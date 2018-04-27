@@ -1,0 +1,654 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TestSTPTool.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="TestSTPToolStoreContainer">
+    <EntitySet Name="TestCases" EntityType="TestSTPTool.Store.TestCases" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TestSteps" EntityType="TestSTPTool.Store.TestSteps" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TestStepResults" EntityType="TestSTPTool.Store.TestStepResults" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TestRuns" EntityType="TestSTPTool.Store.TestRuns" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TestCaseResults" EntityType="TestSTPTool.Store.TestCaseResults" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TestSuites" EntityType="TestSTPTool.Store.TestSuites" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DeviceUnderTests" EntityType="TestSTPTool.Store.DeviceUnderTests" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DeviceComponents" EntityType="TestSTPTool.Store.DeviceComponents" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Equipment" EntityType="TestSTPTool.Store.Equipment" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="TestCaseTestStep" Association="TestSTPTool.Store.TestCaseTestStep">
+      <End Role="TestCase" EntitySet="TestCases" />
+      <End Role="TestStep" EntitySet="TestSteps" />
+    </AssociationSet>
+    <AssociationSet Name="TestStepTestStepResult" Association="TestSTPTool.Store.TestStepTestStepResult">
+      <End Role="TestStep" EntitySet="TestSteps" />
+      <End Role="TestStepResult" EntitySet="TestStepResults" />
+    </AssociationSet>
+    <AssociationSet Name="TestCaseTestRun" Association="TestSTPTool.Store.TestCaseTestRun">
+      <End Role="TestCase" EntitySet="TestCases" />
+      <End Role="TestRun" EntitySet="TestRuns" />
+    </AssociationSet>
+    <AssociationSet Name="TestCaseTestCaseResult" Association="TestSTPTool.Store.TestCaseTestCaseResult">
+      <End Role="TestCase" EntitySet="TestCases" />
+      <End Role="TestCaseResult" EntitySet="TestCaseResults" />
+    </AssociationSet>
+    <AssociationSet Name="TestRunTestCaseResult" Association="TestSTPTool.Store.TestRunTestCaseResult">
+      <End Role="TestRun" EntitySet="TestRuns" />
+      <End Role="TestCaseResult" EntitySet="TestCaseResults" />
+    </AssociationSet>
+    <AssociationSet Name="TestRunTestStepResult" Association="TestSTPTool.Store.TestRunTestStepResult">
+      <End Role="TestRun" EntitySet="TestRuns" />
+      <End Role="TestStepResult" EntitySet="TestStepResults" />
+    </AssociationSet>
+    <AssociationSet Name="TestRunEnvironment" Association="TestSTPTool.Store.TestRunEnvironment">
+      <End Role="TestRun" EntitySet="TestRuns" />
+      <End Role="Environment" EntitySet="DeviceUnderTests" />
+    </AssociationSet>
+    <AssociationSet Name="DeviceUnderTestDeviceComponent" Association="TestSTPTool.Store.DeviceUnderTestDeviceComponent">
+      <End Role="DeviceUnderTest" EntitySet="DeviceUnderTests" />
+      <End Role="DeviceComponent" EntitySet="DeviceComponents" />
+    </AssociationSet>
+    <AssociationSet Name="TestSuiteTestCase" Association="TestSTPTool.Store.TestSuiteTestCase">
+      <End Role="TestSuite" EntitySet="TestSuites" />
+      <End Role="TestCase" EntitySet="TestCases" />
+    </AssociationSet>
+    <AssociationSet Name="TestSuiteEquipment" Association="TestSTPTool.Store.TestSuiteEquipment">
+      <End Role="TestSuite" EntitySet="TestSuites" />
+      <End Role="Equipment" EntitySet="Equipment" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="TestCases">
+    <Key>
+      <PropertyRef Name="TestCaseID" />
+    </Key>
+    <Property Name="TestCaseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Objective" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Owner" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="EstimatedTime" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="TestSuiteID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TestSteps">
+    <Key>
+      <PropertyRef Name="TestStepID" />
+    </Key>
+    <Property Name="TestStepID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Step" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ExpectedResult" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="TestCaseID" Type="int" Nullable="false" />
+    <Property Name="TestStepResult_TestStepResultID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TestStepResults">
+    <Key>
+      <PropertyRef Name="TestStepResultID" />
+    </Key>
+    <Property Name="TestStepResultID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ActualResult" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Status" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="TestRunID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TestRuns">
+    <Key>
+      <PropertyRef Name="TestRunID" />
+    </Key>
+    <Property Name="TestRunID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Tester" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="TestCaseID" Type="int" Nullable="false" />
+    <Property Name="Notes" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="TestCaseResult_TestCaseResultID" Type="int" Nullable="false" />
+    <Property Name="Environment_EnvironmentID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TestCaseResults">
+    <Key>
+      <PropertyRef Name="TestCaseResultID" />
+    </Key>
+    <Property Name="TestCaseResultID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Status" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Issue" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="TestCaseID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TestSuites">
+    <Key>
+      <PropertyRef Name="TestSuiteID" />
+    </Key>
+    <Property Name="TestSuiteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Product" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DeviceUnderTests">
+    <Key>
+      <PropertyRef Name="EnvironmentID" />
+    </Key>
+    <Property Name="EnvironmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DeviceComponents">
+    <Key>
+      <PropertyRef Name="DeviceUnderTestID" />
+    </Key>
+    <Property Name="DeviceUnderTestID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Version" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="EnvironmentID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Equipment">
+    <Key>
+      <PropertyRef Name="EquipmentID" />
+    </Key>
+    <Property Name="EquipmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Quantity" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="TestSuiteID" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="TestCaseTestStep">
+    <End Role="TestCase" Type="TestSTPTool.Store.TestCases" Multiplicity="1" />
+    <End Role="TestStep" Type="TestSTPTool.Store.TestSteps" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestCase">
+        <PropertyRef Name="TestCaseID" />
+      </Principal>
+      <Dependent Role="TestStep">
+        <PropertyRef Name="TestCaseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TestStepTestStepResult">
+    <End Role="TestStep" Type="TestSTPTool.Store.TestSteps" Multiplicity="*" />
+    <End Role="TestStepResult" Type="TestSTPTool.Store.TestStepResults" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="TestStepResult">
+        <PropertyRef Name="TestStepResultID" />
+      </Principal>
+      <Dependent Role="TestStep">
+        <PropertyRef Name="TestStepResult_TestStepResultID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TestCaseTestRun">
+    <End Role="TestCase" Type="TestSTPTool.Store.TestCases" Multiplicity="1" />
+    <End Role="TestRun" Type="TestSTPTool.Store.TestRuns" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestCase">
+        <PropertyRef Name="TestCaseID" />
+      </Principal>
+      <Dependent Role="TestRun">
+        <PropertyRef Name="TestCaseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TestCaseTestCaseResult">
+    <End Role="TestCase" Type="TestSTPTool.Store.TestCases" Multiplicity="1" />
+    <End Role="TestCaseResult" Type="TestSTPTool.Store.TestCaseResults" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestCase">
+        <PropertyRef Name="TestCaseID" />
+      </Principal>
+      <Dependent Role="TestCaseResult">
+        <PropertyRef Name="TestCaseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TestRunTestCaseResult">
+    <End Role="TestRun" Type="TestSTPTool.Store.TestRuns" Multiplicity="*" />
+    <End Role="TestCaseResult" Type="TestSTPTool.Store.TestCaseResults" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="TestCaseResult">
+        <PropertyRef Name="TestCaseResultID" />
+      </Principal>
+      <Dependent Role="TestRun">
+        <PropertyRef Name="TestCaseResult_TestCaseResultID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TestRunTestStepResult">
+    <End Role="TestRun" Type="TestSTPTool.Store.TestRuns" Multiplicity="1" />
+    <End Role="TestStepResult" Type="TestSTPTool.Store.TestStepResults" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestRun">
+        <PropertyRef Name="TestRunID" />
+      </Principal>
+      <Dependent Role="TestStepResult">
+        <PropertyRef Name="TestRunID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TestRunEnvironment">
+    <End Role="TestRun" Type="TestSTPTool.Store.TestRuns" Multiplicity="*" />
+    <End Role="Environment" Type="TestSTPTool.Store.DeviceUnderTests" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Environment">
+        <PropertyRef Name="EnvironmentID" />
+      </Principal>
+      <Dependent Role="TestRun">
+        <PropertyRef Name="Environment_EnvironmentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DeviceUnderTestDeviceComponent">
+    <End Role="DeviceUnderTest" Type="TestSTPTool.Store.DeviceUnderTests" Multiplicity="1" />
+    <End Role="DeviceComponent" Type="TestSTPTool.Store.DeviceComponents" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeviceUnderTest">
+        <PropertyRef Name="EnvironmentID" />
+      </Principal>
+      <Dependent Role="DeviceComponent">
+        <PropertyRef Name="EnvironmentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TestSuiteTestCase">
+    <End Role="TestSuite" Type="TestSTPTool.Store.TestSuites" Multiplicity="1" />
+    <End Role="TestCase" Type="TestSTPTool.Store.TestCases" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestSuite">
+        <PropertyRef Name="TestSuiteID" />
+      </Principal>
+      <Dependent Role="TestCase">
+        <PropertyRef Name="TestSuiteID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TestSuiteEquipment">
+    <End Role="TestSuite" Type="TestSTPTool.Store.TestSuites" Multiplicity="1" />
+    <End Role="Equipment" Type="TestSTPTool.Store.Equipment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestSuite">
+        <PropertyRef Name="TestSuiteID" />
+      </Principal>
+      <Dependent Role="Equipment">
+        <PropertyRef Name="TestSuiteID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="TestSTPTool" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="TestSTPToolContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TestCases" EntityType="TestSTPTool.TestCase" />
+          <EntitySet Name="TestSteps" EntityType="TestSTPTool.TestStep" />
+          <EntitySet Name="TestStepResults" EntityType="TestSTPTool.TestStepResult" />
+          <EntitySet Name="TestRuns" EntityType="TestSTPTool.TestRun" />
+          <EntitySet Name="TestCaseResults" EntityType="TestSTPTool.TestCaseResult" />
+          <AssociationSet Name="TestCaseTestStep" Association="TestSTPTool.TestCaseTestStep">
+            <End Role="TestCase" EntitySet="TestCases" />
+            <End Role="TestStep" EntitySet="TestSteps" />
+          </AssociationSet>
+          <AssociationSet Name="TestStepTestStepResult" Association="TestSTPTool.TestStepTestStepResult">
+            <End Role="TestStep" EntitySet="TestSteps" />
+            <End Role="TestStepResult" EntitySet="TestStepResults" />
+          </AssociationSet>
+          <AssociationSet Name="TestCaseTestRun" Association="TestSTPTool.TestCaseTestRun">
+            <End Role="TestCase" EntitySet="TestCases" />
+            <End Role="TestRun" EntitySet="TestRuns" />
+          </AssociationSet>
+          <AssociationSet Name="TestCaseTestCaseResult" Association="TestSTPTool.TestCaseTestCaseResult">
+            <End Role="TestCase" EntitySet="TestCases" />
+            <End Role="TestCaseResult" EntitySet="TestCaseResults" />
+          </AssociationSet>
+          <AssociationSet Name="TestRunTestCaseResult" Association="TestSTPTool.TestRunTestCaseResult">
+            <End Role="TestRun" EntitySet="TestRuns" />
+            <End Role="TestCaseResult" EntitySet="TestCaseResults" />
+          </AssociationSet>
+          <AssociationSet Name="TestRunTestStepResult" Association="TestSTPTool.TestRunTestStepResult">
+            <End Role="TestRun" EntitySet="TestRuns" />
+            <End Role="TestStepResult" EntitySet="TestStepResults" />
+          </AssociationSet>
+          <EntitySet Name="TestSuites" EntityType="TestSTPTool.TestSuite" />
+          <EntitySet Name="DeviceUnderTests" EntityType="TestSTPTool.DeviceUnderTest" />
+          <EntitySet Name="DeviceComponents" EntityType="TestSTPTool.DeviceComponent" />
+          <AssociationSet Name="TestRunEnvironment" Association="TestSTPTool.TestRunEnvironment">
+            <End Role="TestRun" EntitySet="TestRuns" />
+            <End Role="Environment" EntitySet="DeviceUnderTests" />
+          </AssociationSet>
+          <AssociationSet Name="DeviceUnderTestDeviceComponent" Association="TestSTPTool.DeviceUnderTestDeviceComponent">
+            <End Role="DeviceUnderTest" EntitySet="DeviceUnderTests" />
+            <End Role="DeviceComponent" EntitySet="DeviceComponents" />
+          </AssociationSet>
+          <AssociationSet Name="TestSuiteTestCase" Association="TestSTPTool.TestSuiteTestCase">
+            <End Role="TestSuite" EntitySet="TestSuites" />
+            <End Role="TestCase" EntitySet="TestCases" />
+          </AssociationSet>
+          <EntitySet Name="Equipment" EntityType="TestSTPTool.Equipment" />
+          <AssociationSet Name="TestSuiteEquipment" Association="TestSTPTool.TestSuiteEquipment">
+            <End Role="TestSuite" EntitySet="TestSuites" />
+            <End Role="Equipment" EntitySet="Equipment" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="TestCase">
+          <Key>
+            <PropertyRef Name="TestCaseID" />
+          </Key>
+          <Property Name="TestCaseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Objective" Type="String" Nullable="true" />
+          <Property Name="Owner" Type="String" Nullable="true" />
+          <Property Name="EstimatedTime" Type="String" Nullable="true" />
+          <NavigationProperty Name="TestSteps" Relationship="TestSTPTool.TestCaseTestStep" FromRole="TestCase" ToRole="TestStep" />
+          <NavigationProperty Name="TestRuns" Relationship="TestSTPTool.TestCaseTestRun" FromRole="TestCase" ToRole="TestRun" />
+          <NavigationProperty Name="TestCaseResults" Relationship="TestSTPTool.TestCaseTestCaseResult" FromRole="TestCase" ToRole="TestCaseResult" />
+          <NavigationProperty Name="TestSuite" Relationship="TestSTPTool.TestSuiteTestCase" FromRole="TestCase" ToRole="TestSuite" />
+          <Property Name="TestSuiteID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TestStep">
+          <Key>
+            <PropertyRef Name="TestStepID" />
+          </Key>
+          <Property Name="TestStepID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Step" Type="String" Nullable="false" />
+          <Property Name="ExpectedResult" Type="String" Nullable="true" />
+          <NavigationProperty Name="TestCase" Relationship="TestSTPTool.TestCaseTestStep" FromRole="TestStep" ToRole="TestCase" />
+          <Property Name="TestCaseID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TestStepResult" Relationship="TestSTPTool.TestStepTestStepResult" FromRole="TestStep" ToRole="TestStepResult" />
+        </EntityType>
+        <EntityType Name="TestStepResult">
+          <Key>
+            <PropertyRef Name="TestStepResultID" />
+          </Key>
+          <Property Name="TestStepResultID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ActualResult" Nullable="true" Type="String" />
+          <Property Name="Status" Type="String" Nullable="true" />
+          <NavigationProperty Name="TestStep" Relationship="TestSTPTool.TestStepTestStepResult" FromRole="TestStepResult" ToRole="TestStep" />
+          <NavigationProperty Name="TestRun" Relationship="TestSTPTool.TestRunTestStepResult" FromRole="TestStepResult" ToRole="TestRun" />
+          <Property Name="TestRunID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TestRun">
+          <Key>
+            <PropertyRef Name="TestRunID" />
+          </Key>
+          <Property Name="TestRunID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="String" Nullable="true" />
+          <Property Name="Tester" Type="String" Nullable="true" />
+          <NavigationProperty Name="TestCase" Relationship="TestSTPTool.TestCaseTestRun" FromRole="TestRun" ToRole="TestCase" />
+          <Property Name="TestCaseID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TestCaseResult" Relationship="TestSTPTool.TestRunTestCaseResult" FromRole="TestRun" ToRole="TestCaseResult" />
+          <NavigationProperty Name="TestStepResults" Relationship="TestSTPTool.TestRunTestStepResult" FromRole="TestRun" ToRole="TestStepResult" />
+          <NavigationProperty Name="Environment" Relationship="TestSTPTool.TestRunEnvironment" FromRole="TestRun" ToRole="Environment" />
+          <Property Name="Notes" Type="String" Nullable="true" />
+        </EntityType>
+        <EntityType Name="TestCaseResult">
+          <Key>
+            <PropertyRef Name="TestCaseResultID" />
+          </Key>
+          <Property Name="TestCaseResultID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="String" Nullable="true" />
+          <Property Name="Status" Type="String" Nullable="true" />
+          <Property Name="Issue" Type="String" Nullable="true" />
+          <NavigationProperty Name="TestCase" Relationship="TestSTPTool.TestCaseTestCaseResult" FromRole="TestCaseResult" ToRole="TestCase" />
+          <Property Name="TestCaseID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TestRun" Relationship="TestSTPTool.TestRunTestCaseResult" FromRole="TestCaseResult" ToRole="TestRun" />
+        </EntityType>
+        <Association Name="TestCaseTestStep">
+          <End Type="TestSTPTool.TestCase" Role="TestCase" Multiplicity="1" />
+          <End Type="TestSTPTool.TestStep" Role="TestStep" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestCase">
+              <PropertyRef Name="TestCaseID" />
+            </Principal>
+            <Dependent Role="TestStep">
+              <PropertyRef Name="TestCaseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TestStepTestStepResult">
+          <End Type="TestSTPTool.TestStep" Role="TestStep" Multiplicity="1" />
+          <End Type="TestSTPTool.TestStepResult" Role="TestStepResult" Multiplicity="1" />
+        </Association>
+        <Association Name="TestCaseTestRun">
+          <End Type="TestSTPTool.TestCase" Role="TestCase" Multiplicity="1" />
+          <End Type="TestSTPTool.TestRun" Role="TestRun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestCase">
+              <PropertyRef Name="TestCaseID" />
+            </Principal>
+            <Dependent Role="TestRun">
+              <PropertyRef Name="TestCaseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TestCaseTestCaseResult">
+          <End Type="TestSTPTool.TestCase" Role="TestCase" Multiplicity="1" />
+          <End Type="TestSTPTool.TestCaseResult" Role="TestCaseResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestCase">
+              <PropertyRef Name="TestCaseID" />
+            </Principal>
+            <Dependent Role="TestCaseResult">
+              <PropertyRef Name="TestCaseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TestRunTestCaseResult">
+          <End Type="TestSTPTool.TestRun" Role="TestRun" Multiplicity="1" />
+          <End Type="TestSTPTool.TestCaseResult" Role="TestCaseResult" Multiplicity="1" />
+        </Association>
+        <Association Name="TestRunTestStepResult">
+          <End Type="TestSTPTool.TestRun" Role="TestRun" Multiplicity="1" />
+          <End Type="TestSTPTool.TestStepResult" Role="TestStepResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestRun">
+              <PropertyRef Name="TestRunID" />
+            </Principal>
+            <Dependent Role="TestStepResult">
+              <PropertyRef Name="TestRunID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TestSuite">
+          <Key>
+            <PropertyRef Name="TestSuiteID" />
+          </Key>
+          <Property Name="TestSuiteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Product" Type="String" Nullable="false" />
+          <NavigationProperty Name="TestCases" Relationship="TestSTPTool.TestSuiteTestCase" FromRole="TestSuite" ToRole="TestCase" />
+          <NavigationProperty Name="Equipments" Relationship="TestSTPTool.TestSuiteEquipment" FromRole="TestSuite" ToRole="Equipment" />
+        </EntityType>
+        <EntityType Name="DeviceUnderTest">
+          <Key>
+            <PropertyRef Name="EnvironmentID" />
+          </Key>
+          <Property Name="EnvironmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="TestRun" Relationship="TestSTPTool.TestRunEnvironment" FromRole="Environment" ToRole="TestRun" />
+          <NavigationProperty Name="DeviceComponents" Relationship="TestSTPTool.DeviceUnderTestDeviceComponent" FromRole="DeviceUnderTest" ToRole="DeviceComponent" />
+        </EntityType>
+        <EntityType Name="DeviceComponent">
+          <Key>
+            <PropertyRef Name="DeviceUnderTestID" />
+          </Key>
+          <Property Name="DeviceUnderTestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Version" Type="String" Nullable="true" />
+          <NavigationProperty Name="DeviceUnderTest" Relationship="TestSTPTool.DeviceUnderTestDeviceComponent" FromRole="DeviceComponent" ToRole="DeviceUnderTest" />
+          <Property Name="EnvironmentID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="TestRunEnvironment">
+          <End Type="TestSTPTool.TestRun" Role="TestRun" Multiplicity="1" />
+          <End Type="TestSTPTool.DeviceUnderTest" Role="Environment" Multiplicity="1" />
+        </Association>
+        <Association Name="DeviceUnderTestDeviceComponent">
+          <End Type="TestSTPTool.DeviceUnderTest" Role="DeviceUnderTest" Multiplicity="1" />
+          <End Type="TestSTPTool.DeviceComponent" Role="DeviceComponent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeviceUnderTest">
+              <PropertyRef Name="EnvironmentID" />
+            </Principal>
+            <Dependent Role="DeviceComponent">
+              <PropertyRef Name="EnvironmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TestSuiteTestCase">
+          <End Type="TestSTPTool.TestSuite" Role="TestSuite" Multiplicity="1" />
+          <End Type="TestSTPTool.TestCase" Role="TestCase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestSuite">
+              <PropertyRef Name="TestSuiteID" />
+            </Principal>
+            <Dependent Role="TestCase">
+              <PropertyRef Name="TestSuiteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Equipment">
+          <Key>
+            <PropertyRef Name="EquipmentID" />
+          </Key>
+          <Property Name="EquipmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Quantity" Type="String" Nullable="false" />
+          <NavigationProperty Name="TestSuite" Relationship="TestSTPTool.TestSuiteEquipment" FromRole="Equipment" ToRole="TestSuite" />
+          <Property Name="TestSuiteID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="TestSuiteEquipment">
+          <End Type="TestSTPTool.TestSuite" Role="TestSuite" Multiplicity="1" />
+          <End Type="TestSTPTool.Equipment" Role="Equipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestSuite">
+              <PropertyRef Name="TestSuiteID" />
+            </Principal>
+            <Dependent Role="Equipment">
+              <PropertyRef Name="TestSuiteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TestSTPToolStoreContainer" CdmEntityContainer="TestSTPToolContainer">
+    <EntitySetMapping Name="TestCases">
+      <EntityTypeMapping TypeName="IsTypeOf(TestSTPTool.TestCase)">
+        <MappingFragment StoreEntitySet="TestCases">
+          <ScalarProperty Name="TestCaseID" ColumnName="TestCaseID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Objective" ColumnName="Objective" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="EstimatedTime" ColumnName="EstimatedTime" />
+          <ScalarProperty Name="TestSuiteID" ColumnName="TestSuiteID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TestSteps">
+      <EntityTypeMapping TypeName="IsTypeOf(TestSTPTool.TestStep)">
+        <MappingFragment StoreEntitySet="TestSteps">
+          <ScalarProperty Name="TestStepID" ColumnName="TestStepID" />
+          <ScalarProperty Name="Step" ColumnName="Step" />
+          <ScalarProperty Name="ExpectedResult" ColumnName="ExpectedResult" />
+          <ScalarProperty Name="TestCaseID" ColumnName="TestCaseID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TestStepResults">
+      <EntityTypeMapping TypeName="IsTypeOf(TestSTPTool.TestStepResult)">
+        <MappingFragment StoreEntitySet="TestStepResults">
+          <ScalarProperty Name="TestStepResultID" ColumnName="TestStepResultID" />
+          <ScalarProperty Name="ActualResult" ColumnName="ActualResult" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="TestRunID" ColumnName="TestRunID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TestRuns">
+      <EntityTypeMapping TypeName="IsTypeOf(TestSTPTool.TestRun)">
+        <MappingFragment StoreEntitySet="TestRuns">
+          <ScalarProperty Name="TestRunID" ColumnName="TestRunID" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Tester" ColumnName="Tester" />
+          <ScalarProperty Name="TestCaseID" ColumnName="TestCaseID" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TestCaseResults">
+      <EntityTypeMapping TypeName="IsTypeOf(TestSTPTool.TestCaseResult)">
+        <MappingFragment StoreEntitySet="TestCaseResults">
+          <ScalarProperty Name="TestCaseResultID" ColumnName="TestCaseResultID" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Issue" ColumnName="Issue" />
+          <ScalarProperty Name="TestCaseID" ColumnName="TestCaseID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TestSuites">
+      <EntityTypeMapping TypeName="IsTypeOf(TestSTPTool.TestSuite)">
+        <MappingFragment StoreEntitySet="TestSuites">
+          <ScalarProperty Name="TestSuiteID" ColumnName="TestSuiteID" />
+          <ScalarProperty Name="Product" ColumnName="Product" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DeviceUnderTests">
+      <EntityTypeMapping TypeName="IsTypeOf(TestSTPTool.DeviceUnderTest)">
+        <MappingFragment StoreEntitySet="DeviceUnderTests">
+          <ScalarProperty Name="EnvironmentID" ColumnName="EnvironmentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DeviceComponents">
+      <EntityTypeMapping TypeName="IsTypeOf(TestSTPTool.DeviceComponent)">
+        <MappingFragment StoreEntitySet="DeviceComponents">
+          <ScalarProperty Name="DeviceUnderTestID" ColumnName="DeviceUnderTestID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Version" ColumnName="Version" />
+          <ScalarProperty Name="EnvironmentID" ColumnName="EnvironmentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Equipment">
+      <EntityTypeMapping TypeName="IsTypeOf(TestSTPTool.Equipment)">
+        <MappingFragment StoreEntitySet="Equipment">
+          <ScalarProperty Name="EquipmentID" ColumnName="EquipmentID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="TestSuiteID" ColumnName="TestSuiteID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="TestStepTestStepResult" TypeName="TestSTPTool.TestStepTestStepResult" StoreEntitySet="TestSteps">
+      <EndProperty Name="TestStepResult">
+        <ScalarProperty Name="TestStepResultID" ColumnName="TestStepResult_TestStepResultID" />
+      </EndProperty>
+      <EndProperty Name="TestStep">
+        <ScalarProperty Name="TestStepID" ColumnName="TestStepID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="TestRunTestCaseResult" TypeName="TestSTPTool.TestRunTestCaseResult" StoreEntitySet="TestRuns">
+      <EndProperty Name="TestCaseResult">
+        <ScalarProperty Name="TestCaseResultID" ColumnName="TestCaseResult_TestCaseResultID" />
+      </EndProperty>
+      <EndProperty Name="TestRun">
+        <ScalarProperty Name="TestRunID" ColumnName="TestRunID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="TestRunEnvironment" TypeName="TestSTPTool.TestRunEnvironment" StoreEntitySet="TestRuns">
+      <EndProperty Name="Environment">
+        <ScalarProperty Name="EnvironmentID" ColumnName="Environment_EnvironmentID" />
+      </EndProperty>
+      <EndProperty Name="TestRun">
+        <ScalarProperty Name="TestRunID" ColumnName="TestRunID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
