@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/27/2018 10:55:12
+-- Date Created: 04/27/2018 15:08:31
 -- Generated from EDMX file: C:\Users\mclemens\SVN-Projects\STP-Tool\trunk\TestSDK\Database\TestSTPTool.edmx
 -- --------------------------------------------------
 
@@ -25,12 +25,6 @@ IF OBJECT_ID(N'[dbo].[FK_TestStepTestStepResult]', 'F') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[FK_TestCaseTestRun]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[TestRuns] DROP CONSTRAINT [FK_TestCaseTestRun];
-GO
-IF OBJECT_ID(N'[dbo].[FK_TestCaseTestCaseResult]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[TestCaseResults] DROP CONSTRAINT [FK_TestCaseTestCaseResult];
-GO
-IF OBJECT_ID(N'[dbo].[FK_TestRunTestCaseResult]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[TestRuns] DROP CONSTRAINT [FK_TestRunTestCaseResult];
 GO
 IF OBJECT_ID(N'[dbo].[FK_TestRunTestStepResult]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[TestStepResults] DROP CONSTRAINT [FK_TestRunTestStepResult];
@@ -63,9 +57,6 @@ IF OBJECT_ID(N'[dbo].[TestStepResults]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[TestRuns]', 'U') IS NOT NULL
     DROP TABLE [dbo].[TestRuns];
-GO
-IF OBJECT_ID(N'[dbo].[TestCaseResults]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[TestCaseResults];
 GO
 IF OBJECT_ID(N'[dbo].[TestSuites]', 'U') IS NOT NULL
     DROP TABLE [dbo].[TestSuites];
@@ -121,18 +112,9 @@ CREATE TABLE [dbo].[TestRuns] (
     [Tester] nvarchar(max)  NULL,
     [TestCaseID] int  NOT NULL,
     [Notes] nvarchar(max)  NULL,
-    [TestCaseResult_TestCaseResultID] int  NOT NULL,
+    [Issue] nvarchar(max)  NOT NULL,
+    [Status] nvarchar(max)  NOT NULL,
     [Environment_EnvironmentID] int  NOT NULL
-);
-GO
-
--- Creating table 'TestCaseResults'
-CREATE TABLE [dbo].[TestCaseResults] (
-    [TestCaseResultID] int IDENTITY(1,1) NOT NULL,
-    [Date] nvarchar(max)  NULL,
-    [Status] nvarchar(max)  NULL,
-    [Issue] nvarchar(max)  NULL,
-    [TestCaseID] int  NOT NULL
 );
 GO
 
@@ -193,12 +175,6 @@ GO
 ALTER TABLE [dbo].[TestRuns]
 ADD CONSTRAINT [PK_TestRuns]
     PRIMARY KEY CLUSTERED ([TestRunID] ASC);
-GO
-
--- Creating primary key on [TestCaseResultID] in table 'TestCaseResults'
-ALTER TABLE [dbo].[TestCaseResults]
-ADD CONSTRAINT [PK_TestCaseResults]
-    PRIMARY KEY CLUSTERED ([TestCaseResultID] ASC);
 GO
 
 -- Creating primary key on [TestSuiteID] in table 'TestSuites'
@@ -272,36 +248,6 @@ GO
 CREATE INDEX [IX_FK_TestCaseTestRun]
 ON [dbo].[TestRuns]
     ([TestCaseID]);
-GO
-
--- Creating foreign key on [TestCaseID] in table 'TestCaseResults'
-ALTER TABLE [dbo].[TestCaseResults]
-ADD CONSTRAINT [FK_TestCaseTestCaseResult]
-    FOREIGN KEY ([TestCaseID])
-    REFERENCES [dbo].[TestCases]
-        ([TestCaseID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_TestCaseTestCaseResult'
-CREATE INDEX [IX_FK_TestCaseTestCaseResult]
-ON [dbo].[TestCaseResults]
-    ([TestCaseID]);
-GO
-
--- Creating foreign key on [TestCaseResult_TestCaseResultID] in table 'TestRuns'
-ALTER TABLE [dbo].[TestRuns]
-ADD CONSTRAINT [FK_TestRunTestCaseResult]
-    FOREIGN KEY ([TestCaseResult_TestCaseResultID])
-    REFERENCES [dbo].[TestCaseResults]
-        ([TestCaseResultID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_TestRunTestCaseResult'
-CREATE INDEX [IX_FK_TestRunTestCaseResult]
-ON [dbo].[TestRuns]
-    ([TestCaseResult_TestCaseResultID]);
 GO
 
 -- Creating foreign key on [TestRunID] in table 'TestStepResults'

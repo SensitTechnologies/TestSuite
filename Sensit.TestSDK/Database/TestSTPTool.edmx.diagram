@@ -8,18 +8,14 @@
         <EntityTypeShape EntityType="TestSTPTool.TestCase" Width="1.5" PointX="5.875" PointY="3.625" />
         <EntityTypeShape EntityType="TestSTPTool.TestStep" Width="1.5" PointX="5.875" PointY="7.5" />
         <EntityTypeShape EntityType="TestSTPTool.TestStepResult" Width="1.75" PointX="9" PointY="7.625" />
-        <EntityTypeShape EntityType="TestSTPTool.TestRun" Width="1.75" PointX="9" PointY="4.25" />
-        <EntityTypeShape EntityType="TestSTPTool.TestCaseResult" Width="1.75" PointX="9" PointY="1.375" />
+        <EntityTypeShape EntityType="TestSTPTool.TestRun" Width="1.75" PointX="9" PointY="3.625" />
         <AssociationConnector Association="TestSTPTool.TestCaseTestStep" />
         <AssociationConnector Association="TestSTPTool.TestStepTestStepResult" />
         <AssociationConnector Association="TestSTPTool.TestCaseTestRun" />
-        <AssociationConnector Association="TestSTPTool.TestCaseTestCaseResult" ManuallyRouted="false" >
-        </AssociationConnector>
-        <AssociationConnector Association="TestSTPTool.TestRunTestCaseResult" />
         <AssociationConnector Association="TestSTPTool.TestRunTestStepResult" />
         <EntityTypeShape EntityType="TestSTPTool.TestSuite" Width="1.5" PointX="2.625" PointY="4.125" />
-        <EntityTypeShape EntityType="TestSTPTool.DeviceUnderTest" Width="1.875" PointX="12.25" PointY="4.875" />
-        <EntityTypeShape EntityType="TestSTPTool.DeviceComponent" Width="2" PointX="15.25" PointY="4.875" />
+        <EntityTypeShape EntityType="TestSTPTool.DeviceUnderTest" Width="1.875" PointX="12.25" PointY="4.25" />
+        <EntityTypeShape EntityType="TestSTPTool.DeviceComponent" Width="2" PointX="15.25" PointY="4.25" />
         <AssociationConnector Association="TestSTPTool.TestRunEnvironment" />
         <AssociationConnector Association="TestSTPTool.DeviceUnderTestDeviceComponent" />
         <AssociationConnector Association="TestSTPTool.TestSuiteTestCase" />
