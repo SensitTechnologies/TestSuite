@@ -18,6 +18,22 @@ namespace Sensit.TestSDK.Email
     /// <remarks>Inspired by: https://developers.google.com/gmail/api/quickstart/dotnet </remarks>
     public class Email
     {
+        // Define properties of the message to be sent
+        public string body;
+        public string subject;
+        public string[] recipients;
+        public string fromAddress;
+
+        // Used as placeholder for client secret from Google API console for the application
+        private string _clientSecret;
+
+        // Getter and setter for client secret json file
+        public string ClientSecret
+        {
+            get { return _clientSecret; }
+            set { _clientSecret = value; }
+        }
+
         // If modifying these scopes, delete your previously saved credentials
         // at ~/.credentials/gmail-dotnet-quickstart.json
         static string[] Scopes = { GmailService.Scope.GmailSend, GmailService.Scope.GmailReadonly };  //Gmail Send is used to send emails where GmailReadonly is used to read emails on the account
@@ -41,18 +57,26 @@ namespace Sensit.TestSDK.Email
         /// <summary>
         /// Sends an email to an array of recipients
         /// </summary>
-        /// <param name="recipients">String array of recipients</param>
-        /// <param name="subject">Subject</param>
-        /// <param name="body">Body</param>
-        /// <param name="fromAddress">Email that is sending the notifications</param>
         /// <remarks>Inspired by: https://developers.google.com/gmail/api/guides/sending </remarks>
-        public static void SendEmail(string[] recipients, string subject, string body, string fromAddress)
+        public void SendEmail()
         {
             UserCredential credential;
 
+            // Check to see if there's the client secret file in the proper location before continuing on to send the email
+            if (!File.Exists(_clientSecret))
+            {
+                throw new Exception("Client Secret JSON file is missing from the application.");
+            }
+
+            // Checks to verify the email has a body, subject, from address, and an array of recipients
+            if ((body == null) || (subject == null) || (recipients == null) || (fromAddress == null))
+            {
+                throw new Exception("The email has not been formatted properly.  Be sure to include a body, subject, fromAddress, and an array of recipients.");
+            }
+
             // Verifies client credentials using client_secret.json file
             using (var stream =
-                new FileStream("client_secret.json", FileMode.Open, FileAccess.Read)) // Make sure client_secret.json is the specified location
+                new FileStream(_clientSecret, FileMode.Open, FileAccess.Read)) // Make sure client_secret.json is the specified location
             {
                 string credPath = System.Environment.GetFolderPath(
                     System.Environment.SpecialFolder.Personal);
