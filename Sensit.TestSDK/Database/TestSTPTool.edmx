@@ -86,7 +86,8 @@
     <Property Name="Tester" Type="nvarchar(max)" Nullable="true" />
     <Property Name="TestCaseID" Type="int" Nullable="false" />
     <Property Name="Notes" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="TestCaseResult_TestCaseResultID" Type="int" Nullable="false" />
+    <Property Name="Issue" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Environment_EnvironmentID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="TestSuites">
@@ -476,6 +477,8 @@
           <ScalarProperty Name="Tester" ColumnName="Tester" />
           <ScalarProperty Name="TestCaseID" ColumnName="TestCaseID" />
           <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="Issue" ColumnName="Issue" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
