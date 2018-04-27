@@ -103,9 +103,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Email\client_secret.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="packages.config" />
     <EntityDeploy Include="Database\TestSTPTool.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
