@@ -76,7 +76,7 @@ namespace Sensit.TestSDK.Database
                 Console.WriteLine("Connection opened successfully");
                 cnn.Close();  // Closes connection
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Console.WriteLine("Something went awry");
             }
@@ -106,7 +106,7 @@ namespace Sensit.TestSDK.Database
                 connection.Close();
                 Console.WriteLine("Query executed successfully");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Console.WriteLine("Query execution failed");
             }
@@ -140,7 +140,7 @@ namespace Sensit.TestSDK.Database
                 connection.Close();
                 Console.WriteLine("Query executed successfully");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Console.WriteLine("Query execution failed");
             }
@@ -169,7 +169,7 @@ namespace Sensit.TestSDK.Database
                 connection.Close();
                 Console.WriteLine("Query executed successfully");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Console.WriteLine("Query execution failed");
             }
@@ -203,7 +203,7 @@ namespace Sensit.TestSDK.Database
                 connection.Close();
                 Console.WriteLine("Query executed successfully");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Console.WriteLine("Query execution failed");
             }
@@ -234,7 +234,7 @@ namespace Sensit.TestSDK.Database
                 connection.Close();
                 Console.WriteLine("Query executed successfully");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Console.WriteLine("Query execution failed");
             }
@@ -265,7 +265,7 @@ namespace Sensit.TestSDK.Database
                 connection.Close();
                 Console.WriteLine("Query executed successfully");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Console.WriteLine("Query execution failed");
             }
@@ -296,7 +296,7 @@ namespace Sensit.TestSDK.Database
                 connection.Close();
                 Console.WriteLine("Query executed successfully");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Console.WriteLine("Query execution failed");
             }
@@ -327,7 +327,7 @@ namespace Sensit.TestSDK.Database
                 connection.Close();
                 Console.WriteLine("Query executed successfully");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Console.WriteLine("Query execution failed");
             }
@@ -484,7 +484,7 @@ namespace Sensit.TestSDK.Database
                 cnn.Close();
                 return JsonConvert.SerializeObject(objs);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Console.WriteLine("Query execution failed");
                 return "Failed";
@@ -516,7 +516,7 @@ namespace Sensit.TestSDK.Database
                 connection.Close();
                 Console.WriteLine("Query executed successfully");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Console.WriteLine("Query execution failed");
             }
