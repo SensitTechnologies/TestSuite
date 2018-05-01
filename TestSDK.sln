@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.TestSDK", "Sensit.TestSDK\Sensit.TestSDK.csproj", "{A147B18E-A3F8-4B5D-A963-6A4E8189AB88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{C2090777-1A67-4673-A4DE-047D34D26326}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{618F2948-45D1-4AD5-94DF-B5FB617B9E77}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{A147B18E-A3F8-4B5D-A963-6A4E8189AB88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A147B18E-A3F8-4B5D-A963-6A4E8189AB88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A147B18E-A3F8-4B5D-A963-6A4E8189AB88}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C2090777-1A67-4673-A4DE-047D34D26326}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C2090777-1A67-4673-A4DE-047D34D26326}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C2090777-1A67-4673-A4DE-047D34D26326}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C2090777-1A67-4673-A4DE-047D34D26326}.Release|Any CPU.Build.0 = Release|Any CPU
+		{618F2948-45D1-4AD5-94DF-B5FB617B9E77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{618F2948-45D1-4AD5-94DF-B5FB617B9E77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{618F2948-45D1-4AD5-94DF-B5FB617B9E77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{618F2948-45D1-4AD5-94DF-B5FB617B9E77}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
