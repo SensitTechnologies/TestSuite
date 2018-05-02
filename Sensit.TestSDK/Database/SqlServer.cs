@@ -20,10 +20,10 @@ namespace Sensit.TestSDK.Database
     public class SqlServer
     {
 
-        private string _server;     // Database Server instance
-        private string _database;   // Name of Database that you're connecting to
-        private string _username;   // Username
-        private string _password;   // Password
+        private string _server; // Database Server instance
+        private string _database; // Name of Database that you're connecting to
+        private string _username; // Username
+        private string _password; // Password
 
         /// <summary>
         /// Name of Server instance for the Database
@@ -68,18 +68,11 @@ namespace Sensit.TestSDK.Database
         {
             string connectionString = null;
             SqlConnection cnn;
-            connectionString = "Data Source=" + _server + ";Initial Catalog=" + _database + ";User ID=" + _username + ";Password=" + _password;  //Sql Server connection string style
-            cnn = new SqlConnection(connectionString);  // Creates new connecting to SQL Server Instance
-            try
-            {
-                cnn.Open();  // Opens connection
-                Console.WriteLine("Connection opened successfully");
-                cnn.Close();  // Closes connection
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Something went awry");
-            }
+            connectionString = "Data Source=" + _server + ";Initial Catalog=" + _database + ";User ID=" + _username +
+                               ";Password=" + _password; //Sql Server connection string style
+            cnn = new SqlConnection(connectionString); // Creates new connecting to SQL Server Instance
+            cnn.Open(); // Opens connection
+            Console.WriteLine("Connection opened successfully");
         }
 
         /// <summary>
@@ -93,23 +86,18 @@ namespace Sensit.TestSDK.Database
             SqlCommand command;
             string sql = null;
 
-            connectionString = "Data Source=" + _server + ";Initial Catalog=" + _database + ";User ID=" + _username + ";Password=" + _password;
+            connectionString = "Data Source=" + _server + ";Initial Catalog=" + _database + ";User ID=" + _username +
+                               ";Password=" + _password;
             sql = "Insert into TestSuites (Product) values (\'" + product + "\');";
 
             connection = new SqlConnection(connectionString);
-            try
-            {
-                connection.Open();
-                command = new SqlCommand(sql, connection);
-                command.ExecuteNonQuery();
-                command.Dispose();
-                connection.Close();
-                Console.WriteLine("Query executed successfully");
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Query execution failed");
-            }
+            connection.Open();
+            command = new SqlCommand(sql, connection);
+            command.ExecuteNonQuery();
+            command.Dispose();
+            connection.Close();
+            Console.WriteLine("Query executed successfully");
+
         }
 
         /// <summary>
@@ -120,30 +108,27 @@ namespace Sensit.TestSDK.Database
         /// <param name="owner">Owner</param>
         /// <param name="estimatedTime">Estimated Time</param>
         /// <param name="product">Project being tested</param>
-        public void InsertIntoTestCases(String name, String objective, String owner, String estimatedTime, String product)
+        public void InsertIntoTestCases(String name, String objective, String owner, String estimatedTime,
+            String product)
         {
             string connectionString = null;
             SqlConnection connection;
             SqlCommand command;
             string sql = null;
 
-            connectionString = "Data Source=" + _server + ";Initial Catalog=" + _database + ";User ID=" + _username + ";Password=" + _password;
-            sql = "insert into TestCases (Name,Objective,Owner,EstimatedTime,TestSuiteID) Values (\'" + name + "\',\'" + objective + "\',\'" + owner + "\',\'" + estimatedTime + "\',(select TestSuiteID from TestSuites where Product = \'" + product + "\'));";
+            connectionString = "Data Source=" + _server + ";Initial Catalog=" + _database + ";User ID=" + _username +
+                               ";Password=" + _password;
+            sql = "insert into TestCases (Name,Objective,Owner,EstimatedTime,TestSuiteID) Values (\'" + name + "\',\'" +
+                  objective + "\',\'" + owner + "\',\'" + estimatedTime +
+                  "\',(select TestSuiteID from TestSuites where Product = \'" + product + "\'));";
 
             connection = new SqlConnection(connectionString);
-            try
-            {
-                connection.Open();
-                command = new SqlCommand(sql, connection);
-                command.ExecuteNonQuery();
-                command.Dispose();
-                connection.Close();
-                Console.WriteLine("Query executed successfully");
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Query execution failed");
-            }
+            connection.Open();
+            command = new SqlCommand(sql, connection);
+            command.ExecuteNonQuery();
+            command.Dispose();
+            connection.Close();
+            Console.WriteLine("Query executed successfully");
         }
 
         /// <summary>
@@ -156,23 +141,18 @@ namespace Sensit.TestSDK.Database
             SqlCommand command;
             string sql = null;
 
-            connectionString = "Data Source=" + _server + ";Initial Catalog=" + _database + ";User ID=" + _username + ";Password=" + _password;
+            connectionString = "Data Source=" + _server + ";Initial Catalog=" + _database + ";User ID=" + _username +
+                               ";Password=" + _password;
             sql = "insert DeviceUnderTests Default Values;";
 
             connection = new SqlConnection(connectionString);
-            try
-            {
-                connection.Open();
-                command = new SqlCommand(sql, connection);
-                command.ExecuteNonQuery();
-                command.Dispose();
-                connection.Close();
-                Console.WriteLine("Query executed successfully");
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Query execution failed");
-            }
+
+            connection.Open();
+            command = new SqlCommand(sql, connection);
+            command.ExecuteNonQuery();
+            command.Dispose();
+            connection.Close();
+            Console.WriteLine("Query executed successfully");
         }
 
         /// <summary>
@@ -190,23 +170,20 @@ namespace Sensit.TestSDK.Database
             SqlCommand command;
             string sql = null;
 
-            connectionString = "Data Source=" + _server + ";Initial Catalog=" + _database + ";User ID=" + _username + ";Password=" + _password;
-            sql = "insert into TestRuns (Date,Tester,TestCaseID,Notes,Issue,Status,EnvironmentID) Values (\'" + date + "\',\'" + tester + "\',(select MAX(TestCaseID) from TestCases),\'" + notes + "\',\'" + issue + "\',\'" + status + "\',(select MAX(EnvironmentID) from DeviceUnderTests));";
+            connectionString = "Data Source=" + _server + ";Initial Catalog=" + _database + ";User ID=" + _username +
+                               ";Password=" + _password;
+            sql = "insert into TestRuns (Date,Tester,TestCaseID,Notes,Issue,Status,EnvironmentID) Values (\'" + date +
+                  "\',\'" + tester + "\',(select MAX(TestCaseID) from TestCases),\'" + notes + "\',\'" + issue +
+                  "\',\'" + status + "\',(select MAX(EnvironmentID) from DeviceUnderTests));";
 
             connection = new SqlConnection(connectionString);
-            try
-            {
-                connection.Open();
-                command = new SqlCommand(sql, connection);
-                command.ExecuteNonQuery();
-                command.Dispose();
-                connection.Close();
-                Console.WriteLine("Query executed successfully");
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Query execution failed");
-            }
+
+            connection.Open();
+            command = new SqlCommand(sql, connection);
+            command.ExecuteNonQuery();
+            command.Dispose();
+            connection.Close();
+            Console.WriteLine("Query executed successfully");
         }
 
         /// <summary>
@@ -221,23 +198,19 @@ namespace Sensit.TestSDK.Database
             SqlCommand command;
             string sql = null;
 
-            connectionString = "Data Source=" + _server + ";Initial Catalog=" + _database + ";User ID=" + _username + ";Password=" + _password;
-            sql = "insert into DeviceComponents(Name,Version,EnvironmentID) Values ('" + name + "','" + version + "',(select MAX(EnvironmentID) from DeviceUnderTests));";
+            connectionString = "Data Source=" + _server + ";Initial Catalog=" + _database + ";User ID=" + _username +
+                               ";Password=" + _password;
+            sql = "insert into DeviceComponents(Name,Version,EnvironmentID) Values ('" + name + "','" + version +
+                  "',(select MAX(EnvironmentID) from DeviceUnderTests));";
 
             connection = new SqlConnection(connectionString);
-            try
-            {
-                connection.Open();
-                command = new SqlCommand(sql, connection);
-                command.ExecuteNonQuery();
-                command.Dispose();
-                connection.Close();
-                Console.WriteLine("Query executed successfully");
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Query execution failed");
-            }
+
+            connection.Open();
+            command = new SqlCommand(sql, connection);
+            command.ExecuteNonQuery();
+            command.Dispose();
+            connection.Close();
+            Console.WriteLine("Query executed successfully");
         }
 
         /// <summary>
@@ -252,23 +225,19 @@ namespace Sensit.TestSDK.Database
             SqlCommand command;
             string sql = null;
 
-            connectionString = "Data Source=" + _server + ";Initial Catalog=" + _database + ";User ID=" + _username + ";Password=" + _password;
-            sql = "insert into Equipment (Name,Quantity,TestSuiteID) Values (\'" + name + "\',\'" + quantity + "\',(select MAX(TestSuiteID) from TestSuites));";
+            connectionString = "Data Source=" + _server + ";Initial Catalog=" + _database + ";User ID=" + _username +
+                               ";Password=" + _password;
+            sql = "insert into Equipment (Name,Quantity,TestSuiteID) Values (\'" + name + "\',\'" + quantity +
+                  "\',(select MAX(TestSuiteID) from TestSuites));";
 
             connection = new SqlConnection(connectionString);
-            try
-            {
-                connection.Open();
-                command = new SqlCommand(sql, connection);
-                command.ExecuteNonQuery();
-                command.Dispose();
-                connection.Close();
-                Console.WriteLine("Query executed successfully");
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Query execution failed");
-            }
+
+            connection.Open();
+            command = new SqlCommand(sql, connection);
+            command.ExecuteNonQuery();
+            command.Dispose();
+            connection.Close();
+            Console.WriteLine("Query executed successfully");
         }
 
         /// <summary>
@@ -283,23 +252,19 @@ namespace Sensit.TestSDK.Database
             SqlCommand command;
             string sql = null;
 
-            connectionString = "Data Source=" + _server + ";Initial Catalog=" + _database + ";User ID=" + _username + ";Password=" + _password;
-            sql = "insert into TestSteps (Step,ExpectedResult,TestCaseID,TestStepResultID) Values (\'" + step + "\',\'" + expectedResult + "\',(select MAX(TestCaseID) from TestCases),(select MAX(TestStepResultID) from TestStepResults));";
+            connectionString = "Data Source=" + _server + ";Initial Catalog=" + _database + ";User ID=" + _username +
+                               ";Password=" + _password;
+            sql = "insert into TestSteps (Step,ExpectedResult,TestCaseID,TestStepResultID) Values (\'" + step +
+                  "\',\'" + expectedResult +
+                  "\',(select MAX(TestCaseID) from TestCases),(select MAX(TestStepResultID) from TestStepResults));";
 
             connection = new SqlConnection(connectionString);
-            try
-            {
-                connection.Open();
-                command = new SqlCommand(sql, connection);
-                command.ExecuteNonQuery();
-                command.Dispose();
-                connection.Close();
-                Console.WriteLine("Query executed successfully");
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Query execution failed");
-            }
+            connection.Open();
+            command = new SqlCommand(sql, connection);
+            command.ExecuteNonQuery();
+            command.Dispose();
+            connection.Close();
+            Console.WriteLine("Query executed successfully");
         }
 
         /// <summary>
@@ -314,23 +279,18 @@ namespace Sensit.TestSDK.Database
             SqlCommand command;
             string sql = null;
 
-            connectionString = "Data Source=" + _server + ";Initial Catalog=" + _database + ";User ID=" + _username + ";Password=" + _password;
-            sql = "insert into TestStepResults (ActualResult,Status,TestRunID) Values (\'" + actualResult + "\',\'" + status + "\',(select MAX(TestRunID) from TestRuns));";
+            connectionString = "Data Source=" + _server + ";Initial Catalog=" + _database + ";User ID=" + _username +
+                               ";Password=" + _password;
+            sql = "insert into TestStepResults (ActualResult,Status,TestRunID) Values (\'" + actualResult + "\',\'" +
+                  status + "\',(select MAX(TestRunID) from TestRuns));";
 
             connection = new SqlConnection(connectionString);
-            try
-            {
-                connection.Open();
-                command = new SqlCommand(sql, connection);
-                command.ExecuteNonQuery();
-                command.Dispose();
-                connection.Close();
-                Console.WriteLine("Query executed successfully");
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Query execution failed");
-            }
+            connection.Open();
+            command = new SqlCommand(sql, connection);
+            command.ExecuteNonQuery();
+            command.Dispose();
+            connection.Close();
+            Console.WriteLine("Query executed successfully");
         }
 
         /// <summary>
@@ -348,149 +308,151 @@ namespace Sensit.TestSDK.Database
             SqlDataReader reader;
             string result = null;
 
-            connectionString = "Data Source=" + _server + ";Initial Catalog=" + _database + ";User ID=" + _username + ";Password=" + _password;
+            connectionString = "Data Source=" + _server + ";Initial Catalog=" + _database + ";User ID=" + _username +
+                               ";Password=" + _password;
             sql = query;
 
 
             cnn = new SqlConnection(connectionString);
-            try
+            cnn.Open();
+            cmd = new SqlCommand(sql, cnn);
+            reader = cmd.ExecuteReader();
+            ArrayList objs = new ArrayList();
+
+            switch (table)
             {
-                cnn.Open();
-                cmd = new SqlCommand(sql, cnn);
-                reader = cmd.ExecuteReader();
-                ArrayList objs = new ArrayList();
-
-                switch (table)
-                {
-                    case "Device Components":
-                        while (reader.Read())
+                case "Device Components":
+                    while (reader.Read())
+                    {
+                        objs.Add(new
                         {
-                            objs.Add(new
-                            {
-                                DeviceUnderTestID = reader["DeviceUnderTestID"],
-                                Name = reader["Name"],
-                                Version = reader["Version"],
-                                EnvironmentID = reader["EnvironmentID"]
-                            });
-                        }
-                        break;
+                            DeviceUnderTestID = reader["DeviceUnderTestID"],
+                            Name = reader["Name"],
+                            Version = reader["Version"],
+                            EnvironmentID = reader["EnvironmentID"]
+                        });
+                    }
 
-                    case "DeviceUnderTests":
-                        while (reader.Read())
+                    break;
+
+                case "DeviceUnderTests":
+                    while (reader.Read())
+                    {
+                        objs.Add(new
                         {
-                            objs.Add(new
-                            {
-                                EnvironmentID = reader["EnvironmentID"]
-                            });
-                        }
-                        break;
+                            EnvironmentID = reader["EnvironmentID"]
+                        });
+                    }
 
-                    case "Equipment":
-                        while (reader.Read())
+                    break;
+
+                case "Equipment":
+                    while (reader.Read())
+                    {
+                        objs.Add(new
                         {
-                            objs.Add(new
-                            {
-                                EquipmentID = reader["EquipmentID"],
-                                Name = reader["Name"],
-                                Quantity = reader["Quantity"],
-                                TestSuiteID = reader["TestSuiteID"]
-                            });
-                        }
-                        break;
+                            EquipmentID = reader["EquipmentID"],
+                            Name = reader["Name"],
+                            Quantity = reader["Quantity"],
+                            TestSuiteID = reader["TestSuiteID"]
+                        });
+                    }
 
-                    case "TestCases":
-                        while (reader.Read())
+                    break;
+
+                case "TestCases":
+                    while (reader.Read())
+                    {
+                        objs.Add(new
                         {
-                            objs.Add(new
-                            {
-                                TestCaseID = reader["TestCaseID"],
-                                Name = reader["Name"],
-                                Objective = reader["Objective"],
-                                Owner = reader["Owner"],
-                                EstimatedTime = reader["EstimatedTime"],
-                                TestSuiteID = reader["TestSuiteID"]
-                            });
-                        }
-                        break;
+                            TestCaseID = reader["TestCaseID"],
+                            Name = reader["Name"],
+                            Objective = reader["Objective"],
+                            Owner = reader["Owner"],
+                            EstimatedTime = reader["EstimatedTime"],
+                            TestSuiteID = reader["TestSuiteID"]
+                        });
+                    }
 
-                    case "TestRuns":
-                        while (reader.Read())
+                    break;
+
+                case "TestRuns":
+                    while (reader.Read())
+                    {
+                        objs.Add(new
                         {
-                            objs.Add(new
-                            {
-                                TestRunID = reader["TestRunID"],
-                                Date = reader["Date"],
-                                Tester = reader["Tester"],
-                                TestCaseID = reader["TestCaseID"],
-                                Notes = reader["Notes"],
-                                Issue = reader["Issue"],
-                                Status = reader["Status"],
-                                EnvironmentID = reader["EnvironmentID"]
-                            });
-                        }
-                        break;
+                            TestRunID = reader["TestRunID"],
+                            Date = reader["Date"],
+                            Tester = reader["Tester"],
+                            TestCaseID = reader["TestCaseID"],
+                            Notes = reader["Notes"],
+                            Issue = reader["Issue"],
+                            Status = reader["Status"],
+                            EnvironmentID = reader["EnvironmentID"]
+                        });
+                    }
 
-                    case "TestStepResults":
-                        while (reader.Read())
+                    break;
+
+                case "TestStepResults":
+                    while (reader.Read())
+                    {
+                        objs.Add(new
                         {
-                            objs.Add(new
-                            {
-                                TestStepResultID = reader["TestStepResultID"],
-                                ActualResult = reader["ActualResult"],
-                                Status = reader["Status"],
-                                TestRunID = reader["TestRunID"]
-                            });
-                        }
-                        break;
+                            TestStepResultID = reader["TestStepResultID"],
+                            ActualResult = reader["ActualResult"],
+                            Status = reader["Status"],
+                            TestRunID = reader["TestRunID"]
+                        });
+                    }
 
-                    case "TestSteps":
-                        while (reader.Read())
+                    break;
+
+                case "TestSteps":
+                    while (reader.Read())
+                    {
+                        objs.Add(new
                         {
-                            objs.Add(new
-                            {
-                                TestStepID = reader["TestStepID"],
-                                Step = reader["Step"],
-                                ExpectedResult = reader["ExpectedResult"],
-                                TestCaseID = reader["TestCaseID"],
-                                TestStepResultID = reader["TestStepResultID"]
-                            });
-                        }
-                        break;
+                            TestStepID = reader["TestStepID"],
+                            Step = reader["Step"],
+                            ExpectedResult = reader["ExpectedResult"],
+                            TestCaseID = reader["TestCaseID"],
+                            TestStepResultID = reader["TestStepResultID"]
+                        });
+                    }
 
-                    case "TestSuites":
-                        while (reader.Read())
+                    break;
+
+                case "TestSuites":
+                    while (reader.Read())
+                    {
+                        objs.Add(new
                         {
-                            objs.Add(new
-                            {
-                                TestSuiteID = reader["TestSuiteID"],
-                                Product = reader["Product"]
-                            });
-                        }
-                        break;
+                            TestSuiteID = reader["TestSuiteID"],
+                            Product = reader["Product"]
+                        });
+                    }
 
-                    case "ID":
-                        while (reader.Read())
+                    break;
+
+                case "ID":
+                    while (reader.Read())
+                    {
+                        objs.Add(new
                         {
-                            objs.Add(new
-                            {
-                                nameOfId = reader[nameOfId]
-                            });
-                        }
-                        break;
+                            nameOfId = reader[nameOfId]
+                        });
+                    }
 
-                }
+                    break;
 
-                cmd.Dispose();
-                cnn.Close();
-                return JsonConvert.SerializeObject(objs);
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Query execution failed");
-                return "Failed";
             }
 
+            cmd.Dispose();
+            cnn.Close();
+            return JsonConvert.SerializeObject(objs);
         }
+
 
         /// <summary>
         /// A modular query that will not return anything when called.  Used for queries such as update, insert, delete, patch
@@ -507,19 +469,13 @@ namespace Sensit.TestSDK.Database
             sql = query;
 
             connection = new SqlConnection(connectionString);
-            try
-            {
-                connection.Open();
-                command = new SqlCommand(sql, connection);
-                command.ExecuteNonQuery();
-                command.Dispose();
-                connection.Close();
-                Console.WriteLine("Query executed successfully");
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Query execution failed");
-            }
+
+            connection.Open();
+            command = new SqlCommand(sql, connection);
+            command.ExecuteNonQuery();
+            command.Dispose();
+            connection.Close();
+            Console.WriteLine("Query executed successfully");
         }
     }
 }
