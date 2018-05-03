@@ -242,7 +242,7 @@ namespace Sensit.TestSDK.Office.Excel
 			range.set_Value(value: values);
 		}
 
-		public T[,] ReadMultiCellValues<T>(int row, int column, int numRows, int numColumns)
+		public object[,] ReadMultiCellValues(int row, int column, int numRows, int numColumns)
 		{
 			// Check for invalid arguments.
 			ValidateCell(row, column);
@@ -254,7 +254,7 @@ namespace Sensit.TestSDK.Office.Excel
 			range = range.get_Resize(numRows, numColumns);
 
 			// Read the cells' values from the spreadsheet.
-			return (T[,])range.Value2;
+			return (object[,])range.Value2;
 		}
 
 		public void CreateChart(double left, double top, double width, double height,
