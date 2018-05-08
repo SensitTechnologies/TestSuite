@@ -18,10 +18,6 @@
       <End Role="TestCase" EntitySet="TestCases" />
       <End Role="TestStep" EntitySet="TestSteps" />
     </AssociationSet>
-    <AssociationSet Name="TestStepTestStepResult" Association="TestSTPTool.Store.TestStepTestStepResult">
-      <End Role="TestStep" EntitySet="TestSteps" />
-      <End Role="TestStepResult" EntitySet="TestStepResults" />
-    </AssociationSet>
     <AssociationSet Name="TestCaseTestRun" Association="TestSTPTool.Store.TestCaseTestRun">
       <End Role="TestCase" EntitySet="TestCases" />
       <End Role="TestRun" EntitySet="TestRuns" />
@@ -66,7 +62,7 @@
     <Property Name="Step" Type="nvarchar(max)" Nullable="false" />
     <Property Name="ExpectedResult" Type="nvarchar(max)" Nullable="true" />
     <Property Name="TestCaseID" Type="int" Nullable="false" />
-    <Property Name="TestStepResult_TestStepResultID" Type="int" Nullable="false" />
+    <Property Name="Sequence" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="TestStepResults">
     <Key>
@@ -76,6 +72,7 @@
     <Property Name="ActualResult" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Status" Type="nvarchar(max)" Nullable="true" />
     <Property Name="TestRunID" Type="int" Nullable="false" />
+    <Property Name="TestStepID" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="TestRuns">
     <Key>
@@ -130,18 +127,6 @@
       </Principal>
       <Dependent Role="TestStep">
         <PropertyRef Name="TestCaseID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="TestStepTestStepResult">
-    <End Role="TestStep" Type="TestSTPTool.Store.TestSteps" Multiplicity="*" />
-    <End Role="TestStepResult" Type="TestSTPTool.Store.TestStepResults" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="TestStepResult">
-        <PropertyRef Name="TestStepResultID" />
-      </Principal>
-      <Dependent Role="TestStep">
-        <PropertyRef Name="TestStepResult_TestStepResultID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -230,10 +215,6 @@
             <End Role="TestCase" EntitySet="TestCases" />
             <End Role="TestStep" EntitySet="TestSteps" />
           </AssociationSet>
-          <AssociationSet Name="TestStepTestStepResult" Association="TestSTPTool.TestStepTestStepResult">
-            <End Role="TestStep" EntitySet="TestSteps" />
-            <End Role="TestStepResult" EntitySet="TestStepResults" />
-          </AssociationSet>
           <AssociationSet Name="TestCaseTestRun" Association="TestSTPTool.TestCaseTestRun">
             <End Role="TestCase" EntitySet="TestCases" />
             <End Role="TestRun" EntitySet="TestRuns" />
@@ -286,7 +267,7 @@
           <Property Name="ExpectedResult" Type="String" Nullable="true" />
           <NavigationProperty Name="TestCase" Relationship="TestSTPTool.TestCaseTestStep" FromRole="TestStep" ToRole="TestCase" />
           <Property Name="TestCaseID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="TestStepResult" Relationship="TestSTPTool.TestStepTestStepResult" FromRole="TestStep" ToRole="TestStepResult" />
+          <Property Name="Sequence" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="TestStepResult">
           <Key>
@@ -295,9 +276,9 @@
           <Property Name="TestStepResultID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ActualResult" Nullable="true" Type="String" />
           <Property Name="Status" Type="String" Nullable="true" />
-          <NavigationProperty Name="TestStep" Relationship="TestSTPTool.TestStepTestStepResult" FromRole="TestStepResult" ToRole="TestStep" />
           <NavigationProperty Name="TestRun" Relationship="TestSTPTool.TestRunTestStepResult" FromRole="TestStepResult" ToRole="TestRun" />
           <Property Name="TestRunID" Type="Int32" Nullable="false" />
+          <Property Name="TestStepID" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="TestRun">
           <Key>
@@ -325,10 +306,6 @@
               <PropertyRef Name="TestCaseID" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>
-        <Association Name="TestStepTestStepResult">
-          <End Type="TestSTPTool.TestStep" Role="TestStep" Multiplicity="1" />
-          <End Type="TestSTPTool.TestStepResult" Role="TestStepResult" Multiplicity="1" />
         </Association>
         <Association Name="TestCaseTestRun">
           <End Type="TestSTPTool.TestCase" Role="TestCase" Multiplicity="1" />
@@ -456,6 +433,7 @@
           <ScalarProperty Name="Step" ColumnName="Step" />
           <ScalarProperty Name="ExpectedResult" ColumnName="ExpectedResult" />
           <ScalarProperty Name="TestCaseID" ColumnName="TestCaseID" />
+          <ScalarProperty Name="Sequence" ColumnName="Sequence" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -466,6 +444,7 @@
           <ScalarProperty Name="ActualResult" ColumnName="ActualResult" />
           <ScalarProperty Name="Status" ColumnName="Status" />
           <ScalarProperty Name="TestRunID" ColumnName="TestRunID" />
+          <ScalarProperty Name="TestStepID" ColumnName="TestStepID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -517,14 +496,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="TestStepTestStepResult" TypeName="TestSTPTool.TestStepTestStepResult" StoreEntitySet="TestSteps">
-      <EndProperty Name="TestStepResult">
-        <ScalarProperty Name="TestStepResultID" ColumnName="TestStepResult_TestStepResultID" />
-      </EndProperty>
-      <EndProperty Name="TestStep">
-        <ScalarProperty Name="TestStepID" ColumnName="TestStepID" />
-      </EndProperty>
-    </AssociationSetMapping>
     <AssociationSetMapping Name="TestRunEnvironment" TypeName="TestSTPTool.TestRunEnvironment" StoreEntitySet="TestRuns">
       <EndProperty Name="Environment">
         <ScalarProperty Name="EnvironmentID" ColumnName="Environment_EnvironmentID" />

@@ -254,9 +254,9 @@ namespace Sensit.TestSDK.Database
 
             connectionString = "Data Source=" + _server + ";Initial Catalog=" + _database + ";User ID=" + _username +
                                ";Password=" + _password;
-            sql = "insert into TestSteps (Step,ExpectedResult,TestCaseID,TestStepResultID) Values (\'" + step +
+            sql = "insert into TestSteps (Step,ExpectedResult,TestCaseID) Values (\'" + step +
                   "\',\'" + expectedResult +
-                  "\',(select MAX(TestCaseID) from TestCases),(select MAX(TestStepResultID) from TestStepResults));";
+                  "\',(select MAX(TestCaseID) from TestCases));";
 
             connection = new SqlConnection(connectionString);
             connection.Open();
@@ -416,8 +416,7 @@ namespace Sensit.TestSDK.Database
                             TestStepID = reader["TestStepID"],
                             Step = reader["Step"],
                             ExpectedResult = reader["ExpectedResult"],
-                            TestCaseID = reader["TestCaseID"],
-                            TestStepResultID = reader["TestStepResultID"]
+                            TestCaseID = reader["TestCaseID"]
                         });
                     }
 

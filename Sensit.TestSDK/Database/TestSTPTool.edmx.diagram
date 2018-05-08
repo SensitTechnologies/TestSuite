@@ -4,13 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="174aa9754d2f4f32b400e34749502859" Name="Diagram1" ZoomLevel="97" >
+      <Diagram DiagramId="174aa9754d2f4f32b400e34749502859" Name="Diagram1" ZoomLevel="110" ShowGrid="true" >
         <EntityTypeShape EntityType="TestSTPTool.TestCase" Width="1.5" PointX="5.875" PointY="3.625" />
         <EntityTypeShape EntityType="TestSTPTool.TestStep" Width="1.5" PointX="5.875" PointY="7.5" />
         <EntityTypeShape EntityType="TestSTPTool.TestStepResult" Width="1.75" PointX="9" PointY="7.625" />
         <EntityTypeShape EntityType="TestSTPTool.TestRun" Width="1.75" PointX="9" PointY="3.625" />
         <AssociationConnector Association="TestSTPTool.TestCaseTestStep" />
-        <AssociationConnector Association="TestSTPTool.TestStepTestStepResult" />
         <AssociationConnector Association="TestSTPTool.TestCaseTestRun" />
         <AssociationConnector Association="TestSTPTool.TestRunTestStepResult" />
         <EntityTypeShape EntityType="TestSTPTool.TestSuite" Width="1.5" PointX="2.625" PointY="4.125" />

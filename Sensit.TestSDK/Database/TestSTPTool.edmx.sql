@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/27/2018 15:08:31
+-- Date Created: 05/03/2018 14:53:27
 -- Generated from EDMX file: C:\Users\mclemens\SVN-Projects\STP-Tool\trunk\TestSDK\Database\TestSTPTool.edmx
 -- --------------------------------------------------
 
@@ -19,9 +19,6 @@ GO
 
 IF OBJECT_ID(N'[dbo].[FK_TestCaseTestStep]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[TestSteps] DROP CONSTRAINT [FK_TestCaseTestStep];
-GO
-IF OBJECT_ID(N'[dbo].[FK_TestStepTestStepResult]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[TestSteps] DROP CONSTRAINT [FK_TestStepTestStepResult];
 GO
 IF OBJECT_ID(N'[dbo].[FK_TestCaseTestRun]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[TestRuns] DROP CONSTRAINT [FK_TestCaseTestRun];
@@ -92,7 +89,7 @@ CREATE TABLE [dbo].[TestSteps] (
     [Step] nvarchar(max)  NOT NULL,
     [ExpectedResult] nvarchar(max)  NULL,
     [TestCaseID] int  NOT NULL,
-    [TestStepResult_TestStepResultID] int  NOT NULL
+    [Sequence] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -101,7 +98,8 @@ CREATE TABLE [dbo].[TestStepResults] (
     [TestStepResultID] int IDENTITY(1,1) NOT NULL,
     [ActualResult] nvarchar(max)  NULL,
     [Status] nvarchar(max)  NULL,
-    [TestRunID] int  NOT NULL
+    [TestRunID] int  NOT NULL,
+    [TestStepID] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -218,21 +216,6 @@ GO
 CREATE INDEX [IX_FK_TestCaseTestStep]
 ON [dbo].[TestSteps]
     ([TestCaseID]);
-GO
-
--- Creating foreign key on [TestStepResult_TestStepResultID] in table 'TestSteps'
-ALTER TABLE [dbo].[TestSteps]
-ADD CONSTRAINT [FK_TestStepTestStepResult]
-    FOREIGN KEY ([TestStepResult_TestStepResultID])
-    REFERENCES [dbo].[TestStepResults]
-        ([TestStepResultID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_TestStepTestStepResult'
-CREATE INDEX [IX_FK_TestStepTestStepResult]
-ON [dbo].[TestSteps]
-    ([TestStepResult_TestStepResultID]);
 GO
 
 -- Creating foreign key on [TestCaseID] in table 'TestRuns'
