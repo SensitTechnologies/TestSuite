@@ -8,20 +8,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Sensit.TestSDK.Forms;
 using Sensit.TestSDK.Controls;
 using Sensit.TestSDK.Database;
-using System.Windows.Forms.VisualStyles;
 using Newtonsoft.Json.Linq;
 
 namespace Sensit.TestSDK.Forms
 {
-    public partial class FormManualTest : Form
+    public partial class FormTestCase : Form
     {
         public SqlServer Database;
         public Int16 Counter = 1;
         public Int16 TestCaseId;
 
-        public FormManualTest(String server, String database, String username, String password, Int16 testCaseId)
+        public FormTestCase(String server, String database, String username, String password, Int16 testCaseId)
         {
             InitializeComponent();
             Database = new SqlServer();

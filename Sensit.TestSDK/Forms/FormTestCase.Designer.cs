@@ -1,6 +1,6 @@
 ﻿namespace Sensit.TestSDK.Forms
 {
-    partial class FormManualTest
+    partial class FormTestCase
     {
         /// <summary>
         /// Required designer variable.
