@@ -12,50 +12,50 @@ using Sensit.TestSDK.Forms;
 using Sensit.TestSDK.Controls;
 using Sensit.TestSDK.Database;
 using Newtonsoft.Json.Linq;
+/// <summary>
+/// Form Popup that will render when a test case has been pressed
+/// </summary>
+/// <remarks>This code has undergone many revisions in order to iterate properly with each row.  Here's my SO question that prompted the code shown below: https://stackoverflow.com/questions/50221721/creating-dynamic-controller-names-in-c-sharp-with-winforms-for-tablelayoutpanel </remarks>
 
 namespace Sensit.TestSDK.Forms
 {
     public partial class FormTestCase : Form
     {
-        public SqlServer Database;
-        public Int16 Counter = 1;
-        public Int16 TestCaseId;
+        public Int16 Counter = 1;  // Counter used for incrementing the step count (Should use Sequence attribute, but for testing purposes a simple Counter was being used)
+        public JArray TestSteps;   // JArray that will become the JArray that is passed to this Form
 
-        public FormTestCase(String server, String database, String username, String password, Int16 testCaseId)
+        public FormTestCase(JArray testSteps)
         {
             InitializeComponent();
-            Database = new SqlServer();
-            Database.Server = server;
-            Database.Database = database;
-            Database.Username = username;
-            Database.Password = password;
-            Database.CheckConnection();
-            TestCaseId = 5;
+            TestSteps = testSteps;
+
+            // Iterate through each element in the JArray and create a new row for each step
+            foreach (var item in TestSteps)
+            {
+                // Creates new user custom step control instance
+                UserCustomStep step = new UserCustomStep("Step: " + Counter + " " + (String)item["Step"]);
+
+                // Adds CustomStep to first column (creates the entire first row)
+                tableLayoutTest.Controls.Add(step, 0, Counter);
+
+                // Increment couter to add subsequent steps underneath the previous ones.
+                Counter++;
+            }
         }
 
+        // Used for testing purposes, please get rid of this element entirely
         private void addRowToolStripMenuItem_Click(object sender, EventArgs anotherEvent)
         {
 
-            String result = Database.ModularQueryWithResult("select * from TestSteps where TestCaseID = " + TestCaseId + " order by Sequence", "TestSteps", "");
-            var jo = JArray.Parse(result);
-            Counter = 1;
-            foreach (var item in jo)
-            {
-                UserCustomStep step = new UserCustomStep(Counter, "Step: " + Counter + " " + (String) item["Step"] );  // Creates new user custom step control instance
-
-                tableLayoutTest.Controls.Add(step, 0, Counter);  // Adds CustomStep to first column (creates the entire first row)
-
-                Counter++;  // Increment couter to add subsequent steps underneath the previous ones.
-
-            }
-
         }
 
+        // Needs to be deleted
         private void FormManualTest_Load(object sender, EventArgs e)
         {
 
         }
 
+        // Will have to send data back to the database and store the results and updates made from creating the test run
         private void saveAndCloseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Console.WriteLine("Saved Button was pressed.");
