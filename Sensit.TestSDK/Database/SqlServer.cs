@@ -272,7 +272,7 @@ namespace Sensit.TestSDK.Database
         /// </summary>
         /// <param name="actualResult">Actual Result</param>
         /// <param name="status">Status of step</param>
-        public void InsertIntoTestStepResults(String actualResult, String status)
+        public void InsertIntoTestStepResults(String actualResult, String status, String stepID)
         {
             string connectionString = null;
             SqlConnection connection;
@@ -281,8 +281,8 @@ namespace Sensit.TestSDK.Database
 
             connectionString = "Data Source=" + _server + ";Initial Catalog=" + _database + ";User ID=" + _username +
                                ";Password=" + _password;
-            sql = "insert into TestStepResults (ActualResult,Status,TestRunID) Values (\'" + actualResult + "\',\'" +
-                  status + "\',(select MAX(TestRunID) from TestRuns));";
+            sql = "insert into TestStepResults (ActualResult,Status,TestRunID,TestStepID) Values (\'" + actualResult + "\',\'" +
+                  status + "\',(select MAX(TestRunID) from TestRuns),\'" + stepID + "\');";
 
             connection = new SqlConnection(connectionString);
             connection.Open();
