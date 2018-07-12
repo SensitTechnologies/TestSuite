@@ -270,6 +270,7 @@ namespace Sensit.TestSDK.Office.Excel
 			chart?.SetSourceData(range);
 
 			// Set the chart's properties.
+			// TODO:  Figure out how to check for null in the next line.
 			chart.ChartType = XlChartType.xlXYScatter;
 			chart?.ChartWizard(Source: range, Title: title, CategoryTitle: xAxisLabel, ValueTitle: yAxisLabel);
 		}

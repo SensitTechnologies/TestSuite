@@ -104,7 +104,7 @@ namespace Sensit.TestSDK.Database.Tests
         public void InsertIntoTestStepResults()
         {
             SqlServer database = new SqlServer();
-            database.InsertIntoTestStepResults("New Actual Result", "Status");
+            database.InsertIntoTestStepResults("New Actual Result", "Status", "New ID");
             String result = database.ModularQueryWithResult("select * from TestStepResults where ActualResult = 'New Actual Result'", "TestStepResults", "");
             var jo = JArray.Parse(result);
             String finalResult = (String)jo[0]["ActualResult"];
