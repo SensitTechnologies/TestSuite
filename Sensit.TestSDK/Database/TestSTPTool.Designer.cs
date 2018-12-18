@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\mclemens\SVN-Projects\STP-Tool\trunk\TestSDK\Database\TestSTPTool.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\ajohnson\SVN_Projects\STP-Tool\TestSDK\Database\TestSTPTool.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

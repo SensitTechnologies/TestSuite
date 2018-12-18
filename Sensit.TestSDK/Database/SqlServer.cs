@@ -20,10 +20,10 @@ namespace Sensit.TestSDK.Database
     public class SqlServer
     {
 
-        private string _server; // Database Server instance
-        private string _database; // Name of Database that you're connecting to
-        private string _username; // Username
-        private string _password; // Password
+        private string _server;		// Database Server instance
+        private string _database;	// Name of Database that you're connecting to
+        private string _username;	// Username to connect to database
+        private string _password;	// Password to connect to database
 
         /// <summary>
         /// Name of Server instance for the Database
