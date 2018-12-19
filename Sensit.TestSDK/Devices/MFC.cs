@@ -1,5 +1,5 @@
-﻿using System.IO.Ports;                  // serial port access
-using System.Threading;
+﻿using System;
+using System.IO.Ports;                  // serial port access
 
 namespace Sensit.TestSDK.Devices
 {
@@ -24,7 +24,32 @@ namespace Sensit.TestSDK.Devices
 			Argon = 1,
 			Methane = 2,
 			CarbonMonoxide = 3,
-			// TODO:  fill in the rest of the gasses
+			CarbonDioxide = 4,
+			Ethane = 5,
+			Hydrogen = 6,
+			Helium = 7,
+			Nitrogen = 8,
+			NitrousOxide = 9,
+			Neon = 10,
+			Oxygen = 11,
+			Propane = 12,
+			normalButane = 13,
+			Acetylene = 14,
+			Ethylene = 15,
+			isoButane = 16,
+			Krypton = 17,
+			Xenon = 18,
+			SulfurHexafluoride = 19,
+			C25 = 20,          // 75% Argon / 25% CO2
+			C10 = 21,          // 90% Argon / 10% CO2
+			C8 = 22,           // 92% Argon / 8% CO2
+			C2 = 23,           // 98% Argon / 2% CO2
+			C75 = 24,          // 75% CO2 / 25% Argon
+			HE75 = 25,         // 75% Argon / 25% Helium
+			HE25 = 26,         // 75% Helium / 25% Argon
+			A1025 = 27,         // 90% Helium / 7.5% Argon / 2.5% CO2 (Praxair - Helistar® A1025)
+			Star29 = 28,        // 90% Argon / 8% CO2 / 2% Oxygen (Praxair - Stargon® CS)
+			P5 = 29,           // 95% Argon / 5% Methane
 		}
 
 		// port used to communicate with mass flow controller
@@ -47,7 +72,7 @@ namespace Sensit.TestSDK.Devices
 			{
 				_address = value;
 
-				// "@=A" sets address = A (and puts device into polling mode).
+				// "*@=A" sets address = A (and puts device into polling mode).
 				_serialPort.WriteLine(Command.SetAddress + _address);
 			}
 		}
@@ -63,7 +88,9 @@ namespace Sensit.TestSDK.Devices
 			_serialPort.Handshake = Handshake.None;
 			_serialPort.ReadTimeout = 500;
 			_serialPort.WriteTimeout = 500;
-			_serialPort.NewLine = "\n";
+
+			// Messages are terminated with a carriage return.
+			_serialPort.NewLine = "\r";
 
 			// Assign a method to handle reading data from the serial port.
 			//_serialPort.DataReceived += new SerialDataReceivedEventHandler(_serialPort_DataReceived);
@@ -77,15 +104,14 @@ namespace Sensit.TestSDK.Devices
 
 		public void SetStreaming()
 		{
-			// "@=@" sets the device into streaming mode.
+			// "*@=@" sets the device into streaming mode.
 			_serialPort.WriteLine(Command.SetAddress + '@');
 		}
 
 		public void SetSetpoint(float setpoint)
 		{
 			// "AS4.54" = Set setpoint to 4.54.
-			//_serialPort.WriteLine(_address + Command.SetSetpoint + setpoint.ToString());
-			_serialPort.Write("AS0.0" + _serialPort.NewLine);
+			_serialPort.WriteLine(_address + Command.SetSetpoint + setpoint.ToString());
 		}
 
 		public void SetGas(GasSelection gas)
@@ -93,20 +119,33 @@ namespace Sensit.TestSDK.Devices
 			_serialPort.WriteLine(_address + Command.GasSelect + gas);
 		}
 
-		public string Read()
+		public void Read(out string pressure, out string temperature,
+			out string volumetricFlow, out string massFlow,
+			out string setpoint, out string gas)
 		{
 			// Read (when in polling mode) by sending the device address.
 			_serialPort.WriteLine(_address.ToString());
 
-			// Pause a bit.
-			Thread.Sleep(500);
+			// Read from the serial port (until we get a \r character).
+			string message = _serialPort.ReadLine();
 
-			char[] buffer = new char[10];
+			// Split the string using spaces to separate each word.
+			char[] separators = new char[] { ' ' };
+			string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
 
-			// Read from the serial port.
-			_serialPort.Read(buffer, 0, 10);
+			// Check the address.
+			if (string.Compare(words[0], _address.ToString()) != 0)
+			{
+				throw new Exception("Unexpected device ID");
+			}
 
-			return buffer.ToString();
+			// Figure out which is which.
+			pressure = words[1];
+			temperature = words[2];
+			volumetricFlow = words[3];
+			massFlow = words[4];
+			setpoint = words[5];
+			gas = words[6];
 		}
 
 		public void Close()
