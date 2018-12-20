@@ -38,32 +38,32 @@ namespace Sensit.TestSDK.Devices
 		public enum GasSelection
 		{
 			Air = 0,
-			Argon = 1,
-			Methane = 2,
-			CarbonMonoxide = 3,
-			CarbonDioxide = 4,
-			Ethane = 5,
-			Hydrogen = 6,
-			Helium = 7,
-			Nitrogen = 8,
-			NitrousOxide = 9,
-			Neon = 10,
-			Oxygen = 11,
-			Propane = 12,
-			normalButane = 13,
-			Acetylene = 14,
-			Ethylene = 15,
-			isoButane = 16,
-			Krypton = 17,
-			Xenon = 18,
-			SulfurHexafluoride = 19,
+			Ar = 1,						// Argon
+			CH4 = 2,					// Methane
+			CO = 3,						// Carbon Monoxide
+			CO2 = 4,					// Carbon Dioxide
+			C2H6 = 5,					// Ethane
+			H2 = 6,						// Hydrogen
+			He = 7,						// Helium
+			N2 = 8,						// Nitrogen
+			N2O = 9,					// Nitrous Oxide
+			Ne = 10,					// Neon
+			O2 = 11,					// Oxygen
+			C3H8 = 12,					// Propane
+			nC4H10 = 13,				// normal-Butane
+			C2H2 = 14,					// Acetylene
+			C2H4 = 15,					// Ethylene
+			iC4H10 = 16,				// isoButane (code in manual has typo)
+			Kr = 17,					// Krypton
+			Xe = 18,					// Xenon
+			SF6 = 19,					// Sulfur Hexafluoride
 			C25 = 20,					// 75% Argon / 25% CO2
 			C10 = 21,					// 90% Argon / 10% CO2
 			C8 = 22,					// 92% Argon / 8% CO2
 			C2 = 23,					// 98% Argon / 2% CO2
 			C75 = 24,					// 75% CO2 / 25% Argon
-			HE75 = 25,					// 75% Argon / 25% Helium
-			HE25 = 26,					// 75% Helium / 25% Argon
+			He25 = 25,					// 75% Argon / 25% Helium (code in manual has typo)
+			He75 = 26,					// 75% Helium / 25% Argon (code in manual has typo)
 			A1025 = 27,					// 90% Helium / 7.5% Argon / 2.5% CO2 (Praxair - Helistar® A1025)
 			Star29 = 28,				// 90% Argon / 8% CO2 / 2% Oxygen (Praxair - Stargon® CS)
 			P5 = 29,					// 95% Argon / 5% Methane
@@ -121,9 +121,6 @@ namespace Sensit.TestSDK.Devices
 			// Messages are terminated with a carriage return.
 			_serialPort.NewLine = "\r";
 
-			// Assign a method to handle reading data from the serial port.
-			//_serialPort.DataReceived += new SerialDataReceivedEventHandler(_serialPort_DataReceived);
-
 			// Open the serial port.
 			_serialPort.Open();
 
@@ -160,18 +157,23 @@ namespace Sensit.TestSDK.Devices
 		/// <param name="gas">enumerated gas type</param>
 		public void SetGas(GasSelection gas)
 		{
+			string msg = _address + Command.GasSelect + (int)gas;
+
 			// "A$$12" selects propane gas for device A.
-			_serialPort.WriteLine(_address + Command.GasSelect + gas.ToString());
+			_serialPort.WriteLine(msg);
 
 			// Read the response from the serial port (until we get a \r character).
 			string message = _serialPort.ReadLine();
 
 			// Split the string using spaces to separate each word.
+			// Remove any "-" characters as they couldn't be used in enumeration names.
 			char[] separators = new char[] { ' ' };
 			string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+			string gasResult = words[6].Replace("-", String.Empty);
 
 			// Check the gas selection.
-			if (string.Compare(words[6], nameof(gas)) != 0)
+			string gasRequest = Enum.GetName(typeof(GasSelection), gas);
+			if (string.Compare(gasResult, gasRequest) != 0)
 			{
 				throw new Exception("Could not write gas selection to mass flow controller.");
 			}
@@ -203,7 +205,7 @@ namespace Sensit.TestSDK.Devices
 			// Check the address.
 			if (string.Compare(words[0], _address.ToString()) != 0)
 			{
-				throw new Exception("Unexpected device ID");
+				throw new Exception("Incorrect device ID");
 			}
 
 			// Figure out which is which.
@@ -212,7 +214,7 @@ namespace Sensit.TestSDK.Devices
 			volumetricFlow = words[3];
 			massFlow = words[4];
 			setpoint = words[5];
-			gas = words[6];
+			gas = words[6].Replace("-", String.Empty);
 		}
 
 		/// <summary>
