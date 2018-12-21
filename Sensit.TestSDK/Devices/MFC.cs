@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sensit.TestSDK.Interfaces;
+using System;
 using System.IO.Ports;                  // serial port access
 
 namespace Sensit.TestSDK.Devices
@@ -10,7 +11,7 @@ namespace Sensit.TestSDK.Devices
 	/// Product website:
 	/// https://www.coleparmer.com/p/cole-parmer-mass-flow-controllers-for-gas/43456
 	/// </remarks>
-	public class MFC
+	public class MFC : IControlDevice
 	{
 		// port used to communicate with mass flow controller
 		private SerialPort _serialPort = new SerialPort();
@@ -149,6 +150,25 @@ namespace Sensit.TestSDK.Devices
 			{
 				throw new Exception("Could not write setpoint to mass flow controller.");
 			}
+		}
+
+		/// <summary>
+		/// Read the volumetric flow setpoint from the mass flow controller.
+		/// </summary>
+		/// <returns>active setpoint [SCCM]</returns>
+		public float GetSetpoint()
+		{
+			// Read (when in polling mode) by sending the device address.
+			_serialPort.WriteLine(_address.ToString());
+
+			// Read from the serial port (until we get a \r character).
+			string message = _serialPort.ReadLine();
+
+			// Split the string using spaces to separate each word.
+			char[] separators = new char[] { ' ' };
+			string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+
+			return Convert.ToSingle(words[5]);
 		}
 
 		/// <summary>

@@ -53,8 +53,7 @@ namespace Sensit.App.MassFlow
 		private void radioButtonOpen_CheckedChanged(object sender, EventArgs e)
 		{
 			// Do stuff only if the radio button is checked.
-			// (This prevents weird user behavior.  Try removing this line
-			// in both radioButton methods, then run the app and click the buttons.)
+			// (Otherwise the actions will run twice.)
 			if (((RadioButton)sender).Checked)
 			{
 				try
