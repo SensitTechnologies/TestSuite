@@ -19,16 +19,40 @@ namespace Sensit.TestSDK.Devices
 	/// </remarks>
 	public class Keysight_34972A
 	{
-		// TODO:  Use this address:  
 		// IVI VISA object used to communicate with the datalogger
 		private ResourceManager _resourceManager = new ResourceManager();
 
 		// VISA SCPI command formatter
 		private FormattedIO488 _io = new FormattedIO488();
 
+		private static class SCPICommand
+		{
+			// Universal Commands
+			public const string Clear = "*CLS";
+			public const string EventStandardEnable = "*ESE";
+			public const string EventStandardRegister = "*ESR";
+			public const string Identification = "*IDN";
+			public const string OperationComplete = "*OPC";
+			public const string PowerOnStatusClear = "*PSC";
+
+			// Top level
+			public const string Abort = "ABOR";
+			public const string Calculate = "CALC";
+			public const string Calibrate = "CAL";
+			public const string Configure = "CONF";
+			public const string Data = "DATA";
+			public const string Diagnostic = "DIAG";
+			public const string Display = "DISP";
+		}
+
 		public void Open()
 		{
 			_io.IO = (IMessage)_resourceManager.Open("USB0::0x0957::0x2007::MY49018108::0::INSTR");
+		}
+
+		public void Close()
+		{
+			_io.IO.Close();
 		}
 	}
 }
