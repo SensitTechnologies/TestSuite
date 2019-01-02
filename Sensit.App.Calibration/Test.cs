@@ -9,17 +9,21 @@ namespace Sensit.App.Calibration
 {
 	public class Test
 	{
-		private IControlDevice controller;
-		private IReferenceDevice reference;
+		private bool _running = false;
+
+		public bool Running()
+		{
+			return _running;
+		}
 
 		public void Start()
 		{
-
+			_running = true;
 		}
 
 		public void Stop()
 		{
-
+			_running = false;
 		}
 	}
 }

@@ -162,6 +162,7 @@
     <Compile Include="Forms\FormTestCase.Designer.cs">
       <DependentUpon>FormTestCase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\InputDialog.cs" />
     <Compile Include="Interfaces\IControlDevice.cs" />
     <Compile Include="Interfaces\IMassFlowController.cs" />
     <Compile Include="Interfaces\IReferenceDevice.cs" />

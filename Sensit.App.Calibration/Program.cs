@@ -29,7 +29,8 @@ namespace Sensit.App.Calibration
 				// Link the test and support devices to form actions.
 				Start = test.Start,
 				Stop = test.Stop,
-				Print = system.Print
+				Print = system.Print,
+				Running = test.Running
 			});
 		}
 	}
