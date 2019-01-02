@@ -32,7 +32,28 @@ namespace Sensit.TestSDK.Forms
 		/// <param name="e"></param>
 		private void buttonStart_Click(object sender, System.EventArgs e)
 		{
-			Start();
+			try
+			{
+				Start();
+
+				// Disable most of the controls.
+				comboBoxModel.Enabled = false;
+				comboBoxRange.Enabled = false;
+				comboBoxTest.Enabled = false;
+				checkBoxSelectAll.Enabled = false;
+				foreach (Control c in tableLayoutPanelDevicesUnderTest.Controls)
+				{
+					c.Enabled = false;
+				}
+
+				// Enable the "Stop" button and disable the "Start" button.
+				buttonStop.Enabled = true;
+				buttonStart.Enabled = false;
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message, "Error");
+			}
 		}
 
 		/// <summary>
@@ -42,44 +63,27 @@ namespace Sensit.TestSDK.Forms
 		/// <param name="e"></param>
 		private void buttonStop_Click(object sender, System.EventArgs e)
 		{
-			Stop();
-		}
-
-		/// <summary>
-		/// When "Select All" button is clicked, select all DUTS.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void buttonSelectAll_Click(object sender, System.EventArgs e)
-		{
-			// Look through each control.
-			foreach (Control c in tableLayoutPanelDevicesUnderTest.Controls)
+			try
 			{
-				// If it's a checkbox...
-				if (c is CheckBox cb)
+				Stop();
+
+				// Enable most of the controls.
+				comboBoxModel.Enabled = true;
+				comboBoxRange.Enabled = true;
+				comboBoxTest.Enabled = true;
+				checkBoxSelectAll.Enabled = true;
+				foreach (Control c in tableLayoutPanelDevicesUnderTest.Controls)
 				{
-					// Check it.
-					cb.Checked = true;
+					c.Enabled = true;
 				}
+
+				// Enable the "Start" button and disable the "Stop" button.
+				buttonStart.Enabled = true;
+				buttonStop.Enabled = false;
 			}
-		}
-
-		/// <summary>
-		/// When "Select None" button is clicked, deselect all DUTs.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void buttonSelectNone_Click(object sender, System.EventArgs e)
-		{
-			// Look through each control.
-			foreach (Control c in tableLayoutPanelDevicesUnderTest.Controls)
+			catch (Exception ex)
 			{
-				// If it's a checkbox...
-				if (c is CheckBox cb)
-				{
-					// Uncheck it.
-					cb.Checked = false;
-				}
+				MessageBox.Show(ex.Message, "Error");
 			}
 		}
 
@@ -90,7 +94,33 @@ namespace Sensit.TestSDK.Forms
 		/// <param name="e"></param>
 		private void buttonPrintLabels_Click(object sender, System.EventArgs e)
 		{
-			Print();
+			try
+			{
+				Print();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message, "Error");
+			}
+		}
+
+		/// <summary>
+		/// When "Select/deselect all" checkbox is clicked, select/deselect all DUTs.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void checkBoxSelectAll_CheckedChanged(object sender, EventArgs e)
+		{
+			// Look through each control.
+			foreach (Control c in tableLayoutPanelDevicesUnderTest.Controls)
+			{
+				// If it's a checkbox...
+				if (c is CheckBox cb)
+				{
+					// Make its state match the select all checkbox.
+					cb.Checked = ((CheckBox)sender).Checked;
+				}
+			}
 		}
 	}
 }

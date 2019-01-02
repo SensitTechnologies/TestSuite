@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.App.Calibration
 {
-	class Test
+	public class Test
 	{
+		private IControlDevice controller;
+		private IReferenceDevice reference;
+
 		public void Start()
 		{
 
