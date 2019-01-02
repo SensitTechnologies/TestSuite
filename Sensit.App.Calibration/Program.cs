@@ -30,7 +30,7 @@ namespace Sensit.App.Calibration
 				Start = test.Start,
 				Stop = test.Stop,
 				Print = system.Print,
-				Running = test.Running
+				Running = test.IsRunning
 			});
 		}
 	}

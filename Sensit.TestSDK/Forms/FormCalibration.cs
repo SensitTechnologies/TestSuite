@@ -10,6 +10,7 @@ namespace Sensit.TestSDK.Forms
 		public Action Pause;    // delegate that will run to pause a test
 		public Func<bool> Running;	// delegate to see if a test is running
 		public Action Print;    // deletate that will run when the "Print" button is clicked
+		public Action Options;  // delegate that will launch an "Options" form
 
 		private int _numDuts = 1;
 
@@ -21,34 +22,42 @@ namespace Sensit.TestSDK.Forms
 				_numDuts = value;
 
 				// Remove all DUT controls.
-				foreach (Control c in tableLayoutPanelDevicesUnderTest.Controls)
+				for (int i = 0; i < tableLayoutPanelDevicesUnderTest.ColumnCount; i++)
 				{
-					tableLayoutPanelDevicesUnderTest.Controls.Remove(c);
+					for (int j = 0; j < tableLayoutPanelDevicesUnderTest.RowCount; j++)
+					{
+						var control = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(i, j);
+						tableLayoutPanelDevicesUnderTest.Controls.Remove(control);
+					}
 				}
 
 				// Set how many rows there should be.
 				tableLayoutPanelDevicesUnderTest.RowCount = value;
 
 				// Create new DUT controls.
-				for (int i = 1; i < value; i++)
+				for (int i = 1; i <= value; i++)
 				{
 					CheckBox checkBox = new CheckBox();
 					checkBox.Name = "checkBoxDut" + i.ToString();
 					checkBox.Text = "DUT" + i.ToString();
 					checkBox.AutoSize = true;
-					tableLayoutPanelDevicesUnderTest.Controls.Add(checkBox, 0, i);
+					tableLayoutPanelDevicesUnderTest.Controls.Add(checkBox, 0, i - 1);
 
 					ComboBox comboBox = new ComboBox();
 					comboBox.Name = "comboBoxDut" + i.ToString();
-					tableLayoutPanelDevicesUnderTest.Controls.Add(comboBox, 1, i);
+					tableLayoutPanelDevicesUnderTest.Controls.Add(comboBox, 1, i - 1);
 
 					TextBox textBox = new TextBox();
 					textBox.Name = "textBoxDut" + i.ToString();
-					tableLayoutPanelDevicesUnderTest.Controls.Add(textBox, 2, i);
+					tableLayoutPanelDevicesUnderTest.Controls.Add(textBox, 2, i - 1);
 				}
 			}
 		}
 
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="duts"></param>
 		public FormCalibration(int duts = 1)
 		{
 			InitializeComponent();
@@ -202,11 +211,31 @@ namespace Sensit.TestSDK.Forms
 			}
 		}
 
+		/// <summary>
+		/// When Tools --> Options menu is clicked, run the Options actions.
+		/// </summary>
+		/// <remarks>
+		/// The application should use this action to launch an app-specific options dialog or form.
+		/// </remarks>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-
+			try
+			{
+				Options();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message, "Error");
+			}
 		}
 
+		/// <summary>
+		/// When Edit --> Number of DUTs is selected, prompt the user to select the number of DUTS.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void numberOfDUTsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			// Prompt user to enter desired number of DUTs (current value as default).
