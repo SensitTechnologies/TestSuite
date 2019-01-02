@@ -242,6 +242,17 @@ namespace Sensit.TestSDK.Office.Excel
 			range.set_Value(value: values);
 		}
 
+		/// <summary>
+		/// Read a set of data from the Excel sheet.
+		/// </summary>
+		/// <remarks>
+		/// See https://stackoverflow.com/questions/50143566/c-sharp-excel-read-to-multidimensional-array
+		/// </remarks>
+		/// <param name="row"></param>
+		/// <param name="column"></param>
+		/// <param name="numRows"></param>
+		/// <param name="numColumns"></param>
+		/// <returns></returns>
 		public object[,] ReadMultiCellValues(int row, int column, int numRows, int numColumns)
 		{
 			// Check for invalid arguments.
