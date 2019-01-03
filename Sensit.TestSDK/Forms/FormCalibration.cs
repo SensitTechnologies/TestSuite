@@ -5,12 +5,15 @@ namespace Sensit.TestSDK.Forms
 {
 	public partial class FormCalibration : Form
 	{
-		public Action Start;    // delegate that will run when the "Start" button is clicked
-		public Action Stop;     // delegate that will run when the "Stop" button is clicked
-		public Action Pause;    // delegate that will run to pause a test
-		public Func<bool> Running;	// delegate to see if a test is running
-		public Action Print;    // deletate that will run when the "Print" button is clicked
-		public Action Options;  // delegate that will launch an "Options" form
+		public Action TestStart;	// "Start" button action
+		public Action TestStop;		// "Stop" button action
+		public Action TestPause;	// action to pause a test
+		public Func<bool> TestBusy;	// method to check if a test is running
+		public Action Print;		// "Print" button action
+		public Action Options;      // action to launch an "Options" form
+
+		// allow the form to wait for tests to cancel/complete before closing application
+		private bool _closeAfterTest = false;
 
 		private int _numDuts = 1;
 
@@ -57,7 +60,7 @@ namespace Sensit.TestSDK.Forms
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="duts"></param>
+		/// <param name="duts">how many devices under test to provide controls for</param>
 		public FormCalibration(int duts = 1)
 		{
 			InitializeComponent();
@@ -65,6 +68,8 @@ namespace Sensit.TestSDK.Forms
 			// Set the amount of DUTs.
 			NumDuts = duts;
 		}
+
+		#region Private Methods
 
 		/// <summary>
 		/// When "Start" button is clicked, run the Start action.
@@ -75,7 +80,7 @@ namespace Sensit.TestSDK.Forms
 		{
 			try
 			{
-				Start();
+				TestStart();
 
 				// Disable most of the controls.
 				comboBoxModel.Enabled = false;
@@ -104,28 +109,7 @@ namespace Sensit.TestSDK.Forms
 		/// <param name="e"></param>
 		private void buttonStop_Click(object sender, System.EventArgs e)
 		{
-			try
-			{
-				Stop();
-
-				// Enable most of the controls.
-				comboBoxModel.Enabled = true;
-				comboBoxRange.Enabled = true;
-				comboBoxTest.Enabled = true;
-				checkBoxSelectAll.Enabled = true;
-				foreach (Control c in tableLayoutPanelDevicesUnderTest.Controls)
-				{
-					c.Enabled = true;
-				}
-
-				// Enable the "Start" button and disable the "Stop" button.
-				buttonStart.Enabled = true;
-				buttonStop.Enabled = false;
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show(ex.Message, "Error");
-			}
+			ConfirmAbort();
 		}
 
 		/// <summary>
@@ -172,6 +156,7 @@ namespace Sensit.TestSDK.Forms
 		private void exitToolStripMenuItem_Click(object sender, System.EventArgs e)
 		{
 			// Exit the application.
+			// This will invoke the "FormClosing" action, so nothing else to do here.
 			Application.Exit();
 		}
 
@@ -182,10 +167,31 @@ namespace Sensit.TestSDK.Forms
 		/// <param name="e"></param>
 		private void FormCalibration_FormClosing(object sender, FormClosingEventArgs e)
 		{
+			// If the TestBusy delegate exists and a test is running...
+			if ((TestBusy != null) && TestBusy())
+			{
+				// Cancel application shutdown.
+				e.Cancel = true;
+
+				// If the user chooses to abort the test...
+				if (ConfirmAbort() == true)
+				{
+					// Remember to close the application after the test finishes.
+					_closeAfterTest = true;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Before exiting, check the user's wishes and safely end testing.
+		/// </summary>
+		/// <returns>true if we're quitting; false if cancelled</returns>
+		private bool ConfirmAbort()
+		{
 			DialogResult result = DialogResult.OK;  // whether to quit or not
 
 			// If the Running delegate exists and a test is running...
-			if ((Running != null) && Running())
+			if ((TestBusy != null) && TestBusy())
 			{
 				// Ask the user if they really want to stop the test.
 				result = MessageBox.Show("Abort the test?", "Abort", MessageBoxButtons.OKCancel);
@@ -196,19 +202,18 @@ namespace Sensit.TestSDK.Forms
 			{
 				try
 				{
-					// Stop any active tests.
-					Stop();
+					// Cancel a test. Don't update GUI; if the test ends it must
+					// call the "TestFinished" method.
+					TestStop();
 				}
 				catch (Exception ex)
 				{
 					MessageBox.Show(ex.Message, "Error");
 				}
 			}
-			else
-			{
-				// Cancel application shutdown.
-				e.Cancel = true;
-			}
+
+			// Return whether or not we're stopping the test.
+			return (result == DialogResult.OK);
 		}
 
 		/// <summary>
@@ -230,7 +235,7 @@ namespace Sensit.TestSDK.Forms
 				MessageBox.Show(ex.Message, "Error");
 			}
 		}
-
+		
 		/// <summary>
 		/// When Edit --> Number of DUTs is selected, prompt the user to select the number of DUTS.
 		/// </summary>
@@ -242,21 +247,49 @@ namespace Sensit.TestSDK.Forms
 			int numDuts = NumDuts;
 			DialogResult result = InputDialog.Show("Number of DUTs", ref numDuts, 1, 12);
 
-			// Set the number of DUTs.
+			// Update the property (which will also update the form).
 			NumDuts = numDuts;
 		}
 
+		#endregion
+
 		/// <summary>
-		/// Update the form's tool strip with a status.
+		/// Update the form with the test's status.
 		/// </summary>
 		/// <param name="message"></param>
-		public void UpdateStatus(int percent, string message)
+		public void TestUpdate(int percent, string message)
 		{
 			// Update the progress bar.
 			toolStripProgressBar1.Value = percent;
 
 			// Update the status message.
 			toolStripStatusLabel1.Text = message;
+		}
+
+		/// <summary>
+		/// Reset the form after a test is completed or cancelled.
+		/// </summary>
+		public void TestFinished()
+		{
+			// Enable most of the controls.
+			comboBoxModel.Enabled = true;
+			comboBoxRange.Enabled = true;
+			comboBoxTest.Enabled = true;
+			checkBoxSelectAll.Enabled = true;
+			foreach (Control c in tableLayoutPanelDevicesUnderTest.Controls)
+			{
+				c.Enabled = true;
+			}
+
+			// Enable the "Start" button and disable the "Stop" button.
+			buttonStart.Enabled = true;
+			buttonStop.Enabled = false;
+
+			// If requested, close the application.
+			if (_closeAfterTest)
+			{
+				Application.Exit();
+			}
 		}
 	}
 }

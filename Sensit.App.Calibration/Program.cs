@@ -29,13 +29,14 @@ namespace Sensit.App.Calibration
 			FormCalibration formCalibration = new FormCalibration();
 
 			// Link test actions that update the GUI.
-			test.UpdateStatus = formCalibration.UpdateStatus;
+			test.Update = formCalibration.TestUpdate;
+			test.Finished = formCalibration.TestFinished;
 			
 			// Link the test and support devices to form actions.
-			formCalibration.Start = test.Start;
-			formCalibration.Stop = test.Stop;
+			formCalibration.TestStart = test.Start;
+			formCalibration.TestStop = test.Stop;
+			formCalibration.TestBusy = test.IsBusy;
 			formCalibration.Print = system.Print;
-			formCalibration.Running = test.IsRunning;
 
 			// Run the GUI.
 			Application.Run(formCalibration);
