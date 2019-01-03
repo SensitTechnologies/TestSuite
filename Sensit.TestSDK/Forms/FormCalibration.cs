@@ -245,5 +245,18 @@ namespace Sensit.TestSDK.Forms
 			// Set the number of DUTs.
 			NumDuts = numDuts;
 		}
+
+		/// <summary>
+		/// Update the form's tool strip with a status.
+		/// </summary>
+		/// <param name="message"></param>
+		public void UpdateStatus(int percent, string message)
+		{
+			// Update the progress bar.
+			toolStripProgressBar1.Value = percent;
+
+			// Update the status message.
+			toolStripStatusLabel1.Text = message;
+		}
 	}
 }

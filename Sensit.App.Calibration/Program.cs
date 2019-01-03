@@ -15,23 +15,30 @@ namespace Sensit.App.Calibration
 		[STAThread]
 		static void Main()
 		{
-			// Create an object to represent calibration equipment and instrumentation.
+			// Auto-generated code.
+			Application.EnableVisualStyles();
+			Application.SetCompatibleTextRenderingDefault(false);
+			
+			// Create an object to represent test equipment.
 			System system = new System();
 
 			// Create an object to represent the tests being run.
 			Test test = new Test();
 
-			// Run the application.
-			Application.EnableVisualStyles();
-			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new FormCalibration
-			{
-				// Link the test and support devices to form actions.
-				Start = test.Start,
-				Stop = test.Stop,
-				Print = system.Print,
-				Running = test.IsRunning
-			});
+			// Create a GUI for user interaction.
+			FormCalibration formCalibration = new FormCalibration();
+
+			// Link test actions that update the GUI.
+			test.UpdateStatus = formCalibration.UpdateStatus;
+			
+			// Link the test and support devices to form actions.
+			formCalibration.Start = test.Start;
+			formCalibration.Stop = test.Stop;
+			formCalibration.Print = system.Print;
+			formCalibration.Running = test.IsRunning;
+
+			// Run the GUI.
+			Application.Run(formCalibration);
 		}
 	}
 }
