@@ -20,10 +20,10 @@ namespace Sensit.TestSDK.Devices
 	public class Keysight_34972A
 	{
 		// IVI VISA object used to communicate with the datalogger
-		private ResourceManager _resourceManager = new ResourceManager();
+		private ResourceManager _rm;
 
 		// VISA SCPI command formatter
-		private FormattedIO488 _io = new FormattedIO488();
+		private FormattedIO488 _instrument;
 
 		private static class SCPICommand
 		{
@@ -47,12 +47,38 @@ namespace Sensit.TestSDK.Devices
 
 		public void Open()
 		{
-			_io.IO = (IMessage)_resourceManager.Open("USB0::0x0957::0x2007::MY49018108::0::INSTR");
+			// Get a handle to the default resource manager.
+			_rm = new ResourceManager();
+
+			// Create an IO formatter.
+			_instrument = new FormattedIO488();
+
+			// Open a connection to the instrument and bind it to the formatter.
+			// TODO:  How to find available instrument address?
+			_instrument.IO = (IMessage)_rm.Open("USB0::0x0957::0x2007::MY49018108::0::INSTR");
+
+			// Once we're connected, make sure we close things correctly.
+			try
+			{
+				// Send the *IDN query to the instrument.
+				_instrument.WriteString(SCPICommand.Identification, true);
+
+				// Read back the response.
+				string result = _instrument.ReadString();
+			}
+			finally
+			{
+				// Close the connection to the instrument.
+				_instrument.IO.Close();
+
+				// Free the reference to the session.
+				_instrument.IO = null;
+			}
 		}
 
 		public void Close()
 		{
-			_io.IO.Close();
+			_instrument.IO.Close();
 		}
 	}
 }
