@@ -245,7 +245,7 @@ namespace Sensit.TestSDK.Forms
 		{
 			// Prompt user to enter desired number of DUTs (current value as default).
 			int numDuts = NumDuts;
-			DialogResult result = InputDialog.Show("Number of DUTs", ref numDuts, 1, 12);
+			DialogResult result = InputDialog.Numeric("Number of DUTs", ref numDuts, 1, 12);
 
 			// Update the property (which will also update the form).
 			NumDuts = numDuts;

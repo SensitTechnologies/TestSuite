@@ -135,6 +135,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dut\AnalogSensor.cs" />
+    <Compile Include="Dut\Dut.cs" />
     <Compile Include="Controls\UserCustomStep.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -149,6 +151,7 @@
     </Compile>
     <Compile Include="Devices\Keysight_34972A.cs" />
     <Compile Include="Devices\MFC.cs" />
+    <Compile Include="Dut\Simulator.cs" />
     <Compile Include="Email\Email.cs" />
     <Compile Include="Forms\FormCalibration.cs">
       <SubType>Form</SubType>
@@ -235,6 +238,7 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

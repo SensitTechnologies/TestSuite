@@ -31,6 +31,8 @@ namespace Sensit.App.Calibration
 			// Link test actions that update the GUI.
 			test.Update = formCalibration.TestUpdate;
 			test.Finished = formCalibration.TestFinished;
+
+			// TODO:  Link test actions that interface with the system.
 			
 			// Link the test and support devices to form actions.
 			formCalibration.TestStart = test.Start;

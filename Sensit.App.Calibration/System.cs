@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sensit.App.Calibration
 {
-	class System
+	public class System
 	{
 		public void Print()
 		{

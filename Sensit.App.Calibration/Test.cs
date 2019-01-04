@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Threading;
 
 namespace Sensit.App.Calibration
@@ -61,11 +62,12 @@ namespace Sensit.App.Calibration
 			BackgroundWorker bw = sender as BackgroundWorker;
 
 			// Get start time.
+			var stopwatch = Stopwatch.StartNew();
 
 			// Anything within this do-while structure can be cancelled.
 			do
 			{
-				// Read settings.
+				// Read system settings.
 				testThread.ReportProgress(5, "Reading test settings...");
 				Thread.Sleep(1000); // One second.
 				if (bw.CancellationPending) { break; }
@@ -77,7 +79,7 @@ namespace Sensit.App.Calibration
 
 				// Initialize GUI.
 
-				// Configure support devices.
+				// Configure test equipment.
 				testThread.ReportProgress(15, "Configuring test equipment...");
 				Thread.Sleep(1000); // One second.
 				if (bw.CancellationPending) { break; }
@@ -113,10 +115,12 @@ namespace Sensit.App.Calibration
 
 			// Calculate end time.
 			testThread.ReportProgress(85, "Calculating elapsed time....");
+			stopwatch.Stop();
 			Thread.Sleep(100); // One second.
 
 			// Record log.
 			testThread.ReportProgress(90, "Recording log...");
+			TimeSpan elapsedtime = stopwatch.Elapsed;
 			Thread.Sleep(100); // One second.
 
 			// Close support devices.
