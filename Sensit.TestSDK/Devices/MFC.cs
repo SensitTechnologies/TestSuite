@@ -1,6 +1,8 @@
-﻿using Sensit.TestSDK.Interfaces;
-using System;
+﻿using System;
 using System.IO.Ports;                  // serial port access
+using Sensit.TestSDK.Calculations;		// define units of measure
+using Sensit.TestSDK.Interfaces;        // define control, serial, mass flow interfaces
+using Sensit.TestSDK.Exceptions;		// define device exceptions
 
 namespace Sensit.TestSDK.Devices
 {
@@ -11,7 +13,7 @@ namespace Sensit.TestSDK.Devices
 	/// Product website:
 	/// https://www.coleparmer.com/p/cole-parmer-mass-flow-controllers-for-gas/43456
 	/// </remarks>
-	public class MFC : IControlDevice
+	public class MFC : IControlDevice, IFlowReference, ISerialDevice
 	{
 		// port used to communicate with mass flow controller
 		private SerialPort _serialPort = new SerialPort();
@@ -19,14 +21,20 @@ namespace Sensit.TestSDK.Devices
 		// ID used to access device
 		private char _address = 'A';
 
+		// units of mass flow (not actually sent to device)
+		private UnitOfMeasure.Flow _flowUnit = UnitOfMeasure.Flow.CubicFeetPerMinute;
+
+		// unit of 
+		private UnitOfMeasure.Temperature _temperatureUnit = UnitOfMeasure.Temperature.Celsius;
+
 		// Commands sent to the device
 		private static class Command
 		{
-			public const string SetAddress = "*@=";		// set the device address; set polling/streaming mode
-			public const string SetSetpoint = "S";		// set the flow setpoint
-			public const string ReadRegister = "*R";	// read a register (low-level; not typically used)
-			public const string WriteRegister = "*W";	// write a register (low-level; not typically used)
-			public const string GasSelect = "$$";		// select gas (for conversion from volume flow to mass flow)
+			public static readonly string SetAddress = "*@=";	// set the device address; set polling/streaming mode
+			public static readonly string SetSetpoint = "S";	// set the flow setpoint
+			public static readonly string ReadRegister = "*R";	// read a register (low-level; not typically used)
+			public static readonly string WriteRegister = "*W";	// write a register (low-level; not typically used)
+			public static readonly string GasSelect = "$$";		// select gas (for conversion from volume flow to mass flow)
 		}
 
 		/// <summary>
@@ -38,6 +46,7 @@ namespace Sensit.TestSDK.Devices
 		/// </remarks>
 		public enum GasSelection
 		{
+			// TODO:  Replace this with a dictionary and use Calculations.Gas!
 			Air = 0,
 			Ar = 1,						// Argon
 			CH4 = 2,					// Methane
@@ -102,6 +111,8 @@ namespace Sensit.TestSDK.Devices
 			}
 		}
 
+		#region Serial Device Methods
+
 		/// <summary>
 		/// Open the serial port with the correct settings; set default address (and polling mode).
 		/// </summary>
@@ -128,6 +139,57 @@ namespace Sensit.TestSDK.Devices
 			// Set polling mode (by assigning a device address).
 			Address = 'A';
 		}
+
+		public void SetSerialProperties(int dataBits = 8, Parity parity = Parity.None, StopBits stopBits = StopBits.One)
+		{
+			// This mass flow controller only supports its default settings,
+			// so all this method does is throw exceptions if you try to change them.
+			if (dataBits != 8)
+				throw new DeviceSettingNotSupportedException("The device only supports 8 data bits.");
+
+			if (parity != Parity.None)
+				throw new DeviceSettingNotSupportedException("The device does not support parity.");
+
+			if (stopBits != StopBits.One)
+				throw new DeviceSettingNotSupportedException("The device only supports one stop bit.");
+		}
+
+		/// <summary>
+		/// Close the mass flow controller's serial port (if it's open).
+		/// </summary>
+		public void Close()
+		{
+			// If the serial port is open, close it.
+			if (_serialPort.IsOpen)
+			{
+				_serialPort.Close();
+			}
+		}
+
+		#endregion
+
+		#region Flow Reference Methods
+
+		public UnitOfMeasure.Flow FlowUnit
+		{
+			get { return _flowUnit; }
+		}
+
+		public UnitOfMeasure.Temperature TemperatureUnit
+		{
+			get { return _temperatureUnit; }
+		}
+
+		public void Config(UnitOfMeasure.Flow flowUnit, UnitOfMeasure.Temperature temperatureUnit,
+			double low, double high)
+		{
+			// TODO:  Ask Cole-Parmer if the device supports setting units of measure over the serial connection.
+			throw new NotImplementedException();
+		}
+
+		#endregion
+
+		#region Control Device Methods
 
 		/// <summary>
 		/// Set the volumetric flow setpoint.
@@ -170,6 +232,8 @@ namespace Sensit.TestSDK.Devices
 
 			return Convert.ToSingle(words[5]);
 		}
+
+		#endregion
 
 		/// <summary>
 		/// Set gas type (needed for accurate conversion between volumetric and mass flow).
@@ -248,16 +312,14 @@ namespace Sensit.TestSDK.Devices
 			// TODO:  Validate streaming mode.
 		}
 
-		/// <summary>
-		/// Close the mass flow controller's serial port (if it's open).
-		/// </summary>
-		public void Close()
+		public void SetControlMode(ControlMode mode)
 		{
-			// If the serial port is open, close it.
-			if (_serialPort.IsOpen)
-			{
-				_serialPort.Close();
-			}
+			throw new NotImplementedException();
+		}
+
+		public double GetReading()
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

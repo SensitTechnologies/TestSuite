@@ -36,9 +36,10 @@ namespace Sensit.App.Keysight
 					if (((RadioButton)sender) == radioButtonOpen)
 					{
 						// Alert the user.
-						toolStripStatusLabel1.Text = "Opening serial port...";
+						toolStripStatusLabel1.Text = "Opening VISA connection...";
 
 						// TODO:  Open the connection.
+						_datalogger.Open();
 
 						// Update the user interface.
 						toolStripStatusLabel1.Text = "Success.";

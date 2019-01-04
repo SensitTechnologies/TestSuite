@@ -135,6 +135,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calculations\Calculations.cs" />
     <Compile Include="Dut\AnalogSensor.cs" />
     <Compile Include="Dut\Dut.cs" />
     <Compile Include="Controls\UserCustomStep.cs">
@@ -153,6 +154,7 @@
     <Compile Include="Devices\MFC.cs" />
     <Compile Include="Dut\Simulator.cs" />
     <Compile Include="Email\Email.cs" />
+    <Compile Include="Exceptions\DeviceExceptions.cs" />
     <Compile Include="Forms\FormCalibration.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -167,8 +169,8 @@
     </Compile>
     <Compile Include="Forms\InputDialog.cs" />
     <Compile Include="Interfaces\IControlDevice.cs" />
-    <Compile Include="Interfaces\IMassFlowController.cs" />
     <Compile Include="Interfaces\IReferenceDevice.cs" />
+    <Compile Include="Interfaces\ISerialDevice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Office\Excel\Excel.cs" />
   </ItemGroup>
