@@ -1,16 +1,12 @@
-Sensit Technologies C# Test Suite & SDK
-=====
-This is a software suite for automating instrumentation tests and calibration.
+# Sensit Technologies C# Test Suite & SDK
+This is a software suite for automating instrumentation and sensor tests and calibration.
 
-Development Environment
-----
+## Development Environment
 * Visual Studio 2017 or later
-* Microsoft .NET Framework 4.7.2
-* Keysight IO Libraries Suite (https://www.keysight.com/en/pd-1985909/io-libraries-suite)
-** This is used to provide the VISA drivers necessary to communicate with Keysight/Agilent instruments.
+* Microsoft .NET Framework 4.7.2 - 
+* [Keysight IO Libraries Suite](https://www.keysight.com/en/pd-1985909/io-libraries-suite) - VISA drivers necessary to communicate with Keysight/Agilent instruments.  You could also use the National Instruments VISA drivers.
 
-Code Standards
-----
+## Code Standards
 Attention was given to making this software suite as easy to read and modify as
 possible, and one part of that is making sure to follow community best practices
 as much as possible.  The following links describe best practices that should be
