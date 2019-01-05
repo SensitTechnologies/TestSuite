@@ -23,36 +23,38 @@ namespace Sensit.TestSDK.Interfaces
 		void Config(UnitOfMeasure.Temperature unit, double low, double high);
 	}
 	
-	// TODO:  Make this work with MFC.cs and IReferenceDevice.cs!
+	/// <summary>
+	/// Gas Selection for Mass Flow Controllers
+	/// </summary>
 	public enum Gas
 	{
 		Air,
-		Ar,						// Argon
-		CH4,					// Methane
-		CO,						// Carbon Monoxide
-		CO2,					// Carbon Dioxide
-		C2H6,					// Ethane
-		H2,						// Hydrogen
-		He,						// Helium
-		N2,						// Nitrogen
-		N2O,					// Nitrous Oxide
-		Ne,						// Neon
-		O2,						// Oxygen
-		C3H8,					// Propane
-		nC4H10,					// normal-Butane
-		C2H2,					// Acetylene
-		C2H4,					// Ethylene
-		iC4H10,					// isoButane (code in manual has typo)
-		Kr,						// Krypton
-		Xe,						// Xenon
-		SF6,					// Sulfur Hexafluoride
+		Argon,
+		Methane,
+		CarbonMonoxide,
+		CarbonDioxide,
+		Ethane,
+		Hydrogen,
+		Helium,
+		Nitrogen,
+		NitrousOxide,
+		Neon,
+		Oxygen,
+		Propane,
+		normalButane,
+		Acetylene,
+		Ethylene,
+		isoButane,
+		Krypton,
+		Xenon,
+		SulfurHexafluoride,
 		C25,					// 75% Argon / 25% CO2
 		C10,					// 90% Argon / 10% CO2
 		C8,						// 92% Argon / 8% CO2
 		C2,						// 98% Argon / 2% CO2
 		C75,					// 75% CO2 / 25% Argon
-		He25,					// 75% Argon / 25% Helium (code in manual has typo)
-		He75,					// 75% Helium / 25% Argon (code in manual has typo)
+		He25,					// 75% Argon / 25% Helium
+		He75,					// 75% Helium / 25% Argon
 		A1025,					// 90% Helium / 7.5% Argon / 2.5% CO2 (Praxair - Helistar® A1025)
 		Star29,					// 90% Argon / 8% CO2 / 2% Oxygen (Praxair - Stargon® CS)
 		P5,						// 95% Argon / 5% Methane
@@ -68,8 +70,9 @@ namespace Sensit.TestSDK.Interfaces
 	{
 		UnitOfMeasure.Temperature TemperatureUnit { get; }
 		UnitOfMeasure.Flow FlowUnit { get; }
+		Gas GasSelection { get; }
 
-		// TODO:  GasSelection gas { get; }
+		void SetGas(Gas gas);
 
 		void Config(UnitOfMeasure.Flow flowUnit, UnitOfMeasure.Temperature temperatureUnit,
 			double low, double high);

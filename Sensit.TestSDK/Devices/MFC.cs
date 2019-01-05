@@ -3,6 +3,7 @@ using System.IO.Ports;                  // serial port access
 using Sensit.TestSDK.Calculations;		// define units of measure
 using Sensit.TestSDK.Interfaces;        // define control, serial, mass flow interfaces
 using Sensit.TestSDK.Exceptions;		// define device exceptions
+using System.Collections.Generic;		// dictionary
 
 namespace Sensit.TestSDK.Devices
 {
@@ -24,8 +25,11 @@ namespace Sensit.TestSDK.Devices
 		// units of mass flow (not actually sent to device)
 		private UnitOfMeasure.Flow _flowUnit = UnitOfMeasure.Flow.CubicFeetPerMinute;
 
-		// unit of 
+		// unit of temperature
 		private UnitOfMeasure.Temperature _temperatureUnit = UnitOfMeasure.Temperature.Celsius;
+
+		// gas used by device to calculate mass flow from volumetric flow
+		private Gas _gasSelection = Gas.Air;
 
 		// Commands sent to the device
 		private static class Command
@@ -35,48 +39,6 @@ namespace Sensit.TestSDK.Devices
 			public static readonly string ReadRegister = "*R";	// read a register (low-level; not typically used)
 			public static readonly string WriteRegister = "*W";	// write a register (low-level; not typically used)
 			public static readonly string GasSelect = "$$";		// select gas (for conversion from volume flow to mass flow)
-		}
-
-		/// <summary>
-		/// Gas Selection Setting
-		/// </summary>
-		/// <remarks>
-		/// The gas selection is used in the conversion from volume flow to mass flow.
-		/// The controller also supports custom gasses, but that functionality is not implemented here.
-		/// </remarks>
-		public enum GasSelection
-		{
-			// TODO:  Replace this with a dictionary and use Calculations.Gas!
-			Air = 0,
-			Ar = 1,						// Argon
-			CH4 = 2,					// Methane
-			CO = 3,						// Carbon Monoxide
-			CO2 = 4,					// Carbon Dioxide
-			C2H6 = 5,					// Ethane
-			H2 = 6,						// Hydrogen
-			He = 7,						// Helium
-			N2 = 8,						// Nitrogen
-			N2O = 9,					// Nitrous Oxide
-			Ne = 10,					// Neon
-			O2 = 11,					// Oxygen
-			C3H8 = 12,					// Propane
-			nC4H10 = 13,				// normal-Butane
-			C2H2 = 14,					// Acetylene
-			C2H4 = 15,					// Ethylene
-			iC4H10 = 16,				// isoButane (code in manual has typo)
-			Kr = 17,					// Krypton
-			Xe = 18,					// Xenon
-			SF6 = 19,					// Sulfur Hexafluoride
-			C25 = 20,					// 75% Argon / 25% CO2
-			C10 = 21,					// 90% Argon / 10% CO2
-			C8 = 22,					// 92% Argon / 8% CO2
-			C2 = 23,					// 98% Argon / 2% CO2
-			C75 = 24,					// 75% CO2 / 25% Argon
-			He25 = 25,					// 75% Argon / 25% Helium (code in manual has typo)
-			He75 = 26,					// 75% Helium / 25% Argon (code in manual has typo)
-			A1025 = 27,					// 90% Helium / 7.5% Argon / 2.5% CO2 (Praxair - Helistar® A1025)
-			Star29 = 28,				// 90% Argon / 8% CO2 / 2% Oxygen (Praxair - Stargon® CS)
-			P5 = 29,					// 95% Argon / 5% Methane
 		}
 
 		/// <summary>
@@ -109,6 +71,44 @@ namespace Sensit.TestSDK.Devices
 					throw new Exception("Could not update mass flow controller address.");
 				}
 			}
+		}
+
+		/// <summary>
+		/// Fetch the mass flow controller's current readings/settings.
+		/// </summary>
+		/// <param name="pressure"></param>
+		/// <param name="temperature"></param>
+		/// <param name="volumetricFlow"></param>
+		/// <param name="massFlow"></param>
+		/// <param name="setpoint"></param>
+		/// <param name="gas"></param>
+		public void Read(out string pressure, out string temperature,
+			out string volumetricFlow, out string massFlow,
+			out string setpoint, out string gas)
+		{
+			// Read (when in polling mode) by sending the device address.
+			_serialPort.WriteLine(_address.ToString());
+
+			// Read from the serial port (until we get a \r character).
+			string message = _serialPort.ReadLine();
+
+			// Split the string using spaces to separate each word.
+			char[] separators = new char[] { ' ' };
+			string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+
+			// Check the address.
+			if (string.Compare(words[0], _address.ToString()) != 0)
+			{
+				throw new Exception("Incorrect device ID");
+			}
+
+			// Figure out which is which.
+			pressure = words[1];
+			temperature = words[2];
+			volumetricFlow = words[3];
+			massFlow = words[4];
+			setpoint = words[5];
+			gas = words[6].Replace("-", String.Empty);
 		}
 
 		#region Serial Device Methods
@@ -180,11 +180,91 @@ namespace Sensit.TestSDK.Devices
 			get { return _temperatureUnit; }
 		}
 
+		public Gas GasSelection
+		{
+			get { return _gasSelection; }
+		}
+
 		public void Config(UnitOfMeasure.Flow flowUnit, UnitOfMeasure.Temperature temperatureUnit,
 			double low, double high)
 		{
 			// TODO:  Ask Cole-Parmer if the device supports setting units of measure over the serial connection.
 			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// Commands to set and query gas selection.
+		/// </summary>
+		/// <remarks>
+		/// The "Index" is the code sent to the device to set the gas.
+		/// The "Code" is what the device sends back when queried to indicate the current setting.
+		/// Inspiration for this dictionary with a tuple:
+		/// https://stackoverflow.com/questions/569903/multi-value-dictionary
+		/// https://stackoverflow.com/questions/8002455/how-to-easily-initialize-a-list-of-tuples
+		/// Note this may require .NET framework 7.0 or later to compile.
+		/// </remarks>
+		private static readonly Dictionary<Gas, (int Index, string Code)> GasCommand = new Dictionary<Gas, (int Index, string Code)>
+		{
+			{ Gas.Air,                  (0, "Air") },
+			{ Gas.Argon,                (1, "Ar") },
+			{ Gas.Methane,              (2, "CH4") },
+			{ Gas.CarbonMonoxide,       (3, "CO") },
+			{ Gas.CarbonDioxide,        (4, "CO2") },
+			{ Gas.Ethane,               (5, "C2H6") },
+			{ Gas.Hydrogen,             (6, "H2") },
+			{ Gas.Helium,               (7, "He") },
+			{ Gas.Nitrogen,             (8, "N2") },
+			{ Gas.NitrousOxide,         (9, "N2O") },
+			{ Gas.Neon,                 (10, "Ne") },
+			{ Gas.Oxygen,               (11, "O2") },
+			{ Gas.Propane,              (12, "C3H8") },
+			{ Gas.normalButane,         (13, "nC4H10") },
+			{ Gas.Acetylene,            (14, "C2H2") },
+			{ Gas.Ethylene,             (15, "C2H4") },
+			{ Gas.isoButane,            (16, "iC4H10") }, // (code in manual has typo)
+			{ Gas.Krypton,              (17, "Kr") },
+			{ Gas.Xenon,                (18, "Xe") },
+			{ Gas.SulfurHexafluoride,   (19, "SF6") },
+			{ Gas.C25,                  (20, "C25") },
+			{ Gas.C10,                  (21, "C10") },
+			{ Gas.C8,                   (22, "C8") },
+			{ Gas.C2,                   (23, "C2") },
+			{ Gas.C75,                  (24, "C75") },
+			{ Gas.He25,                 (25, "He25") }, // (code in manual has typo)
+			{ Gas.He75,                 (26, "He75") }, // (code in manual has typo)
+			{ Gas.A1025,                (27, "A1025") },
+			{ Gas.Star29,               (28, "Star29") },
+			{ Gas.P5,                   (29, "P5") },
+		};
+
+		/// <summary>
+		/// Set gas type (needed for accurate conversion between volumetric and mass flow).
+		/// </summary>
+		/// <param name="gas">enumerated gas type</param>
+		public void SetGas(Gas gas)
+		{
+			// Note the way we access the "GasSelection" Dictionary/Tuple.
+			string msg = _address + Command.GasSelect + GasCommand[gas].Index;
+
+			// "A$$12" selects propane gas for device A.
+			_serialPort.WriteLine(msg);
+
+			// Read the response from the serial port (until we get a \r character).
+			string message = _serialPort.ReadLine();
+
+			// Split the string using spaces to separate each word.
+			// Remove any "-" characters as they couldn't be used in enumeration names.
+			char[] separators = new char[] { ' ' };
+			string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+			string gasResult = words[6].Replace("-", String.Empty);
+
+			// Check the gas selection.
+			// Note (again) the way we access the "GasSelection" Dictionary/Tuple.
+			string gasRequest = GasCommand[gas].Code;
+			if (string.Compare(gasResult, gasRequest) != 0)
+			{
+				throw new Exception("Could not write gas selection to mass flow controller.");
+			}
 		}
 
 		#endregion
@@ -233,73 +313,12 @@ namespace Sensit.TestSDK.Devices
 			return Convert.ToSingle(words[5]);
 		}
 
+		public void SetControlMode(ControlMode mode)
+		{
+			throw new NotImplementedException();
+		}
+
 		#endregion
-
-		/// <summary>
-		/// Set gas type (needed for accurate conversion between volumetric and mass flow).
-		/// </summary>
-		/// <param name="gas">enumerated gas type</param>
-		public void SetGas(GasSelection gas)
-		{
-			string msg = _address + Command.GasSelect + (int)gas;
-
-			// "A$$12" selects propane gas for device A.
-			_serialPort.WriteLine(msg);
-
-			// Read the response from the serial port (until we get a \r character).
-			string message = _serialPort.ReadLine();
-
-			// Split the string using spaces to separate each word.
-			// Remove any "-" characters as they couldn't be used in enumeration names.
-			char[] separators = new char[] { ' ' };
-			string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-			string gasResult = words[6].Replace("-", String.Empty);
-
-			// Check the gas selection.
-			string gasRequest = Enum.GetName(typeof(GasSelection), gas);
-			if (string.Compare(gasResult, gasRequest) != 0)
-			{
-				throw new Exception("Could not write gas selection to mass flow controller.");
-			}
-		}
-
-		/// <summary>
-		/// Fetch the mass flow controller's current readings/settings.
-		/// </summary>
-		/// <param name="pressure"></param>
-		/// <param name="temperature"></param>
-		/// <param name="volumetricFlow"></param>
-		/// <param name="massFlow"></param>
-		/// <param name="setpoint"></param>
-		/// <param name="gas"></param>
-		public void Read(out string pressure, out string temperature,
-			out string volumetricFlow, out string massFlow,
-			out string setpoint, out string gas)
-		{
-			// Read (when in polling mode) by sending the device address.
-			_serialPort.WriteLine(_address.ToString());
-
-			// Read from the serial port (until we get a \r character).
-			string message = _serialPort.ReadLine();
-
-			// Split the string using spaces to separate each word.
-			char[] separators = new char[] { ' ' };
-			string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-
-			// Check the address.
-			if (string.Compare(words[0], _address.ToString()) != 0)
-			{
-				throw new Exception("Incorrect device ID");
-			}
-
-			// Figure out which is which.
-			pressure = words[1];
-			temperature = words[2];
-			volumetricFlow = words[3];
-			massFlow = words[4];
-			setpoint = words[5];
-			gas = words[6].Replace("-", String.Empty);
-		}
 
 		/// <summary>
 		/// Enable the mass flow controller's streaming mode.
@@ -310,11 +329,6 @@ namespace Sensit.TestSDK.Devices
 			_serialPort.WriteLine(Command.SetAddress + '@');
 
 			// TODO:  Validate streaming mode.
-		}
-
-		public void SetControlMode(ControlMode mode)
-		{
-			throw new NotImplementedException();
 		}
 
 		public double GetReading()

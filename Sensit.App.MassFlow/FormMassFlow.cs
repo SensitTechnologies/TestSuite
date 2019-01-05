@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.IO.Ports;                  // serial port access
 using Sensit.TestSDK.Devices;			// mass flow controller
+using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.App.MassFlow
 {
@@ -29,7 +30,7 @@ namespace Sensit.App.MassFlow
 			comboBoxSerialPort.Text = Properties.Settings.Default.Port;
 
 			// Populate the Gas combo box.
-			foreach (MFC.GasSelection gas in Enum.GetValues(typeof(MFC.GasSelection)))
+			foreach (Gas gas in Enum.GetValues(typeof(Gas)))
 			{
 				comboBoxGas.Items.Add(gas);
 			}
@@ -219,7 +220,7 @@ namespace Sensit.App.MassFlow
 		private void buttonWriteGas_Click(object sender, EventArgs e)
 		{
 			// Find the selected gas.
-			Enum.TryParse(comboBoxGas.Text, out MFC.GasSelection gas);
+			Enum.TryParse(comboBoxGas.Text, out Gas gas);
 
 			try
 			{
