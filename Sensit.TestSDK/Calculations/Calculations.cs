@@ -96,7 +96,7 @@ namespace Sensit.TestSDK.Calculations
 			{ UnitOfMeasure.Length.Meters, 1.0 },
 			{ UnitOfMeasure.Length.Centimeters, 100.0 },
 			{ UnitOfMeasure.Length.Feet, 3.2808399 },
-			{UnitOfMeasure.Length.Inches, 39.370079}
+			{ UnitOfMeasure.Length.Inches, 39.370079}
 		};
 
 		// Conversion factors for pressure; KPA is the base unit.
