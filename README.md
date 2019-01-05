@@ -11,8 +11,7 @@ Attention was given to making this software suite as easy to read and modify as
 possible, and one part of that is making sure to follow community best practices
 as much as possible.  The following links describe best practices that should be
 considered by contributors to this project:
-* http://businessinteriorsidaho.com/wp-content/uploads/2016/09/DotNetCodingStandard.pdf
-* https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/inside-a-program/coding-conventions
-* https://www.codeproject.com/Articles/118853/%2FArticles%2F118853%2FSome-Best-Practices-for-C-Application-Developmen
-* https://www.c-sharpcorner.com/article/best-practice-of-write-c-sharp-code/
-* https://enterprisecraftsmanship.com/2015/12/08/c-regions-is-a-design-smell/
+* [Microsoft - C# Coding Conventions (C# Programming Guide)](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/inside-a-program/coding-conventions)
+* [Code Project - Some Best Practices for C# Application Development (Explained)](https://www.codeproject.com/Articles/118853/%2FArticles%2F118853%2FSome-Best-Practices-for-C-Application-Developmen)
+* [C# Corner - Best Practices Of Writing C# Code](https://www.c-sharpcorner.com/article/best-practice-of-write-c-sharp-code/
+* [dotnetspider - C# Coding Standards and Best Programming Practices](http://businessinteriorsidaho.com/wp-content/uploads/2016/09/DotNetCodingStandard.pdf)
