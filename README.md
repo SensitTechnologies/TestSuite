@@ -2,7 +2,7 @@
 This is a software suite for automating instrumentation and sensor tests and calibration.
 
 ## Development Environment
-* Visual Studio 2017 or later - Community edition is free.
+* [Visual Studio 2017](https://visualstudio.microsoft.com) or later - Community edition is free.
 * Microsoft .NET Framework 4.7.2 - If Visual Studio is already installed but the correct framework is not, run the Visual Studio Installer, navigate to *Individual Components* and select the appropriate framework.
 * [Keysight IO Libraries Suite](https://www.keysight.com/en/pd-1985909/io-libraries-suite) - VISA drivers necessary to communicate with Keysight/Agilent instruments.  You could also use the National Instruments VISA drivers.
 
