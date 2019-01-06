@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Ivi.Visa.Interop;					// sent SCPI commands using VISA
+using Ivi.Visa;					// sent SCPI commands using VISA
 
 namespace Sensit.TestSDK.Devices
 {
@@ -19,11 +19,8 @@ namespace Sensit.TestSDK.Devices
 	/// </remarks>
 	public class Keysight_34972A
 	{
-		// IVI VISA object used to communicate with the datalogger
-		private ResourceManager _rm;
-
-		// VISA SCPI command formatter
-		private FormattedIO488 _instrument;
+		// IVI VISA object used to communicate with the device
+		private IMessageBasedFormattedIO _instrument;
 
 		private static class SCPICommand
 		{
@@ -31,7 +28,7 @@ namespace Sensit.TestSDK.Devices
 			public const string Clear = "*CLS";
 			public const string EventStandardEnable = "*ESE";
 			public const string EventStandardRegister = "*ESR";
-			public const string Identification = "*IDN";
+			public const string Identification = "*IDN?";
 			public const string OperationComplete = "*OPC";
 			public const string PowerOnStatusClear = "*PSC";
 
@@ -47,21 +44,15 @@ namespace Sensit.TestSDK.Devices
 
 		public void Open()
 		{
-			// Get a handle to the default resource manager.
-			_rm = new ResourceManager();
-
-			// Create an IO formatter.
-			_instrument = new FormattedIO488();
-
-			// Open a connection to the instrument and bind it to the formatter.
-			// TODO:  How to find available instrument address?
-			_instrument.IO = (IMessage)_rm.Open("USB0::0x0957::0x2007::MY49018108::0::INSTR");
+			// Open a connection to the instrument.
+			// TODO:  Find available instrument address instead of hardcoding.
+			_instrument = GlobalResourceManager.Open("USB0::0x0957::0x2007::MY49018108::0::INSTR") as IMessageBasedFormattedIO;
 
 			// Once we're connected, make sure we close things correctly.
 			try
 			{
 				// Send the *IDN query to the instrument.
-				_instrument.WriteString(SCPICommand.Identification, true);
+				_instrument.WriteLine(SCPICommand.Identification);
 
 				// Read back the response.
 				string result = _instrument.ReadString();
@@ -69,16 +60,18 @@ namespace Sensit.TestSDK.Devices
 			finally
 			{
 				// Close the connection to the instrument.
-				_instrument.IO.Close();
+				// TODO:  This line does not compile!
+				//_instrument.Close();
 
 				// Free the reference to the session.
-				_instrument.IO = null;
+				_instrument = null;
 			}
 		}
 
 		public void Close()
 		{
-			_instrument.IO.Close();
+			// TODO:  This line does not compile!
+			//_instrument.Close();
 		}
 	}
 }
