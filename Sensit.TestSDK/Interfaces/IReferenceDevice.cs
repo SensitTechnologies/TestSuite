@@ -7,22 +7,20 @@ namespace Sensit.TestSDK.Interfaces
 	/// </summary>
 	public interface IReferenceDevice
 	{
-		double GetReading();
+		/// <summary>
+		/// Send configuration (set through properties) to device.
+		/// </summary>
+		void Configure();
+
+		/// <summary>
+		/// Fetch the device's current readings/settings (accessible through properties).
+		/// </summary>
+		void Read();
 
 		// TODO:  Are "Prompt" or "SetReading" methods necessary to support manual reference?
 		// Or maybe instead of returning a variable, ref it instead?
 	}
 
-	/// <summary>
-	/// Device that measures temperature.
-	/// </summary>
-	public interface ITemperatureReference : IReferenceDevice
-	{
-		UnitOfMeasure.Temperature TemperatureUnit { get; }
-
-		void Config(UnitOfMeasure.Temperature unit, double low, double high);
-	}
-	
 	/// <summary>
 	/// Gas Selection for Mass Flow Controllers
 	/// </summary>
@@ -68,15 +66,31 @@ namespace Sensit.TestSDK.Interfaces
 	/// </remarks>
 	public interface IFlowReference : IReferenceDevice
 	{
-		UnitOfMeasure.Temperature TemperatureUnit { get; }
-		UnitOfMeasure.Flow FlowUnit { get; }
-		Gas GasSelection { get; }
+		UnitOfMeasure.Flow FlowUnit { get; set; }
 
-		void SetGas(Gas gas);
+		/// <summary>
+		/// Gas used by device to calculate mass flow from volumetric flow.
+		/// </summary>
+		Gas GasSelection { get; set; }
 
-		void Config(UnitOfMeasure.Flow flowUnit, UnitOfMeasure.Temperature temperatureUnit,
-			double low, double high);
+		float VolumeFlow { get; }
+		float MassFlow { get; }
 	}
 
+	public interface IPressureReference : IReferenceDevice
+	{
+		UnitOfMeasure.Pressure PressureUnit { get; set; }
 
+		float Pressure { get; }
+	}
+
+	/// <summary>
+	/// Device that measures temperature.
+	/// </summary>
+	public interface ITemperatureReference : IReferenceDevice
+	{
+		UnitOfMeasure.Temperature TemperatureUnit { get; set; }
+
+		float Temperature { get; }
+	}
 }

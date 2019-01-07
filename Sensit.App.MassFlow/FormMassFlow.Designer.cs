@@ -92,7 +92,7 @@
 			this.radioButtonClosed.TabStop = true;
 			this.radioButtonClosed.Text = "Closed";
 			this.radioButtonClosed.UseVisualStyleBackColor = true;
-			this.radioButtonClosed.CheckedChanged += new System.EventHandler(this.radioButtonClosed_CheckedChanged);
+			this.radioButtonClosed.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
 			// 
 			// radioButtonOpen
 			// 
@@ -103,7 +103,7 @@
 			this.radioButtonOpen.TabIndex = 1;
 			this.radioButtonOpen.Text = "Open";
 			this.radioButtonOpen.UseVisualStyleBackColor = true;
-			this.radioButtonOpen.CheckedChanged += new System.EventHandler(this.radioButtonOpen_CheckedChanged);
+			this.radioButtonOpen.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
 			// 
 			// comboBoxSerialPort
 			// 
@@ -117,7 +117,7 @@
 			// menuStrip1
 			// 
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Size = new System.Drawing.Size(334, 24);
@@ -127,7 +127,7 @@
 			// fileToolStripMenuItem
 			// 
 			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.exitToolStripMenuItem});
+            this.exitToolStripMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
 			this.fileToolStripMenuItem.Text = "&File";
@@ -386,7 +386,7 @@
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.toolStripStatusLabel1});
+            this.toolStripStatusLabel1});
 			this.statusStrip1.Location = new System.Drawing.Point(3, 202);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(328, 22);
@@ -399,7 +399,7 @@
 			this.toolStripStatusLabel1.Size = new System.Drawing.Size(39, 17);
 			this.toolStripStatusLabel1.Text = "Ready";
 			// 
-			// Form1
+			// FormMassFlow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -408,7 +408,7 @@
 			this.Controls.Add(this.groupBoxSerialPort);
 			this.Controls.Add(this.menuStrip1);
 			this.MainMenuStrip = this.menuStrip1;
-			this.Name = "Form1";
+			this.Name = "FormMassFlow";
 			this.Text = "Mass Flow Controller";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
 			this.groupBoxSerialPort.ResumeLayout(false);

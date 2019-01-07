@@ -14,6 +14,19 @@ using System.Threading.Tasks;
 namespace Sensit.TestSDK.Exceptions
 {
 	/// <summary>
+	/// Device dependency is not present or not working.
+	/// </summary>
+	/// <remarks>
+	/// This exception indicates problems such as COM port failure or DLL missing.
+	/// </remarks>
+	public class DevicePortErrorException : Exception
+	{
+		public DevicePortErrorException() { }
+		public DevicePortErrorException(string message) : base(message) { }
+		public DevicePortErrorException(string message, Exception inner) : base(message, inner) { }
+	}
+
+	/// <summary>
 	/// Device is not present or not working.
 	/// </summary>
 	public class DeviceNotFoundException : Exception

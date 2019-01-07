@@ -14,182 +14,19 @@ namespace Sensit.TestSDK.Devices
 	/// Product website:
 	/// https://www.coleparmer.com/p/cole-parmer-mass-flow-controllers-for-gas/43456
 	/// </remarks>
-	public class MFC : IControlDevice, IFlowReference, ISerialDevice
+	public class MFC : ISerialDevice, IControlDevice, IReferenceDevice,
+		IFlowReference, ITemperatureReference, IPressureReference
 	{
-		// port used to communicate with mass flow controller
-		private SerialPort _serialPort = new SerialPort();
-
-		// ID used to access device
-		private char _address = 'A';
-
-		// units of mass flow (not actually sent to device)
-		private UnitOfMeasure.Flow _flowUnit = UnitOfMeasure.Flow.CubicFeetPerMinute;
-
-		// unit of temperature
-		private UnitOfMeasure.Temperature _temperatureUnit = UnitOfMeasure.Temperature.Celsius;
-
-		// gas used by device to calculate mass flow from volumetric flow
-		private Gas _gasSelection = Gas.Air;
-
-		// Commands sent to the device
+		/// <summary>
+		/// Commands sent to the device
+		/// </summary>
 		private static class Command
 		{
-			public static readonly string SetAddress = "*@=";	// set the device address; set polling/streaming mode
-			public static readonly string SetSetpoint = "S";	// set the flow setpoint
-			public static readonly string ReadRegister = "*R";	// read a register (low-level; not typically used)
-			public static readonly string WriteRegister = "*W";	// write a register (low-level; not typically used)
-			public static readonly string GasSelect = "$$";		// select gas (for conversion from volume flow to mass flow)
-		}
-
-		/// <summary>
-		/// Specifier for a specific device on the serial port
-		/// </summary>
-		/// <remarks>
-		/// Must be set when no other devices are on the bus, or it will
-		/// affect all devices at the same time.
-		/// </remarks>
-		public char Address
-		{
-			get { return _address; }
-			set
-			{
-				_address = value;
-
-				// "*@=A" sets address = A (and puts device into polling mode).
-				_serialPort.WriteLine(Command.SetAddress + _address);
-
-				// Read from the serial port (until we get a \r character).
-				string message = _serialPort.ReadLine();
-
-				// Split the string using spaces to separate each word.
-				char[] separators = new char[] { ' ' };
-				string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-
-				// Check the address.
-				if (string.Compare(words[0], _address.ToString()) != 0)
-				{
-					throw new Exception("Could not update mass flow controller address.");
-				}
-			}
-		}
-
-		/// <summary>
-		/// Fetch the mass flow controller's current readings/settings.
-		/// </summary>
-		/// <param name="pressure"></param>
-		/// <param name="temperature"></param>
-		/// <param name="volumetricFlow"></param>
-		/// <param name="massFlow"></param>
-		/// <param name="setpoint"></param>
-		/// <param name="gas"></param>
-		public void Read(out string pressure, out string temperature,
-			out string volumetricFlow, out string massFlow,
-			out string setpoint, out string gas)
-		{
-			// Read (when in polling mode) by sending the device address.
-			_serialPort.WriteLine(_address.ToString());
-
-			// Read from the serial port (until we get a \r character).
-			string message = _serialPort.ReadLine();
-
-			// Split the string using spaces to separate each word.
-			char[] separators = new char[] { ' ' };
-			string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-
-			// Check the address.
-			if (string.Compare(words[0], _address.ToString()) != 0)
-			{
-				throw new Exception("Incorrect device ID");
-			}
-
-			// Figure out which is which.
-			pressure = words[1];
-			temperature = words[2];
-			volumetricFlow = words[3];
-			massFlow = words[4];
-			setpoint = words[5];
-			gas = words[6].Replace("-", String.Empty);
-		}
-
-		#region Serial Device Methods
-
-		/// <summary>
-		/// Open the serial port with the correct settings; set default address (and polling mode).
-		/// </summary>
-		/// <param name="portName">com port name (i.e. "COM3")</param>
-		/// <param name="baudRate">baud rate (9600 and 19200 are supported)</param>
-		public void Open(string portName, int baudRate = 19200)
-		{
-			// Set serial port settings.
-			_serialPort.PortName = portName;
-			_serialPort.BaudRate = baudRate;
-			_serialPort.DataBits = 8;
-			_serialPort.Parity = Parity.None;
-			_serialPort.StopBits = StopBits.One;
-			_serialPort.Handshake = Handshake.None;
-			_serialPort.ReadTimeout = 500;
-			_serialPort.WriteTimeout = 500;
-
-			// Messages are terminated with a carriage return.
-			_serialPort.NewLine = "\r";
-
-			// Open the serial port.
-			_serialPort.Open();
-
-			// Set polling mode (by assigning a device address).
-			Address = 'A';
-		}
-
-		public void SetSerialProperties(int dataBits = 8, Parity parity = Parity.None, StopBits stopBits = StopBits.One)
-		{
-			// This mass flow controller only supports its default settings,
-			// so all this method does is throw exceptions if you try to change them.
-			if (dataBits != 8)
-				throw new DeviceSettingNotSupportedException("The device only supports 8 data bits.");
-
-			if (parity != Parity.None)
-				throw new DeviceSettingNotSupportedException("The device does not support parity.");
-
-			if (stopBits != StopBits.One)
-				throw new DeviceSettingNotSupportedException("The device only supports one stop bit.");
-		}
-
-		/// <summary>
-		/// Close the mass flow controller's serial port (if it's open).
-		/// </summary>
-		public void Close()
-		{
-			// If the serial port is open, close it.
-			if (_serialPort.IsOpen)
-			{
-				_serialPort.Close();
-			}
-		}
-
-		#endregion
-
-		#region Flow Reference Methods
-
-		public UnitOfMeasure.Flow FlowUnit
-		{
-			get { return _flowUnit; }
-		}
-
-		public UnitOfMeasure.Temperature TemperatureUnit
-		{
-			get { return _temperatureUnit; }
-		}
-
-		public Gas GasSelection
-		{
-			get { return _gasSelection; }
-		}
-
-		public void Config(UnitOfMeasure.Flow flowUnit, UnitOfMeasure.Temperature temperatureUnit,
-			double low, double high)
-		{
-			// TODO:  Ask Cole-Parmer if the device supports setting units of measure over the serial connection.
-			throw new NotImplementedException();
+			public static readonly string SetAddress = "*@=";   // set the device address; set polling/streaming mode
+			public static readonly string SetSetpoint = "S";    // set the flow setpoint
+			public static readonly string ReadRegister = "*R";  // read a register (low-level; not typically used)
+			public static readonly string WriteRegister = "*W"; // write a register (low-level; not typically used)
+			public static readonly string GasSelect = "$$";     // select gas (for conversion from volume flow to mass flow)
 		}
 
 		/// <summary>
@@ -225,26 +62,45 @@ namespace Sensit.TestSDK.Devices
 			{ Gas.Krypton,              (17, "Kr") },
 			{ Gas.Xenon,                (18, "Xe") },
 			{ Gas.SulfurHexafluoride,   (19, "SF6") },
-			{ Gas.C25,                  (20, "C25") },
-			{ Gas.C10,                  (21, "C10") },
-			{ Gas.C8,                   (22, "C8") },
-			{ Gas.C2,                   (23, "C2") },
-			{ Gas.C75,                  (24, "C75") },
-			{ Gas.He25,                 (25, "He25") }, // (code in manual has typo)
-			{ Gas.He75,                 (26, "He75") }, // (code in manual has typo)
+			{ Gas.C25,                  (20, "C-25") },
+			{ Gas.C10,                  (21, "C-10") },
+			{ Gas.C8,                   (22, "C-8") },
+			{ Gas.C2,                   (23, "C-2") },
+			{ Gas.C75,                  (24, "C-75") },
+			{ Gas.He25,                 (25, "He-25") }, // (code in manual has typo)
+			{ Gas.He75,                 (26, "He-75") }, // (code in manual has typo)
 			{ Gas.A1025,                (27, "A1025") },
 			{ Gas.Star29,               (28, "Star29") },
-			{ Gas.P5,                   (29, "P5") },
+			{ Gas.P5,                   (29, "P-5") },
 		};
+
+		// port used to communicate with mass flow controller
+		private SerialPort _serialPort = new SerialPort();
+
+		// specifier for a specific device on the serial port
+		private static readonly char ADDRESS = 'A';
+
+		/// <summary>
+		/// Enable the mass flow controller's streaming mode.
+		/// </summary>
+		/// <remarks>
+		/// Not used; but I wanted a method for it so it's documented.
+		/// </remarks>
+		private void SetStreaming()
+		{
+			// "*@=@" sets the device into streaming mode.
+			_serialPort.WriteLine(Command.SetAddress + '@');
+
+			// TODO:  Validate streaming mode.
+		}
 
 		/// <summary>
 		/// Set gas type (needed for accurate conversion between volumetric and mass flow).
 		/// </summary>
-		/// <param name="gas">enumerated gas type</param>
-		public void SetGas(Gas gas)
+		private void SetGas()
 		{
 			// Note the way we access the "GasSelection" Dictionary/Tuple.
-			string msg = _address + Command.GasSelect + GasCommand[gas].Index;
+			string msg = ADDRESS + Command.GasSelect + GasCommand[GasSelection].Index;
 
 			// "A$$12" selects propane gas for device A.
 			_serialPort.WriteLine(msg);
@@ -253,32 +109,166 @@ namespace Sensit.TestSDK.Devices
 			string message = _serialPort.ReadLine();
 
 			// Split the string using spaces to separate each word.
-			// Remove any "-" characters as they couldn't be used in enumeration names.
 			char[] separators = new char[] { ' ' };
 			string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-			string gasResult = words[6].Replace("-", String.Empty);
+			string gasResult = words[6];
 
 			// Check the gas selection.
 			// Note (again) the way we access the "GasSelection" Dictionary/Tuple.
-			string gasRequest = GasCommand[gas].Code;
+			string gasRequest = GasCommand[GasSelection].Code;
 			if (string.Compare(gasResult, gasRequest) != 0)
 			{
 				throw new Exception("Could not write gas selection to mass flow controller.");
 			}
 		}
 
+		/// <summary>
+		/// Set the device address
+		/// </summary>
+		/// <remarks>
+		/// Must be set when no other devices are on the bus, or it will
+		/// affect all devices at the same time.  This class supports only one
+		/// device per bus, so a constant address is used.
+		/// </remarks>
+		private void WriteAddress()
+		{
+			// "*@=A" sets address = A (and puts device into polling mode).
+			_serialPort.WriteLine(Command.SetAddress + ADDRESS);
+
+			// Read from the serial port (until we get a \r character).
+			string message = _serialPort.ReadLine();
+
+			// Split the string using spaces to separate each word.
+			char[] separators = new char[] { ' ' };
+			string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+
+			// Check the address.
+			if (string.Compare(words[0], ADDRESS.ToString()) != 0)
+			{
+				throw new Exception("Could not update mass flow controller address.");
+			}
+		}
+
+		#region Serial Device Methods
+
+		/// <summary>
+		/// Open the serial port with the correct settings; set default address (and polling mode).
+		/// </summary>
+		/// <param name="portName">com port name (i.e. "COM3")</param>
+		/// <param name="baudRate">baud rate (9600 and 19200 are supported)</param>
+		public void Open(string portName, int baudRate = 19200)
+		{
+			// Set serial port settings.
+			_serialPort.PortName = portName;
+			_serialPort.BaudRate = baudRate;
+			_serialPort.DataBits = 8;
+			_serialPort.Parity = Parity.None;
+			_serialPort.StopBits = StopBits.One;
+			_serialPort.Handshake = Handshake.None;
+			_serialPort.ReadTimeout = 500;
+			_serialPort.WriteTimeout = 500;
+
+			// Messages are terminated with a carriage return.
+			_serialPort.NewLine = "\r";
+
+			// Open the serial port.
+			_serialPort.Open();
+
+			// Set polling mode (by assigning a device address).
+			WriteAddress();
+		}
+
+		public void SetSerialProperties(int dataBits = 8, Parity parity = Parity.None, StopBits stopBits = StopBits.One)
+		{
+			// This mass flow controller only supports its default settings,
+			// so all this method does is throw exceptions if you try to change them.
+			if (dataBits != 8)
+				throw new DeviceSettingNotSupportedException("The device only supports 8 data bits.");
+
+			if (parity != Parity.None)
+				throw new DeviceSettingNotSupportedException("The device does not support parity.");
+
+			if (stopBits != StopBits.One)
+				throw new DeviceSettingNotSupportedException("The device only supports one stop bit.");
+		}
+
+		/// <summary>
+		/// Close the mass flow controller's serial port (if it's open).
+		/// </summary>
+		public void Close()
+		{
+			// If the serial port is open, close it.
+			if (_serialPort.IsOpen)
+			{
+				_serialPort.Close();
+			}
+		}
+
+		#endregion
+
+		#region Reference Device Methods
+
+		public UnitOfMeasure.Flow FlowUnit { get; set; } = UnitOfMeasure.Flow.CubicFeetPerMinute;
+
+		public Gas GasSelection { get; set; } = Gas.Air;
+
+		public float VolumeFlow { get; private set; }
+
+		public float MassFlow { get; private set; }
+
+		public UnitOfMeasure.Temperature TemperatureUnit { get; set; } = UnitOfMeasure.Temperature.Celsius;
+
+		public float Temperature { get; private set; }
+
+		public UnitOfMeasure.Pressure PressureUnit { get; set; } = UnitOfMeasure.Pressure.PSI;
+
+		public float Pressure { get; private set; }
+
+		public void Configure()
+		{
+			// This device has only one settable property.
+			SetGas();
+		}
+
+		public void Read()
+		{
+			// Read (when in polling mode) by sending the device address.
+			_serialPort.WriteLine(ADDRESS.ToString());
+
+			// Read from the serial port (until we get a \r character).
+			string message = _serialPort.ReadLine();
+
+			// Split the string using spaces to separate each word.
+			char[] separators = new char[] { ' ' };
+			string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+
+			// Check the address.
+			if (string.Compare(words[0], ADDRESS.ToString()) != 0)
+			{
+				throw new Exception("Incorrect device ID");
+			}
+
+			// Figure out which is which and update class properties.
+			Pressure = Convert.ToSingle(words[1]);
+			Temperature = Convert.ToSingle(words[2]);
+			VolumeFlow = Convert.ToSingle(words[3]);
+			MassFlow = Convert.ToSingle(words[4]);
+
+			// Probably don't update the control properties.
+			//Setpoint = Convert.ToSingle(words[5]);
+			//GasSelection = words[6];
+		}
+
 		#endregion
 
 		#region Control Device Methods
 
-		/// <summary>
-		/// Set the volumetric flow setpoint.
-		/// </summary>
-		/// <param name="setpoint">desired setpoint [SCCM]</param>
-		public void SetSetpoint(float setpoint)
+		public float Setpoint { get; set; }
+
+		public void WriteSetpoint()
 		{
 			// "AS4.54" = Set setpoint to 4.54 on device A.
-			_serialPort.WriteLine(_address + Command.SetSetpoint + setpoint.ToString());
+			_serialPort.WriteLine(ADDRESS + Command.SetSetpoint + Setpoint.ToString());
 
 			// Read the response from the serial port (until we get a \r character).
 			string message = _serialPort.ReadLine();
@@ -288,20 +278,16 @@ namespace Sensit.TestSDK.Devices
 			string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
 
 			// Check the setpoint.
-			if (Convert.ToSingle(words[5]).Equals(setpoint) == false)
+			if (Convert.ToSingle(words[5]).Equals(Setpoint) == false)
 			{
-				throw new Exception("Could not write setpoint to mass flow controller.");
+				throw new DeviceCommandFailedException("Could not write setpoint to mass flow controller.");
 			}
 		}
 
-		/// <summary>
-		/// Read the volumetric flow setpoint from the mass flow controller.
-		/// </summary>
-		/// <returns>active setpoint [SCCM]</returns>
-		public float GetSetpoint()
+		public void ReadSetpoint()
 		{
 			// Read (when in polling mode) by sending the device address.
-			_serialPort.WriteLine(_address.ToString());
+			_serialPort.WriteLine(ADDRESS.ToString());
 
 			// Read from the serial port (until we get a \r character).
 			string message = _serialPort.ReadLine();
@@ -310,7 +296,7 @@ namespace Sensit.TestSDK.Devices
 			char[] separators = new char[] { ' ' };
 			string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
 
-			return Convert.ToSingle(words[5]);
+			Setpoint = Convert.ToSingle(words[5]);
 		}
 
 		public void SetControlMode(ControlMode mode)
@@ -319,21 +305,5 @@ namespace Sensit.TestSDK.Devices
 		}
 
 		#endregion
-
-		/// <summary>
-		/// Enable the mass flow controller's streaming mode.
-		/// </summary>
-		public void SetStreaming()
-		{
-			// "*@=@" sets the device into streaming mode.
-			_serialPort.WriteLine(Command.SetAddress + '@');
-
-			// TODO:  Validate streaming mode.
-		}
-
-		public double GetReading()
-		{
-			throw new NotImplementedException();
-		}
 	}
 }

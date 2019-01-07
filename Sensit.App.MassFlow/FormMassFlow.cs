@@ -51,7 +51,7 @@ namespace Sensit.App.MassFlow
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void radioButtonOpen_CheckedChanged(object sender, EventArgs e)
+		private void radioButton_CheckedChanged(object sender, EventArgs e)
 		{
 			// Do stuff only if the radio button is checked.
 			// (Otherwise the actions will run twice.)
@@ -59,70 +59,50 @@ namespace Sensit.App.MassFlow
 			{
 				try
 				{
-					// Alert the user.
-					toolStripStatusLabel1.Text = "Opening serial port...";
+					// If the "Open radio button has been checked...
+					if (((RadioButton)sender) == radioButtonOpen)
+					{
+						// Alert the user.
+						toolStripStatusLabel1.Text = "Opening serial port...";
 
-					// Open the Mass Flow Controller (and let it know what serial port to use).
-					_mfc.Open(Properties.Settings.Default.Port);
+						// Open the Mass Flow Controller (and let it know what serial port to use).
+						_mfc.Open(Properties.Settings.Default.Port);
 
-					// Update the user interface.
-					comboBoxSerialPort.Enabled = false;
-					comboBoxGas.Enabled = true;
-					textBoxSetpoint.Enabled = true;
-					buttonReadAll.Enabled = true;
-					buttonWriteGas.Enabled = true;
-					buttonWrite.Enabled = true;
-					toolStripStatusLabel1.Text = "Success.";
+						// Update the user interface.
+						comboBoxSerialPort.Enabled = false;
+						comboBoxGas.Enabled = true;
+						textBoxSetpoint.Enabled = true;
+						buttonReadAll.Enabled = true;
+						buttonWriteGas.Enabled = true;
+						buttonWrite.Enabled = true;
+						toolStripStatusLabel1.Text = "Port open.";
+					}
+					else if (((RadioButton)sender) == radioButtonClosed)
+					{
+						// Alert the user.
+						toolStripStatusLabel1.Text = "Closing serial port...";
+
+						// Close the serial port.
+						_mfc.Close();
+
+						// Update user interface.
+						comboBoxSerialPort.Enabled = true;
+						comboBoxGas.Enabled = false;
+						textBoxSetpoint.Enabled = false;
+						buttonReadAll.Enabled = false;
+						buttonWriteGas.Enabled = false;
+						buttonWrite.Enabled = false;
+						toolStripStatusLabel1.Text = "Port closed.";
+					}
 				}
 				// If an error occurs...
 				catch (Exception ex)
 				{
 					// Alert the user.
 					MessageBox.Show(ex.Message, "Error");
-					toolStripStatusLabel1.Text = ex.Message;
 
 					// Undo the user action.
 					radioButtonClosed.Checked = true;
-				}
-			}
-		}
-
-		/// <summary>
-		/// Close the serial port.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void radioButtonClosed_CheckedChanged(object sender, EventArgs e)
-		{
-			// Do stuff only if the radio button is checked.
-			if (((RadioButton)sender).Checked)
-			{
-				try
-				{
-					// Alert the user.
-					toolStripStatusLabel1.Text = "Closing serial port...";
-
-					// Close the serial port.
-					_mfc.Close();
-
-					// Update user interface.
-					comboBoxSerialPort.Enabled = true;
-					comboBoxGas.Enabled = false;
-					textBoxSetpoint.Enabled = false;
-					buttonReadAll.Enabled = false;
-					buttonWriteGas.Enabled = false;
-					buttonWrite.Enabled = false;
-					toolStripStatusLabel1.Text = "Success.";
-				}
-				// If an error occurs...
-				catch (Exception ex)
-				{
-					// If an error occurs, alert the user.
-					MessageBox.Show(ex.Message, "Error");
-					toolStripStatusLabel1.Text = ex.Message;
-
-					// Undo the user action.
-					radioButtonOpen.Checked = true;
 				}
 			}
 		}
@@ -166,17 +146,15 @@ namespace Sensit.App.MassFlow
 				toolStripStatusLabel1.Text = "Reading from mass flow controller...";
 
 				// Read status from the mass flow controller.
-				_mfc.Read(out string pressure, out string temperature,
-					out string volumetricFlow, out string massFlow,
-					out string setpoint, out string gas);
+				_mfc.Read();
 
 				// Update the form.
-				textBoxPressure.Text = pressure;
-				textBoxTemperature.Text = temperature;
-				textBoxVolumetricFlow.Text = volumetricFlow;
-				textBoxMassFlow.Text = massFlow;
-				textBoxSetpoint.Text = setpoint;
-				comboBoxGas.Text = gas;
+				textBoxPressure.Text = _mfc.Pressure.ToString();
+				textBoxTemperature.Text = _mfc.Temperature.ToString();
+				textBoxVolumetricFlow.Text = _mfc.VolumeFlow.ToString();
+				textBoxMassFlow.Text = _mfc.MassFlow.ToString();
+				textBoxSetpoint.Text = _mfc.Setpoint.ToString();
+				comboBoxGas.Text = _mfc.GasSelection.ToString();
 				toolStripStatusLabel1.Text = "Success.";
 			}
 			catch (Exception ex)
@@ -200,7 +178,8 @@ namespace Sensit.App.MassFlow
 				float setpoint = Convert.ToSingle(textBoxSetpoint.Text);
 
 				// Write setpoint to the mass flow controller.
-				_mfc.SetSetpoint(setpoint);
+				_mfc.Setpoint = setpoint;
+				_mfc.WriteSetpoint();
 			}
 			catch (FormatException ex)
 			{
@@ -228,7 +207,8 @@ namespace Sensit.App.MassFlow
 				toolStripStatusLabel1.Text = "Writing gas selection...";
 
 				// Send the gas selection to the mass flow controller.
-				_mfc.SetGas(gas);
+				_mfc.GasSelection = gas;
+				_mfc.Configure();
 
 				// Alert the user.
 				toolStripStatusLabel1.Text = "Success.";
