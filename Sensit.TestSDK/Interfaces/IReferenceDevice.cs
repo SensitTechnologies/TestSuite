@@ -5,6 +5,10 @@ namespace Sensit.TestSDK.Interfaces
 	/// <summary>
 	/// Device that measures one or more dependent variables in a test.
 	/// </summary>
+	/// <remarks>
+	/// Don't implement this interface directly.
+	/// Devices should implement one of the more specific interfaces below.
+	/// </remarks>
 	public interface IReferenceDevice
 	{
 		/// <summary>
@@ -15,10 +19,14 @@ namespace Sensit.TestSDK.Interfaces
 		/// <summary>
 		/// Fetch the device's current readings/settings (accessible through properties).
 		/// </summary>
+		/// <remarks>
+		/// Some processes need fast reads, and some devices measure multiple parameters
+		/// with a single query.  So this interface supports reading all parameters
+		/// at once.
+		/// </remarks>
 		void Read();
 
 		// TODO:  Are "Prompt" or "SetReading" methods necessary to support manual reference?
-		// Or maybe instead of returning a variable, ref it instead?
 	}
 
 	/// <summary>
@@ -59,12 +67,12 @@ namespace Sensit.TestSDK.Interfaces
 	}
 
 	/// <summary>
-	/// Device that measures mass flow and volumetric flow.
+	/// Device that measures gas mass flow.
 	/// </summary>
 	/// <remarks>
 	/// May wish to split into two interfaces (mass and volumetric flow) in the future.
 	/// </remarks>
-	public interface IFlowReference : IReferenceDevice
+	public interface IMassFlowReference : IReferenceDevice
 	{
 		UnitOfMeasure.Flow FlowUnit { get; set; }
 
@@ -73,10 +81,32 @@ namespace Sensit.TestSDK.Interfaces
 		/// </summary>
 		Gas GasSelection { get; set; }
 
-		float VolumeFlow { get; }
 		float MassFlow { get; }
 	}
 
+	/// <summary>
+	/// Device that measures gas volumetric flow.
+	/// </summary>
+	public interface IVolumeFlowReference : IReferenceDevice
+	{
+		UnitOfMeasure.Flow FlowUnit { get; set; }
+
+		float VolumeFlow { get; }
+	}
+
+	/// <summary>
+	/// Device that measures gas velocity.
+	/// </summary>
+	public interface IVelocityReference : IReferenceDevice
+	{
+		UnitOfMeasure.Velocity VelocityUnit { get; set; }
+
+		float Velocity { get; }
+	}
+
+	/// <summary>
+	/// Device that measures pressure.
+	/// </summary>
 	public interface IPressureReference : IReferenceDevice
 	{
 		UnitOfMeasure.Pressure PressureUnit { get; set; }

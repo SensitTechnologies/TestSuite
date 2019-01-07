@@ -14,8 +14,8 @@ namespace Sensit.TestSDK.Devices
 	/// Product website:
 	/// https://www.coleparmer.com/p/cole-parmer-mass-flow-controllers-for-gas/43456
 	/// </remarks>
-	public class MFC : ISerialDevice, IControlDevice, IReferenceDevice,
-		IFlowReference, ITemperatureReference, IPressureReference
+	public class MFC : ISerialDevice, IMassFlowController, 
+		IMassFlowReference, IVolumeFlowReference, ITemperatureReference, IPressureReference
 	{
 		/// <summary>
 		/// Commands sent to the device
@@ -84,7 +84,7 @@ namespace Sensit.TestSDK.Devices
 		/// Enable the mass flow controller's streaming mode.
 		/// </summary>
 		/// <remarks>
-		/// Not used; but I wanted a method for it so it's documented.
+		/// Not used; but I wrote a method for it so it's documented.
 		/// </remarks>
 		private void SetStreaming()
 		{
@@ -118,7 +118,7 @@ namespace Sensit.TestSDK.Devices
 			string gasRequest = GasCommand[GasSelection].Code;
 			if (string.Compare(gasResult, gasRequest) != 0)
 			{
-				throw new Exception("Could not write gas selection to mass flow controller.");
+				throw new DeviceCommandFailedException("Could not write gas selection to mass flow controller.");
 			}
 		}
 
@@ -145,7 +145,7 @@ namespace Sensit.TestSDK.Devices
 			// Check the address.
 			if (string.Compare(words[0], ADDRESS.ToString()) != 0)
 			{
-				throw new Exception("Could not update mass flow controller address.");
+				throw new DeviceCommandFailedException("Could not update mass flow controller address.");
 			}
 		}
 
@@ -228,6 +228,9 @@ namespace Sensit.TestSDK.Devices
 		{
 			// This device has only one settable property.
 			SetGas();
+
+			// TODO:  Figure out how to set units of measure programmatically.
+			// TODO:  Until you can set units of meaure programmatically, throw an error if it's not a default unit.
 		}
 
 		public void Read()
@@ -245,7 +248,7 @@ namespace Sensit.TestSDK.Devices
 			// Check the address.
 			if (string.Compare(words[0], ADDRESS.ToString()) != 0)
 			{
-				throw new Exception("Incorrect device ID");
+				throw new DeviceCommandFailedException("Incorrect device ID");
 			}
 
 			// Figure out which is which and update class properties.
@@ -263,12 +266,12 @@ namespace Sensit.TestSDK.Devices
 
 		#region Control Device Methods
 
-		public float Setpoint { get; set; }
+		public float MassFlowSetpoint { set; get; }
 
-		public void WriteSetpoint()
+		public void WriteMassFlowSetpoint()
 		{
 			// "AS4.54" = Set setpoint to 4.54 on device A.
-			_serialPort.WriteLine(ADDRESS + Command.SetSetpoint + Setpoint.ToString());
+			_serialPort.WriteLine(ADDRESS + Command.SetSetpoint + MassFlowSetpoint.ToString());
 
 			// Read the response from the serial port (until we get a \r character).
 			string message = _serialPort.ReadLine();
@@ -278,13 +281,20 @@ namespace Sensit.TestSDK.Devices
 			string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
 
 			// Check the setpoint.
-			if (Convert.ToSingle(words[5]).Equals(Setpoint) == false)
+			if (Convert.ToSingle(words[5]).Equals(MassFlowSetpoint) == false)
 			{
 				throw new DeviceCommandFailedException("Could not write setpoint to mass flow controller.");
 			}
 		}
 
-		public void ReadSetpoint()
+		public void WriteMassFlowSetpoint(float setpoint)
+		{
+			MassFlowSetpoint = setpoint;
+
+			WriteMassFlowSetpoint();
+		}
+
+		public float ReadMassFlowSetpoint()
 		{
 			// Read (when in polling mode) by sending the device address.
 			_serialPort.WriteLine(ADDRESS.ToString());
@@ -296,12 +306,19 @@ namespace Sensit.TestSDK.Devices
 			char[] separators = new char[] { ' ' };
 			string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
 
-			Setpoint = Convert.ToSingle(words[5]);
+			// Convert the setpoint to a number and set the property.
+			MassFlowSetpoint = Convert.ToSingle(words[5]);
+
+			// Return the setpoint in case the user wants it.
+			return MassFlowSetpoint;
 		}
 
 		public void SetControlMode(ControlMode mode)
 		{
-			throw new NotImplementedException();
+			// This mass flow controller only supports control mode,
+			// so all this method does is throw exceptions if you try to change them.
+			if (mode != ControlMode.Control)
+				throw new DeviceSettingNotSupportedException("The device only supports Control mode.");
 		}
 
 		#endregion

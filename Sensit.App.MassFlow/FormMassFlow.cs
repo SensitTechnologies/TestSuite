@@ -153,7 +153,7 @@ namespace Sensit.App.MassFlow
 				textBoxTemperature.Text = _mfc.Temperature.ToString();
 				textBoxVolumetricFlow.Text = _mfc.VolumeFlow.ToString();
 				textBoxMassFlow.Text = _mfc.MassFlow.ToString();
-				textBoxSetpoint.Text = _mfc.Setpoint.ToString();
+				textBoxSetpoint.Text = _mfc.MassFlowSetpoint.ToString();
 				comboBoxGas.Text = _mfc.GasSelection.ToString();
 				toolStripStatusLabel1.Text = "Success.";
 			}
@@ -178,8 +178,7 @@ namespace Sensit.App.MassFlow
 				float setpoint = Convert.ToSingle(textBoxSetpoint.Text);
 
 				// Write setpoint to the mass flow controller.
-				_mfc.Setpoint = setpoint;
-				_mfc.WriteSetpoint();
+				_mfc.WriteMassFlowSetpoint(setpoint);
 			}
 			catch (FormatException ex)
 			{
