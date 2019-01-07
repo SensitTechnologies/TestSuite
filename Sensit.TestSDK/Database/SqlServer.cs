@@ -306,7 +306,6 @@ namespace Sensit.TestSDK.Database
             SqlCommand cmd;
             string sql = null;
             SqlDataReader reader;
-            string result = null;
 
             connectionString = "Data Source=" + _server + ";Initial Catalog=" + _database + ";User ID=" + _username +
                                ";Password=" + _password;
