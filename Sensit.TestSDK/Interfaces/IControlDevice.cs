@@ -61,6 +61,9 @@ namespace Sensit.TestSDK.Interfaces
 		/// <summary>
 		/// Read the setpoint from the device.
 		/// </summary>
+		/// <remarks>
+		/// For convenience, this method updates the property and returns the value.
+		/// </remarks>
 		float ReadMassFlowSetpoint();
 	}
 
