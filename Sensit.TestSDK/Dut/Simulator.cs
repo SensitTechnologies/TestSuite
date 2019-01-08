@@ -3,33 +3,30 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
 using Sensit.TestSDK.Forms;
+using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.TestSDK.Dut
 {
-	class Simulator : Dut
+	/// <summary>
+	/// A virtual device under test.  Useful for testing software and test equipment.
+	/// </summary>
+	class Simulator : IDeviceUnderTest
 	{
-		public override bool Selected { get; set; } = false;
-		public override DutStatus Status { get; set; } = DutStatus.Unknown;
-		public override string Serial { get; set; } = "Simulator";
-		public override string Message { get; set; }
-		public override List<DutCoefficient> Coefficients { get; set; }
+		public string Model { get; set; }
 
-		public override void ClosePort()
-		{
-			// Nothing to do here.
-		}
+		public string Version { get; set; }
 
-		public override void ComputeCoefficients()
-		{
-			throw new NotImplementedException();
-		}
+		public bool Selected { get; set; } = false;
 
-		public override void FactoryDefault()
-		{
-			// Nothing to do here.
-		}
+		public DutStatus Status { get; set; } = DutStatus.Unknown;
 
-		public override void Find()
+		public string SerialNumber { get; set; } = "Simulator";
+
+		public string Message { get; set; } = String.Empty;
+
+		public List<DutCoefficient> Coefficients { get; set; }
+
+		public void ReadModel()
 		{
 			// Pause for effect.
 			Thread.Sleep(1000);
@@ -38,7 +35,7 @@ namespace Sensit.TestSDK.Dut
 			Status = DutStatus.Found;
 		}
 
-		public override string GetFirmwareVersion()
+		public string ReadVersion()
 		{
 			// Prompt user to enter desired number of DUTs (current value as default).
 			string version = "1.0.0";
@@ -51,12 +48,43 @@ namespace Sensit.TestSDK.Dut
 			return version;
 		}
 
-		public override void OpenPort()
+		public void FactoryDefault()
 		{
-			// Nothing to do here.
+			// Pause for effect.
+			Thread.Sleep(250);
 		}
 
-		public override int ReadRawCounts()
+		public string ReadSerialNumber()
+		{
+			// Prompt user to enter desired number of DUTs (current value as default).
+			string serial = SerialNumber;
+			DialogResult result = InputDialog.Text("Enter firmware version", ref serial);
+
+			// If user cancels, throw an error.
+			if (result != DialogResult.OK)
+				throw new Exception("Could not read serial number.");
+
+			// Update the property.
+			SerialNumber = serial;
+
+			// Return the value.
+			return SerialNumber;
+		}
+
+		public void WriteSerialNumber()
+		{
+			// Pause for effect.
+			Thread.Sleep(250);
+		}
+
+		public void WriteSerialNumber(string serialNumber)
+		{
+			SerialNumber = serialNumber;
+
+			WriteSerialNumber();
+		}
+
+		public int ReadRawCounts()
 		{
 			// Return a random 16-bit number.
 			//Random random = new Random();
@@ -73,39 +101,30 @@ namespace Sensit.TestSDK.Dut
 			return counts;
 		}
 
-		public override void ReadSerialNumber()
+		public void ComputeCoefficients()
 		{
-			// Prompt user to enter desired number of DUTs (current value as default).
-			string serial = Serial;
-			DialogResult result = InputDialog.Text("Enter firmware version", ref serial);
-
-			// If user cancels, throw an error.
-			if (result != DialogResult.OK)
-				throw new Exception("Could not read serial number.");
-
-			// Update the property.
-			Serial = serial;
+			throw new NotImplementedException();
 		}
 
-		public override void TurnPowerOff()
+		public List<DutCoefficient> ReadCoefficients()
 		{
-			// Nothing to do here.
+			// Pause for effect.
+			Thread.Sleep(250);
+
+			return Coefficients;
 		}
 
-		public override void TurnPowerOn()
-		{
-			// Nothing to do here.
-		}
-
-		public override void WriteCoefficients()
+		public void WriteCoefficients()
 		{
 			// Pause for effect.
 			Thread.Sleep(250);
 		}
 
-		public override void WriteSerialNumber()
+		public void WriteCoefficients(List<DutCoefficient> coefficients)
 		{
-			// Nothing to do here.
+			Coefficients = coefficients;
+
+			WriteCoefficients();
 		}
 	}
 }
