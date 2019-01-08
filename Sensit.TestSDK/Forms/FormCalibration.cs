@@ -291,5 +291,10 @@ namespace Sensit.TestSDK.Forms
 				Application.Exit();
 			}
 		}
+
+		private void variablesToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			// TODO:  Open a form to select controlled and independent variables.
+		}
 	}
 }
