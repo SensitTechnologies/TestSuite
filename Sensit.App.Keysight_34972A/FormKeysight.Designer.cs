@@ -37,6 +37,7 @@
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.buttonFind = new System.Windows.Forms.Button();
 			this.groupBoxGPIB.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
@@ -46,13 +47,14 @@
 			// 
 			this.groupBoxGPIB.AutoSize = true;
 			this.groupBoxGPIB.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.groupBoxGPIB.Controls.Add(this.buttonFind);
 			this.groupBoxGPIB.Controls.Add(this.radioButtonClosed);
 			this.groupBoxGPIB.Controls.Add(this.radioButtonOpen);
 			this.groupBoxGPIB.Controls.Add(this.comboBoxAddress);
 			this.groupBoxGPIB.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBoxGPIB.Location = new System.Drawing.Point(0, 24);
 			this.groupBoxGPIB.Name = "groupBoxGPIB";
-			this.groupBoxGPIB.Size = new System.Drawing.Size(334, 60);
+			this.groupBoxGPIB.Size = new System.Drawing.Size(334, 62);
 			this.groupBoxGPIB.TabIndex = 1;
 			this.groupBoxGPIB.TabStop = false;
 			this.groupBoxGPIB.Text = "GPIB";
@@ -61,7 +63,7 @@
 			// 
 			this.radioButtonClosed.AutoSize = true;
 			this.radioButtonClosed.Checked = true;
-			this.radioButtonClosed.Location = new System.Drawing.Point(199, 23);
+			this.radioButtonClosed.Location = new System.Drawing.Point(241, 23);
 			this.radioButtonClosed.Name = "radioButtonClosed";
 			this.radioButtonClosed.Size = new System.Drawing.Size(57, 17);
 			this.radioButtonClosed.TabIndex = 2;
@@ -73,7 +75,7 @@
 			// radioButtonOpen
 			// 
 			this.radioButtonOpen.AutoSize = true;
-			this.radioButtonOpen.Location = new System.Drawing.Point(141, 23);
+			this.radioButtonOpen.Location = new System.Drawing.Point(184, 23);
 			this.radioButtonOpen.Name = "radioButtonOpen";
 			this.radioButtonOpen.Size = new System.Drawing.Size(51, 17);
 			this.radioButtonOpen.TabIndex = 1;
@@ -130,6 +132,18 @@
 			this.exitToolStripMenuItem.Text = "&Exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
 			// 
+			// buttonFind
+			// 
+			this.buttonFind.AutoSize = true;
+			this.buttonFind.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.buttonFind.Location = new System.Drawing.Point(141, 20);
+			this.buttonFind.Name = "buttonFind";
+			this.buttonFind.Size = new System.Drawing.Size(37, 23);
+			this.buttonFind.TabIndex = 3;
+			this.buttonFind.Text = "Find";
+			this.buttonFind.UseVisualStyleBackColor = true;
+			this.buttonFind.Click += new System.EventHandler(this.buttonFind_Click);
+			// 
 			// FormKeysight
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -163,6 +177,7 @@
 		private System.Windows.Forms.MenuStrip menuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+		private System.Windows.Forms.Button buttonFind;
 	}
 }
 

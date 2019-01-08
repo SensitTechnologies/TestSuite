@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Ivi.Visa;					// sent SCPI commands using VISA
+using Sensit.TestSDK.Exceptions;
 
 namespace Sensit.TestSDK.Devices
 {
@@ -44,9 +45,19 @@ namespace Sensit.TestSDK.Devices
 
 		public void Open()
 		{
-			// Open a connection to the instrument.
-			// TODO:  Find available instrument address instead of hardcoding.
-			_instrument = GlobalResourceManager.Open("USB0::0x0957::0x2007::MY49018108::0::INSTR") as IMessageBasedFormattedIO;
+			try
+			{
+				// Open a connection to the instrument.
+				// TODO:  Find available instrument address instead of hardcoding.
+				_instrument = GlobalResourceManager.Open("USB0::0x0957::0x2007::MY49018108::0::INSTR") as IMessageBasedFormattedIO;
+			}
+			catch (EntryPointNotFoundException ex)
+			{
+				throw new DevicePortException("The IVI.VISA dll appears to be missing." + Environment.NewLine +
+					"It must be installed as a separate package." + Environment.NewLine +
+					"Details:" + Environment.NewLine +
+					ex.Message);
+			}
 
 			// Once we're connected, make sure we close things correctly.
 			try
@@ -59,9 +70,8 @@ namespace Sensit.TestSDK.Devices
 			}
 			finally
 			{
-				// Close the connection to the instrument.
-				// TODO:  This line does not compile!
-				//_instrument.Close();
+				// Dispose of the instrument connection if it is not null.
+				((IDisposable)_instrument)?.Dispose();
 
 				// Free the reference to the session.
 				_instrument = null;
@@ -70,8 +80,8 @@ namespace Sensit.TestSDK.Devices
 
 		public void Close()
 		{
-			// TODO:  This line does not compile!
-			//_instrument.Close();
+			// Dispose of the instrument connection if it is not null.
+			((IDisposable)_instrument)?.Dispose();
 		}
 	}
 }

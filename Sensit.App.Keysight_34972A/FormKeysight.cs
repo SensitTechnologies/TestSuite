@@ -78,5 +78,10 @@ namespace Sensit.App.Keysight
 		{
 			Application.Exit();
 		}
+
+		private void buttonFind_Click(object sender, EventArgs e)
+		{
+
+		}
 	}
 }
