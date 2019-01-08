@@ -19,21 +19,21 @@ namespace Sensit.TestSDK.Exceptions
 	/// <remarks>
 	/// This exception indicates problems such as COM port failure or DLL missing.
 	/// </remarks>
-	public class DevicePortErrorException : Exception
+	public class DevicePortException : Exception
 	{
-		public DevicePortErrorException() { }
-		public DevicePortErrorException(string message) : base(message) { }
-		public DevicePortErrorException(string message, Exception inner) : base(message, inner) { }
+		public DevicePortException() { }
+		public DevicePortException(string message) : base(message) { }
+		public DevicePortException(string message, Exception inner) : base(message, inner) { }
 	}
 
 	/// <summary>
 	/// Device is not present or not working.
 	/// </summary>
-	public class DeviceNotFoundException : Exception
+	public class DeviceCommunicationException : Exception
 	{
-		public DeviceNotFoundException() { }
-		public DeviceNotFoundException(string message) : base(message) { }
-		public DeviceNotFoundException(string message, Exception inner) : base(message, inner) { }
+		public DeviceCommunicationException() { }
+		public DeviceCommunicationException(string message) : base(message) { }
+		public DeviceCommunicationException(string message, Exception inner) : base(message, inner) { }
 	}
 
 	/// <summary>
@@ -47,7 +47,7 @@ namespace Sensit.TestSDK.Exceptions
 	}
 
 	/// <summary>
-	/// Device communication failed.
+	/// Device failed to execute the command.
 	/// </summary>
 	public class DeviceCommandFailedException : Exception
 	{
@@ -64,5 +64,15 @@ namespace Sensit.TestSDK.Exceptions
 		public DeviceOutOfRangeException() { }
 		public DeviceOutOfRangeException(string message) : base(message) { }
 		public DeviceOutOfRangeException(string message, Exception inner) : base(message, inner) { }
+	}
+
+	/// <summary>
+	/// Device data could not be linearized.
+	/// </summary>
+	public class DeviceCalibrationFailedException : Exception
+	{
+		public DeviceCalibrationFailedException() { }
+		public DeviceCalibrationFailedException(string message) : base(message) { }
+		public DeviceCalibrationFailedException(string message, Exception inner) : base(message, inner) { }
 	}
 }
