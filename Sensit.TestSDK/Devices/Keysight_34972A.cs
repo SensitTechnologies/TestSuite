@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Ivi.Visa;					// sent SCPI commands using VISA
-using Sensit.TestSDK.Exceptions;
+using Ivi.Visa;                         // send SCPI commands using VISA
+using Sensit.TestSDK.Communication;     // SCPI library
+using Sensit.TestSDK.Exceptions;        // custom exceptions
 
 namespace Sensit.TestSDK.Devices
 {
