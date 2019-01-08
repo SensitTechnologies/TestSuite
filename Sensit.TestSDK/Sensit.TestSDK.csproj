@@ -140,8 +140,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calculations\Calculations.cs" />
+    <Compile Include="Devices\Manual.cs" />
     <Compile Include="Dut\AnalogSensor.cs" />
-    <Compile Include="Dut\Dut.cs" />
     <Compile Include="Controls\UserCustomStep.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -173,6 +173,7 @@
     </Compile>
     <Compile Include="Forms\InputDialog.cs" />
     <Compile Include="Interfaces\IControlDevice.cs" />
+    <Compile Include="Interfaces\IDeviceUnderTest.cs" />
     <Compile Include="Interfaces\IReferenceDevice.cs" />
     <Compile Include="Interfaces\ISerialDevice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
