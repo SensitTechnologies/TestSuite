@@ -13,6 +13,9 @@ namespace Sensit.TestSDK.Devices
 	/// <remarks>
 	/// Product website:
 	/// https://www.coleparmer.com/p/cole-parmer-mass-flow-controllers-for-gas/43456
+	/// TODO:  Figure out how to set control variable over serial interface.
+	/// Once that's possible, this class can be extended to implement
+	/// IVolumeFlowController, IPressureController. This should be low priority.
 	/// </remarks>
 	public class MFC : ISerialDevice, IMassFlowController, 
 		IMassFlowReference, IVolumeFlowReference, ITemperatureReference, IPressureReference
