@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Sensit.TestSDK.Forms
@@ -49,18 +50,24 @@ namespace Sensit.TestSDK.Forms
 				// Create new DUT controls.
 				for (int i = 1; i <= value; i++)
 				{
-					CheckBox checkBox = new CheckBox();
-					checkBox.Name = "checkBoxDut" + i.ToString();
-					checkBox.Text = "DUT" + i.ToString();
-					checkBox.AutoSize = true;
+					CheckBox checkBox = new CheckBox
+					{
+						Name = "checkBoxDut" + i.ToString(),
+						Text = "DUT" + i.ToString(),
+						AutoSize = true
+					};
 					tableLayoutPanelDevicesUnderTest.Controls.Add(checkBox, 0, i - 1);
 
-					ComboBox comboBox = new ComboBox();
-					comboBox.Name = "comboBoxDut" + i.ToString();
+					ComboBox comboBox = new ComboBox
+					{
+						Name = "comboBoxDut" + i.ToString()
+					};
 					tableLayoutPanelDevicesUnderTest.Controls.Add(comboBox, 1, i - 1);
 
-					TextBox textBox = new TextBox();
-					textBox.Name = "textBoxDut" + i.ToString();
+					TextBox textBox = new TextBox
+					{
+						Name = "textBoxDut" + i.ToString()
+					};
 					tableLayoutPanelDevicesUnderTest.Controls.Add(textBox, 2, i - 1);
 				}
 			}
