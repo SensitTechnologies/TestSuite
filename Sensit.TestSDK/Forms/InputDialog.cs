@@ -6,10 +6,12 @@ namespace Sensit.TestSDK.Forms
 {
 	public static class InputDialog
 	{
+		#region Private Methods
+
 		private static Form CreateBox(string caption)
 		{
 			// Create a new form.
-			Size size = new Size(150, 70);
+			Size size = new Size(160, 70);
 			// TODO:  Make the form autosize to the controls.
 			Form inputBox = new Form
 			{
@@ -52,7 +54,9 @@ namespace Sensit.TestSDK.Forms
 			return inputBox;
 		}
 
-		public static DialogResult Numeric(string caption, ref int input, int min = 0, int max = 100)
+		#endregion
+
+		public static DialogResult Numeric(string caption, ref int input, int min = 0, int max = 100, int increment = 1)
 		{
 			// Create a new form.
 			Form inputBox = CreateBox(caption);
@@ -61,13 +65,35 @@ namespace Sensit.TestSDK.Forms
 			NumericUpDown numericInput = new NumericUpDown
 			{
 				Location = new Point(5, 5),
-				Dock = DockStyle.Fill,
 				Value = input,
-				Increment = 1,
+				Increment = increment,
 				Minimum = min,
 				Maximum = max
 			};
 			
+			inputBox.Controls.Add(numericInput);
+
+			// Show the form; read and return user input.
+			DialogResult result = inputBox.ShowDialog();
+			input = Convert.ToInt32(numericInput.Value);
+			return result;
+		}
+
+		public static DialogResult Numeric(string caption, ref double input, double min = 0, double max = 100, double increment = 1.0)
+		{
+			// Create a new form.
+			Form inputBox = CreateBox(caption);
+
+			// Create a numeric up/down control.
+			NumericUpDown numericInput = new NumericUpDown
+			{
+				Location = new Point(5, 5),
+				Value = (decimal)input,
+				Increment = (decimal)increment,
+				Minimum = (decimal)min,
+				Maximum = (decimal)max
+			};
+
 			inputBox.Controls.Add(numericInput);
 
 			// Show the form; read and return user input.
@@ -82,9 +108,12 @@ namespace Sensit.TestSDK.Forms
 			Form inputBox = CreateBox(caption);
 
 			// Create a numeric up/down control.
-			TextBox textBox = new TextBox();
-			textBox.Location = new Point(5, 5);
-			textBox.Text = input;
+			TextBox textBox = new TextBox
+			{
+				Location = new Point(5, 5),
+				Text = input
+			};
+
 			inputBox.Controls.Add(textBox);
 
 			// Show the form; read and return user input.
