@@ -1,6 +1,5 @@
 ﻿using System;
 using Ivi.Visa;                         // send SCPI commands using VISA
-using Sensit.TestSDK.Communication;     // SCPI library
 using Sensit.TestSDK.Exceptions;        // custom exceptions
 
 namespace Sensit.TestSDK.Devices
