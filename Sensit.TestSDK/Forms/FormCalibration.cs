@@ -1,22 +1,31 @@
 ﻿using System;
+using System.Collections;
 using System.Windows.Forms;
 
 namespace Sensit.TestSDK.Forms
 {
 	public partial class FormCalibration : Form
 	{
-		public Action TestStart;	// "Start" button action
-		public Action TestStop;		// "Stop" button action
-		public Action TestPause;	// action to pause a test
-		public Func<bool> TestBusy;	// method to check if a test is running
-		public Action Print;		// "Print" button action
-		public Action Options;      // action to launch an "Options" form
+		public Action TestStart;			// "Start" button action
+		public Action TestStop;				// "Stop" button action
+		public Action TestPause;			// action to pause a test
+		public Func<bool> TestBusy;         // method to check if a test is running
+		public Action<string> ModelChanged; // action when model is chanced
+		public Action<string> RangeChanged; // action when range is changed
+		public Action<string> TestChanged;	// action when test is changed
+		public Action Print;				// "Print" button action
+		public Action Options;				// action to launch an "Options" form
+		public Action<int> NumDutsChanged;	// method to call when the number of DUTs has changed
 
 		// allow the form to wait for tests to cancel/complete before closing application
 		private bool _closeAfterTest = false;
 
+		// number of devices under test displayed on the form
 		private int _numDuts = 1;
 
+		/// <summary>
+		/// Number of DUTs displayed on the form
+		/// </summary>
 		public int NumDuts
 		{
 			get { return _numDuts; }
@@ -58,14 +67,127 @@ namespace Sensit.TestSDK.Forms
 		}
 
 		/// <summary>
+		/// Items in the "Model" combobox
+		/// </summary>
+		public ArrayList ModelList
+		{
+			get
+			{
+				// Create new array list.
+				ArrayList models = new ArrayList();
+
+				// Add the items.
+				foreach (var item in comboBoxModel.Items)
+				{
+					models.Add(item);
+				}
+
+				// Return the array list.
+				return models;
+			}
+			set
+			{
+				// Remove existing items.
+				comboBoxModel.Items.Clear();
+
+				// Add new items.
+				foreach (var model in value)
+				{
+					comboBoxModel.Items.Add(model);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Items in the "Range" combobox
+		/// </summary>
+		public ArrayList RangeList
+		{
+			get
+			{
+				// Create new array list.
+				ArrayList ranges = new ArrayList();
+
+				// Add the items.
+				foreach (var item in comboBoxRange.Items)
+				{
+					ranges.Add(item);
+				}
+
+				// Return the array list.
+				return ranges;
+			}
+			set
+			{
+				// Remove existing items.
+				comboBoxRange.Items.Clear();
+
+				// Add new items.
+				foreach (var range in value)
+				{
+					comboBoxRange.Items.Add(range);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Items in the "Test" combobox
+		/// </summary>
+		public ArrayList TestList
+		{
+			get
+			{
+				// Create new array list.
+				ArrayList tests = new ArrayList();
+
+				// Add the items.
+				foreach (var item in comboBoxRange.Items)
+				{
+					tests.Add(item);
+				}
+
+				// Return the array list.
+				return tests;
+			}
+			set
+			{
+				// Remove existing items.
+				comboBoxTest.Items.Clear();
+
+				// Add new items.
+				foreach (var test in value)
+				{
+					comboBoxTest.Items.Add(test);
+				}
+			}
+		}
+
+		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="duts">how many devices under test to provide controls for</param>
-		public FormCalibration(int duts = 1)
+		public FormCalibration(int duts = 8)
 		{
 			InitializeComponent();
 
-			// Set the amount of DUTs.
+			NumDuts = duts;
+		}
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="models">items in the "Model" combobox</param>
+		/// <param name="ranges">items in the "Range" combobox</param>
+		/// <param name="tests">items in the "Test" combobox</param>
+		/// <param name="duts">how many devices under test to provide controls for</param>
+		public FormCalibration(ArrayList models, ArrayList ranges, ArrayList tests, int duts = 8)
+		{
+			InitializeComponent();
+
+			ModelList = models;
+			RangeList = ranges;
+			TestList = tests;
+
 			NumDuts = duts;
 		}
 
@@ -251,6 +373,36 @@ namespace Sensit.TestSDK.Forms
 			NumDuts = numDuts;
 		}
 
+		/// <summary>
+		/// When the "Model" selection is changed, alert the application.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void comboBoxModel_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			ModelChanged(comboBoxModel.SelectedText);
+		}
+
+		/// <summary>
+		/// When the "Range" selection is changed, alert the application.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void comboBoxRange_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			RangeChanged(comboBoxRange.SelectedText);
+		}
+
+		/// <summary>
+		/// When the "Test" selection is changed, alert the application.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void comboBoxTest_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			TestChanged(comboBoxTest.SelectedText);
+		}
+
 		#endregion
 
 		/// <summary>
@@ -290,11 +442,6 @@ namespace Sensit.TestSDK.Forms
 			{
 				Application.Exit();
 			}
-		}
-
-		private void variablesToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			// TODO:  Open a form to select controlled and independent variables.
 		}
 	}
 }

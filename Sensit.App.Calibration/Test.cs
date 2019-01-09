@@ -13,6 +13,12 @@ namespace Sensit.App.Calibration
 		// task that will handle test operations
 		private BackgroundWorker testThread = new BackgroundWorker();
 
+		// number of devices under test
+		private int _numDuts;
+		private string _model;
+		private string _range;
+		private string _test;
+
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -165,6 +171,72 @@ namespace Sensit.App.Calibration
 		public bool IsBusy()
 		{
 			return testThread.IsBusy;
+		}
+
+		/// <summary>
+		/// Set the number of DUTs handled in the test.
+		/// </summary>
+		/// <param name="duts"></param>
+		public void SetNumDuts(int duts)
+		{
+			// If the test is running, throw an error.
+			if (testThread.IsBusy)
+			{
+				throw new Exception("Cannot change number of DUTs when test is running.");
+			}
+
+			_numDuts = duts;
+		}
+
+		/// <summary>
+		/// Set the DUT type.
+		/// </summary>
+		/// <param name="model"></param>
+		public void SetModel(string model)
+		{
+			// If the test is running, throw an error.
+			if (testThread.IsBusy)
+			{
+				throw new Exception("Cannot change model when test is running.");
+			}
+
+			_model = model;
+
+			// TODO:  Re-populate the available ranges.
+
+			// TODO:  Re-populate the available tests.
+		}
+
+		/// <summary>
+		/// Set the DUT range.
+		/// </summary>
+		/// <param name="range"></param>
+		public void SetRange(string range)
+		{
+			// If the test is running, throw an error.
+			if (testThread.IsBusy)
+			{
+				throw new Exception("Cannot change range when test is running.");
+			}
+
+			_range = range;
+
+			// TODO:  Re-populate the available tests.
+		}
+
+		/// <summary>
+		/// Select what test to perform.
+		/// </summary>
+		/// <param name="test"></param>
+		public void SetTest(string test)
+		{
+			// If the test is running, throw an error.
+			if (testThread.IsBusy)
+			{
+				throw new Exception("Cannot change test type when test is running.");
+			}
+
+			_test = test;
 		}
 	}
 }

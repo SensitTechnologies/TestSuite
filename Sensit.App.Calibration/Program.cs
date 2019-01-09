@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -22,27 +22,34 @@ namespace Sensit.App.Calibration
 			// Create an object to represent test equipment.
 			System system = new System();
 
-			// Create an object to represent the test being run.
+			// Create an object to represent the tests being run.
 			Test test = new Test();
 
 			// Create a GUI for user interaction.
 			FormCalibration formCalibration = new FormCalibration();
 
-			// TODO:  Tell formCalibration class and Test class what variables to use.
-			// TODO:  Code DAQ library.
-			// TODO:  Display tab for DUT.  Maybe show Excel in a web browser?
+			formCalibration.ModelList = new ArrayList(new string[] { "css", "gif", "htm", "html", "txt", "xml" });
 
-			// Link test actions that update the GUI.
+			// TODO:  Tell formCalibration class and Test class what variables to use.
+			// TODO:  Tell formCalibration and test objects what equipment is needed.
+			// TODO:  Display tab for DUT.  Maybe show Excel in a web browser?
+			// TODO:  Code DAQ library.
+
+			// Set test actions.
 			test.Update = formCalibration.TestUpdate;
 			test.Finished = formCalibration.TestFinished;
 
-			// TODO:  Link test actions that interface with the system.
+			// TODO:  Set system actions.
 			
-			// Link the test and support devices to form actions.
+			// Set form actions.
 			formCalibration.TestStart = test.Start;
 			formCalibration.TestStop = test.Stop;
 			formCalibration.TestBusy = test.IsBusy;
 			formCalibration.Print = system.Print;
+			formCalibration.NumDutsChanged = test.SetNumDuts;
+			formCalibration.ModelChanged = test.SetModel;
+			formCalibration.RangeChanged = test.SetRange;
+			formCalibration.TestChanged = test.SetTest;
 
 			// Run the GUI.
 			Application.Run(formCalibration);
