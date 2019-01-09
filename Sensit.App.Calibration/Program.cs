@@ -22,11 +22,15 @@ namespace Sensit.App.Calibration
 			// Create an object to represent test equipment.
 			System system = new System();
 
-			// Create an object to represent the tests being run.
+			// Create an object to represent the test being run.
 			Test test = new Test();
 
 			// Create a GUI for user interaction.
 			FormCalibration formCalibration = new FormCalibration();
+
+			// TODO:  Tell formCalibration class and Test class what variables to use.
+			// TODO:  Code DAQ library.
+			// TODO:  Display tab for DUT.  Maybe show Excel in a web browser?
 
 			// Link test actions that update the GUI.
 			test.Update = formCalibration.TestUpdate;
