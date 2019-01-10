@@ -1,6 +1,5 @@
 ﻿using System;
-using Ivi.Visa;                         // send SCPI commands using VISA
-using Sensit.TestSDK.Exceptions;        // custom exceptions
+using Sensit.TestSDK.Communication;
 
 namespace Sensit.TestSDK.Devices
 {
@@ -14,11 +13,8 @@ namespace Sensit.TestSDK.Devices
 	/// optional plug-in modules to create a compact data logger, full-featured data acquisition
 	/// system or low-cost switching unit.
 	/// </remarks>
-	public class Keysight_34972A
+	public class Keysight_34972A : VisaDevice
 	{
-		// IVI VISA object used to communicate with the device
-		private IMessageBasedFormattedIO _instrument;
-
 		private static class SCPICommand
 		{
 			// Universal Commands
@@ -37,47 +33,6 @@ namespace Sensit.TestSDK.Devices
 			public const string Data = "DATA";
 			public const string Diagnostic = "DIAG";
 			public const string Display = "DISP";
-		}
-
-		public void Open()
-		{
-			try
-			{
-				// Open a connection to the instrument.
-				// TODO:  Find available instrument address instead of hardcoding.
-				_instrument = GlobalResourceManager.Open("USB0::0x0957::0x2007::MY49018108::0::INSTR") as IMessageBasedFormattedIO;
-			}
-			catch (EntryPointNotFoundException ex)
-			{
-				throw new DevicePortException("The IVI.VISA dll appears to be missing." + Environment.NewLine +
-					"It must be installed as a separate package." + Environment.NewLine +
-					"Details:" + Environment.NewLine +
-					ex.Message);
-			}
-
-			// Once we're connected, make sure we close things correctly.
-			try
-			{
-				// Send the *IDN query to the instrument.
-				_instrument.WriteLine(SCPICommand.Identification);
-
-				// Read back the response.
-				string result = _instrument.ReadString();
-			}
-			finally
-			{
-				// Dispose of the instrument connection if it is not null.
-				((IDisposable)_instrument)?.Dispose();
-
-				// Free the reference to the session.
-				_instrument = null;
-			}
-		}
-
-		public void Close()
-		{
-			// Dispose of the instrument connection if it is not null.
-			((IDisposable)_instrument)?.Dispose();
 		}
 	}
 }

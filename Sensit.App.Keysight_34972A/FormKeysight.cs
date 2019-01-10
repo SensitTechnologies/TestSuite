@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
+using Sensit.TestSDK.Communication;
 using Sensit.TestSDK.Devices;			// datalogger
 
 namespace Sensit.App.Keysight
@@ -17,6 +19,44 @@ namespace Sensit.App.Keysight
 		{
 			// Initialize the form.
 			InitializeComponent();
+
+			// Find all available instruments.
+			Find();
+		}
+
+		/// <summary>
+		/// When the "Refresh" button is clicked, update instrument list.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void buttonRefresh_Click(object sender, EventArgs e)
+		{
+			Find();
+		}
+
+		/// <summary>
+		/// Find all available instruments.
+		/// </summary>
+		private void Find()
+		{
+			// Find all available VISA-over-USB devices.
+			IEnumerable<string> devices = Keysight_34972A.Find(VisaDevice.PATTERN_USB);
+
+			foreach (string d in devices)
+			{
+				comboBoxResources.Items.Add(d);
+			}
+
+			comboBoxResources.SelectedIndex = 0;
+		}
+
+		private void buttonWrite_Click(object sender, EventArgs e)
+		{
+			// Write a command.
+			string response = _datalogger.Write(comboBoxCommand.Text);
+
+			// Display the response.
+			textBoxResponse.Text = response;
 		}
 
 		/// <summary>
@@ -38,11 +78,11 @@ namespace Sensit.App.Keysight
 						// Alert the user.
 						toolStripStatusLabel1.Text = "Opening VISA connection...";
 
-						// TODO:  Open the connection.
-						_datalogger.Open();
+						// Open the connection.
+						_datalogger.Open(comboBoxResources.Text);
 
 						// Update the user interface.
-						toolStripStatusLabel1.Text = "Success.";
+						toolStripStatusLabel1.Text = "VISA open.";
 					}
 					// If the "Closed" radio button has been checked...
 					else if (((RadioButton)sender) == radioButtonClosed)
@@ -50,10 +90,11 @@ namespace Sensit.App.Keysight
 						// Alert the user.
 						toolStripStatusLabel1.Text = "Closing serial port...";
 
-						// TODO:  Close the connection.
+						// Close the connection.
+						_datalogger.Close();
 
 						// Update user interface.
-						toolStripStatusLabel1.Text = "Success.";
+						toolStripStatusLabel1.Text = "VISA closed.";
 					}
 				}
 				// If an error occurs...
@@ -77,11 +118,6 @@ namespace Sensit.App.Keysight
 		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Application.Exit();
-		}
-
-		private void buttonFind_Click(object sender, EventArgs e)
-		{
-
 		}
 	}
 }

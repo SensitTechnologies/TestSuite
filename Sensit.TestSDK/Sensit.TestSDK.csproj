@@ -140,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calculations\Calculations.cs" />
+    <Compile Include="Communication\VisaDevice.cs" />
     <Compile Include="Devices\Manual.cs" />
     <Compile Include="Dut\AnalogSensor.cs" />
     <Compile Include="Controls\UserCustomStep.cs">
