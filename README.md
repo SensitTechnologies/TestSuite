@@ -1,30 +1,77 @@
 # Sensit Technologies C# Test Suite & SDK
-This is a software suite for automating instrumentation and sensor tests and calibration.  Core features are still in development, so check back daily.
+This is a software suite for automating testing and calibration of sensors or
+instrumentation.  It provides (1) integration with various types of test
+equipment and devices under test (DUT), (2) automatic gathering and recording of
+data, (3) basic calibration and data analysis, and (4) decreased time-to-market
+or time-in-production by providing thorough, accurate test results for R&D or
+manufacturing.
 
-## To Do
-### High Priority
-* **Agilent Datalogger**
-  * VISA.IVI driver
-  * SCPI Command Class
-* **FormCalibration**
-  * Tab control for each DUT.
-  * Data view (Excel or data view grid) in each DUT tab
-* **Datalogging** via Excel or CSV, whichever is easier to implement
-* Test settings via serializable class
-* **DUT** control via Agilent datalogger.
+## Requirements
+The first iteration of the project will be a desktop app which automates testing
+of analog sensors using a datalogger and mass flow meter.  The deliverable will
+have the following abilities:
+* Use a Cole-Parmer Mass Flow Controller to control gas flow.
+* Gather sensor data from a Keysight datalogger.
+* Log test results in a csv or Excel file for further analysis.
+The second iteration of the project will add:
+* Use a Dwyer Temperature Controller to control gas temperature.
 
-### Medium Priority
-* **Temperature Control**
-  * MODBUS protocol
-  * Love Controller
-* FormCalibration Features
-  * Create/update/destroy controls for controlled variables on Status tab.
-  * Create/read/destroy test equipment controls on Overview tab.
-  * Update independent variable control parameters.
-* Create form (accessible via FormCalibration menu) to edit Model, Range, Test settings.
+## Development Plan
+The software suite is organized into several projects:
+* A Software Development Kit (SDK) which contains utilities for each of the
+ deliverables and can be reused in future applications.
+* A Calibration app which utilizes the SDK to perform automated tests.
+* Utility apps for standalone operation/testing of automated equipment.
+* A collection of unit-tests for the SDK to aid development and maintenance.
+
+This project's core features are in active development.  After the initial
+application is delivered, support for more general testing/calibration, and
+more types of test equipment will be added to the SDK as needed.  As automation
+tools are added to the SDK, those tools may also be used to streamline
+production of manufactured products.
+
+The project is organized to facilitate rapid testing of the project itself.
+* Whenever possible, each class is to have its own unit test.
+* Each piece of automated test equipment is to have its own GUI project which
+  can test its performance.
+* Within the calibration app, a "simulator" can be chosen as the device under
+  test, and any controlled or independent variable, rather than being gathered
+  from a physical piece of equipment, can be provided by setting a "manual" test
+  equipment option.  This allows any test to be run with any combination of
+  virtual or real equipment and data.
+
+## Features (and Status)
+Features necessary for the first iteration are highlighted in bold.
+* Interface to a variety of test equipment.
+  * Prompt an operator for manual control.
+  * **Cole-Parmer Mass Flow Controller**
+  * **Keysight datalogger**
+  * Dwyer 16B Temperature Controller
+* Interface to a variety of devices under test.
+  * Device Under Test Simulator
+  * **Analog sensor**
+* Support a variety of communication protocols.
+  * **VISA.IVI**
+  * **SCPI**
+  * **Serial port**
+  * MODBUS
+* Provide a Graphic User Interface.
+  * **Present an *overview* where user can set options, run tests, see DUT status**
+  * View *status* while testing, showing controlled and independent variables from test equipment
+  * View data gathered from each *DUT* (via embedded Excel or simple data grid)
+* Record test data for further analysis.
+  * **CSV**
+  * Excel
+  * SQL Database
+  * Mongo Database
+* Calculate coefficients and trends.
+* Store settings in serializable classes.
+  * DUT information (model, range, available tests).
+  * Test information (variables, setpoints).
+  * Provide a GUI to edit settings.
 
 ## Development Environment
-* [Visual Studio 2017](https://visualstudio.microsoft.com) or later - Community edition is free.
+* [Visual Studio 2017](https://visualstudio.microsoft.com) or later (Community edition is free!)
 * Microsoft .NET Framework 4.7.2 - If Visual Studio is already installed but the correct framework is not, run the Visual Studio Installer, navigate to *Individual Components* and select the appropriate framework.
 * [Keysight IO Libraries Suite](https://www.keysight.com/en/pd-1985909/io-libraries-suite) - VISA drivers necessary to communicate with Keysight/Agilent instruments.  You could also use the National Instruments VISA drivers.
 
