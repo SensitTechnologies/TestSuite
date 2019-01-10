@@ -28,7 +28,7 @@ namespace Sensit.App.Calibration
 			// Create a GUI for user interaction.
 			FormCalibration formCalibration = new FormCalibration();
 
-			formCalibration.ModelList = new ArrayList(new string[] { "css", "gif", "htm", "html", "txt", "xml" });
+			formCalibration.ModelList = new ArrayList(new string[] { "Simulator", "Analog Sensor" });
 
 			// TODO:  Tell formCalibration class and Test class what variables to use.
 			// TODO:  Tell formCalibration and test objects what equipment is needed.
@@ -38,8 +38,6 @@ namespace Sensit.App.Calibration
 			// Set test actions.
 			test.Update = formCalibration.TestUpdate;
 			test.Finished = formCalibration.TestFinished;
-
-			// TODO:  Set system actions.
 			
 			// Set form actions.
 			formCalibration.TestStart = test.Start;
