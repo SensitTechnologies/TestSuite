@@ -43,32 +43,33 @@ The project is organized to facilitate rapid testing of the project itself.
 ## Features (and Status)
 Features necessary for the first iteration are highlighted in bold.
 * Interface to a variety of test equipment.
-  * Prompt an operator for manual control.
-  * **Cole-Parmer Mass Flow Controller**
-  * **Keysight datalogger**
-  * Dwyer 16B Temperature Controller
+  * [x] Prompt an operator for manual control.
+  * [x] **Cole-Parmer Mass Flow Controller**
+  * [ ] **Keysight datalogger**
+  * [ ] Dwyer 16B Temperature Controller
 * Interface to a variety of devices under test.
-  * Device Under Test Simulator
-  * **Analog sensor**
+  * [x] Device Under Test Simulator
+  * [ ] **Analog sensor**
 * Support a variety of communication protocols.
-  * **VISA.IVI**
-  * **SCPI**
-  * **Serial port**
-  * MODBUS
+  * [ ] **VISA.IVI**
+  * [ ] **SCPI**
+  * [x] **Serial port**
+  * [ ] MODBUS
 * Provide a Graphic User Interface.
-  * **Present an *overview* where user can set options, run tests, see DUT status**
-  * View *status* while testing, showing controlled and independent variables from test equipment
-  * View data gathered from each *DUT* (via embedded Excel or simple data grid)
+  * [x] **Present an *overview* where user can set options, run tests, see DUT status**
+  * [ ] View *status* while testing, showing controlled and independent variables from test equipment
+  * [ ] View data gathered from each *DUT* (via embedded Excel or simple data grid)
 * Record test data for further analysis.
-  * **CSV**
-  * Excel
-  * SQL Database
-  * Mongo Database
-* Calculate coefficients and trends.
+  * [ ] **CSV**
+  * [ ] Excel
+  * [ ] SQL or Mongo Database
+* Provide a calculation library for.
+  * [x] Convert units of measure.
+  * [ ] Linearize calibration data.
 * Store settings in serializable classes.
-  * DUT information (model, range, available tests).
-  * Test information (variables, setpoints).
-  * Provide a GUI to edit settings.
+  * [ ] DUT information (model, range, available tests).
+  * [ ] Test information (variables, setpoints).
+  * [ ] Provide a GUI to edit settings.
 
 ## Development Environment
 * [Visual Studio 2017](https://visualstudio.microsoft.com) or later (Community edition is free!)
