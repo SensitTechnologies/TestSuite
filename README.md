@@ -1,5 +1,27 @@
 # Sensit Technologies C# Test Suite & SDK
-This is a software suite for automating instrumentation and sensor tests and calibration.
+This is a software suite for automating instrumentation and sensor tests and calibration.  Core features are still in development, so check back daily.
+
+## To Do
+### High Priority
+* **Agilent Datalogger**
+  * VISA.IVI driver
+  * SCPI Command Class
+* **FormCalibration**
+  * Tab control for each DUT.
+  * Data view (Excel or data view grid) in each DUT tab
+* **Datalogging** via Excel or CSV, whichever is easier to implement
+* Test settings via serializable class
+* **DUT** control via Agilent datalogger.
+
+### Medium Priority
+* **Temperature Control**
+  * MODBUS protocol
+  * Love Controller
+* FormCalibration Features
+  * Create/update/destroy controls for controlled variables on Status tab.
+  * Create/read/destroy test equipment controls on Overview tab.
+  * Update independent variable control parameters.
+* Create form (accessible via FormCalibration menu) to edit Model, Range, Test settings.
 
 ## Development Environment
 * [Visual Studio 2017](https://visualstudio.microsoft.com) or later - Community edition is free.

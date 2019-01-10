@@ -51,6 +51,80 @@ namespace Sensit.App.Calibration
 			// Run actions required when test is completed (i.e. update GUI).
 			Finished();
 		}
+		
+		private void InitializeDuts()
+		{
+			
+		}
+		
+		private void ProcessCommand()
+		{
+			
+		}
+		
+		private void RecordLog()
+		{
+			// TODO:  Do this continuously rather than just at the end of a test.
+			// Should likely be a logger class in the SDK.
+		}
+
+		#region DUT Helper Methods
+		
+		private void ScanAllDuts(Action action)
+		{
+			
+		}
+		
+		private void ScanSelectedDuts(Action action)
+		{
+			
+		}
+		
+		private void ScanOpenedDuts(Action action)
+		{
+			
+		}
+		
+		private void ScanFoundOrFailDuts(Action action)
+		{
+			
+		}
+		
+		#endregion
+		
+		#region Test Actions
+		
+		private void SetMassFlow()
+		{
+			
+		}
+		
+		private void SetpointCycle()
+		{
+			
+		}
+		
+		private void DutCycle()
+		{
+			
+		}
+		
+		private void CheckTolerance()
+		{
+			
+		}
+		
+		private void ComputeError()
+		{
+			
+		}
+		
+		private void Verify()
+		{
+			
+		}
+				
+		#endregion
 
 		/// <summary>
 		/// This runs during a test.
