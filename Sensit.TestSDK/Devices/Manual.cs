@@ -6,7 +6,7 @@ using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.TestSDK.Devices
 {
-	class Manual : IMassFlowReference, IVolumeFlowReference, IVelocityReference, IPressureReference, ITemperatureReference,
+	public class Manual : IMassFlowReference, IVolumeFlowReference, IVelocityReference, IPressureReference, ITemperatureReference,
 		IMassFlowController, IVolumeFlowController, IVelocityController, IPressureController, ITemperatureController
 	{
 		#region Reference Device Properties
