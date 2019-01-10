@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
@@ -7,13 +8,25 @@ namespace Sensit.App.Calibration
 {
 	public class Test
 	{
-		public Action<int, string> Update;	// action to run as test progresses
-		public Action Finished;				// action to run after test finishes
+		// Report test progress.
+		public Action<int, string> Update;
+
+		// Report test results.
+		public Action Finished;
+
+		// Configure test equipment.
+		public Action SystemOpen;
+
+		// Close test equipment.
+		public Action SystemClose;
+
+		// Fetch test equipment readings.
+		public Func<Dictionary<Reference, double>> SystemRead;
 
 		// task that will handle test operations
 		private BackgroundWorker testThread = new BackgroundWorker();
 
-		// number of devices under test
+		// user settings
 		private int _numDuts;
 		private string _model;
 		private string _range;
@@ -158,10 +171,11 @@ namespace Sensit.App.Calibration
 				if (bw.CancellationPending) { break; }
 
 				// Initialize GUI.
+				// TODO:  
 
 				// Configure test equipment.
 				testThread.ReportProgress(15, "Configuring test equipment...");
-				Thread.Sleep(1000); // One second.
+				SystemOpen();
 				if (bw.CancellationPending) { break; }
 
 				// Open selected DUTs.
@@ -194,17 +208,16 @@ namespace Sensit.App.Calibration
 			// and highly reliable since it cannot be cancelled.
 
 			// Calculate end time.
-			testThread.ReportProgress(85, "Calculating elapsed time....");
 			stopwatch.Stop();
-			Thread.Sleep(100); // One second.
+			TimeSpan elapsedtime = stopwatch.Elapsed;
 
 			// Record log.
 			testThread.ReportProgress(90, "Recording log...");
-			TimeSpan elapsedtime = stopwatch.Elapsed;
 			Thread.Sleep(100); // One second.
 
 			// Close support devices.
 			testThread.ReportProgress(95, "Closing test equipment...");
+			SystemClose();
 			Thread.Sleep(100); // One second.
 
 			// Done!
