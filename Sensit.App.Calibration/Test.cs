@@ -62,7 +62,7 @@ namespace Sensit.App.Calibration
 			}
 
 			// Run actions required when test is completed (i.e. update GUI).
-			Finished();
+			Finished?.Invoke();
 		}
 		
 		private void InitializeDuts()
@@ -175,7 +175,7 @@ namespace Sensit.App.Calibration
 
 				// Configure test equipment.
 				testThread.ReportProgress(15, "Configuring test equipment...");
-				SystemOpen();
+				SystemOpen?.Invoke();
 				if (bw.CancellationPending) { break; }
 
 				// Open selected DUTs.
@@ -217,7 +217,7 @@ namespace Sensit.App.Calibration
 
 			// Close support devices.
 			testThread.ReportProgress(95, "Closing test equipment...");
-			SystemClose();
+			SystemClose?.Invoke();
 			Thread.Sleep(100); // One second.
 
 			// Done!

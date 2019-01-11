@@ -28,9 +28,14 @@ namespace Sensit.App.Calibration
 			// Create a GUI for user interaction.
 			FormCalibration formCalibration = new FormCalibration();
 
-			formCalibration.ModelList = new ArrayList(new string[] { "Simulator", "Analog Sensor" });
+			// TODO:  Tell the GUI what models are available.
+			formCalibration.Models = new ArrayList(new string[] { "Simulator", "Analog Sensor" });
+			// TODO:  Tell the GUI what ranges are available.
+			// TODO:  Tell the GUI what tests are available.
 
-			// TODO:  Tell formCalibration class and Test class what variables to use.
+			// TODO:  Tell the GUI variables to use.
+			//        Maybe create test.Initialize that calls a form action and sends
+			//        a list of references and controllers.
 			// TODO:  Tell formCalibration and test objects what equipment is needed.
 			// TODO:  Display tab for DUT.  Maybe show Excel in a web browser?
 			// TODO:  Code DAQ library.
@@ -38,8 +43,11 @@ namespace Sensit.App.Calibration
 			// Set test actions.
 			test.Update = formCalibration.TestUpdate;
 			test.Finished = formCalibration.TestFinished;
+			test.SystemOpen = system.Open;
+			test.SystemClose = system.Close;
+			test.SystemRead = system.Read;
 			
-			// Set form actions.
+			// Set GUI actions.
 			formCalibration.TestStart = test.Start;
 			formCalibration.TestStop = test.Stop;
 			formCalibration.TestBusy = test.IsBusy;

@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Sensit.TestSDK.Interfaces;
+﻿using System;
+using System.Collections.Generic;
 using Sensit.TestSDK.Devices;
 
 namespace Sensit.App.Calibration
@@ -31,10 +31,10 @@ namespace Sensit.App.Calibration
 	public class System
 	{
 		// mass flow controller
-		MFC _mfc = new MFC();
+		//MFC _mfc = new MFC();
 
 		// datalogger (for analog sensor DUTs)
-		Keysight_34972A _datalogger = new Keysight_34972A();
+		//Keysight_34972A _datalogger = new Keysight_34972A();
 
 		public void Open()
 		{
@@ -42,14 +42,14 @@ namespace Sensit.App.Calibration
 
 			// Open all devices.
 			//_mfc.Open();
-			_datalogger.Open();
+			//_datalogger.Open();
 		}
 
 		public void Close()
 		{
 			// Close all devices.
-			_mfc.Close();
-			_datalogger.Close();
+			//_mfc.Close();
+			//_datalogger.Close();
 		}
 
 		/// <summary>
@@ -59,13 +59,16 @@ namespace Sensit.App.Calibration
 		public Dictionary<Reference, double> Read()
 		{
 			// Read all test equipment.
-			_mfc.Read();
+			//_mfc.Read();
+
+			// TODO:  Read datalogger if selected.
+			
 			//_datalogger.Read();
 
 			// Fetch the readings and return them.
 			Dictionary<Reference, double> readings = new Dictionary<Reference, double>
 			{
-				{ Reference.MassFlow, _mfc.MassFlow }
+				//{ Reference.MassFlow, _mfc.MassFlow }
 			};
 
 			return readings;
