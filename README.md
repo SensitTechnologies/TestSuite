@@ -13,8 +13,7 @@ have the following abilities:
 * Use a Cole-Parmer Mass Flow Controller to control gas flow.
 * Gather sensor data from a Keysight datalogger.
 * Log test results in a csv or Excel file for further analysis.
-The second iteration of the project will add:
-* Use a Dwyer Temperature Controller to control gas temperature.
+* The second iteration of the project will add a Dwyer Temperature Controller to control gas temperature.
 
 ## Development Plan
 The software suite is organized into several projects:
