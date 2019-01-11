@@ -100,6 +100,8 @@
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.supportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpProvider1 = new System.Windows.Forms.HelpProvider();
+			this.labelSupportDevice2 = new System.Windows.Forms.Label();
+			this.comboBox2 = new System.Windows.Forms.ComboBox();
 			this.tabControl1.SuspendLayout();
 			this.Overview.SuspendLayout();
 			this.tableLayoutPanelOverview.SuspendLayout();
@@ -135,7 +137,7 @@
 			this.tabControl1.Location = new System.Drawing.Point(0, 24);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(534, 312);
+			this.tabControl1.Size = new System.Drawing.Size(544, 311);
 			this.tabControl1.TabIndex = 0;
 			// 
 			// Overview
@@ -144,13 +146,15 @@
 			this.Overview.Location = new System.Drawing.Point(4, 22);
 			this.Overview.Name = "Overview";
 			this.Overview.Padding = new System.Windows.Forms.Padding(3);
-			this.Overview.Size = new System.Drawing.Size(526, 286);
+			this.Overview.Size = new System.Drawing.Size(536, 285);
 			this.Overview.TabIndex = 2;
 			this.Overview.Text = "Overview";
 			this.Overview.UseVisualStyleBackColor = true;
 			// 
 			// tableLayoutPanelOverview
 			// 
+			this.tableLayoutPanelOverview.AutoSize = true;
+			this.tableLayoutPanelOverview.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.tableLayoutPanelOverview.ColumnCount = 2;
 			this.tableLayoutPanelOverview.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanelOverview.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -166,7 +170,7 @@
 			this.tableLayoutPanelOverview.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelOverview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanelOverview.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelOverview.Size = new System.Drawing.Size(520, 280);
+			this.tableLayoutPanelOverview.Size = new System.Drawing.Size(530, 279);
 			this.tableLayoutPanelOverview.TabIndex = 17;
 			// 
 			// groupBoxTestSetup
@@ -177,7 +181,7 @@
 			this.groupBoxTestSetup.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBoxTestSetup.Location = new System.Drawing.Point(3, 3);
 			this.groupBoxTestSetup.Name = "groupBoxTestSetup";
-			this.groupBoxTestSetup.Size = new System.Drawing.Size(200, 100);
+			this.groupBoxTestSetup.Size = new System.Drawing.Size(215, 100);
 			this.groupBoxTestSetup.TabIndex = 16;
 			this.groupBoxTestSetup.TabStop = false;
 			this.groupBoxTestSetup.Text = "Test Setup";
@@ -203,7 +207,7 @@
 			this.tableLayoutPanelTestSetup.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelTestSetup.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelTestSetup.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanelTestSetup.Size = new System.Drawing.Size(194, 81);
+			this.tableLayoutPanelTestSetup.Size = new System.Drawing.Size(209, 81);
 			this.tableLayoutPanelTestSetup.TabIndex = 6;
 			// 
 			// labelModel
@@ -219,14 +223,14 @@
 			// 
 			// comboBoxModel
 			// 
-			this.comboBoxModel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.comboBoxModel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.comboBoxModel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxModel.FormattingEnabled = true;
 			this.helpProvider1.SetHelpString(this.comboBoxModel, "Selects the type of device to perform tests upon");
 			this.comboBoxModel.Location = new System.Drawing.Point(66, 3);
 			this.comboBoxModel.Name = "comboBoxModel";
 			this.helpProvider1.SetShowHelp(this.comboBoxModel, true);
-			this.comboBoxModel.Size = new System.Drawing.Size(121, 21);
+			this.comboBoxModel.Size = new System.Drawing.Size(140, 21);
 			this.comboBoxModel.TabIndex = 0;
 			this.comboBoxModel.SelectedIndexChanged += new System.EventHandler(this.comboBoxModel_SelectedIndexChanged);
 			// 
@@ -254,38 +258,39 @@
 			// 
 			// comboBoxRange
 			// 
-			this.comboBoxRange.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.comboBoxRange.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.comboBoxRange.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxRange.FormattingEnabled = true;
 			this.helpProvider1.SetHelpString(this.comboBoxRange, "Further specifies the device type to test");
 			this.comboBoxRange.Location = new System.Drawing.Point(66, 30);
 			this.comboBoxRange.Name = "comboBoxRange";
 			this.helpProvider1.SetShowHelp(this.comboBoxRange, true);
-			this.comboBoxRange.Size = new System.Drawing.Size(121, 21);
+			this.comboBoxRange.Size = new System.Drawing.Size(140, 21);
 			this.comboBoxRange.TabIndex = 1;
 			this.comboBoxRange.SelectedIndexChanged += new System.EventHandler(this.comboBoxRange_SelectedIndexChanged);
 			// 
 			// comboBoxTest
 			// 
-			this.comboBoxTest.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.comboBoxTest.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.comboBoxTest.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxTest.FormattingEnabled = true;
 			this.helpProvider1.SetHelpString(this.comboBoxTest, "Selects which test to run");
 			this.comboBoxTest.Location = new System.Drawing.Point(66, 57);
 			this.comboBoxTest.Name = "comboBoxTest";
 			this.helpProvider1.SetShowHelp(this.comboBoxTest, true);
-			this.comboBoxTest.Size = new System.Drawing.Size(121, 21);
+			this.comboBoxTest.Size = new System.Drawing.Size(140, 21);
 			this.comboBoxTest.TabIndex = 2;
 			this.comboBoxTest.SelectedIndexChanged += new System.EventHandler(this.comboBoxTest_SelectedIndexChanged);
 			// 
 			// groupBoxDevicesUnderTest
 			// 
+			this.groupBoxDevicesUnderTest.AutoSize = true;
 			this.groupBoxDevicesUnderTest.Controls.Add(this.tableLayoutPanelDevicesUnderTest);
 			this.groupBoxDevicesUnderTest.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBoxDevicesUnderTest.Location = new System.Drawing.Point(209, 3);
+			this.groupBoxDevicesUnderTest.Location = new System.Drawing.Point(224, 3);
 			this.groupBoxDevicesUnderTest.Name = "groupBoxDevicesUnderTest";
 			this.tableLayoutPanelOverview.SetRowSpan(this.groupBoxDevicesUnderTest, 2);
-			this.groupBoxDevicesUnderTest.Size = new System.Drawing.Size(308, 239);
+			this.groupBoxDevicesUnderTest.Size = new System.Drawing.Size(303, 238);
 			this.groupBoxDevicesUnderTest.TabIndex = 17;
 			this.groupBoxDevicesUnderTest.TabStop = false;
 			this.groupBoxDevicesUnderTest.Text = "Devices Under Test";
@@ -303,7 +308,7 @@
 			this.tableLayoutPanelDevicesUnderTest.Name = "tableLayoutPanelDevicesUnderTest";
 			this.tableLayoutPanelDevicesUnderTest.RowCount = 1;
 			this.tableLayoutPanelDevicesUnderTest.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelDevicesUnderTest.Size = new System.Drawing.Size(302, 220);
+			this.tableLayoutPanelDevicesUnderTest.Size = new System.Drawing.Size(297, 219);
 			this.tableLayoutPanelDevicesUnderTest.TabIndex = 0;
 			// 
 			// tableLayoutPanelTestSetupButtons
@@ -317,7 +322,7 @@
 			this.tableLayoutPanelTestSetupButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanelTestSetupButtons.Controls.Add(this.buttonStart, 0, 0);
 			this.tableLayoutPanelTestSetupButtons.Controls.Add(this.buttonStop, 1, 0);
-			this.tableLayoutPanelTestSetupButtons.Location = new System.Drawing.Point(22, 248);
+			this.tableLayoutPanelTestSetupButtons.Location = new System.Drawing.Point(29, 247);
 			this.tableLayoutPanelTestSetupButtons.Name = "tableLayoutPanelTestSetupButtons";
 			this.tableLayoutPanelTestSetupButtons.RowCount = 1;
 			this.tableLayoutPanelTestSetupButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -359,18 +364,18 @@
 			this.tableLayoutPanelDUTButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.tableLayoutPanelDUTButtons.Controls.Add(this.buttonPrintLabels, 1, 0);
 			this.tableLayoutPanelDUTButtons.Controls.Add(this.checkBoxSelectAll, 0, 0);
-			this.tableLayoutPanelDUTButtons.Location = new System.Drawing.Point(209, 248);
+			this.tableLayoutPanelDUTButtons.Location = new System.Drawing.Point(224, 247);
 			this.tableLayoutPanelDUTButtons.Name = "tableLayoutPanelDUTButtons";
 			this.tableLayoutPanelDUTButtons.RowCount = 1;
 			this.tableLayoutPanelDUTButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanelDUTButtons.Size = new System.Drawing.Size(308, 29);
+			this.tableLayoutPanelDUTButtons.Size = new System.Drawing.Size(303, 29);
 			this.tableLayoutPanelDUTButtons.TabIndex = 19;
 			// 
 			// buttonPrintLabels
 			// 
 			this.buttonPrintLabels.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.helpProvider1.SetHelpKeyword(this.buttonPrintLabels, "Print serial number labels for all DUTs");
-			this.buttonPrintLabels.Location = new System.Drawing.Point(230, 3);
+			this.buttonPrintLabels.Location = new System.Drawing.Point(225, 3);
 			this.buttonPrintLabels.Name = "buttonPrintLabels";
 			this.helpProvider1.SetShowHelp(this.buttonPrintLabels, true);
 			this.buttonPrintLabels.Size = new System.Drawing.Size(75, 23);
@@ -392,13 +397,14 @@
 			// 
 			// groupBoxTestEquipment
 			// 
+			this.groupBoxTestEquipment.AutoSize = true;
 			this.groupBoxTestEquipment.Controls.Add(this.tableLayoutPanel1);
 			this.groupBoxTestEquipment.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.helpProvider1.SetHelpString(this.groupBoxTestEquipment, "Select which test equipment is used to perform the test.");
 			this.groupBoxTestEquipment.Location = new System.Drawing.Point(3, 109);
 			this.groupBoxTestEquipment.Name = "groupBoxTestEquipment";
 			this.helpProvider1.SetShowHelp(this.groupBoxTestEquipment, true);
-			this.groupBoxTestEquipment.Size = new System.Drawing.Size(200, 133);
+			this.groupBoxTestEquipment.Size = new System.Drawing.Size(215, 132);
 			this.groupBoxTestEquipment.TabIndex = 20;
 			this.groupBoxTestEquipment.TabStop = false;
 			this.groupBoxTestEquipment.Text = "Test Equipment";
@@ -410,15 +416,18 @@
 			this.tableLayoutPanel1.ColumnCount = 2;
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanel1.Controls.Add(this.labelSupportDevice2, 0, 1);
 			this.tableLayoutPanel1.Controls.Add(this.labelSupportDevice1, 0, 0);
 			this.tableLayoutPanel1.Controls.Add(this.comboBox1, 1, 0);
+			this.tableLayoutPanel1.Controls.Add(this.comboBox2, 1, 1);
 			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 16);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.RowCount = 2;
+			this.tableLayoutPanel1.RowCount = 3;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(194, 114);
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(209, 113);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
 			// labelSupportDevice1
@@ -427,16 +436,19 @@
 			this.labelSupportDevice1.AutoSize = true;
 			this.labelSupportDevice1.Location = new System.Drawing.Point(3, 7);
 			this.labelSupportDevice1.Name = "labelSupportDevice1";
-			this.labelSupportDevice1.Size = new System.Drawing.Size(95, 13);
+			this.labelSupportDevice1.Size = new System.Drawing.Size(104, 13);
 			this.labelSupportDevice1.TabIndex = 0;
-			this.labelSupportDevice1.Text = "Pressure Controller";
+			this.labelSupportDevice1.Text = "Mass Flow Controller";
 			// 
 			// comboBox1
 			// 
-			this.comboBox1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.comboBox1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBox1.FormattingEnabled = true;
-			this.comboBox1.Location = new System.Drawing.Point(104, 3);
+			this.comboBox1.Items.AddRange(new object[] {
+            "Manual",
+            "Cole-Parmer MFC"});
+			this.comboBox1.Location = new System.Drawing.Point(123, 3);
 			this.comboBox1.Name = "comboBox1";
 			this.comboBox1.Size = new System.Drawing.Size(83, 21);
 			this.comboBox1.TabIndex = 0;
@@ -447,7 +459,7 @@
 			this.tabPage2.Location = new System.Drawing.Point(4, 22);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(526, 286);
+			this.tabPage2.Size = new System.Drawing.Size(536, 285);
 			this.tabPage2.TabIndex = 4;
 			this.tabPage2.Text = "Status";
 			this.tabPage2.UseVisualStyleBackColor = true;
@@ -465,8 +477,8 @@
 			// splitContainer1.Panel2
 			// 
 			this.splitContainer1.Panel2.Controls.Add(this.groupBox2);
-			this.splitContainer1.Size = new System.Drawing.Size(520, 280);
-			this.splitContainer1.SplitterDistance = 266;
+			this.splitContainer1.Size = new System.Drawing.Size(530, 279);
+			this.splitContainer1.SplitterDistance = 271;
 			this.splitContainer1.TabIndex = 0;
 			// 
 			// groupBox3
@@ -475,7 +487,7 @@
 			this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox3.Location = new System.Drawing.Point(0, 0);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(266, 280);
+			this.groupBox3.Size = new System.Drawing.Size(271, 279);
 			this.groupBox3.TabIndex = 0;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Controlled Variables";
@@ -488,7 +500,7 @@
 			this.flowLayoutPanelControlledVariables.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.flowLayoutPanelControlledVariables.Location = new System.Drawing.Point(3, 16);
 			this.flowLayoutPanelControlledVariables.Name = "flowLayoutPanelControlledVariables";
-			this.flowLayoutPanelControlledVariables.Size = new System.Drawing.Size(260, 261);
+			this.flowLayoutPanelControlledVariables.Size = new System.Drawing.Size(265, 260);
 			this.flowLayoutPanelControlledVariables.TabIndex = 0;
 			// 
 			// groupBoxVariable1
@@ -605,7 +617,7 @@
 			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox2.Location = new System.Drawing.Point(0, 0);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(250, 280);
+			this.groupBox2.Size = new System.Drawing.Size(255, 279);
 			this.groupBox2.TabIndex = 0;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Independent Variable";
@@ -625,7 +637,7 @@
 			this.tableLayoutPanelIndependentVariables.RowCount = 2;
 			this.tableLayoutPanelIndependentVariables.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelIndependentVariables.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanelIndependentVariables.Size = new System.Drawing.Size(244, 261);
+			this.tableLayoutPanelIndependentVariables.Size = new System.Drawing.Size(249, 260);
 			this.tableLayoutPanelIndependentVariables.TabIndex = 1;
 			// 
 			// labelError
@@ -633,7 +645,7 @@
 			this.labelError.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.labelError.AutoSize = true;
 			this.labelError.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelError.Location = new System.Drawing.Point(39, 0);
+			this.labelError.Location = new System.Drawing.Point(40, 0);
 			this.labelError.Name = "labelError";
 			this.labelError.Size = new System.Drawing.Size(44, 20);
 			this.labelError.TabIndex = 18;
@@ -643,12 +655,12 @@
 			// 
 			this.trackBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
 			this.trackBar1.LargeChange = 20;
-			this.trackBar1.Location = new System.Drawing.Point(38, 23);
+			this.trackBar1.Location = new System.Drawing.Point(39, 23);
 			this.trackBar1.Maximum = 100;
 			this.trackBar1.Minimum = -100;
 			this.trackBar1.Name = "trackBar1";
 			this.trackBar1.Orientation = System.Windows.Forms.Orientation.Vertical;
-			this.trackBar1.Size = new System.Drawing.Size(45, 235);
+			this.trackBar1.Size = new System.Drawing.Size(45, 234);
 			this.trackBar1.TabIndex = 0;
 			this.trackBar1.TickFrequency = 10;
 			this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.Both;
@@ -658,7 +670,7 @@
 			this.labelRate.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.labelRate.AutoSize = true;
 			this.labelRate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelRate.Location = new System.Drawing.Point(161, 0);
+			this.labelRate.Location = new System.Drawing.Point(164, 0);
 			this.labelRate.Name = "labelRate";
 			this.labelRate.Size = new System.Drawing.Size(44, 20);
 			this.labelRate.TabIndex = 19;
@@ -668,12 +680,12 @@
 			// 
 			this.trackBar2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
 			this.trackBar2.LargeChange = 20;
-			this.trackBar2.Location = new System.Drawing.Point(160, 23);
+			this.trackBar2.Location = new System.Drawing.Point(164, 23);
 			this.trackBar2.Maximum = 100;
 			this.trackBar2.Minimum = -100;
 			this.trackBar2.Name = "trackBar2";
 			this.trackBar2.Orientation = System.Windows.Forms.Orientation.Vertical;
-			this.trackBar2.Size = new System.Drawing.Size(45, 235);
+			this.trackBar2.Size = new System.Drawing.Size(45, 234);
 			this.trackBar2.TabIndex = 1;
 			this.trackBar2.TickFrequency = 10;
 			this.trackBar2.TickStyle = System.Windows.Forms.TickStyle.Both;
@@ -683,9 +695,9 @@
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar1,
             this.toolStripStatusLabel1});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 336);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 335);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(534, 26);
+			this.statusStrip1.Size = new System.Drawing.Size(544, 26);
 			this.statusStrip1.TabIndex = 1;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
@@ -710,7 +722,7 @@
             this.helpToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(534, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(544, 24);
 			this.menuStrip1.TabIndex = 2;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -853,7 +865,7 @@
 			// numberOfDUTsToolStripMenuItem
 			// 
 			this.numberOfDUTsToolStripMenuItem.Name = "numberOfDUTsToolStripMenuItem";
-			this.numberOfDUTsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.numberOfDUTsToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
 			this.numberOfDUTsToolStripMenuItem.Text = "&Number of DUTs";
 			this.numberOfDUTsToolStripMenuItem.Click += new System.EventHandler(this.numberOfDUTsToolStripMenuItem_Click);
 			// 
@@ -861,13 +873,13 @@
 			// 
 			this.variablesToolStripMenuItem.Enabled = false;
 			this.variablesToolStripMenuItem.Name = "variablesToolStripMenuItem";
-			this.variablesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.variablesToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
 			this.variablesToolStripMenuItem.Text = "&Variables";
 			// 
 			// optionsToolStripMenuItem
 			// 
 			this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
 			this.optionsToolStripMenuItem.Text = "&Options";
 			this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
 			// 
@@ -875,7 +887,7 @@
 			// 
 			this.terminalToolStripMenuItem.Enabled = false;
 			this.terminalToolStripMenuItem.Name = "terminalToolStripMenuItem";
-			this.terminalToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.terminalToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
 			this.terminalToolStripMenuItem.Text = "&Terminal";
 			// 
 			// helpToolStripMenuItem
@@ -901,11 +913,35 @@
 			this.supportToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
 			this.supportToolStripMenuItem.Text = "How Do I";
 			// 
+			// labelSupportDevice2
+			// 
+			this.labelSupportDevice2.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelSupportDevice2.AutoSize = true;
+			this.labelSupportDevice2.Location = new System.Drawing.Point(3, 34);
+			this.labelSupportDevice2.Name = "labelSupportDevice2";
+			this.labelSupportDevice2.Size = new System.Drawing.Size(114, 13);
+			this.labelSupportDevice2.TabIndex = 1;
+			this.labelSupportDevice2.Text = "Temperature Controller";
+			// 
+			// comboBox2
+			// 
+			this.comboBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBox2.FormattingEnabled = true;
+			this.comboBox2.Items.AddRange(new object[] {
+            "Manual",
+            "Dwyer 16B"});
+			this.comboBox2.Location = new System.Drawing.Point(123, 30);
+			this.comboBox2.Name = "comboBox2";
+			this.comboBox2.Size = new System.Drawing.Size(83, 21);
+			this.comboBox2.TabIndex = 2;
+			// 
 			// FormCalibration
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(534, 362);
+			this.AutoSize = true;
+			this.ClientSize = new System.Drawing.Size(544, 361);
 			this.Controls.Add(this.tabControl1);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.menuStrip1);
@@ -915,6 +951,7 @@
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormCalibration_FormClosing);
 			this.tabControl1.ResumeLayout(false);
 			this.Overview.ResumeLayout(false);
+			this.Overview.PerformLayout();
 			this.tableLayoutPanelOverview.ResumeLayout(false);
 			this.tableLayoutPanelOverview.PerformLayout();
 			this.groupBoxTestSetup.ResumeLayout(false);
@@ -1029,6 +1066,8 @@
 		private System.Windows.Forms.ComboBox comboBox1;
 		private System.Windows.Forms.ToolStripMenuItem numberOfDUTsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem variablesToolStripMenuItem;
+		private System.Windows.Forms.Label labelSupportDevice2;
+		private System.Windows.Forms.ComboBox comboBox2;
 	}
 }
 

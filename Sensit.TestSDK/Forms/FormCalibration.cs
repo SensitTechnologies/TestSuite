@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Sensit.TestSDK.Forms
@@ -76,7 +75,7 @@ namespace Sensit.TestSDK.Forms
 		/// <summary>
 		/// Items in the "Model" combobox
 		/// </summary>
-		public ArrayList ModelList
+		public ArrayList Models
 		{
 			get
 			{
@@ -108,7 +107,7 @@ namespace Sensit.TestSDK.Forms
 		/// <summary>
 		/// Items in the "Range" combobox
 		/// </summary>
-		public ArrayList RangeList
+		public ArrayList Ranges
 		{
 			get
 			{
@@ -140,7 +139,7 @@ namespace Sensit.TestSDK.Forms
 		/// <summary>
 		/// Items in the "Test" combobox
 		/// </summary>
-		public ArrayList TestList
+		public ArrayList Tests
 		{
 			get
 			{
@@ -191,9 +190,9 @@ namespace Sensit.TestSDK.Forms
 		{
 			InitializeComponent();
 
-			ModelList = models;
-			RangeList = ranges;
-			TestList = tests;
+			Models = models;
+			Ranges = ranges;
+			Tests = tests;
 
 			NumDuts = duts;
 		}
