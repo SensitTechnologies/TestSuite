@@ -6,19 +6,22 @@ using Sensit.TestSDK.Exceptions;
 
 namespace Sensit.TestSDK.Communication
 {
+	public static class VisaPattern
+	{
+		// common search patterns
+		public const string ASRL = "ASRL?*";
+		public const string GPIB = "GPIB?*";
+		public const string GPIB_VXI = "GPIB-VXI?*";
+		public const string TCPIP = "TCPIP?*";
+		public const string VXI = "VXI?*";
+		public const string USB = "USB?*";
+	}
+
 	/// <summary>
 	/// Virtual Instrument Software Architecture (VISA)
 	/// </summary>
 	public abstract class VisaDevice
 	{
-		// common search patterns
-		public const string PATTERN_ASRL = "ASRL?*";
-		public const string PATTERN_GPIB = "GPIB?*";
-		public const string PATTERN_GPIB_VXI = "GPIB-VXI?*";
-		public const string PATTERN_TCPIP = "TCPIP?*";
-		public const string PATTERN_VXI = "VXI?*";
-		public const string PATTERN_USB = "USB?*";
-
 		// IVI VISA object used to communicate with the device
 		private IMessageBasedFormattedIO _instrument;
 
@@ -31,10 +34,10 @@ namespace Sensit.TestSDK.Communication
 		/// with the same pattern to open an instrument.
 		/// </remarks>
 		/// <param name="pattern">string to match in resource names</param>
-		/// <returns></returns>
-		public static List<string> Find(string pattern)
+		/// <returns>list of resource names that include pattern</returns>
+		public static IEnumerable<string> Find(string pattern = VisaPattern.USB)
 		{
-			List<string> resourceNames;
+			IEnumerable<string> resourceNames;
 
 			try
 			{
@@ -59,7 +62,7 @@ namespace Sensit.TestSDK.Communication
 		/// </remarks>
 		/// <param name="pattern">string to match in resource names</param>
 		/// <param name="index">which of the instruments matching the pattern to open</param>
-		public void Open(string pattern = PATTERN_USB, int index = 0)
+		public void Open(string pattern = VisaPattern.USB, int index = 0)
 		{
 			try
 			{
