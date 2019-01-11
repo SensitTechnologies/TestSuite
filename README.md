@@ -51,8 +51,8 @@ Features necessary for the first iteration are highlighted in bold.
   * [x] Device Under Test Simulator
   * [ ] **Analog sensor**
 * Support a variety of communication protocols.
-  * [ ] **VISA.IVI**
-  * [ ] **SCPI**
+  * [x] **VISA.IVI**
+  * [x] **SCPI**
   * [x] **Serial port**
   * [ ] MODBUS
 * Provide a Graphic User Interface.
@@ -63,7 +63,7 @@ Features necessary for the first iteration are highlighted in bold.
   * [ ] **CSV**
   * [ ] Excel
   * [ ] SQL or Mongo Database
-* Provide a calculation library.
+* Provide a calculation library to generate test results.
   * [x] Convert units of measure.
   * [ ] Linearize calibration data.
 * Store settings in serializable classes.
@@ -72,9 +72,17 @@ Features necessary for the first iteration are highlighted in bold.
   * [ ] Provide a GUI to edit settings.
 
 ## Development Environment
-* [Visual Studio 2017](https://visualstudio.microsoft.com) or later (Community edition is free for open source projects!)
-* Microsoft .NET Framework 4.7.2 - If Visual Studio is already installed but the correct framework is not, run the Visual Studio Installer, navigate to *Individual Components* and select the appropriate framework.
-* [Keysight IO Libraries Suite](https://www.keysight.com/en/pd-1985909/io-libraries-suite) - VISA drivers necessary to communicate with Keysight/Agilent instruments.  You could also use the National Instruments VISA drivers.
+* [Visual Studio 2017](https://visualstudio.microsoft.com) or later (Community
+  edition is free for open source projects!)
+* Microsoft .NET Framework 4.7.2 - If Visual Studio is already installed but the
+  correct framework is not, run the Visual Studio Installer, navigate to
+  *Individual Components* and select the appropriate framework.
+* [Keysight IO Libraries Suite](https://www.keysight.com/en/pd-1985909/io-libraries-suite)
+  - VISA drivers necessary to communicate with Keysight/Agilent instruments.
+  You could also use the National Instruments VISA drivers.
+* [Keysight Command Expert](https://www.keysight.com/en/pd-2036130/command-expert)
+  - used to install necessary Agilent dll.  See included help file for
+  instructions to install dependencies for specific instruments.
 
 ## Code Standards
 Attention was given to making this software suite as easy to read and modify as
