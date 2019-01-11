@@ -40,23 +40,19 @@ namespace Sensit.App.Keysight
 		private void Find()
 		{
 			// Find all available VISA-over-USB devices.
-			IEnumerable<string> devices = Keysight_34972A.Find(VisaDevice.PATTERN_USB);
+			IEnumerable<string> devices = VisaDevice.Find(VisaPattern.USB);
 
+			// Remove all items.
+			comboBoxResources.Items.Clear();
+
+			// Add found items.
 			foreach (string d in devices)
 			{
 				comboBoxResources.Items.Add(d);
 			}
 
+			// Select the first item.
 			comboBoxResources.SelectedIndex = 0;
-		}
-
-		private void buttonWrite_Click(object sender, EventArgs e)
-		{
-			// Write a command.
-			string response = _datalogger.Write(comboBoxCommand.Text);
-
-			// Display the response.
-			textBoxResponse.Text = response;
 		}
 
 		/// <summary>

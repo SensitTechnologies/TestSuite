@@ -39,15 +39,9 @@
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.groupBoxScpi = new System.Windows.Forms.GroupBox();
-			this.comboBoxCommand = new System.Windows.Forms.ComboBox();
-			this.buttonWrite = new System.Windows.Forms.Button();
-			this.labelCommand = new System.Windows.Forms.Label();
-			this.labelResponse = new System.Windows.Forms.Label();
-			this.textBoxResponse = new System.Windows.Forms.TextBox();
 			this.groupBoxVisa.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
-			this.groupBoxScpi.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// groupBoxVisa
@@ -155,63 +149,13 @@
 			// 
 			this.groupBoxScpi.AutoSize = true;
 			this.groupBoxScpi.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.groupBoxScpi.Controls.Add(this.textBoxResponse);
-			this.groupBoxScpi.Controls.Add(this.labelResponse);
-			this.groupBoxScpi.Controls.Add(this.labelCommand);
-			this.groupBoxScpi.Controls.Add(this.buttonWrite);
-			this.groupBoxScpi.Controls.Add(this.comboBoxCommand);
 			this.groupBoxScpi.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBoxScpi.Location = new System.Drawing.Point(0, 107);
 			this.groupBoxScpi.Name = "groupBoxScpi";
-			this.groupBoxScpi.Size = new System.Drawing.Size(334, 113);
+			this.groupBoxScpi.Size = new System.Drawing.Size(334, 19);
 			this.groupBoxScpi.TabIndex = 4;
 			this.groupBoxScpi.TabStop = false;
 			this.groupBoxScpi.Text = "SCPI";
-			// 
-			// comboBoxCommand
-			// 
-			this.comboBoxCommand.FormattingEnabled = true;
-			this.comboBoxCommand.Location = new System.Drawing.Point(6, 32);
-			this.comboBoxCommand.Name = "comboBoxCommand";
-			this.comboBoxCommand.Size = new System.Drawing.Size(240, 21);
-			this.comboBoxCommand.TabIndex = 0;
-			// 
-			// buttonWrite
-			// 
-			this.buttonWrite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonWrite.Location = new System.Drawing.Point(253, 30);
-			this.buttonWrite.Name = "buttonWrite";
-			this.buttonWrite.Size = new System.Drawing.Size(75, 23);
-			this.buttonWrite.TabIndex = 1;
-			this.buttonWrite.Text = "Write";
-			this.buttonWrite.UseVisualStyleBackColor = true;
-			this.buttonWrite.Click += new System.EventHandler(this.buttonWrite_Click);
-			// 
-			// labelCommand
-			// 
-			this.labelCommand.AutoSize = true;
-			this.labelCommand.Location = new System.Drawing.Point(6, 16);
-			this.labelCommand.Name = "labelCommand";
-			this.labelCommand.Size = new System.Drawing.Size(54, 13);
-			this.labelCommand.TabIndex = 2;
-			this.labelCommand.Text = "Command";
-			// 
-			// labelResponse
-			// 
-			this.labelResponse.AutoSize = true;
-			this.labelResponse.Location = new System.Drawing.Point(6, 57);
-			this.labelResponse.Name = "labelResponse";
-			this.labelResponse.Size = new System.Drawing.Size(55, 13);
-			this.labelResponse.TabIndex = 4;
-			this.labelResponse.Text = "Response";
-			// 
-			// textBoxResponse
-			// 
-			this.textBoxResponse.Location = new System.Drawing.Point(7, 74);
-			this.textBoxResponse.Name = "textBoxResponse";
-			this.textBoxResponse.ReadOnly = true;
-			this.textBoxResponse.Size = new System.Drawing.Size(239, 20);
-			this.textBoxResponse.TabIndex = 5;
 			// 
 			// FormKeysight
 			// 
@@ -231,8 +175,6 @@
 			this.statusStrip1.PerformLayout();
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
-			this.groupBoxScpi.ResumeLayout(false);
-			this.groupBoxScpi.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -251,11 +193,6 @@
 		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
 		private System.Windows.Forms.Button buttonRefresh;
 		private System.Windows.Forms.GroupBox groupBoxScpi;
-		private System.Windows.Forms.TextBox textBoxResponse;
-		private System.Windows.Forms.Label labelResponse;
-		private System.Windows.Forms.Label labelCommand;
-		private System.Windows.Forms.Button buttonWrite;
-		private System.Windows.Forms.ComboBox comboBoxCommand;
 	}
 }
 
