@@ -31,7 +31,9 @@ namespace Sensit.App.Calibration
 			// TODO:  Tell the GUI what models are available.
 			formCalibration.Models = new ArrayList(new string[] { "Simulator", "Analog Sensor" });
 			// TODO:  Tell the GUI what ranges are available.
+			formCalibration.Ranges = new ArrayList(new string[] { "0 - 5% V/V", "0 - 100% V/V" });
 			// TODO:  Tell the GUI what tests are available.
+			formCalibration.Tests = new ArrayList(new string[] { "Linearity" });
 
 			// TODO:  Tell the GUI variables to use.
 			//        Maybe create test.Initialize that calls a form action and sends
