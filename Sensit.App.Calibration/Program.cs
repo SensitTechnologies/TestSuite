@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Sensit.TestSDK.Forms;
 
@@ -26,14 +24,15 @@ namespace Sensit.App.Calibration
 			Test test = new Test();
 
 			// Create a GUI for user interaction.
-			FormCalibration formCalibration = new FormCalibration();
-
-			// TODO:  Tell the GUI what models are available.
-			formCalibration.Models = new ArrayList(new string[] { "Simulator", "Analog Sensor" });
-			// TODO:  Tell the GUI what ranges are available.
-			formCalibration.Ranges = new ArrayList(new string[] { "0 - 5% V/V", "0 - 100% V/V" });
-			// TODO:  Tell the GUI what tests are available.
-			formCalibration.Tests = new ArrayList(new string[] { "Linearity" });
+			FormCalibration formCalibration = new FormCalibration
+			{
+				// TODO:  Tell the GUI what models are available.
+				Models = new ArrayList(new string[] { "Simulator", "Analog Sensor" }),
+				// TODO:  Tell the GUI what ranges are available.
+				Ranges = new ArrayList(new string[] { "0 - 5% V/V", "0 - 100% V/V" }),
+				// TODO:  Tell the GUI what tests are available.
+				Tests = new ArrayList(new string[] { "Linearity" })
+			};
 
 			// TODO:  Tell the GUI variables to use.
 			//        Maybe create test.Initialize that calls a form action and sends
