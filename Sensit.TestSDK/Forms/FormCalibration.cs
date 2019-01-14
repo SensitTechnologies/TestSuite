@@ -194,24 +194,6 @@ namespace Sensit.TestSDK.Forms
 			NumDuts = duts;
 		}
 
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="models">items in the "Model" combobox</param>
-		/// <param name="ranges">items in the "Range" combobox</param>
-		/// <param name="tests">items in the "Test" combobox</param>
-		/// <param name="duts">how many devices under test to provide controls for</param>
-		public FormCalibration(ArrayList models, ArrayList ranges, ArrayList tests, int duts = 8)
-		{
-			InitializeComponent();
-
-			Models = models;
-			Ranges = ranges;
-			Tests = tests;
-
-			NumDuts = duts;
-		}
-
 		#endregion
 
 		#region Private Methods
