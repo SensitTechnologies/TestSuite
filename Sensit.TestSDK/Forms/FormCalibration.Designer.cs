@@ -49,8 +49,10 @@
 			this.checkBoxSelectAll = new System.Windows.Forms.CheckBox();
 			this.groupBoxTestEquipment = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			this.labelSupportDevice2 = new System.Windows.Forms.Label();
 			this.labelSupportDevice1 = new System.Windows.Forms.Label();
 			this.comboBox1 = new System.Windows.Forms.ComboBox();
+			this.comboBox2 = new System.Windows.Forms.ComboBox();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -87,7 +89,6 @@
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.abortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.reconnectDUTsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,8 +101,7 @@
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.supportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpProvider1 = new System.Windows.Forms.HelpProvider();
-			this.labelSupportDevice2 = new System.Windows.Forms.Label();
-			this.comboBox2 = new System.Windows.Forms.ComboBox();
+			this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tabControl1.SuspendLayout();
 			this.Overview.SuspendLayout();
 			this.tableLayoutPanelOverview.SuspendLayout();
@@ -430,6 +430,16 @@
 			this.tableLayoutPanel1.Size = new System.Drawing.Size(209, 113);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
+			// labelSupportDevice2
+			// 
+			this.labelSupportDevice2.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelSupportDevice2.AutoSize = true;
+			this.labelSupportDevice2.Location = new System.Drawing.Point(3, 34);
+			this.labelSupportDevice2.Name = "labelSupportDevice2";
+			this.labelSupportDevice2.Size = new System.Drawing.Size(114, 13);
+			this.labelSupportDevice2.TabIndex = 1;
+			this.labelSupportDevice2.Text = "Temperature Controller";
+			// 
 			// labelSupportDevice1
 			// 
 			this.labelSupportDevice1.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -452,6 +462,19 @@
 			this.comboBox1.Name = "comboBox1";
 			this.comboBox1.Size = new System.Drawing.Size(83, 21);
 			this.comboBox1.TabIndex = 0;
+			// 
+			// comboBox2
+			// 
+			this.comboBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBox2.FormattingEnabled = true;
+			this.comboBox2.Items.AddRange(new object[] {
+            "Manual",
+            "Dwyer 16B"});
+			this.comboBox2.Location = new System.Drawing.Point(123, 30);
+			this.comboBox2.Name = "comboBox2";
+			this.comboBox2.Size = new System.Drawing.Size(83, 21);
+			this.comboBox2.TabIndex = 2;
 			// 
 			// tabPage2
 			// 
@@ -817,38 +840,29 @@
 			// 
 			this.startToolStripMenuItem.Name = "startToolStripMenuItem";
 			this.startToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-			this.startToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+			this.startToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.startToolStripMenuItem.Text = "&Start";
 			this.startToolStripMenuItem.Click += new System.EventHandler(this.buttonStart_Click);
-			// 
-			// pauseToolStripMenuItem
-			// 
-			this.pauseToolStripMenuItem.Enabled = false;
-			this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
-			this.pauseToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F6;
-			this.pauseToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
-			this.pauseToolStripMenuItem.Text = "&Pause";
-			this.pauseToolStripMenuItem.ToolTipText = "Hault the current test temporarily";
 			// 
 			// abortToolStripMenuItem
 			// 
 			this.abortToolStripMenuItem.Enabled = false;
 			this.abortToolStripMenuItem.Name = "abortToolStripMenuItem";
 			this.abortToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F7;
-			this.abortToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+			this.abortToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.abortToolStripMenuItem.Text = "&Abort";
 			this.abortToolStripMenuItem.Click += new System.EventHandler(this.buttonStop_Click);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(124, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
 			// 
 			// reconnectDUTsToolStripMenuItem
 			// 
 			this.reconnectDUTsToolStripMenuItem.Enabled = false;
 			this.reconnectDUTsToolStripMenuItem.Name = "reconnectDUTsToolStripMenuItem";
-			this.reconnectDUTsToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+			this.reconnectDUTsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.reconnectDUTsToolStripMenuItem.Text = "&Find DUTs";
 			// 
 			// toolsToolStripMenuItem
@@ -913,28 +927,15 @@
 			this.supportToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
 			this.supportToolStripMenuItem.Text = "How Do I";
 			// 
-			// labelSupportDevice2
+			// pauseToolStripMenuItem
 			// 
-			this.labelSupportDevice2.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelSupportDevice2.AutoSize = true;
-			this.labelSupportDevice2.Location = new System.Drawing.Point(3, 34);
-			this.labelSupportDevice2.Name = "labelSupportDevice2";
-			this.labelSupportDevice2.Size = new System.Drawing.Size(114, 13);
-			this.labelSupportDevice2.TabIndex = 1;
-			this.labelSupportDevice2.Text = "Temperature Controller";
-			// 
-			// comboBox2
-			// 
-			this.comboBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBox2.FormattingEnabled = true;
-			this.comboBox2.Items.AddRange(new object[] {
-            "Manual",
-            "Dwyer 16B"});
-			this.comboBox2.Location = new System.Drawing.Point(123, 30);
-			this.comboBox2.Name = "comboBox2";
-			this.comboBox2.Size = new System.Drawing.Size(83, 21);
-			this.comboBox2.TabIndex = 2;
+			this.pauseToolStripMenuItem.Enabled = false;
+			this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
+			this.pauseToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F6;
+			this.pauseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.pauseToolStripMenuItem.Text = "&Pause";
+			this.pauseToolStripMenuItem.ToolTipText = "Hault the current test temporarily";
+			this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
 			// 
 			// FormCalibration
 			// 
@@ -1005,7 +1006,6 @@
 		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem supportToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem startToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem pauseToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem abortToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.ToolStripMenuItem reconnectDUTsToolStripMenuItem;
@@ -1068,6 +1068,7 @@
 		private System.Windows.Forms.ToolStripMenuItem variablesToolStripMenuItem;
 		private System.Windows.Forms.Label labelSupportDevice2;
 		private System.Windows.Forms.ComboBox comboBox2;
+		private System.Windows.Forms.ToolStripMenuItem pauseToolStripMenuItem;
 	}
 }
 

@@ -23,6 +23,8 @@ namespace Sensit.TestSDK.Forms
 		// number of devices under test displayed on the form
 		private int _numDuts = 1;
 
+		#region Properties
+
 		/// <summary>
 		/// Number of DUTs displayed on the form
 		/// </summary>
@@ -32,6 +34,9 @@ namespace Sensit.TestSDK.Forms
 			set
 			{
 				_numDuts = value;
+
+				// Stop the GUI from looking weird while we update it.
+				tableLayoutPanelDevicesUnderTest.SuspendLayout();
 
 				// Remove all DUT controls.
 				for (int i = 0; i < tableLayoutPanelDevicesUnderTest.ColumnCount; i++)
@@ -69,6 +74,12 @@ namespace Sensit.TestSDK.Forms
 					};
 					tableLayoutPanelDevicesUnderTest.Controls.Add(textBox, 2, i - 1);
 				}
+
+				// Make the GUI act normally again.
+				tableLayoutPanelDevicesUnderTest.ResumeLayout();
+
+				// Inform the application that the number of DUTs has changed.
+				NumDutsChanged?.Invoke(NumDuts);
 			}
 		}
 
@@ -168,6 +179,10 @@ namespace Sensit.TestSDK.Forms
 			}
 		}
 
+		#endregion
+
+		#region Constructors
+
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -197,6 +212,8 @@ namespace Sensit.TestSDK.Forms
 			NumDuts = duts;
 		}
 
+		#endregion
+
 		#region Private Methods
 
 		/// <summary>
@@ -224,6 +241,11 @@ namespace Sensit.TestSDK.Forms
 				buttonStop.Enabled = true;
 				buttonStart.Enabled = false;
 			}
+			catch (NullReferenceException)
+			{
+				MessageBox.Show("The application has not assigned an action to run when a test is started!"
+					+ Environment.NewLine + "Please contact your engineering team.", "Error");
+			}
 			catch (Exception ex)
 			{
 				MessageBox.Show(ex.Message, "Error");
@@ -231,13 +253,31 @@ namespace Sensit.TestSDK.Forms
 		}
 
 		/// <summary>
-		/// when the "Stop" button is clicked, run the Stop action.
+		/// When the "Stop" button is clicked, run the Stop action.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void buttonStop_Click(object sender, System.EventArgs e)
 		{
 			ConfirmAbort();
+		}
+
+		/// <summary>
+		/// When the "Pause" menu item is clicked, run the Pause action.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				TestPause();
+			}
+			catch (NullReferenceException)
+			{
+				MessageBox.Show("This application does not support pausing a test."
+					+ Environment.NewLine + "Please contact your engineering team.", "Error");
+			}
 		}
 
 		/// <summary>
@@ -250,6 +290,11 @@ namespace Sensit.TestSDK.Forms
 			try
 			{
 				Print();
+			}
+			catch (NullReferenceException)
+			{
+				MessageBox.Show("This application does not support printing."
+					+ Environment.NewLine + "Please contact your engineering team.", "Error");
 			}
 			catch (Exception ex)
 			{
@@ -334,6 +379,11 @@ namespace Sensit.TestSDK.Forms
 					// call the "TestFinished" method.
 					TestStop();
 				}
+				catch (NullReferenceException)
+				{
+					MessageBox.Show("The application has not assigned an action to run when a test is aborted!"
+						+ Environment.NewLine + "Please contact your engineering team.", "Error");
+				}
 				catch (Exception ex)
 				{
 					MessageBox.Show(ex.Message, "Error");
@@ -358,6 +408,10 @@ namespace Sensit.TestSDK.Forms
 			{
 				Options();
 			}
+			catch (NullReferenceException)
+			{
+				MessageBox.Show("This application has no options to set.", "Error");
+			}
 			catch (Exception ex)
 			{
 				MessageBox.Show(ex.Message, "Error");
@@ -373,7 +427,7 @@ namespace Sensit.TestSDK.Forms
 		{
 			// Prompt user to enter desired number of DUTs (current value as default).
 			int numDuts = NumDuts;
-			DialogResult result = InputDialog.Numeric("Number of DUTs", ref numDuts, 1, 12);
+			DialogResult result = InputDialog.Numeric("Number of DUTs", ref numDuts, 1, 24);
 
 			// Update the property (which will also update the form).
 			NumDuts = numDuts;
@@ -386,7 +440,7 @@ namespace Sensit.TestSDK.Forms
 		/// <param name="e"></param>
 		private void comboBoxModel_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			ModelChanged(comboBoxModel.SelectedText);
+			ModelChanged?.Invoke(comboBoxModel.SelectedText);
 		}
 
 		/// <summary>
@@ -396,7 +450,7 @@ namespace Sensit.TestSDK.Forms
 		/// <param name="e"></param>
 		private void comboBoxRange_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			RangeChanged(comboBoxRange.SelectedText);
+			RangeChanged?.Invoke(comboBoxRange.SelectedText);
 		}
 
 		/// <summary>
@@ -406,7 +460,7 @@ namespace Sensit.TestSDK.Forms
 		/// <param name="e"></param>
 		private void comboBoxTest_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			TestChanged(comboBoxTest.SelectedText);
+			TestChanged?.Invoke(comboBoxTest.SelectedText);
 		}
 
 		#endregion
