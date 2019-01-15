@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Sensit.TestSDK.Communication;
-using Sensit.TestSDK.Devices;			// datalogger
+using Sensit.TestSDK.Devices;
 
 namespace Sensit.App.Keysight
 {
-
 	public partial class FormKeysight : Form
 	{
 		// Keysight datalogger

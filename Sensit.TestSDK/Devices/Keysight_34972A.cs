@@ -46,7 +46,7 @@ namespace Sensit.TestSDK.Devices
 			// Confirm identity.
 			_v34972A.SCPI.IDN.Query(out string identity);
 
-			// The second 
+			// The second word is the model number.
 			string[] words = identity.Split(',');
 
 			if (words[1].Equals("34972A") == false)
@@ -66,6 +66,7 @@ namespace Sensit.TestSDK.Devices
 			// Disconnect.
 			_v34972A?.Disconnect();
 
+			// Prevent memory leaks.
 			((IDisposable)_v34972A)?.Dispose();
 
 			_v34972A = null;
