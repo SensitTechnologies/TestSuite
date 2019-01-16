@@ -11,3 +11,5 @@
 /TestResults
 /Sensit.App.Calibration/bin
 /Sensit.App.Calibration/obj
+/Sensit.App.Calibration/*.user
+/Sensit.TestSDK/*.user
