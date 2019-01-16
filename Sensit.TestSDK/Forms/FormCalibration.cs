@@ -416,6 +416,22 @@ namespace Sensit.TestSDK.Forms
 		}
 
 		/// <summary>
+		/// When the user clicks Help --> About, show an about box.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			// Create an about box.
+			FormAbout formAbout = new FormAbout();
+
+			// Show the about box.
+			// ShowDialog() disables interaction with the app's other forms.
+			// Show() does not.
+			formAbout.ShowDialog();
+		}
+
+		/// <summary>
 		/// When the "Model" selection is changed, alert the application.
 		/// </summary>
 		/// <param name="sender"></param>

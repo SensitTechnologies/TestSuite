@@ -155,6 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calculations\Calculations.cs" />
+    <Compile Include="Calculations\LeastSquaresFitLinear.cs" />
     <Compile Include="Communication\SCPI.cs" />
     <Compile Include="Communication\VisaDevice.cs" />
     <Compile Include="Devices\Manual.cs" />
@@ -176,6 +177,12 @@
     <Compile Include="Dut\Simulator.cs" />
     <Compile Include="Email\Email.cs" />
     <Compile Include="Exceptions\DeviceExceptions.cs" />
+    <Compile Include="Forms\FormAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormAbout.Designer.cs">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormCalibration.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -187,6 +194,12 @@
     </Compile>
     <Compile Include="Forms\FormInputDialog.Designer.cs">
       <DependentUpon>FormInputDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormObjectEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormObjectEditor.Designer.cs">
+      <DependentUpon>FormObjectEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FormTestCase.cs">
       <SubType>Form</SubType>
@@ -201,6 +214,8 @@
     <Compile Include="Interfaces\ISerialDevice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Office\Excel\Excel.cs" />
+    <Compile Include="Settings\GenericSerializer.cs" />
+    <Compile Include="Settings\SettingsMethods.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -249,11 +264,17 @@
     <EmbeddedResource Include="Controls\UserCustomStep.resx">
       <DependentUpon>UserCustomStep.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormAbout.resx">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCalibration.resx">
       <DependentUpon>FormCalibration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormInputDialog.resx">
       <DependentUpon>FormInputDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormObjectEditor.resx">
+      <DependentUpon>FormObjectEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormTestCase.resx">
       <DependentUpon>FormTestCase.cs</DependentUpon>
