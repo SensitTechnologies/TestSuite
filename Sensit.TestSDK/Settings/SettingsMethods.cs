@@ -11,6 +11,9 @@ namespace Sensit.TestSDK.Settings
 		/// <summary>
 		/// Folder where settings files will be stored for the application.
 		/// </summary>
+		/// <remarks>
+		/// Default setting is the location that the application runs from.
+		/// </remarks>
 		public static string SettingsDirectory { get; set; } = AppDomain.CurrentDomain.BaseDirectory;
 
 		/// <summary>
@@ -24,20 +27,19 @@ namespace Sensit.TestSDK.Settings
 			// Form the path to the file.
 			string filepath = GetSettingsFilePath(filename);
 
+			// Start with a null settings class.
+			T settings = default(T);
+
 			// If the file exists...
-			T settings;
 			if (File.Exists(filepath))
 			{
 				// Retrieve settings from file into the object.
 				settings = GenericSerializer.DeserializeXML<T>(filepath);
 			}
-			// If the file didn't exist, put default values into the settings object.
-			else
-			{
-				settings = (T)Activator.CreateInstance<T>();
-			}
-			
-			if (settings == null || settings.Equals(default(T)))
+
+			// If the file didn't exist or otherwise couldn't be deserialized,
+			// put default values into the settings object.
+			if (settings.Equals(default(T)))
 			{
 				settings = (T)Activator.CreateInstance<T>();
 			}

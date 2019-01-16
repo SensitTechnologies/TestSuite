@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Sensit.TestSDK.Devices;
+using Sensit.TestSDK.Settings;
 
 namespace Sensit.App.Calibration
 {
@@ -30,25 +31,28 @@ namespace Sensit.App.Calibration
 
 	public class System
 	{
+		private const string SYSTEM_SETTINGS_FILE = "System Settings";	// file where system settings are stored
+
 		// mass flow controller
-		//MFC _mfc = new MFC();
+		MFC _mfc = new MFC();
 
 		// datalogger (for analog sensor DUTs)
 		//Keysight_34972A _datalogger = new Keysight_34972A();
 
 		public void Open()
 		{
-			// TODO:  Read system settings.
+			// Read system settings.
+			SystemSettings settings = SettingsMethods.LoadSettings<SystemSettings>(SYSTEM_SETTINGS_FILE);
 
 			// Open all devices.
-			//_mfc.Open();
+			_mfc.Open(settings.MassFlowControllerPort);
 			//_datalogger.Open();
 		}
 
 		public void Close()
 		{
 			// Close all devices.
-			//_mfc.Close();
+			_mfc.Close();
 			//_datalogger.Close();
 		}
 

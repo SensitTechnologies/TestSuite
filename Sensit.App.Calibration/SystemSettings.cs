@@ -10,6 +10,6 @@ namespace Sensit.App.Calibration
 	public class SystemSettings
 	{
 		[Category("Hardware"), Description("Serial Port")]
-		public string MassFlowController { get; set; } = "";
+		public string MassFlowControllerPort { get; set; } = "COM18";
 	}
 }
