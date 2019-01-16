@@ -66,6 +66,7 @@ Features necessary for the first iteration are highlighted in bold.
   * [x] Convert units of measure.
   * [ ] Linearize calibration data.
 * Store settings in serializable classes.
+  * [x] System settings
   * [ ] DUT information (model, range, available tests).
   * [ ] Test information (variables, setpoints).
   * [ ] Provide a GUI to edit settings.
