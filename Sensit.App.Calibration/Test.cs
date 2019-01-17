@@ -3,11 +3,18 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
+using Sensit.TestSDK.Settings;
 
 namespace Sensit.App.Calibration
 {
 	public class Test
 	{
+		// file where model, range, test settings are stored
+		private const string PRODUCT_SETTINGS_FILE = "Product Settings";
+
+		// product settings
+		private ProductSettings _settings;
+
 		// Report test progress.
 		public Action<int, string> Update;
 
@@ -19,6 +26,9 @@ namespace Sensit.App.Calibration
 
 		// Close test equipment.
 		public Action SystemClose;
+
+		// Read system settings.
+		public Action SystemReadSettings;
 
 		// Fetch test equipment readings.
 		public Func<Dictionary<Reference, double>> SystemRead;
@@ -32,6 +42,57 @@ namespace Sensit.App.Calibration
 		private string _range;
 		private string _test;
 
+		#region Properties
+
+		public List<string> Models
+		{
+			get
+			{
+				List<string> models = new List<string>();
+
+				foreach (ModelSetting model in _settings.ModelSettings)
+				{
+					models.Add(model.Label);
+				}
+
+				return models;
+			}
+		}
+
+		public List<string> Ranges
+		{
+			get
+			{
+				List<string> ranges = new List<string>();
+
+				// Find the selected model settings object.
+				ModelSetting m = _settings.ModelSettings.Find(x => x.Label == _model);
+
+				// Find each range associated with the model.
+				foreach (RangeSetting r in m.RangeSettings)
+				{
+					ranges.Add(r.Label);
+				}
+
+				return ranges;
+			}
+		}
+
+		public List<string> Tests
+		{
+			get
+			{
+				List<string> tests = new List<string>();
+
+				foreach (TestSetting t in _settings.TestSettings)
+				{
+					tests.Add(t.Label);
+				}
+			}
+		}
+
+		#endregion
+
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -43,6 +104,9 @@ namespace Sensit.App.Calibration
 			testThread.DoWork += TestThread;
 			testThread.ProgressChanged += ProgressChanged;
 			testThread.RunWorkerCompleted += RunWorkerCompleted;
+
+			// Update product settings.
+			_settings = SettingsMethods.LoadSettings<ProductSettings>(PRODUCT_SETTINGS_FILE);
 		}
 
 		#region Private Methods
@@ -50,7 +114,7 @@ namespace Sensit.App.Calibration
 		private void ProgressChanged(object sender, ProgressChangedEventArgs e)
 		{
 			// Run action required as test progresses (i.e. update GUI).
-			Update(e.ProgressPercentage, e.UserState as String);
+			Update(e.ProgressPercentage, e.UserState as string);
 		}
 
 		private void RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -161,21 +225,20 @@ namespace Sensit.App.Calibration
 			do
 			{
 				// Read system settings.
-				testThread.ReportProgress(5, "Reading test settings...");
-				Thread.Sleep(1000); // One second.
+				testThread.ReportProgress(5, "Reading system settings...");
+				SystemReadSettings();
 				if (bw.CancellationPending) { break; }
 
 				// Read DUT settings (specific to Model, Range, Test).
 				testThread.ReportProgress(10, "Reading DUT settings...");
-				Thread.Sleep(1000); // One second.
+				_settings = SettingsMethods.LoadSettings<ProductSettings>(PRODUCT_SETTINGS_FILE);
 				if (bw.CancellationPending) { break; }
 
-				// Initialize GUI.
-				// TODO:  
+				// TODO:  Initialize GUI.
 
 				// Configure test equipment.
 				testThread.ReportProgress(15, "Configuring test equipment...");
-				SystemOpen?.Invoke();
+				SystemOpen();
 				if (bw.CancellationPending) { break; }
 
 				// Open selected DUTs.

@@ -47,6 +47,7 @@ namespace Sensit.App.Calibration
 			test.SystemOpen = system.Open;
 			test.SystemClose = system.Close;
 			test.SystemRead = system.Read;
+			test.SystemReadSettings = system.ReadSettings;
 			
 			// Set GUI actions.
 			formCalibration.TestStart = test.Start;
