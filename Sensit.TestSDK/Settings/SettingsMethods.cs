@@ -39,7 +39,7 @@ namespace Sensit.TestSDK.Settings
 
 			// If the file didn't exist or otherwise couldn't be deserialized,
 			// put default values into the settings object.
-			if (settings.Equals(default(T)))
+			if (settings == null)
 			{
 				settings = (T)Activator.CreateInstance<T>();
 			}
