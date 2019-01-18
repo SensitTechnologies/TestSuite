@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Sensit.TestSDK.Forms;
 
 namespace Sensit.App.Calibration
 {
@@ -26,12 +25,11 @@ namespace Sensit.App.Calibration
 			// Create a GUI for user interaction.
 			FormCalibration formCalibration = new FormCalibration
 			{
-				// TODO:  Tell the GUI what models are available.
-				Models = new List<string> { "Simulator", "Analog Sensor" },
-				// TODO:  Tell the GUI what ranges are available.
-				Ranges = new List<string> { "0 - 5% V/V", "0 - 100% V/V" },
-				// TODO:  Tell the GUI what tests are available.
-				Tests = new List<string> { "Linearity" }
+				// Tell the GUI what models, ranges, tests are available.
+				Models = test.Models,
+				Ranges = test.Ranges,
+				Tests = test.Tests,
+				NumDuts = test.NumDuts
 			};
 
 			// TODO:  Every time a model, range, is updated, get new options.
@@ -45,16 +43,19 @@ namespace Sensit.App.Calibration
 			test.SystemOpen = equipment.Open;
 			test.SystemClose = equipment.Close;
 			test.SystemRead = equipment.Read;
+			test.SetRanges = value => formCalibration.Ranges = value;
 			
 			// Set GUI actions.
 			formCalibration.TestStart = test.Start;
 			formCalibration.TestStop = test.Stop;
 			formCalibration.TestBusy = test.IsBusy;
 			formCalibration.Print = equipment.Print;
-			formCalibration.NumDutsChanged = test.SetNumDuts;
-			formCalibration.ModelChanged = test.SetModel;
-			formCalibration.RangeChanged = test.SetRange;
-			formCalibration.TestChanged = test.SetTest;
+			formCalibration.Exit = test.SaveSettings;
+			// https://syncor.blogspot.com/2010/11/passing-getter-and-setter-of-c-property.html
+			formCalibration.NumDutsChanged = value => test.NumDuts = value;
+			formCalibration.ModelChanged = value => test.SelectedModel = value;
+			formCalibration.RangeChanged = value => test.SelectedRange = value;
+			formCalibration.TestChanged = value => test.SelectedTest = value;
 
 			// Run the GUI.
 			Application.Run(formCalibration);

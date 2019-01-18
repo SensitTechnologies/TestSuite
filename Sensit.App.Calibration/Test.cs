@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading;
-using Sensit.TestSDK.Forms;
 using Sensit.TestSDK.Settings;
 
 namespace Sensit.App.Calibration
@@ -29,17 +27,107 @@ namespace Sensit.App.Calibration
 		// Close test equipment.
 		public Action SystemClose;
 
+		// Update the GUI's list of available ranges (when the selected model changes).
+		public Action<List<string>> SetRanges;
+
 		// Fetch test equipment readings.
 		public Func<Dictionary<Reference, double>> SystemRead;
 
 		// task that will handle test operations
 		private BackgroundWorker testThread = new BackgroundWorker();
 
-		// user settings
-		private int _numDuts;
-
 		#region Properties
 
+		/// <summary>
+		/// Number of devices under test
+		/// </summary>
+		public int NumDuts
+		{
+			get
+			{
+				return Properties.Settings.Default.NumDuts;
+			}
+			set
+			{
+				// If the test is running, throw an error.
+				if (testThread.IsBusy)
+				{
+					throw new Exception("Cannot change number of DUTs when test is running.");
+				}
+
+				Properties.Settings.Default.NumDuts = value;
+			}
+		}
+
+		/// <summary>
+		/// Type of device under test
+		/// </summary>
+		public string SelectedModel
+		{
+			get
+			{
+				return Properties.Settings.Default.Model;
+			}
+			set
+			{
+				// If the test is running, throw an error.
+				if (testThread.IsBusy)
+				{
+					throw new Exception("Cannot change model when test is running.");
+				}
+
+				// Re-populate the ranges available in the GUI.
+				SetRanges(Ranges);
+
+				Properties.Settings.Default.Model = value;
+			}
+		}
+
+		/// <summary>
+		/// Range of devices under test
+		/// </summary>
+		public string SelectedRange
+		{
+			get
+			{
+				return Properties.Settings.Default.Range;
+			}
+			set
+			{
+				// If the test is running, throw an error.
+				if (testThread.IsBusy)
+				{
+					throw new Exception("Cannot change range when test is running.");
+				}
+
+				Properties.Settings.Default.Range = value;
+			}
+		}
+
+		/// <summary>
+		/// What test to perform.
+		/// </summary>
+		public string SelectedTest
+		{
+			get
+			{
+				return Properties.Settings.Default.Test;
+			}
+			set
+			{
+				// If the test is running, throw an error.
+				if (testThread.IsBusy)
+				{
+					throw new Exception("Cannot change test type when test is running.");
+				}
+
+				Properties.Settings.Default.Test = value;
+			}
+		}
+
+		/// <summary>
+		/// Available models to select from
+		/// </summary>
 		public List<string> Models
 		{
 			get
@@ -57,15 +145,15 @@ namespace Sensit.App.Calibration
 			}
 		}
 
+		/// <summary>
+		/// Available ranges to select from
+		/// </summary>
 		public List<string> Ranges
 		{
 			get
 			{
-				// Find the currently selected model.
-				string model = Properties.Settings.Default.Model;
-
 				// Find the selected model settings object.
-				ModelSetting m = _settings.ModelSettings.Find(x => x.Label == model);
+				ModelSetting m = _settings.ModelSettings.Find(x => x.Label == SelectedModel);
 
 				// Create a new list.
 				List<string> ranges = new List<string>();
@@ -80,6 +168,9 @@ namespace Sensit.App.Calibration
 			}
 		}
 
+		/// <summary>
+		/// Available tests to select from
+		/// </summary>
 		public List<string> Tests
 		{
 			get
@@ -114,7 +205,7 @@ namespace Sensit.App.Calibration
 			testThread.RunWorkerCompleted += RunWorkerCompleted;
 
 			// Fetch product settings.
-			_settings = SettingsMethods.LoadSettings<ProductSettings>(PRODUCT_SETTINGS_FILE);
+			_settings = Settings.Load<ProductSettings>(PRODUCT_SETTINGS_FILE);
 
 			// TODO:  Populate the GUI's options.
 		}
@@ -240,7 +331,7 @@ namespace Sensit.App.Calibration
 
 				// Read DUT settings (specific to Model, Range, Test).
 				testThread.ReportProgress(10, "Reading DUT settings...");
-				_settings = SettingsMethods.LoadSettings<ProductSettings>(PRODUCT_SETTINGS_FILE);
+				_settings = Settings.Load<ProductSettings>(PRODUCT_SETTINGS_FILE);
 				if (bw.CancellationPending) { break; }
 
 				// TODO:  Initialize GUI.
@@ -333,68 +424,11 @@ namespace Sensit.App.Calibration
 		}
 
 		/// <summary>
-		/// Set the number of DUTs handled in the test.
+		/// Save user settings (for next time the application runs).
 		/// </summary>
-		/// <param name="duts"></param>
-		public void SetNumDuts(int duts)
+		public void SaveSettings()
 		{
-			// If the test is running, throw an error.
-			if (testThread.IsBusy)
-			{
-				throw new Exception("Cannot change number of DUTs when test is running.");
-			}
-
-			_numDuts = duts;
-		}
-
-		/// <summary>
-		/// Set the DUT type.
-		/// </summary>
-		/// <param name="model"></param>
-		public void SetModel(string model)
-		{
-			// If the test is running, throw an error.
-			if (testThread.IsBusy)
-			{
-				throw new Exception("Cannot change model when test is running.");
-			}
-
-			// Remember the new setting.
-			Properties.Settings.Default.Model = model;
-
-			// TODO:  Re-populate the available ranges.
-		}
-
-		/// <summary>
-		/// Set the DUT range.
-		/// </summary>
-		/// <param name="range"></param>
-		public void SetRange(string range)
-		{
-			// If the test is running, throw an error.
-			if (testThread.IsBusy)
-			{
-				throw new Exception("Cannot change range when test is running.");
-			}
-
-			// Remember the new setting.
-			Properties.Settings.Default.Range = range;
-		}
-
-		/// <summary>
-		/// Select what test to perform.
-		/// </summary>
-		/// <param name="test"></param>
-		public void SetTest(string test)
-		{
-			// If the test is running, throw an error.
-			if (testThread.IsBusy)
-			{
-				throw new Exception("Cannot change test type when test is running.");
-			}
-
-			// Remember the new setting.
-			Properties.Settings.Default.Test = test;
+			Properties.Settings.Default.Save();
 		}
 	}
 }
