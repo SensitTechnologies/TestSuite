@@ -6,7 +6,7 @@ namespace Sensit.TestSDK.Settings
 	/// <summary>
 	/// Class to allow editing of settings objects by user
 	/// </summary>
-	public static class SettingsMethods
+	public static class Settings
 	{
 		/// <summary>
 		/// Folder where settings files will be stored for the application.
@@ -14,7 +14,7 @@ namespace Sensit.TestSDK.Settings
 		/// <remarks>
 		/// Default setting is the location that the application runs from.
 		/// </remarks>
-		public static string SettingsDirectory { get; set; } = AppDomain.CurrentDomain.BaseDirectory;
+		public static string Directory { get; set; } = AppDomain.CurrentDomain.BaseDirectory;
 
 		/// <summary>
 		/// Retrieve an object of the specified type from the specified settings file
@@ -22,7 +22,7 @@ namespace Sensit.TestSDK.Settings
 		/// <typeparam name="T">the type the settings object</typeparam>
 		/// <param name="filename">XML file where settings are stored</param>
 		/// <returns>an object containing settings from the file</returns>
-		public static T LoadSettings<T>(string filename)
+		public static T Load<T>(string filename)
 		{
 			// Form the path to the file.
 			string filepath = GetSettingsFilePath(filename);
@@ -34,7 +34,7 @@ namespace Sensit.TestSDK.Settings
 			if (File.Exists(filepath))
 			{
 				// Retrieve settings from file into the object.
-				settings = GenericSerializer.DeserializeXML<T>(filepath);
+				settings = Serializer.DeserializeXML<T>(filepath);
 			}
 
 			// If the file didn't exist or otherwise couldn't be deserialized,
@@ -53,13 +53,13 @@ namespace Sensit.TestSDK.Settings
 		/// <typeparam name="T">the type the settings object</typeparam>
 		/// <param name="settings">Object to be serialized to XML</param>
 		/// <param name="fileName">XML file where settings are stored</param>
-		public static void SaveSettings<T>(T settings, string filename)
+		public static void Save<T>(T settings, string filename)
 		{
 			// Form the path to the file.
 			string filepath = GetSettingsFilePath(filename);
 
 			// Save the settings as an XML file.
-			GenericSerializer.SerializeXML<T>(settings, filepath);
+			Serializer.SerializeXML<T>(settings, filepath);
 		}
 
 		#region HelperMethods
@@ -71,7 +71,7 @@ namespace Sensit.TestSDK.Settings
 		/// <returns>full file path</returns>
 		private static string GetSettingsFilePath(string fileName)
 		{
-			return Path.Combine(SettingsDirectory, fileName.Replace(' ', '_') + ".xml");
+			return Path.Combine(Directory, fileName.Replace(' ', '_') + ".xml");
 		}
 
 		#endregion

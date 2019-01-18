@@ -39,7 +39,7 @@ namespace Sensit.App.Calibration
 		public Equipment()
 		{
 			// Read system settings.
-			_settings = SettingsMethods.LoadSettings<EquipmentSettings>(SYSTEM_SETTINGS_FILE);
+			_settings = Settings.Load<EquipmentSettings>(SYSTEM_SETTINGS_FILE);
 
 			// Create test equipment objects.
 			_mfc = new MFC();

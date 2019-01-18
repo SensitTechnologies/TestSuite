@@ -11,7 +11,7 @@ namespace Sensit.TestSDK.Settings
 	/// https://docs.microsoft.com/en-us/dotnet/standard/serialization/how-to-serialize-an-object
 	/// https://docs.microsoft.com/en-us/dotnet/standard/serialization/how-to-deserialize-an-object
 	/// </remarks>
-	public class GenericSerializer
+	public class Serializer
 	{
 		/// <summary>
 		/// Save a serializable object to an XML file.
