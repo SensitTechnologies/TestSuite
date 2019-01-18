@@ -31,7 +31,7 @@
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.Overview = new System.Windows.Forms.TabPage();
 			this.tableLayoutPanelOverview = new System.Windows.Forms.TableLayoutPanel();
-			this.groupBoxTestSetup = new System.Windows.Forms.GroupBox();
+			this.groupBoxTestSettings = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanelTestSetup = new System.Windows.Forms.TableLayoutPanel();
 			this.labelModel = new System.Windows.Forms.Label();
 			this.comboBoxModel = new System.Windows.Forms.ComboBox();
@@ -47,7 +47,7 @@
 			this.tableLayoutPanelDUTButtons = new System.Windows.Forms.TableLayoutPanel();
 			this.buttonPrintLabels = new System.Windows.Forms.Button();
 			this.checkBoxSelectAll = new System.Windows.Forms.CheckBox();
-			this.groupBoxTestEquipment = new System.Windows.Forms.GroupBox();
+			this.groupBoxEquipmentSettings = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.labelSupportDevice2 = new System.Windows.Forms.Label();
 			this.labelSupportDevice1 = new System.Windows.Forms.Label();
@@ -105,12 +105,12 @@
 			this.tabControl1.SuspendLayout();
 			this.Overview.SuspendLayout();
 			this.tableLayoutPanelOverview.SuspendLayout();
-			this.groupBoxTestSetup.SuspendLayout();
+			this.groupBoxTestSettings.SuspendLayout();
 			this.tableLayoutPanelTestSetup.SuspendLayout();
 			this.groupBoxDevicesUnderTest.SuspendLayout();
 			this.tableLayoutPanelTestSetupButtons.SuspendLayout();
 			this.tableLayoutPanelDUTButtons.SuspendLayout();
-			this.groupBoxTestEquipment.SuspendLayout();
+			this.groupBoxEquipmentSettings.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.tabPage2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -158,11 +158,11 @@
 			this.tableLayoutPanelOverview.ColumnCount = 2;
 			this.tableLayoutPanelOverview.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanelOverview.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanelOverview.Controls.Add(this.groupBoxTestSetup, 0, 0);
+			this.tableLayoutPanelOverview.Controls.Add(this.groupBoxTestSettings, 0, 0);
 			this.tableLayoutPanelOverview.Controls.Add(this.groupBoxDevicesUnderTest, 1, 0);
 			this.tableLayoutPanelOverview.Controls.Add(this.tableLayoutPanelTestSetupButtons, 0, 2);
 			this.tableLayoutPanelOverview.Controls.Add(this.tableLayoutPanelDUTButtons, 1, 2);
-			this.tableLayoutPanelOverview.Controls.Add(this.groupBoxTestEquipment, 0, 1);
+			this.tableLayoutPanelOverview.Controls.Add(this.groupBoxEquipmentSettings, 0, 1);
 			this.tableLayoutPanelOverview.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanelOverview.Location = new System.Drawing.Point(3, 3);
 			this.tableLayoutPanelOverview.Name = "tableLayoutPanelOverview";
@@ -173,18 +173,18 @@
 			this.tableLayoutPanelOverview.Size = new System.Drawing.Size(530, 279);
 			this.tableLayoutPanelOverview.TabIndex = 17;
 			// 
-			// groupBoxTestSetup
+			// groupBoxTestSettings
 			// 
-			this.groupBoxTestSetup.AutoSize = true;
-			this.groupBoxTestSetup.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.groupBoxTestSetup.Controls.Add(this.tableLayoutPanelTestSetup);
-			this.groupBoxTestSetup.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBoxTestSetup.Location = new System.Drawing.Point(3, 3);
-			this.groupBoxTestSetup.Name = "groupBoxTestSetup";
-			this.groupBoxTestSetup.Size = new System.Drawing.Size(215, 100);
-			this.groupBoxTestSetup.TabIndex = 16;
-			this.groupBoxTestSetup.TabStop = false;
-			this.groupBoxTestSetup.Text = "Test Setup";
+			this.groupBoxTestSettings.AutoSize = true;
+			this.groupBoxTestSettings.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.groupBoxTestSettings.Controls.Add(this.tableLayoutPanelTestSetup);
+			this.groupBoxTestSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBoxTestSettings.Location = new System.Drawing.Point(3, 3);
+			this.groupBoxTestSettings.Name = "groupBoxTestSettings";
+			this.groupBoxTestSettings.Size = new System.Drawing.Size(215, 100);
+			this.groupBoxTestSettings.TabIndex = 16;
+			this.groupBoxTestSettings.TabStop = false;
+			this.groupBoxTestSettings.Text = "Test Settings";
 			// 
 			// tableLayoutPanelTestSetup
 			// 
@@ -395,19 +395,19 @@
 			this.checkBoxSelectAll.UseVisualStyleBackColor = true;
 			this.checkBoxSelectAll.CheckedChanged += new System.EventHandler(this.checkBoxSelectAll_CheckedChanged);
 			// 
-			// groupBoxTestEquipment
+			// groupBoxEquipmentSettings
 			// 
-			this.groupBoxTestEquipment.AutoSize = true;
-			this.groupBoxTestEquipment.Controls.Add(this.tableLayoutPanel1);
-			this.groupBoxTestEquipment.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.helpProvider1.SetHelpString(this.groupBoxTestEquipment, "Select which test equipment is used to perform the test.");
-			this.groupBoxTestEquipment.Location = new System.Drawing.Point(3, 109);
-			this.groupBoxTestEquipment.Name = "groupBoxTestEquipment";
-			this.helpProvider1.SetShowHelp(this.groupBoxTestEquipment, true);
-			this.groupBoxTestEquipment.Size = new System.Drawing.Size(215, 132);
-			this.groupBoxTestEquipment.TabIndex = 20;
-			this.groupBoxTestEquipment.TabStop = false;
-			this.groupBoxTestEquipment.Text = "Test Equipment";
+			this.groupBoxEquipmentSettings.AutoSize = true;
+			this.groupBoxEquipmentSettings.Controls.Add(this.tableLayoutPanel1);
+			this.groupBoxEquipmentSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.helpProvider1.SetHelpString(this.groupBoxEquipmentSettings, "Select which test equipment is used to perform the test.");
+			this.groupBoxEquipmentSettings.Location = new System.Drawing.Point(3, 109);
+			this.groupBoxEquipmentSettings.Name = "groupBoxEquipmentSettings";
+			this.helpProvider1.SetShowHelp(this.groupBoxEquipmentSettings, true);
+			this.groupBoxEquipmentSettings.Size = new System.Drawing.Size(215, 132);
+			this.groupBoxEquipmentSettings.TabIndex = 20;
+			this.groupBoxEquipmentSettings.TabStop = false;
+			this.groupBoxEquipmentSettings.Text = "Equipment Settings";
 			// 
 			// tableLayoutPanel1
 			// 
@@ -926,7 +926,7 @@
 			// aboutToolStripMenuItem
 			// 
 			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
 			this.aboutToolStripMenuItem.Text = "&About";
 			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
 			// 
@@ -934,7 +934,7 @@
 			// 
 			this.supportToolStripMenuItem.Enabled = false;
 			this.supportToolStripMenuItem.Name = "supportToolStripMenuItem";
-			this.supportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.supportToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
 			this.supportToolStripMenuItem.Text = "How Do I";
 			// 
 			// FormCalibration
@@ -955,16 +955,16 @@
 			this.Overview.PerformLayout();
 			this.tableLayoutPanelOverview.ResumeLayout(false);
 			this.tableLayoutPanelOverview.PerformLayout();
-			this.groupBoxTestSetup.ResumeLayout(false);
-			this.groupBoxTestSetup.PerformLayout();
+			this.groupBoxTestSettings.ResumeLayout(false);
+			this.groupBoxTestSettings.PerformLayout();
 			this.tableLayoutPanelTestSetup.ResumeLayout(false);
 			this.tableLayoutPanelTestSetup.PerformLayout();
 			this.groupBoxDevicesUnderTest.ResumeLayout(false);
 			this.tableLayoutPanelTestSetupButtons.ResumeLayout(false);
 			this.tableLayoutPanelDUTButtons.ResumeLayout(false);
 			this.tableLayoutPanelDUTButtons.PerformLayout();
-			this.groupBoxTestEquipment.ResumeLayout(false);
-			this.groupBoxTestEquipment.PerformLayout();
+			this.groupBoxEquipmentSettings.ResumeLayout(false);
+			this.groupBoxEquipmentSettings.PerformLayout();
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();
 			this.tabPage2.ResumeLayout(false);
@@ -1026,7 +1026,7 @@
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelTestSetupButtons;
 		private System.Windows.Forms.Button buttonStart;
 		private System.Windows.Forms.Button buttonStop;
-		private System.Windows.Forms.GroupBox groupBoxTestSetup;
+		private System.Windows.Forms.GroupBox groupBoxTestSettings;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelTestSetup;
 		private System.Windows.Forms.Label labelModel;
 		private System.Windows.Forms.ComboBox comboBoxModel;
@@ -1060,7 +1060,7 @@
 		private System.Windows.Forms.TextBox textBoxVariable2Setpoint;
 		private System.Windows.Forms.CheckBox checkBoxSelectAll;
 		private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
-		private System.Windows.Forms.GroupBox groupBoxTestEquipment;
+		private System.Windows.Forms.GroupBox groupBoxEquipmentSettings;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private System.Windows.Forms.Label labelSupportDevice1;
 		private System.Windows.Forms.ComboBox comboBox1;

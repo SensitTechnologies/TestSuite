@@ -16,7 +16,8 @@ namespace Sensit.App.Calibration
 		public Action<string> TestChanged;	// action when test is changed
 		public Action Print;				// "Print" button action
 		public Action Options;				// action to launch an "Options" form
-		public Action<int> NumDutsChanged;	// method to call when the number of DUTs has changed
+		public Action<int> NumDutsChanged;  // method to call when the number of DUTs has changed
+		public Action Exit;					// action when the program exits
 
 		// allow the form to wait for tests to cancel/complete before closing application
 		private bool _closeAfterTest = false;
@@ -184,15 +185,9 @@ namespace Sensit.App.Calibration
 
 		#region Constructors
 
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="duts">how many devices under test to provide controls for</param>
-		public FormCalibration(int duts = 8)
+		public FormCalibration()
 		{
 			InitializeComponent();
-
-			NumDuts = duts;
 		}
 
 		#endregion
@@ -311,8 +306,12 @@ namespace Sensit.App.Calibration
 		/// <param name="e"></param>
 		private void exitToolStripMenuItem_Click(object sender, System.EventArgs e)
 		{
-			// Exit the application.
 			// This will invoke the "FormClosing" action, so nothing else to do here.
+
+			// Run any exit action.
+			Exit?.Invoke();
+
+			// Exit the application.
 			Application.Exit();
 		}
 
@@ -499,6 +498,9 @@ namespace Sensit.App.Calibration
 			// If requested, close the application.
 			if (_closeAfterTest)
 			{
+				// Run any exit action.
+				Exit?.Invoke();
+
 				Application.Exit();
 			}
 		}
