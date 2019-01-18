@@ -90,20 +90,6 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		public List<string> Models
 		{
-			get
-			{
-				// Create new array list.
-				List<string> models = new List<string>();
-
-				// Add the items.
-				foreach (var item in comboBoxModel.Items)
-				{
-					models.Add(item.ToString());
-				}
-
-				// Return the list.
-				return models;
-			}
 			set
 			{
 				// Remove existing items.
@@ -122,20 +108,6 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		public List<string> Ranges
 		{
-			get
-			{
-				// Create new array list.
-				List<string> ranges = new List<string>();
-
-				// Add the items.
-				foreach (var item in comboBoxRange.Items)
-				{
-					ranges.Add(item.ToString());
-				}
-
-				// Return the array list.
-				return ranges;
-			}
 			set
 			{
 				// Remove existing items.
@@ -154,20 +126,6 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		public List<string> Tests
 		{
-			get
-			{
-				// Create new array list.
-				List<string> tests = new List<string>();
-
-				// Add the items.
-				foreach (var item in comboBoxRange.Items)
-				{
-					tests.Add(item.ToString());
-				}
-
-				// Return the array list.
-				return tests;
-			}
 			set
 			{
 				// Remove existing items.
