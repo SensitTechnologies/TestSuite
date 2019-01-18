@@ -43,10 +43,7 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		public int NumDuts
 		{
-			get
-			{
-				return Properties.Settings.Default.NumDuts;
-			}
+			get => Properties.Settings.Default.NumDuts;
 			set
 			{
 				// If the test is running, throw an error.
@@ -64,10 +61,7 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		public string SelectedModel
 		{
-			get
-			{
-				return Properties.Settings.Default.Model;
-			}
+			get => Properties.Settings.Default.Model;
 			set
 			{
 				// If the test is running, throw an error.
@@ -88,10 +82,7 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		public string SelectedRange
 		{
-			get
-			{
-				return Properties.Settings.Default.Range;
-			}
+			get => Properties.Settings.Default.Range;
 			set
 			{
 				// If the test is running, throw an error.
@@ -109,10 +100,7 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		public string SelectedTest
 		{
-			get
-			{
-				return Properties.Settings.Default.Test;
-			}
+			get => Properties.Settings.Default.Test;
 			set
 			{
 				// If the test is running, throw an error.
