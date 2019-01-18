@@ -1,4 +1,4 @@
-﻿namespace Sensit.TestSDK.Forms
+﻿namespace Sensit.App.Calibration
 {
 	partial class FormCalibration
 	{

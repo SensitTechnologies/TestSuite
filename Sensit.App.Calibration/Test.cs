@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
+using Sensit.TestSDK.Forms;
 using Sensit.TestSDK.Settings;
 
 namespace Sensit.App.Calibration
@@ -27,9 +29,6 @@ namespace Sensit.App.Calibration
 		// Close test equipment.
 		public Action SystemClose;
 
-		// Read system settings.
-		public Action SystemReadSettings;
-
 		// Fetch test equipment readings.
 		public Func<Dictionary<Reference, double>> SystemRead;
 
@@ -38,9 +37,6 @@ namespace Sensit.App.Calibration
 
 		// user settings
 		private int _numDuts;
-		private string _model;
-		private string _range;
-		private string _test;
 
 		#region Properties
 
@@ -48,9 +44,11 @@ namespace Sensit.App.Calibration
 		{
 			get
 			{
+				// Create a new list.
 				List<string> models = new List<string>();
 
-				foreach (ModelSetting model in _settings.ModelSettings)
+				// Add each model in the settings (if any models exist).
+				foreach (ModelSetting model in _settings.ModelSettings ?? new List<ModelSetting>())
 				{
 					models.Add(model.Label);
 				}
@@ -63,13 +61,17 @@ namespace Sensit.App.Calibration
 		{
 			get
 			{
-				List<string> ranges = new List<string>();
+				// Find the currently selected model.
+				string model = Properties.Settings.Default.Model;
 
 				// Find the selected model settings object.
-				ModelSetting m = _settings.ModelSettings.Find(x => x.Label == _model);
+				ModelSetting m = _settings.ModelSettings.Find(x => x.Label == model);
 
-				// Find each range associated with the model.
-				foreach (RangeSetting r in m.RangeSettings)
+				// Create a new list.
+				List<string> ranges = new List<string>();
+
+				// Find each range associated with the model (if any ranges exist).
+				foreach (RangeSetting r in m?.RangeSettings ?? new List<RangeSetting>())
 				{
 					ranges.Add(r.Label);
 				}
@@ -82,12 +84,18 @@ namespace Sensit.App.Calibration
 		{
 			get
 			{
+				// Create a new list.
 				List<string> tests = new List<string>();
 
-				foreach (TestSetting t in _settings.TestSettings)
+				if (_settings.TestSettings != null)
 				{
-					tests.Add(t.Label);
+					foreach (TestSetting t in _settings.TestSettings ?? new List<TestSetting>())
+					{
+						tests.Add(t.Label);
+					}
 				}
+
+				return tests;
 			}
 		}
 
@@ -105,8 +113,10 @@ namespace Sensit.App.Calibration
 			testThread.ProgressChanged += ProgressChanged;
 			testThread.RunWorkerCompleted += RunWorkerCompleted;
 
-			// Update product settings.
+			// Fetch product settings.
 			_settings = SettingsMethods.LoadSettings<ProductSettings>(PRODUCT_SETTINGS_FILE);
+
+			// TODO:  Populate the GUI's options.
 		}
 
 		#region Private Methods
@@ -224,9 +234,8 @@ namespace Sensit.App.Calibration
 			// Anything within this do-while structure can be cancelled.
 			do
 			{
-				// Read system settings.
+				// TODO:  Update system settings.
 				testThread.ReportProgress(5, "Reading system settings...");
-				SystemReadSettings();
 				if (bw.CancellationPending) { break; }
 
 				// Read DUT settings (specific to Model, Range, Test).
@@ -350,11 +359,10 @@ namespace Sensit.App.Calibration
 				throw new Exception("Cannot change model when test is running.");
 			}
 
-			_model = model;
+			// Remember the new setting.
+			Properties.Settings.Default.Model = model;
 
 			// TODO:  Re-populate the available ranges.
-
-			// TODO:  Re-populate the available tests.
 		}
 
 		/// <summary>
@@ -369,9 +377,8 @@ namespace Sensit.App.Calibration
 				throw new Exception("Cannot change range when test is running.");
 			}
 
-			_range = range;
-
-			// TODO:  Re-populate the available tests.
+			// Remember the new setting.
+			Properties.Settings.Default.Range = range;
 		}
 
 		/// <summary>
@@ -386,7 +393,8 @@ namespace Sensit.App.Calibration
 				throw new Exception("Cannot change test type when test is running.");
 			}
 
-			_test = test;
+			// Remember the new setting.
+			Properties.Settings.Default.Test = test;
 		}
 	}
 }

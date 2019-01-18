@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Sensit.TestSDK.Devices;
+using Sensit.TestSDK.Forms;
 using Sensit.TestSDK.Settings;
 
 namespace Sensit.App.Calibration
@@ -28,30 +29,27 @@ namespace Sensit.App.Calibration
 		Temperature
 	}
 
-	public class System
+	public class Equipment
 	{
-		// file where system settings are stored
-		private const string SYSTEM_SETTINGS_FILE = "System Settings";
+		private const string SYSTEM_SETTINGS_FILE = "System Settings";  // file where system settings are stored
+		private EquipmentSettings _settings;							// system settings
+		private MFC _mfc;												// mass flow controller
+		private Keysight_34972A _datalogger;							// datalogger (for analog sensor DUTs)
 
-		// system settings
-		SystemSettings settings = default(SystemSettings);
-
-		// mass flow controller
-		MFC _mfc = new MFC();
-
-		// datalogger (for analog sensor DUTs)
-		//Keysight_34972A _datalogger = new Keysight_34972A();
-
-		public void ReadSettings()
+		public Equipment()
 		{
 			// Read system settings.
-			settings = SettingsMethods.LoadSettings<SystemSettings>(SYSTEM_SETTINGS_FILE);
+			_settings = SettingsMethods.LoadSettings<EquipmentSettings>(SYSTEM_SETTINGS_FILE);
+
+			// Create test equipment objects.
+			_mfc = new MFC();
+			_datalogger = new Keysight_34972A();
 		}
 
 		public void Open()
 		{
 			// Open all devices.
-			_mfc.Open(settings?.MassFlowControllerPort);
+			_mfc.Open(_settings?.MassFlowControllerPort);
 			//_datalogger.Open();
 		}
 

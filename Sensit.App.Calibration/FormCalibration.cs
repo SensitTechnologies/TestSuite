@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using Sensit.TestSDK.Forms;
 
-namespace Sensit.TestSDK.Forms
+namespace Sensit.App.Calibration
 {
 	public partial class FormCalibration : Form
 	{
@@ -438,7 +439,7 @@ namespace Sensit.TestSDK.Forms
 		/// <param name="e"></param>
 		private void comboBoxModel_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			ModelChanged?.Invoke(comboBoxModel.SelectedText);
+			ModelChanged?.Invoke(comboBoxModel.SelectedItem.ToString());
 		}
 
 		/// <summary>
@@ -448,7 +449,7 @@ namespace Sensit.TestSDK.Forms
 		/// <param name="e"></param>
 		private void comboBoxRange_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			RangeChanged?.Invoke(comboBoxRange.SelectedText);
+			RangeChanged?.Invoke(comboBoxRange.SelectedItem.ToString());
 		}
 
 		/// <summary>
@@ -458,7 +459,7 @@ namespace Sensit.TestSDK.Forms
 		/// <param name="e"></param>
 		private void comboBoxTest_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			TestChanged?.Invoke(comboBoxTest.SelectedText);
+			TestChanged?.Invoke(comboBoxTest.SelectedItem.ToString());
 		}
 
 		#endregion
