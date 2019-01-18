@@ -1,10 +1,8 @@
-# Sensit Technologies C# Test Suite & SDK
+# Sensit Technologies Test Suite
 This is a software suite for automating testing and calibration of sensors or
 instrumentation.  It provides (1) integration with various types of test
-equipment and devices under test (DUT), (2) automatic gathering and recording of
-data, (3) basic calibration and data analysis, and (4) decreased time-to-market
-or time-in-production by providing thorough, accurate test results for R&D or
-manufacturing.
+equipment and Devices Under Test (DUTs), (2) automatic gathering and recording of
+data, and (3) basic calibration and data analysis.
 
 ## Requirements
 The first iteration of the project will be a desktop app which automates testing
