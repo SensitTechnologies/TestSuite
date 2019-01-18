@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Sensit.TestSDK.Forms
@@ -86,20 +86,20 @@ namespace Sensit.TestSDK.Forms
 		/// <summary>
 		/// Items in the "Model" combobox
 		/// </summary>
-		public ArrayList Models
+		public List<string> Models
 		{
 			get
 			{
 				// Create new array list.
-				ArrayList models = new ArrayList();
+				List<string> models = new List<string>();
 
 				// Add the items.
 				foreach (var item in comboBoxModel.Items)
 				{
-					models.Add(item);
+					models.Add(item.ToString());
 				}
 
-				// Return the array list.
+				// Return the list.
 				return models;
 			}
 			set
@@ -118,17 +118,17 @@ namespace Sensit.TestSDK.Forms
 		/// <summary>
 		/// Items in the "Range" combobox
 		/// </summary>
-		public ArrayList Ranges
+		public List<string> Ranges
 		{
 			get
 			{
 				// Create new array list.
-				ArrayList ranges = new ArrayList();
+				List<string> ranges = new List<string>();
 
 				// Add the items.
 				foreach (var item in comboBoxRange.Items)
 				{
-					ranges.Add(item);
+					ranges.Add(item.ToString());
 				}
 
 				// Return the array list.
@@ -150,17 +150,17 @@ namespace Sensit.TestSDK.Forms
 		/// <summary>
 		/// Items in the "Test" combobox
 		/// </summary>
-		public ArrayList Tests
+		public List<string> Tests
 		{
 			get
 			{
 				// Create new array list.
-				ArrayList tests = new ArrayList();
+				List<string> tests = new List<string>();
 
 				// Add the items.
 				foreach (var item in comboBoxRange.Items)
 				{
-					tests.Add(item);
+					tests.Add(item.ToString());
 				}
 
 				// Return the array list.
