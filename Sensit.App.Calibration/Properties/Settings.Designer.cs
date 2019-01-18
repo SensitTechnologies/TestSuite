@@ -58,5 +58,17 @@ namespace Sensit.App.Calibration.Properties {
                 this["Test"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int NumDuts {
+            get {
+                return ((int)(this["NumDuts"]));
+            }
+            set {
+                this["NumDuts"] = value;
+            }
+        }
     }
 }
