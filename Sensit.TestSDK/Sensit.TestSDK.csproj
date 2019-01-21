@@ -155,6 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calculations\Calculations.cs" />
+    <Compile Include="Calculations\LeastSquares.cs" />
     <Compile Include="Calculations\LeastSquaresFitLinear.cs" />
     <Compile Include="Communication\SCPI.cs" />
     <Compile Include="Communication\VisaDevice.cs" />

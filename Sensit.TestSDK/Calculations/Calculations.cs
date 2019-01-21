@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sensit.TestSDK.Calculations
 {
@@ -190,23 +187,26 @@ namespace Sensit.TestSDK.Calculations
 		/// Calculates the output of a polynomial of the form
 		/// y = C_n * (x^n) + C_n-1 * (x^(n-1)) ... + C0
 		/// </summary>
-		/// 
+		/// <param name="c">list of coefficients</param>
 		/// <param name="x">the independent variable</param>
-		/// <param name="c">array of coefficients</param>
-		/// <param name="n">the equation's order</param>
-		/// 
 		/// <returns>the dependent variable</returns>
-		public static double CalcPolynomial(double x, double[] c, uint n)
+		public static double CalcPolynomial(List<double> c, double x)
 		{
-			double y = c[n];			// Start with the first coefficient.
+			// Start with the first coefficient.
+			double y = c[c.Count];
 
-			while (n > 0)				// If there's another coefficient...
+			// For each coefficient...
+			foreach (var v in c)
 			{
-				y *= x;					// Multiply by x.
-				y += c[--n];			// Add next coefficient.
+				// Multiply by x.
+				y *= x;
+
+				// Add next coefficient.
+				y += v;
 			}
 
-			return y;					// Return the result.
+			// Return the result.
+			return y;
 		}
 
 		/// <summary>

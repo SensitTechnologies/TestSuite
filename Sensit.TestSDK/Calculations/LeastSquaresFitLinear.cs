@@ -18,18 +18,9 @@ namespace Sensit.TestSDK.Calculations
 			}
 		}
 
-		public double Slope
-		{
-			get { return _slope; }
-		}
-		double _slope;
+		public double Slope { get; }
 
-		public double Intercept
-		{
-			get { return _intercept; }
-
-		}
-		double _intercept;
+		public double Intercept { get; }
 
 
 		/// <summary>
@@ -43,13 +34,13 @@ namespace Sensit.TestSDK.Calculations
 
 			if (numPoints == 0)
 			{
-				_slope = 0;
-				_intercept = 0;
+				Slope = 0;
+				Intercept = 0;
 			}
 			else if (numPoints == 1)
 			{
-				_slope = 1;
-				_intercept = points[0].Reference - points[0].Measured;
+				Slope = 1;
+				Intercept = points[0].Reference - points[0].Measured;
 			}
 			else
 			{
@@ -70,14 +61,14 @@ namespace Sensit.TestSDK.Calculations
 				if (j.Equals(0.0) == false)
 				{
 					double f1 = ((numPoints * xy) - (x1 * y1)) / j;
-					_slope = (Math.Floor(1.0E3 * f1 + 0.5) / 1.0E3);
+					Slope = (Math.Floor(1.0E3 * f1 + 0.5) / 1.0E3);
 					double off1 = ((y1 * x2) - (x1 * xy)) / j;
-					_intercept = (Math.Floor(1.0E3 * off1 + 0.5) / 1.0E3);
+					Intercept = (Math.Floor(1.0E3 * off1 + 0.5) / 1.0E3);
 				}
 				else
 				{
-					_slope = 0.0;
-					_intercept = 0.0;
+					Slope = 0.0;
+					Intercept = 0.0;
 				}
 			}
 		}
