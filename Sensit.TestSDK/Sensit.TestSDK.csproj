@@ -205,6 +205,7 @@
     <Compile Include="Forms\InputDialog.cs" />
     <Compile Include="Interfaces\IControlDevice.cs" />
     <Compile Include="Interfaces\IDeviceUnderTest.cs" />
+    <Compile Include="Interfaces\IDutInterfaceDevice.cs" />
     <Compile Include="Interfaces\IReferenceDevice.cs" />
     <Compile Include="Interfaces\ISerialDevice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

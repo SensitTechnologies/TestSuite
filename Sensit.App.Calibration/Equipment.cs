@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Sensit.TestSDK.Devices;
-using Sensit.TestSDK.Forms;
+using Sensit.TestSDK.Interfaces;
 using Sensit.TestSDK.Settings;
 
 namespace Sensit.App.Calibration
@@ -31,7 +31,6 @@ namespace Sensit.App.Calibration
 
 	public class Equipment
 	{
-		private const string SYSTEM_SETTINGS_FILE = "System Settings";  // file where system settings are stored
 		private EquipmentSettings _settings;							// system settings
 		private MFC _mfc;												// mass flow controller
 		private Keysight_34972A _datalogger;							// datalogger (for analog sensor DUTs)
@@ -39,25 +38,32 @@ namespace Sensit.App.Calibration
 		public Equipment()
 		{
 			// Read system settings.
-			_settings = Settings.Load<EquipmentSettings>(SYSTEM_SETTINGS_FILE);
+			_settings = Settings.Load<EquipmentSettings>(Properties.Settings.Default.SystemSettingsFile);
 
 			// Create test equipment objects.
+			// TODO:  Do this according to settings, (i.e. use manual if selected).
 			_mfc = new MFC();
 			_datalogger = new Keysight_34972A();
 		}
+
+		public IDutInterfaceDevice DutInterface => _datalogger;
+
+		public IMassFlowController MassFlowController => _mfc;
+
+		public IMassFlowReference MassFlowReference => _mfc;
 
 		public void Open()
 		{
 			// Open all devices.
 			_mfc.Open(_settings?.MassFlowControllerPort);
-			//_datalogger.Open();
+			_datalogger.Open();
 		}
 
 		public void Close()
 		{
 			// Close all devices.
-			_mfc.Close();
-			//_datalogger.Close();
+			_mfc?.Close();
+			_datalogger?.Close();
 		}
 
 		/// <summary>
@@ -67,24 +73,18 @@ namespace Sensit.App.Calibration
 		public Dictionary<Reference, double> Read()
 		{
 			// Read all test equipment.
-			//_mfc.Read();
+			_mfc.Read();
 
 			// TODO:  Read datalogger if selected.
-			
-			//_datalogger.Read();
+			//_datalogger.ReadAnalog();
 
 			// Fetch the readings and return them.
 			Dictionary<Reference, double> readings = new Dictionary<Reference, double>
 			{
-				//{ Reference.MassFlow, _mfc.MassFlow }
+				{ Reference.MassFlow, _mfc.MassFlow }
 			};
 
 			return readings;
-		}
-
-		public void Print()
-		{
-
 		}
 	}
 }

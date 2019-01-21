@@ -3,6 +3,7 @@ using System.Linq;
 using Agilent.CommandExpert.ScpiNet.Ag3497x_1_13;
 using Sensit.TestSDK.Communication;
 using Sensit.TestSDK.Exceptions;
+using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.TestSDK.Devices
 {
@@ -16,7 +17,7 @@ namespace Sensit.TestSDK.Devices
 	/// optional plug-in modules to create a compact data logger, full-featured data acquisition
 	/// system or low-cost switching unit.
 	/// </remarks>
-	public class Keysight_34972A
+	public class Keysight_34972A : IDutInterfaceDevice
 	{
 		Ag3497x _v34972A;
 
@@ -56,6 +57,31 @@ namespace Sensit.TestSDK.Devices
 
 			// Introduce yourself.
 			_v34972A.SCPI.DISPlay.TEXT.Command("SENSIT");
+		}
+
+		public void PowerOn(int dut)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void PowerOff(int dut)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void Find(int dut)
+		{
+			throw new NotImplementedException();
+		}
+
+		public int ReadCounts(int dut)
+		{
+			throw new NotImplementedException();
+		}
+
+		public double ReadAnalog(int dut)
+		{
+			throw new NotImplementedException();
 		}
 
 		public void Close()

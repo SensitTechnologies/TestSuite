@@ -3,17 +3,21 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
+using Sensit.TestSDK.Dut;
+using Sensit.TestSDK.Interfaces;
 using Sensit.TestSDK.Settings;
 
 namespace Sensit.App.Calibration
 {
 	public class Test
 	{
-		// file where model, range, test settings are stored
-		private const string PRODUCT_SETTINGS_FILE = "Product Settings";
+		private BackgroundWorker _testThread;   // task that will handle test operations
+		private ProductSettings _settings;      // product settings for model, range, test
+		private Equipment _equipment;			// test equipment object
+		private List<IDeviceUnderTest> _duts;	// devices under test
 
-		// product settings
-		private ProductSettings _settings;
+
+		#region Delegates
 
 		// Report test progress.
 		public Action<int, string> Update;
@@ -21,20 +25,13 @@ namespace Sensit.App.Calibration
 		// Report test results.
 		public Action Finished;
 
-		// Configure test equipment.
-		public Action SystemOpen;
-
-		// Close test equipment.
-		public Action SystemClose;
-
 		// Update the GUI's list of available ranges (when the selected model changes).
 		public Action<List<string>> SetRanges;
 
 		// Fetch test equipment readings.
 		public Func<Dictionary<Reference, double>> SystemRead;
 
-		// task that will handle test operations
-		private BackgroundWorker testThread = new BackgroundWorker();
+		#endregion
 
 		#region Properties
 
@@ -47,7 +44,7 @@ namespace Sensit.App.Calibration
 			set
 			{
 				// If the test is running, throw an error.
-				if (testThread.IsBusy)
+				if (_testThread.IsBusy)
 				{
 					throw new Exception("Cannot change number of DUTs when test is running.");
 				}
@@ -65,7 +62,7 @@ namespace Sensit.App.Calibration
 			set
 			{
 				// If the test is running, throw an error.
-				if (testThread.IsBusy)
+				if (_testThread.IsBusy)
 				{
 					throw new Exception("Cannot change model when test is running.");
 				}
@@ -86,7 +83,7 @@ namespace Sensit.App.Calibration
 			set
 			{
 				// If the test is running, throw an error.
-				if (testThread.IsBusy)
+				if (_testThread.IsBusy)
 				{
 					throw new Exception("Cannot change range when test is running.");
 				}
@@ -104,7 +101,7 @@ namespace Sensit.App.Calibration
 			set
 			{
 				// If the test is running, throw an error.
-				if (testThread.IsBusy)
+				if (_testThread.IsBusy)
 				{
 					throw new Exception("Cannot change test type when test is running.");
 				}
@@ -186,16 +183,20 @@ namespace Sensit.App.Calibration
 		public Test()
 		{
 			// Set up the background worker.
-			testThread.WorkerReportsProgress = true;
-			testThread.WorkerSupportsCancellation = true;
-			testThread.DoWork += TestThread;
-			testThread.ProgressChanged += ProgressChanged;
-			testThread.RunWorkerCompleted += RunWorkerCompleted;
+			_testThread = new BackgroundWorker();
+			_testThread.WorkerReportsProgress = true;
+			_testThread.WorkerSupportsCancellation = true;
+			_testThread.DoWork += TestThread;
+			_testThread.ProgressChanged += ProgressChanged;
+			_testThread.RunWorkerCompleted += RunWorkerCompleted;
+
+			// Set up list of DUTs.
+			_duts = new List<IDeviceUnderTest>();
 
 			// Fetch product settings.
-			_settings = Settings.Load<ProductSettings>(PRODUCT_SETTINGS_FILE);
+			_settings = Settings.Load<ProductSettings>(Properties.Settings.Default.ProductSettingsFile);
 
-			// TODO:  Populate the GUI's options.
+			// TODO:  Populate the GUI's options for model, range, test.
 		}
 
 		#region Private Methods
@@ -220,12 +221,15 @@ namespace Sensit.App.Calibration
 		
 		private void InitializeDuts()
 		{
-			
+			for (int i = 0; i < NumDuts; i++)
+			{
+				_duts.Add(new AnalogSensor(_equipment.DutInterface) as IDeviceUnderTest);
+			}
 		}
 		
 		private void ProcessCommand()
 		{
-			
+
 		}
 		
 		private void RecordLog()
@@ -259,6 +263,30 @@ namespace Sensit.App.Calibration
 		#endregion
 		
 		#region Test Actions
+
+		private void PowerOn()
+		{
+			foreach (IDeviceUnderTest s in _duts)
+			{
+				if (s.Selected)
+				{
+					s.PowerOn();
+				}
+			}
+		}
+
+		private void PowerOff()
+		{
+			foreach (AnalogSensor s in _duts)
+			{
+				// Turn off DUTs that have been found.
+				if ((s.Status != DutStatus.PortError) &&
+					(s.Status != DutStatus.NotFound))
+				{
+					s.PowerOff();
+				}
+			}
+		}
 		
 		private void SetMassFlow()
 		{
@@ -313,35 +341,25 @@ namespace Sensit.App.Calibration
 			// Anything within this do-while structure can be cancelled.
 			do
 			{
-				// TODO:  Update system settings.
-				testThread.ReportProgress(5, "Reading system settings...");
+				// Create an object to represent test equipment, and
+				// update equipment settings.
+				_testThread.ReportProgress(1, "Reading equipment settings...");
+				_equipment = new Equipment();
 				if (bw.CancellationPending) { break; }
 
 				// Read DUT settings (specific to Model, Range, Test).
-				testThread.ReportProgress(10, "Reading DUT settings...");
-				_settings = Settings.Load<ProductSettings>(PRODUCT_SETTINGS_FILE);
+				_testThread.ReportProgress(2, "Reading DUT settings...");
+				_settings = Settings.Load<ProductSettings>(Properties.Settings.Default.ProductSettingsFile);
 				if (bw.CancellationPending) { break; }
-
-				// TODO:  Initialize GUI.
 
 				// Configure test equipment.
-				testThread.ReportProgress(15, "Configuring test equipment...");
-				SystemOpen();
-				if (bw.CancellationPending) { break; }
-
-				// Open selected DUTs.
-				testThread.ReportProgress(20, "Opening DUT communication...");
-				Thread.Sleep(1000); // One second.
+				_testThread.ReportProgress(15, "Configuring test equipment...");
+				_equipment.Open();
 				if (bw.CancellationPending) { break; }
 
 				// Apply power to opened DUTs.
-				testThread.ReportProgress(25, "Applying power to DUTs...");
-				Thread.Sleep(1000); // One second.
-				if (bw.CancellationPending) { break; }
-
-				// Wait for DUTs to power up.
-				testThread.ReportProgress(30, "Power-up delay...");
-				Thread.Sleep(2500);
+				_testThread.ReportProgress(25, "Applying power to DUTs...");
+				PowerOn();
 				if (bw.CancellationPending) { break; }
 
 				// Configure DUTs.
@@ -351,7 +369,7 @@ namespace Sensit.App.Calibration
 				// Close DUTs.
 
 				// Identify passing DUTs.
-				testThread.ReportProgress(80, "Identifying passed DUTS...");
+				_testThread.ReportProgress(95, "Identifying passed DUTS...");
 				Thread.Sleep(250); // One second.
 			} while (false);
 
@@ -363,16 +381,16 @@ namespace Sensit.App.Calibration
 			TimeSpan elapsedtime = stopwatch.Elapsed;
 
 			// Record log.
-			testThread.ReportProgress(90, "Recording log...");
+			_testThread.ReportProgress(95, "Recording log...");
 			Thread.Sleep(100); // One second.
 
-			// Close support devices.
-			testThread.ReportProgress(95, "Closing test equipment...");
-			SystemClose?.Invoke();
+			// Close test equipment.
+			_testThread.ReportProgress(95, "Closing test equipment...");
+			_equipment.Close();
 			Thread.Sleep(100); // One second.
 
 			// Done!
-			testThread.ReportProgress(100, "Done.");
+			_testThread.ReportProgress(100, "Done.");
 
 			// If the operation was cancelled by the user, set the cancel property.
 			if (bw.CancellationPending) { e.Cancel = true; }
@@ -386,10 +404,10 @@ namespace Sensit.App.Calibration
 		public void Start()
 		{
 			// Run "TestProcess" asynchronously (using a background worker).
-			if (testThread.IsBusy == false)
+			if (_testThread.IsBusy == false)
 			{
 				// Start the asynchronous operation.
-				testThread.RunWorkerAsync();
+				_testThread.RunWorkerAsync();
 			}
 		}
 
@@ -399,7 +417,7 @@ namespace Sensit.App.Calibration
 		public void Stop()
 		{
 			// Cancel the test operation.
-			testThread.CancelAsync();
+			_testThread.CancelAsync();
 		}
 
 		/// <summary>
@@ -408,7 +426,7 @@ namespace Sensit.App.Calibration
 		/// <returns>true if test is running; false otherwise</returns>
 		public bool IsBusy()
 		{
-			return testThread.IsBusy;
+			return _testThread.IsBusy;
 		}
 
 		/// <summary>

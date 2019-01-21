@@ -15,9 +15,6 @@ namespace Sensit.App.Calibration
 			// Auto-generated code.
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			
-			// Create an object to represent test equipment.
-			Equipment equipment = new Equipment();
 
 			// Create an object to represent the tests being run.
 			Test test = new Test();
@@ -40,16 +37,12 @@ namespace Sensit.App.Calibration
 			// Set test actions.
 			test.Update = formCalibration.TestUpdate;
 			test.Finished = formCalibration.TestFinished;
-			test.SystemOpen = equipment.Open;
-			test.SystemClose = equipment.Close;
-			test.SystemRead = equipment.Read;
 			test.SetRanges = value => formCalibration.Ranges = value;
 			
 			// Set GUI actions.
 			formCalibration.TestStart = test.Start;
 			formCalibration.TestStop = test.Stop;
 			formCalibration.TestBusy = test.IsBusy;
-			formCalibration.Print = equipment.Print;
 			formCalibration.Exit = test.SaveSettings;
 			// https://syncor.blogspot.com/2010/11/passing-getter-and-setter-of-c-property.html
 			formCalibration.NumDutsChanged = value => test.NumDuts = value;

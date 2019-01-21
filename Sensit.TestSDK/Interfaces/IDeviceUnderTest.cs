@@ -35,6 +35,11 @@ namespace Sensit.TestSDK.Interfaces
 	public interface IDeviceUnderTest
 	{
 		/// <summary>
+		/// DUT's fixture position or channel
+		/// </summary>
+		int Index { get; set; }
+
+		/// <summary>
 		/// true if under test; false if idle
 		/// </summary>
 		bool Selected { get; set; }
@@ -60,6 +65,16 @@ namespace Sensit.TestSDK.Interfaces
 		List<DutCoefficient> Coefficients { get; set; }
 
 		/// <summary>
+		/// Apply power to DUT.
+		/// </summary>
+		void PowerOn();
+
+		/// <summary>
+		/// Remove power from DUT.
+		/// </summary>
+		void PowerOff();
+
+		/// <summary>
 		/// Read sensor counts from device.
 		/// </summary>
 		/// <returns>raw sensor counts</returns>
@@ -79,11 +94,17 @@ namespace Sensit.TestSDK.Interfaces
 		/// <summary>
 		/// Firmware or Sensor Series/Model ID
 		/// </summary>
+		/// <remarks>
+		/// Firmware devices do not likely support setting model ID.
+		/// </remarks>
 		string Model { get; }
 
 		/// <summary>
 		/// Firmware or Sensor Version
 		/// </summary>
+		/// <remarks>
+		/// Firmware devices do not likely support setting version.
+		/// </remarks>
 		string Version { get; }
 
 		/// <summary>
@@ -160,17 +181,11 @@ namespace Sensit.TestSDK.Interfaces
 		/// <summary>
 		/// Firmware or Sensor Series/Model ID
 		/// </summary>
-		/// <remarks>
-		/// Firmware devices do not likely support setting model ID.
-		/// </remarks>
 		string Model { get; set; }
 
 		/// <summary>
 		/// Firmware or Sensor Version
 		/// </summary>
-		/// <remarks>
-		/// Firmware devices do not likely support setting version.
-		/// </remarks>
 		string Version { get; set; }
 	}
 }
