@@ -70,5 +70,53 @@ namespace Sensit.App.Calibration.Properties {
                 this["NumDuts"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("System Settings")]
+        public string SystemSettingsFile {
+            get {
+                return ((string)(this["SystemSettingsFile"]));
+            }
+            set {
+                this["SystemSettingsFile"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Product Settings")]
+        public string ProductSettingsFile {
+            get {
+                return ((string)(this["ProductSettingsFile"]));
+            }
+            set {
+                this["ProductSettingsFile"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Simulator")]
+        public string MassFlowController {
+            get {
+                return ((string)(this["MassFlowController"]));
+            }
+            set {
+                this["MassFlowController"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Simulator")]
+        public string TemperatureController {
+            get {
+                return ((string)(this["TemperatureController"]));
+            }
+            set {
+                this["TemperatureController"] = value;
+            }
+        }
     }
 }

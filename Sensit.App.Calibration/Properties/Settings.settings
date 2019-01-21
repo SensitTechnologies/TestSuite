@@ -14,5 +14,17 @@
     <Setting Name="NumDuts" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">8</Value>
     </Setting>
+    <Setting Name="SystemSettingsFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">System Settings</Value>
+    </Setting>
+    <Setting Name="ProductSettingsFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Product Settings</Value>
+    </Setting>
+    <Setting Name="MassFlowController" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Simulator</Value>
+    </Setting>
+    <Setting Name="TemperatureController" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Simulator</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
