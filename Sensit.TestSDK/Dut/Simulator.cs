@@ -20,7 +20,7 @@ namespace Sensit.TestSDK.Dut
 
 		public bool Selected { get; set; } = false;
 
-		public DutStatus Status { get; set; } = DutStatus.Unknown;
+		public DutStatus Status { get; set; } = DutStatus.Init;
 
 		public string SerialNumber { get; set; } = "Simulator";
 

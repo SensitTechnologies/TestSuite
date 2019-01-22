@@ -17,7 +17,7 @@ namespace Sensit.TestSDK.Interfaces
 
 	public enum DutStatus
 	{
-		Unknown,
+		Init,
 		Found,
 		NotFound,
 		PortError,

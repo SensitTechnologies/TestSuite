@@ -210,7 +210,7 @@ namespace Sensit.App.Calibration
 			// Run actions required when test is completed (i.e. update GUI).
 			Finished?.Invoke();
 		}
-		
+
 		/// <summary>
 		/// Create DUT objects and initialize them with settings chosen by the user.
 		/// </summary>
@@ -233,7 +233,7 @@ namespace Sensit.App.Calibration
 					// Model = "",
 					// Version = "",
 					Selected = true,
-					Status = DutStatus.Unknown,
+					Status = DutStatus.Init,
 					SerialNumber = string.Empty,
 					Message = string.Empty,
 				});
@@ -246,7 +246,73 @@ namespace Sensit.App.Calibration
 				throw new Exception("You must select at least one DUT.");
 			}
 
+			// TODO:  Open DUT ports (if applicable).
 			// TODO:  Throw exception is no DUT ports could be opened.
+		}
+
+		private void DutOpen()
+		{
+			foreach (IDeviceUnderTest dut in _duts)
+			{
+				if (dut.Status == DutStatus.Init)
+				{
+					// TODO:  Open ports if necessary.
+
+					dut.Status = DutStatus.Found;
+				}
+			}
+		}
+
+		private void DutClose()
+		{
+			foreach (IDeviceUnderTest dut in _duts)
+			{
+				if ((dut.Status == DutStatus.Found) ||
+					(dut.Status == DutStatus.Fail) ||
+					(dut.Status == DutStatus.NotFound))
+				{
+					// TODO:  Close DUT ports (if applicable).
+				}
+			}
+		}
+
+		private void DutPowerOn()
+		{
+			// Turn all DUTs on.
+			foreach (IDeviceUnderTest dut in _duts)
+			{
+				if (dut.Status == DutStatus.Found)
+				{
+					_equipment.DutInterface?.PowerOn(dut.Index);
+				}
+			}
+		}
+
+		private void DutFind()
+		{
+			// Communicate with each DUT.
+			foreach (IDeviceUnderTest dut in _duts)
+			{
+				if (dut.Status == DutStatus.Found)
+				{
+					// TODO:  Talk to each DUT to verify communication.
+
+					dut.Status = DutStatus.Found;
+				}
+			}
+		}
+
+		private void DutPowerOff()
+		{
+			foreach (IDeviceUnderTest dut in _duts)
+			{
+				// Turn off DUTs that have been found.
+				if ((dut.Status != DutStatus.PortError) &&
+					(dut.Status != DutStatus.NotFound))
+				{
+					_equipment.DutInterface?.PowerOff(dut.Index);
+				}
+			}
 		}
 
 		private void ProcessCommand()
@@ -259,57 +325,8 @@ namespace Sensit.App.Calibration
 			// TODO:  Do this continuously rather than just at the end of a test.
 			// Should likely be a logger class in the SDK.
 		}
-
-		#region DUT Helper Methods
-		
-		private void ScanAllDuts(Action action)
-		{
-			
-		}
-		
-		private void ScanSelectedDuts(Action action)
-		{
-			
-		}
-		
-		private void ScanOpenedDuts(Action action)
-		{
-			
-		}
-		
-		private void ScanFoundOrFailDuts(Action action)
-		{
-			
-		}
-		
-		#endregion
 		
 		#region Test Actions
-
-		private void PowerOn()
-		{
-			// Turn all duts on.
-			foreach(IDeviceUnderTest dut in _duts)
-			{
-				if (dut.Selected)
-				{
-					_equipment.DutInterface.PowerOn(dut.Index);
-				}
-			}
-		}
-
-		private void PowerOff()
-		{
-			foreach (IDeviceUnderTest dut in _duts)
-			{
-				// Turn off DUTs that have been found.
-				if ((dut.Status != DutStatus.PortError) &&
-					(dut.Status != DutStatus.NotFound))
-				{
-					_equipment.DutInterface.PowerOff(dut.Index);
-				}
-			}
-		}
 		
 		private void SetMassFlow()
 		{
@@ -385,13 +402,8 @@ namespace Sensit.App.Calibration
 				if (bw.CancellationPending) { break; }
 
 				// Initialize DUTs.
-				_testThread.ReportProgress(4, "Initializing DUT data structures...");
+				_testThread.ReportProgress(4, "Initializing DUTs...");
 				InitializeDuts();
-				if (bw.CancellationPending) { break; }
-
-				// Apply power to opened DUTs.
-				_testThread.ReportProgress(25, "Applying power to DUTs...");
-				PowerOn();
 				if (bw.CancellationPending) { break; }
 
 				// TODO:  Configure DUTs (i.e. if there were some default settings or programmable range).
@@ -399,6 +411,8 @@ namespace Sensit.App.Calibration
 				// Perform test actions.
 
 				// Close DUTs.
+				_testThread.ReportProgress(5, "Closing DUTs...");
+				DutClose();
 
 				// Identify passing DUTs.
 				_testThread.ReportProgress(95, "Identifying passed DUTS...");
