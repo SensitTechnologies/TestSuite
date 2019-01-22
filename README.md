@@ -42,11 +42,12 @@ Features necessary for the first iteration are highlighted in bold.
 * Interface to a variety of test equipment.
   * [x] Prompt an operator for manual control.
   * [x] **Cole-Parmer Mass Flow Controller**
+  * [ ] **2nd Mass Flow Controller (enables gas concentration control)**
   * [ ] **Keysight datalogger**
   * [ ] Dwyer 16B Temperature Controller
 * Interface to a variety of devices under test.
   * [x] Device Under Test Simulator
-  * [ ] **Analog sensor**
+  * [x] **Analog sensor**
 * Support a variety of communication protocols.
   * [x] **VISA.IVI**
   * [x] **SCPI**
@@ -58,18 +59,18 @@ Features necessary for the first iteration are highlighted in bold.
   * [ ] View data gathered from each *DUT* (via embedded Excel or simple data grid)
 * Record test data for further analysis.
   * [ ] **CSV**
-  * [ ] Excel
+  * [x] Excel
   * [ ] SQL or Mongo Database
 * Provide a calculation library to generate test results.
   * [x] Convert units of measure.
-  * [ ] Linearize calibration data.
+  * [x] Linearize calibration data.
 * Store settings in serializable classes.
   * [x] System settings
-  * [ ] DUT information (model, range, available tests).
-  * [ ] Test information (variables, setpoints).
+  * [x] DUT information (model, range, available tests).
+  * [x] Test information (variables, setpoints).
   * [ ] Provide a GUI to edit settings.
 
-## Development Environment
+## Requirements
 * [Visual Studio 2017](https://visualstudio.microsoft.com) or later (Community
   edition is free for open source projects!)
 * Microsoft .NET Framework 4.7.2 - If Visual Studio is already installed but the
