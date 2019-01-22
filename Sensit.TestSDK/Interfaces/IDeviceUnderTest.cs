@@ -65,29 +65,13 @@ namespace Sensit.TestSDK.Interfaces
 		List<DutCoefficient> Coefficients { get; set; }
 
 		/// <summary>
-		/// Apply power to DUT.
-		/// </summary>
-		void PowerOn();
-
-		/// <summary>
-		/// Remove power from DUT.
-		/// </summary>
-		void PowerOff();
-
-		/// <summary>
-		/// Read sensor counts from device.
-		/// </summary>
-		/// <returns>raw sensor counts</returns>
-		int ReadRawCounts();
-
-		/// <summary>
 		/// Compute sensor coefficient(s) to linearize device.
 		/// </summary>
 		void ComputeCoefficients();
 	}
 
 	/// <summary>
-	/// DUT that has firmware and can communicate with test equipment.
+	/// DUT that has firmware and can communicate with test equipment on its own.
 	/// </summary>
 	public interface IFirmwareBasedDUT : IDeviceUnderTest
 	{
@@ -174,7 +158,7 @@ namespace Sensit.TestSDK.Interfaces
 	}
 
 	/// <summary>
-	///  DUT that lacks a communication interface.
+	///  DUT that relies on a support device to communicate.
 	/// </summary>
 	public interface IAnalogDUT : IDeviceUnderTest
 	{
