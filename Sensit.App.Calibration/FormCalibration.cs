@@ -157,7 +157,7 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void buttonStart_Click(object sender, System.EventArgs e)
+		private void buttonStart_Click(object sender, EventArgs e)
 		{
 			try
 			{
@@ -176,6 +176,9 @@ namespace Sensit.App.Calibration
 				// Enable the "Stop" button and disable the "Start" button.
 				buttonStop.Enabled = true;
 				buttonStart.Enabled = false;
+
+				// TODO:  Delete DUT tabs (if they exist) and any data on them.
+				// TODO:  Clear the DUT data on the Overview tab.
 			}
 			catch (NullReferenceException)
 			{
@@ -193,7 +196,7 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void buttonStop_Click(object sender, System.EventArgs e)
+		private void buttonStop_Click(object sender, EventArgs e)
 		{
 			ConfirmAbort();
 		}
@@ -221,7 +224,7 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void buttonPrintLabels_Click(object sender, System.EventArgs e)
+		private void buttonPrintLabels_Click(object sender, EventArgs e)
 		{
 			try
 			{
@@ -262,7 +265,7 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void exitToolStripMenuItem_Click(object sender, System.EventArgs e)
+		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			// This will invoke the "FormClosing" action, so nothing else to do here.
 
