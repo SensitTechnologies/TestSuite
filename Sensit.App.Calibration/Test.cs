@@ -14,8 +14,7 @@ namespace Sensit.App.Calibration
 		private BackgroundWorker _testThread;   // task that will handle test operations
 		private ProductSettings _settings;      // product settings for model, range, test
 		private Equipment _equipment;			// test equipment object
-		private List<IDeviceUnderTest> _duts;	// devices under test
-
+		private List<AnalogSensor> _duts;		// devices under test
 
 		#region Delegates
 
@@ -27,9 +26,6 @@ namespace Sensit.App.Calibration
 
 		// Update the GUI's list of available ranges (when the selected model changes).
 		public Action<List<string>> SetRanges;
-
-		// Fetch test equipment readings.
-		public Func<Dictionary<Reference, double>> SystemRead;
 
 		#endregion
 
@@ -163,6 +159,7 @@ namespace Sensit.App.Calibration
 				// Create a new list.
 				List<string> tests = new List<string>();
 
+				// Find each test.
 				if (_settings.TestSettings != null)
 				{
 					foreach (TestSetting t in _settings.TestSettings ?? new List<TestSetting>())
@@ -190,13 +187,8 @@ namespace Sensit.App.Calibration
 			_testThread.ProgressChanged += ProgressChanged;
 			_testThread.RunWorkerCompleted += RunWorkerCompleted;
 
-			// Set up list of DUTs.
-			_duts = new List<IDeviceUnderTest>();
-
-			// Fetch product settings.
+			// Fetch product settings (so we can get available models, ranges, tests).
 			_settings = Settings.Load<ProductSettings>(Properties.Settings.Default.ProductSettingsFile);
-
-			// TODO:  Populate the GUI's options for model, range, test.
 		}
 
 		#region Private Methods
@@ -219,14 +211,44 @@ namespace Sensit.App.Calibration
 			Finished?.Invoke();
 		}
 		
+		/// <summary>
+		/// Create DUT objects and initialize them with settings chosen by the user.
+		/// </summary>
 		private void InitializeDuts()
 		{
+			// Create a list of DUTs.
+			// TODO:  Choose type of DUT based on settings.
+			_duts = new List<AnalogSensor>(NumDuts);
+
+			// Keep track of how many DUTs are selected.
+			int numSelected = 0;
+
+			// Create each DUT object.
 			for (int i = 0; i < NumDuts; i++)
 			{
-				_duts.Add(new AnalogSensor(_equipment.DutInterface) as IDeviceUnderTest);
+				_duts.Add(new AnalogSensor
+				{
+					Index = i,
+					// TODO:  Get these settings from GUI.
+					// Model = "",
+					// Version = "",
+					Selected = true,
+					Status = DutStatus.Unknown,
+					SerialNumber = string.Empty,
+					Message = string.Empty,
+				});
+				numSelected++;
 			}
+
+			// Throw exception if no DUTs are selected.
+			if (numSelected == 0)
+			{
+				throw new Exception("You must select at least one DUT.");
+			}
+
+			// TODO:  Throw exception is no DUT ports could be opened.
 		}
-		
+
 		private void ProcessCommand()
 		{
 
@@ -266,24 +288,25 @@ namespace Sensit.App.Calibration
 
 		private void PowerOn()
 		{
-			foreach (IDeviceUnderTest s in _duts)
+			// Turn all duts on.
+			foreach(IDeviceUnderTest dut in _duts)
 			{
-				if (s.Selected)
+				if (dut.Selected)
 				{
-					s.PowerOn();
+					_equipment.DutInterface.PowerOn(dut.Index);
 				}
 			}
 		}
 
 		private void PowerOff()
 		{
-			foreach (AnalogSensor s in _duts)
+			foreach (IDeviceUnderTest dut in _duts)
 			{
 				// Turn off DUTs that have been found.
-				if ((s.Status != DutStatus.PortError) &&
-					(s.Status != DutStatus.NotFound))
+				if ((dut.Status != DutStatus.PortError) &&
+					(dut.Status != DutStatus.NotFound))
 				{
-					s.PowerOff();
+					_equipment.DutInterface.PowerOff(dut.Index);
 				}
 			}
 		}
@@ -324,7 +347,11 @@ namespace Sensit.App.Calibration
 		/// This runs during a test.
 		/// </summary>
 		/// <remarks>
-		/// This page helped guide implementation of how to cancel the task.
+		/// This method handles all the testing of the DUTs.  Every time the
+		/// user presses "Start" this is what runs.  If you're trying to figure
+		/// out what this application does, this is a good place to start.
+		/// 
+		/// This page helped guide implementation of how to cancel the task:
 		/// https://docs.microsoft.com/en-us/dotnet/framework/winforms/controls/how-to-run-an-operation-in-the-background
 		/// </remarks>
 		/// <param name="sender"></param>
@@ -353,8 +380,13 @@ namespace Sensit.App.Calibration
 				if (bw.CancellationPending) { break; }
 
 				// Configure test equipment.
-				_testThread.ReportProgress(15, "Configuring test equipment...");
+				_testThread.ReportProgress(3, "Configuring test equipment...");
 				_equipment.Open();
+				if (bw.CancellationPending) { break; }
+
+				// Initialize DUTs.
+				_testThread.ReportProgress(4, "Initializing DUT data structures...");
+				InitializeDuts();
 				if (bw.CancellationPending) { break; }
 
 				// Apply power to opened DUTs.
@@ -362,7 +394,7 @@ namespace Sensit.App.Calibration
 				PowerOn();
 				if (bw.CancellationPending) { break; }
 
-				// Configure DUTs.
+				// TODO:  Configure DUTs (i.e. if there were some default settings or programmable range).
 
 				// Perform test actions.
 
