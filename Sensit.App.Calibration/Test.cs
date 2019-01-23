@@ -68,11 +68,11 @@ namespace Sensit.App.Calibration
 					throw new Exception("Cannot change model when test is running.");
 				}
 
-				// TODO:  Bug: Model, range, test not populated correctly.
+				// Remember the new setting.
+				Properties.Settings.Default.Model = value;
+
 				// Re-populate the ranges available in the GUI.
 				SetRanges(Ranges);
-
-				Properties.Settings.Default.Model = value;
 			}
 		}
 

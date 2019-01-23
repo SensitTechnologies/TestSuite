@@ -32,7 +32,7 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		public int NumDuts
 		{
-			get { return _numDuts; }
+			get => _numDuts;
 			set
 			{
 				_numDuts = value;
@@ -100,6 +100,10 @@ namespace Sensit.App.Calibration
 				{
 					comboBoxModel.Items.Add(model);
 				}
+
+				// Select item from settings if it exists.
+				comboBoxModel.SelectedIndex = comboBoxModel.FindStringExact(
+					Properties.Settings.Default.Model);
 			}
 		}
 
@@ -118,6 +122,10 @@ namespace Sensit.App.Calibration
 				{
 					comboBoxRange.Items.Add(range);
 				}
+
+				// Select item from settings if it exists.
+				comboBoxRange.SelectedIndex = comboBoxRange.FindStringExact(
+					Properties.Settings.Default.Range);
 			}
 		}
 
@@ -136,6 +144,10 @@ namespace Sensit.App.Calibration
 				{
 					comboBoxTest.Items.Add(test);
 				}
+
+				// Select item from settings if it exists.
+				comboBoxTest.SelectedIndex = comboBoxTest.FindStringExact(
+					Properties.Settings.Default.Test);
 			}
 		}
 
