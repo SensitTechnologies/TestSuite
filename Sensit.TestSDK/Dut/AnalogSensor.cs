@@ -8,9 +8,6 @@ namespace Sensit.TestSDK.Dut
 	/// <summary>
 	/// Analog sensor
 	/// </summary>
-	/// <remarks>
-	/// TODO:  Should this be renamed to be a generic DUT?
-	/// </remarks>
 	public class AnalogSensor : IAnalogDUT
 	{
 		public int Index { get; set; }
