@@ -36,7 +36,7 @@ namespace Sensit.TestSDK.Interfaces
 		/// <summary>
 		/// Value the device should try to achieve when in Control Mode.
 		/// </summary>
-		float MassFlowSetpoint { get; set; }
+		double MassFlowSetpoint { get; set; }
 
 		/// <summary>
 		/// Write the setpoint to the device.
@@ -56,7 +56,7 @@ namespace Sensit.TestSDK.Interfaces
 		/// So we can write one line of code instead of two.
 		/// </remarks>
 		/// <param name="setpoint"></param>
-		void WriteMassFlowSetpoint(float setpoint);
+		void WriteMassFlowSetpoint(double setpoint);
 
 		/// <summary>
 		/// Read the setpoint from the device.
@@ -64,7 +64,7 @@ namespace Sensit.TestSDK.Interfaces
 		/// <remarks>
 		/// For convenience, this method updates the property and returns the value.
 		/// </remarks>
-		float ReadMassFlowSetpoint();
+		double ReadMassFlowSetpoint();
 	}
 
 	/// <summary>
@@ -72,13 +72,13 @@ namespace Sensit.TestSDK.Interfaces
 	/// </summary>
 	public interface IVolumeFlowController : IControlDevice
 	{
-		float VolumeFlowSetpoint { get; set; }
+		double VolumeFlowSetpoint { get; set; }
 
 		void WriteVolumeFlowSetpoint();
 
-		void WriteVolumeFlowSetpoint(float setpoint);
+		void WriteVolumeFlowSetpoint(double setpoint);
 
-		float ReadVolumeFlowSetpoint();
+		double ReadVolumeFlowSetpoint();
 	}
 
 	/// <summary>
@@ -86,13 +86,13 @@ namespace Sensit.TestSDK.Interfaces
 	/// </summary>
 	public interface IVelocityController : IControlDevice
 	{
-		float VelocitySetpoint { get; set; }
+		double VelocitySetpoint { get; set; }
 
 		void WriteVelocitySetpoint();
 
-		void WriteVelocitySetpoint(float setpoint);
+		void WriteVelocitySetpoint(double setpoint);
 
-		float ReadVelocitySetpoint();
+		double ReadVelocitySetpoint();
 	}
 
 	/// <summary>
@@ -100,13 +100,13 @@ namespace Sensit.TestSDK.Interfaces
 	/// </summary>
 	public interface IPressureController : IControlDevice
 	{
-		float PressureSetpoint { get; set; }
+		double PressureSetpoint { get; set; }
 
 		void WritePressureSetpoint();
 
-		void WritePressureSetpoint(float setpoint);
+		void WritePressureSetpoint(double setpoint);
 
-		float ReadPressureSetpoint();
+		double ReadPressureSetpoint();
 	}
 
 	/// <summary>
@@ -114,12 +114,12 @@ namespace Sensit.TestSDK.Interfaces
 	/// </summary>
 	public interface ITemperatureController : IControlDevice
 	{
-		float TemperatureSetpoint { get; set; }
+		double TemperatureSetpoint { get; set; }
 
 		void WriteTemperatureSetpoint();
 
-		void WriteTemperatureSetpoint(float setpoint);
+		void WriteTemperatureSetpoint(double setpoint);
 
-		float ReadTemperatureSetpoint();
+		double ReadTemperatureSetpoint();
 	}
 }

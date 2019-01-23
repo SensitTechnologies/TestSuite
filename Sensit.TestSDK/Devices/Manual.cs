@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
-using Sensit.TestSDK.Calculations;
+﻿using Sensit.TestSDK.Calculations;
 using Sensit.TestSDK.Forms;
 using Sensit.TestSDK.Interfaces;
 
@@ -9,42 +7,104 @@ namespace Sensit.TestSDK.Devices
 	public class Manual : IMassFlowReference, IVolumeFlowReference, IVelocityReference, IPressureReference, ITemperatureReference,
 		IMassFlowController, IVolumeFlowController, IVelocityController, IPressureController, ITemperatureController
 	{
+		private double _massFlow;
+		private double _volumeFlow;
+		private double _velocity;
+		private double _pressure;
+		private double _temperature;
+
 		#region Reference Device Properties
 
 		public UnitOfMeasure.Flow FlowUnit { get; set; }
 
 		public Gas GasSelection { get; set; } = Gas.Air;
 
-		// TODO:  For every numeric property, generate a prompt to ask the user for input.
-		public float MassFlow { get; }
+		public double MassFlow
+		{
+			get
+			{
+				InputDialog.Numeric("Mass Flow", ref _massFlow);
+				return _massFlow;
+			}
+		}
 
-		public float VolumeFlow { get; }
+		public double VolumeFlow
+		{
+			get
+			{
+				InputDialog.Numeric("Volume Flow", ref _volumeFlow);
+				return _volumeFlow;
+			}
+		}
 
 		public UnitOfMeasure.Velocity VelocityUnit { get; set; }
 
-		public float Velocity { get; }
+		public double Velocity
+		{
+			get
+			{
+				InputDialog.Numeric("Velocity", ref _velocity);
+				return _velocity;
+			}
+		}
 
 		public UnitOfMeasure.Pressure PressureUnit { get; set; }
 
-		public float Pressure { get; }
+		public double Pressure
+		{
+			get
+			{
+				InputDialog.Numeric("Pressure", ref _pressure);
+				return _pressure;
+			}
+		}
 
 		public UnitOfMeasure.Temperature TemperatureUnit { get; set; }
 
-		public float Temperature { get; }
+		public double Temperature
+		{
+			get
+			{
+				InputDialog.Numeric("Temperature", ref _temperature);
+				return _temperature;
+			}
+		}
 
 		#endregion
 
 		#region Control Device Properties
 
-		public float MassFlowSetpoint { get; set; }
+		// TODO:  Create input dialog that is read-only and displays a message.
+		// TODO:  Use read-only input dialog with message to display manual setpoints to user.
+		public double MassFlowSetpoint
+		{
+			get;
+			set;
+		}
 
-		public float VolumeFlowSetpoint { get; set; }
+		public double VolumeFlowSetpoint
+		{
+			get;
+			set;
+		}
 
-		public float VelocitySetpoint { get; set; }
+		public double VelocitySetpoint
+		{
+			get;
+			set;
+		}
 
-		public float PressureSetpoint { get; set; }
+		public double PressureSetpoint
+		{
+			get;
+			set;
+		}
 
-		public float TemperatureSetpoint { get; set; }
+		public double TemperatureSetpoint
+		{
+			get;
+			set;
+		}
 
 		#endregion
 
@@ -61,27 +121,27 @@ namespace Sensit.TestSDK.Devices
 			// Nothing to do here.
 		}
 
-		public float ReadMassFlowSetpoint()
+		public double ReadMassFlowSetpoint()
 		{
 			return MassFlowSetpoint;
 		}
 
-		public float ReadPressureSetpoint()
+		public double ReadPressureSetpoint()
 		{
 			return PressureSetpoint;
 		}
 
-		public float ReadTemperatureSetpoint()
+		public double ReadTemperatureSetpoint()
 		{
 			return TemperatureSetpoint;
 		}
 
-		public float ReadVelocitySetpoint()
+		public double ReadVelocitySetpoint()
 		{
 			return VelocitySetpoint;
 		}
 
-		public float ReadVolumeFlowSetpoint()
+		public double ReadVolumeFlowSetpoint()
 		{
 			return VolumeFlowSetpoint;
 		}
@@ -96,7 +156,7 @@ namespace Sensit.TestSDK.Devices
 			// Nothing to do here.
 		}
 
-		public void WriteMassFlowSetpoint(float setpoint)
+		public void WriteMassFlowSetpoint(double setpoint)
 		{
 			MassFlowSetpoint = setpoint;
 		}
@@ -106,7 +166,7 @@ namespace Sensit.TestSDK.Devices
 			// Nothing to do here.
 		}
 
-		public void WritePressureSetpoint(float setpoint)
+		public void WritePressureSetpoint(double setpoint)
 		{
 			PressureSetpoint = setpoint;
 		}
@@ -116,7 +176,7 @@ namespace Sensit.TestSDK.Devices
 			// Nothing to do here.
 		}
 
-		public void WriteTemperatureSetpoint(float setpoint)
+		public void WriteTemperatureSetpoint(double setpoint)
 		{
 			TemperatureSetpoint = setpoint;
 		}
@@ -126,7 +186,7 @@ namespace Sensit.TestSDK.Devices
 			// Nothing to do here.
 		}
 
-		public void WriteVelocitySetpoint(float setpoint)
+		public void WriteVelocitySetpoint(double setpoint)
 		{
 			VelocitySetpoint = setpoint;
 		}
@@ -136,7 +196,7 @@ namespace Sensit.TestSDK.Devices
 			// Nothing to do here.
 		}
 
-		public void WriteVolumeFlowSetpoint(float setpoint)
+		public void WriteVolumeFlowSetpoint(double setpoint)
 		{
 			VolumeFlowSetpoint = setpoint;
 		}

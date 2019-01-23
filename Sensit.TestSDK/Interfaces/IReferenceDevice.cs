@@ -81,7 +81,7 @@ namespace Sensit.TestSDK.Interfaces
 		/// </summary>
 		Gas GasSelection { get; set; }
 
-		float MassFlow { get; }
+		double MassFlow { get; }
 	}
 
 	/// <summary>
@@ -91,7 +91,7 @@ namespace Sensit.TestSDK.Interfaces
 	{
 		UnitOfMeasure.Flow FlowUnit { get; set; }
 
-		float VolumeFlow { get; }
+		double VolumeFlow { get; }
 	}
 
 	/// <summary>
@@ -101,7 +101,7 @@ namespace Sensit.TestSDK.Interfaces
 	{
 		UnitOfMeasure.Velocity VelocityUnit { get; set; }
 
-		float Velocity { get; }
+		double Velocity { get; }
 	}
 
 	/// <summary>
@@ -111,7 +111,7 @@ namespace Sensit.TestSDK.Interfaces
 	{
 		UnitOfMeasure.Pressure PressureUnit { get; set; }
 
-		float Pressure { get; }
+		double Pressure { get; }
 	}
 
 	/// <summary>
@@ -121,6 +121,6 @@ namespace Sensit.TestSDK.Interfaces
 	{
 		UnitOfMeasure.Temperature TemperatureUnit { get; set; }
 
-		float Temperature { get; }
+		double Temperature { get; }
 	}
 }

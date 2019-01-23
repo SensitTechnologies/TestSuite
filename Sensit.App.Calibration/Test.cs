@@ -541,6 +541,7 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		public void SaveSettings()
 		{
+			// TODO:  Bug:  Settings don't seem to be saved.
 			Properties.Settings.Default.Save();
 		}
 	}

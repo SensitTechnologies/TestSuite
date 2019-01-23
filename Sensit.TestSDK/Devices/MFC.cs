@@ -102,7 +102,7 @@ namespace Sensit.TestSDK.Devices
 				// "*@=@" sets the device into streaming mode.
 				_serialPort.WriteLine(Command.SetAddress + '@');
 
-				// TODO:  Validate streaming mode.
+				// TODO:  Validate mass flow controller streaming mode.
 			}
 			catch (Exception ex)
 			{
@@ -253,24 +253,24 @@ namespace Sensit.TestSDK.Devices
 
 		public Gas GasSelection { get; set; } = Gas.Air;
 
-		public float VolumeFlow { get; private set; }
+		public double VolumeFlow { get; private set; }
 
-		public float MassFlow { get; private set; }
+		public double MassFlow { get; private set; }
 
 		public UnitOfMeasure.Temperature TemperatureUnit { get; set; } = UnitOfMeasure.Temperature.Celsius;
 
-		public float Temperature { get; private set; }
+		public double Temperature { get; private set; }
 
 		public UnitOfMeasure.Pressure PressureUnit { get; set; } = UnitOfMeasure.Pressure.PSI;
 
-		public float Pressure { get; private set; }
+		public double Pressure { get; private set; }
 
 		public void Configure()
 		{
 			// This device has only one settable property.
 			SetGas();
 
-			// TODO:  Figure out how to set units of measure programmatically.
+			// TODO:  Figure out how to set mass flow controller's units of measure programmatically.
 			// TODO:  Until you can set units of meaure programmatically, throw an error if it's not a default unit.
 		}
 
@@ -315,7 +315,7 @@ namespace Sensit.TestSDK.Devices
 
 		#region Control Device Methods
 
-		public float MassFlowSetpoint { set; get; }
+		public double MassFlowSetpoint { set; get; }
 
 		public void WriteMassFlowSetpoint()
 		{
@@ -344,14 +344,14 @@ namespace Sensit.TestSDK.Devices
 			}
 		}
 
-		public void WriteMassFlowSetpoint(float setpoint)
+		public void WriteMassFlowSetpoint(double setpoint)
 		{
 			MassFlowSetpoint = setpoint;
 
 			WriteMassFlowSetpoint();
 		}
 
-		public float ReadMassFlowSetpoint()
+		public double ReadMassFlowSetpoint()
 		{
 			try
 			{

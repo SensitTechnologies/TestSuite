@@ -12,7 +12,7 @@ namespace Sensit.TestSDK.Interfaces
 		/// <summary>
 		/// the actual coefficient
 		/// </summary>
-		public float Value;
+		public double Value;
 	}
 
 	public enum DutStatus
