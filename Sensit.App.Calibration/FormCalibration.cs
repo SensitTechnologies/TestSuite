@@ -161,6 +161,20 @@ namespace Sensit.App.Calibration
 		{
 			try
 			{
+				// Check user selections.
+				if (comboBoxModel.SelectedItem == null)
+				{
+					throw new Exception("Please select a model before starting test.");
+				}
+				if (comboBoxRange.SelectedItem == null)
+				{
+					throw new Exception("Please select a range before starting test.");
+				}
+				if (comboBoxTest.SelectedItem == null)
+				{
+					throw new Exception("Please select a test before starting test.");
+				}
+
 				TestStart();
 
 				// Disable most of the controls.
