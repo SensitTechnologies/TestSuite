@@ -68,6 +68,7 @@ namespace Sensit.App.Calibration
 					throw new Exception("Cannot change model when test is running.");
 				}
 
+				// TODO:  Bug: Model, range, test not populated correctly.
 				// Re-populate the ranges available in the GUI.
 				SetRanges(Ranges);
 
@@ -326,12 +327,6 @@ namespace Sensit.App.Calibration
 
 		#endregion
 
-		private void RecordLog()
-		{
-			// TODO:  Do this continuously rather than just at the end of a test.
-			// Should likely be a logger class in the SDK.
-		}
-		
 		#region Test Actions
 		
 		private void SetMassFlow()
@@ -490,9 +485,8 @@ namespace Sensit.App.Calibration
 				stopwatch.Stop();
 				TimeSpan elapsedtime = stopwatch.Elapsed;
 
-				// Record log.
-				_testThread.ReportProgress(95, "Recording log...");
-				Thread.Sleep(100); // One second.
+				// TODO:  Add (continuous) logger support (to CSV for now).
+				// Should likely be a logger class in the SDK.
 
 				// Close test equipment.
 				_testThread.ReportProgress(95, "Closing test equipment...");

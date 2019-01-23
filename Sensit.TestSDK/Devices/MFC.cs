@@ -15,6 +15,10 @@ namespace Sensit.TestSDK.Devices
 	/// https://www.coleparmer.com/p/cole-parmer-mass-flow-controllers-for-gas/43456
 	/// Instruction manual:
 	/// https://pim-resources.coleparmer.com/instruction-manual/cole-parmer-mass-flow-controller-manual.pdf
+	/// 
+	/// TODO:  Add support for 2nd mass flow controller; probably as a second class.
+	/// Once that's possible, you can regulate gas concentration (in addition to gas flow).
+	/// 
 	/// TODO:  Figure out how to set control variable over serial interface.
 	/// Once that's possible, this class can be extended to implement
 	/// IVolumeFlowController, IPressureController. This should be low priority.

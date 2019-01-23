@@ -269,6 +269,7 @@ namespace Sensit.App.Calibration
 			new TestSetting("Humidity Effects")
 		};
 
+		// TODO:  Add simulator settings as Model.
 		[Category("Product Settings"), Description("Settings describing a product series.")]
 		public List<ModelSetting> ModelSettings { get; set; } = new List<ModelSetting>
 		{

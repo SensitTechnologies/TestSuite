@@ -16,8 +16,9 @@ namespace Sensit.App.Calibration
 			_settings = Settings.Load<EquipmentSettings>(Properties.Settings.Default.SystemSettingsFile);
 
 			// Create test equipment objects.
-			// TODO:  Do this according to settings, (i.e. use manual if selected).
+			// TODO:  Add ability to choose control/reference devices from GUI, (i.e. use manual if selected).
 			_mfc = new MFC();
+			// TODO:  Add ability to choose DUT interface device from GUI.  Maybe change based on DUT type.
 			_datalogger = new Keysight_34972A();
 		}
 
