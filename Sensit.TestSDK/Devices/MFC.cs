@@ -93,10 +93,18 @@ namespace Sensit.TestSDK.Devices
 		/// </remarks>
 		private void SetStreaming()
 		{
-			// "*@=@" sets the device into streaming mode.
-			_serialPort.WriteLine(Command.SetAddress + '@');
+			try
+			{
+				// "*@=@" sets the device into streaming mode.
+				_serialPort.WriteLine(Command.SetAddress + '@');
 
-			// TODO:  Validate streaming mode.
+				// TODO:  Validate streaming mode.
+			}
+			catch (Exception ex)
+			{
+				throw new DevicePortException("Could not set mass flow controller streaming mode:"
+					+ Environment.NewLine + ex.Message);
+			}
 		}
 
 		/// <summary>
@@ -107,23 +115,31 @@ namespace Sensit.TestSDK.Devices
 			// Note the way we access the "GasSelection" Dictionary/Tuple.
 			string msg = ADDRESS + Command.GasSelect + GasCommand[GasSelection].Index;
 
-			// "A$$12" selects propane gas for device A.
-			_serialPort.WriteLine(msg);
-
-			// Read the response from the serial port (until we get a \r character).
-			string message = _serialPort.ReadLine();
-
-			// Split the string using spaces to separate each word.
-			char[] separators = new char[] { ' ' };
-			string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-			string gasResult = words[6];
-
-			// Check the gas selection.
-			// Note (again) the way we access the "GasSelection" Dictionary/Tuple.
-			string gasRequest = GasCommand[GasSelection].Code;
-			if (string.Compare(gasResult, gasRequest) != 0)
+			try
 			{
-				throw new DeviceCommandFailedException("Could not write gas selection to mass flow controller.");
+				// "A$$12" selects propane gas for device A.
+				_serialPort.WriteLine(msg);
+
+				// Read the response from the serial port (until we get a \r character).
+				string message = _serialPort.ReadLine();
+
+				// Split the string using spaces to separate each word.
+				char[] separators = new char[] { ' ' };
+				string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+				string gasResult = words[6];
+
+				// Check the gas selection.
+				// Note (again) the way we access the "GasSelection" Dictionary/Tuple.
+				string gasRequest = GasCommand[GasSelection].Code;
+				if (string.Compare(gasResult, gasRequest) != 0)
+				{
+					throw new Exception("Value returned from instrument was incorrect.");
+				}
+			}
+			catch (Exception ex)
+			{
+				throw new DeviceCommunicationException("Could not write gas selection to mass flow controller."
+					+ Environment.NewLine + ex.Message);
 			}
 		}
 
@@ -137,20 +153,28 @@ namespace Sensit.TestSDK.Devices
 		/// </remarks>
 		private void WriteAddress()
 		{
-			// "*@=A" sets address = A (and puts device into polling mode).
-			_serialPort.WriteLine(Command.SetAddress + ADDRESS);
-
-			// Read from the serial port (until we get a \r character).
-			string message = _serialPort.ReadLine();
-
-			// Split the string using spaces to separate each word.
-			char[] separators = new char[] { ' ' };
-			string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-
-			// Check the address.
-			if (string.Compare(words[0], ADDRESS.ToString()) != 0)
+			try
 			{
-				throw new DeviceCommandFailedException("Could not update mass flow controller address.");
+				// "*@=A" sets address = A (and puts device into polling mode).
+				_serialPort.WriteLine(Command.SetAddress + ADDRESS);
+
+				// Read from the serial port (until we get a \r character).
+				string message = _serialPort.ReadLine();
+
+				// Split the string using spaces to separate each word.
+				char[] separators = new char[] { ' ' };
+				string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+
+				// Check the address.
+				if (string.Compare(words[0], ADDRESS.ToString()) != 0)
+				{
+					throw new Exception("Value returned from instrument was incorrect.");
+				}
+			}
+			catch (Exception ex)
+			{
+				throw new DeviceCommunicationException("Could not update mass flow controller address."
+					+ Environment.NewLine + ex.Message);
 			}
 		}
 
@@ -163,24 +187,32 @@ namespace Sensit.TestSDK.Devices
 		/// <param name="baudRate">baud rate (9600 and 19200 are supported)</param>
 		public void Open(string portName, int baudRate = 19200)
 		{
-			// Set serial port settings.
-			_serialPort.PortName = portName;
-			_serialPort.BaudRate = baudRate;
-			_serialPort.DataBits = 8;
-			_serialPort.Parity = Parity.None;
-			_serialPort.StopBits = StopBits.One;
-			_serialPort.Handshake = Handshake.None;
-			_serialPort.ReadTimeout = 500;
-			_serialPort.WriteTimeout = 500;
+			try
+			{
+				// Set serial port settings.
+				_serialPort.PortName = portName;
+				_serialPort.BaudRate = baudRate;
+				_serialPort.DataBits = 8;
+				_serialPort.Parity = Parity.None;
+				_serialPort.StopBits = StopBits.One;
+				_serialPort.Handshake = Handshake.None;
+				_serialPort.ReadTimeout = 500;
+				_serialPort.WriteTimeout = 500;
 
-			// Messages are terminated with a carriage return.
-			_serialPort.NewLine = "\r";
+				// Messages are terminated with a carriage return.
+				_serialPort.NewLine = "\r";
 
-			// Open the serial port.
-			_serialPort.Open();
+				// Open the serial port.
+				_serialPort.Open();
 
-			// Set polling mode (by assigning a device address).
-			WriteAddress();
+				// Set polling mode (by assigning a device address).
+				WriteAddress();
+			}
+			catch (Exception ex)
+			{
+				throw new DevicePortException("Could not open mass flow controller's serial port."
+					+ Environment.NewLine + ex.Message);
+			}
 		}
 
 		public void SetSerialProperties(int dataBits = 8, Parity parity = Parity.None, StopBits stopBits = StopBits.One)
@@ -240,31 +272,39 @@ namespace Sensit.TestSDK.Devices
 
 		public void Read()
 		{
-			// Read (when in polling mode) by sending the device address.
-			_serialPort.WriteLine(ADDRESS.ToString());
-
-			// Read from the serial port (until we get a \r character).
-			string message = _serialPort.ReadLine();
-
-			// Split the string using spaces to separate each word.
-			char[] separators = new char[] { ' ' };
-			string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-
-			// Check the address.
-			if (string.Compare(words[0], ADDRESS.ToString()) != 0)
+			try
 			{
-				throw new DeviceCommandFailedException("Incorrect device ID");
+				// Read (when in polling mode) by sending the device address.
+				_serialPort.WriteLine(ADDRESS.ToString());
+
+				// Read from the serial port (until we get a \r character).
+				string message = _serialPort.ReadLine();
+
+				// Split the string using spaces to separate each word.
+				char[] separators = new char[] { ' ' };
+				string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+
+				// Check the address.
+				if (string.Compare(words[0], ADDRESS.ToString()) != 0)
+				{
+					throw new Exception("Incorrect device ID");
+				}
+
+				// Figure out which is which and update class properties.
+				Pressure = Convert.ToSingle(words[1]);
+				Temperature = Convert.ToSingle(words[2]);
+				VolumeFlow = Convert.ToSingle(words[3]);
+				MassFlow = Convert.ToSingle(words[4]);
+
+				// Probably don't update the control properties.
+				//Setpoint = Convert.ToSingle(words[5]);
+				//GasSelection = words[6];
 			}
-
-			// Figure out which is which and update class properties.
-			Pressure = Convert.ToSingle(words[1]);
-			Temperature = Convert.ToSingle(words[2]);
-			VolumeFlow = Convert.ToSingle(words[3]);
-			MassFlow = Convert.ToSingle(words[4]);
-
-			// Probably don't update the control properties.
-			//Setpoint = Convert.ToSingle(words[5]);
-			//GasSelection = words[6];
+			catch (Exception ex)
+			{
+				throw new DeviceCommandFailedException("Could not read from mass flow controller."
+					+ Environment.NewLine + ex.Message);
+			}
 		}
 
 		#endregion
@@ -275,20 +315,28 @@ namespace Sensit.TestSDK.Devices
 
 		public void WriteMassFlowSetpoint()
 		{
-			// "AS4.54" = Set setpoint to 4.54 on device A.
-			_serialPort.WriteLine(ADDRESS + Command.SetSetpoint + MassFlowSetpoint.ToString());
-
-			// Read the response from the serial port (until we get a \r character).
-			string message = _serialPort.ReadLine();
-
-			// Split the string using spaces to separate each word.
-			char[] separators = new char[] { ' ' };
-			string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-
-			// Check the setpoint.
-			if (Convert.ToSingle(words[5]).Equals(MassFlowSetpoint) == false)
+			try
 			{
-				throw new DeviceCommandFailedException("Could not write setpoint to mass flow controller.");
+				// "AS4.54" = Set setpoint to 4.54 on device A.
+				_serialPort.WriteLine(ADDRESS + Command.SetSetpoint + MassFlowSetpoint.ToString());
+
+				// Read the response from the serial port (until we get a \r character).
+				string message = _serialPort.ReadLine();
+
+				// Split the string using spaces to separate each word.
+				char[] separators = new char[] { ' ' };
+				string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+
+				// Check the setpoint.
+				if (Convert.ToSingle(words[5]).Equals(MassFlowSetpoint) == false)
+				{
+					throw new Exception("Value read from instrument was incorrect.");
+				}
+			}
+			catch (Exception ex)
+			{
+				throw new DeviceCommandFailedException("Could not write setpoint to mass flow controller."
+					+ Environment.NewLine + ex.Message);
 			}
 		}
 
@@ -301,21 +349,29 @@ namespace Sensit.TestSDK.Devices
 
 		public float ReadMassFlowSetpoint()
 		{
-			// Read (when in polling mode) by sending the device address.
-			_serialPort.WriteLine(ADDRESS.ToString());
+			try
+			{
+				// Read (when in polling mode) by sending the device address.
+				_serialPort.WriteLine(ADDRESS.ToString());
 
-			// Read from the serial port (until we get a \r character).
-			string message = _serialPort.ReadLine();
+				// Read from the serial port (until we get a \r character).
+				string message = _serialPort.ReadLine();
 
-			// Split the string using spaces to separate each word.
-			char[] separators = new char[] { ' ' };
-			string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+				// Split the string using spaces to separate each word.
+				char[] separators = new char[] { ' ' };
+				string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
 
-			// Convert the setpoint to a number and set the property.
-			MassFlowSetpoint = Convert.ToSingle(words[5]);
+				// Convert the setpoint to a number and set the property.
+				MassFlowSetpoint = Convert.ToSingle(words[5]);
 
-			// Return the setpoint in case the user wants it.
-			return MassFlowSetpoint;
+				// Return the setpoint in case the user wants it.
+				return MassFlowSetpoint;
+			}
+			catch (Exception ex)
+			{
+				throw new DeviceCommandFailedException("Could not read setpoint from mass flow controller."
+					+ Environment.NewLine + ex.Message);
+			}
 		}
 
 		public void SetControlMode(ControlMode mode)
