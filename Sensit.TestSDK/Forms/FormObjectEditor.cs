@@ -19,8 +19,8 @@ namespace Sensit.TestSDK.Forms
 
 			// Remember the size of the form and the properties on it.
             originalFormSize = this.Size;
-            originalGridSize = propertyGrid1.Size;
-			originalTreeSize = treeView1.Size;
+            originalGridSize = propertyGrid.Size;
+			originalTreeSize = treeView.Size;
         }
 
 		/// <summary>
@@ -44,7 +44,7 @@ namespace Sensit.TestSDK.Forms
 				}
 
 				// TODO:  Put the selected node's properties into the properties grid.
-				propertyGrid1.SelectedObject = propertiesObject;
+				propertyGrid.SelectedObject = propertiesObject;
 			}
 		}
 
@@ -128,10 +128,10 @@ namespace Sensit.TestSDK.Forms
                 Size delta = this.Size - originalFormSize;
 
 				// Change the properties grid size by the same amount.
-                propertyGrid1.Size = originalGridSize + delta;
+                propertyGrid.Size = originalGridSize + delta;
 
 				// Change the tree view's length by the same amount.
-				treeView1.Height = originalTreeSize.Height + delta.Height;
+				treeView.Height = originalTreeSize.Height + delta.Height;
             }
             base.OnResize(e);
         }

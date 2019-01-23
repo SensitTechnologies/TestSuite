@@ -28,18 +28,18 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
+			this.propertyGrid = new System.Windows.Forms.PropertyGrid();
 			this.btnOK = new System.Windows.Forms.Button();
 			this.btnCan = new System.Windows.Forms.Button();
-			this.treeView1 = new System.Windows.Forms.TreeView();
+			this.treeView = new System.Windows.Forms.TreeView();
 			this.SuspendLayout();
 			// 
-			// propertyGrid1
+			// propertyGrid
 			// 
-			this.propertyGrid1.Location = new System.Drawing.Point(174, 41);
-			this.propertyGrid1.Name = "propertyGrid1";
-			this.propertyGrid1.Size = new System.Drawing.Size(362, 409);
-			this.propertyGrid1.TabIndex = 0;
+			this.propertyGrid.Location = new System.Drawing.Point(174, 41);
+			this.propertyGrid.Name = "propertyGrid";
+			this.propertyGrid.Size = new System.Drawing.Size(362, 409);
+			this.propertyGrid.TabIndex = 0;
 			// 
 			// btnOK
 			// 
@@ -61,12 +61,12 @@
 			this.btnCan.Text = "Cancel";
 			this.btnCan.UseVisualStyleBackColor = true;
 			// 
-			// treeView1
+			// treeView
 			// 
-			this.treeView1.Location = new System.Drawing.Point(14, 66);
-			this.treeView1.Name = "treeView1";
-			this.treeView1.Size = new System.Drawing.Size(154, 384);
-			this.treeView1.TabIndex = 3;
+			this.treeView.Location = new System.Drawing.Point(14, 66);
+			this.treeView.Name = "treeView";
+			this.treeView.Size = new System.Drawing.Size(154, 384);
+			this.treeView.TabIndex = 3;
 			// 
 			// FormObjectEditor
 			// 
@@ -75,10 +75,10 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.btnCan;
 			this.ClientSize = new System.Drawing.Size(549, 462);
-			this.Controls.Add(this.treeView1);
+			this.Controls.Add(this.treeView);
 			this.Controls.Add(this.btnCan);
 			this.Controls.Add(this.btnOK);
-			this.Controls.Add(this.propertyGrid1);
+			this.Controls.Add(this.propertyGrid);
 			this.MinimumSize = new System.Drawing.Size(400, 500);
 			this.Name = "FormObjectEditor";
 			this.Text = "frmObjectEditor";
@@ -88,9 +88,9 @@
 
 		#endregion
 
-		private System.Windows.Forms.PropertyGrid propertyGrid1;
+		private System.Windows.Forms.PropertyGrid propertyGrid;
 		private System.Windows.Forms.Button btnOK;
 		private System.Windows.Forms.Button btnCan;
-		private System.Windows.Forms.TreeView treeView1;
+		private System.Windows.Forms.TreeView treeView;
 	}
 }
