@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
+using System.Windows.Forms;
 using Sensit.TestSDK.Dut;
 using Sensit.TestSDK.Interfaces;
 using Sensit.TestSDK.Settings;
@@ -14,7 +15,11 @@ namespace Sensit.App.Calibration
 		private BackgroundWorker _testThread;   // task that will handle test operations
 		private ProductSettings _settings;      // product settings for model, range, test
 		private Equipment _equipment;			// test equipment object
-		private List<AnalogSensor> _duts;		// devices under test
+		private List<AnalogSensor> _duts;       // devices under test
+
+		private ModelSetting _modelSettings;    // settings for selected model
+		private RangeSetting _rangeSettings;    // settings for selected range
+		private TestSetting _testSettings;		// settings for selected test
 
 		#region Delegates
 
@@ -191,7 +196,7 @@ namespace Sensit.App.Calibration
 			_settings = Settings.Load<ProductSettings>(Properties.Settings.Default.ProductSettingsFile);
 		}
 
-		#region Private Methods
+		#region Thread Management
 
 		private void ProgressChanged(object sender, ProgressChangedEventArgs e)
 		{
@@ -211,10 +216,14 @@ namespace Sensit.App.Calibration
 			Finished?.Invoke();
 		}
 
+		#endregion
+
+		#region DUT Management
+
 		/// <summary>
 		/// Create DUT objects and initialize them with settings chosen by the user.
 		/// </summary>
-		private void InitializeDuts()
+		private void DutInitialize()
 		{
 			// Create a list of DUTs.
 			// TODO:  Choose type of DUT based on settings.
@@ -315,11 +324,8 @@ namespace Sensit.App.Calibration
 			}
 		}
 
-		private void ProcessCommand()
-		{
+		#endregion
 
-		}
-		
 		private void RecordLog()
 		{
 			// TODO:  Do this continuously rather than just at the end of a test.
@@ -360,6 +366,33 @@ namespace Sensit.App.Calibration
 				
 		#endregion
 
+		private void ReadTestSettings()
+		{
+			// Read the settings file.
+			_settings = Settings.Load<ProductSettings>(Properties.Settings.Default.ProductSettingsFile);
+
+			// Find the selected model settings.
+			_modelSettings = _settings.ModelSettings.Find(i => i.Label == SelectedModel);
+			if (_modelSettings == null)
+			{
+				throw new Exception("Model settings not found. Please contact Engineering.");
+			}
+
+			// Find the selected range settings.
+			_rangeSettings = _modelSettings.RangeSettings.Find(i => i.Label == SelectedRange);
+			if (_rangeSettings == null)
+			{
+				throw new Exception("Range settings not found. Please contact Engineering.");
+			}
+
+			// Find the selected test settings.
+			_testSettings = _settings.TestSettings.Find(i => i.Label == SelectedTest);
+			if (_testSettings == null)
+			{
+				throw new Exception("Test settings not found. Please contact Engineering.");
+			}
+		}
+
 		/// <summary>
 		/// This runs during a test.
 		/// </summary>
@@ -382,58 +415,94 @@ namespace Sensit.App.Calibration
 			// Get start time.
 			var stopwatch = Stopwatch.StartNew();
 
-			// Anything within this do-while structure can be cancelled.
-			do
+			try
 			{
-				// Create an object to represent test equipment, and
-				// update equipment settings.
-				_testThread.ReportProgress(1, "Reading equipment settings...");
-				_equipment = new Equipment();
-				if (bw.CancellationPending) { break; }
+				// Anything within this do-while structure can be cancelled.
+				do
+				{
+					// Read test settings (specific to Model, Range, Test).
+					_testThread.ReportProgress(1, "Reading DUT and test settings...");
+					ReadTestSettings();
+					if (bw.CancellationPending) { break; }
 
-				// Read DUT settings (specific to Model, Range, Test).
-				_testThread.ReportProgress(2, "Reading DUT settings...");
-				_settings = Settings.Load<ProductSettings>(Properties.Settings.Default.ProductSettingsFile);
-				if (bw.CancellationPending) { break; }
+					// Create an object to represent test equipment, and
+					// update equipment settings.
+					_testThread.ReportProgress(2, "Reading equipment settings...");
+					_equipment = new Equipment();
+					if (bw.CancellationPending) { break; }
 
-				// Configure test equipment.
-				_testThread.ReportProgress(3, "Configuring test equipment...");
-				_equipment.Open();
-				if (bw.CancellationPending) { break; }
+					// Configure test equipment.
+					_testThread.ReportProgress(3, "Configuring test equipment...");
+					_equipment.Open();
+					if (bw.CancellationPending) { break; }
 
-				// Initialize DUTs.
-				_testThread.ReportProgress(4, "Initializing DUTs...");
-				InitializeDuts();
-				if (bw.CancellationPending) { break; }
+					// Initialize DUTs.
+					_testThread.ReportProgress(4, "Initializing DUTs...");
+					DutInitialize();
+					if (bw.CancellationPending) { break; }
 
-				// TODO:  Configure DUTs (i.e. if there were some default settings or programmable range).
+					// TODO:  Configure DUTs (i.e. if there were some default settings or programmable range).
 
-				// Perform test actions.
+					// Perform test actions.
+					foreach (TestCommand cmd in _testSettings.Commands)
+					{
+						switch (cmd)
+						{
+							case TestCommand.ColdCal:
+								break;
+							case TestCommand.HotCal:
+								break;
+							case TestCommand.NoTempCal:
+								break;
+							case TestCommand.RoomCal:
+								break;
+							case TestCommand.SetRange:
+								break;
+							case TestCommand.SetTemp:
+								break;
+							case TestCommand.Span:
+								break;
+							case TestCommand.Verify:
+								Verify();
+								break;
+							case TestCommand.Zero:
+								break;
+							case TestCommand.Default:
+								break;
+							default:
+								throw new Exception("Unrecognized test command: " + cmd.ToString());
+						}
+					}
 
-				// Close DUTs.
-				_testThread.ReportProgress(5, "Closing DUTs...");
-				DutClose();
+					// Close DUTs.
+					_testThread.ReportProgress(5, "Closing DUTs...");
+					DutClose();
 
-				// Identify passing DUTs.
-				_testThread.ReportProgress(95, "Identifying passed DUTS...");
-				Thread.Sleep(250); // One second.
-			} while (false);
+					// Identify passing DUTs.
+					_testThread.ReportProgress(95, "Identifying passed DUTS...");
+					Thread.Sleep(250); // One second.
+				} while (false);
 
-			// Everything between here and the end of the test should be fast
-			// and highly reliable since it cannot be cancelled.
+				// Everything between here and the end of the test should be fast
+				// and highly reliable since it cannot be cancelled.
 
-			// Calculate end time.
-			stopwatch.Stop();
-			TimeSpan elapsedtime = stopwatch.Elapsed;
+				// Calculate end time.
+				stopwatch.Stop();
+				TimeSpan elapsedtime = stopwatch.Elapsed;
 
-			// Record log.
-			_testThread.ReportProgress(95, "Recording log...");
-			Thread.Sleep(100); // One second.
+				// Record log.
+				_testThread.ReportProgress(95, "Recording log...");
+				Thread.Sleep(100); // One second.
 
-			// Close test equipment.
-			_testThread.ReportProgress(95, "Closing test equipment...");
-			_equipment.Close();
-			Thread.Sleep(100); // One second.
+				// Close test equipment.
+				_testThread.ReportProgress(95, "Closing test equipment...");
+				_equipment.Close();
+				Thread.Sleep(100); // One second.
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message, ex.GetType().ToString());
+			}
 
 			// Done!
 			_testThread.ReportProgress(100, "Done.");
@@ -441,8 +510,6 @@ namespace Sensit.App.Calibration
 			// If the operation was cancelled by the user, set the cancel property.
 			if (bw.CancellationPending) { e.Cancel = true; }
 		}
-
-		#endregion
 
 		/// <summary>
 		/// Start a new test.
