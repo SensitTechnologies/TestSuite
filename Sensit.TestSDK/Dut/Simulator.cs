@@ -10,7 +10,7 @@ namespace Sensit.TestSDK.Dut
 	/// <summary>
 	/// A virtual device under test.  Useful for testing software and test equipment.
 	/// </summary>
-	class Simulator : IFirmwareBasedDUT, IAnalogDUT
+	public class Simulator : IFirmwareBasedDUT, IAnalogDUT
 	{
 		public int Index { get; set; }
 
