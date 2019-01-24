@@ -269,10 +269,25 @@ namespace Sensit.App.Calibration
 			new TestSetting("Humidity Effects")
 		};
 
-		// TODO:  Add simulator settings as Model.
 		[Category("Product Settings"), Description("Settings describing a product series.")]
 		public List<ModelSetting> ModelSettings { get; set; } = new List<ModelSetting>
 		{
+			new ModelSetting("Simulator", new List<RangeSetting>
+			{
+				new RangeSetting("0 - 10,000 PPM (1% V)", 0.0, 1.0, 10.0, ToleranceType.PercentReading),
+				new RangeSetting("0 - 100 %LEL (2.2% V)", 0.0, 2.2, 10.0, ToleranceType.PercentReading),
+				new RangeSetting("2.2 - 100% V",          2.2, 100, 5.0, ToleranceType.PercentReading),
+				new RangeSetting("0 - 25% V", 0.0, 25.0, new List<ToleranceSetting>
+				{
+					new ToleranceSetting(0.0, 0.2, 0.2, ToleranceType.Absolute),
+					new ToleranceSetting(0.2, 25.0, 10.0, ToleranceType.PercentReading)
+				}),
+				new RangeSetting("0 - 2,000 PPM", 0.0000, 0.2000, new List<ToleranceSetting>
+				{
+					new ToleranceSetting(0.0000, 0.0010, 0.0005, ToleranceType.Absolute),
+					new ToleranceSetting(0.0010, 0.2000, 5.0, ToleranceType.PercentReading)
+				})
+			}),
 			new ModelSetting("Propane", new List<RangeSetting>
 			{
 				new RangeSetting("0 - 10,000 PPM (1% V)", 0.0, 1.0, 10.0, ToleranceType.PercentReading),
