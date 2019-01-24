@@ -15,7 +15,7 @@ namespace Sensit.App.Calibration
 		private BackgroundWorker _testThread;   // task that will handle test operations
 		private ProductSettings _settings;      // product settings for model, range, test
 		private Equipment _equipment;			// test equipment object
-		private List<AnalogSensor> _duts;       // devices under test
+		private List<IDeviceUnderTest> _duts;	// devices under test
 
 		private ModelSetting _modelSettings;    // settings for selected model
 		private RangeSetting _rangeSettings;    // settings for selected range
@@ -224,11 +224,11 @@ namespace Sensit.App.Calibration
 		/// <summary>
 		/// Create DUT objects and initialize them with settings chosen by the user.
 		/// </summary>
-		private void DutInitialize()
+		private void DutOpen()
 		{
 			// Create a list of DUTs.
-			// TODO:  Choose type of DUT based on settings.
-			_duts = new List<AnalogSensor>(NumDuts);
+			// TODO:  (Medium priority) Choose type of DUT based on settings.
+			_duts = new List<IDeviceUnderTest>(NumDuts);
 
 			// Keep track of how many DUTs are selected.
 			int numSelected = 0;
@@ -239,10 +239,9 @@ namespace Sensit.App.Calibration
 				_duts.Add(new AnalogSensor
 				{
 					Index = i,
-					// TODO:  Get these settings from GUI.
 					// Model = "",
 					// Version = "",
-					Selected = true,
+					Selected = true,	// Replace this with user setting from FormCalibration.
 					Status = DutStatus.Init,
 					SerialNumber = string.Empty,
 					Message = string.Empty,
@@ -250,44 +249,8 @@ namespace Sensit.App.Calibration
 				numSelected++;
 			}
 
-			// Throw exception if no DUTs are selected.
-			if (numSelected == 0)
-			{
-				throw new Exception("You must select at least one DUT.");
-			}
+			// TODO:  (Low priority) Open DUT ports (if applicable); throw exception is no DUT ports could be opened.
 
-			// TODO:  Open DUT ports (if applicable).
-			// TODO:  Throw exception is no DUT ports could be opened.
-		}
-
-		private void DutOpen()
-		{
-			foreach (IDeviceUnderTest dut in _duts)
-			{
-				if (dut.Status == DutStatus.Init)
-				{
-					// TODO:  Open ports if necessary.
-
-					dut.Status = DutStatus.Found;
-				}
-			}
-		}
-
-		private void DutClose()
-		{
-			foreach (IDeviceUnderTest dut in _duts)
-			{
-				if ((dut.Status == DutStatus.Found) ||
-					(dut.Status == DutStatus.Fail) ||
-					(dut.Status == DutStatus.NotFound))
-				{
-					// TODO:  Close DUT ports (if applicable).
-				}
-			}
-		}
-
-		private void DutPowerOn()
-		{
 			// Turn all DUTs on.
 			foreach (IDeviceUnderTest dut in _duts)
 			{
@@ -296,31 +259,38 @@ namespace Sensit.App.Calibration
 					_equipment.DutInterface?.PowerOn(dut.Index);
 				}
 			}
-		}
 
-		private void DutFind()
-		{
-			// Communicate with each DUT.
+			// Verify communication with each DUT.
 			foreach (IDeviceUnderTest dut in _duts)
 			{
 				if (dut.Status == DutStatus.Found)
 				{
-					// TODO:  Talk to each DUT to verify communication.
+					// TODO:  (Low priority) Talk to each DUT to verify communication.
 
 					dut.Status = DutStatus.Found;
 				}
 			}
 		}
 
-		private void DutPowerOff()
+		private void DutClose()
 		{
+			// Turn off DUTs that have been found.
 			foreach (IDeviceUnderTest dut in _duts)
 			{
-				// Turn off DUTs that have been found.
 				if ((dut.Status != DutStatus.PortError) &&
 					(dut.Status != DutStatus.NotFound))
 				{
 					_equipment.DutInterface?.PowerOff(dut.Index);
+				}
+			}
+
+			foreach (IDeviceUnderTest dut in _duts)
+			{
+				if ((dut.Status == DutStatus.Found) ||
+					(dut.Status == DutStatus.Fail) ||
+					(dut.Status == DutStatus.NotFound))
+				{
+					// TODO:  (Low priority) Close DUT ports (if applicable).
 				}
 			}
 		}
@@ -433,10 +403,8 @@ namespace Sensit.App.Calibration
 
 					// Initialize DUTs.
 					_testThread.ReportProgress(4, "Initializing DUTs...");
-					DutInitialize();
+					DutOpen();
 					if (bw.CancellationPending) { break; }
-
-					// TODO:  Configure DUTs (i.e. if there were some default settings or programmable range).
 
 					// Perform test actions.
 					foreach (TestCommand cmd in _testSettings.Commands)
@@ -484,9 +452,6 @@ namespace Sensit.App.Calibration
 				// Calculate end time.
 				stopwatch.Stop();
 				TimeSpan elapsedtime = stopwatch.Elapsed;
-
-				// TODO:  Add (continuous) logger support (to CSV for now).
-				// Should likely be a logger class in the SDK.
 
 				// Close test equipment.
 				_testThread.ReportProgress(95, "Closing test equipment...");
@@ -541,7 +506,7 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		public void SaveSettings()
 		{
-			// TODO:  Bug:  Settings don't seem to be saved.
+			// BUG:  (Medium priority) Settings don't seem to be saved.
 			Properties.Settings.Default.Save();
 		}
 	}
