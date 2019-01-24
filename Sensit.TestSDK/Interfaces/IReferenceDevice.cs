@@ -25,8 +25,6 @@ namespace Sensit.TestSDK.Interfaces
 		/// at once.
 		/// </remarks>
 		void Read();
-
-		// TODO:  Are "Prompt" or "SetReading" methods necessary to support manual reference?
 	}
 
 	/// <summary>

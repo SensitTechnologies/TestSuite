@@ -12,7 +12,6 @@ namespace Sensit.TestSDK.Forms
 		{
 			// Create a new form.
 			Size size = new Size(160, 70);
-			// TODO:  Make the form autosize to the controls.
 			Form inputBox = new Form
 			{
 				// Set the form's properties.

@@ -74,8 +74,6 @@ namespace Sensit.TestSDK.Devices
 
 		#region Control Device Properties
 
-		// TODO:  Create input dialog that is read-only and displays a message.
-		// TODO:  Use read-only input dialog with message to display manual setpoints to user.
 		public double MassFlowSetpoint
 		{
 			get;

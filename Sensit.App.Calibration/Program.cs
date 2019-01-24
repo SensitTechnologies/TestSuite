@@ -29,10 +29,13 @@ namespace Sensit.App.Calibration
 				NumDuts = test.NumDuts
 			};
 
-			// TODO:  Every time a model, range, is updated, get new options.
-			// TODO:  Tell the GUI and test objects what equipment is needed.
-			// TODO:  Tell the GUI what variables to use. Maybe create test.Initialize that calls a form action and sends a list of references and controllers.
-			// TODO:  Display tab for DUT.  Maybe show Excel in a web browser?
+			// TODO:  FormCalibration support for reading DUT selection, model.
+			// TODO:  FormCalibration support for setting test equipment and fetching related user settings.
+			// TODO:  FormCalibration support for setting test variables and updating their values.
+			// TODO:  FormCalibration support for displaying data in a tab for each DUT.  Maybe show Excel in a web browser?
+			// TODO:  Support for regulating gas concentration via two mass flow controllers.
+			// TODO:  Call FormObjectEditor from FormCalibration to view/change test and equipment settings.
+			// TODO:  Log data (create a logger class in the SDK).
 
 			// Set test actions.
 			test.Update = formCalibration.TestUpdate;

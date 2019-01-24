@@ -16,10 +16,7 @@ namespace Sensit.TestSDK.Devices
 	/// Instruction manual:
 	/// https://pim-resources.coleparmer.com/instruction-manual/cole-parmer-mass-flow-controller-manual.pdf
 	/// 
-	/// TODO:  Add support for 2nd mass flow controller; probably as a second class.
-	/// Once that's possible, you can regulate gas concentration (in addition to gas flow).
-	/// 
-	/// TODO:  Figure out how to set control variable over serial interface.
+	/// TODO:  (Low priority) Figure out how to set control variable over serial interface.
 	/// Once that's possible, this class can be extended to implement
 	/// IVolumeFlowController, IPressureController. This should be low priority.
 	/// </remarks>
@@ -93,7 +90,8 @@ namespace Sensit.TestSDK.Devices
 		/// Enable the mass flow controller's streaming mode.
 		/// </summary>
 		/// <remarks>
-		/// Not used; but I wrote a method for it so it's documented.
+		/// Not used; the method was written to document the command. If you
+		/// ever use it, you should probably add a check that the command succeeds.
 		/// </remarks>
 		private void SetStreaming()
 		{
@@ -101,8 +99,6 @@ namespace Sensit.TestSDK.Devices
 			{
 				// "*@=@" sets the device into streaming mode.
 				_serialPort.WriteLine(Command.SetAddress + '@');
-
-				// TODO:  Validate mass flow controller streaming mode.
 			}
 			catch (Exception ex)
 			{
@@ -270,8 +266,7 @@ namespace Sensit.TestSDK.Devices
 			// This device has only one settable property.
 			SetGas();
 
-			// TODO:  Figure out how to set mass flow controller's units of measure programmatically.
-			// TODO:  Until you can set units of meaure programmatically, throw an error if it's not a default unit.
+			// TODO:  (Low priority) Figure out how to set mass flow controller's units of measure programmatically.
 		}
 
 		public void Read()

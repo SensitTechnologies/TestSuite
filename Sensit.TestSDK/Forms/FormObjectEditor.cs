@@ -43,7 +43,7 @@ namespace Sensit.TestSDK.Forms
 					Add<objectType>(propertiesObject, null, propertyForText);
 				}
 
-				// TODO:  Put the selected node's properties into the properties grid.
+				// BUG:  Object editor is broken.
 				propertyGrid.SelectedObject = propertiesObject;
 			}
 		}
