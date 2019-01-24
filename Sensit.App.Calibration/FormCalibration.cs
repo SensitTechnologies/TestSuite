@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Forms;
 using Sensit.TestSDK.Forms;
 
@@ -24,6 +25,35 @@ namespace Sensit.App.Calibration
 
 		// number of devices under test displayed on the form
 		private int _numDuts = 1;
+
+		BindingSource bindingSourceTestEquipment = new BindingSource();
+		private List<Dut> _duts = new List<Dut>();
+		private List<TestEquipment> _equipment = new List<TestEquipment>();
+
+		public class Dut
+		{
+			public bool Selected { get; set; }
+			public string SerialNumber { get; set; }
+
+			public Dut(bool selected, string serialNumber)
+			{
+				Selected = selected;
+				SerialNumber = serialNumber;
+			}
+		}
+
+		public class TestEquipment
+		{
+			public string Name { get; set; }
+			public List<string> Options { get; set; }
+			public string Selection { get; set; }
+
+			public TestEquipment(string name, string selection)
+			{
+				Name = name;
+				Selection = selection;
+			}
+		}
 
 		#region Properties
 
@@ -158,9 +188,25 @@ namespace Sensit.App.Calibration
 		public FormCalibration()
 		{
 			InitializeComponent();
+
+			// Set up data binding for test equipment.
+			bindingSourceTestEquipment.DataSource = _equipment;
+			bindingSourceTestEquipment.AllowNew = true;
+			bindingSourceTestEquipment.AddingNew += new AddingNewEventHandler(TestEquipment_AddingNew);
+			bindingSourceTestEquipment.ListChanged += new ListChangedEventHandler(TestEquipment_ListChanged);
 		}
 
 		#endregion
+
+		private void TestEquipment_AddingNew(object sender, AddingNewEventArgs e)
+		{
+
+		}
+
+		private void TestEquipment_ListChanged(object sender, ListChangedEventArgs e)
+		{
+
+		}
 
 		#region Private Methods
 
