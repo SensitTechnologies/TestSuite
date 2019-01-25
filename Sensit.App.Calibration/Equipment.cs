@@ -7,7 +7,7 @@ namespace Sensit.App.Calibration
 	public class Equipment
 	{
 		private readonly EquipmentSettings _settings;	// system settings
-		private MFC _mfc;								// mass flow controller
+		private ColeParmerMFC _mfc;								// mass flow controller
 		private Keysight_34972A _datalogger;			// datalogger (for analog sensor DUTs)
 
 		public Equipment()
@@ -16,7 +16,7 @@ namespace Sensit.App.Calibration
 			_settings = Settings.Load<EquipmentSettings>(Properties.Settings.Default.SystemSettingsFile);
 
 			// Create test equipment objects.
-			_mfc = new MFC();
+			_mfc = new ColeParmerMFC();
 			_datalogger = new Keysight_34972A();
 		}
 

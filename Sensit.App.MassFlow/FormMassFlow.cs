@@ -9,7 +9,7 @@ namespace Sensit.App.MassFlow
 	public partial class FormMassFlow : Form
 	{
 		// mass flow controller
-		private MFC _mfc = new MFC();
+		private ColeParmerMFC _mfc = new ColeParmerMFC();
 
 		/// <summary>
 		/// Runs when the application starts.

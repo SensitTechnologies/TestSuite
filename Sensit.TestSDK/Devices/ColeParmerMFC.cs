@@ -20,7 +20,7 @@ namespace Sensit.TestSDK.Devices
 	/// Once that's possible, this class can be extended to implement
 	/// IVolumeFlowController, IPressureController. This should be low priority.
 	/// </remarks>
-	public class MFC : ISerialDevice, IMassFlowController, 
+	public class ColeParmerMFC : ISerialDevice, IMassFlowController, 
 		IMassFlowReference, IVolumeFlowReference, ITemperatureReference, IPressureReference
 	{
 		/// <summary>

@@ -29,6 +29,50 @@ namespace Sensit.TestSDK.Interfaces
 	}
 
 	/// <summary>
+	/// Device that controls gas concentration.
+	/// </summary>
+	public interface IGasConcentrationController : IMassFlowController, IControlDevice
+	{
+		/// <summary>
+		/// Concentration of the gas under test before dilution.
+		/// </summary>
+		double GasBottleConcentration { get; set; }
+
+		/// <summary>
+		/// Value the device should try to achieve when in Control mode.
+		/// </summary>
+		double GasConcentrationSetpoint { get; set; }
+
+		/// <summary>
+		/// Write the setpoint to the device.
+		/// </summary>
+		/// <remarks>
+		/// Some processes need to control multiple variables at a time,
+		/// but only one variable needs to vary.
+		/// So this interface supports sending each setpoint individually.
+		/// </remarks>
+		void WriteGasConcentrationSetpoint();
+
+		/// <summary>
+		/// Write the setpoint to the device.
+		/// </summary>
+		/// <remarks>
+		/// For convenience, this method sets the property and writes it to the device.
+		/// So we can write one line of code instead of two.
+		/// </remarks>
+		/// <param name="setpoint"></param>
+		void WriteGasConcentrationSetpoint(double setpoint);
+
+		/// <summary>
+		/// Read the setpoint from the device.
+		/// </summary>
+		/// <remarks>
+		/// For convenience, this method updates the property and returns the value.
+		/// </remarks>
+		double ReadGasConcentationSetpoint();
+	}
+
+	/// <summary>
 	/// Device that controls gas mass flow.
 	/// </summary>
 	public interface IMassFlowController : IControlDevice

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.Keysight", "Sens
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.Calibration", "Sensit.App.Calibration\Sensit.App.Calibration.csproj", "{1065271E-2906-499B-A9FA-43BFB1EB218B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.GasConcentration", "Sensit.App.GasConcentration\Sensit.App.GasConcentration.csproj", "{172798F2-78C7-4AFB-8F28-B713CFA8E125}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{1065271E-2906-499B-A9FA-43BFB1EB218B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1065271E-2906-499B-A9FA-43BFB1EB218B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1065271E-2906-499B-A9FA-43BFB1EB218B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{172798F2-78C7-4AFB-8F28-B713CFA8E125}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{172798F2-78C7-4AFB-8F28-B713CFA8E125}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{172798F2-78C7-4AFB-8F28-B713CFA8E125}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{172798F2-78C7-4AFB-8F28-B713CFA8E125}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

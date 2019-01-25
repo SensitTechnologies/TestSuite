@@ -159,6 +159,7 @@
     <Compile Include="Calculations\LeastSquaresFitLinear.cs" />
     <Compile Include="Communication\SCPI.cs" />
     <Compile Include="Communication\VisaDevice.cs" />
+    <Compile Include="Devices\GasConcentrationDevice.cs" />
     <Compile Include="Devices\Manual.cs" />
     <Compile Include="Dut\AnalogSensor.cs" />
     <Compile Include="Controls\UserCustomStep.cs">
@@ -174,7 +175,7 @@
       <DependentUpon>TestSTPTool.edmx</DependentUpon>
     </Compile>
     <Compile Include="Devices\Keysight_34972A.cs" />
-    <Compile Include="Devices\MFC.cs" />
+    <Compile Include="Devices\ColeParmerMFC.cs" />
     <Compile Include="Dut\Simulator.cs" />
     <Compile Include="Email\Email.cs" />
     <Compile Include="Exceptions\DeviceExceptions.cs" />

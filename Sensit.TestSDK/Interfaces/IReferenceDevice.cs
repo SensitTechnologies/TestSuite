@@ -65,6 +65,17 @@ namespace Sensit.TestSDK.Interfaces
 	}
 
 	/// <summary>
+	/// Device that measures gas concentration.
+	/// </summary>
+	public interface IGasConcentrationReference : IReferenceDevice
+	{
+		/// <summary>
+		/// Percent gas concentration.
+		/// </summary>
+		double Concentration { get; }
+	}
+
+	/// <summary>
 	/// Device that measures gas mass flow.
 	/// </summary>
 	/// <remarks>

@@ -13,3 +13,5 @@
 /Sensit.App.Calibration/obj
 /Sensit.App.Calibration/*.user
 /Sensit.TestSDK/*.user
+/Sensit.App.GasConcentration/obj
+/Sensit.App.GasConcentration/bin
