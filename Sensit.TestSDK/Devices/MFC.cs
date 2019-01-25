@@ -1,7 +1,7 @@
 ﻿using System;
-using System.IO.Ports;                  // serial port access
+using System.IO.Ports;					// serial port access
 using Sensit.TestSDK.Calculations;		// define units of measure
-using Sensit.TestSDK.Interfaces;        // define control, serial, mass flow interfaces
+using Sensit.TestSDK.Interfaces;		// define control, serial, mass flow interfaces
 using Sensit.TestSDK.Exceptions;		// define device exceptions
 using System.Collections.Generic;		// dictionary
 
@@ -100,7 +100,7 @@ namespace Sensit.TestSDK.Devices
 				// "*@=@" sets the device into streaming mode.
 				_serialPort.WriteLine(Command.SetAddress + '@');
 			}
-			catch (Exception ex)
+			catch (SystemException ex)
 			{
 				throw new DevicePortException("Could not set mass flow controller streaming mode:"
 					+ Environment.NewLine + ex.Message);
@@ -133,10 +133,16 @@ namespace Sensit.TestSDK.Devices
 				string gasRequest = GasCommand[GasSelection].Code;
 				if (string.Compare(gasResult, gasRequest) != 0)
 				{
-					throw new Exception("Value returned from instrument was incorrect.");
+					throw new DeviceCommunicationException("Could not write gas selection to mass flow controller."
+						+ Environment.NewLine + "Value returned from instrument was incorrect.");
 				}
 			}
-			catch (Exception ex)
+			catch (InvalidOperationException ex)
+			{
+				throw new DevicePortException("Could not write gas selection to mass flow controller."
+					+ Environment.NewLine + ex.Message);
+			}
+			catch (TimeoutException ex)
 			{
 				throw new DeviceCommunicationException("Could not write gas selection to mass flow controller."
 					+ Environment.NewLine + ex.Message);
@@ -168,10 +174,16 @@ namespace Sensit.TestSDK.Devices
 				// Check the address.
 				if (string.Compare(words[0], ADDRESS.ToString()) != 0)
 				{
-					throw new Exception("Value returned from instrument was incorrect.");
+					throw new DeviceCommunicationException("Could not update mass flow controller address"
+						+ Environment.NewLine + "Value returned from instrument was incorrect.");
 				}
 			}
-			catch (Exception ex)
+			catch (InvalidOperationException ex)
+			{
+				throw new DevicePortException("Could not update mass flow controller address."
+					+ Environment.NewLine + ex.Message);
+			}
+			catch (TimeoutException ex)
 			{
 				throw new DeviceCommunicationException("Could not update mass flow controller address."
 					+ Environment.NewLine + ex.Message);
@@ -208,7 +220,7 @@ namespace Sensit.TestSDK.Devices
 				// Set polling mode (by assigning a device address).
 				WriteAddress();
 			}
-			catch (Exception ex)
+			catch (SystemException ex)
 			{
 				throw new DevicePortException("Could not open mass flow controller's serial port."
 					+ Environment.NewLine + ex.Message);
@@ -286,7 +298,8 @@ namespace Sensit.TestSDK.Devices
 				// Check the address.
 				if (string.Compare(words[0], ADDRESS.ToString()) != 0)
 				{
-					throw new Exception("Incorrect device ID");
+					throw new DeviceCommunicationException("Could not read from mass flow controller."
+					+ Environment.NewLine + "Incorrect device ID");
 				}
 
 				// Figure out which is which and update class properties.
@@ -299,9 +312,14 @@ namespace Sensit.TestSDK.Devices
 				//Setpoint = Convert.ToSingle(words[5]);
 				//GasSelection = words[6];
 			}
-			catch (Exception ex)
+			catch (InvalidOperationException ex)
 			{
-				throw new DeviceCommandFailedException("Could not read from mass flow controller."
+				throw new DevicePortException("Could not read from mass flow controller."
+					+ Environment.NewLine + ex.Message);
+			}
+			catch (TimeoutException ex)
+			{
+				throw new DeviceCommunicationException("Could not read from mass flow controller."
 					+ Environment.NewLine + ex.Message);
 			}
 		}
@@ -329,12 +347,18 @@ namespace Sensit.TestSDK.Devices
 				// Check the setpoint.
 				if (Convert.ToSingle(words[5]).Equals(MassFlowSetpoint) == false)
 				{
-					throw new Exception("Value read from instrument was incorrect.");
+					throw new DeviceCommunicationException("Could not write setpoint to mass flow controller."
+						+ Environment.NewLine + "Value read from instrument was incorrect.");
 				}
 			}
-			catch (Exception ex)
+			catch (InvalidOperationException ex)
 			{
-				throw new DeviceCommandFailedException("Could not write setpoint to mass flow controller."
+				throw new DevicePortException("Could not write setpoint to mass flow controller."
+					+ Environment.NewLine + ex.Message);
+			}
+			catch (TimeoutException ex)
+			{
+				throw new DeviceCommunicationException("Could not write setpoint to mass flow controller."
 					+ Environment.NewLine + ex.Message);
 			}
 		}
@@ -366,9 +390,20 @@ namespace Sensit.TestSDK.Devices
 				// Return the setpoint in case the user wants it.
 				return MassFlowSetpoint;
 			}
-			catch (Exception ex)
+			catch (InvalidOperationException ex)
 			{
-				throw new DeviceCommandFailedException("Could not read setpoint from mass flow controller."
+				throw new DevicePortException("Could not read setpoint from mass flow controller."
+					+ Environment.NewLine + ex.Message);
+			}
+			catch (TimeoutException ex)
+			{
+				throw new DeviceCommunicationException("Could not read setpoint from mass flow controller."
+					+ Environment.NewLine + ex.Message);
+			}
+			catch (FormatException ex)
+			{
+				throw new DeviceCommunicationException("Could not read setpoint from mass flow controller."
+					+ Environment.NewLine + "Incorrect response."
 					+ Environment.NewLine + ex.Message);
 			}
 		}

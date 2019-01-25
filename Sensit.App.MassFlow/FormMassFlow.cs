@@ -99,7 +99,7 @@ namespace Sensit.App.MassFlow
 				catch (Exception ex)
 				{
 					// Alert the user.
-					MessageBox.Show(ex.Message, "Error");
+					MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
 
 					// Undo the user action.
 					radioButtonClosed.Checked = true;
@@ -160,7 +160,7 @@ namespace Sensit.App.MassFlow
 			catch (Exception ex)
 			{
 				// If an error occurs, alert the user.
-				MessageBox.Show(ex.Message, "Error");
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
 				toolStripStatusLabel1.Text = ex.Message;
 			}
 		}
@@ -184,13 +184,13 @@ namespace Sensit.App.MassFlow
 			{
 				// If the user didn't enter a valid number, prompt the user.
 				MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine +
-					"Did you type a valid setpoint?", "Error");
+					"Did you type a valid setpoint?", ex.GetType().Name.ToString());
 				toolStripStatusLabel1.Text = ex.Message;
 			}
 			catch (Exception ex)
 			{
 				// If an error occurs, alert the user.
-				MessageBox.Show(ex.Message, "Error");
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
 				toolStripStatusLabel1.Text = ex.Message;
 			}
 		}
@@ -215,7 +215,7 @@ namespace Sensit.App.MassFlow
 			catch (Exception ex)
 			{
 				// If an error occurs, alert the user.
-				MessageBox.Show(ex.Message, "Error");
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
 				toolStripStatusLabel1.Text = ex.Message;
 			}
 		}
