@@ -55,7 +55,7 @@
 			this.labelUnitSetpoint = new System.Windows.Forms.Label();
 			this.labelGas = new System.Windows.Forms.Label();
 			this.comboBoxGas = new System.Windows.Forms.ComboBox();
-			this.buttonWrite = new System.Windows.Forms.Button();
+			this.buttonWriteSP = new System.Windows.Forms.Button();
 			this.buttonWriteGas = new System.Windows.Forms.Button();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -144,6 +144,7 @@
 			this.groupBoxMassFlow.Controls.Add(this.tableLayoutPanel1);
 			this.groupBoxMassFlow.Controls.Add(this.statusStrip1);
 			this.groupBoxMassFlow.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBoxMassFlow.Enabled = false;
 			this.groupBoxMassFlow.Location = new System.Drawing.Point(0, 84);
 			this.groupBoxMassFlow.Name = "groupBoxMassFlow";
 			this.groupBoxMassFlow.Size = new System.Drawing.Size(334, 227);
@@ -178,7 +179,7 @@
 			this.tableLayoutPanel1.Controls.Add(this.labelUnitSetpoint, 2, 5);
 			this.tableLayoutPanel1.Controls.Add(this.labelGas, 0, 4);
 			this.tableLayoutPanel1.Controls.Add(this.comboBoxGas, 1, 4);
-			this.tableLayoutPanel1.Controls.Add(this.buttonWrite, 3, 5);
+			this.tableLayoutPanel1.Controls.Add(this.buttonWriteSP, 3, 5);
 			this.tableLayoutPanel1.Controls.Add(this.buttonWriteGas, 3, 4);
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 19);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -266,7 +267,6 @@
 			// 
 			// buttonReadAll
 			// 
-			this.buttonReadAll.Enabled = false;
 			this.buttonReadAll.Location = new System.Drawing.Point(239, 3);
 			this.buttonReadAll.Name = "buttonReadAll";
 			this.buttonReadAll.Size = new System.Drawing.Size(75, 23);
@@ -326,7 +326,6 @@
 			// 
 			// textBoxSetpoint
 			// 
-			this.textBoxSetpoint.Enabled = false;
 			this.textBoxSetpoint.Location = new System.Drawing.Point(90, 139);
 			this.textBoxSetpoint.Name = "textBoxSetpoint";
 			this.textBoxSetpoint.Size = new System.Drawing.Size(100, 20);
@@ -354,27 +353,24 @@
 			// 
 			// comboBoxGas
 			// 
-			this.comboBoxGas.Enabled = false;
 			this.comboBoxGas.FormattingEnabled = true;
 			this.comboBoxGas.Location = new System.Drawing.Point(90, 110);
 			this.comboBoxGas.Name = "comboBoxGas";
 			this.comboBoxGas.Size = new System.Drawing.Size(100, 21);
 			this.comboBoxGas.TabIndex = 16;
 			// 
-			// buttonWrite
+			// buttonWriteSP
 			// 
-			this.buttonWrite.Enabled = false;
-			this.buttonWrite.Location = new System.Drawing.Point(239, 139);
-			this.buttonWrite.Name = "buttonWrite";
-			this.buttonWrite.Size = new System.Drawing.Size(75, 23);
-			this.buttonWrite.TabIndex = 10;
-			this.buttonWrite.Text = "Write SP";
-			this.buttonWrite.UseVisualStyleBackColor = true;
-			this.buttonWrite.Click += new System.EventHandler(this.buttonWrite_Click);
+			this.buttonWriteSP.Location = new System.Drawing.Point(239, 139);
+			this.buttonWriteSP.Name = "buttonWriteSP";
+			this.buttonWriteSP.Size = new System.Drawing.Size(75, 23);
+			this.buttonWriteSP.TabIndex = 10;
+			this.buttonWriteSP.Text = "Write SP";
+			this.buttonWriteSP.UseVisualStyleBackColor = true;
+			this.buttonWriteSP.Click += new System.EventHandler(this.buttonWrite_Click);
 			// 
 			// buttonWriteGas
 			// 
-			this.buttonWriteGas.Enabled = false;
 			this.buttonWriteGas.Location = new System.Drawing.Point(239, 110);
 			this.buttonWriteGas.Name = "buttonWriteGas";
 			this.buttonWriteGas.Size = new System.Drawing.Size(75, 23);
@@ -450,7 +446,7 @@
 		private System.Windows.Forms.Label labelSetpoint;
 		private System.Windows.Forms.TextBox textBoxSetpoint;
 		private System.Windows.Forms.Button buttonReadAll;
-		private System.Windows.Forms.Button buttonWrite;
+		private System.Windows.Forms.Button buttonWriteSP;
 		private System.Windows.Forms.Label labelUnitPressure;
 		private System.Windows.Forms.Label labelUnitTemperature;
 		private System.Windows.Forms.Label labelUnitVolumetricFlow;

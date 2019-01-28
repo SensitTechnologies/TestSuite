@@ -70,11 +70,7 @@ namespace Sensit.App.MassFlow
 
 						// Update the user interface.
 						comboBoxSerialPort.Enabled = false;
-						comboBoxGas.Enabled = true;
-						textBoxSetpoint.Enabled = true;
-						buttonReadAll.Enabled = true;
-						buttonWriteGas.Enabled = true;
-						buttonWrite.Enabled = true;
+						groupBoxMassFlow.Enabled = true;
 						toolStripStatusLabel1.Text = "Port open.";
 					}
 					else if (((RadioButton)sender) == radioButtonClosed)
@@ -87,11 +83,7 @@ namespace Sensit.App.MassFlow
 
 						// Update user interface.
 						comboBoxSerialPort.Enabled = true;
-						comboBoxGas.Enabled = false;
-						textBoxSetpoint.Enabled = false;
-						buttonReadAll.Enabled = false;
-						buttonWriteGas.Enabled = false;
-						buttonWrite.Enabled = false;
+						groupBoxMassFlow.Enabled = false;
 						toolStripStatusLabel1.Text = "Port closed.";
 					}
 				}
@@ -166,7 +158,37 @@ namespace Sensit.App.MassFlow
 		}
 
 		/// <summary>
-		/// When the "Write" button is clicked, send the setpoint to the mass flow controller.
+		/// When the "Write Gas" button is clicked, send the gas selection to the mass flow controller.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void buttonWriteGas_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// Alert the user.
+				toolStripStatusLabel1.Text = "Writing gas selection...";
+
+				// Find the selected gas.
+				Enum.TryParse(comboBoxGas.Text, out Gas gas);
+
+				// Send the gas selection to the mass flow controller.
+				_massFlowController.GasSelection = gas;
+				_massFlowController.Configure();
+
+				// Alert the user.
+				toolStripStatusLabel1.Text = "Success.";
+			}
+			catch (Exception ex)
+			{
+				// If an error occurs, alert the user.
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
+				toolStripStatusLabel1.Text = ex.Message;
+			}
+		}
+
+		/// <summary>
+		/// When the "Write SP" button is clicked, send the setpoint to the mass flow controller.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -179,6 +201,9 @@ namespace Sensit.App.MassFlow
 
 				// Write setpoint to the mass flow controller.
 				_massFlowController.WriteMassFlowSetpoint(setpoint);
+
+				// Alert the user.
+				toolStripStatusLabel1.Text = "Success.";
 			}
 			catch (FormatException ex)
 			{
@@ -186,31 +211,6 @@ namespace Sensit.App.MassFlow
 				MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine +
 					"Did you type a valid setpoint?", ex.GetType().Name.ToString());
 				toolStripStatusLabel1.Text = ex.Message;
-			}
-			catch (Exception ex)
-			{
-				// If an error occurs, alert the user.
-				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
-				toolStripStatusLabel1.Text = ex.Message;
-			}
-		}
-
-		private void buttonWriteGas_Click(object sender, EventArgs e)
-		{
-			// Find the selected gas.
-			Enum.TryParse(comboBoxGas.Text, out Gas gas);
-
-			try
-			{
-				// Alert the user.
-				toolStripStatusLabel1.Text = "Writing gas selection...";
-
-				// Send the gas selection to the mass flow controller.
-				_massFlowController.GasSelection = gas;
-				_massFlowController.Configure();
-
-				// Alert the user.
-				toolStripStatusLabel1.Text = "Success.";
 			}
 			catch (Exception ex)
 			{
