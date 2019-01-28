@@ -79,5 +79,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sensit.TestSDK\Sensit.TestSDK.csproj">
+      <Project>{A147B18E-A3F8-4B5D-A963-6A4E8189AB88}</Project>
+      <Name>Sensit.TestSDK</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
