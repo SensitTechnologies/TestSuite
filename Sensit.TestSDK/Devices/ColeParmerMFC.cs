@@ -343,12 +343,13 @@ namespace Sensit.TestSDK.Devices
 				// Split the string using spaces to separate each word.
 				char[] separators = new char[] { ' ' };
 				string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+				float returnedValue = Convert.ToSingle(words[5]);
 
 				// Check the setpoint.
-				if (Convert.ToSingle(words[5]).Equals(MassFlowSetpoint) == false)
+				if (returnedValue - MassFlowSetpoint > double.Epsilon)
 				{
 					throw new DeviceCommunicationException("Could not write setpoint to mass flow controller."
-						+ Environment.NewLine + "Value read from instrument was incorrect.");
+						+ Environment.NewLine + "Value read from instrument (" + returnedValue.ToString() + ") was incorrect.");
 				}
 			}
 			catch (InvalidOperationException ex)
