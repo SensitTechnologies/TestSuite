@@ -72,7 +72,7 @@ namespace Sensit.TestSDK.Interfaces
 		/// <summary>
 		/// Percent gas concentration.
 		/// </summary>
-		double Concentration { get; }
+		double AnalyteConcentration { get; }
 	}
 
 	/// <summary>

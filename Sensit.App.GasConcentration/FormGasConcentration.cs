@@ -10,8 +10,9 @@ namespace Sensit.App.GasConcentration
 	{
 		// mass flow controllers
 		// You need two to mix gasses and control gas concentration.
-		private ColeParmerMFC _mfcGasUnderTest = new ColeParmerMFC();
-		private ColeParmerMFC _mfcDilutent = new ColeParmerMFC();
+		private ColeParmerMFC _mfcAnalyte = new ColeParmerMFC();
+		private ColeParmerMFC _mfcDiluent = new ColeParmerMFC();
+		private GasConcentrationDevice _concentrationController;
 
 		/// <summary>
 		/// Runs when the application starts.
@@ -21,22 +22,28 @@ namespace Sensit.App.GasConcentration
 			// Initialize the form.
 			InitializeComponent();
 
+			// This has to be created in the constructor, because it references
+			// non-static objects.
+			_concentrationController = new GasConcentrationDevice(
+				_mfcDiluent, _mfcDiluent, _mfcAnalyte, _mfcAnalyte);
+
 			// Find all available serial ports.
 			foreach (string s in SerialPort.GetPortNames())
 			{
-				comboBoxSerialPortGasUnderTest.Items.Add(s);
-				comboBoxSerialPortDilutent.Items.Add(s);
+				comboBoxAnalytePort.Items.Add(s);
+				comboBoxDiluentPort.Items.Add(s);
 			}
 
 			// Select the most recently used port.
 			// The most recently used port is fetched from application settings.
-			comboBoxSerialPortGasUnderTest.Text = Properties.Settings.Default.PortGasUnderTest;
-			comboBoxSerialPortDilutent.Text = Properties.Settings.Default.PortDilutent;
+			comboBoxAnalytePort.Text = Properties.Settings.Default.PortAnalyte;
+			comboBoxDiluentPort.Text = Properties.Settings.Default.PortDiluent;
 
 			// Populate the Gas combo box.
 			foreach (Gas gas in Enum.GetValues(typeof(Gas)))
 			{
-				comboBoxGas.Items.Add(gas);
+				comboBoxAnalyteGas.Items.Add(gas);
+				comboBoxDiluentGas.Items.Add(gas);
 			}
 		}
 
@@ -70,30 +77,34 @@ namespace Sensit.App.GasConcentration
 						toolStripStatusLabel1.Text = "Opening serial ports...";
 
 						// If both ports are the same, send an error.
-						if (comboBoxSerialPortGasUnderTest.Text.Equals(comboBoxSerialPortDilutent.Text))
+						if (comboBoxAnalytePort.Text.Equals(comboBoxDiluentPort.Text))
 						{
 							throw new ArgumentException("Both ports can't be the same.");
 						}
 
 						// Open the Mass Flow Controllers (and let it know what serial port to use).
-						_mfcGasUnderTest.Open(Properties.Settings.Default.PortGasUnderTest);
-						_mfcDilutent.Open(Properties.Settings.Default.PortDilutent);
+						_mfcAnalyte.Open(Properties.Settings.Default.PortAnalyte);
+						_mfcDiluent.Open(Properties.Settings.Default.PortDiluent);
 
 						// Update the user interface.
-						comboBoxSerialPortGasUnderTest.Enabled = false;
-						comboBoxSerialPortDilutent.Enabled = false;
-						// TODO:  Add other controls here.
+						comboBoxAnalytePort.Enabled = false;
+						comboBoxDiluentPort.Enabled = false;
+						groupBoxMassFlow.Enabled = true;
+						groupBoxGasConcentration.Enabled = true;
+						toolStripStatusLabel1.Text = "Port open.";
 					}
 					else if (((RadioButton)sender) == radioButtonClosed)
 					{
 						// Close the serial port.
-						_mfcGasUnderTest.Close();
-						_mfcDilutent.Close();
+						_mfcAnalyte.Close();
+						_mfcDiluent.Close();
 
 						// Update the user interface.
-						comboBoxSerialPortGasUnderTest.Enabled = true;
-						comboBoxSerialPortDilutent.Enabled = true;
-						// TODO:  Add other controls here.
+						comboBoxAnalytePort.Enabled = true;
+						comboBoxDiluentPort.Enabled = true;
+						groupBoxMassFlow.Enabled = false;
+						groupBoxGasConcentration.Enabled = false;
+						toolStripStatusLabel1.Text = "Port closed.";
 					}
 				}
 				// If an error occurs...
@@ -116,7 +127,7 @@ namespace Sensit.App.GasConcentration
 		private void comboBoxSerialPortGasUnderTest_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			// Save the serial port selection in the application settings.
-			Properties.Settings.Default.PortGasUnderTest = comboBoxSerialPortGasUnderTest.Text;
+			Properties.Settings.Default.PortAnalyte = comboBoxAnalytePort.Text;
 		}
 
 		/// <summary>
@@ -124,10 +135,10 @@ namespace Sensit.App.GasConcentration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void comboBoxSerialPortDilutent_SelectedIndexChanged(object sender, EventArgs e)
+		private void comboBoxSerialPortDiluent_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			// Save the serial port selection in the application settings.
-			Properties.Settings.Default.PortDilutent = comboBoxSerialPortDilutent.Text;
+			Properties.Settings.Default.PortDiluent = comboBoxDiluentPort.Text;
 		}
 
 		/// <summary>
@@ -138,12 +149,217 @@ namespace Sensit.App.GasConcentration
 		private void FormGasConcentration_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			// Close the mass flow controllers.
-			_mfcDilutent.Close();
-			_mfcGasUnderTest.Close();
+			_mfcDiluent.Close();
+			_mfcAnalyte.Close();
 
 			// Store the current values of the application settings properties.
 			// If this call is omitted, then the settings will not be saved after the application quits.
 			Properties.Settings.Default.Save();
+		}
+
+		/// <summary>
+		/// When the "Update" button is clicked, fetch readings/settings from the mass flow controllers.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void buttonReadAll_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// Alert the user.
+				toolStripStatusLabel1.Text = "Reading from mass flow controllers...";
+
+				// Read status from the mass flow controllers.
+				_mfcAnalyte.Read();
+				_mfcDiluent.Read();
+
+				// Update the form.
+				textBoxAnalytePressure.Text = _mfcAnalyte.Pressure.ToString();
+				textBoxDiluentPressure.Text = _mfcDiluent.Pressure.ToString();
+				textBoxAnalyteTemperature.Text = _mfcAnalyte.Temperature.ToString();
+				textBoxDiluentTemperature.Text = _mfcDiluent.Temperature.ToString();
+				textBoxAnalyteVolumetricFlow.Text = _mfcAnalyte.VolumeFlow.ToString();
+				textBoxDiluentVolumetricFlow.Text = _mfcDiluent.VolumeFlow.ToString();
+				textBoxAnalyteMassFlow.Text = _mfcAnalyte.MassFlow.ToString();
+				textBoxDiluentMassFlow.Text = _mfcDiluent.MassFlow.ToString();
+				textBoxAnalyteSetpoint.Text = _mfcAnalyte.MassFlowSetpoint.ToString();
+				textBoxDiluentSetpoint.Text = _mfcDiluent.MassFlowSetpoint.ToString();
+				comboBoxAnalyteGas.Text = _mfcAnalyte.GasSelection.ToString();
+				comboBoxDiluentGas.Text = _mfcDiluent.GasSelection.ToString();
+				toolStripStatusLabel1.Text = "Success.";
+			}
+			catch (Exception ex)
+			{
+				// If an error occurs, alert the user.
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
+				toolStripStatusLabel1.Text = ex.Message;
+			}
+		}
+
+		/// <summary>
+		/// When the "Write Gas" button is clicked, send the gas selection to the mass flow controller.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void buttonWriteGas_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// Alert the user.
+				toolStripStatusLabel1.Text = "Writing gas selections...";
+
+				// Find the selected gas.
+				Enum.TryParse(comboBoxAnalyteGas.Text, out Gas analyteGas);
+				Enum.TryParse(comboBoxDiluentGas.Text, out Gas diluentGas);
+
+				// Send the gas selection to the mass flow controller.
+				_mfcAnalyte.GasSelection = analyteGas;
+				_mfcDiluent.GasSelection = diluentGas;
+				_mfcAnalyte.Configure();
+				_mfcDiluent.Configure();
+
+				// Alert the user.
+				toolStripStatusLabel1.Text = "Success.";
+			}
+			catch (Exception ex)
+			{
+				// If an error occurs, alert the user.
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
+				toolStripStatusLabel1.Text = ex.Message;
+			}
+		}
+
+		/// <summary>
+		/// When the "Write SP" button is clicked, send the setpoint to the mass flow controller.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void buttonWrite_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// Convert the setpoints to numbers.
+				double analyteSetpoint = Convert.ToDouble(textBoxAnalyteSetpoint.Text);
+				double diluentSetpoint = Convert.ToDouble(textBoxDiluentSetpoint.Text);
+
+				// Write setpoints to mass flow controllers.
+				_mfcAnalyte.WriteMassFlowSetpoint(analyteSetpoint);
+				_mfcDiluent.WriteMassFlowSetpoint(diluentSetpoint);
+
+				// Alert the user.
+				toolStripStatusLabel1.Text = "Success.";
+			}
+			catch (FormatException ex)
+			{
+				// If the user didn't enter a valid number, prompt the user.
+				MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine +
+					"Did you type a valid setpoint?", ex.GetType().Name.ToString());
+				toolStripStatusLabel1.Text = ex.Message;
+			}
+			catch (Exception ex)
+			{
+				// If an error occurs, alert the user.
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
+				toolStripStatusLabel1.Text = ex.Message;
+			}
+		}
+
+		private void buttonReadConcentration_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// Fetch new values from the mass flow controllers.
+				_concentrationController.Read();
+
+				// Update the form.
+				textBoxGasConcentration.Text = _concentrationController.AnalyteConcentration.ToString();
+				textBoxGasConcentrationSetpoint.Text = _concentrationController.AnalyteConcentrationSetpoint.ToString();
+				textBoxMassFlowSetpoint.Text = _concentrationController.MassFlowSetpoint.ToString();
+				textBoxAnalyteBottleConcentration.Text = _concentrationController.AnalyteBottleConcentration.ToString();
+			}
+			catch (Exception ex)
+			{
+				// If an error occurs, alert the user.
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
+				toolStripStatusLabel1.Text = ex.Message;
+			}
+		}
+
+		private void buttonWriteGasConcentrationSetpoint_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// Convert the setpoint to a number.
+				double setpoint = Convert.ToDouble(textBoxGasConcentrationSetpoint.Text);
+
+				// Write the setpoint property.
+				_concentrationController.AnalyteConcentrationSetpoint = setpoint;
+				_concentrationController.WriteMassFlowSetpoint();
+			}
+			catch (FormatException ex)
+			{
+				// If the user didn't enter a valid number, prompt the user.
+				MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine +
+					"Did you type a valid setpoint?", ex.GetType().Name.ToString());
+				toolStripStatusLabel1.Text = ex.Message;
+			}
+			catch (Exception ex)
+			{
+				// If an error occurs, alert the user.
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
+				toolStripStatusLabel1.Text = ex.Message;
+			}
+		}
+
+		private void buttonWriteMassFlowSetpoint_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// Convert the setpoint to a number.
+				double setpoint = Convert.ToDouble(textBoxMassFlowSetpoint.Text);
+
+				// Write the setpoint to the mass flow controllers.
+				_concentrationController.WriteMassFlowSetpoint(setpoint);
+			}
+			catch (FormatException ex)
+			{
+				// If the user didn't enter a valid number, prompt the user.
+				MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine +
+					"Did you type a valid setpoint?", ex.GetType().Name.ToString());
+				toolStripStatusLabel1.Text = ex.Message;
+			}
+			catch (Exception ex)
+			{
+				// If an error occurs, alert the user.
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
+				toolStripStatusLabel1.Text = ex.Message;
+			}
+		}
+
+		private void buttonWriteAnalyteBottleConcentration_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// Convert the concentration to a number.
+				double concentration = Convert.ToDouble(textBoxAnalyteBottleConcentration.Text);
+
+				// Pass concentration to the controllers.
+				_concentrationController.AnalyteBottleConcentration = concentration;
+				_concentrationController.WriteMassFlowSetpoint();
+			}
+			catch (FormatException ex)
+			{
+				// If the user didn't enter a valid number, prompt the user.
+				MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine +
+					"Did you type a valid setpoint?", ex.GetType().Name.ToString());
+				toolStripStatusLabel1.Text = ex.Message;
+			}
+			catch (Exception ex)
+			{
+				// If an error occurs, alert the user.
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
+				toolStripStatusLabel1.Text = ex.Message;
+			}
 		}
 	}
 }

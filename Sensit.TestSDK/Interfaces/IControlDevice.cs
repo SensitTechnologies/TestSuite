@@ -1,6 +1,4 @@
-﻿using Sensit.TestSDK.Calculations;      // define unit of measure
-
-namespace Sensit.TestSDK.Interfaces
+﻿namespace Sensit.TestSDK.Interfaces
 {
 	/// <summary>
 	/// What the device should try to do.
@@ -31,45 +29,23 @@ namespace Sensit.TestSDK.Interfaces
 	/// <summary>
 	/// Device that controls gas concentration.
 	/// </summary>
-	public interface IGasConcentrationController : IMassFlowController, IControlDevice
+	public interface IGasConcentrationController : IControlDevice
 	{
 		/// <summary>
 		/// Concentration of the gas under test before dilution.
 		/// </summary>
-		double GasBottleConcentration { get; set; }
+		double AnalyteBottleConcentration { get; set; }
 
 		/// <summary>
 		/// Value the device should try to achieve when in Control mode.
 		/// </summary>
-		double GasConcentrationSetpoint { get; set; }
+		double AnalyteConcentrationSetpoint { get; set; }
 
-		/// <summary>
-		/// Write the setpoint to the device.
-		/// </summary>
-		/// <remarks>
-		/// Some processes need to control multiple variables at a time,
-		/// but only one variable needs to vary.
-		/// So this interface supports sending each setpoint individually.
-		/// </remarks>
-		void WriteGasConcentrationSetpoint();
-
-		/// <summary>
-		/// Write the setpoint to the device.
-		/// </summary>
-		/// <remarks>
-		/// For convenience, this method sets the property and writes it to the device.
-		/// So we can write one line of code instead of two.
-		/// </remarks>
-		/// <param name="setpoint"></param>
-		void WriteGasConcentrationSetpoint(double setpoint);
-
-		/// <summary>
-		/// Read the setpoint from the device.
-		/// </summary>
-		/// <remarks>
-		/// For convenience, this method updates the property and returns the value.
-		/// </remarks>
-		double ReadGasConcentationSetpoint();
+		// There is no method to read/write analyte concentration to the device,
+		// because really we're writing mass flow instead.
+		// void WriteAnalyteConcentrationSetpoint();
+		// void WriteAnalyteConcentrationSetpoint(double setpoint);
+		// double ReadAnalyteConcentationSetpoint();
 	}
 
 	/// <summary>

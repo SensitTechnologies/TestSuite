@@ -26,24 +26,24 @@ namespace Sensit.App.GasConcentration.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string PortGasUnderTest {
+        public string PortAnalyte {
             get {
-                return ((string)(this["PortGasUnderTest"]));
+                return ((string)(this["PortAnalyte"]));
             }
             set {
-                this["PortGasUnderTest"] = value;
+                this["PortAnalyte"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string PortDilutent {
+        public string PortDiluent {
             get {
-                return ((string)(this["PortDilutent"]));
+                return ((string)(this["PortDiluent"]));
             }
             set {
-                this["PortDilutent"] = value;
+                this["PortDiluent"] = value;
             }
         }
     }

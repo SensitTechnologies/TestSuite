@@ -1,45 +1,87 @@
-﻿using System;
-using Sensit.TestSDK.Interfaces;
+﻿using Sensit.TestSDK.Calculations;
 using Sensit.TestSDK.Exceptions;
+using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.TestSDK.Devices
 {
 	/// <summary>
 	/// Use two Mass Flow Controllers to mix two gasses.
 	/// </summary>
-	public class GasConcentrationDevice : IGasConcentrationReference, IGasConcentrationController
+	public class GasConcentrationDevice : IGasConcentrationReference, IGasConcentrationController, IMassFlowReference, IMassFlowController
 	{
-		private IMassFlowController _gasUnderTestController;
+		private IMassFlowController _analyteController;
 		private IMassFlowController _dilutentController;
-		private IMassFlowReference _gasUnderTestReference;
+		private IMassFlowReference _analyteReference;
 		private IMassFlowReference _dilutentReference;
 
-		public double Concentration => _gasUnderTestReference.MassFlow / MassFlowSetpoint * GasBottleConcentration * 100.0;
+		private double _analyteBottleConcentration;
+		private double _massFlowSetpoint;
+		private double _analyteConcentrationSetpoint;
 
-		public double GasBottleConcentration { get; set; }
+		public UnitOfMeasure.Flow FlowUnit { get; set; } = UnitOfMeasure.Flow.CubicFeetPerMinute;
 
-		public double MassFlowSetpoint { get; set; }
+		public Gas GasSelection { get; set; } = Gas.Air;
 
-		public double GasConcentrationSetpoint
+		public double MassFlow { get; private set; }
+
+		/// <summary>
+		/// Desired total mass flow of mixed gas.
+		/// </summary>
+		public double MassFlowSetpoint
 		{
-			// This equation results from solving the setter's equation "for gas under test" for value.
-			get => _gasUnderTestController.MassFlowSetpoint / MassFlowSetpoint * GasBottleConcentration * 100.0;
+			get => _massFlowSetpoint;
+			set
+			{
+				// Check for valid value.
+				if (value < 0.0)
+				{
+					throw new DeviceOutOfRangeException("Total Flow Setpoint must be greater than or equal to 0.0.");
+				}
+
+				_massFlowSetpoint = value;
+			}
+		}
+
+		/// <summary>
+		/// Concentration of analyte gas cylinder [%V].
+		/// </summary>
+		public double AnalyteBottleConcentration
+		{
+			get => _analyteBottleConcentration;
 			set
 			{
 				// Check for valid value.
 				if ((value < 0.0) || (value > 100.0))
 				{
-					throw new DeviceOutOfRangeException("Gas Concentration Setpoint must be between 0.0 and 100.0 %."
-						+ Environment.NewLine + "Value was:  " + value.ToString());
+					throw new DeviceOutOfRangeException("Analyte Bottle Concentration must be between 0.0% and 100.%, inclusive.");
 				}
 
-				// For gas under test:  mass Flow = desired flow rate / original concentration.
-				_gasUnderTestController.MassFlowSetpoint = MassFlowSetpoint * (value / 100 / GasBottleConcentration);
-
-				// For dilutent:  mass flow = desired flow - gas under test flow.
-				_dilutentController.MassFlowSetpoint = MassFlowSetpoint - _gasUnderTestController.MassFlowSetpoint;
+				_analyteBottleConcentration = value;
 			}
 		}
+
+		/// <summary>
+		/// Desired analyte concentration in mixed gas [%V].
+		/// </summary>
+		public double AnalyteConcentrationSetpoint
+		{
+			get => _analyteConcentrationSetpoint;
+			set
+			{
+				// Check for valid value.
+				if ((value < 0.0) || (value > 100.0))
+				{
+					throw new DeviceOutOfRangeException("Gas Concentration Setpoint must be between 0.0% and 100.0%, inclusive.");
+				}
+
+				_analyteConcentrationSetpoint = value;
+			}
+		}
+
+		/// <summary>
+		/// Actual analyte concentration [%V] in mixed gas (calculated from mass flow controllers' measured flows).
+		/// </summary>
+		public double AnalyteConcentration { get; private set; }
 
 		/// <summary>
 		/// Constructor
@@ -59,54 +101,59 @@ namespace Sensit.TestSDK.Devices
 		{
 			_dilutentController = dilutentController;
 			_dilutentReference = dilutentReference;
-			_gasUnderTestController = gasUnderTestController;
-			_gasUnderTestReference = gasUnderTestReference;
+			_analyteController = gasUnderTestController;
+			_analyteReference = gasUnderTestReference;
 		}
 
 		public void Configure()
 		{
 			_dilutentReference.Configure();
-			_gasUnderTestReference.Configure();
-		}
-
-		public void Read()
-		{
-			_dilutentReference.Read();
-			_gasUnderTestReference.Read();
-		}
-
-		public double ReadGasConcentationSetpoint()
-		{
-			// Read the mass flows of each gas.
-			_gasUnderTestController.ReadMassFlowSetpoint();
-			_dilutentController.ReadMassFlowSetpoint();
-
-			return GasConcentrationSetpoint;
+			_analyteReference.Configure();
 		}
 
 		public void SetControlMode(ControlMode mode)
 		{
 			_dilutentController.SetControlMode(mode);
-			_gasUnderTestController.SetControlMode(mode);
+			_analyteController.SetControlMode(mode);
 		}
 
-		public void WriteGasConcentrationSetpoint()
+		public void Read()
 		{
-			_dilutentController.WriteMassFlowSetpoint();
-			_gasUnderTestController.WriteMassFlowSetpoint();
+			_dilutentReference.Read();
+			_analyteReference.Read();
+
+			// Calculate analyte concentration.
+			if (_massFlowSetpoint.Equals(0.0))
+			{
+				AnalyteConcentration = 0.0;
+			}
+			else
+			{
+				AnalyteConcentration = _analyteReference.MassFlow / _massFlowSetpoint * _analyteBottleConcentration;
+			}
 		}
 
-		public void WriteGasConcentrationSetpoint(double setpoint)
+		public double ReadMassFlowSetpoint()
 		{
-			GasConcentrationSetpoint = setpoint;
+			double dilutentFlow = _dilutentController.ReadMassFlowSetpoint();
+			double analyteFlow = _analyteController.ReadMassFlowSetpoint();
 
-			WriteGasConcentrationSetpoint();
+			_massFlowSetpoint = dilutentFlow + analyteFlow;
+
+			// Return the setpoint in case the user wants it.
+			return _massFlowSetpoint;
 		}
 
 		public void WriteMassFlowSetpoint()
 		{
+			// For analyte:  mass Flow = desired flow rate / original concentration.
+			_analyteController.MassFlowSetpoint = _massFlowSetpoint * (_analyteConcentrationSetpoint / _analyteBottleConcentration);
+
+			// For diluent:  mass flow = desired flow - gas under test flow.
+			_dilutentController.MassFlowSetpoint = MassFlowSetpoint - _analyteController.MassFlowSetpoint;
+
 			_dilutentController.WriteMassFlowSetpoint();
-			_gasUnderTestController.WriteMassFlowSetpoint();
+			_analyteController.WriteMassFlowSetpoint();
 		}
 
 		public void WriteMassFlowSetpoint(double setpoint)
@@ -114,15 +161,6 @@ namespace Sensit.TestSDK.Devices
 			MassFlowSetpoint = setpoint;
 
 			WriteMassFlowSetpoint();
-		}
-
-		public double ReadMassFlowSetpoint()
-		{
-			_dilutentController.ReadMassFlowSetpoint();
-			_gasUnderTestController.ReadMassFlowSetpoint();
-
-			// Return the setpoint in case the user wants it.
-			return MassFlowSetpoint;
 		}
 	}
 }

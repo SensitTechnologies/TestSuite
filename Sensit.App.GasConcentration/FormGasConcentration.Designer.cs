@@ -32,49 +32,69 @@
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.groupBoxSerialPorts = new System.Windows.Forms.GroupBox();
-			this.labelDilutentPort = new System.Windows.Forms.Label();
-			this.labelGasUnderTestPort = new System.Windows.Forms.Label();
+			this.labelDiluentPort = new System.Windows.Forms.Label();
+			this.labelAnalytePort = new System.Windows.Forms.Label();
 			this.radioButtonClosed = new System.Windows.Forms.RadioButton();
 			this.radioButtonOpen = new System.Windows.Forms.RadioButton();
-			this.comboBoxSerialPortDilutent = new System.Windows.Forms.ComboBox();
-			this.comboBoxSerialPortGasUnderTest = new System.Windows.Forms.ComboBox();
+			this.comboBoxDiluentPort = new System.Windows.Forms.ComboBox();
+			this.comboBoxAnalytePort = new System.Windows.Forms.ComboBox();
 			this.groupBoxMassFlow = new System.Windows.Forms.GroupBox();
-			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			this.tableLayoutPanelMassFlow = new System.Windows.Forms.TableLayoutPanel();
 			this.labelSetpoint = new System.Windows.Forms.Label();
 			this.labelGas = new System.Windows.Forms.Label();
 			this.labelMassFlow = new System.Windows.Forms.Label();
 			this.labelVolumetricFlow = new System.Windows.Forms.Label();
 			this.labelTemperature = new System.Windows.Forms.Label();
 			this.labelPressure = new System.Windows.Forms.Label();
-			this.textBoxSetpoint = new System.Windows.Forms.TextBox();
-			this.comboBoxGas = new System.Windows.Forms.ComboBox();
-			this.textBoxMassFlow = new System.Windows.Forms.TextBox();
-			this.textBoxVolumetricFlow = new System.Windows.Forms.TextBox();
-			this.textBoxTemperature = new System.Windows.Forms.TextBox();
-			this.textBoxPressure = new System.Windows.Forms.TextBox();
-			this.labelGasUnderTest = new System.Windows.Forms.Label();
-			this.textBox6 = new System.Windows.Forms.TextBox();
-			this.comboBox1 = new System.Windows.Forms.ComboBox();
-			this.textBox4 = new System.Windows.Forms.TextBox();
-			this.textBox3 = new System.Windows.Forms.TextBox();
-			this.textBox2 = new System.Windows.Forms.TextBox();
-			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.textBoxAnalyteSetpoint = new System.Windows.Forms.TextBox();
+			this.comboBoxAnalyteGas = new System.Windows.Forms.ComboBox();
+			this.textBoxAnalyteMassFlow = new System.Windows.Forms.TextBox();
+			this.textBoxAnalyteVolumetricFlow = new System.Windows.Forms.TextBox();
+			this.textBoxAnalyteTemperature = new System.Windows.Forms.TextBox();
+			this.textBoxAnalytePressure = new System.Windows.Forms.TextBox();
+			this.labelAnalyte = new System.Windows.Forms.Label();
+			this.textBoxDiluentSetpoint = new System.Windows.Forms.TextBox();
+			this.comboBoxDiluentGas = new System.Windows.Forms.ComboBox();
+			this.textBoxDiluentMassFlow = new System.Windows.Forms.TextBox();
+			this.textBoxDiluentVolumetricFlow = new System.Windows.Forms.TextBox();
+			this.textBoxDiluentTemperature = new System.Windows.Forms.TextBox();
+			this.textBoxDiluentPressure = new System.Windows.Forms.TextBox();
 			this.labelUnitSetpoint = new System.Windows.Forms.Label();
 			this.labelUnitMassFlow = new System.Windows.Forms.Label();
 			this.labelUnitVolumetricFlow = new System.Windows.Forms.Label();
 			this.labelUnitTemperature = new System.Windows.Forms.Label();
 			this.labelUnitPressure = new System.Windows.Forms.Label();
-			this.buttonWrite = new System.Windows.Forms.Button();
+			this.buttonWriteSP = new System.Windows.Forms.Button();
 			this.buttonWriteGas = new System.Windows.Forms.Button();
-			this.buttonReadAll = new System.Windows.Forms.Button();
-			this.labelDilutent = new System.Windows.Forms.Label();
+			this.buttonReadMFCAll = new System.Windows.Forms.Button();
+			this.labelDiluent = new System.Windows.Forms.Label();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+			this.groupBoxGasConcentration = new System.Windows.Forms.GroupBox();
+			this.tableLayoutPanelGasConcentration = new System.Windows.Forms.TableLayoutPanel();
+			this.labelGasConcentrationSetpoint = new System.Windows.Forms.Label();
+			this.buttonWriteAnalyteBottleConcentration = new System.Windows.Forms.Button();
+			this.labelUnitGasConcentrationSetpoint = new System.Windows.Forms.Label();
+			this.buttonWriteGasConcentrationSetpoint = new System.Windows.Forms.Button();
+			this.textBoxGasConcentrationSetpoint = new System.Windows.Forms.TextBox();
+			this.textBoxGasConcentration = new System.Windows.Forms.TextBox();
+			this.labelUnitGasConcentration = new System.Windows.Forms.Label();
+			this.labelConcentration = new System.Windows.Forms.Label();
+			this.buttonReadGasConcentrationAll = new System.Windows.Forms.Button();
+			this.labelAnalyteBottleConcentration = new System.Windows.Forms.Label();
+			this.labelMassFlowSetpoint = new System.Windows.Forms.Label();
+			this.textBoxAnalyteBottleConcentration = new System.Windows.Forms.TextBox();
+			this.textBoxMassFlowSetpoint = new System.Windows.Forms.TextBox();
+			this.labelUnitAnalyteBottleConcentration = new System.Windows.Forms.Label();
+			this.labelUnitMassFlowSetpoint = new System.Windows.Forms.Label();
+			this.buttonWriteMassFlowSetpoint = new System.Windows.Forms.Button();
 			this.menuStrip1.SuspendLayout();
 			this.groupBoxSerialPorts.SuspendLayout();
 			this.groupBoxMassFlow.SuspendLayout();
-			this.tableLayoutPanel1.SuspendLayout();
+			this.tableLayoutPanelMassFlow.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
+			this.groupBoxGasConcentration.SuspendLayout();
+			this.tableLayoutPanelGasConcentration.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -83,7 +103,7 @@
             this.fileToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(437, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(439, 24);
 			this.menuStrip1.TabIndex = 0;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -106,37 +126,37 @@
 			// 
 			this.groupBoxSerialPorts.AutoSize = true;
 			this.groupBoxSerialPorts.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.groupBoxSerialPorts.Controls.Add(this.labelDilutentPort);
-			this.groupBoxSerialPorts.Controls.Add(this.labelGasUnderTestPort);
+			this.groupBoxSerialPorts.Controls.Add(this.labelDiluentPort);
+			this.groupBoxSerialPorts.Controls.Add(this.labelAnalytePort);
 			this.groupBoxSerialPorts.Controls.Add(this.radioButtonClosed);
 			this.groupBoxSerialPorts.Controls.Add(this.radioButtonOpen);
-			this.groupBoxSerialPorts.Controls.Add(this.comboBoxSerialPortDilutent);
-			this.groupBoxSerialPorts.Controls.Add(this.comboBoxSerialPortGasUnderTest);
+			this.groupBoxSerialPorts.Controls.Add(this.comboBoxDiluentPort);
+			this.groupBoxSerialPorts.Controls.Add(this.comboBoxAnalytePort);
 			this.groupBoxSerialPorts.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBoxSerialPorts.Location = new System.Drawing.Point(0, 24);
 			this.groupBoxSerialPorts.Name = "groupBoxSerialPorts";
-			this.groupBoxSerialPorts.Size = new System.Drawing.Size(437, 72);
+			this.groupBoxSerialPorts.Size = new System.Drawing.Size(439, 72);
 			this.groupBoxSerialPorts.TabIndex = 1;
 			this.groupBoxSerialPorts.TabStop = false;
 			this.groupBoxSerialPorts.Text = "Serial Ports";
 			// 
-			// labelDilutentPort
+			// labelDiluentPort
 			// 
-			this.labelDilutentPort.AutoSize = true;
-			this.labelDilutentPort.Location = new System.Drawing.Point(133, 15);
-			this.labelDilutentPort.Name = "labelDilutentPort";
-			this.labelDilutentPort.Size = new System.Drawing.Size(43, 13);
-			this.labelDilutentPort.TabIndex = 4;
-			this.labelDilutentPort.Text = "Dilutent";
+			this.labelDiluentPort.AutoSize = true;
+			this.labelDiluentPort.Location = new System.Drawing.Point(133, 15);
+			this.labelDiluentPort.Name = "labelDiluentPort";
+			this.labelDiluentPort.Size = new System.Drawing.Size(40, 13);
+			this.labelDiluentPort.TabIndex = 4;
+			this.labelDiluentPort.Text = "Diluent";
 			// 
-			// labelGasUnderTestPort
+			// labelAnalytePort
 			// 
-			this.labelGasUnderTestPort.AutoSize = true;
-			this.labelGasUnderTestPort.Location = new System.Drawing.Point(6, 16);
-			this.labelGasUnderTestPort.Name = "labelGasUnderTestPort";
-			this.labelGasUnderTestPort.Size = new System.Drawing.Size(82, 13);
-			this.labelGasUnderTestPort.TabIndex = 3;
-			this.labelGasUnderTestPort.Text = "Gas Under Test";
+			this.labelAnalytePort.AutoSize = true;
+			this.labelAnalytePort.Location = new System.Drawing.Point(6, 16);
+			this.labelAnalytePort.Name = "labelAnalytePort";
+			this.labelAnalytePort.Size = new System.Drawing.Size(42, 13);
+			this.labelAnalytePort.TabIndex = 3;
+			this.labelAnalytePort.Text = "Analyte";
 			// 
 			// radioButtonClosed
 			// 
@@ -162,86 +182,88 @@
 			this.radioButtonOpen.UseVisualStyleBackColor = true;
 			this.radioButtonOpen.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
 			// 
-			// comboBoxSerialPortDilutent
+			// comboBoxDiluentPort
 			// 
-			this.comboBoxSerialPortDilutent.FormattingEnabled = true;
-			this.comboBoxSerialPortDilutent.Location = new System.Drawing.Point(133, 32);
-			this.comboBoxSerialPortDilutent.Name = "comboBoxSerialPortDilutent";
-			this.comboBoxSerialPortDilutent.Size = new System.Drawing.Size(121, 21);
-			this.comboBoxSerialPortDilutent.TabIndex = 0;
-			this.comboBoxSerialPortDilutent.SelectedIndexChanged += new System.EventHandler(this.comboBoxSerialPortDilutent_SelectedIndexChanged);
+			this.comboBoxDiluentPort.FormattingEnabled = true;
+			this.comboBoxDiluentPort.Location = new System.Drawing.Point(133, 32);
+			this.comboBoxDiluentPort.Name = "comboBoxDiluentPort";
+			this.comboBoxDiluentPort.Size = new System.Drawing.Size(121, 21);
+			this.comboBoxDiluentPort.TabIndex = 0;
+			this.comboBoxDiluentPort.SelectedIndexChanged += new System.EventHandler(this.comboBoxSerialPortDiluent_SelectedIndexChanged);
 			// 
-			// comboBoxSerialPortGasUnderTest
+			// comboBoxAnalytePort
 			// 
-			this.comboBoxSerialPortGasUnderTest.FormattingEnabled = true;
-			this.comboBoxSerialPortGasUnderTest.Location = new System.Drawing.Point(6, 32);
-			this.comboBoxSerialPortGasUnderTest.Name = "comboBoxSerialPortGasUnderTest";
-			this.comboBoxSerialPortGasUnderTest.Size = new System.Drawing.Size(121, 21);
-			this.comboBoxSerialPortGasUnderTest.TabIndex = 0;
-			this.comboBoxSerialPortGasUnderTest.SelectedIndexChanged += new System.EventHandler(this.comboBoxSerialPortGasUnderTest_SelectedIndexChanged);
+			this.comboBoxAnalytePort.FormattingEnabled = true;
+			this.comboBoxAnalytePort.Location = new System.Drawing.Point(6, 32);
+			this.comboBoxAnalytePort.Name = "comboBoxAnalytePort";
+			this.comboBoxAnalytePort.Size = new System.Drawing.Size(121, 21);
+			this.comboBoxAnalytePort.TabIndex = 0;
+			this.comboBoxAnalytePort.SelectedIndexChanged += new System.EventHandler(this.comboBoxSerialPortGasUnderTest_SelectedIndexChanged);
 			// 
 			// groupBoxMassFlow
 			// 
-			this.groupBoxMassFlow.Controls.Add(this.tableLayoutPanel1);
-			this.groupBoxMassFlow.Controls.Add(this.statusStrip1);
-			this.groupBoxMassFlow.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBoxMassFlow.AutoSize = true;
+			this.groupBoxMassFlow.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.groupBoxMassFlow.Controls.Add(this.tableLayoutPanelMassFlow);
+			this.groupBoxMassFlow.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBoxMassFlow.Enabled = false;
 			this.groupBoxMassFlow.Location = new System.Drawing.Point(0, 96);
 			this.groupBoxMassFlow.Name = "groupBoxMassFlow";
-			this.groupBoxMassFlow.Size = new System.Drawing.Size(437, 265);
+			this.groupBoxMassFlow.Size = new System.Drawing.Size(439, 216);
 			this.groupBoxMassFlow.TabIndex = 3;
 			this.groupBoxMassFlow.TabStop = false;
-			this.groupBoxMassFlow.Text = "Gas Concentration Control";
+			this.groupBoxMassFlow.Text = "Mass Flow";
 			// 
-			// tableLayoutPanel1
+			// tableLayoutPanelMassFlow
 			// 
-			this.tableLayoutPanel1.AutoSize = true;
-			this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutPanel1.ColumnCount = 5;
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel1.Controls.Add(this.labelSetpoint, 0, 6);
-			this.tableLayoutPanel1.Controls.Add(this.labelGas, 0, 5);
-			this.tableLayoutPanel1.Controls.Add(this.labelMassFlow, 0, 4);
-			this.tableLayoutPanel1.Controls.Add(this.labelVolumetricFlow, 0, 3);
-			this.tableLayoutPanel1.Controls.Add(this.labelTemperature, 0, 2);
-			this.tableLayoutPanel1.Controls.Add(this.labelPressure, 0, 1);
-			this.tableLayoutPanel1.Controls.Add(this.textBoxSetpoint, 1, 6);
-			this.tableLayoutPanel1.Controls.Add(this.comboBoxGas, 1, 5);
-			this.tableLayoutPanel1.Controls.Add(this.textBoxMassFlow, 1, 4);
-			this.tableLayoutPanel1.Controls.Add(this.textBoxVolumetricFlow, 1, 3);
-			this.tableLayoutPanel1.Controls.Add(this.textBoxTemperature, 1, 2);
-			this.tableLayoutPanel1.Controls.Add(this.textBoxPressure, 1, 1);
-			this.tableLayoutPanel1.Controls.Add(this.labelGasUnderTest, 1, 0);
-			this.tableLayoutPanel1.Controls.Add(this.textBox6, 2, 6);
-			this.tableLayoutPanel1.Controls.Add(this.comboBox1, 2, 5);
-			this.tableLayoutPanel1.Controls.Add(this.textBox4, 2, 4);
-			this.tableLayoutPanel1.Controls.Add(this.textBox3, 2, 3);
-			this.tableLayoutPanel1.Controls.Add(this.textBox2, 2, 2);
-			this.tableLayoutPanel1.Controls.Add(this.textBox1, 2, 1);
-			this.tableLayoutPanel1.Controls.Add(this.labelUnitSetpoint, 3, 6);
-			this.tableLayoutPanel1.Controls.Add(this.labelUnitMassFlow, 3, 4);
-			this.tableLayoutPanel1.Controls.Add(this.labelUnitVolumetricFlow, 3, 3);
-			this.tableLayoutPanel1.Controls.Add(this.labelUnitTemperature, 3, 2);
-			this.tableLayoutPanel1.Controls.Add(this.labelUnitPressure, 3, 1);
-			this.tableLayoutPanel1.Controls.Add(this.buttonWrite, 4, 6);
-			this.tableLayoutPanel1.Controls.Add(this.buttonWriteGas, 4, 5);
-			this.tableLayoutPanel1.Controls.Add(this.buttonReadAll, 4, 1);
-			this.tableLayoutPanel1.Controls.Add(this.labelDilutent, 2, 0);
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 19);
-			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.RowCount = 7;
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(423, 178);
-			this.tableLayoutPanel1.TabIndex = 1;
+			this.tableLayoutPanelMassFlow.AutoSize = true;
+			this.tableLayoutPanelMassFlow.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.tableLayoutPanelMassFlow.ColumnCount = 5;
+			this.tableLayoutPanelMassFlow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelMassFlow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelMassFlow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelMassFlow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelMassFlow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelMassFlow.Controls.Add(this.labelSetpoint, 0, 6);
+			this.tableLayoutPanelMassFlow.Controls.Add(this.labelGas, 0, 5);
+			this.tableLayoutPanelMassFlow.Controls.Add(this.labelMassFlow, 0, 4);
+			this.tableLayoutPanelMassFlow.Controls.Add(this.labelVolumetricFlow, 0, 3);
+			this.tableLayoutPanelMassFlow.Controls.Add(this.labelTemperature, 0, 2);
+			this.tableLayoutPanelMassFlow.Controls.Add(this.labelPressure, 0, 1);
+			this.tableLayoutPanelMassFlow.Controls.Add(this.textBoxAnalyteSetpoint, 1, 6);
+			this.tableLayoutPanelMassFlow.Controls.Add(this.comboBoxAnalyteGas, 1, 5);
+			this.tableLayoutPanelMassFlow.Controls.Add(this.textBoxAnalyteMassFlow, 1, 4);
+			this.tableLayoutPanelMassFlow.Controls.Add(this.textBoxAnalyteVolumetricFlow, 1, 3);
+			this.tableLayoutPanelMassFlow.Controls.Add(this.textBoxAnalyteTemperature, 1, 2);
+			this.tableLayoutPanelMassFlow.Controls.Add(this.textBoxAnalytePressure, 1, 1);
+			this.tableLayoutPanelMassFlow.Controls.Add(this.labelAnalyte, 1, 0);
+			this.tableLayoutPanelMassFlow.Controls.Add(this.textBoxDiluentSetpoint, 2, 6);
+			this.tableLayoutPanelMassFlow.Controls.Add(this.comboBoxDiluentGas, 2, 5);
+			this.tableLayoutPanelMassFlow.Controls.Add(this.textBoxDiluentMassFlow, 2, 4);
+			this.tableLayoutPanelMassFlow.Controls.Add(this.textBoxDiluentVolumetricFlow, 2, 3);
+			this.tableLayoutPanelMassFlow.Controls.Add(this.textBoxDiluentTemperature, 2, 2);
+			this.tableLayoutPanelMassFlow.Controls.Add(this.textBoxDiluentPressure, 2, 1);
+			this.tableLayoutPanelMassFlow.Controls.Add(this.labelUnitSetpoint, 3, 6);
+			this.tableLayoutPanelMassFlow.Controls.Add(this.labelUnitMassFlow, 3, 4);
+			this.tableLayoutPanelMassFlow.Controls.Add(this.labelUnitVolumetricFlow, 3, 3);
+			this.tableLayoutPanelMassFlow.Controls.Add(this.labelUnitTemperature, 3, 2);
+			this.tableLayoutPanelMassFlow.Controls.Add(this.labelUnitPressure, 3, 1);
+			this.tableLayoutPanelMassFlow.Controls.Add(this.buttonWriteSP, 4, 6);
+			this.tableLayoutPanelMassFlow.Controls.Add(this.buttonWriteGas, 4, 5);
+			this.tableLayoutPanelMassFlow.Controls.Add(this.buttonReadMFCAll, 4, 1);
+			this.tableLayoutPanelMassFlow.Controls.Add(this.labelDiluent, 2, 0);
+			this.tableLayoutPanelMassFlow.Location = new System.Drawing.Point(6, 19);
+			this.tableLayoutPanelMassFlow.Name = "tableLayoutPanelMassFlow";
+			this.tableLayoutPanelMassFlow.RowCount = 7;
+			this.tableLayoutPanelMassFlow.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelMassFlow.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelMassFlow.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelMassFlow.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelMassFlow.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelMassFlow.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelMassFlow.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelMassFlow.Size = new System.Drawing.Size(423, 178);
+			this.tableLayoutPanelMassFlow.TabIndex = 1;
 			// 
 			// labelSetpoint
 			// 
@@ -303,111 +325,109 @@
 			this.labelPressure.TabIndex = 0;
 			this.labelPressure.Text = "Pressure";
 			// 
-			// textBoxSetpoint
+			// textBoxAnalyteSetpoint
 			// 
-			this.textBoxSetpoint.Enabled = false;
-			this.textBoxSetpoint.Location = new System.Drawing.Point(90, 152);
-			this.textBoxSetpoint.Name = "textBoxSetpoint";
-			this.textBoxSetpoint.Size = new System.Drawing.Size(100, 20);
-			this.textBoxSetpoint.TabIndex = 9;
+			this.textBoxAnalyteSetpoint.Location = new System.Drawing.Point(90, 152);
+			this.textBoxAnalyteSetpoint.Name = "textBoxAnalyteSetpoint";
+			this.textBoxAnalyteSetpoint.Size = new System.Drawing.Size(100, 20);
+			this.textBoxAnalyteSetpoint.TabIndex = 9;
 			// 
-			// comboBoxGas
+			// comboBoxAnalyteGas
 			// 
-			this.comboBoxGas.Enabled = false;
-			this.comboBoxGas.FormattingEnabled = true;
-			this.comboBoxGas.Location = new System.Drawing.Point(90, 123);
-			this.comboBoxGas.Name = "comboBoxGas";
-			this.comboBoxGas.Size = new System.Drawing.Size(100, 21);
-			this.comboBoxGas.TabIndex = 16;
+			this.comboBoxAnalyteGas.FormattingEnabled = true;
+			this.comboBoxAnalyteGas.Location = new System.Drawing.Point(90, 123);
+			this.comboBoxAnalyteGas.Name = "comboBoxAnalyteGas";
+			this.comboBoxAnalyteGas.Size = new System.Drawing.Size(100, 21);
+			this.comboBoxAnalyteGas.TabIndex = 16;
 			// 
-			// textBoxMassFlow
+			// textBoxAnalyteMassFlow
 			// 
-			this.textBoxMassFlow.Location = new System.Drawing.Point(90, 97);
-			this.textBoxMassFlow.Name = "textBoxMassFlow";
-			this.textBoxMassFlow.ReadOnly = true;
-			this.textBoxMassFlow.Size = new System.Drawing.Size(100, 20);
-			this.textBoxMassFlow.TabIndex = 7;
+			this.textBoxAnalyteMassFlow.Location = new System.Drawing.Point(90, 97);
+			this.textBoxAnalyteMassFlow.Name = "textBoxAnalyteMassFlow";
+			this.textBoxAnalyteMassFlow.ReadOnly = true;
+			this.textBoxAnalyteMassFlow.Size = new System.Drawing.Size(100, 20);
+			this.textBoxAnalyteMassFlow.TabIndex = 7;
 			// 
-			// textBoxVolumetricFlow
+			// textBoxAnalyteVolumetricFlow
 			// 
-			this.textBoxVolumetricFlow.Location = new System.Drawing.Point(90, 71);
-			this.textBoxVolumetricFlow.Name = "textBoxVolumetricFlow";
-			this.textBoxVolumetricFlow.ReadOnly = true;
-			this.textBoxVolumetricFlow.Size = new System.Drawing.Size(100, 20);
-			this.textBoxVolumetricFlow.TabIndex = 5;
+			this.textBoxAnalyteVolumetricFlow.Location = new System.Drawing.Point(90, 71);
+			this.textBoxAnalyteVolumetricFlow.Name = "textBoxAnalyteVolumetricFlow";
+			this.textBoxAnalyteVolumetricFlow.ReadOnly = true;
+			this.textBoxAnalyteVolumetricFlow.Size = new System.Drawing.Size(100, 20);
+			this.textBoxAnalyteVolumetricFlow.TabIndex = 5;
 			// 
-			// textBoxTemperature
+			// textBoxAnalyteTemperature
 			// 
-			this.textBoxTemperature.Location = new System.Drawing.Point(90, 45);
-			this.textBoxTemperature.Name = "textBoxTemperature";
-			this.textBoxTemperature.ReadOnly = true;
-			this.textBoxTemperature.Size = new System.Drawing.Size(100, 20);
-			this.textBoxTemperature.TabIndex = 3;
+			this.textBoxAnalyteTemperature.Location = new System.Drawing.Point(90, 45);
+			this.textBoxAnalyteTemperature.Name = "textBoxAnalyteTemperature";
+			this.textBoxAnalyteTemperature.ReadOnly = true;
+			this.textBoxAnalyteTemperature.Size = new System.Drawing.Size(100, 20);
+			this.textBoxAnalyteTemperature.TabIndex = 3;
 			// 
-			// textBoxPressure
+			// textBoxAnalytePressure
 			// 
-			this.textBoxPressure.Location = new System.Drawing.Point(90, 16);
-			this.textBoxPressure.Name = "textBoxPressure";
-			this.textBoxPressure.ReadOnly = true;
-			this.textBoxPressure.Size = new System.Drawing.Size(100, 20);
-			this.textBoxPressure.TabIndex = 2;
+			this.textBoxAnalytePressure.Location = new System.Drawing.Point(90, 16);
+			this.textBoxAnalytePressure.Name = "textBoxAnalytePressure";
+			this.textBoxAnalytePressure.ReadOnly = true;
+			this.textBoxAnalytePressure.Size = new System.Drawing.Size(100, 20);
+			this.textBoxAnalytePressure.TabIndex = 2;
 			// 
-			// labelGasUnderTest
+			// labelAnalyte
 			// 
-			this.labelGasUnderTest.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.labelGasUnderTest.AutoSize = true;
-			this.labelGasUnderTest.Location = new System.Drawing.Point(99, 0);
-			this.labelGasUnderTest.Name = "labelGasUnderTest";
-			this.labelGasUnderTest.Size = new System.Drawing.Size(82, 13);
-			this.labelGasUnderTest.TabIndex = 23;
-			this.labelGasUnderTest.Text = "Gas Under Test";
+			this.labelAnalyte.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.labelAnalyte.AutoSize = true;
+			this.labelAnalyte.Location = new System.Drawing.Point(119, 0);
+			this.labelAnalyte.Name = "labelAnalyte";
+			this.labelAnalyte.Size = new System.Drawing.Size(42, 13);
+			this.labelAnalyte.TabIndex = 23;
+			this.labelAnalyte.Text = "Analyte";
 			// 
-			// textBox6
+			// textBoxDiluentSetpoint
 			// 
-			this.textBox6.Location = new System.Drawing.Point(196, 152);
-			this.textBox6.Name = "textBox6";
-			this.textBox6.Size = new System.Drawing.Size(100, 20);
-			this.textBox6.TabIndex = 2;
+			this.textBoxDiluentSetpoint.Location = new System.Drawing.Point(196, 152);
+			this.textBoxDiluentSetpoint.Name = "textBoxDiluentSetpoint";
+			this.textBoxDiluentSetpoint.Size = new System.Drawing.Size(100, 20);
+			this.textBoxDiluentSetpoint.TabIndex = 2;
 			// 
-			// comboBox1
+			// comboBoxDiluentGas
 			// 
-			this.comboBox1.FormattingEnabled = true;
-			this.comboBox1.Location = new System.Drawing.Point(196, 123);
-			this.comboBox1.Name = "comboBox1";
-			this.comboBox1.Size = new System.Drawing.Size(100, 21);
-			this.comboBox1.TabIndex = 22;
+			this.comboBoxDiluentGas.FormattingEnabled = true;
+			this.comboBoxDiluentGas.Location = new System.Drawing.Point(196, 123);
+			this.comboBoxDiluentGas.Name = "comboBoxDiluentGas";
+			this.comboBoxDiluentGas.Size = new System.Drawing.Size(100, 21);
+			this.comboBoxDiluentGas.TabIndex = 22;
 			// 
-			// textBox4
+			// textBoxDiluentMassFlow
 			// 
-			this.textBox4.Location = new System.Drawing.Point(196, 97);
-			this.textBox4.Name = "textBox4";
-			this.textBox4.ReadOnly = true;
-			this.textBox4.Size = new System.Drawing.Size(100, 20);
-			this.textBox4.TabIndex = 21;
+			this.textBoxDiluentMassFlow.Location = new System.Drawing.Point(196, 97);
+			this.textBoxDiluentMassFlow.Name = "textBoxDiluentMassFlow";
+			this.textBoxDiluentMassFlow.ReadOnly = true;
+			this.textBoxDiluentMassFlow.Size = new System.Drawing.Size(100, 20);
+			this.textBoxDiluentMassFlow.TabIndex = 21;
 			// 
-			// textBox3
+			// textBoxDiluentVolumetricFlow
 			// 
-			this.textBox3.Location = new System.Drawing.Point(196, 71);
-			this.textBox3.Name = "textBox3";
-			this.textBox3.ReadOnly = true;
-			this.textBox3.Size = new System.Drawing.Size(100, 20);
-			this.textBox3.TabIndex = 20;
+			this.textBoxDiluentVolumetricFlow.Location = new System.Drawing.Point(196, 71);
+			this.textBoxDiluentVolumetricFlow.Name = "textBoxDiluentVolumetricFlow";
+			this.textBoxDiluentVolumetricFlow.ReadOnly = true;
+			this.textBoxDiluentVolumetricFlow.Size = new System.Drawing.Size(100, 20);
+			this.textBoxDiluentVolumetricFlow.TabIndex = 20;
 			// 
-			// textBox2
+			// textBoxDiluentTemperature
 			// 
-			this.textBox2.Location = new System.Drawing.Point(196, 45);
-			this.textBox2.Name = "textBox2";
-			this.textBox2.ReadOnly = true;
-			this.textBox2.Size = new System.Drawing.Size(100, 20);
-			this.textBox2.TabIndex = 19;
+			this.textBoxDiluentTemperature.Location = new System.Drawing.Point(196, 45);
+			this.textBoxDiluentTemperature.Name = "textBoxDiluentTemperature";
+			this.textBoxDiluentTemperature.ReadOnly = true;
+			this.textBoxDiluentTemperature.Size = new System.Drawing.Size(100, 20);
+			this.textBoxDiluentTemperature.TabIndex = 19;
 			// 
-			// textBox1
+			// textBoxDiluentPressure
 			// 
-			this.textBox1.Location = new System.Drawing.Point(196, 16);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.ReadOnly = true;
-			this.textBox1.Size = new System.Drawing.Size(100, 20);
-			this.textBox1.TabIndex = 18;
+			this.textBoxDiluentPressure.Location = new System.Drawing.Point(196, 16);
+			this.textBoxDiluentPressure.Name = "textBoxDiluentPressure";
+			this.textBoxDiluentPressure.ReadOnly = true;
+			this.textBoxDiluentPressure.Size = new System.Drawing.Size(100, 20);
+			this.textBoxDiluentPressure.TabIndex = 18;
 			// 
 			// labelUnitSetpoint
 			// 
@@ -458,54 +478,54 @@
 			this.labelUnitPressure.TabIndex = 0;
 			this.labelUnitPressure.Text = "PSIA";
 			// 
-			// buttonWrite
+			// buttonWriteSP
 			// 
-			this.buttonWrite.Enabled = false;
-			this.buttonWrite.Location = new System.Drawing.Point(345, 152);
-			this.buttonWrite.Name = "buttonWrite";
-			this.buttonWrite.Size = new System.Drawing.Size(75, 23);
-			this.buttonWrite.TabIndex = 10;
-			this.buttonWrite.Text = "Write SP";
-			this.buttonWrite.UseVisualStyleBackColor = true;
+			this.buttonWriteSP.Location = new System.Drawing.Point(345, 152);
+			this.buttonWriteSP.Name = "buttonWriteSP";
+			this.buttonWriteSP.Size = new System.Drawing.Size(75, 23);
+			this.buttonWriteSP.TabIndex = 10;
+			this.buttonWriteSP.Text = "Write SP";
+			this.buttonWriteSP.UseVisualStyleBackColor = true;
+			this.buttonWriteSP.Click += new System.EventHandler(this.buttonWrite_Click);
 			// 
 			// buttonWriteGas
 			// 
-			this.buttonWriteGas.Enabled = false;
 			this.buttonWriteGas.Location = new System.Drawing.Point(345, 123);
 			this.buttonWriteGas.Name = "buttonWriteGas";
 			this.buttonWriteGas.Size = new System.Drawing.Size(75, 23);
 			this.buttonWriteGas.TabIndex = 17;
 			this.buttonWriteGas.Text = "Write Gas";
 			this.buttonWriteGas.UseVisualStyleBackColor = true;
+			this.buttonWriteGas.Click += new System.EventHandler(this.buttonWriteGas_Click);
 			// 
-			// buttonReadAll
+			// buttonReadMFCAll
 			// 
-			this.buttonReadAll.Enabled = false;
-			this.buttonReadAll.Location = new System.Drawing.Point(345, 16);
-			this.buttonReadAll.Name = "buttonReadAll";
-			this.buttonReadAll.Size = new System.Drawing.Size(75, 23);
-			this.buttonReadAll.TabIndex = 2;
-			this.buttonReadAll.Text = "Read All";
-			this.buttonReadAll.UseVisualStyleBackColor = true;
+			this.buttonReadMFCAll.Location = new System.Drawing.Point(345, 16);
+			this.buttonReadMFCAll.Name = "buttonReadMFCAll";
+			this.buttonReadMFCAll.Size = new System.Drawing.Size(75, 23);
+			this.buttonReadMFCAll.TabIndex = 2;
+			this.buttonReadMFCAll.Text = "Read All";
+			this.buttonReadMFCAll.UseVisualStyleBackColor = true;
+			this.buttonReadMFCAll.Click += new System.EventHandler(this.buttonReadAll_Click);
 			// 
-			// labelDilutent
+			// labelDiluent
 			// 
-			this.labelDilutent.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.labelDilutent.AutoSize = true;
-			this.labelDilutent.Location = new System.Drawing.Point(224, 0);
-			this.labelDilutent.Name = "labelDilutent";
-			this.labelDilutent.Size = new System.Drawing.Size(43, 13);
-			this.labelDilutent.TabIndex = 24;
-			this.labelDilutent.Text = "Dilutent";
+			this.labelDiluent.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.labelDiluent.AutoSize = true;
+			this.labelDiluent.Location = new System.Drawing.Point(226, 0);
+			this.labelDiluent.Name = "labelDiluent";
+			this.labelDiluent.Size = new System.Drawing.Size(40, 13);
+			this.labelDiluent.TabIndex = 24;
+			this.labelDiluent.Text = "Diluent";
 			// 
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-			this.statusStrip1.Location = new System.Drawing.Point(3, 240);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 464);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(431, 22);
-			this.statusStrip1.TabIndex = 0;
+			this.statusStrip1.Size = new System.Drawing.Size(439, 22);
+			this.statusStrip1.TabIndex = 4;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
 			// toolStripStatusLabel1
@@ -514,11 +534,212 @@
 			this.toolStripStatusLabel1.Size = new System.Drawing.Size(39, 17);
 			this.toolStripStatusLabel1.Text = "Ready";
 			// 
+			// groupBoxGasConcentration
+			// 
+			this.groupBoxGasConcentration.AutoSize = true;
+			this.groupBoxGasConcentration.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.groupBoxGasConcentration.Controls.Add(this.tableLayoutPanelGasConcentration);
+			this.groupBoxGasConcentration.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBoxGasConcentration.Enabled = false;
+			this.groupBoxGasConcentration.Location = new System.Drawing.Point(0, 312);
+			this.groupBoxGasConcentration.Name = "groupBoxGasConcentration";
+			this.groupBoxGasConcentration.Size = new System.Drawing.Size(439, 152);
+			this.groupBoxGasConcentration.TabIndex = 5;
+			this.groupBoxGasConcentration.TabStop = false;
+			this.groupBoxGasConcentration.Text = "Gas Concentration";
+			// 
+			// tableLayoutPanelGasConcentration
+			// 
+			this.tableLayoutPanelGasConcentration.AutoSize = true;
+			this.tableLayoutPanelGasConcentration.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.tableLayoutPanelGasConcentration.ColumnCount = 5;
+			this.tableLayoutPanelGasConcentration.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 185F));
+			this.tableLayoutPanelGasConcentration.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelGasConcentration.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelGasConcentration.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelGasConcentration.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelGasConcentration.Controls.Add(this.labelGasConcentrationSetpoint, 0, 1);
+			this.tableLayoutPanelGasConcentration.Controls.Add(this.buttonWriteAnalyteBottleConcentration, 4, 3);
+			this.tableLayoutPanelGasConcentration.Controls.Add(this.labelUnitGasConcentrationSetpoint, 2, 1);
+			this.tableLayoutPanelGasConcentration.Controls.Add(this.buttonWriteGasConcentrationSetpoint, 4, 1);
+			this.tableLayoutPanelGasConcentration.Controls.Add(this.textBoxGasConcentrationSetpoint, 1, 1);
+			this.tableLayoutPanelGasConcentration.Controls.Add(this.textBoxGasConcentration, 1, 0);
+			this.tableLayoutPanelGasConcentration.Controls.Add(this.labelUnitGasConcentration, 2, 0);
+			this.tableLayoutPanelGasConcentration.Controls.Add(this.labelConcentration, 0, 0);
+			this.tableLayoutPanelGasConcentration.Controls.Add(this.buttonReadGasConcentrationAll, 4, 0);
+			this.tableLayoutPanelGasConcentration.Controls.Add(this.labelAnalyteBottleConcentration, 0, 3);
+			this.tableLayoutPanelGasConcentration.Controls.Add(this.labelMassFlowSetpoint, 0, 2);
+			this.tableLayoutPanelGasConcentration.Controls.Add(this.textBoxAnalyteBottleConcentration, 1, 3);
+			this.tableLayoutPanelGasConcentration.Controls.Add(this.textBoxMassFlowSetpoint, 1, 2);
+			this.tableLayoutPanelGasConcentration.Controls.Add(this.labelUnitAnalyteBottleConcentration, 2, 3);
+			this.tableLayoutPanelGasConcentration.Controls.Add(this.labelUnitMassFlowSetpoint, 2, 2);
+			this.tableLayoutPanelGasConcentration.Controls.Add(this.buttonWriteMassFlowSetpoint, 4, 2);
+			this.tableLayoutPanelGasConcentration.Location = new System.Drawing.Point(12, 19);
+			this.tableLayoutPanelGasConcentration.Name = "tableLayoutPanelGasConcentration";
+			this.tableLayoutPanelGasConcentration.RowCount = 4;
+			this.tableLayoutPanelGasConcentration.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelGasConcentration.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelGasConcentration.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelGasConcentration.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelGasConcentration.Size = new System.Drawing.Size(415, 116);
+			this.tableLayoutPanelGasConcentration.TabIndex = 0;
+			// 
+			// labelGasConcentrationSetpoint
+			// 
+			this.labelGasConcentrationSetpoint.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelGasConcentrationSetpoint.AutoSize = true;
+			this.labelGasConcentrationSetpoint.Location = new System.Drawing.Point(3, 37);
+			this.labelGasConcentrationSetpoint.Name = "labelGasConcentrationSetpoint";
+			this.labelGasConcentrationSetpoint.Size = new System.Drawing.Size(137, 13);
+			this.labelGasConcentrationSetpoint.TabIndex = 3;
+			this.labelGasConcentrationSetpoint.Text = "Gas Concentration Setpoint";
+			// 
+			// buttonWriteAnalyteBottleConcentration
+			// 
+			this.buttonWriteAnalyteBottleConcentration.Location = new System.Drawing.Point(337, 90);
+			this.buttonWriteAnalyteBottleConcentration.Name = "buttonWriteAnalyteBottleConcentration";
+			this.buttonWriteAnalyteBottleConcentration.Size = new System.Drawing.Size(75, 23);
+			this.buttonWriteAnalyteBottleConcentration.TabIndex = 13;
+			this.buttonWriteAnalyteBottleConcentration.Text = "Write Bottle";
+			this.buttonWriteAnalyteBottleConcentration.UseVisualStyleBackColor = true;
+			this.buttonWriteAnalyteBottleConcentration.Click += new System.EventHandler(this.buttonWriteAnalyteBottleConcentration_Click);
+			// 
+			// labelUnitGasConcentrationSetpoint
+			// 
+			this.labelUnitGasConcentrationSetpoint.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelUnitGasConcentrationSetpoint.AutoSize = true;
+			this.labelUnitGasConcentrationSetpoint.Location = new System.Drawing.Point(294, 37);
+			this.labelUnitGasConcentrationSetpoint.Name = "labelUnitGasConcentrationSetpoint";
+			this.labelUnitGasConcentrationSetpoint.Size = new System.Drawing.Size(22, 13);
+			this.labelUnitGasConcentrationSetpoint.TabIndex = 11;
+			this.labelUnitGasConcentrationSetpoint.Text = "%V";
+			// 
+			// buttonWriteGasConcentrationSetpoint
+			// 
+			this.buttonWriteGasConcentrationSetpoint.Location = new System.Drawing.Point(337, 32);
+			this.buttonWriteGasConcentrationSetpoint.Name = "buttonWriteGasConcentrationSetpoint";
+			this.buttonWriteGasConcentrationSetpoint.Size = new System.Drawing.Size(75, 23);
+			this.buttonWriteGasConcentrationSetpoint.TabIndex = 12;
+			this.buttonWriteGasConcentrationSetpoint.Text = "Write SP";
+			this.buttonWriteGasConcentrationSetpoint.UseVisualStyleBackColor = true;
+			this.buttonWriteGasConcentrationSetpoint.Click += new System.EventHandler(this.buttonWriteGasConcentrationSetpoint_Click);
+			// 
+			// textBoxGasConcentrationSetpoint
+			// 
+			this.textBoxGasConcentrationSetpoint.Location = new System.Drawing.Point(188, 32);
+			this.textBoxGasConcentrationSetpoint.Name = "textBoxGasConcentrationSetpoint";
+			this.textBoxGasConcentrationSetpoint.Size = new System.Drawing.Size(100, 20);
+			this.textBoxGasConcentrationSetpoint.TabIndex = 0;
+			// 
+			// textBoxGasConcentration
+			// 
+			this.textBoxGasConcentration.Location = new System.Drawing.Point(188, 3);
+			this.textBoxGasConcentration.Name = "textBoxGasConcentration";
+			this.textBoxGasConcentration.ReadOnly = true;
+			this.textBoxGasConcentration.Size = new System.Drawing.Size(100, 20);
+			this.textBoxGasConcentration.TabIndex = 7;
+			// 
+			// labelUnitGasConcentration
+			// 
+			this.labelUnitGasConcentration.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelUnitGasConcentration.AutoSize = true;
+			this.labelUnitGasConcentration.Location = new System.Drawing.Point(294, 8);
+			this.labelUnitGasConcentration.Name = "labelUnitGasConcentration";
+			this.labelUnitGasConcentration.Size = new System.Drawing.Size(22, 13);
+			this.labelUnitGasConcentration.TabIndex = 8;
+			this.labelUnitGasConcentration.Text = "%V";
+			// 
+			// labelConcentration
+			// 
+			this.labelConcentration.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelConcentration.AutoSize = true;
+			this.labelConcentration.Location = new System.Drawing.Point(3, 8);
+			this.labelConcentration.Name = "labelConcentration";
+			this.labelConcentration.Size = new System.Drawing.Size(95, 13);
+			this.labelConcentration.TabIndex = 0;
+			this.labelConcentration.Text = "Gas Concentration";
+			// 
+			// buttonReadGasConcentrationAll
+			// 
+			this.buttonReadGasConcentrationAll.Location = new System.Drawing.Point(337, 3);
+			this.buttonReadGasConcentrationAll.Name = "buttonReadGasConcentrationAll";
+			this.buttonReadGasConcentrationAll.Size = new System.Drawing.Size(75, 23);
+			this.buttonReadGasConcentrationAll.TabIndex = 14;
+			this.buttonReadGasConcentrationAll.Text = "Read All";
+			this.buttonReadGasConcentrationAll.UseVisualStyleBackColor = true;
+			this.buttonReadGasConcentrationAll.Click += new System.EventHandler(this.buttonReadConcentration_Click);
+			// 
+			// labelAnalyteBottleConcentration
+			// 
+			this.labelAnalyteBottleConcentration.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelAnalyteBottleConcentration.AutoSize = true;
+			this.labelAnalyteBottleConcentration.Location = new System.Drawing.Point(3, 95);
+			this.labelAnalyteBottleConcentration.Name = "labelAnalyteBottleConcentration";
+			this.labelAnalyteBottleConcentration.Size = new System.Drawing.Size(141, 13);
+			this.labelAnalyteBottleConcentration.TabIndex = 1;
+			this.labelAnalyteBottleConcentration.Text = "Analyte Bottle Concentration";
+			// 
+			// labelMassFlowSetpoint
+			// 
+			this.labelMassFlowSetpoint.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelMassFlowSetpoint.AutoSize = true;
+			this.labelMassFlowSetpoint.Location = new System.Drawing.Point(3, 66);
+			this.labelMassFlowSetpoint.Name = "labelMassFlowSetpoint";
+			this.labelMassFlowSetpoint.Size = new System.Drawing.Size(132, 13);
+			this.labelMassFlowSetpoint.TabIndex = 2;
+			this.labelMassFlowSetpoint.Text = "(Total) Mass Flow Setpoint";
+			// 
+			// textBoxAnalyteBottleConcentration
+			// 
+			this.textBoxAnalyteBottleConcentration.Location = new System.Drawing.Point(188, 90);
+			this.textBoxAnalyteBottleConcentration.Name = "textBoxAnalyteBottleConcentration";
+			this.textBoxAnalyteBottleConcentration.Size = new System.Drawing.Size(100, 20);
+			this.textBoxAnalyteBottleConcentration.TabIndex = 5;
+			// 
+			// textBoxMassFlowSetpoint
+			// 
+			this.textBoxMassFlowSetpoint.Location = new System.Drawing.Point(188, 61);
+			this.textBoxMassFlowSetpoint.Name = "textBoxMassFlowSetpoint";
+			this.textBoxMassFlowSetpoint.Size = new System.Drawing.Size(100, 20);
+			this.textBoxMassFlowSetpoint.TabIndex = 4;
+			// 
+			// labelUnitAnalyteBottleConcentration
+			// 
+			this.labelUnitAnalyteBottleConcentration.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelUnitAnalyteBottleConcentration.AutoSize = true;
+			this.labelUnitAnalyteBottleConcentration.Location = new System.Drawing.Point(294, 95);
+			this.labelUnitAnalyteBottleConcentration.Name = "labelUnitAnalyteBottleConcentration";
+			this.labelUnitAnalyteBottleConcentration.Size = new System.Drawing.Size(22, 13);
+			this.labelUnitAnalyteBottleConcentration.TabIndex = 9;
+			this.labelUnitAnalyteBottleConcentration.Text = "%V";
+			// 
+			// labelUnitMassFlowSetpoint
+			// 
+			this.labelUnitMassFlowSetpoint.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelUnitMassFlowSetpoint.AutoSize = true;
+			this.labelUnitMassFlowSetpoint.Location = new System.Drawing.Point(294, 66);
+			this.labelUnitMassFlowSetpoint.Name = "labelUnitMassFlowSetpoint";
+			this.labelUnitMassFlowSetpoint.Size = new System.Drawing.Size(37, 13);
+			this.labelUnitMassFlowSetpoint.TabIndex = 10;
+			this.labelUnitMassFlowSetpoint.Text = "SCCM";
+			// 
+			// buttonWriteMassFlowSetpoint
+			// 
+			this.buttonWriteMassFlowSetpoint.Location = new System.Drawing.Point(337, 61);
+			this.buttonWriteMassFlowSetpoint.Name = "buttonWriteMassFlowSetpoint";
+			this.buttonWriteMassFlowSetpoint.Size = new System.Drawing.Size(75, 23);
+			this.buttonWriteMassFlowSetpoint.TabIndex = 6;
+			this.buttonWriteMassFlowSetpoint.Text = "Write Flow";
+			this.buttonWriteMassFlowSetpoint.UseVisualStyleBackColor = true;
+			this.buttonWriteMassFlowSetpoint.Click += new System.EventHandler(this.buttonWriteMassFlowSetpoint_Click);
+			// 
 			// FormGasConcentration
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(437, 361);
+			this.ClientSize = new System.Drawing.Size(439, 486);
+			this.Controls.Add(this.groupBoxGasConcentration);
+			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.groupBoxMassFlow);
 			this.Controls.Add(this.groupBoxSerialPorts);
 			this.Controls.Add(this.menuStrip1);
@@ -532,10 +753,14 @@
 			this.groupBoxSerialPorts.PerformLayout();
 			this.groupBoxMassFlow.ResumeLayout(false);
 			this.groupBoxMassFlow.PerformLayout();
-			this.tableLayoutPanel1.ResumeLayout(false);
-			this.tableLayoutPanel1.PerformLayout();
+			this.tableLayoutPanelMassFlow.ResumeLayout(false);
+			this.tableLayoutPanelMassFlow.PerformLayout();
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();
+			this.groupBoxGasConcentration.ResumeLayout(false);
+			this.groupBoxGasConcentration.PerformLayout();
+			this.tableLayoutPanelGasConcentration.ResumeLayout(false);
+			this.tableLayoutPanelGasConcentration.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -549,42 +774,60 @@
 		private System.Windows.Forms.GroupBox groupBoxSerialPorts;
 		private System.Windows.Forms.RadioButton radioButtonClosed;
 		private System.Windows.Forms.RadioButton radioButtonOpen;
-		private System.Windows.Forms.ComboBox comboBoxSerialPortGasUnderTest;
-		private System.Windows.Forms.ComboBox comboBoxSerialPortDilutent;
+		private System.Windows.Forms.ComboBox comboBoxAnalytePort;
+		private System.Windows.Forms.ComboBox comboBoxDiluentPort;
 		private System.Windows.Forms.GroupBox groupBoxMassFlow;
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelMassFlow;
 		private System.Windows.Forms.Label labelPressure;
 		private System.Windows.Forms.Label labelTemperature;
-		private System.Windows.Forms.TextBox textBoxPressure;
-		private System.Windows.Forms.TextBox textBoxTemperature;
+		private System.Windows.Forms.TextBox textBoxAnalytePressure;
+		private System.Windows.Forms.TextBox textBoxAnalyteTemperature;
 		private System.Windows.Forms.Label labelVolumetricFlow;
-		private System.Windows.Forms.TextBox textBoxVolumetricFlow;
+		private System.Windows.Forms.TextBox textBoxAnalyteVolumetricFlow;
 		private System.Windows.Forms.Label labelMassFlow;
-		private System.Windows.Forms.TextBox textBoxMassFlow;
-		private System.Windows.Forms.Button buttonReadAll;
+		private System.Windows.Forms.TextBox textBoxAnalyteMassFlow;
+		private System.Windows.Forms.Button buttonReadMFCAll;
 		private System.Windows.Forms.Label labelUnitPressure;
 		private System.Windows.Forms.Label labelUnitTemperature;
 		private System.Windows.Forms.Label labelUnitVolumetricFlow;
 		private System.Windows.Forms.Label labelUnitMassFlow;
 		private System.Windows.Forms.Label labelSetpoint;
-		private System.Windows.Forms.TextBox textBoxSetpoint;
+		private System.Windows.Forms.TextBox textBoxAnalyteSetpoint;
 		private System.Windows.Forms.Label labelUnitSetpoint;
 		private System.Windows.Forms.Label labelGas;
-		private System.Windows.Forms.ComboBox comboBoxGas;
-		private System.Windows.Forms.Button buttonWrite;
+		private System.Windows.Forms.ComboBox comboBoxAnalyteGas;
+		private System.Windows.Forms.Button buttonWriteSP;
 		private System.Windows.Forms.Button buttonWriteGas;
+		private System.Windows.Forms.Label labelDiluentPort;
+		private System.Windows.Forms.Label labelAnalytePort;
+		private System.Windows.Forms.TextBox textBoxDiluentSetpoint;
+		private System.Windows.Forms.TextBox textBoxDiluentPressure;
+		private System.Windows.Forms.TextBox textBoxDiluentTemperature;
+		private System.Windows.Forms.TextBox textBoxDiluentVolumetricFlow;
+		private System.Windows.Forms.TextBox textBoxDiluentMassFlow;
+		private System.Windows.Forms.ComboBox comboBoxDiluentGas;
+		private System.Windows.Forms.Label labelAnalyte;
+		private System.Windows.Forms.Label labelDiluent;
 		private System.Windows.Forms.StatusStrip statusStrip1;
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-		private System.Windows.Forms.Label labelDilutentPort;
-		private System.Windows.Forms.Label labelGasUnderTestPort;
-		private System.Windows.Forms.TextBox textBox6;
-		private System.Windows.Forms.TextBox textBox1;
-		private System.Windows.Forms.TextBox textBox2;
-		private System.Windows.Forms.TextBox textBox3;
-		private System.Windows.Forms.TextBox textBox4;
-		private System.Windows.Forms.ComboBox comboBox1;
-		private System.Windows.Forms.Label labelGasUnderTest;
-		private System.Windows.Forms.Label labelDilutent;
+		private System.Windows.Forms.GroupBox groupBoxGasConcentration;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelGasConcentration;
+		private System.Windows.Forms.Label labelConcentration;
+		private System.Windows.Forms.Label labelAnalyteBottleConcentration;
+		private System.Windows.Forms.Label labelMassFlowSetpoint;
+		private System.Windows.Forms.Label labelGasConcentrationSetpoint;
+		private System.Windows.Forms.TextBox textBoxMassFlowSetpoint;
+		private System.Windows.Forms.Button buttonWriteMassFlowSetpoint;
+		private System.Windows.Forms.TextBox textBoxAnalyteBottleConcentration;
+		private System.Windows.Forms.TextBox textBoxGasConcentrationSetpoint;
+		private System.Windows.Forms.TextBox textBoxGasConcentration;
+		private System.Windows.Forms.Label labelUnitGasConcentration;
+		private System.Windows.Forms.Label labelUnitAnalyteBottleConcentration;
+		private System.Windows.Forms.Label labelUnitMassFlowSetpoint;
+		private System.Windows.Forms.Label labelUnitGasConcentrationSetpoint;
+		private System.Windows.Forms.Button buttonWriteGasConcentrationSetpoint;
+		private System.Windows.Forms.Button buttonWriteAnalyteBottleConcentration;
+		private System.Windows.Forms.Button buttonReadGasConcentrationAll;
 	}
 }
 
