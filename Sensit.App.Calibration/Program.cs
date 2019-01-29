@@ -33,7 +33,6 @@ namespace Sensit.App.Calibration
 			// TODO:  FormCalibration support for setting test equipment and fetching related user settings.
 			// TODO:  FormCalibration support for setting test variables and updating their values.
 			// TODO:  FormCalibration support for displaying data in a tab for each DUT.  Maybe show Excel in a web browser?
-			// TODO:  Support for regulating gas concentration via two mass flow controllers.
 			// TODO:  Call FormObjectEditor from FormCalibration to view/change test and equipment settings.
 			// TODO:  Log data (create a logger class in the SDK).
 
