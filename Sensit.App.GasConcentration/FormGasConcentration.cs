@@ -289,62 +289,17 @@ namespace Sensit.App.GasConcentration
 		{
 			try
 			{
-				// Convert the setpoint to a number.
-				double setpoint = Convert.ToDouble(textBoxGasConcentrationSetpoint.Text);
+				// Convert the setpoints to numbers.
+				double analyteConcentration = Convert.ToDouble(textBoxGasConcentrationSetpoint.Text);
+				double massFlowSetpoint = Convert.ToDouble(textBoxMassFlowSetpoint.Text);
+				double bottleConcentration = Convert.ToDouble(textBoxAnalyteBottleConcentration.Text);
 
-				// Write the setpoint property.
-				_concentrationController.AnalyteConcentrationSetpoint = setpoint;
-				_concentrationController.WriteMassFlowSetpoint();
-			}
-			catch (FormatException ex)
-			{
-				// If the user didn't enter a valid number, prompt the user.
-				MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine +
-					"Did you type a valid setpoint?", ex.GetType().Name.ToString());
-				toolStripStatusLabel1.Text = ex.Message;
-			}
-			catch (Exception ex)
-			{
-				// If an error occurs, alert the user.
-				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
-				toolStripStatusLabel1.Text = ex.Message;
-			}
-		}
+				// Write the properties.
+				_concentrationController.AnalyteConcentrationSetpoint = analyteConcentration;
+				_concentrationController.MassFlowSetpoint = massFlowSetpoint;
+				_concentrationController.AnalyteBottleConcentration = bottleConcentration;
 
-		private void buttonWriteMassFlowSetpoint_Click(object sender, EventArgs e)
-		{
-			try
-			{
-				// Convert the setpoint to a number.
-				double setpoint = Convert.ToDouble(textBoxMassFlowSetpoint.Text);
-
-				// Write the setpoint to the mass flow controllers.
-				_concentrationController.WriteMassFlowSetpoint(setpoint);
-			}
-			catch (FormatException ex)
-			{
-				// If the user didn't enter a valid number, prompt the user.
-				MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine +
-					"Did you type a valid setpoint?", ex.GetType().Name.ToString());
-				toolStripStatusLabel1.Text = ex.Message;
-			}
-			catch (Exception ex)
-			{
-				// If an error occurs, alert the user.
-				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
-				toolStripStatusLabel1.Text = ex.Message;
-			}
-		}
-
-		private void buttonWriteAnalyteBottleConcentration_Click(object sender, EventArgs e)
-		{
-			try
-			{
-				// Convert the concentration to a number.
-				double concentration = Convert.ToDouble(textBoxAnalyteBottleConcentration.Text);
-
-				// Pass concentration to the controllers.
-				_concentrationController.AnalyteBottleConcentration = concentration;
+				// Write to mass flow controllers.
 				_concentrationController.WriteMassFlowSetpoint();
 			}
 			catch (FormatException ex)

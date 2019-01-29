@@ -73,21 +73,19 @@
 			this.groupBoxGasConcentration = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanelGasConcentration = new System.Windows.Forms.TableLayoutPanel();
 			this.labelGasConcentrationSetpoint = new System.Windows.Forms.Label();
-			this.buttonWriteAnalyteBottleConcentration = new System.Windows.Forms.Button();
 			this.labelUnitGasConcentrationSetpoint = new System.Windows.Forms.Label();
-			this.buttonWriteGasConcentrationSetpoint = new System.Windows.Forms.Button();
+			this.buttonWriteAll = new System.Windows.Forms.Button();
 			this.textBoxGasConcentrationSetpoint = new System.Windows.Forms.TextBox();
 			this.textBoxGasConcentration = new System.Windows.Forms.TextBox();
 			this.labelUnitGasConcentration = new System.Windows.Forms.Label();
 			this.labelConcentration = new System.Windows.Forms.Label();
-			this.buttonReadGasConcentrationAll = new System.Windows.Forms.Button();
+			this.buttonReadAll = new System.Windows.Forms.Button();
 			this.labelAnalyteBottleConcentration = new System.Windows.Forms.Label();
 			this.labelMassFlowSetpoint = new System.Windows.Forms.Label();
 			this.textBoxAnalyteBottleConcentration = new System.Windows.Forms.TextBox();
 			this.textBoxMassFlowSetpoint = new System.Windows.Forms.TextBox();
 			this.labelUnitAnalyteBottleConcentration = new System.Windows.Forms.Label();
 			this.labelUnitMassFlowSetpoint = new System.Windows.Forms.Label();
-			this.buttonWriteMassFlowSetpoint = new System.Windows.Forms.Button();
 			this.menuStrip1.SuspendLayout();
 			this.groupBoxSerialPorts.SuspendLayout();
 			this.groupBoxMassFlow.SuspendLayout();
@@ -559,21 +557,19 @@
 			this.tableLayoutPanelGasConcentration.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanelGasConcentration.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanelGasConcentration.Controls.Add(this.labelGasConcentrationSetpoint, 0, 1);
-			this.tableLayoutPanelGasConcentration.Controls.Add(this.buttonWriteAnalyteBottleConcentration, 4, 3);
 			this.tableLayoutPanelGasConcentration.Controls.Add(this.labelUnitGasConcentrationSetpoint, 2, 1);
-			this.tableLayoutPanelGasConcentration.Controls.Add(this.buttonWriteGasConcentrationSetpoint, 4, 1);
+			this.tableLayoutPanelGasConcentration.Controls.Add(this.buttonWriteAll, 4, 1);
 			this.tableLayoutPanelGasConcentration.Controls.Add(this.textBoxGasConcentrationSetpoint, 1, 1);
 			this.tableLayoutPanelGasConcentration.Controls.Add(this.textBoxGasConcentration, 1, 0);
 			this.tableLayoutPanelGasConcentration.Controls.Add(this.labelUnitGasConcentration, 2, 0);
 			this.tableLayoutPanelGasConcentration.Controls.Add(this.labelConcentration, 0, 0);
-			this.tableLayoutPanelGasConcentration.Controls.Add(this.buttonReadGasConcentrationAll, 4, 0);
+			this.tableLayoutPanelGasConcentration.Controls.Add(this.buttonReadAll, 4, 0);
 			this.tableLayoutPanelGasConcentration.Controls.Add(this.labelAnalyteBottleConcentration, 0, 3);
 			this.tableLayoutPanelGasConcentration.Controls.Add(this.labelMassFlowSetpoint, 0, 2);
 			this.tableLayoutPanelGasConcentration.Controls.Add(this.textBoxAnalyteBottleConcentration, 1, 3);
 			this.tableLayoutPanelGasConcentration.Controls.Add(this.textBoxMassFlowSetpoint, 1, 2);
 			this.tableLayoutPanelGasConcentration.Controls.Add(this.labelUnitAnalyteBottleConcentration, 2, 3);
 			this.tableLayoutPanelGasConcentration.Controls.Add(this.labelUnitMassFlowSetpoint, 2, 2);
-			this.tableLayoutPanelGasConcentration.Controls.Add(this.buttonWriteMassFlowSetpoint, 4, 2);
 			this.tableLayoutPanelGasConcentration.Location = new System.Drawing.Point(12, 19);
 			this.tableLayoutPanelGasConcentration.Name = "tableLayoutPanelGasConcentration";
 			this.tableLayoutPanelGasConcentration.RowCount = 4;
@@ -581,7 +577,7 @@
 			this.tableLayoutPanelGasConcentration.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelGasConcentration.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelGasConcentration.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelGasConcentration.Size = new System.Drawing.Size(415, 116);
+			this.tableLayoutPanelGasConcentration.Size = new System.Drawing.Size(415, 110);
 			this.tableLayoutPanelGasConcentration.TabIndex = 0;
 			// 
 			// labelGasConcentrationSetpoint
@@ -594,16 +590,6 @@
 			this.labelGasConcentrationSetpoint.TabIndex = 3;
 			this.labelGasConcentrationSetpoint.Text = "Gas Concentration Setpoint";
 			// 
-			// buttonWriteAnalyteBottleConcentration
-			// 
-			this.buttonWriteAnalyteBottleConcentration.Location = new System.Drawing.Point(337, 90);
-			this.buttonWriteAnalyteBottleConcentration.Name = "buttonWriteAnalyteBottleConcentration";
-			this.buttonWriteAnalyteBottleConcentration.Size = new System.Drawing.Size(75, 23);
-			this.buttonWriteAnalyteBottleConcentration.TabIndex = 13;
-			this.buttonWriteAnalyteBottleConcentration.Text = "Write Bottle";
-			this.buttonWriteAnalyteBottleConcentration.UseVisualStyleBackColor = true;
-			this.buttonWriteAnalyteBottleConcentration.Click += new System.EventHandler(this.buttonWriteAnalyteBottleConcentration_Click);
-			// 
 			// labelUnitGasConcentrationSetpoint
 			// 
 			this.labelUnitGasConcentrationSetpoint.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -614,15 +600,15 @@
 			this.labelUnitGasConcentrationSetpoint.TabIndex = 11;
 			this.labelUnitGasConcentrationSetpoint.Text = "%V";
 			// 
-			// buttonWriteGasConcentrationSetpoint
+			// buttonWriteAll
 			// 
-			this.buttonWriteGasConcentrationSetpoint.Location = new System.Drawing.Point(337, 32);
-			this.buttonWriteGasConcentrationSetpoint.Name = "buttonWriteGasConcentrationSetpoint";
-			this.buttonWriteGasConcentrationSetpoint.Size = new System.Drawing.Size(75, 23);
-			this.buttonWriteGasConcentrationSetpoint.TabIndex = 12;
-			this.buttonWriteGasConcentrationSetpoint.Text = "Write SP";
-			this.buttonWriteGasConcentrationSetpoint.UseVisualStyleBackColor = true;
-			this.buttonWriteGasConcentrationSetpoint.Click += new System.EventHandler(this.buttonWriteGasConcentrationSetpoint_Click);
+			this.buttonWriteAll.Location = new System.Drawing.Point(337, 32);
+			this.buttonWriteAll.Name = "buttonWriteAll";
+			this.buttonWriteAll.Size = new System.Drawing.Size(75, 23);
+			this.buttonWriteAll.TabIndex = 12;
+			this.buttonWriteAll.Text = "Write All";
+			this.buttonWriteAll.UseVisualStyleBackColor = true;
+			this.buttonWriteAll.Click += new System.EventHandler(this.buttonWriteGasConcentrationSetpoint_Click);
 			// 
 			// textBoxGasConcentrationSetpoint
 			// 
@@ -659,21 +645,21 @@
 			this.labelConcentration.TabIndex = 0;
 			this.labelConcentration.Text = "Gas Concentration";
 			// 
-			// buttonReadGasConcentrationAll
+			// buttonReadAll
 			// 
-			this.buttonReadGasConcentrationAll.Location = new System.Drawing.Point(337, 3);
-			this.buttonReadGasConcentrationAll.Name = "buttonReadGasConcentrationAll";
-			this.buttonReadGasConcentrationAll.Size = new System.Drawing.Size(75, 23);
-			this.buttonReadGasConcentrationAll.TabIndex = 14;
-			this.buttonReadGasConcentrationAll.Text = "Read All";
-			this.buttonReadGasConcentrationAll.UseVisualStyleBackColor = true;
-			this.buttonReadGasConcentrationAll.Click += new System.EventHandler(this.buttonReadConcentration_Click);
+			this.buttonReadAll.Location = new System.Drawing.Point(337, 3);
+			this.buttonReadAll.Name = "buttonReadAll";
+			this.buttonReadAll.Size = new System.Drawing.Size(75, 23);
+			this.buttonReadAll.TabIndex = 14;
+			this.buttonReadAll.Text = "Read All";
+			this.buttonReadAll.UseVisualStyleBackColor = true;
+			this.buttonReadAll.Click += new System.EventHandler(this.buttonReadConcentration_Click);
 			// 
 			// labelAnalyteBottleConcentration
 			// 
 			this.labelAnalyteBottleConcentration.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelAnalyteBottleConcentration.AutoSize = true;
-			this.labelAnalyteBottleConcentration.Location = new System.Drawing.Point(3, 95);
+			this.labelAnalyteBottleConcentration.Location = new System.Drawing.Point(3, 90);
 			this.labelAnalyteBottleConcentration.Name = "labelAnalyteBottleConcentration";
 			this.labelAnalyteBottleConcentration.Size = new System.Drawing.Size(141, 13);
 			this.labelAnalyteBottleConcentration.TabIndex = 1;
@@ -683,7 +669,7 @@
 			// 
 			this.labelMassFlowSetpoint.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelMassFlowSetpoint.AutoSize = true;
-			this.labelMassFlowSetpoint.Location = new System.Drawing.Point(3, 66);
+			this.labelMassFlowSetpoint.Location = new System.Drawing.Point(3, 64);
 			this.labelMassFlowSetpoint.Name = "labelMassFlowSetpoint";
 			this.labelMassFlowSetpoint.Size = new System.Drawing.Size(132, 13);
 			this.labelMassFlowSetpoint.TabIndex = 2;
@@ -691,7 +677,7 @@
 			// 
 			// textBoxAnalyteBottleConcentration
 			// 
-			this.textBoxAnalyteBottleConcentration.Location = new System.Drawing.Point(188, 90);
+			this.textBoxAnalyteBottleConcentration.Location = new System.Drawing.Point(188, 87);
 			this.textBoxAnalyteBottleConcentration.Name = "textBoxAnalyteBottleConcentration";
 			this.textBoxAnalyteBottleConcentration.Size = new System.Drawing.Size(100, 20);
 			this.textBoxAnalyteBottleConcentration.TabIndex = 5;
@@ -707,7 +693,7 @@
 			// 
 			this.labelUnitAnalyteBottleConcentration.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelUnitAnalyteBottleConcentration.AutoSize = true;
-			this.labelUnitAnalyteBottleConcentration.Location = new System.Drawing.Point(294, 95);
+			this.labelUnitAnalyteBottleConcentration.Location = new System.Drawing.Point(294, 90);
 			this.labelUnitAnalyteBottleConcentration.Name = "labelUnitAnalyteBottleConcentration";
 			this.labelUnitAnalyteBottleConcentration.Size = new System.Drawing.Size(22, 13);
 			this.labelUnitAnalyteBottleConcentration.TabIndex = 9;
@@ -717,21 +703,11 @@
 			// 
 			this.labelUnitMassFlowSetpoint.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelUnitMassFlowSetpoint.AutoSize = true;
-			this.labelUnitMassFlowSetpoint.Location = new System.Drawing.Point(294, 66);
+			this.labelUnitMassFlowSetpoint.Location = new System.Drawing.Point(294, 64);
 			this.labelUnitMassFlowSetpoint.Name = "labelUnitMassFlowSetpoint";
 			this.labelUnitMassFlowSetpoint.Size = new System.Drawing.Size(37, 13);
 			this.labelUnitMassFlowSetpoint.TabIndex = 10;
 			this.labelUnitMassFlowSetpoint.Text = "SCCM";
-			// 
-			// buttonWriteMassFlowSetpoint
-			// 
-			this.buttonWriteMassFlowSetpoint.Location = new System.Drawing.Point(337, 61);
-			this.buttonWriteMassFlowSetpoint.Name = "buttonWriteMassFlowSetpoint";
-			this.buttonWriteMassFlowSetpoint.Size = new System.Drawing.Size(75, 23);
-			this.buttonWriteMassFlowSetpoint.TabIndex = 6;
-			this.buttonWriteMassFlowSetpoint.Text = "Write Flow";
-			this.buttonWriteMassFlowSetpoint.UseVisualStyleBackColor = true;
-			this.buttonWriteMassFlowSetpoint.Click += new System.EventHandler(this.buttonWriteMassFlowSetpoint_Click);
 			// 
 			// FormGasConcentration
 			// 
@@ -817,7 +793,6 @@
 		private System.Windows.Forms.Label labelMassFlowSetpoint;
 		private System.Windows.Forms.Label labelGasConcentrationSetpoint;
 		private System.Windows.Forms.TextBox textBoxMassFlowSetpoint;
-		private System.Windows.Forms.Button buttonWriteMassFlowSetpoint;
 		private System.Windows.Forms.TextBox textBoxAnalyteBottleConcentration;
 		private System.Windows.Forms.TextBox textBoxGasConcentrationSetpoint;
 		private System.Windows.Forms.TextBox textBoxGasConcentration;
@@ -825,9 +800,8 @@
 		private System.Windows.Forms.Label labelUnitAnalyteBottleConcentration;
 		private System.Windows.Forms.Label labelUnitMassFlowSetpoint;
 		private System.Windows.Forms.Label labelUnitGasConcentrationSetpoint;
-		private System.Windows.Forms.Button buttonWriteGasConcentrationSetpoint;
-		private System.Windows.Forms.Button buttonWriteAnalyteBottleConcentration;
-		private System.Windows.Forms.Button buttonReadGasConcentrationAll;
+		private System.Windows.Forms.Button buttonWriteAll;
+		private System.Windows.Forms.Button buttonReadAll;
 	}
 }
 
