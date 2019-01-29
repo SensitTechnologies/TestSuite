@@ -252,8 +252,11 @@ namespace Sensit.App.Calibration
 	}
 
 	[Serializable]
-	public class ProductSettings
+	public class ProductSettings : Attribute
 	{
+		[Category("Product Settings"), Description("Settings for Model, Range, Test.")]
+		public string Label { get; set; } = "Product Settings";
+
 		[Category("Product Settings"), Description("Settings describing tests that can be performed.")]
 		public List<TestSetting> TestSettings { get; set; } = new List<TestSetting>
 		{

@@ -1,26 +1,18 @@
 ﻿using System;
 using System.Collections;
-using System.Drawing;
+using System.ComponentModel;
 using System.Reflection;
 using System.Windows.Forms;
-using System.ComponentModel;
 
 namespace Sensit.TestSDK.Forms
 {
-    public partial class FormObjectEditor : Form
+	public partial class FormObjectEditor : Form
     {
-        private Size originalFormSize;		// the form's original size
-        private Size originalGridSize;      // the property grid's original size
-		private Size originalTreeSize;		// the tree view control's original size
-
         public FormObjectEditor()
         {
             InitializeComponent();
 
-			// Remember the size of the form and the properties on it.
-            originalFormSize = Size;
-            originalGridSize = propertyGrid.Size;
-			originalTreeSize = treeView.Size;
+			// TODO:  (Low priority) Form currently has no way of saving the object, since it's not passed back out.
         }
 
 		/// <summary>
@@ -37,13 +29,14 @@ namespace Sensit.TestSDK.Forms
                 // See if we can get the property propertyForText from the item
                 PropertyInfo propertyInfoForText = propertiesObject.GetType().GetProperty(propertyForText);
 
+				// TODO:  (Low priority) FormObjectEditor tree view isn't implemented correctly.
 				// if we can't access the property then it might not be a valid object, or not a valid property so return.
 				if (propertyInfoForText != null)
 				{
 					Add<objectType>(propertiesObject, null, propertyForText);
 				}
 
-				// BUG:  Object editor is broken.
+				// Add object to properties grid.
 				propertyGrid.SelectedObject = propertiesObject;
 			}
 		}
@@ -115,25 +108,5 @@ namespace Sensit.TestSDK.Forms
 
 			return null;
 		}
-
-		/// <summary>
-		/// Runs when the form is resized, and makes the form's controls resize too.
-		/// </summary>
-		/// <param name="e"></param>
-		protected override void OnResize(EventArgs e)
-        {
-            if (!originalFormSize.IsEmpty)
-            {
-				// Calculate the difference between the form's new size and the original size.
-                Size delta = this.Size - originalFormSize;
-
-				// Change the properties grid size by the same amount.
-                propertyGrid.Size = originalGridSize + delta;
-
-				// Change the tree view's length by the same amount.
-				treeView.Height = originalTreeSize.Height + delta.Height;
-            }
-            base.OnResize(e);
-        }
 	}
 }
