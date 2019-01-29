@@ -42,7 +42,7 @@ Features necessary for the first iteration are highlighted in bold.
 * Interface to a variety of test equipment.
   * [x] Prompt an operator for manual control.
   * [x] **Cole-Parmer Mass Flow Controller**
-  * [ ] **2nd Mass Flow Controller (enables gas concentration control)**
+  * [x] **2nd Mass Flow Controller (enables gas concentration control)**
   * [ ] **Keysight datalogger**
   * [ ] Dwyer 16B Temperature Controller
 * Interface to a variety of devices under test.
