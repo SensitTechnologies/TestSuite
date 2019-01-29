@@ -18,7 +18,7 @@ namespace Sensit.TestSDK.Forms
             InitializeComponent();
 
 			// Remember the size of the form and the properties on it.
-            originalFormSize = this.Size;
+            originalFormSize = Size;
             originalGridSize = propertyGrid.Size;
 			originalTreeSize = treeView.Size;
         }

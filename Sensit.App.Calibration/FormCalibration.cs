@@ -16,7 +16,6 @@ namespace Sensit.App.Calibration
 		public Action<string> RangeChanged; // action when range is changed
 		public Action<string> TestChanged;	// action when test is changed
 		public Action Print;				// "Print" button action
-		public Action Options;				// action to launch an "Options" form
 		public Action<int> NumDutsChanged;  // method to call when the number of DUTs has changed
 		public Action Exit;					// action when the program exits
 
@@ -404,29 +403,43 @@ namespace Sensit.App.Calibration
 		}
 
 		/// <summary>
-		/// When Tools --> Options menu is clicked, run the Options actions.
+		/// When Tools --> Equipment Settings menu is clicked, open an object browser for the settings.
 		/// </summary>
-		/// <remarks>
-		/// The application should use this action to launch an app-specific options dialog or form.
-		/// </remarks>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+		private void equipmentSettingsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			try
 			{
-				Options();
-			}
-			catch (NullReferenceException)
-			{
-				MessageBox.Show("This application has no options to set.", "Error");
+				// Create and show a new object editor with the equipment settings.
+				FormObjectEditor objectEditor = new FormObjectEditor();
+				objectEditor.ShowDialog();
 			}
 			catch (Exception ex)
 			{
 				MessageBox.Show(ex.Message, "Error");
 			}
 		}
-		
+
+		/// <summary>
+		/// When Tools --> Test Settings menu is clicked, open an object browser for the settings.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void testSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// Create and show a new object editor with the equipment settings.
+				FormObjectEditor objectEditor = new FormObjectEditor();
+				objectEditor.ShowDialog();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message, "Error");
+			}
+		}
+
 		/// <summary>
 		/// When Edit --> Number of DUTs is selected, prompt the user to select the number of DUTS.
 		/// </summary>
