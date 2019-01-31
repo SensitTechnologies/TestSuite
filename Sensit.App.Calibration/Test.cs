@@ -412,26 +412,26 @@ namespace Sensit.App.Calibration
 						switch (cmd)
 						{
 							case TestCommand.ColdCal:
-								break;
+								throw new NotImplementedException("Cold calibration is not yet implemented.");
 							case TestCommand.HotCal:
-								break;
+								throw new NotImplementedException("Hot calibration is not yet implemented.");
 							case TestCommand.NoTempCal:
-								break;
+								throw new NotImplementedException("No-temp calibration is not yet implemented.");
 							case TestCommand.RoomCal:
-								break;
+								throw new NotImplementedException("Room-temperature calibration is not yet implemented.");
 							case TestCommand.SetRange:
-								break;
+								throw new NotImplementedException("Setting instrument range is not yet implemented.");
 							case TestCommand.SetTemp:
-								break;
+								throw new NotImplementedException("Setting temperature is not yet implemented.");
 							case TestCommand.Span:
-								break;
+								throw new NotImplementedException("Performing DUT span calibration is not yet implemented.");
 							case TestCommand.Verify:
 								Verify();
 								break;
 							case TestCommand.Zero:
-								break;
+								throw new NotImplementedException("Performing DUT zero calibration is not yet implemented.");
 							case TestCommand.Default:
-								break;
+								throw new NotImplementedException("Resetting DUT to factory defaults is not yet implemented.");
 							default:
 								throw new Exception("Unrecognized test command: " + cmd.ToString());
 						}

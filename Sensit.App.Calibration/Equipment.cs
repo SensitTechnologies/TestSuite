@@ -21,12 +21,16 @@ namespace Sensit.App.Calibration
 		// datalogger (for analog sensor DUTs)
 		private Keysight_34972A _datalogger;
 
+		/// <summary>
+		/// Constructor; reads settings and creates equipment objects.
+		/// </summary>
 		public Equipment()
 		{
 			// Read system settings.
 			_settings = Settings.Load<EquipmentSettings>(Properties.Settings.Default.SystemSettingsFile);
 
 			// Create test equipment objects.
+			// TODO:  (Low priority) Create equipment objects based on settings.
 			_mfcAnalyte = new ColeParmerMFC();
 			_mfcDiluent = new ColeParmerMFC();
 			_gasMixer = new GasConcentrationDevice(_mfcDiluent, _mfcDiluent, _mfcAnalyte, _mfcAnalyte);
@@ -39,6 +43,9 @@ namespace Sensit.App.Calibration
 
 		public IGasConcentrationReference GasReference => _gasMixer;
 
+		/// <summary>
+		/// Initializes all equipment.
+		/// </summary>
 		public void Open()
 		{
 			// Configure the mass flow controllers.
@@ -49,6 +56,9 @@ namespace Sensit.App.Calibration
 			_datalogger.Open();
 		}
 
+		/// <summary>
+		/// Close all equipment.
+		/// </summary>
 		public void Close()
 		{
 			// Close all devices.
