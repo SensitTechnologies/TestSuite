@@ -7,6 +7,13 @@ namespace Sensit.TestSDK.Controls
     {
 		private int _index;
 
+		public enum StepResult
+		{
+			Pass,
+			Fail,
+			Unknown,
+		}
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -49,10 +56,35 @@ namespace Sensit.TestSDK.Controls
 		/// <summary>
 		/// Whether the instructions produced the expected result.
 		/// </summary>
-		public bool Result
+		public StepResult Result
 		{
-			get => radioButtonPass.Checked;
-			set => radioButtonPass.Checked = value;
+			get
+			{
+				if (radioButtonFail.Checked)
+					return StepResult.Fail;
+				else if (radioButtonPass.Checked)
+					return StepResult.Pass;
+				else
+					return StepResult.Unknown;
+			}
+			set
+			{
+				switch (value)
+				{
+					case StepResult.Fail:
+						radioButtonFail.Checked = true;
+						radioButtonPass.Checked = false;
+						break;
+					case StepResult.Pass:
+						radioButtonFail.Checked = false;
+						radioButtonPass.Checked = true;
+						break;
+					default:
+						radioButtonFail.Checked = false;
+						radioButtonPass.Checked = false;
+						break;
+				}
+			}
 		}
 
 		/// <summary>
