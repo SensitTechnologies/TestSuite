@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
 using Sensit.TestSDK.Dut;
+using Sensit.TestSDK.Exceptions;
 using Sensit.TestSDK.Interfaces;
 using Sensit.TestSDK.Settings;
 
@@ -16,7 +17,6 @@ namespace Sensit.App.Calibration
 		private ProductSettings _settings;      // product settings for model, range, test
 		private Equipment _equipment;			// test equipment object
 		private List<IDeviceUnderTest> _duts;	// devices under test
-
 		private ModelSetting _modelSettings;    // settings for selected model
 		private RangeSetting _rangeSettings;    // settings for selected range
 		private TestSetting _testSettings;		// settings for selected test
@@ -186,9 +186,11 @@ namespace Sensit.App.Calibration
 		public Test()
 		{
 			// Set up the background worker.
-			_testThread = new BackgroundWorker();
-			_testThread.WorkerReportsProgress = true;
-			_testThread.WorkerSupportsCancellation = true;
+			_testThread = new BackgroundWorker
+			{
+				WorkerReportsProgress = true,
+				WorkerSupportsCancellation = true
+			};
 			_testThread.DoWork += TestThread;
 			_testThread.ProgressChanged += ProgressChanged;
 			_testThread.RunWorkerCompleted += RunWorkerCompleted;
@@ -297,23 +299,23 @@ namespace Sensit.App.Calibration
 
 		#endregion
 
-		#region Test Actions
-		
-		private void SetMassFlow()
+		private void PopupAlarm(string errorMessage)
 		{
-			
+			// Alert the user.
+			DialogResult result = MessageBox.Show(errorMessage
+				+ Environment.NewLine + "Abort the test?"
+				, "Test Error", MessageBoxButtons.YesNo);
+
+			// If requested, cancel the test.
+			if (result == DialogResult.Yes)
+			{
+				// TODO:  Log the abort action.
+
+				// Abort the test.
+				_testThread.CancelAsync();
+			}
 		}
-		
-		private void SetpointCycle()
-		{
-			
-		}
-		
-		private void DutCycle()
-		{
-			
-		}
-		
+
 		private void CheckTolerance()
 		{
 			
@@ -323,14 +325,97 @@ namespace Sensit.App.Calibration
 		{
 			
 		}
-		
-		private void Verify()
-		{
-			
-		}
-				
-		#endregion
 
+		private void DutCycle()
+		{
+			// TODO:  Provide a single method in dut interface to eliminate multiple calls.
+		}
+
+		private void SetpointCycle(IGasConcentrationController controller, IGasConcentrationReference reference,
+			double setpoint, int interval)
+		{
+			// Set setpoint.
+			controller.AnalyteConcentrationSetpoint = setpoint;
+
+			// TODO:  (Low priority) Update GUI with setpoint.
+
+			// Get start time.
+			Stopwatch stopwatch = Stopwatch.StartNew();
+
+			double previous = setpoint;
+			TimeSpan timeoutValue = TimeSpan.Zero;
+
+			// Take readings until they are within tolerance for the required settling time.
+			// TODO:  Make SetpointStabilityTime a TimeSpan with hours, minutes, seconds.
+			while (stopwatch.Elapsed < _testSettings.SetpointStabilityTime)
+			{
+				// Abort if requested.
+				if (_testThread.CancellationPending) { break; }
+
+				// Process timeouts.
+				if (stopwatch.Elapsed > _testSettings.SetpointTimeout)
+				{
+					// Prompt user; cancel test if requested.
+					PopupAlarm("Not able to reach stability.");
+
+					// Reset the timer.
+					stopwatch.Restart();
+				}
+
+				// Get reference reading.
+				reference.Read();
+
+				// Calculate error.
+				double error = reference.AnalyteConcentration - setpoint;
+
+				// Calculate rate of change.
+				// TODO:  (Low priority) Implement setpoint cycle frequency as a setting.
+				double rate = (reference.AnalyteConcentration - previous) / (interval / 1000);
+				previous = reference.AnalyteConcentration;
+
+				// If tolerance has been exceeded, reset the stability time.
+				if (Math.Abs(error) > _testSettings.SetpointErrorTolerance)
+				{
+					stopwatch.Restart();
+				}
+
+				// TODO:  (Low priority) Update GUI.
+
+				// Wait to get desired reading frequency.
+				Thread.Sleep(interval);
+			}
+		}
+
+		private void GasTest(List<double> setpoints)
+		{
+			// Set active control mode.
+			_equipment.GasController.SetControlMode(ControlMode.Control);
+
+			// Collect data.
+			foreach (double sp in setpoints)
+			{
+				// Abort if requested.
+				if (_testThread.CancellationPending) { break; }
+
+				// Achieve the setpoint.
+				SetpointCycle(_equipment.GasController, _equipment.GasReference, sp, 1000);
+
+				// TODO:  (Low priority) Do not process setpoints outside range of the DUT.
+
+				// Read data from each DUT.
+				foreach (IDeviceUnderTest dut in _duts)
+				{
+					// TODO:  (Low priority) Only process found or failed DUTs?
+					DutCycle();
+				}
+			}
+
+			// Set controller to passive mode.
+			_equipment.GasController.SetControlMode(ControlMode.Ambient);
+		}
+
+		// TODO:  (Low priority) Move settings operations from Test.cs to FormCalibrate.cs?
+		// Also ensure that settings are refreshed before each test starts.
 		private void ReadTestSettings()
 		{
 			// Read the settings file.
@@ -373,12 +458,8 @@ namespace Sensit.App.Calibration
 		/// <param name="e"></param>
 		private void TestThread(object sender, DoWorkEventArgs e)
 		{
-			// Do not access the form's BackgroundWorker reference directly.
-			// Instead, use the reference provided by the sender parameter.
-			BackgroundWorker bw = sender as BackgroundWorker;
-
 			// Get start time.
-			var stopwatch = Stopwatch.StartNew();
+			Stopwatch stopwatch = Stopwatch.StartNew();
 
 			try
 			{
@@ -388,23 +469,23 @@ namespace Sensit.App.Calibration
 					// Read test settings (specific to Model, Range, Test).
 					_testThread.ReportProgress(1, "Reading DUT and test settings...");
 					ReadTestSettings();
-					if (bw.CancellationPending) { break; }
+					if (_testThread.CancellationPending) { break; }
 
 					// Create an object to represent test equipment, and
 					// update equipment settings.
 					_testThread.ReportProgress(2, "Reading equipment settings...");
 					_equipment = new Equipment();
-					if (bw.CancellationPending) { break; }
+					if (_testThread.CancellationPending) { break; }
 
 					// Configure test equipment.
 					_testThread.ReportProgress(3, "Configuring test equipment...");
 					_equipment.Open();
-					if (bw.CancellationPending) { break; }
+					if (_testThread.CancellationPending) { break; }
 
 					// Initialize DUTs.
 					_testThread.ReportProgress(4, "Initializing DUTs...");
 					DutOpen();
-					if (bw.CancellationPending) { break; }
+					if (_testThread.CancellationPending) { break; }
 
 					// Perform test actions.
 					foreach (TestCommand cmd in _testSettings.Commands)
@@ -426,7 +507,7 @@ namespace Sensit.App.Calibration
 							case TestCommand.Span:
 								throw new NotImplementedException("Performing DUT span calibration is not yet implemented.");
 							case TestCommand.Verify:
-								Verify();
+								GasTest(_testSettings.VerifiySetpoints);
 								break;
 							case TestCommand.Zero:
 								throw new NotImplementedException("Performing DUT zero calibration is not yet implemented.");
@@ -441,22 +522,27 @@ namespace Sensit.App.Calibration
 					_testThread.ReportProgress(5, "Closing DUTs...");
 					DutClose();
 
-					// Identify passing DUTs.
+					// TODO:  Identify passing DUTs.
 					_testThread.ReportProgress(95, "Identifying passed DUTS...");
-					Thread.Sleep(250); // One second.
 				} while (false);
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message, ex.GetType().ToString());
+			}
 
-				// Everything between here and the end of the test should be fast
-				// and highly reliable since it cannot be cancelled.
+			// Everything between here and the end of the test should be fast
+			// and highly reliable since it cannot be cancelled.
 
-				// Calculate end time.
-				stopwatch.Stop();
-				TimeSpan elapsedtime = stopwatch.Elapsed;
+			// Calculate end time.
+			stopwatch.Stop();
+			TimeSpan elapsedtime = stopwatch.Elapsed;
 
+			try
+			{
 				// Close test equipment.
 				_testThread.ReportProgress(95, "Closing test equipment...");
 				_equipment.Close();
-				Thread.Sleep(100); // One second.
 			}
 			catch (Exception ex)
 			{
@@ -467,7 +553,7 @@ namespace Sensit.App.Calibration
 			_testThread.ReportProgress(100, "Done.");
 
 			// If the operation was cancelled by the user, set the cancel property.
-			if (bw.CancellationPending) { e.Cancel = true; }
+			if (_testThread.CancellationPending) { e.Cancel = true; }
 		}
 
 		/// <summary>

@@ -245,10 +245,10 @@ namespace Sensit.App.Calibration
 		public double SetpointRateTolerance { get; set; } = 2.0;
 
 		[Category("Test Settings"), Description("Required time to be at setpoint [s].")]
-		public int SetpointStabilityTime { get; set; } = 15;
+		public TimeSpan SetpointStabilityTime { get; set; } = new TimeSpan(0, 0, 15);
 
 		[Category("Test Settings"), Description("Timeout before aborting setpoint control [s].")]
-		public int SetpointTimeout { get; set; } = 200;
+		public TimeSpan SetpointTimeout { get; set; } = new TimeSpan(0, 3, 20);
 	}
 
 	[Serializable]
