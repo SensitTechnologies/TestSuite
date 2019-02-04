@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Sensit.TestSDK.Calculations
 {
+	// TODO:  (Low priority) LeastSquaresFitLinear class is deprecated; remove and use LeastSquares class instead.
 	public class LeastSquaresFitLinear
 	{
 		public class ValuePair
