@@ -4,9 +4,10 @@ using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.TestSDK.Devices
 {
-	public class Manual : IMassFlowReference, IVolumeFlowReference, IVelocityReference, IPressureReference, ITemperatureReference,
-		IMassFlowController, IVolumeFlowController, IVelocityController, IPressureController, ITemperatureController
+	public class Manual : IGasConcentrationReference, IMassFlowReference, IVolumeFlowReference, IVelocityReference, IPressureReference, ITemperatureReference,
+		IGasConcentrationController, IMassFlowController, IVolumeFlowController, IVelocityController, IPressureController, ITemperatureController
 	{
+		private double _gasConcentration;
 		private double _massFlow;
 		private double _volumeFlow;
 		private double _velocity;
@@ -18,6 +19,15 @@ namespace Sensit.TestSDK.Devices
 		public UnitOfMeasure.Flow FlowUnit { get; set; }
 
 		public Gas GasSelection { get; set; } = Gas.Air;
+
+		public double AnalyteConcentration
+		{
+			get
+			{
+				InputDialog.Numeric("Gas Concentration", ref _gasConcentration);
+				return _gasConcentration;
+			}
+		}
 
 		public double MassFlow
 		{
@@ -73,6 +83,18 @@ namespace Sensit.TestSDK.Devices
 		#endregion
 
 		#region Control Device Properties
+
+		public double AnalyteBottleConcentration
+		{
+			get;
+			set;
+		}
+
+		public double AnalyteConcentrationSetpoint
+		{
+			get;
+			set;
+		}
 
 		public double MassFlowSetpoint
 		{
