@@ -85,37 +85,25 @@ namespace Sensit.App.Calibration.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Product Settings")]
-        public string ProductSettingsFile {
+        [global::System.Configuration.DefaultSettingValueAttribute("DUT Settings")]
+        public string DutSettingsFile {
             get {
-                return ((string)(this["ProductSettingsFile"]));
+                return ((string)(this["DutSettingsFile"]));
             }
             set {
-                this["ProductSettingsFile"] = value;
+                this["DutSettingsFile"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Simulator")]
-        public string MassFlowController {
+        [global::System.Configuration.DefaultSettingValueAttribute("Test Settings")]
+        public string TestSettingsFile {
             get {
-                return ((string)(this["MassFlowController"]));
+                return ((string)(this["TestSettingsFile"]));
             }
             set {
-                this["MassFlowController"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Simulator")]
-        public string TemperatureController {
-            get {
-                return ((string)(this["TemperatureController"]));
-            }
-            set {
-                this["TemperatureController"] = value;
+                this["TestSettingsFile"] = value;
             }
         }
     }

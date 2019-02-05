@@ -5,188 +5,72 @@ using System.ComponentModel;
 namespace Sensit.App.Calibration
 {
 	/// <summary>
-	/// Components of a test
+	/// Configuration for a variable being measured or controlled during a test.
 	/// </summary>
-	public enum TestCommand
-	{
-		SetTemp,    // Go to a temperature setpoint.
-		Default,    // Set factory default settings.
-		SetRange,   // Set range settings.
-		ColdCal,    // Perform cold-temperature compensation calibration.
-		RoomCal,    // Perform room-temperature compensation calibration.
-		HotCal,     // Perform hot-temperature compensation calibration.
-		NoTempCal,  // Perform a temperature-agnostic calibration.
-		Verify,     // Gather performance data.
-		Zero,       // Perform zero-calibration.
-		Span,       // Perform span-calibration.
-	}
-
-	public enum ToleranceType
-	{
-		/// <summary>
-		/// Quantity of range.
-		/// </summary>
-		Absolute,
-
-		/// <summary>
-		/// Percent of positive range.
-		/// </summary>
-		PercentFullScale,
-
-		/// <summary>
-		/// Percent of reading.
-		/// </summary>
-		PercentReading
-	}
-
-	/// <summary>
-	/// A series of related DUTs and their output characteristics
-	/// </summary>
-	[Serializable]
-	public class ModelSetting
+	public class TestVariable
 	{
 		// Default constructor.
-		public ModelSetting() { }
+		public TestVariable() { }
 
-		// The following constructor has parameters for one of the properties.
-		public ModelSetting(string label)
+		// Initializer with variable type.
+		public TestVariable(Test.VariableType type)
 		{
-			Label = label;
+			VariableType = type;
 		}
 
-		// This constructor has parameters for the label and list.
-		public ModelSetting(string label, List<RangeSetting> rangeSettings)
-		{
-			Label = label;
-			RangeSettings = rangeSettings;
-		}
+		[Category("Test Variable"), Description("Type of the variable.")]
+		public Test.VariableType VariableType { get; set; }
 
-		// This constructor has parameters for all of the properties.
-		public ModelSetting(string label, List<RangeSetting> rangeSettings, string type, int minVal, int maxVal)
-		{
-			Label = label;
-			RangeSettings = rangeSettings;
-			Type = type;
-			MinVal = minVal;
-			MaxVal = maxVal;
-		}
+		[Category("Test Variable"), Description("Error tolerance around setpoints [% full scale].  If this is exceeded, Stability Time will reset.")]
+		public double ErrorTolerance { get; set; } = 3.0;
 
-		[Category("Model Settings"), Description("Name of the DUT series (as it will appear to the operator).")]
-		public string Label { get; set; } = "";
+		[Category("Test Variable"), Description("Tolerated rate of change of setpoints [% full scale / s].")]
+		public double RateTolerance { get; set; } = 2.0;
 
-		[Category("Model Settings"), Description("Input ranges associated with the DUT series.")]
-		public List<RangeSetting> RangeSettings { get; set; }
+		[Category("Test Variable"), Description("Required time to be at setpoint before continuing test.")]
+		public TimeSpan StabilityTime { get; set; } = new TimeSpan(0, 0, 15);
 
-		[Category("Model Settings"), Description("DUT's minimum output")]
-		public double MinVal { get; set; } = 0.0;
+		[Category("Test Variable"), Description("Timeout before aborting setpoint control.")]
+		public TimeSpan Timeout { get; set; } = new TimeSpan(0, 3, 20);
 
-		[Category("Model Settings"), Description("DUT's maximum output")]
-		public double MaxVal { get; set; } = 5.0;
-
-		[Category("Model Settings"), Description("Type of output DUT has")]
-		public string Type { get; set; } = "Volts";
+		[Category("Test Variable"), Description("Time to wait between taking samples from DUT.")]
+		public TimeSpan Interval { get; set; } = new TimeSpan(0, 0, 0);
 	}
 
 	/// <summary>
-	/// A DUT's input characteristics
+	/// Configuration for a component of a test.
 	/// </summary>
-	[Serializable]
-	public class RangeSetting
+	public class TestComponent
 	{
 		// Default constructor.
-		public RangeSetting() { }
+		public TestComponent() { }
 
-		// Constructor with label.
-		public RangeSetting(string label)
+		// Initializer with label.
+		public TestComponent(string label)
 		{
 			Label = label;
 		}
 
-		// This constructor is for unidirectional ranges.
-		public RangeSetting(string label, double high)
-		{
-			Label = label;
-			Low = 0.0;
-			High = high;
-		}
-
-		// This constructor is for bidirectional ranges.
-		public RangeSetting(string label, double low, double high)
-		{
-			Label = label;
-			Low = low;
-			High = high;
-		}
-
-		// Constructor with a single tolerance.
-		public RangeSetting(string label, double low, double high, double tolerance, ToleranceType type)
-		{
-			Label = label;
-			Low = low;
-			High = high;
-
-			// For a range with a single tolerance, the tolerance will always have the same high and low
-			// values as the range itself.
-			ToleranceSettings = new List<ToleranceSetting> { new ToleranceSetting(low, high, tolerance, type) };
-		}
-
-		// Constructor with all properties (including multiple tolerances).
-		public RangeSetting(string label, double low, double high, List<ToleranceSetting> tolerances)
-		{
-			Label = label;
-			Low = low;
-			High = high;
-			ToleranceSettings = tolerances;
-		}
-
-		[Category("Range Settings"), Description("Name of the range (as it will appear to the operator).")]
+		[Category("Test Component"), Description("Name of the test component.")]
 		public string Label { get; set; } = "";
 
-		[Category("Range Settings"), Description("DUT's minimum input [volume %]")]
-		public double Low { get; set; } = 0.0;
+		[Category("Test Component"), Description("Action to perform on the DUT during this test component.")]
+		public Test.DutCommand DutCommand { get; set; }
 
-		[Category("Range Settings"), Description("DUT's maximum input [volume %]")]
-		public double High { get; set; } = 1.0;
+		[Category("Test Component"), Description("Independent variable for this part of the test.")]
+		public TestVariable IndependentVariable { get; set; }
 
-		[Category("Test Settings"), Description(
-			"Pass/fail tolerance for the DUT. " +
-			"Unit varies according to Tolerance Type.")]
-		public List<ToleranceSetting> ToleranceSettings { get; set; }
-	}
+		[Category("Test Component"), Description("Controlled variables for this part of the test.")]
+		public List<TestVariable> ControlledVariables { get; set; }
 
-	/// <summary>
-	/// A ranged tolerance.
-	/// </summary>
-	/// <remarks>
-	/// A range setting has one or more tolerance settings.  This happens, for
-	/// example, if accuracy is "5 PPM or 10% of reading, whichever is greater."
-	/// </remarks>
-	[Serializable]
-	public class ToleranceSetting
-	{
-		// Constructor with no parameters.
-		public ToleranceSetting() { }
+		[Category("Test Component"), Description("Setpoints [% full scale]; Required if calibration is part of the test.")]
+		public List<double> Setpoints { get; set; }
 
-		// Constructor with parameters.
-		public ToleranceSetting(double low, double high, double tolerance, ToleranceType type)
-		{
-			Low = low;
-			High = high;
-			Tolerance = tolerance;
-			Type = type;
-		}
+		[Category("Test Component"), Description("Number of samples taken from DUT at each setpoint.")]
+		public int NumberOfSamples { get; set; } = 1;
 
-		[Category("Range Settings"), Description("Low bound of the tolerance range.")]
-		public double Low { get; set; }
-
-		[Category("Range Settings"), Description("High bound of the tolerance range.")]
-		public double High { get; set; }
-
-		[Category("Range Settings"), Description("Allowable tolerance.")]
-		public double Tolerance { get; set; }
-
-		[Category("Range Settings"), Description("Type of tolerance. Percent Full Scale, Percent Reading, or Greater of both")]
-		public ToleranceType Type { get; set; }
+		[Category("Test Component"), Description("Time to wait between taking samples from DUT.")]
+		public TimeSpan SampleInterval { get; set; } = new TimeSpan(0, 0, 0);
 	}
 
 	/// <summary>
@@ -207,146 +91,36 @@ namespace Sensit.App.Calibration
 		[Category("Test Settings"), Description("Name of the test (as it will appear to the operator).")]
 		public string Label { get; set; } = "";
 
-		[Category("Range Settings"), Description(
-			"True if test requires writing to DUT, false otherwise. " +
-			"We write to a DUT during calibration. " +
-			"In verification, we avoid erasing previous calibrations.")]
-		public bool WriteEnable { get; set; } = false;
-
-		[Category("Test Settings"), Description("Components of the test")]
-		public List<TestCommand> Commands { get; set; }
-
-		[Category("Test Settings"), Description(
-			"Setpoints for calibration [% full scale]. +" +
-			"Required if calibration is part of the test.")]
-		public List<double> CalibrationSetpoints { get; set; }
-
-		[Category("Test Settings"), Description(
-			"Setpoints for verification [% full scale]. " +
-			"Required if verification is part of the test.")]
-		public List<double> VerifiySetpoints { get; set; }
-
-		[Category("Test Settings"), Description("Tolerance for temperature drift during tests without resetting temperature dwell time [degrees].")]
-		public double TemperatureTolerance { get; set; } = 4.0;
-
-		[Category("Test Settings"), Description("Time to wait after achieving temperature setpoint before proceeding with test [minutes]")]
-		public int TemperatureDwellTime { get; set; } = 60;
-
-		[Category("Test Settings"), Description("Number of samples taken from DUT at each setpoint.")]
-		public int NumberOfSamples { get; set; } = 1;
-
-		[Category("Test Settings"), Description("Time to wait between each sample [s].")]
-		public int SampleInterval { get; set; } = 0;
-
-		[Category("Test Settings"), Description("Error tolerance around setpoints [% full scale].")]
-		public double SetpointErrorTolerance { get; set; } = 3.0;
-
-		[Category("Test Settings"), Description("Tolerated rate of change of setpoints [% full scale / s].")]
-		public double SetpointRateTolerance { get; set; } = 2.0;
-
-		[Category("Test Settings"), Description("Required time to be at setpoint [s].")]
-		public TimeSpan SetpointStabilityTime { get; set; } = new TimeSpan(0, 0, 15);
-
-		[Category("Test Settings"), Description("Timeout before aborting setpoint control [s].")]
-		public TimeSpan SetpointTimeout { get; set; } = new TimeSpan(0, 3, 20);
+		[Category("Test Settings"), Description("Actions performed during the test.")]
+		public List<TestComponent> Components { get; set; }
 	}
 
 	[Serializable]
-	public class ProductSettings : Attribute
+	public class TestSettings : Attribute
 	{
-		[Category("Product Settings"), Description("Settings for Model, Range, Test.")]
-		public string Label { get; set; } = "Product Settings";
-
-		[Category("Product Settings"), Description("Settings describing tests that can be performed.")]
-		public List<TestSetting> TestSettings { get; set; } = new List<TestSetting>
+		[Category("Test Settings"), Description("Settings describing tests that can be performed.")]
+		public List<TestSetting> Tests { get; set; } = new List<TestSetting>
 		{
-			new TestSetting("Warm-Up Time") { Commands = new List<TestCommand> { TestCommand.Verify } },
-			new TestSetting("Linearity") { Commands = new List<TestCommand> { TestCommand.Verify } },
-			new TestSetting("Transient Response") { Commands = new List<TestCommand> { TestCommand.Verify } },
-			new TestSetting("Sustained Hysteresis") { Commands = new List<TestCommand> { TestCommand.Verify } },
-			new TestSetting("Short-term Stability") { Commands = new List<TestCommand> { TestCommand.Verify } },
-			new TestSetting("Long-term Stability") { Commands = new List<TestCommand> { TestCommand.Verify } },
-			new TestSetting("Thermal Effects") { Commands = new List<TestCommand> { TestCommand.Verify } },
-			new TestSetting("Thermal Transients") { Commands = new List<TestCommand> { TestCommand.Verify } },
-			new TestSetting("Cross-Sensitivity") { Commands = new List<TestCommand> { TestCommand.Verify } },
-			new TestSetting("Humidity Effects") { Commands = new List<TestCommand> { TestCommand.Verify } }
-		};
-
-		[Category("Product Settings"), Description("Settings describing a product series.")]
-		public List<ModelSetting> ModelSettings { get; set; } = new List<ModelSetting>
-		{
-			new ModelSetting("Simulator", new List<RangeSetting>
+			new TestSetting("Warm-Up Time"),
+			new TestSetting("Linearity")
 			{
-				new RangeSetting("0 - 10,000 PPM (1% V)", 0.0, 1.0, 10.0, ToleranceType.PercentReading),
-				new RangeSetting("0 - 100 %LEL (2.2% V)", 0.0, 2.2, 10.0, ToleranceType.PercentReading),
-				new RangeSetting("2.2 - 100% V",          2.2, 100, 5.0, ToleranceType.PercentReading),
-				new RangeSetting("0 - 25% V", 0.0, 25.0, new List<ToleranceSetting>
+				Components = new List<TestComponent>
 				{
-					new ToleranceSetting(0.0, 0.2, 0.2, ToleranceType.Absolute),
-					new ToleranceSetting(0.2, 25.0, 10.0, ToleranceType.PercentReading)
-				}),
-				new RangeSetting("0 - 2,000 PPM", 0.0000, 0.2000, new List<ToleranceSetting>
-				{
-					new ToleranceSetting(0.0000, 0.0010, 0.0005, ToleranceType.Absolute),
-					new ToleranceSetting(0.0010, 0.2000, 5.0, ToleranceType.PercentReading)
-				})
-			}),
-			new ModelSetting("Propane", new List<RangeSetting>
-			{
-				new RangeSetting("0 - 10,000 PPM (1% V)", 0.0, 1.0, 10.0, ToleranceType.PercentReading),
-				new RangeSetting("0 - 100 %LEL (2.2% V)", 0.0, 2.2, 10.0, ToleranceType.PercentReading),
-				new RangeSetting("2.2 - 100% V",          2.2, 100, 5.0, ToleranceType.PercentReading)
-			}),
-			new ModelSetting("Methane", new List<RangeSetting>
-			{
-				new RangeSetting("0 - 10,000 PPM (1% V)", 0.0, 1.0, 10.0, ToleranceType.PercentReading),
-				new RangeSetting("0 - 100 %LEL (5.0% V)", 0.0, 5.0, 10.0, ToleranceType.PercentReading),
-				new RangeSetting("2.2 - 100% V",          5.0, 100, 5.0, ToleranceType.PercentReading)
-			}),
-			new ModelSetting("Oxygen (O2)", new List<RangeSetting>
-			{
-				new RangeSetting("0 - 25% V", 0.0, 25.0, new List<ToleranceSetting>
-				{
-					new ToleranceSetting(0.0, 0.2, 0.2, ToleranceType.Absolute),
-					new ToleranceSetting(0.2, 25.0, 10.0, ToleranceType.PercentReading)
-				})
-			}),
-			new ModelSetting("Carbon Monoxide (CO)", new List<RangeSetting>
-			{
-				new RangeSetting("0 - 2,000 PPM", 0.0000, 0.2000, new List<ToleranceSetting>
-				{
-					new ToleranceSetting(0.0000, 0.0010, 0.0005, ToleranceType.Absolute),
-					new ToleranceSetting(0.0010, 0.2000, 5.0, ToleranceType.PercentReading)
-				})
-			}),
-
-			// Specification for CO2 is unknown at present.
-			new ModelSetting("Carbon Dioxide (CO2)"),
-
-			new ModelSetting("Hydrogen Sulfide (H2S)", new List<RangeSetting>
-			{
-				new RangeSetting("0 - 100 PPM", 0.0000, 0.0100, new List<ToleranceSetting>
-				{
-					new ToleranceSetting(0.0000, 0.0004, 0.0002, ToleranceType.Absolute),
-					new ToleranceSetting(0.0004, 0.0100, 5.0, ToleranceType.PercentReading)
-				})
-			}),
-			new ModelSetting("Hydrogen Cyanide (HCN)", new List<RangeSetting>
-			{
-				new RangeSetting("0 - 30 PPM", 0.0000, 0.0030, new List<ToleranceSetting>
-				{
-					new ToleranceSetting(0.0000, 0.0004, 0.0002, ToleranceType.Absolute),
-					new ToleranceSetting(0.0004, 0.0030, 5.0, ToleranceType.PercentReading)
-				})
-			}),
-			new ModelSetting("Sulfer Dioxide (SO2)", new List<RangeSetting>
-			{
-				new RangeSetting("0 - 20 PPM", 0.0000, 0.0020, new List<ToleranceSetting>
-				{
-					new ToleranceSetting(0.0000, 0.0010, 0.0001, ToleranceType.Absolute),
-					new ToleranceSetting(0.0010, 0.0020, 5.0, ToleranceType.PercentReading)
-				})
-			})
+					new TestComponent("Verify")
+					{
+						IndependentVariable = new TestVariable(Test.VariableType.GasConcentration),
+						Setpoints = new List<double> { 0.0, 10.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 90.0, 100.0 }
+					}
+				}
+			},
+			new TestSetting("Transient Response"),
+			new TestSetting("Sustained Hysteresis"),
+			new TestSetting("Short-term Stability"),
+			new TestSetting("Long-term Stability"),
+			new TestSetting("Thermal Effects"),
+			new TestSetting("Thermal Transients"),
+			new TestSetting("Cross-Sensitivity"),
+			new TestSetting("Humidity Effects")
 		};
 	}
 }

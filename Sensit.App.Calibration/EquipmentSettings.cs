@@ -5,24 +5,11 @@ using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.App.Calibration
 {
-	/// <summary>
-	/// List of possible device types.
-	/// </summary>
-	public enum SupportDeviceType
-	{
-		GasConcentration,
-		MassFlow,
-		VolumeFlow,
-		Velocity,
-		Pressure,
-		Temperature
-	}
-
 	[Serializable]
 	public class ReferenceSetting
 	{
 		[Category("Device Type"), Description("Variable that device measures.")]
-		public SupportDeviceType DeviceType { get; set; }
+		public Test.VariableType DeviceType { get; set; }
 
 		[Category("Serial Ports"), Description("Serial ports used by device.")]
 		public List<string> SerialPorts { get; set; }
@@ -35,7 +22,7 @@ namespace Sensit.App.Calibration
 	public class ControlSetting
 	{
 		[Category("Device Type"), Description("Interface used by control device.")]
-		public SupportDeviceType DeviceType { get; set; }
+		public Test.VariableType DeviceType { get; set; }
 
 		[Category("Serial Ports"), Description("Serial ports used by device.")]
 		public List<string> SerialPorts { get; set; }

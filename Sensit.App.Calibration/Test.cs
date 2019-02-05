@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
 using Sensit.TestSDK.Dut;
-using Sensit.TestSDK.Exceptions;
 using Sensit.TestSDK.Interfaces;
 using Sensit.TestSDK.Settings;
 
@@ -13,13 +12,39 @@ namespace Sensit.App.Calibration
 {
 	public class Test
 	{
+		public enum DutCommand
+		{
+			Default,    // Set factory default settings.
+			Range,      // Set range settings.
+			Zero,       // Perform zero-calibration.
+			Span,       // Perform span-calibration.
+		}
+
+		public enum VariableType
+		{
+			GasConcentration,
+			MassFlow,
+			VolumeFlow,
+			Velocity,
+			Pressure,
+			Temperature
+		}
+
+		public enum ToleranceType
+		{
+			Absolute,			// Quantity of range.
+			PercentFullScale,   // Percent of positive range.
+			PercentReading      // Percent of reading.
+		}
+
 		private BackgroundWorker _testThread;   // task that will handle test operations
-		private ProductSettings _settings;      // product settings for model, range, test
+		private DutSettings _dutSettings;       // settings for model, range
+		private TestSettings _testSettings;		// settings for tests
 		private Equipment _equipment;			// test equipment object
 		private List<IDeviceUnderTest> _duts;	// devices under test
 		private ModelSetting _modelSettings;    // settings for selected model
 		private RangeSetting _rangeSettings;    // settings for selected range
-		private TestSetting _testSettings;		// settings for selected test
+		private TestSetting _testSetting;		// settings for selected test
 
 		#region Delegates
 
@@ -123,7 +148,7 @@ namespace Sensit.App.Calibration
 				List<string> models = new List<string>();
 
 				// Add each model in the settings (if any models exist).
-				foreach (ModelSetting model in _settings.ModelSettings ?? new List<ModelSetting>())
+				foreach (ModelSetting model in _dutSettings.ModelSettings ?? new List<ModelSetting>())
 				{
 					models.Add(model.Label);
 				}
@@ -140,7 +165,7 @@ namespace Sensit.App.Calibration
 			get
 			{
 				// Find the selected model settings object.
-				ModelSetting m = _settings.ModelSettings.Find(x => x.Label == SelectedModel);
+				ModelSetting m = _dutSettings.ModelSettings.Find(x => x.Label == SelectedModel);
 
 				// Create a new list.
 				List<string> ranges = new List<string>();
@@ -166,9 +191,9 @@ namespace Sensit.App.Calibration
 				List<string> tests = new List<string>();
 
 				// Find each test.
-				if (_settings.TestSettings != null)
+				if (_testSettings.Tests != null)
 				{
-					foreach (TestSetting t in _settings.TestSettings ?? new List<TestSetting>())
+					foreach (TestSetting t in _testSettings.Tests ?? new List<TestSetting>())
 					{
 						tests.Add(t.Label);
 					}
@@ -195,8 +220,11 @@ namespace Sensit.App.Calibration
 			_testThread.ProgressChanged += ProgressChanged;
 			_testThread.RunWorkerCompleted += RunWorkerCompleted;
 
-			// Fetch product settings (so we can get available models, ranges, tests).
-			_settings = Settings.Load<ProductSettings>(Properties.Settings.Default.ProductSettingsFile);
+			// Fetch product settings (so we can get available models, ranges).
+			_dutSettings = Settings.Load<DutSettings>(Properties.Settings.Default.DutSettingsFile);
+
+			// Fetch test settings (so we can get available tests).
+			_testSettings = Settings.Load<TestSettings>(Properties.Settings.Default.TestSettingsFile);
 		}
 
 		#region Thread Management
@@ -316,55 +344,39 @@ namespace Sensit.App.Calibration
 			}
 		}
 
-		private void CheckTolerance()
+		private void DutCycle(TestVariable variable, double setpoint)
 		{
-			
-		}
-		
-		private void ComputeError()
-		{
-			
-		}
-
-		private void DutCycle(IGasConcentrationReference reference, double setpoint)
-		{
-			// TODO:  Provide a single method in dut interface to eliminate multiple calls.
-
-			for (int i = 0; i < _testSettings.NumberOfSamples; i++)
+			// Get reading from each DUT.
+			foreach (IDeviceUnderTest dut in _duts)
 			{
-				// Get reading from each DUT.
-				foreach (IDeviceUnderTest dut in _duts)
+				// Abort if requested.
+				if (_testThread.CancellationPending) { break; }
+
+				// TODO:  foreach (IReferenceDevice ref in _testSettings.References)
+				// Get reference reading.
+				_equipment.GasReference.Read();
+
+				// Calculate error.
+				double error = _equipment.GasReference.AnalyteConcentration - setpoint;
+
+				// Check tolerance.
+				if (Math.Abs(error) > variable.ErrorTolerance)
 				{
-					// Abort if requested.
-					if (_testThread.CancellationPending) { break; }
-
-					// TODO:  foreach (IReferenceDevice ref in _testSettings.References)
-					// Get reference reading.
-					reference.Read();
-
-					// Calculate error.
-					double error = reference.AnalyteConcentration - setpoint;
-
-					// Check tolerance.
-					if (Math.Abs(error) > _testSettings.SetpointErrorTolerance)
-					{
-						// TODO:  Log an error, "Reference out of tolerance during DutCycle."
-						// Mark DUT as failed too.
-					}
-
-					// TODO:  Update GUI with reference info.
-					double dutValue = _equipment.DutInterface.ReadAnalog(dut.Index);
-
-					// TODO:  Log the result.
+					// TODO:  Log an error, "Reference out of tolerance during DutCycle."
+					// Mark DUT as failed too.
 				}
+
+				// TODO:  Update GUI with reference info.
+				double dutValue = _equipment.DutInterface.ReadAnalog(dut.Index);
+
+				// TODO:  Log the result.
 			}
 		}
 
-		private void SetpointCycle(IGasConcentrationController controller, IGasConcentrationReference reference,
-			double setpoint, int interval)
+		private void SetpointCycle(TestVariable variable, double setpoint)
 		{
 			// Set setpoint.
-			controller.AnalyteConcentrationSetpoint = setpoint;
+			_equipment.GasController.AnalyteConcentrationSetpoint = setpoint;
 
 			// TODO:  (Low priority) Update GUI with setpoint.
 
@@ -375,13 +387,13 @@ namespace Sensit.App.Calibration
 			TimeSpan timeoutValue = TimeSpan.Zero;
 
 			// Take readings until they are within tolerance for the required settling time.
-			while (stopwatch.Elapsed < _testSettings.SetpointStabilityTime)
+			while (stopwatch.Elapsed < variable.StabilityTime)
 			{
 				// Abort if requested.
 				if (_testThread.CancellationPending) { break; }
 
 				// Process timeouts.
-				if (stopwatch.Elapsed > _testSettings.SetpointTimeout)
+				if (stopwatch.Elapsed > variable.Timeout)
 				{
 					// Prompt user; cancel test if requested.
 					PopupAlarm("Not able to reach stability.");
@@ -391,18 +403,18 @@ namespace Sensit.App.Calibration
 				}
 
 				// Get reference reading.
-				reference.Read();
+				_equipment.GasReference.Read();
 
 				// Calculate error.
-				double error = reference.AnalyteConcentration - setpoint;
+				double error = _equipment.GasReference.AnalyteConcentration - setpoint;
 
 				// Calculate rate of change.
-				// TODO:  (Low priority) Implement setpoint cycle frequency as a setting.
-				double rate = (reference.AnalyteConcentration - previous) / (interval / 1000);
-				previous = reference.AnalyteConcentration;
+				double rate = (_equipment.GasReference.AnalyteConcentration - previous)
+					/ (variable.Interval.TotalSeconds / 1000);
+				previous = _equipment.GasReference.AnalyteConcentration;
 
 				// If tolerance has been exceeded, reset the stability time.
-				if (Math.Abs(error) > _testSettings.SetpointErrorTolerance)
+				if (Math.Abs(error) > variable.ErrorTolerance)
 				{
 					stopwatch.Restart();
 				}
@@ -410,28 +422,31 @@ namespace Sensit.App.Calibration
 				// TODO:  (Low priority) Update GUI.
 
 				// Wait to get desired reading frequency.
-				Thread.Sleep(interval);
+				Thread.Sleep(variable.Interval);
 			}
 		}
 
-		private void GasTest(List<double> setpoints)
+		private void GasTest(TestComponent testComponent)
 		{
 			// Set active control mode.
 			_equipment.GasController.SetControlMode(ControlMode.Control);
 
 			// Collect data.
-			foreach (double sp in setpoints)
+			foreach (double sp in testComponent.Setpoints)
 			{
 				// Abort if requested.
 				if (_testThread.CancellationPending) { break; }
 
 				// Achieve the setpoint.
-				SetpointCycle(_equipment.GasController, _equipment.GasReference, sp, 1000);
+				SetpointCycle(testComponent.IndependentVariable, sp);
 
 				// Read data from each DUT.
-				// TODO:  (Low priority) Do not process setpoints outside range of the DUT.
-				// TODO:  (Low priority) Only process found or failed DUTs?
-				DutCycle(_equipment.GasReference, sp);
+				for (int i = 0; i < testComponent.NumberOfSamples; i++)
+				{
+					// TODO:  (Low priority) Do not process setpoints outside range of the DUT.
+					// TODO:  (Low priority) Only process found or failed DUTs?
+					DutCycle(testComponent.IndependentVariable, sp);
+				}
 			}
 
 			// Set controller to passive mode.
@@ -443,10 +458,10 @@ namespace Sensit.App.Calibration
 		private void ReadTestSettings()
 		{
 			// Read the settings file.
-			_settings = Settings.Load<ProductSettings>(Properties.Settings.Default.ProductSettingsFile);
+			_dutSettings = Settings.Load<DutSettings>(Properties.Settings.Default.DutSettingsFile);
 
 			// Find the selected model settings.
-			_modelSettings = _settings.ModelSettings.Find(i => i.Label == SelectedModel);
+			_modelSettings = _dutSettings.ModelSettings.Find(i => i.Label == SelectedModel);
 			if (_modelSettings == null)
 			{
 				throw new Exception("Model settings not found. Please contact Engineering.");
@@ -460,8 +475,8 @@ namespace Sensit.App.Calibration
 			}
 
 			// Find the selected test settings.
-			_testSettings = _settings.TestSettings.Find(i => i.Label == SelectedTest);
-			if (_testSettings == null)
+			_testSetting = _testSettings.Tests.Find(i => i.Label == SelectedTest);
+			if (_testSetting == null)
 			{
 				throw new Exception("Test settings not found. Please contact Engineering.");
 			}
@@ -512,34 +527,9 @@ namespace Sensit.App.Calibration
 					if (_testThread.CancellationPending) { break; }
 
 					// Perform test actions.
-					foreach (TestCommand cmd in _testSettings.Commands)
+					foreach (TestComponent c in _testSetting.Components)
 					{
-						switch (cmd)
-						{
-							case TestCommand.ColdCal:
-								throw new NotImplementedException("Cold calibration is not yet implemented.");
-							case TestCommand.HotCal:
-								throw new NotImplementedException("Hot calibration is not yet implemented.");
-							case TestCommand.NoTempCal:
-								throw new NotImplementedException("No-temp calibration is not yet implemented.");
-							case TestCommand.RoomCal:
-								throw new NotImplementedException("Room-temperature calibration is not yet implemented.");
-							case TestCommand.SetRange:
-								throw new NotImplementedException("Setting instrument range is not yet implemented.");
-							case TestCommand.SetTemp:
-								throw new NotImplementedException("Setting temperature is not yet implemented.");
-							case TestCommand.Span:
-								throw new NotImplementedException("Performing DUT span calibration is not yet implemented.");
-							case TestCommand.Verify:
-								GasTest(_testSettings.VerifiySetpoints);
-								break;
-							case TestCommand.Zero:
-								throw new NotImplementedException("Performing DUT zero calibration is not yet implemented.");
-							case TestCommand.Default:
-								throw new NotImplementedException("Resetting DUT to factory defaults is not yet implemented.");
-							default:
-								throw new Exception("Unrecognized test command: " + cmd.ToString());
-						}
+						GasTest(c);
 					}
 
 					// Close DUTs.

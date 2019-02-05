@@ -423,7 +423,7 @@ namespace Sensit.App.Calibration
 				// If user selects "OK," save the settings.
 				if (result == DialogResult.OK)
 				{
-					Settings.Save(settings, Properties.Settings.Default.ProductSettingsFile);
+					Settings.Save(settings, Properties.Settings.Default.DutSettingsFile);
 				}
 			}
 			catch (Exception ex)
@@ -442,7 +442,7 @@ namespace Sensit.App.Calibration
 			try
 			{
 				// Fetch product settings (so we can get available models, ranges, tests).
-				ProductSettings settings = Settings.Load<ProductSettings>(Properties.Settings.Default.ProductSettingsFile);
+				ProductSettings settings = Settings.Load<ProductSettings>(Properties.Settings.Default.DutSettingsFile);
 
 				// Create and show a new object editor with the equipment settings.
 				FormObjectEditor objectEditor = new FormObjectEditor();
@@ -452,7 +452,7 @@ namespace Sensit.App.Calibration
 				// If user selects "OK," save the settings.
 				if (result == DialogResult.OK)
 				{
-					Settings.Save(settings, Properties.Settings.Default.ProductSettingsFile);
+					Settings.Save(settings, Properties.Settings.Default.DutSettingsFile);
 				}
 			}
 			catch (Exception ex)
