@@ -260,16 +260,16 @@ namespace Sensit.App.Calibration
 		[Category("Product Settings"), Description("Settings describing tests that can be performed.")]
 		public List<TestSetting> TestSettings { get; set; } = new List<TestSetting>
 		{
-			new TestSetting("Warm-Up Time"),
-			new TestSetting("Linearity"),
-			new TestSetting("Transient Response"),
-			new TestSetting("Sustained Hysteresis"),
-			new TestSetting("Short-term Stability"),
-			new TestSetting("Long-term Stability"),
-			new TestSetting("Thermal Effects"),
-			new TestSetting("Thermal Transients"),
-			new TestSetting("Cross-Sensitivity"),
-			new TestSetting("Humidity Effects")
+			new TestSetting("Warm-Up Time") { Commands = new List<TestCommand> { TestCommand.Verify } },
+			new TestSetting("Linearity") { Commands = new List<TestCommand> { TestCommand.Verify } },
+			new TestSetting("Transient Response") { Commands = new List<TestCommand> { TestCommand.Verify } },
+			new TestSetting("Sustained Hysteresis") { Commands = new List<TestCommand> { TestCommand.Verify } },
+			new TestSetting("Short-term Stability") { Commands = new List<TestCommand> { TestCommand.Verify } },
+			new TestSetting("Long-term Stability") { Commands = new List<TestCommand> { TestCommand.Verify } },
+			new TestSetting("Thermal Effects") { Commands = new List<TestCommand> { TestCommand.Verify } },
+			new TestSetting("Thermal Transients") { Commands = new List<TestCommand> { TestCommand.Verify } },
+			new TestSetting("Cross-Sensitivity") { Commands = new List<TestCommand> { TestCommand.Verify } },
+			new TestSetting("Humidity Effects") { Commands = new List<TestCommand> { TestCommand.Verify } }
 		};
 
 		[Category("Product Settings"), Description("Settings describing a product series.")]

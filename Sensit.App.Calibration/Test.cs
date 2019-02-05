@@ -326,9 +326,38 @@ namespace Sensit.App.Calibration
 			
 		}
 
-		private void DutCycle()
+		private void DutCycle(IGasConcentrationReference reference, double setpoint)
 		{
 			// TODO:  Provide a single method in dut interface to eliminate multiple calls.
+
+			for (int i = 0; i < _testSettings.NumberOfSamples; i++)
+			{
+				// Get reading from each DUT.
+				foreach (IDeviceUnderTest dut in _duts)
+				{
+					// Abort if requested.
+					if (_testThread.CancellationPending) { break; }
+
+					// TODO:  foreach (IReferenceDevice ref in _testSettings.References)
+					// Get reference reading.
+					reference.Read();
+
+					// Calculate error.
+					double error = reference.AnalyteConcentration - setpoint;
+
+					// Check tolerance.
+					if (Math.Abs(error) > _testSettings.SetpointErrorTolerance)
+					{
+						// TODO:  Log an error, "Reference out of tolerance during DutCycle."
+						// Mark DUT as failed too.
+					}
+
+					// TODO:  Update GUI with reference info.
+					double dutValue = _equipment.DutInterface.ReadAnalog(dut.Index);
+
+					// TODO:  Log the result.
+				}
+			}
 		}
 
 		private void SetpointCycle(IGasConcentrationController controller, IGasConcentrationReference reference,
@@ -346,7 +375,6 @@ namespace Sensit.App.Calibration
 			TimeSpan timeoutValue = TimeSpan.Zero;
 
 			// Take readings until they are within tolerance for the required settling time.
-			// TODO:  Make SetpointStabilityTime a TimeSpan with hours, minutes, seconds.
 			while (stopwatch.Elapsed < _testSettings.SetpointStabilityTime)
 			{
 				// Abort if requested.
@@ -400,14 +428,10 @@ namespace Sensit.App.Calibration
 				// Achieve the setpoint.
 				SetpointCycle(_equipment.GasController, _equipment.GasReference, sp, 1000);
 
-				// TODO:  (Low priority) Do not process setpoints outside range of the DUT.
-
 				// Read data from each DUT.
-				foreach (IDeviceUnderTest dut in _duts)
-				{
-					// TODO:  (Low priority) Only process found or failed DUTs?
-					DutCycle();
-				}
+				// TODO:  (Low priority) Do not process setpoints outside range of the DUT.
+				// TODO:  (Low priority) Only process found or failed DUTs?
+				DutCycle(_equipment.GasReference, sp);
 			}
 
 			// Set controller to passive mode.
@@ -538,10 +562,10 @@ namespace Sensit.App.Calibration
 			stopwatch.Stop();
 			TimeSpan elapsedtime = stopwatch.Elapsed;
 
+			// Close test equipment.
 			try
 			{
-				// Close test equipment.
-				_testThread.ReportProgress(95, "Closing test equipment...");
+				_testThread.ReportProgress(99, "Closing test equipment...");
 				_equipment.Close();
 			}
 			catch (Exception ex)
@@ -549,7 +573,7 @@ namespace Sensit.App.Calibration
 				MessageBox.Show(ex.Message, ex.GetType().ToString());
 			}
 
-			// Done!
+			// Update the GUI.
 			_testThread.ReportProgress(100, "Done.");
 
 			// If the operation was cancelled by the user, set the cancel property.

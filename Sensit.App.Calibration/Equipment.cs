@@ -9,6 +9,8 @@ namespace Sensit.App.Calibration
 		// system settings
 		private readonly EquipmentSettings _settings;
 
+		Manual _manual;
+
 		// mass flow controller for analyte gas
 		private ColeParmerMFC _mfcAnalyte;
 
@@ -29,19 +31,20 @@ namespace Sensit.App.Calibration
 			// Read system settings.
 			_settings = Settings.Load<EquipmentSettings>(Properties.Settings.Default.SystemSettingsFile);
 
-			// Create test equipment objects.
-			// TODO:  (Low priority) Create equipment objects based on settings.
+			// TODO:  (Low priority) Create test equipment objects (as specified in settings).
 			_mfcAnalyte = new ColeParmerMFC();
 			_mfcDiluent = new ColeParmerMFC();
 			_gasMixer = new GasConcentrationDevice(_mfcDiluent, _mfcDiluent, _mfcAnalyte, _mfcAnalyte);
 			_datalogger = new Keysight_34972A();
+
+			_manual = new Manual();
 		}
 
 		public IDutInterfaceDevice DutInterface => _datalogger;
 
-		public IGasConcentrationController GasController => _gasMixer;
+		public IGasConcentrationController GasController => _manual;
 
-		public IGasConcentrationReference GasReference => _gasMixer;
+		public IGasConcentrationReference GasReference => _manual;
 
 		/// <summary>
 		/// Initializes all equipment.
@@ -53,7 +56,7 @@ namespace Sensit.App.Calibration
 			_mfcDiluent.Open(_settings?.DiluentControllerPort);
 
 			// Configure the datalogger.
-			_datalogger.Open();
+			//_datalogger.Open();
 		}
 
 		/// <summary>
