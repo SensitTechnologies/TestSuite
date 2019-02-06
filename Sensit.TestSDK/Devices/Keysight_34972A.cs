@@ -19,9 +19,10 @@ namespace Sensit.TestSDK.Devices
 	/// </remarks>
 	public class Keysight_34972A : IDutInterfaceDevice
 	{
-		Ag3497x _v34972A;
+		Ag3497x _v3497x;
+        public string readings;
 
-		public void Open()
+        public void Open()
 		{
 			// The device uses a USB VISA interface, so look for devices with that pattern.
 			string[] resourceStrings = VisaDevice.Find(VisaPattern.USB).ToArray();
@@ -42,24 +43,50 @@ namespace Sensit.TestSDK.Devices
 		public void Open(string resourceName)
 		{
 			// Open the device.
-			_v34972A = new Ag3497x(resourceName);
+			_v3497x = new Ag3497x(resourceName);
 
 			// Confirm identity.
-			_v34972A.SCPI.IDN.Query(out string identity);
+			_v3497x.SCPI.IDN.Query(out string identity);
 
 			// The second word is the model number.
 			string[] words = identity.Split(',');
 
-			if (words[1].Equals("34972A") == false)
+			if (words[1].Equals("34970A") == false && words[1].Equals("34972A") == false)
 			{
 				throw new DeviceCommunicationException("Unexpected device model number.");
 			}
 
 			// Introduce yourself.
-			_v34972A.SCPI.DISPlay.TEXT.Command("SENSIT");
-		}
+			_v3497x.SCPI.DISPlay.TEXT.Command("SENSIT");
 
-		public void PowerOn(int dut)
+            //Configure channels for DC voltage. 
+            // In order to use the following driver class, you need to reference this assembly : [C:\ProgramData\Keysight\Command Expert\ScpiNetDrivers\Ag3497x_1_13.dll]
+            _v3497x.SCPI.CONFigure.VOLTage.DC.Command("AUTO", "DEF", "(@301,305,309,313,317)");
+
+            //Enable inclusion of channel number on log. 
+            _v3497x.SCPI.FORMat.READing.CHANnel.Command(true);
+
+            //Enable inclusion of timestamp on log. 
+            _v3497x.SCPI.FORMat.READing.TIME.Command(true);
+
+            //Set format of timestamp. 
+            _v3497x.SCPI.FORMat.READing.TIME.TYPE.Command("ABSolute");
+
+            //Set trigger source to software trigger over bus. 
+            _v3497x.SCPI.TRIGger.SOURce.Command("BUS");
+
+            //Set trigger-to-trigger interval. Currently: 1 second. 
+            //_v3497x.SCPI.TRIGger.TIMer.Command(1D);
+
+            //Number of sweeps through the scan list before stopping scan. MIN = 1, MAX = 50000, INFinity = infinite. 
+            _v3497x.SCPI.TRIGger.COUNt.Command("MIN");
+
+            //Sets channels to be included in scan list.
+            _v3497x.SCPI.ROUTe.SCAN.Command("@301,305,309,313,317");
+
+        }
+
+        public void PowerOn(int dut)
 		{
 			throw new NotImplementedException();
 		}
@@ -80,22 +107,34 @@ namespace Sensit.TestSDK.Devices
 		}
 
 		public double ReadAnalog(int dut)
-		{
-			throw new NotImplementedException();
-		}
+        {
+            //Changes from idle to wait-for-trigger state. 
+            //May want to move to "Open". Unsure if state is changed back to idle upon scan completion. 
+            _v3497x.SCPI.INITiate.Command();
 
-		public void Close()
+            //Sends trigger via bus source. 
+            _v3497x.SCPI.TRG.Command();
+
+            //Transfers NVM readings to output buffer. 
+            _v3497x.SCPI.FETCh.QueryAllData(out readings);
+
+
+
+            return Double.Parse(readings,System.Globalization.NumberStyles.AllowExponent);
+        }
+
+        public void Close()
 		{
 			// Clear any text on the display.
-			_v34972A.SCPI.DISPlay.TEXT.CLEar.Command();
+			_v3497x.SCPI.DISPlay.TEXT.CLEar.Command();
 
 			// Disconnect.
-			_v34972A?.Disconnect();
+			_v3497x?.Disconnect();
 
 			// Prevent memory leaks.
-			((IDisposable)_v34972A)?.Dispose();
+			((IDisposable)_v3497x)?.Dispose();
 
-			_v34972A = null;
+			_v3497x = null;
 		}
 	}
 }
