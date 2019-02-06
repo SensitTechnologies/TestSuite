@@ -6,6 +6,11 @@
 	public interface IDutInterfaceDevice
 	{
 		/// <summary>
+		/// Number of devices under test controlled by the device.
+		/// </summary>
+		int NumberOfDuts { set; }
+
+		/// <summary>
 		/// Apply power to the specified DUT.
 		/// </summary>
 		/// <param name="dut">device to act upon</param>
@@ -16,6 +21,15 @@
 		/// </summary>
 		/// <param name="dut">device to act upon</param>
 		void PowerOff(int dut);
+
+		/// <summary>
+		/// Fetch the device's current readings/settings.
+		/// </summary>
+		/// <remarks>
+		/// Some devices (i.e. Agilent DAQs) return all readings at once.
+		/// Those devices should use this method to update values returned by the individual methods.
+		/// </remarks>
+		void Read();
 
 		/// <summary>
 		/// Confirm that a DUT is present.
