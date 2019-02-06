@@ -33,8 +33,8 @@ namespace Sensit.App.Calibration
 		[Category("Test Variable"), Description("Timeout before aborting setpoint control.")]
 		public TimeSpan Timeout { get; set; } = new TimeSpan(0, 3, 20);
 
-		[Category("Test Variable"), Description("Time to wait between taking samples from DUT.")]
-		public TimeSpan Interval { get; set; } = new TimeSpan(0, 0, 0);
+		[Category("Test Variable"), Description("Time to wait between taking samples for this variable.")]
+		public TimeSpan Interval { get; set; } = new TimeSpan(0, 0, 1);
 	}
 
 	/// <summary>
