@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Threading;
 using System.Windows.Forms;
+using CsvHelper;
 using Sensit.TestSDK.Dut;
 using Sensit.TestSDK.Interfaces;
 using Sensit.TestSDK.Settings;
@@ -37,6 +39,15 @@ namespace Sensit.App.Calibration
 			PercentReading      // Percent of reading.
 		}
 
+		public class TestResults
+		{
+			public double Setpoint { get; set; }
+			public int RawValue { get; set; }
+			public double CalValue { get; set; }
+			public double Reference { get; set; }
+			public double Error { get; set; }
+		}
+
 		private BackgroundWorker _testThread;   // task that will handle test operations
 		private DutSettings _dutSettings;       // settings for model, range
 		private TestSettings _testSettings;		// settings for tests
@@ -45,6 +56,10 @@ namespace Sensit.App.Calibration
 		private ModelSetting _modelSettings;    // settings for selected model
 		private RangeSetting _rangeSettings;    // settings for selected range
 		private TestSetting _testSetting;		// settings for selected test
+		private List<TestResults> dutData = new List<TestResults>
+		{
+			new TestResults{ Setpoint = 0, RawValue = 0, CalValue = 3, Reference = 4.3, Error = 32 }
+		};
 
 		#region Delegates
 
@@ -404,14 +419,15 @@ namespace Sensit.App.Calibration
 
 				// Get reference reading.
 				_equipment.GasReference.Read();
+				double reading = _equipment.GasReference.AnalyteConcentration;
 
 				// Calculate error.
-				double error = _equipment.GasReference.AnalyteConcentration - setpoint;
+				double error = reading - setpoint;
 
 				// Calculate rate of change.
-				double rate = (_equipment.GasReference.AnalyteConcentration - previous)
+				double rate = (reading - previous)
 					/ (variable.Interval.TotalSeconds / 1000);
-				previous = _equipment.GasReference.AnalyteConcentration;
+				previous = reading;
 
 				// If tolerance has been exceeded, reset the stability time.
 				if (Math.Abs(error) > variable.ErrorTolerance)
@@ -561,6 +577,13 @@ namespace Sensit.App.Calibration
 			catch (Exception ex)
 			{
 				MessageBox.Show(ex.Message, ex.GetType().ToString());
+			}
+
+			// Save test results to csv file.
+			using (var writer = new StreamWriter("results.csv"))
+			using (var csv = new CsvWriter(writer))
+			{
+				csv.WriteRecords(dutData);
 			}
 
 			// Update the GUI.
