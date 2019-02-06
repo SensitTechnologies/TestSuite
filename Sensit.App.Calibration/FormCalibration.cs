@@ -442,11 +442,11 @@ namespace Sensit.App.Calibration
 			try
 			{
 				// Fetch product settings (so we can get available models, ranges, tests).
-				ProductSettings settings = Settings.Load<ProductSettings>(Properties.Settings.Default.DutSettingsFile);
+				TestSettings settings = Settings.Load<TestSettings>(Properties.Settings.Default.DutSettingsFile);
 
 				// Create and show a new object editor with the equipment settings.
 				FormObjectEditor objectEditor = new FormObjectEditor();
-				objectEditor.AddObject<ProductSettings>(settings, "Label");
+				objectEditor.AddObject<TestSettings>(settings, "Label");
 				DialogResult result = objectEditor.ShowDialog();
 
 				// If user selects "OK," save the settings.
