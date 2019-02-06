@@ -1,43 +1,100 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Sensit.TestSDK.Controls
 {
-    public partial class UserCustomStep : UserControl
+	public partial class UserCustomStep : UserControl
     {
-        public String radioButtonString = "";
+		private int _index;
+
+		public enum StepResult
+		{
+			Pass,
+			Fail,
+			Unknown,
+		}
 
         /// <summary>
-        /// Used to create a Test Step in the Form
+        /// Constructor
         /// </summary>
-        /// <param name="stepInfo">Test Step</param>
-        public UserCustomStep(String stepInfo)
+        public UserCustomStep()
         {
             InitializeComponent();
-            label1.Text = stepInfo;
         }
 
-        /// <summary>
-        /// Shows or hides the textbox depending on the variable passed into this method
-        /// </summary>
-        /// <param name="visible">Set to whether or not you want the textbox to be visible</param>
-        public void SetVisibility(bool visible)
-        {
-            failureExplanation.Visible = visible;
-        }
+		/// <summary>
+		/// Number to associate with the step.
+		/// </summary>
+		public int Index
+		{
+			get => _index;
+			set
+			{
+				_index = value;
+				groupBoxStep.Text = "Step " + value;
+			}
+		}
 
-        public String GetTestFailureResult()
-        {
-            return failureExplanation.Text;
-        }
+		/// <summary>
+		/// Instructional text displayed to the user.
+		/// </summary>
+		public string Instructions
+		{
+			get => labelInstructions.Text;
+			set => labelInstructions.Text = value;
+		}
+
+		/// <summary>
+		/// The desired effect of the instructions.
+		/// </summary>
+		public string ExpectedResult
+		{
+			get => labelExpectedResult.Text;
+			set => labelExpectedResult.Text = value;
+		}
+
+		/// <summary>
+		/// Whether the instructions produced the expected result.
+		/// </summary>
+		public StepResult Result
+		{
+			get
+			{
+				if (radioButtonFail.Checked)
+					return StepResult.Fail;
+				else if (radioButtonPass.Checked)
+					return StepResult.Pass;
+				else
+					return StepResult.Unknown;
+			}
+			set
+			{
+				switch (value)
+				{
+					case StepResult.Fail:
+						radioButtonFail.Checked = true;
+						radioButtonPass.Checked = false;
+						break;
+					case StepResult.Pass:
+						radioButtonFail.Checked = false;
+						radioButtonPass.Checked = true;
+						break;
+					default:
+						radioButtonFail.Checked = false;
+						radioButtonPass.Checked = false;
+						break;
+				}
+			}
+		}
+
+		/// <summary>
+		/// The observed effect of the instructions.
+		/// </summary>
+		public string ActualResult
+		{
+			get => textBoxActualResult.Text;
+			set => textBoxActualResult.Text = value;
+		}
 
         /// <summary>
         /// Hides the textbox when the Pass radio button has been clicked
@@ -46,9 +103,12 @@ namespace Sensit.TestSDK.Controls
         /// <param name="e"></param>
         private void radioButtonPass_CheckedChanged(object sender, EventArgs e)
         {
-            radioButtonString = "Pass";
-            Console.WriteLine("Pass was clicked");
-            SetVisibility(false);
+			// Do stuff only if the radio button is checked.
+			// (Otherwise the actions will run twice.)
+			if (((RadioButton)sender).Checked)
+			{
+				textBoxActualResult.Visible = false;
+			}
         }
 
         /// <summary>
@@ -58,14 +118,12 @@ namespace Sensit.TestSDK.Controls
         /// <param name="e"></param>
         private void radioButtonFail_CheckedChanged(object sender, EventArgs e)
         {
-            radioButtonString = "Fail";
-            Console.WriteLine("Fail was clicked");
-            SetVisibility(true);
-        }
-
-        public String ReturnText()
-        {
-            return label1.Text;
+			// Do stuff only if the radio button is checked.
+			// (Otherwise the actions will run twice.)
+			if (((RadioButton)sender).Checked)
+			{
+				textBoxActualResult.Visible = true;
+			}
         }
     }
 }

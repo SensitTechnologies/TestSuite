@@ -1,9 +1,10 @@
 ﻿using System;
-using System.IO.Ports;					// serial port access
-using Sensit.TestSDK.Calculations;		// define units of measure
-using Sensit.TestSDK.Interfaces;		// define control, serial, mass flow interfaces
-using Sensit.TestSDK.Exceptions;		// define device exceptions
-using System.Collections.Generic;		// dictionary
+using System.IO.Ports;
+using Sensit.TestSDK.Calculations;
+using Sensit.TestSDK.Interfaces;
+using Sensit.TestSDK.Exceptions;
+using System.Collections.Generic;
+using Sensit.TestSDK.Communication;
 
 namespace Sensit.TestSDK.Devices
 {
@@ -20,7 +21,7 @@ namespace Sensit.TestSDK.Devices
 	/// Once that's possible, this class can be extended to implement
 	/// IVolumeFlowController, IPressureController. This should be low priority.
 	/// </remarks>
-	public class ColeParmerMFC : ISerialDevice, IMassFlowController, 
+	public class ColeParmerMFC : SerialDevice, IMassFlowController, 
 		IMassFlowReference, IVolumeFlowReference, ITemperatureReference, IPressureReference
 	{
 		/// <summary>
@@ -79,9 +80,6 @@ namespace Sensit.TestSDK.Devices
 			{ Gas.Star29,               (28, "Star29") },
 			{ Gas.P5,                   (29, "P-5") },
 		};
-
-		// port used to communicate with mass flow controller
-		private SerialPort _serialPort = new SerialPort();
 
 		// specifier for a specific device on the serial port
 		private static readonly char ADDRESS = 'A';
@@ -192,12 +190,73 @@ namespace Sensit.TestSDK.Devices
 
 		#region Serial Device Methods
 
+		public new int BaudRate
+		{
+			set
+			{
+				if ((value != 2400) &&
+					(value != 9600) &&
+					(value != 19200) &&
+					(value != 38400) &&
+					(value != 57600))
+				{
+					throw new DeviceSettingNotSupportedException("The Cole Parmer MFC does not support baud rate " + value.ToString() + ".");
+				}
+
+				_serialPort.BaudRate = value;
+			}
+		}
+
+		public new int DataBits
+		{
+			set
+			{
+				if (value != 8)
+				{
+					throw new DeviceSettingNotSupportedException("The Cole Parmer MFC only supports 8 data bits.");
+				}
+
+				_serialPort.DataBits = value;
+			}
+		}
+
+		public new Parity Parity
+		{
+			set
+			{
+				if (value != Parity.None)
+					throw new DeviceSettingNotSupportedException("The Cole Parmer MFC does not support parity.");
+
+				_serialPort.Parity = value;
+			}
+		}
+
+		public new StopBits StopBits
+		{
+			set
+			{
+				if (value != StopBits.One)
+					throw new DeviceSettingNotSupportedException("The Cole Parmer MFC only supports one stop bit.");
+
+				_serialPort.StopBits = value;
+			}
+		}
+
+		public override void WriteSerialProperties(int dataBits = 8, Parity parity = Parity.None, StopBits stopBits = StopBits.One)
+		{
+			// This mass flow controller only supports its default settings,
+			// so there is nothing to do here except update the properties.
+			DataBits = dataBits;
+			Parity = parity;
+			StopBits = stopBits;
+		}
+
 		/// <summary>
 		/// Open the serial port with the correct settings; set default address (and polling mode).
 		/// </summary>
 		/// <param name="portName">com port name (i.e. "COM3")</param>
 		/// <param name="baudRate">baud rate (9600 and 19200 are supported)</param>
-		public void Open(string portName, int baudRate = 19200)
+		public override void Open(string portName, int baudRate = 19200)
 		{
 			try
 			{
@@ -224,32 +283,6 @@ namespace Sensit.TestSDK.Devices
 			{
 				throw new DevicePortException("Could not open mass flow controller's serial port."
 					+ Environment.NewLine + ex.Message);
-			}
-		}
-
-		public void SetSerialProperties(int dataBits = 8, Parity parity = Parity.None, StopBits stopBits = StopBits.One)
-		{
-			// This mass flow controller only supports its default settings,
-			// so all this method does is throw exceptions if you try to change them.
-			if (dataBits != 8)
-				throw new DeviceSettingNotSupportedException("The device only supports 8 data bits.");
-
-			if (parity != Parity.None)
-				throw new DeviceSettingNotSupportedException("The device does not support parity.");
-
-			if (stopBits != StopBits.One)
-				throw new DeviceSettingNotSupportedException("The device only supports one stop bit.");
-		}
-
-		/// <summary>
-		/// Close the mass flow controller's serial port (if it's open).
-		/// </summary>
-		public void Close()
-		{
-			// If the serial port is open, close it.
-			if (_serialPort.IsOpen)
-			{
-				_serialPort.Close();
 			}
 		}
 

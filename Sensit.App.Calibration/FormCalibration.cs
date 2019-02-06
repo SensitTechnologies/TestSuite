@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 using Sensit.TestSDK.Forms;
+using Sensit.TestSDK.Settings;
 
 namespace Sensit.App.Calibration
 {
@@ -411,9 +412,19 @@ namespace Sensit.App.Calibration
 		{
 			try
 			{
+				// Fetch equipment settings.
+				EquipmentSettings settings = Settings.Load<EquipmentSettings>(Properties.Settings.Default.SystemSettingsFile);
+
 				// Create and show a new object editor with the equipment settings.
 				FormObjectEditor objectEditor = new FormObjectEditor();
-				objectEditor.ShowDialog();
+				objectEditor.AddObject<EquipmentSettings>(settings, "Label");
+				DialogResult result = objectEditor.ShowDialog();
+
+				// If user selects "OK," save the settings.
+				if (result == DialogResult.OK)
+				{
+					Settings.Save(settings, Properties.Settings.Default.DutSettingsFile);
+				}
 			}
 			catch (Exception ex)
 			{
@@ -430,9 +441,19 @@ namespace Sensit.App.Calibration
 		{
 			try
 			{
+				// Fetch product settings (so we can get available models, ranges, tests).
+				TestSettings settings = Settings.Load<TestSettings>(Properties.Settings.Default.DutSettingsFile);
+
 				// Create and show a new object editor with the equipment settings.
 				FormObjectEditor objectEditor = new FormObjectEditor();
-				objectEditor.ShowDialog();
+				objectEditor.AddObject<TestSettings>(settings, "Label");
+				DialogResult result = objectEditor.ShowDialog();
+
+				// If user selects "OK," save the settings.
+				if (result == DialogResult.OK)
+				{
+					Settings.Save(settings, Properties.Settings.Default.DutSettingsFile);
+				}
 			}
 			catch (Exception ex)
 			{

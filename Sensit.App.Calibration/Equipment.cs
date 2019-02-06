@@ -6,37 +6,67 @@ namespace Sensit.App.Calibration
 {
 	public class Equipment
 	{
-		private readonly EquipmentSettings _settings;	// system settings
-		private ColeParmerMFC _mfc;								// mass flow controller
-		private Keysight_34972A _datalogger;			// datalogger (for analog sensor DUTs)
+		// system settings
+		private readonly EquipmentSettings _settings;
 
+		Manual _manual;
+
+		// mass flow controller for analyte gas
+		private ColeParmerMFC _mfcAnalyte;
+
+		// mass flow controller for diluent gas
+		private ColeParmerMFC _mfcDiluent;
+
+		// both mass flow controllers combined for mixing gas
+		private GasConcentrationDevice _gasMixer;
+
+		// datalogger (for analog sensor DUTs)
+		private Keysight_34972A _datalogger;
+
+		/// <summary>
+		/// Constructor; reads settings and creates equipment objects.
+		/// </summary>
 		public Equipment()
 		{
 			// Read system settings.
 			_settings = Settings.Load<EquipmentSettings>(Properties.Settings.Default.SystemSettingsFile);
 
-			// Create test equipment objects.
-			_mfc = new ColeParmerMFC();
+			// TODO:  (Low priority) Create test equipment objects (as specified in settings).
+			_mfcAnalyte = new ColeParmerMFC();
+			_mfcDiluent = new ColeParmerMFC();
+			_gasMixer = new GasConcentrationDevice(_mfcDiluent, _mfcDiluent, _mfcAnalyte, _mfcAnalyte);
 			_datalogger = new Keysight_34972A();
+
+			_manual = new Manual();
 		}
 
 		public IDutInterfaceDevice DutInterface => _datalogger;
 
-		public IMassFlowController MassFlowController => _mfc;
+		public IGasConcentrationController GasController => _manual;
 
-		public IMassFlowReference MassFlowReference => _mfc;
+		public IGasConcentrationReference GasReference => _manual;
 
+		/// <summary>
+		/// Initializes all equipment.
+		/// </summary>
 		public void Open()
 		{
-			// Open all devices.
-			_mfc.Open(_settings?.MassFlowControllerPort);
-			_datalogger.Open();
+			// Configure the mass flow controllers.
+			_mfcAnalyte.Open(_settings?.AnalyteControllerPort);
+			_mfcDiluent.Open(_settings?.DiluentControllerPort);
+
+			// Configure the datalogger.
+			//_datalogger.Open();
 		}
 
+		/// <summary>
+		/// Close all equipment.
+		/// </summary>
 		public void Close()
 		{
 			// Close all devices.
-			_mfc?.Close();
+			_mfcAnalyte?.Close();
+			_mfcDiluent?.Close();
 			_datalogger?.Close();
 		}
 	}

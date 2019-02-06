@@ -5,7 +5,7 @@
 	/// </summary>
 	public enum ControlMode
 	{
-		Vent,		// no active effect on test environment
+		Ambient,	// vent to external environment if possible
 		Control,	// actively controlling the test environment
 		Measure		// passively measuring the test environment
 	}

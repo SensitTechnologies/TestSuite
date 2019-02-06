@@ -17,14 +17,11 @@
     <Setting Name="SystemSettingsFile" Type="System.String" Scope="User">
       <Value Profile="(Default)">System Settings</Value>
     </Setting>
-    <Setting Name="ProductSettingsFile" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Product Settings</Value>
+    <Setting Name="DutSettingsFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">DUT Settings</Value>
     </Setting>
-    <Setting Name="MassFlowController" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Simulator</Value>
-    </Setting>
-    <Setting Name="TemperatureController" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Simulator</Value>
+    <Setting Name="TestSettingsFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Test Settings</Value>
     </Setting>
   </Settings>
 </SettingsFile>

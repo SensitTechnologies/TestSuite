@@ -16,7 +16,7 @@ namespace Sensit.TestSDK.Communication
 	/// In the meantime, I'm going to use a pre-packaged class from Keysight
 	/// that is specific to my instrument.
 	/// </remarks>
-	public static class SCPI
+	public class SCPI
 	{
 		// Mandated Commands
 		public const string CLS = "*CLS";
@@ -28,15 +28,28 @@ namespace Sensit.TestSDK.Communication
 
 		// Top level
 		public const string ABORt = "ABOR";
-		public const string CALCulate = "CALC";
 		public const string CALibrate = "CAL";
 		public const string CONFigure = "CONF";
 		public const string DATA = "DATA";
 		public const string DIAGnostic = "DIAG";
 
-		public static class DISPlay
+		public class CALCulate
 		{
-			public const string TEXT = "DISP:TEXT";
+			public AVERage AVERage { get; set; }
+		}
+
+		public class AVERage
+		{
+			public string CLEar { get; set; }
+			public string COUNt { get; set; }
+			public MAXimum MAXimum { get; set; }
+			public string MINimum { get; set; }
+			public string PTPeak { get; set; }
+		}
+
+		public class MAXimum
+		{
+			public string TIME { get; set; }
 		}
 	}
 }
