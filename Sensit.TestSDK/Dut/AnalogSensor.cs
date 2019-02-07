@@ -4,7 +4,6 @@ using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.TestSDK.Dut
 {
-
 	/// <summary>
 	/// Analog sensor
 	/// </summary>
