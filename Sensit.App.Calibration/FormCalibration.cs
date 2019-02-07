@@ -15,9 +15,6 @@ namespace Sensit.App.Calibration
 	/// TODO:  FormCalibration support for displaying data in a tab for each DUT.  Maybe show Excel in a web browser?
 	public partial class FormCalibration : Form
 	{
-		public Action TestPause;			// action to pause a test
-		public Action Print;				// "Print" button action
-
 		// allow the form to wait for tests to cancel/complete before closing application
 		private bool _closeAfterTest = false;
 
@@ -232,46 +229,6 @@ namespace Sensit.App.Calibration
 		private void buttonStop_Click(object sender, EventArgs e)
 		{
 			ConfirmAbort();
-		}
-
-		/// <summary>
-		/// When the "Pause" menu item is clicked, run the Pause action.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			try
-			{
-				TestPause();
-			}
-			catch (NullReferenceException)
-			{
-				MessageBox.Show("This application does not support pausing a test."
-					+ Environment.NewLine + "Please contact your engineering team.", "Error");
-			}
-		}
-
-		/// <summary>
-		/// When "Print Labels" button is clicked, run the Print action.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void buttonPrintLabels_Click(object sender, EventArgs e)
-		{
-			try
-			{
-				Print();
-			}
-			catch (NullReferenceException)
-			{
-				MessageBox.Show("This application does not support printing."
-					+ Environment.NewLine + "Please contact your engineering team.", "Error");
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show(ex.Message, "Error");
-			}
 		}
 
 		/// <summary>
