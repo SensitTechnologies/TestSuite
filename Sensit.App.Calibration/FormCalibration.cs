@@ -18,11 +18,11 @@ namespace Sensit.App.Calibration
 		// allow the form to wait for tests to cancel/complete before closing application
 		private bool _closeAfterTest = false;
 
-		// Object to run tests.
-		private Test test = new Test();
-
 		// Object to represent test equipment.
 		private Equipment _equipment = new Equipment();
+
+		// Object to represent tests.
+		private Test _test;
 
 		#region Properties
 
@@ -80,7 +80,7 @@ namespace Sensit.App.Calibration
 				tableLayoutPanelDevicesUnderTest.ResumeLayout();
 
 				// Set the number of DUTs in the test.
-				test.NumDuts = value;
+				_test.NumDuts = value;
 			}
 		}
 
@@ -90,7 +90,15 @@ namespace Sensit.App.Calibration
 
 		public FormCalibration()
 		{
+			// Initialize the form.
 			InitializeComponent();
+
+			// Initialize the test object.
+			_test = new Test(_equipment)
+			{
+				Finished = TestFinished,
+				Update = TestUpdate
+			};
 
 			// Set the number of DUTs.
 			NumDuts = Properties.Settings.Default.NumDuts;
@@ -108,7 +116,6 @@ namespace Sensit.App.Calibration
 			comboBoxModel.SelectedIndex = index == -1 ? 0 : index;
 
 			UpdateRanges();
-
 
 			// Populate the Test combobox based on the test settings.
 			comboBoxTest.Items.Clear();
@@ -170,22 +177,22 @@ namespace Sensit.App.Calibration
 				_equipment.Settings = Settings.Load<EquipmentSettings>(Properties.Settings.Default.SystemSettingsFile);
 
 				// Find the selected model settings.
-				test.ModelSettings = dutSettings.ModelSettings.Find(i => i.Label == comboBoxModel.Text);
-				if (test.ModelSettings == null)
+				_test.ModelSettings = dutSettings.ModelSettings.Find(i => i.Label == comboBoxModel.Text);
+				if (_test.ModelSettings == null)
 				{
 					throw new Exception("Model settings not found. Please contact Engineering.");
 				}
 
 				// Find the selected range settings.
-				test.RangeSettings = test.ModelSettings.RangeSettings.Find(i => i.Label == comboBoxRange.Text);
-				if (test.RangeSettings == null)
+				_test.RangeSettings = _test.ModelSettings.RangeSettings.Find(i => i.Label == comboBoxRange.Text);
+				if (_test.RangeSettings == null)
 				{
 					throw new Exception("Range settings not found. Please contact Engineering.");
 				}
 
 				// Find the selected test settings.
-				test.TestSettings = testSettings.Tests.Find(i => i.Label == comboBoxTest.Text);
-				if (test.TestSettings == null)
+				_test.TestSettings = testSettings.Tests.Find(i => i.Label == comboBoxTest.Text);
+				if (_test.TestSettings == null)
 				{
 					throw new Exception("Test settings not found. Please contact Engineering.");
 				}
@@ -208,7 +215,7 @@ namespace Sensit.App.Calibration
 				// TODO:  Clear the DUT data on the Overview tab.
 
 				// Start the test.
-				test.Start();
+				_test.Start();
 			}
 			catch (NullReferenceException)
 			{
@@ -271,7 +278,7 @@ namespace Sensit.App.Calibration
 		private void FormCalibration_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			// If a test is running...
-			if (test.IsBusy())
+			if (_test.IsBusy())
 			{
 				// Cancel application shutdown.
 				e.Cancel = true;
@@ -297,7 +304,7 @@ namespace Sensit.App.Calibration
 			DialogResult result = DialogResult.OK;  // whether to quit or not
 
 			// If the Running delegate exists and a test is running...
-			if (test.IsBusy())
+			if (_test.IsBusy())
 			{
 				// Ask the user if they really want to stop the test.
 				result = MessageBox.Show("Abort the test?", "Abort", MessageBoxButtons.OKCancel);
@@ -310,7 +317,7 @@ namespace Sensit.App.Calibration
 				{
 					// Cancel a test. Don't update GUI; if the test ends it must
 					// call the "TestFinished" method.
-					test.Stop();
+					_test.Stop();
 				}
 				catch (NullReferenceException)
 				{

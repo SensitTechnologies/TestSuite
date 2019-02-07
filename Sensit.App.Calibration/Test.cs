@@ -103,8 +103,12 @@ namespace Sensit.App.Calibration
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public Test()
+		/// <param name="equipment">the equipment object used by the test</param>
+		public Test(Equipment equipment)
 		{
+			// Save the reference to the equipment object.
+			_equipment = equipment;
+
 			// Set up the background worker.
 			_testThread = new BackgroundWorker
 			{
@@ -376,12 +380,6 @@ namespace Sensit.App.Calibration
 				// Anything within this do-while structure can be cancelled.
 				do
 				{
-					// Create an object to represent test equipment, and
-					// update equipment settings.
-					_testThread.ReportProgress(2, "Reading equipment settings...");
-					_equipment = new Equipment();
-					if (_testThread.CancellationPending) { break; }
-
 					// Configure test equipment.
 					_testThread.ReportProgress(3, "Configuring test equipment...");
 					_equipment.Open();
