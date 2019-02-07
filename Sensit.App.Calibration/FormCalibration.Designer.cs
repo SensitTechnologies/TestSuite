@@ -46,6 +46,7 @@
 			this.buttonStop = new System.Windows.Forms.Button();
 			this.groupBoxEquipmentSettings = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanelEquipmentSettings = new System.Windows.Forms.TableLayoutPanel();
+			this.checkBoxSelectAll = new System.Windows.Forms.CheckBox();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -95,7 +96,7 @@
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.supportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpProvider1 = new System.Windows.Forms.HelpProvider();
-			this.checkBoxSelectAll = new System.Windows.Forms.CheckBox();
+			this.dUTSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tabControl1.SuspendLayout();
 			this.Overview.SuspendLayout();
 			this.tableLayoutPanelOverview.SuspendLayout();
@@ -372,10 +373,21 @@
 			this.tableLayoutPanelEquipmentSettings.Name = "tableLayoutPanelEquipmentSettings";
 			this.tableLayoutPanelEquipmentSettings.RowCount = 1;
 			this.tableLayoutPanelEquipmentSettings.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelEquipmentSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanelEquipmentSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanelEquipmentSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 113F));
+			this.tableLayoutPanelEquipmentSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 113F));
 			this.tableLayoutPanelEquipmentSettings.Size = new System.Drawing.Size(209, 113);
 			this.tableLayoutPanelEquipmentSettings.TabIndex = 0;
+			// 
+			// checkBoxSelectAll
+			// 
+			this.checkBoxSelectAll.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.checkBoxSelectAll.AutoSize = true;
+			this.checkBoxSelectAll.Location = new System.Drawing.Point(224, 253);
+			this.checkBoxSelectAll.Name = "checkBoxSelectAll";
+			this.checkBoxSelectAll.Size = new System.Drawing.Size(114, 17);
+			this.checkBoxSelectAll.TabIndex = 21;
+			this.checkBoxSelectAll.Text = "Select/deselect all";
+			this.checkBoxSelectAll.UseVisualStyleBackColor = true;
 			// 
 			// tabPage2
 			// 
@@ -741,7 +753,7 @@
 			// 
 			this.startToolStripMenuItem.Name = "startToolStripMenuItem";
 			this.startToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-			this.startToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+			this.startToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.startToolStripMenuItem.Text = "&Start";
 			this.startToolStripMenuItem.Click += new System.EventHandler(this.buttonStart_Click);
 			// 
@@ -750,7 +762,7 @@
 			this.pauseToolStripMenuItem.Enabled = false;
 			this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
 			this.pauseToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F6;
-			this.pauseToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+			this.pauseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.pauseToolStripMenuItem.Text = "&Pause";
 			this.pauseToolStripMenuItem.ToolTipText = "Hault the current test temporarily";
 			this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
@@ -760,20 +772,20 @@
 			this.abortToolStripMenuItem.Enabled = false;
 			this.abortToolStripMenuItem.Name = "abortToolStripMenuItem";
 			this.abortToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F7;
-			this.abortToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+			this.abortToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.abortToolStripMenuItem.Text = "&Abort";
 			this.abortToolStripMenuItem.Click += new System.EventHandler(this.buttonStop_Click);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(124, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
 			// 
 			// reconnectDUTsToolStripMenuItem
 			// 
 			this.reconnectDUTsToolStripMenuItem.Enabled = false;
 			this.reconnectDUTsToolStripMenuItem.Name = "reconnectDUTsToolStripMenuItem";
-			this.reconnectDUTsToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+			this.reconnectDUTsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.reconnectDUTsToolStripMenuItem.Text = "&Find DUTs";
 			// 
 			// toolsToolStripMenuItem
@@ -782,6 +794,7 @@
             this.numberOfDUTsToolStripMenuItem,
             this.variablesToolStripMenuItem,
             this.optionsToolStripMenuItem,
+            this.dUTSettingsToolStripMenuItem,
             this.terminalToolStripMenuItem});
 			this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
 			this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
@@ -790,7 +803,7 @@
 			// numberOfDUTsToolStripMenuItem
 			// 
 			this.numberOfDUTsToolStripMenuItem.Name = "numberOfDUTsToolStripMenuItem";
-			this.numberOfDUTsToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+			this.numberOfDUTsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.numberOfDUTsToolStripMenuItem.Text = "&Number of DUTs";
 			this.numberOfDUTsToolStripMenuItem.Click += new System.EventHandler(this.numberOfDUTsToolStripMenuItem_Click);
 			// 
@@ -798,20 +811,20 @@
 			// 
 			this.variablesToolStripMenuItem.Enabled = false;
 			this.variablesToolStripMenuItem.Name = "variablesToolStripMenuItem";
-			this.variablesToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+			this.variablesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.variablesToolStripMenuItem.Text = "&Variables";
 			// 
 			// optionsToolStripMenuItem
 			// 
 			this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.optionsToolStripMenuItem.Text = "&Equipment Settings";
 			this.optionsToolStripMenuItem.Click += new System.EventHandler(this.equipmentSettingsToolStripMenuItem_Click);
 			// 
 			// terminalToolStripMenuItem
 			// 
 			this.terminalToolStripMenuItem.Name = "terminalToolStripMenuItem";
-			this.terminalToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+			this.terminalToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.terminalToolStripMenuItem.Text = "&Test Settings";
 			this.terminalToolStripMenuItem.Click += new System.EventHandler(this.testSettingsToolStripMenuItem_Click);
 			// 
@@ -838,16 +851,12 @@
 			this.supportToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
 			this.supportToolStripMenuItem.Text = "How Do I";
 			// 
-			// checkBoxSelectAll
+			// dUTSettingsToolStripMenuItem
 			// 
-			this.checkBoxSelectAll.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.checkBoxSelectAll.AutoSize = true;
-			this.checkBoxSelectAll.Location = new System.Drawing.Point(224, 253);
-			this.checkBoxSelectAll.Name = "checkBoxSelectAll";
-			this.checkBoxSelectAll.Size = new System.Drawing.Size(114, 17);
-			this.checkBoxSelectAll.TabIndex = 21;
-			this.checkBoxSelectAll.Text = "Select/deselect all";
-			this.checkBoxSelectAll.UseVisualStyleBackColor = true;
+			this.dUTSettingsToolStripMenuItem.Name = "dUTSettingsToolStripMenuItem";
+			this.dUTSettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.dUTSettingsToolStripMenuItem.Text = "&DUT Settings";
+			this.dUTSettingsToolStripMenuItem.Click += new System.EventHandler(this.dUTSettingsToolStripMenuItem_Click);
 			// 
 			// FormCalibration
 			// 
@@ -971,6 +980,7 @@
 		private System.Windows.Forms.ToolStripMenuItem variablesToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem pauseToolStripMenuItem;
 		private System.Windows.Forms.CheckBox checkBoxSelectAll;
+		private System.Windows.Forms.ToolStripMenuItem dUTSettingsToolStripMenuItem;
 	}
 }
 

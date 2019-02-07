@@ -42,24 +42,19 @@ namespace Sensit.App.Calibration
 		public class TestResults
 		{
 			public double Setpoint { get; set; }
-			public int RawValue { get; set; }
-			public double CalValue { get; set; }
 			public double Reference { get; set; }
-			public double Error { get; set; }
+			public double SensorValue { get; set; }
+			//public double Error { get; set; }
 		}
 
 		private BackgroundWorker _testThread;   // task that will handle test operations
-		private DutSettings _dutSettings;       // settings for model, range
-		private TestSettings _testSettings;		// settings for tests
 		private Equipment _equipment;			// test equipment object
 		private List<IDeviceUnderTest> _duts;	// devices under test
 		private ModelSetting _modelSettings;    // settings for selected model
 		private RangeSetting _rangeSettings;    // settings for selected range
-		private TestSetting _testSetting;		// settings for selected test
-		private List<TestResults> dutData = new List<TestResults>
-		{
-			new TestResults{ Setpoint = 0, RawValue = 0, CalValue = 3, Reference = 4.3, Error = 32 }
-		};
+		private TestSetting _testSetting;       // settings for selected test
+		private List<TestResults> dutData;
+		private int _numDuts;                   // number of devices under test displayed on the form
 
 		#region Delegates
 
@@ -81,7 +76,7 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		public int NumDuts
 		{
-			get => Properties.Settings.Default.NumDuts;
+			get => _numDuts;
 			set
 			{
 				// If the test is running, throw an error.
@@ -90,131 +85,7 @@ namespace Sensit.App.Calibration
 					throw new Exception("Cannot change number of DUTs when test is running.");
 				}
 
-				Properties.Settings.Default.NumDuts = value;
-			}
-		}
-
-		/// <summary>
-		/// Type of device under test
-		/// </summary>
-		public string SelectedModel
-		{
-			get => Properties.Settings.Default.Model;
-			set
-			{
-				// If the test is running, throw an error.
-				if (_testThread.IsBusy)
-				{
-					throw new Exception("Cannot change model when test is running.");
-				}
-
-				// Remember the new setting.
-				Properties.Settings.Default.Model = value;
-
-				// Re-populate the ranges available in the GUI.
-				SetRanges(Ranges);
-			}
-		}
-
-		/// <summary>
-		/// Range of devices under test
-		/// </summary>
-		public string SelectedRange
-		{
-			get => Properties.Settings.Default.Range;
-			set
-			{
-				// If the test is running, throw an error.
-				if (_testThread.IsBusy)
-				{
-					throw new Exception("Cannot change range when test is running.");
-				}
-
-				Properties.Settings.Default.Range = value;
-			}
-		}
-
-		/// <summary>
-		/// What test to perform.
-		/// </summary>
-		public string SelectedTest
-		{
-			get => Properties.Settings.Default.Test;
-			set
-			{
-				// If the test is running, throw an error.
-				if (_testThread.IsBusy)
-				{
-					throw new Exception("Cannot change test type when test is running.");
-				}
-
-				Properties.Settings.Default.Test = value;
-			}
-		}
-
-		/// <summary>
-		/// Available models to select from
-		/// </summary>
-		public List<string> Models
-		{
-			get
-			{
-				// Create a new list.
-				List<string> models = new List<string>();
-
-				// Add each model in the settings (if any models exist).
-				foreach (ModelSetting model in _dutSettings.ModelSettings ?? new List<ModelSetting>())
-				{
-					models.Add(model.Label);
-				}
-
-				return models;
-			}
-		}
-
-		/// <summary>
-		/// Available ranges to select from
-		/// </summary>
-		public List<string> Ranges
-		{
-			get
-			{
-				// Find the selected model settings object.
-				ModelSetting m = _dutSettings.ModelSettings.Find(x => x.Label == SelectedModel);
-
-				// Create a new list.
-				List<string> ranges = new List<string>();
-
-				// Find each range associated with the model (if any ranges exist).
-				foreach (RangeSetting r in m?.RangeSettings ?? new List<RangeSetting>())
-				{
-					ranges.Add(r.Label);
-				}
-
-				return ranges;
-			}
-		}
-
-		/// <summary>
-		/// Available tests to select from
-		/// </summary>
-		public List<string> Tests
-		{
-			get
-			{
-				// Create a new list.
-				List<string> tests = new List<string>();
-
-				// Find each test.
-				if (_testSettings.Tests != null)
-				{
-					foreach (TestSetting t in _testSettings.Tests ?? new List<TestSetting>())
-					{
-						tests.Add(t.Label);
-					}
-				}
-
-				return tests;
+				_numDuts = value;
 			}
 		}
 
@@ -234,12 +105,6 @@ namespace Sensit.App.Calibration
 			_testThread.DoWork += TestThread;
 			_testThread.ProgressChanged += ProgressChanged;
 			_testThread.RunWorkerCompleted += RunWorkerCompleted;
-
-			// Fetch product settings (so we can get available models, ranges).
-			_dutSettings = Settings.Load<DutSettings>(Properties.Settings.Default.DutSettingsFile);
-
-			// Fetch test settings (so we can get available tests).
-			_testSettings = Settings.Load<TestSettings>(Properties.Settings.Default.TestSettingsFile);
 		}
 
 		#region Thread Management
@@ -384,7 +249,13 @@ namespace Sensit.App.Calibration
 				// TODO:  Update GUI with reference info.
 				double dutValue = _equipment.DutInterface.ReadAnalog(dut.Index);
 
-				// TODO:  Log the result.
+				// Save the result.
+				dutData.Add(new TestResults
+				{
+					Setpoint = setpoint,
+					Reference = _equipment.GasReference.AnalyteConcentration,
+					SensorValue = dutValue
+				});
 			}
 		}
 
@@ -457,10 +328,13 @@ namespace Sensit.App.Calibration
 				SetpointCycle(testComponent.IndependentVariable, sp);
 
 				// Read data from each DUT.
+				// TODO:  (Low priority) Do not process setpoints outside range of the DUT.
+				// TODO:  (Low priority) Only process found or failed DUTs?
 				for (int i = 0; i < testComponent.NumberOfSamples; i++)
 				{
-					// TODO:  (Low priority) Do not process setpoints outside range of the DUT.
-					// TODO:  (Low priority) Only process found or failed DUTs?
+					// Take samples via DUT interface.
+					_equipment.DutInterface.Read();
+
 					DutCycle(testComponent.IndependentVariable, sp);
 				}
 			}
@@ -473,29 +347,7 @@ namespace Sensit.App.Calibration
 		// Also ensure that settings are refreshed before each test starts.
 		private void ReadTestSettings()
 		{
-			// Read the settings file.
-			_dutSettings = Settings.Load<DutSettings>(Properties.Settings.Default.DutSettingsFile);
 
-			// Find the selected model settings.
-			_modelSettings = _dutSettings.ModelSettings.Find(i => i.Label == SelectedModel);
-			if (_modelSettings == null)
-			{
-				throw new Exception("Model settings not found. Please contact Engineering.");
-			}
-
-			// Find the selected range settings.
-			_rangeSettings = _modelSettings.RangeSettings.Find(i => i.Label == SelectedRange);
-			if (_rangeSettings == null)
-			{
-				throw new Exception("Range settings not found. Please contact Engineering.");
-			}
-
-			// Find the selected test settings.
-			_testSetting = _testSettings.Tests.Find(i => i.Label == SelectedTest);
-			if (_testSetting == null)
-			{
-				throw new Exception("Test settings not found. Please contact Engineering.");
-			}
 		}
 
 		/// <summary>
@@ -515,6 +367,7 @@ namespace Sensit.App.Calibration
 		{
 			// Get start time.
 			Stopwatch stopwatch = Stopwatch.StartNew();
+			dutData = new List<TestResults>();
 
 			try
 			{
@@ -622,15 +475,6 @@ namespace Sensit.App.Calibration
 		public bool IsBusy()
 		{
 			return _testThread.IsBusy;
-		}
-
-		/// <summary>
-		/// Save user settings (for next time the application runs).
-		/// </summary>
-		public void SaveSettings()
-		{
-			// BUG:  (Medium priority) Settings don't seem to be saved.
-			Properties.Settings.Default.Save();
 		}
 	}
 }

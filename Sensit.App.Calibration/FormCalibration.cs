@@ -1,59 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Windows.Forms;
 using Sensit.TestSDK.Forms;
 using Sensit.TestSDK.Settings;
 
 namespace Sensit.App.Calibration
 {
+	/// <summary>
+	/// GUI operations and settings access are handled here.
+	/// </summary>
 	public partial class FormCalibration : Form
 	{
 		public Action TestStart;			// "Start" button action
 		public Action TestStop;				// "Stop" button action
 		public Action TestPause;			// action to pause a test
 		public Func<bool> TestBusy;         // method to check if a test is running
-		public Action<string> ModelChanged; // action when model is chanced
-		public Action<string> RangeChanged; // action when range is changed
-		public Action<string> TestChanged;	// action when test is changed
 		public Action Print;				// "Print" button action
 		public Action<int> NumDutsChanged;  // method to call when the number of DUTs has changed
-		public Action Exit;					// action when the program exits
 
 		// allow the form to wait for tests to cancel/complete before closing application
 		private bool _closeAfterTest = false;
 
-		// number of devices under test displayed on the form
-		private int _numDuts = 1;
+		// settings for model, range
+		private DutSettings _dutSettings = Settings.Load<DutSettings>(Properties.Settings.Default.DutSettingsFile);
 
-		BindingSource bindingSourceTestEquipment = new BindingSource();
-		private List<Dut> _duts = new List<Dut>();
-		private List<TestEquipment> _equipment = new List<TestEquipment>();
-
-		public class Dut
-		{
-			public bool Selected { get; set; }
-			public string SerialNumber { get; set; }
-
-			public Dut(bool selected, string serialNumber)
-			{
-				Selected = selected;
-				SerialNumber = serialNumber;
-			}
-		}
-
-		public class TestEquipment
-		{
-			public string Name { get; set; }
-			public List<string> Options { get; set; }
-			public string Selection { get; set; }
-
-			public TestEquipment(string name, string selection)
-			{
-				Name = name;
-				Selection = selection;
-			}
-		}
+		// settings for tests
+		private TestSettings _testSettings = Settings.Load<TestSettings>(Properties.Settings.Default.TestSettingsFile);
 
 		#region Properties
 
@@ -62,10 +34,10 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		public int NumDuts
 		{
-			get => _numDuts;
+			get => Properties.Settings.Default.NumDuts;
 			set
 			{
-				_numDuts = value;
+				Properties.Settings.Default.NumDuts = value;
 
 				// Stop the GUI from looking weird while we update it.
 				tableLayoutPanelDevicesUnderTest.SuspendLayout();
@@ -115,72 +87,6 @@ namespace Sensit.App.Calibration
 			}
 		}
 
-		/// <summary>
-		/// Items in the "Model" combobox
-		/// </summary>
-		public List<string> Models
-		{
-			set
-			{
-				// Remove existing items.
-				comboBoxModel.Items.Clear();
-
-				// Add new items.
-				foreach (var model in value)
-				{
-					comboBoxModel.Items.Add(model);
-				}
-
-				// Select item from settings if it exists.
-				comboBoxModel.SelectedIndex = comboBoxModel.FindStringExact(
-					Properties.Settings.Default.Model);
-			}
-		}
-
-		/// <summary>
-		/// Items in the "Range" combobox
-		/// </summary>
-		public List<string> Ranges
-		{
-			set
-			{
-				// Remove existing items.
-				comboBoxRange.Items.Clear();
-
-				// Add new items.
-				foreach (var range in value)
-				{
-					comboBoxRange.Items.Add(range);
-				}
-
-				// Select item from settings if it exists.
-				comboBoxRange.SelectedIndex = comboBoxRange.FindStringExact(
-					Properties.Settings.Default.Range);
-			}
-		}
-
-		/// <summary>
-		/// Items in the "Test" combobox
-		/// </summary>
-		public List<string> Tests
-		{
-			set
-			{
-				// Remove existing items.
-				comboBoxTest.Items.Clear();
-
-				// Add new items.
-				foreach (var test in value)
-				{
-					comboBoxTest.Items.Add(test);
-				}
-
-				// Select item from settings if it exists.
-				comboBoxTest.SelectedIndex = comboBoxTest.FindStringExact(
-					Properties.Settings.Default.Test);
-			}
-		}
-
 		#endregion
 
 		#region Constructors
@@ -189,24 +95,43 @@ namespace Sensit.App.Calibration
 		{
 			InitializeComponent();
 
-			// Set up data binding for test equipment.
-			bindingSourceTestEquipment.DataSource = _equipment;
-			bindingSourceTestEquipment.AllowNew = true;
-			bindingSourceTestEquipment.AddingNew += new AddingNewEventHandler(TestEquipment_AddingNew);
-			bindingSourceTestEquipment.ListChanged += new ListChangedEventHandler(TestEquipment_ListChanged);
+			// Clear the Model, Range, Test comboboxes.
+			comboBoxModel.Items.Clear();
+			comboBoxRange.Items.Clear();
+			comboBoxTest.Items.Clear();
+
+			// Add each model in the settings.
+			foreach (ModelSetting model in _dutSettings.ModelSettings ?? new List<ModelSetting>())
+			{
+				comboBoxModel.Items.Add(model.Label);
+			}
+
+			// Select the most recently used model.
+			comboBoxRange.SelectedIndex = comboBoxRange.FindStringExact(Properties.Settings.Default.Range);
+
+			// Find the ranges associated with the selected model.
+			ModelSetting m = _dutSettings.ModelSettings.Find(x => x.Label == comboBoxModel.SelectedText);
+
+			// Add each range in the settings.
+			foreach (RangeSetting r in m?.RangeSettings ?? new List<RangeSetting>())
+			{
+				comboBoxRange.Items.Add(r.Label);
+			}
+
+			// Select the most recently used range if it's available.
+			comboBoxModel.SelectedIndex = comboBoxModel.FindStringExact(Properties.Settings.Default.Model);
+
+			// Add each test in the settings.
+			foreach (TestSetting t in _testSettings.Tests ?? new List<TestSetting>())
+			{
+				comboBoxTest.Items.Add(t.Label);
+			}
+
+			// Select the most recently used test if it's available.
+			comboBoxTest.SelectedIndex = comboBoxTest.FindStringExact(Properties.Settings.Default.Test);
 		}
 
 		#endregion
-
-		private void TestEquipment_AddingNew(object sender, AddingNewEventArgs e)
-		{
-
-		}
-
-		private void TestEquipment_ListChanged(object sender, ListChangedEventArgs e)
-		{
-
-		}
 
 		#region Private Methods
 
@@ -227,7 +152,30 @@ namespace Sensit.App.Calibration
 					throw new Exception("Please select model, range, test before starting test.");
 				}
 
-				TestStart();
+				// Reload the settings files in case they changed since the app was started.
+				_dutSettings = Settings.Load<DutSettings>(Properties.Settings.Default.DutSettingsFile);
+				_testSettings = Settings.Load<TestSettings>(Properties.Settings.Default.TestSettingsFile);
+
+				// Find the selected model settings.
+				ModelSetting _modelSettings = _dutSettings.ModelSettings.Find(i => i.Label == comboBoxModel.SelectedText);
+				if (_modelSettings == null)
+				{
+					throw new Exception("Model settings not found. Please contact Engineering.");
+				}
+
+				// Find the selected range settings.
+				RangeSetting _rangeSettings = _modelSettings.RangeSettings.Find(i => i.Label == comboBoxRange.SelectedText);
+				if (_rangeSettings == null)
+				{
+					throw new Exception("Range settings not found. Please contact Engineering.");
+				}
+
+				// Find the selected test settings.
+				TestSetting _testSetting = _testSettings.Tests.Find(i => i.Label == comboBoxTest.SelectedText);
+				if (_testSetting == null)
+				{
+					throw new Exception("Test settings not found. Please contact Engineering.");
+				}
 
 				// Disable most of the controls.
 				comboBoxModel.Enabled = false;
@@ -245,6 +193,8 @@ namespace Sensit.App.Calibration
 
 				// TODO:  Delete DUT tabs (if they exist) and any data on them.
 				// TODO:  Clear the DUT data on the Overview tab.
+
+				TestStart();
 			}
 			catch (NullReferenceException)
 			{
@@ -335,8 +285,8 @@ namespace Sensit.App.Calibration
 		{
 			// This will invoke the "FormClosing" action, so nothing else to do here.
 
-			// Run any exit action.
-			Exit?.Invoke();
+			// Save settings.
+			Properties.Settings.Default.Save();
 
 			// Exit the application.
 			Application.Exit();
@@ -404,16 +354,15 @@ namespace Sensit.App.Calibration
 		}
 
 		/// <summary>
-		/// When Tools --> Equipment Settings menu is clicked, open an object browser for the settings.
+		/// Present a settings file to the user to edit.
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void equipmentSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+		/// <param name="filename"></param>
+		private void EditSettings(string filename)
 		{
 			try
 			{
 				// Fetch equipment settings.
-				EquipmentSettings settings = Settings.Load<EquipmentSettings>(Properties.Settings.Default.SystemSettingsFile);
+				EquipmentSettings settings = Settings.Load<EquipmentSettings>(filename);
 
 				// Create and show a new object editor with the equipment settings.
 				FormObjectEditor objectEditor = new FormObjectEditor();
@@ -423,7 +372,7 @@ namespace Sensit.App.Calibration
 				// If user selects "OK," save the settings.
 				if (result == DialogResult.OK)
 				{
-					Settings.Save(settings, Properties.Settings.Default.DutSettingsFile);
+					Settings.Save(settings, filename);
 				}
 			}
 			catch (Exception ex)
@@ -433,32 +382,33 @@ namespace Sensit.App.Calibration
 		}
 
 		/// <summary>
+		/// When Tools --> Equipment Settings menu is clicked, open an object browser for the settings.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void equipmentSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			EditSettings(Properties.Settings.Default.SystemSettingsFile);
+		}
+
+		/// <summary>
+		/// When Tools --> DUT Settings menu is clicked, open an object browser for the settings.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void dUTSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			EditSettings(Properties.Settings.Default.DutSettingsFile);
+		}
+
+		/// <summary>
 		/// When Tools --> Test Settings menu is clicked, open an object browser for the settings.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void testSettingsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			try
-			{
-				// Fetch product settings (so we can get available models, ranges, tests).
-				TestSettings settings = Settings.Load<TestSettings>(Properties.Settings.Default.DutSettingsFile);
-
-				// Create and show a new object editor with the equipment settings.
-				FormObjectEditor objectEditor = new FormObjectEditor();
-				objectEditor.AddObject<TestSettings>(settings, "Label");
-				DialogResult result = objectEditor.ShowDialog();
-
-				// If user selects "OK," save the settings.
-				if (result == DialogResult.OK)
-				{
-					Settings.Save(settings, Properties.Settings.Default.DutSettingsFile);
-				}
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show(ex.Message, "Error");
-			}
+			EditSettings(Properties.Settings.Default.TestSettingsFile);
 		}
 
 		/// <summary>
@@ -493,33 +443,38 @@ namespace Sensit.App.Calibration
 		}
 
 		/// <summary>
-		/// When the "Model" selection is changed, alert the application.
+		/// When the "Model" selection is changed, save the new selection and fetch new ranges.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void comboBoxModel_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			ModelChanged?.Invoke(comboBoxModel.SelectedItem.ToString());
+			// Remember the selected value.
+			Properties.Settings.Default.Model = comboBoxModel.SelectedItem.ToString();
+
+			// TODO:  Re-populate the ranges available in the GUI.
 		}
 
 		/// <summary>
-		/// When the "Range" selection is changed, alert the application.
+		/// When the "Range" selection is changed, save the new selection.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void comboBoxRange_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			RangeChanged?.Invoke(comboBoxRange.SelectedItem.ToString());
+			// Remember the selected value.
+			Properties.Settings.Default.Range = comboBoxRange.SelectedItem.ToString();
 		}
 
 		/// <summary>
-		/// When the "Test" selection is changed, alert the application.
+		/// When the "Test" selection is changed, save the new selection.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void comboBoxTest_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			TestChanged?.Invoke(comboBoxTest.SelectedItem.ToString());
+			// Remember the selected value.
+			Properties.Settings.Default.Test = comboBoxTest.SelectedItem.ToString();
 		}
 
 		#endregion
@@ -559,8 +514,8 @@ namespace Sensit.App.Calibration
 			// If requested, close the application.
 			if (_closeAfterTest)
 			{
-				// Run any exit action.
-				Exit?.Invoke();
+				// Save settings.
+				Properties.Settings.Default.Save();
 
 				Application.Exit();
 			}
