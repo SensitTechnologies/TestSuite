@@ -142,7 +142,7 @@ namespace Sensit.TestSDK.Devices
 			}
 			catch (TimeoutException ex)
 			{
-				throw new DeviceCommunicationException("Could not write gas selection to mass flow controller."
+				throw new DeviceCommunicationException("No response from mass flow controller."
 					+ Environment.NewLine + ex.Message);
 			}
 		}
@@ -183,7 +183,7 @@ namespace Sensit.TestSDK.Devices
 			}
 			catch (TimeoutException ex)
 			{
-				throw new DeviceCommunicationException("Could not update mass flow controller address."
+				throw new DeviceCommunicationException("No response from mass flow controller."
 					+ Environment.NewLine + ex.Message);
 			}
 		}
@@ -352,7 +352,7 @@ namespace Sensit.TestSDK.Devices
 			}
 			catch (TimeoutException ex)
 			{
-				throw new DeviceCommunicationException("Could not read from mass flow controller."
+				throw new DeviceCommunicationException("No response from mass flow controller."
 					+ Environment.NewLine + ex.Message);
 			}
 		}
@@ -392,7 +392,7 @@ namespace Sensit.TestSDK.Devices
 			}
 			catch (TimeoutException ex)
 			{
-				throw new DeviceCommunicationException("Could not write setpoint to mass flow controller."
+				throw new DeviceCommunicationException("No response from mass flow controller."
 					+ Environment.NewLine + ex.Message);
 			}
 		}
@@ -431,7 +431,7 @@ namespace Sensit.TestSDK.Devices
 			}
 			catch (TimeoutException ex)
 			{
-				throw new DeviceCommunicationException("Could not read setpoint from mass flow controller."
+				throw new DeviceCommunicationException("No response from mass flow controller."
 					+ Environment.NewLine + ex.Message);
 			}
 			catch (FormatException ex)
