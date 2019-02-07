@@ -3,13 +3,13 @@
   <Profiles />
   <Settings>
     <Setting Name="Model" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">Simulator</Value>
     </Setting>
     <Setting Name="Range" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Test" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">Linearity</Value>
     </Setting>
     <Setting Name="NumDuts" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">8</Value>
