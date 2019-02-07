@@ -54,7 +54,7 @@ namespace Sensit.App.Calibration
 		private RangeSetting _rangeSettings;    // settings for selected range
 		private TestSetting _testSetting;       // settings for selected test
 		private List<TestResults> dutData;
-		private int _numDuts;                   // number of devices under test displayed on the form
+		private int _numDuts = 8;				// number of devices under test displayed on the form
 
 		#region Delegates
 
