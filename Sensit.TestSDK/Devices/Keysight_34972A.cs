@@ -22,7 +22,7 @@ namespace Sensit.TestSDK.Devices
 	{
 		Ag3497x _v3497x;
 
-		private List<double> _readings;
+		private Dictionary<int,double> _readings = new Dictionary<int, double>();
 
 		public int NumberOfDuts { private get; set; }
 
@@ -74,10 +74,10 @@ namespace Sensit.TestSDK.Devices
 				_v3497x.SCPI.FORMat.READing.CHANnel.Command(true);
 
 				// Enable inclusion of timestamp on log.
-				_v3497x.SCPI.FORMat.READing.TIME.Command(true);
+				//_v3497x.SCPI.FORMat.READing.TIME.Command(true);
 
 				// Set format of timestamp.
-				_v3497x.SCPI.FORMat.READing.TIME.TYPE.Command("ABSolute");
+				//_v3497x.SCPI.FORMat.READing.TIME.TYPE.Command("ABSolute");
 
 				// Set trigger source to software trigger over bus.
 				_v3497x.SCPI.TRIGger.SOURce.Command("BUS");
@@ -126,8 +126,15 @@ namespace Sensit.TestSDK.Devices
 			// Transfers NVM readings to output buffer. 
 			_v3497x.SCPI.FETCh.QueryAllData(out string data);
 
-			// TODO:  Parse data into list of readings.  Timestamps can be discarded for now.
-			// double.Parse(readings[dut], System.Globalization.NumberStyles.AllowExponent);
+            string[] dataSeparated = data.Split(',');
+
+            for (int i = 0; i < dataSeparated.Length; i+=2) 
+            {
+                //Parse sensor output from string into double and add to list _readings. Timestamps and channel number are discarded for now.
+                int key = int.Parse(dataSeparated[(i + 1)]) % 100;
+                double value = double.Parse(dataSeparated[i], System.Globalization.NumberStyles.Any);
+                _readings.Add(key, value);
+            }
 		}
 
 		public int ReadCounts(int dut)
@@ -137,8 +144,18 @@ namespace Sensit.TestSDK.Devices
 
 		public double ReadAnalog(int dut)
 		{
-			// Return the requested reading.
-			return _readings[dut];
+            double reading = 0;
+            try
+            {
+                reading = _readings[dut];
+            }
+            catch (KeyNotFoundException)
+            {
+                throw new DeviceSettingNotSupportedException("Channel not configured for measurement.");
+            }
+
+            // Return the requested reading.
+			return reading;
 		}
 
 		public void Close()

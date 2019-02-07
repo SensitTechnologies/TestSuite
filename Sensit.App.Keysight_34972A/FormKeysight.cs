@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using Sensit.TestSDK.Communication;
 using Sensit.TestSDK.Devices;
+using Sensit.TestSDK.Exceptions;
 
 namespace Sensit.App.Keysight
 {
@@ -121,20 +122,29 @@ namespace Sensit.App.Keysight
         {
             updownNumDut1.Minimum = 1;
             updownNumDut1.Maximum = 20;
-            dut1 = (int)updownNumDut1.Value;
+            Keysight_34972A dut1 = new Keysight_34972A();
+            dut1.NumberOfDuts = (int)updownNumDut1.Value;
         }
 
         private void buttonMeasure1_Click(object sender, EventArgs e)
         {
-            //Prevent user from modifying DUT number while retrieving data. 
-            updownNumDut1.Enabled = false;
-            Keysight_34972A analogMeas = new Keysight_34972A();
-            analogMeas.Open();
-            analogMeas.ReadAnalog(dut1);
-            textboxVout1.Text = analogMeas.readings;
-            analogMeas.Close();
-            //Re-enable DUT number selection. 
-            updownNumDut1.Enabled = true;
+            try
+            {
+                //Prevent user from modifying DUT number while retrieving data. 
+                updownNumDut1.Enabled = false;
+                Keysight_34972A analogMeas = new Keysight_34972A();
+                analogMeas.Open();
+                analogMeas.Read();
+                int value = decimal.ToInt32(updownSelectedDut.Value);
+                textboxVout1.Text = analogMeas.ReadAnalog(value).ToString();
+                analogMeas.Close();
+                //Re-enable DUT number selection. 
+                updownNumDut1.Enabled = true;
+            }
+            catch (DeviceSettingNotSupportedException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
