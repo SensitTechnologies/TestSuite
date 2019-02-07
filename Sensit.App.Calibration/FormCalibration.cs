@@ -9,23 +9,23 @@ namespace Sensit.App.Calibration
 	/// <summary>
 	/// GUI operations and settings access are handled here.
 	/// </summary>
+	/// TODO:  FormCalibration support for reading DUT selection, model.
+	/// TODO:  FormCalibration support for setting test equipment and fetching related user settings.
+	/// TODO:  FormCalibration support for setting test variables and updating their values.
+	/// TODO:  FormCalibration support for displaying data in a tab for each DUT.  Maybe show Excel in a web browser?
 	public partial class FormCalibration : Form
 	{
-		public Action TestStart;			// "Start" button action
-		public Action TestStop;				// "Stop" button action
 		public Action TestPause;			// action to pause a test
-		public Func<bool> TestBusy;         // method to check if a test is running
 		public Action Print;				// "Print" button action
-		public Action<int> NumDutsChanged;  // method to call when the number of DUTs has changed
 
 		// allow the form to wait for tests to cancel/complete before closing application
 		private bool _closeAfterTest = false;
 
-		// settings for model, range
-		private DutSettings _dutSettings = Settings.Load<DutSettings>(Properties.Settings.Default.DutSettingsFile);
+		// Object to run tests.
+		private Test test = new Test();
 
-		// settings for tests
-		private TestSettings _testSettings = Settings.Load<TestSettings>(Properties.Settings.Default.TestSettingsFile);
+		// Object to represent test equipment.
+		private Equipment _equipment = new Equipment();
 
 		#region Properties
 
@@ -47,7 +47,7 @@ namespace Sensit.App.Calibration
 				{
 					for (int j = 0; j < tableLayoutPanelDevicesUnderTest.RowCount; j++)
 					{
-						var control = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(i, j);
+						Control control = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(i, j);
 						tableLayoutPanelDevicesUnderTest.Controls.Remove(control);
 					}
 				}
@@ -82,8 +82,8 @@ namespace Sensit.App.Calibration
 				// Make the GUI act normally again.
 				tableLayoutPanelDevicesUnderTest.ResumeLayout();
 
-				// Inform the application that the number of DUTs has changed.
-				NumDutsChanged?.Invoke(NumDuts);
+				// Set the number of DUTs in the test.
+				test.NumDuts = value;
 			}
 		}
 
@@ -95,59 +95,60 @@ namespace Sensit.App.Calibration
 		{
 			InitializeComponent();
 
-			// Clear the Model, Range, Test comboboxes.
-			comboBoxModel.Items.Clear();
-			comboBoxRange.Items.Clear();
-			comboBoxTest.Items.Clear();
+			// Set the number of DUTs.
+			NumDuts = Properties.Settings.Default.NumDuts;
 
-			// Add each model in the settings.
-			foreach (ModelSetting model in _dutSettings.ModelSettings ?? new List<ModelSetting>())
+			// Populate the Model combobox based on DUT settings.
+			comboBoxModel.Items.Clear();
+			DutSettings dutSettings = Settings.Load<DutSettings>(Properties.Settings.Default.DutSettingsFile);
+			foreach (ModelSetting model in dutSettings.ModelSettings ?? new List<ModelSetting>())
 			{
 				comboBoxModel.Items.Add(model.Label);
 			}
 
 			// Select the most recently used model, or the first if that's not available.
 			int index = comboBoxModel.FindStringExact(Properties.Settings.Default.Model);
-			if (index == -1)
-				comboBoxModel.SelectedIndex = 0;
-			else
-				comboBoxModel.SelectedIndex = index;
-			
+			comboBoxModel.SelectedIndex = index == -1 ? 0 : index;
 
-			// Find the ranges associated with the selected model.
-			ModelSetting m = _dutSettings.ModelSettings.Find(x => x.Label == comboBoxModel.Text);
-
-			// Add each range in the settings.
-			foreach (RangeSetting r in m?.RangeSettings ?? new List<RangeSetting>())
-			{
-				comboBoxRange.Items.Add(r.Label);
-			}
-
-			// Select the most recently used range, or the first if that's not available.
-			index = comboBoxRange.FindStringExact(Properties.Settings.Default.Range);
-			if (index == -1)
-				comboBoxRange.SelectedIndex = 0;
-			else
-				comboBoxRange.SelectedIndex = index;
+			UpdateRanges();
 
 
-			// Add each test in the settings.
-			foreach (TestSetting t in _testSettings.Tests ?? new List<TestSetting>())
+			// Populate the Test combobox based on the test settings.
+			comboBoxTest.Items.Clear();
+			TestSettings testSettings = Settings.Load<TestSettings>(Properties.Settings.Default.TestSettingsFile);
+			foreach (TestSetting t in testSettings.Tests ?? new List<TestSetting>())
 			{
 				comboBoxTest.Items.Add(t.Label);
 			}
 
 			// Select the most recently used test, or the first if that's not available.
 			index = comboBoxTest.FindStringExact(Properties.Settings.Default.Test);
-			if (index == -1)
-				comboBoxTest.SelectedIndex = 0;
-			else
-				comboBoxTest.SelectedIndex = index;
+			comboBoxTest.SelectedIndex = index == -1 ? 0 : index;
 		}
 
 		#endregion
 
 		#region Private Methods
+
+		private void UpdateRanges()
+		{
+			// Read the DUT settings file.
+			DutSettings dutSettings = Settings.Load<DutSettings>(Properties.Settings.Default.DutSettingsFile);
+
+			// Find the ranges associated with the selected model.
+			ModelSetting m = dutSettings.ModelSettings.Find(x => x.Label == comboBoxModel.Text);
+
+			// Populate the Range combobox based on the DUT settings.
+			comboBoxRange.Items.Clear();
+			foreach (RangeSetting r in m?.RangeSettings ?? new List<RangeSetting>())
+			{
+				comboBoxRange.Items.Add(r.Label);
+			}
+
+			// Select the most recently used range, or the first if that's not available.
+			int index = comboBoxRange.FindStringExact(Properties.Settings.Default.Range);
+			comboBoxRange.SelectedIndex = index == -1 ? 0 : index;
+		}
 
 		/// <summary>
 		/// When "Start" button is clicked, run the Start action.
@@ -167,26 +168,27 @@ namespace Sensit.App.Calibration
 				}
 
 				// Reload the settings files in case they changed since the app was started.
-				_dutSettings = Settings.Load<DutSettings>(Properties.Settings.Default.DutSettingsFile);
-				_testSettings = Settings.Load<TestSettings>(Properties.Settings.Default.TestSettingsFile);
+				DutSettings dutSettings = Settings.Load<DutSettings>(Properties.Settings.Default.DutSettingsFile);
+				TestSettings testSettings = Settings.Load<TestSettings>(Properties.Settings.Default.TestSettingsFile);
+				_equipment.Settings = Settings.Load<EquipmentSettings>(Properties.Settings.Default.SystemSettingsFile);
 
 				// Find the selected model settings.
-				ModelSetting _modelSettings = _dutSettings.ModelSettings.Find(i => i.Label == comboBoxModel.SelectedText);
-				if (_modelSettings == null)
+				test.ModelSettings = dutSettings.ModelSettings.Find(i => i.Label == comboBoxModel.Text);
+				if (test.ModelSettings == null)
 				{
 					throw new Exception("Model settings not found. Please contact Engineering.");
 				}
 
 				// Find the selected range settings.
-				RangeSetting _rangeSettings = _modelSettings.RangeSettings.Find(i => i.Label == comboBoxRange.SelectedText);
-				if (_rangeSettings == null)
+				test.RangeSettings = test.ModelSettings.RangeSettings.Find(i => i.Label == comboBoxRange.Text);
+				if (test.RangeSettings == null)
 				{
 					throw new Exception("Range settings not found. Please contact Engineering.");
 				}
 
 				// Find the selected test settings.
-				TestSetting _testSetting = _testSettings.Tests.Find(i => i.Label == comboBoxTest.SelectedText);
-				if (_testSetting == null)
+				test.TestSettings = testSettings.Tests.Find(i => i.Label == comboBoxTest.Text);
+				if (test.TestSettings == null)
 				{
 					throw new Exception("Test settings not found. Please contact Engineering.");
 				}
@@ -208,7 +210,8 @@ namespace Sensit.App.Calibration
 				// TODO:  Delete DUT tabs (if they exist) and any data on them.
 				// TODO:  Clear the DUT data on the Overview tab.
 
-				TestStart();
+				// Start the test.
+				test.Start();
 			}
 			catch (NullReferenceException)
 			{
@@ -310,8 +313,8 @@ namespace Sensit.App.Calibration
 		/// <param name="e"></param>
 		private void FormCalibration_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			// If the TestBusy delegate exists and a test is running...
-			if ((TestBusy != null) && TestBusy())
+			// If a test is running...
+			if (test.IsBusy())
 			{
 				// Cancel application shutdown.
 				e.Cancel = true;
@@ -337,7 +340,7 @@ namespace Sensit.App.Calibration
 			DialogResult result = DialogResult.OK;  // whether to quit or not
 
 			// If the Running delegate exists and a test is running...
-			if ((TestBusy != null) && TestBusy())
+			if (test.IsBusy())
 			{
 				// Ask the user if they really want to stop the test.
 				result = MessageBox.Show("Abort the test?", "Abort", MessageBoxButtons.OKCancel);
@@ -350,7 +353,7 @@ namespace Sensit.App.Calibration
 				{
 					// Cancel a test. Don't update GUI; if the test ends it must
 					// call the "TestFinished" method.
-					TestStop();
+					test.Stop();
 				}
 				catch (NullReferenceException)
 				{
@@ -466,7 +469,8 @@ namespace Sensit.App.Calibration
 			// Remember the selected value.
 			Properties.Settings.Default.Model = comboBoxModel.SelectedItem.ToString();
 
-			// TODO:  Re-populate the ranges available in the GUI.
+			// Re-populate the ranges available in the GUI.
+			UpdateRanges();
 		}
 
 		/// <summary>

@@ -50,11 +50,8 @@ namespace Sensit.App.Calibration
 		private BackgroundWorker _testThread;   // task that will handle test operations
 		private Equipment _equipment;			// test equipment object
 		private List<IDeviceUnderTest> _duts;	// devices under test
-		private ModelSetting _modelSettings;    // settings for selected model
-		private RangeSetting _rangeSettings;    // settings for selected range
-		private TestSetting _testSetting;       // settings for selected test
 		private List<TestResults> dutData;
-		private int _numDuts = 8;				// number of devices under test displayed on the form
+		private int _numDuts;					// number of devices under test displayed on the form
 
 		#region Delegates
 
@@ -64,12 +61,24 @@ namespace Sensit.App.Calibration
 		// Report test results.
 		public Action Finished;
 
-		// Update the GUI's list of available ranges (when the selected model changes).
-		public Action<List<string>> SetRanges;
-
 		#endregion
 
 		#region Properties
+
+		/// <summary>
+		/// Settings for selected model.
+		/// </summary>
+		public ModelSetting ModelSettings { get; set; }
+
+		/// <summary>
+		/// Settings for selected range.
+		/// </summary>
+		public RangeSetting RangeSettings { get; set; }
+
+		/// <summary>
+		/// Settings for selected test.
+		/// </summary>
+		public TestSetting TestSettings { get; set; }
 
 		/// <summary>
 		/// Number of devices under test
@@ -343,13 +352,6 @@ namespace Sensit.App.Calibration
 			_equipment.GasController.SetControlMode(ControlMode.Ambient);
 		}
 
-		// TODO:  (Low priority) Move settings operations from Test.cs to FormCalibrate.cs?
-		// Also ensure that settings are refreshed before each test starts.
-		private void ReadTestSettings()
-		{
-
-		}
-
 		/// <summary>
 		/// This runs during a test.
 		/// </summary>
@@ -374,11 +376,6 @@ namespace Sensit.App.Calibration
 				// Anything within this do-while structure can be cancelled.
 				do
 				{
-					// Read test settings (specific to Model, Range, Test).
-					_testThread.ReportProgress(1, "Reading DUT and test settings...");
-					ReadTestSettings();
-					if (_testThread.CancellationPending) { break; }
-
 					// Create an object to represent test equipment, and
 					// update equipment settings.
 					_testThread.ReportProgress(2, "Reading equipment settings...");
@@ -396,7 +393,7 @@ namespace Sensit.App.Calibration
 					if (_testThread.CancellationPending) { break; }
 
 					// Perform test actions.
-					foreach (TestComponent c in _testSetting.Components)
+					foreach (TestComponent c in TestSettings.Components)
 					{
 						GasTest(c);
 					}

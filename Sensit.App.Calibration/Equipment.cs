@@ -17,11 +17,8 @@ namespace Sensit.App.Calibration
 	/// </remarks>
 	public class Equipment
 	{
-		// system settings
-		private readonly EquipmentSettings _settings;
-
 		// generic manual device, used whenever the user selects "Manual" option for equipment.
-		Manual _manual;
+		private Manual _manual;
 
 		// mass flow controller for analyte gas
 		private ColeParmerMFC _mfcAnalyte;
@@ -35,14 +32,37 @@ namespace Sensit.App.Calibration
 		// datalogger (for analog sensor DUTs)
 		private Keysight_34972A _datalogger;
 
+		#region Properties
+
+		/// <summary>
+		/// Equipment settings
+		/// </summary>
+		public EquipmentSettings Settings { private get; set; }
+
+		/// <summary>
+		///  DUT interface device used to take readings from sensors/products/etc.
+		/// </summary>
+		public IDutInterfaceDevice DutInterface => _datalogger;
+
+		/// <summary>
+		/// Gas Concentration Controller used to mix gasses.
+		/// </summary>
+		public IGasConcentrationController GasController => _manual;
+
+		/// <summary>
+		/// Gas Concentration Reference used to determine gas composition.
+		/// </summary>
+		public IGasConcentrationReference GasReference => _manual;
+
+		#endregion
+
+		#region Constructor
+
 		/// <summary>
 		/// Constructor; reads settings and creates equipment objects.
 		/// </summary>
 		public Equipment()
 		{
-			// Read system settings.
-			_settings = Settings.Load<EquipmentSettings>(Properties.Settings.Default.SystemSettingsFile);
-
 			// Create test equipment objects.
 			// Only the ones chosen by the user will end up being used.
 			_mfcAnalyte = new ColeParmerMFC();
@@ -52,14 +72,7 @@ namespace Sensit.App.Calibration
 			_manual = new Manual();
 		}
 
-		/// <summary>
-		///  DUT interface device used to take readings from sensors/products/etc.
-		/// </summary>
-		public IDutInterfaceDevice DutInterface => _datalogger;
-
-		public IGasConcentrationController GasController => _manual;
-
-		public IGasConcentrationReference GasReference => _manual;
+		#endregion
 
 		/// <summary>
 		/// Initializes all equipment.
@@ -67,8 +80,8 @@ namespace Sensit.App.Calibration
 		public void Open()
 		{
 			// Configure the mass flow controllers.
-			_mfcAnalyte.Open(_settings?.AnalyteControllerPort);
-			_mfcDiluent.Open(_settings?.DiluentControllerPort);
+			_mfcAnalyte.Open(Settings?.AnalyteControllerPort);
+			_mfcDiluent.Open(Settings?.DiluentControllerPort);
 
 			// Configure the datalogger.
 			_datalogger.Open();
