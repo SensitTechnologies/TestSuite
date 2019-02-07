@@ -106,11 +106,16 @@ namespace Sensit.App.Calibration
 				comboBoxModel.Items.Add(model.Label);
 			}
 
-			// Select the most recently used model.
-			comboBoxRange.SelectedIndex = comboBoxRange.FindStringExact(Properties.Settings.Default.Range);
+			// Select the most recently used model, or the first if that's not available.
+			int index = comboBoxModel.FindStringExact(Properties.Settings.Default.Model);
+			if (index == -1)
+				comboBoxModel.SelectedIndex = 0;
+			else
+				comboBoxModel.SelectedIndex = index;
+			
 
 			// Find the ranges associated with the selected model.
-			ModelSetting m = _dutSettings.ModelSettings.Find(x => x.Label == comboBoxModel.SelectedText);
+			ModelSetting m = _dutSettings.ModelSettings.Find(x => x.Label == comboBoxModel.Text);
 
 			// Add each range in the settings.
 			foreach (RangeSetting r in m?.RangeSettings ?? new List<RangeSetting>())
@@ -118,8 +123,13 @@ namespace Sensit.App.Calibration
 				comboBoxRange.Items.Add(r.Label);
 			}
 
-			// Select the most recently used range if it's available.
-			comboBoxModel.SelectedIndex = comboBoxModel.FindStringExact(Properties.Settings.Default.Model);
+			// Select the most recently used range, or the first if that's not available.
+			index = comboBoxRange.FindStringExact(Properties.Settings.Default.Range);
+			if (index == -1)
+				comboBoxRange.SelectedIndex = 0;
+			else
+				comboBoxRange.SelectedIndex = index;
+
 
 			// Add each test in the settings.
 			foreach (TestSetting t in _testSettings.Tests ?? new List<TestSetting>())
@@ -127,8 +137,12 @@ namespace Sensit.App.Calibration
 				comboBoxTest.Items.Add(t.Label);
 			}
 
-			// Select the most recently used test if it's available.
-			comboBoxTest.SelectedIndex = comboBoxTest.FindStringExact(Properties.Settings.Default.Test);
+			// Select the most recently used test, or the first if that's not available.
+			index = comboBoxTest.FindStringExact(Properties.Settings.Default.Test);
+			if (index == -1)
+				comboBoxTest.SelectedIndex = 0;
+			else
+				comboBoxTest.SelectedIndex = index;
 		}
 
 		#endregion
@@ -285,9 +299,6 @@ namespace Sensit.App.Calibration
 		{
 			// This will invoke the "FormClosing" action, so nothing else to do here.
 
-			// Save settings.
-			Properties.Settings.Default.Save();
-
 			// Exit the application.
 			Application.Exit();
 		}
@@ -312,6 +323,9 @@ namespace Sensit.App.Calibration
 					_closeAfterTest = true;
 				}
 			}
+
+			// Save settings.
+			Properties.Settings.Default.Save();
 		}
 
 		/// <summary>
@@ -514,9 +528,6 @@ namespace Sensit.App.Calibration
 			// If requested, close the application.
 			if (_closeAfterTest)
 			{
-				// Save settings.
-				Properties.Settings.Default.Save();
-
 				Application.Exit();
 			}
 		}
