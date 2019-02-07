@@ -9,8 +9,6 @@ namespace Sensit.App.Keysight
 {
 	public partial class FormKeysight : Form
 	{
-        int dut1;
-
 		// Keysight datalogger
 		private Keysight_34972A _datalogger = new Keysight_34972A();
 
