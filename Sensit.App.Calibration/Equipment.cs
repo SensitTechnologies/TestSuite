@@ -1,6 +1,5 @@
 ﻿using Sensit.TestSDK.Devices;
 using Sensit.TestSDK.Interfaces;
-using Sensit.TestSDK.Settings;
 
 namespace Sensit.App.Calibration
 {
@@ -59,7 +58,7 @@ namespace Sensit.App.Calibration
 		#region Constructor
 
 		/// <summary>
-		/// Constructor; reads settings and creates equipment objects.
+		/// Constructor; creates equipment objects.
 		/// </summary>
 		public Equipment()
 		{
