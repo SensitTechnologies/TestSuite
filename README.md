@@ -43,7 +43,7 @@ Features necessary for the first iteration are highlighted in bold.
   * [x] Prompt an operator for manual control.
   * [x] **Cole-Parmer Mass Flow Controller**
   * [x] **2nd Mass Flow Controller (enables gas concentration control)**
-  * [ ] **Keysight datalogger**
+  * [x] **Keysight datalogger**
   * [ ] Dwyer 16B Temperature Controller
 * Interface to a variety of devices under test.
   * [x] Device Under Test Simulator
@@ -58,7 +58,7 @@ Features necessary for the first iteration are highlighted in bold.
   * [ ] View *status* while testing, showing controlled and independent variables from test equipment
   * [ ] View data gathered from each *DUT* (via embedded Excel or simple data grid)
 * Record test data for further analysis.
-  * [ ] **CSV**
+  * [x] **CSV**
   * [x] Excel
   * [ ] SQL or Mongo Database
 * Provide a calculation library to generate test results.
