@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Sensit.TestSDK.Forms;
+using Sensit.TestSDK.Interfaces;
 using Sensit.TestSDK.Settings;
 
 namespace Sensit.App.Calibration
@@ -20,6 +21,9 @@ namespace Sensit.App.Calibration
 
 		// Object to represent test equipment.
 		private Equipment _equipment = new Equipment();
+
+		// Object to represent devices under test.
+		private List<Dut> _duts = new List<Dut>();
 
 		// Object to represent tests.
 		private Test _test;
@@ -57,30 +61,27 @@ namespace Sensit.App.Calibration
 				{
 					CheckBox checkBox = new CheckBox
 					{
-						Name = "checkBoxDut" + i.ToString(),
+						Name = "checkBoxSelected" + i.ToString(),
 						Text = "DUT" + i.ToString(),
 						AutoSize = true
 					};
 					tableLayoutPanelDevicesUnderTest.Controls.Add(checkBox, 0, i - 1);
 
-					ComboBox comboBox = new ComboBox
+					TextBox textBoxSerialNumber = new TextBox
 					{
-						Name = "comboBoxDut" + i.ToString()
+						Name = "textBoxSerialNumber" + i.ToString()
 					};
-					tableLayoutPanelDevicesUnderTest.Controls.Add(comboBox, 1, i - 1);
+					tableLayoutPanelDevicesUnderTest.Controls.Add(textBoxSerialNumber, 1, i - 1);
 
-					TextBox textBox = new TextBox
+					TextBox textBoxStatus = new TextBox
 					{
-						Name = "textBoxDut" + i.ToString()
+						Name = "textBoxStatus" + i.ToString()
 					};
-					tableLayoutPanelDevicesUnderTest.Controls.Add(textBox, 2, i - 1);
+					tableLayoutPanelDevicesUnderTest.Controls.Add(textBoxStatus, 2, i - 1);
 				}
 
 				// Make the GUI act normally again.
 				tableLayoutPanelDevicesUnderTest.ResumeLayout();
-
-				// Set the number of DUTs in the test.
-				_test.NumDuts = value;
 			}
 		}
 
@@ -94,7 +95,7 @@ namespace Sensit.App.Calibration
 			InitializeComponent();
 
 			// Initialize the test object.
-			_test = new Test(_equipment)
+			_test = new Test(_equipment, _duts)
 			{
 				Finished = TestFinished,
 				Update = TestUpdate
@@ -213,6 +214,23 @@ namespace Sensit.App.Calibration
 
 				// TODO:  Delete DUT tabs (if they exist) and any data on them.
 				// TODO:  Clear the DUT data on the Overview tab.
+				_duts.Clear();
+
+				// Create each DUT object.
+				for (int i = 0; i < NumDuts; i++)
+				{
+					// Fetch user settings for DUT.
+					CheckBox checkBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(0, i) as CheckBox;
+					TextBox textBoxSerial = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(1, i) as TextBox;
+
+					Dut dut = new Dut();
+					dut.Device.Index = i;
+					dut.Device.Selected = checkBox.Checked;
+					dut.Device.Status = DutStatus.Init;
+					dut.Device.SerialNumber = textBoxSerial.Text;
+					dut.Device.Message = string.Empty;
+					_duts.Add(dut);
+				}
 
 				// Start the test.
 				_test.Start();

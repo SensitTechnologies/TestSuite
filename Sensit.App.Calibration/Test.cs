@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
 using System.Threading;
 using System.Windows.Forms;
-using CsvHelper;
 using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.App.Calibration
@@ -37,19 +35,9 @@ namespace Sensit.App.Calibration
 			PercentReading      // Percent of reading.
 		}
 
-		public class TestResults
-		{
-			public double Setpoint { get; set; }
-			public double Reference { get; set; }
-			public double SensorValue { get; set; }
-			//public double Error { get; set; }
-		}
-
 		private BackgroundWorker _testThread;   // task that will handle test operations
 		private Equipment _equipment;			// test equipment object
 		private List<Dut> _duts;				// devices under test
-		private List<TestResults> dutData;
-		private int _numDuts;                   // number of devices under test
 
 		#region Delegates
 
@@ -78,34 +66,17 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		public TestSetting TestSettings { get; set; }
 
-		/// <summary>
-		/// Number of devices under test
-		/// </summary>
-		public int NumDuts
-		{
-			get => _numDuts;
-			set
-			{
-				// If the test is running, throw an error.
-				if (_testThread.IsBusy)
-				{
-					throw new Exception("Cannot change number of DUTs when test is running.");
-				}
-
-				_numDuts = value;
-			}
-		}
-
 		#endregion
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="equipment">the equipment object used by the test</param>
-		public Test(Equipment equipment)
+		public Test(Equipment equipment, List<Dut> duts)
 		{
-			// Save the reference to the equipment object.
+			// Save the reference to the equipment and DUTs objects.
 			_equipment = equipment;
+			_duts = duts;
 
 			// Set up the background worker.
 			_testThread = new BackgroundWorker
@@ -140,84 +111,6 @@ namespace Sensit.App.Calibration
 
 		#endregion
 
-		#region DUT Management
-
-		/// <summary>
-		/// Create DUT objects and initialize them with settings chosen by the user.
-		/// </summary>
-		private void DutOpen()
-		{
-			// Create a list of DUTs.
-			// TODO:  (Medium priority) Choose type of DUT based on settings.
-			_duts = new List<Dut>(NumDuts);
-
-			// Keep track of how many DUTs are selected.
-			int numSelected = 0;
-
-			// Create each DUT object.
-			for (int i = 0; i < NumDuts; i++)
-			{
-				_duts.Add(new Dut
-				{
-					Index = i,
-					// Model = "",
-					// Version = "",
-					Selected = true,    // TODO:  Replace this with user setting from FormCalibration.
-					Status = DutStatus.Init,
-					SerialNumber = string.Empty,
-					Message = string.Empty,
-				});
-				numSelected++;
-			}
-
-			// TODO:  (Low priority) Open DUT ports (if applicable); throw exception is no DUT ports could be opened.
-
-			// Turn all DUTs on.
-			foreach (IDeviceUnderTest dut in _duts)
-			{
-				if (dut.Status == DutStatus.Found)
-				{
-					_equipment.DutInterface?.PowerOn(dut.Index);
-				}
-			}
-
-			// Verify communication with each DUT.
-			foreach (IDeviceUnderTest dut in _duts)
-			{
-				if (dut.Status == DutStatus.Found)
-				{
-					// TODO:  (Low priority) Talk to each DUT to verify communication.
-
-					dut.Status = DutStatus.Found;
-				}
-			}
-		}
-
-		private void DutClose()
-		{
-			// Turn off DUTs that have been found.
-			foreach (IDeviceUnderTest dut in _duts)
-			{
-				if ((dut.Status != DutStatus.PortError) &&
-					(dut.Status != DutStatus.NotFound))
-				{
-					_equipment.DutInterface?.PowerOff(dut.Index);
-				}
-			}
-
-			foreach (IDeviceUnderTest dut in _duts)
-			{
-				if ((dut.Status == DutStatus.Found) ||
-					(dut.Status == DutStatus.Fail) ||
-					(dut.Status == DutStatus.NotFound))
-				{
-					// TODO:  (Low priority) Close DUT ports (if applicable).
-				}
-			}
-		}
-
-		#endregion
-
 		private void PopupAlarm(string errorMessage)
 		{
 			// Alert the user.
@@ -238,7 +131,7 @@ namespace Sensit.App.Calibration
 		private void DutCycle(TestVariable variable, double setpoint)
 		{
 			// Get reading from each DUT.
-			foreach (IDeviceUnderTest dut in _duts)
+			foreach (Dut dut in _duts)
 			{
 				// Abort if requested.
 				if (_testThread.CancellationPending) { break; }
@@ -258,10 +151,10 @@ namespace Sensit.App.Calibration
 				}
 
 				// TODO:  Update GUI with reference info.
-				double dutValue = _equipment.DutInterface.ReadAnalog(dut.Index);
+				double? dutValue = dut.Read();
 
 				// Save the result.
-				dutData.Add(new TestResults
+				dut.Results.Add(new TestResults
 				{
 					Setpoint = setpoint,
 					Reference = _equipment.GasReference.AnalyteConcentration,
@@ -371,35 +264,30 @@ namespace Sensit.App.Calibration
 		{
 			// Get start time.
 			Stopwatch stopwatch = Stopwatch.StartNew();
-			dutData = new List<TestResults>();
 
 			try
 			{
 				// Anything within this do-while structure can be cancelled.
 				do
 				{
-					// Configure test equipment.
+					// Initialize test equipment.
 					_testThread.ReportProgress(3, "Configuring test equipment...");
 					_equipment.Open();
 					if (_testThread.CancellationPending) { break; }
 
 					// Initialize DUTs.
 					_testThread.ReportProgress(4, "Initializing DUTs...");
-					DutOpen();
-					if (_testThread.CancellationPending) { break; }
+					foreach (Dut dut in _duts)
+					{
+						dut.Open();
+						if (_testThread.CancellationPending) { break; }
+					}
 
 					// Perform test actions.
 					foreach (TestComponent c in TestSettings.Components)
 					{
 						GasTest(c);
 					}
-
-					// Close DUTs.
-					_testThread.ReportProgress(5, "Closing DUTs...");
-					DutClose();
-
-					// TODO:  Identify passing DUTs.
-					_testThread.ReportProgress(95, "Identifying passed DUTS...");
 				} while (false);
 			}
 			catch (Exception ex)
@@ -414,22 +302,22 @@ namespace Sensit.App.Calibration
 			stopwatch.Stop();
 			TimeSpan elapsedtime = stopwatch.Elapsed;
 
-			// Close test equipment.
 			try
 			{
+				// Close DUTs.
+				_testThread.ReportProgress(5, "Closing DUTs...");
+				foreach (Dut dut in _duts)
+				{
+					dut.Close();
+				}
+
+				// Close test equipment.
 				_testThread.ReportProgress(99, "Closing test equipment...");
 				_equipment.Close();
 			}
 			catch (Exception ex)
 			{
 				MessageBox.Show(ex.Message, ex.GetType().ToString());
-			}
-
-			// Save test results to csv file.
-			using (var writer = new StreamWriter("results.csv"))
-			using (var csv = new CsvWriter(writer))
-			{
-				csv.WriteRecords(dutData);
 			}
 
 			// Update the GUI.
