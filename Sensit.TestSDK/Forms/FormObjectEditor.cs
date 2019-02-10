@@ -11,8 +11,6 @@ namespace Sensit.TestSDK.Forms
         public FormObjectEditor()
         {
             InitializeComponent();
-
-			// TODO:  (Low priority) Form currently has no way of saving the object, since it's not passed back out.
         }
 
 		/// <summary>
@@ -29,8 +27,8 @@ namespace Sensit.TestSDK.Forms
                 // See if we can get the property propertyForText from the item
                 PropertyInfo propertyInfoForText = propertiesObject.GetType().GetProperty(propertyForText);
 
-				// TODO:  (Low priority) FormObjectEditor tree view isn't implemented correctly.
-				// if we can't access the property then it might not be a valid object, or not a valid property so return.
+				// TODO:  (Low priority) Tree view isn't implemented correctly.
+				// If we can't access the property then it might not be a valid object, or not a valid property so return.
 				if (propertyInfoForText != null)
 				{
 					Add<objectType>(propertiesObject, null, propertyForText);
@@ -39,6 +37,15 @@ namespace Sensit.TestSDK.Forms
 				// Add object to properties grid.
 				propertyGrid.SelectedObject = propertiesObject;
 			}
+		}
+
+		/// <summary>
+		/// Get the object (presumably to save it after user modifications).
+		/// </summary>
+		/// <returns>object from the property grid</returns>
+		public object FetchObject()
+		{
+			return propertyGrid.SelectedObject;
 		}
 
 		/// <summary>

@@ -354,7 +354,8 @@ namespace Sensit.App.Calibration
 				// If user selects "OK," save the settings.
 				if (result == DialogResult.OK)
 				{
-					Settings.Save(settings, filename);
+					// TODO:  Saving settings does not work (XML file is corrupted).
+					Settings.Save(objectEditor.FetchObject(), filename);
 				}
 			}
 			catch (Exception ex)
