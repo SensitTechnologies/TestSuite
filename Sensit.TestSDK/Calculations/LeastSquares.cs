@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
+// Original source:
+// http://csharphelper.com/blog/2014/10/find-a-polynomial-least-squares-fit-for-a-set-of-points-in-c/
 namespace Sensit.TestSDK.Calculations
 {
 	class Curve
