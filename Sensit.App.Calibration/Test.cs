@@ -6,9 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using CsvHelper;
-using Sensit.TestSDK.Dut;
 using Sensit.TestSDK.Interfaces;
-using Sensit.TestSDK.Settings;
 
 namespace Sensit.App.Calibration
 {
@@ -49,9 +47,9 @@ namespace Sensit.App.Calibration
 
 		private BackgroundWorker _testThread;   // task that will handle test operations
 		private Equipment _equipment;			// test equipment object
-		private List<IDeviceUnderTest> _duts;	// devices under test
+		private List<Dut> _duts;				// devices under test
 		private List<TestResults> dutData;
-		private int _numDuts;					// number of devices under test displayed on the form
+		private int _numDuts;                   // number of devices under test
 
 		#region Delegates
 
@@ -151,7 +149,7 @@ namespace Sensit.App.Calibration
 		{
 			// Create a list of DUTs.
 			// TODO:  (Medium priority) Choose type of DUT based on settings.
-			_duts = new List<IDeviceUnderTest>(NumDuts);
+			_duts = new List<Dut>(NumDuts);
 
 			// Keep track of how many DUTs are selected.
 			int numSelected = 0;
@@ -159,12 +157,12 @@ namespace Sensit.App.Calibration
 			// Create each DUT object.
 			for (int i = 0; i < NumDuts; i++)
 			{
-				_duts.Add(new AnalogSensor
+				_duts.Add(new Dut
 				{
 					Index = i,
 					// Model = "",
 					// Version = "",
-					Selected = true,	// Replace this with user setting from FormCalibration.
+					Selected = true,    // TODO:  Replace this with user setting from FormCalibration.
 					Status = DutStatus.Init,
 					SerialNumber = string.Empty,
 					Message = string.Empty,

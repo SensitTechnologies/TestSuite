@@ -66,6 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dut.cs" />
     <Compile Include="FormCalibration.cs">
       <SubType>Form</SubType>
     </Compile>
