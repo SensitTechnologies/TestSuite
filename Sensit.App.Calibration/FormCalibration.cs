@@ -338,16 +338,17 @@ namespace Sensit.App.Calibration
 		/// Present a settings file to the user to edit.
 		/// </summary>
 		/// <param name="filename"></param>
-		private void EditSettings(string filename)
+		private void EditSettings<T>(string filename)
+			where T : Attribute
 		{
 			try
 			{
 				// Fetch equipment settings.
-				EquipmentSettings settings = Settings.Load<EquipmentSettings>(filename);
+				T settings = Settings.Load<T>(filename);
 
 				// Create and show a new object editor with the equipment settings.
 				FormObjectEditor objectEditor = new FormObjectEditor();
-				objectEditor.AddObject<EquipmentSettings>(settings, "Label");
+				objectEditor.AddObject<T>(settings, "Label");
 				DialogResult result = objectEditor.ShowDialog();
 
 				// If user selects "OK," save the settings.
@@ -369,7 +370,7 @@ namespace Sensit.App.Calibration
 		/// <param name="e"></param>
 		private void equipmentSettingsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			EditSettings(Properties.Settings.Default.SystemSettingsFile);
+			EditSettings<EquipmentSettings>(Properties.Settings.Default.SystemSettingsFile);
 		}
 
 		/// <summary>
@@ -379,7 +380,7 @@ namespace Sensit.App.Calibration
 		/// <param name="e"></param>
 		private void dUTSettingsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			EditSettings(Properties.Settings.Default.DutSettingsFile);
+			EditSettings<DutSettings>(Properties.Settings.Default.DutSettingsFile);
 		}
 
 		/// <summary>
@@ -389,7 +390,7 @@ namespace Sensit.App.Calibration
 		/// <param name="e"></param>
 		private void testSettingsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			EditSettings(Properties.Settings.Default.TestSettingsFile);
+			EditSettings<TestSettings>(Properties.Settings.Default.TestSettingsFile);
 		}
 
 		/// <summary>
