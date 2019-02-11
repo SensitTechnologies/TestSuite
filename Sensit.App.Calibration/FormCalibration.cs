@@ -20,7 +20,7 @@ namespace Sensit.App.Calibration
 		private bool _closeAfterTest = false;
 
 		// Object to represent test equipment.
-		private Equipment _equipment = new Equipment();
+		private Equipment _equipment;
 
 		// Object to represent devices under test.
 		private List<Dut> _duts = new List<Dut>();
@@ -94,13 +94,6 @@ namespace Sensit.App.Calibration
 			// Initialize the form.
 			InitializeComponent();
 
-			// Initialize the test object.
-			_test = new Test(_equipment, _duts)
-			{
-				Finished = TestFinished,
-				Update = TestUpdate
-			};
-
 			// Set the number of DUTs.
 			NumDuts = Properties.Settings.Default.NumDuts;
 
@@ -156,7 +149,7 @@ namespace Sensit.App.Calibration
 		}
 
 		/// <summary>
-		/// When "Start" button is clicked, run the Start action.
+		/// When "Start" button is clicked, fetch settings, create equipment/test/DUTs, start test.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -172,58 +165,57 @@ namespace Sensit.App.Calibration
 					throw new Exception("Please select model, range, test before starting test.");
 				}
 
+				//
 				// Reload the settings files in case they changed since the app was started.
-				DutSettings dutSettings = Settings.Load<DutSettings>(Properties.Settings.Default.DutSettingsFile);
-				TestSettings testSettings = Settings.Load<TestSettings>(Properties.Settings.Default.TestSettingsFile);
-				_equipment.Settings = Settings.Load<EquipmentSettings>(Properties.Settings.Default.SystemSettingsFile);
+				//
 
-				// Find the selected model settings.
-				_test.ModelSettings = dutSettings.ModelSettings.Find(i => i.Label == comboBoxModel.Text);
-				if (_test.ModelSettings == null)
+				EquipmentSettings equipmentSettings = Settings.Load<EquipmentSettings>(Properties.Settings.Default.SystemSettingsFile);
+				if (equipmentSettings == null)
+				{
+					throw new Exception("Equipment settings not found.  Please contact Engineering.");
+				}
+
+				DutSettings dutSettings = Settings.Load<DutSettings>(Properties.Settings.Default.DutSettingsFile);
+
+				ModelSetting modelSetting = dutSettings.ModelSettings.Find(i => i.Label == comboBoxModel.Text);
+				if (modelSetting == null)
 				{
 					throw new Exception("Model settings not found. Please contact Engineering.");
 				}
 
-				// Find the selected range settings.
-				_test.RangeSettings = _test.ModelSettings.RangeSettings.Find(i => i.Label == comboBoxRange.Text);
-				if (_test.RangeSettings == null)
+				RangeSetting rangeSetting = modelSetting.RangeSettings.Find(i => i.Label == comboBoxRange.Text);
+				if (rangeSetting == null)
 				{
 					throw new Exception("Range settings not found. Please contact Engineering.");
 				}
 
-				// Find the selected test settings.
-				_test.TestSettings = testSettings.Tests.Find(i => i.Label == comboBoxTest.Text);
-				if (_test.TestSettings == null)
+				TestSettings testSettings = Settings.Load<TestSettings>(Properties.Settings.Default.TestSettingsFile);
+				TestSetting testSetting = testSettings.Tests.Find(i => i.Label == comboBoxTest.Text);
+				if (testSetting == null)
 				{
 					throw new Exception("Test settings not found. Please contact Engineering.");
 				}
 
-				// Disable most of the controls.
-				comboBoxModel.Enabled = false;
-				comboBoxRange.Enabled = false;
-				comboBoxTest.Enabled = false;
-				checkBoxSelectAll.Enabled = false;
-				foreach (Control c in tableLayoutPanelDevicesUnderTest.Controls)
+				//
+				// Create objects for equipment, test, and DUTs.
+				//
+
+				_equipment = new Equipment(equipmentSettings);
+
+				_test = new Test(testSetting, _equipment, _duts)
 				{
-					c.Enabled = false;
-				}
+					Finished = TestFinished,
+					Update = TestUpdate
+				};
 
-				// Enable the "Stop" button and disable the "Start" button.
-				buttonStop.Enabled = true;
-				buttonStart.Enabled = false;
-
-				// TODO:  Delete DUT tabs (if they exist) and any data on them.
-				// TODO:  Clear the DUT data on the Overview tab.
 				_duts.Clear();
-
-				// Create each DUT object.
 				for (int i = 0; i < NumDuts; i++)
 				{
 					// Fetch user settings for DUT.
 					CheckBox checkBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(0, i) as CheckBox;
 					TextBox textBoxSerial = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(1, i) as TextBox;
 
-					Dut dut = new Dut();
+					Dut dut = new Dut(modelSetting, _equipment);
 					dut.Device.Index = i;
 					dut.Device.Selected = checkBox.Checked;
 					dut.Device.Status = DutStatus.Init;
@@ -232,13 +224,26 @@ namespace Sensit.App.Calibration
 					_duts.Add(dut);
 				}
 
+				//
+				// Disable most of the user controls.
+				//
+
+				// TODO:  Delete DUT tabs (if they exist) and any data on them.
+				// TODO:  Clear the DUT data on the Overview tab.
+
+				comboBoxModel.Enabled = false;
+				comboBoxRange.Enabled = false;
+				comboBoxTest.Enabled = false;
+				checkBoxSelectAll.Enabled = false;
+				foreach (Control c in tableLayoutPanelDevicesUnderTest.Controls)
+				{
+					c.Enabled = false;
+				}
+				buttonStop.Enabled = true;
+				buttonStart.Enabled = false;
+
 				// Start the test.
 				_test.Start();
-			}
-			catch (NullReferenceException)
-			{
-				MessageBox.Show("The application has not assigned an action to run when a test is started!"
-					+ Environment.NewLine + "Please contact your engineering team.", "Error");
 			}
 			catch (Exception ex)
 			{
@@ -295,8 +300,8 @@ namespace Sensit.App.Calibration
 		/// <param name="e"></param>
 		private void FormCalibration_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			// If a test is running...
-			if (_test.IsBusy())
+			// If a test exists and is running...
+			if ((_test != null) && (_test.IsBusy()))
 			{
 				// Cancel application shutdown.
 				e.Cancel = true;
@@ -321,8 +326,8 @@ namespace Sensit.App.Calibration
 		{
 			DialogResult result = DialogResult.OK;  // whether to quit or not
 
-			// If the Running delegate exists and a test is running...
-			if (_test.IsBusy())
+			// If a test exists and is running...
+			if ((_test != null) && (_test.IsBusy()))
 			{
 				// Ask the user if they really want to stop the test.
 				result = MessageBox.Show("Abort the test?", "Abort", MessageBoxButtons.OKCancel);
@@ -372,7 +377,6 @@ namespace Sensit.App.Calibration
 				// If user selects "OK," save the settings.
 				if (result == DialogResult.OK)
 				{
-					// TODO:  Saving settings does not work (XML file is corrupted).
 					Settings.Save(objectEditor.FetchObject(), filename);
 				}
 			}

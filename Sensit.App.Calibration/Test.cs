@@ -36,6 +36,7 @@ namespace Sensit.App.Calibration
 		}
 
 		private BackgroundWorker _testThread;   // task that will handle test operations
+		private TestSetting _settings;			// settings for test
 		private Equipment _equipment;			// test equipment object
 		private List<Dut> _duts;				// devices under test
 
@@ -49,32 +50,15 @@ namespace Sensit.App.Calibration
 
 		#endregion
 
-		#region Properties
-
-		/// <summary>
-		/// Settings for selected model.
-		/// </summary>
-		public ModelSetting ModelSettings { get; set; }
-
-		/// <summary>
-		/// Settings for selected range.
-		/// </summary>
-		public RangeSetting RangeSettings { get; set; }
-
-		/// <summary>
-		/// Settings for selected test.
-		/// </summary>
-		public TestSetting TestSettings { get; set; }
-
-		#endregion
-
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="equipment">the equipment object used by the test</param>
-		public Test(Equipment equipment, List<Dut> duts)
+		/// <param name="equipment">equipment used by the test</param>
+		/// <param name="duts">devices being tested</param>
+		public Test(TestSetting settings, Equipment equipment, List<Dut> duts)
 		{
 			// Save the reference to the equipment and DUTs objects.
+			_settings = settings;
 			_equipment = equipment;
 			_duts = duts;
 
@@ -128,45 +112,13 @@ namespace Sensit.App.Calibration
 			}
 		}
 
-		private void DutCycle(TestVariable variable, double setpoint)
-		{
-			// Get reading from each DUT.
-			foreach (Dut dut in _duts)
-			{
-				// Abort if requested.
-				if (_testThread.CancellationPending) { break; }
-
-				// TODO:  foreach (IReferenceDevice ref in _testSettings.References)
-				// Get reference reading.
-				_equipment.GasReference.Read();
-
-				// Calculate error.
-				double error = _equipment.GasReference.AnalyteConcentration - setpoint;
-
-				// Check tolerance.
-				if (Math.Abs(error) > variable.ErrorTolerance)
-				{
-					// TODO:  Log an error, "Reference out of tolerance during DutCycle."
-					// Mark DUT as failed too.
-				}
-
-				// TODO:  Update GUI with reference info.
-				double? dutValue = dut.Read();
-
-				// Save the result.
-				dut.Results.Add(new TestResults
-				{
-					Setpoint = setpoint,
-					Reference = _equipment.GasReference.AnalyteConcentration,
-					SensorValue = dutValue
-				});
-			}
-		}
-
 		private void SetpointCycle(TestVariable variable, double setpoint)
 		{
 			// Set setpoint.
-			_equipment.GasController.AnalyteConcentrationSetpoint = setpoint;
+			_equipment.GasMixController.AnalyteBottleConcentration = 25;
+			_equipment.GasMixController.MassFlowSetpoint = 300;
+			_equipment.GasMixController.AnalyteConcentrationSetpoint = setpoint;
+			_equipment.GasMixController.WriteMassFlowSetpoint();
 
 			// TODO:  (Low priority) Update GUI with setpoint.
 
@@ -210,8 +162,6 @@ namespace Sensit.App.Calibration
 					stopwatch.Restart();
 				}
 
-				// TODO:  (Low priority) Update GUI.
-
 				// Wait to get desired reading frequency.
 				Thread.Sleep(variable.Interval);
 			}
@@ -220,7 +170,7 @@ namespace Sensit.App.Calibration
 		private void GasTest(TestComponent testComponent)
 		{
 			// Set active control mode.
-			_equipment.GasController.SetControlMode(ControlMode.Control);
+			_equipment.GasMixController.SetControlMode(ControlMode.Control);
 
 			// Collect data.
 			foreach (double sp in testComponent.Setpoints)
@@ -233,18 +183,26 @@ namespace Sensit.App.Calibration
 
 				// Read data from each DUT.
 				// TODO:  (Low priority) Do not process setpoints outside range of the DUT.
-				// TODO:  (Low priority) Only process found or failed DUTs?
 				for (int i = 0; i < testComponent.NumberOfSamples; i++)
 				{
 					// Take samples via DUT interface.
+					// TODO:  Update GUI with reference info.
 					_equipment.DutInterface.Read();
 
-					DutCycle(testComponent.IndependentVariable, sp);
+					// Get reading from each DUT.
+					foreach (Dut dut in _duts)
+					{
+						// Abort if requested.
+						if (_testThread.CancellationPending) { break; }
+
+						// Read and process DUT data.
+						dut.Read(sp, testComponent.IndependentVariable.ErrorTolerance);
+					}
 				}
 			}
 
 			// Set controller to passive mode.
-			_equipment.GasController.SetControlMode(ControlMode.Ambient);
+			_equipment.GasMixController.SetControlMode(ControlMode.Ambient);
 		}
 
 		/// <summary>
@@ -284,7 +242,7 @@ namespace Sensit.App.Calibration
 					}
 
 					// Perform test actions.
-					foreach (TestComponent c in TestSettings.Components)
+					foreach (TestComponent c in _settings.Components)
 					{
 						GasTest(c);
 					}

@@ -44,9 +44,9 @@ namespace Sensit.App.Calibration
 		public List<ReferenceSetting> ReferenceSettings { get; set; }
 
 		[Category("Analyte Mass Flow Controller"), Description("Serial Port")]
-		public string AnalyteControllerPort { get; set; } = "COM4";
+		public string AnalyteControllerPort { get; set; } = "COM7";
 
 		[Category("Diluent Mass Flow Controller"), Description("Serial Port")]
-		public string DiluentControllerPort { get; set; } = "COM3";
+		public string DiluentControllerPort { get; set; } = "COM6";
 	}
 }

@@ -5,7 +5,7 @@ using Sensit.TestSDK.Interfaces;
 namespace Sensit.TestSDK.Devices
 {
 	public class Manual : IGasConcentrationReference, IMassFlowReference, IVolumeFlowReference, IVelocityReference, IPressureReference, ITemperatureReference,
-		IGasConcentrationController, IMassFlowController, IVolumeFlowController, IVelocityController, IPressureController, ITemperatureController
+		IGasMixController, IMassFlowController, IVolumeFlowController, IVelocityController, IPressureController, ITemperatureController
 	{
 		private double _gasConcentration;
 		private double _massFlow;

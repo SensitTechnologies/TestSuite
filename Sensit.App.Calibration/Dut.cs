@@ -1,8 +1,9 @@
-﻿using Sensit.TestSDK.Dut;
-using Sensit.TestSDK.Interfaces;
-using CsvHelper;
-using System.IO;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using CsvHelper;
+using Sensit.TestSDK.Dut;
+using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.App.Calibration
 {
@@ -11,7 +12,7 @@ namespace Sensit.App.Calibration
 		public double? Setpoint { get; set; }
 		public double? Reference { get; set; }
 		public double? SensorValue { get; set; }
-		//public double Error { get; set; }
+		//public double? Error { get; set; }
 	}
 
 	/// <summary>
@@ -24,6 +25,9 @@ namespace Sensit.App.Calibration
 	/// </remarks>
 	public class Dut
 	{
+		private ModelSetting _settings;
+		private Equipment _equipment;
+
 		// used when the user selects "Simulator" option for DUTs.
 		private Simulator _simulator;
 
@@ -32,36 +36,46 @@ namespace Sensit.App.Calibration
 
 		#region Properties
 
+		/// <summary>
+		/// Data collected during a test.
+		/// </summary>
 		public List<TestResults> Results { get; set; } = new List<TestResults>();
 
 		/// <summary>
-		/// Device Under Test settings
+		/// Type of device under test.
 		/// </summary>
-		public ModelSetting Settings { private get; set; }
-
-		public IDutInterfaceDevice InterfaceDevice { private get; set; }
-
-		// TODO:  Select type of device based on settings passed into this class.
-		public IDeviceUnderTest Device => _analogSensor;
+		public IDeviceUnderTest Device { get; private set; }
 
 		#endregion
 
 		#region Constructor
 
-		public Dut()
+		public Dut(ModelSetting settings, Equipment equipment)
 		{
+			_settings = settings;
+			_equipment = equipment;
+
 			// Create DUT object.
 			// Only the one chosen by the user will end up being used.
-			// TODO:  (Medium priority) Choose type of DUT based on settings.
-			//_simulator = new Simulator();
-			_analogSensor = new AnalogSensor();
+			// TODO:  Choose type of DUT based on settings.
+			switch (settings.Label)
+			{
+				case "Simulator":
+					_simulator = new Simulator();
+					Device = _simulator;
+					break;
+				default:
+					_analogSensor = new AnalogSensor();
+					Device = _analogSensor;
+					break;
+			}
 		}
 
 		public void Open()
 		{
 			if (Device.Selected == true)
 			{
-				InterfaceDevice?.PowerOn(Device.Index);
+				_equipment?.DutInterface?.PowerOn(Device.Index);
 
 				// TODO:  (Low priority) Open DUT ports (if applicable); throw exception is no DUT ports could be opened.
 				// TODO:  (Low priority) Talk to each DUT to verify communication.
@@ -76,7 +90,7 @@ namespace Sensit.App.Calibration
 			if ((Device.Status != DutStatus.PortError) &&
 				(Device.Status != DutStatus.NotFound))
 			{
-				InterfaceDevice?.PowerOff(Device.Index);
+				_equipment?.DutInterface?.PowerOff(Device.Index);
 			}
 
 			if ((Device.Status == DutStatus.Found) ||
@@ -96,14 +110,47 @@ namespace Sensit.App.Calibration
 			}
 		}
 
-		public double? Read()
+		public void Read(double setpoint, double errorTolerance)
 		{
-			return InterfaceDevice?.ReadAnalog(Device.Index);
+			// Only process found or failed DUTs.
+			if ((Device.Status == DutStatus.Found) ||
+				(Device.Status == DutStatus.Fail))
+			{
+				// TODO:  foreach (IReferenceDevice ref in _testSettings.References)
+				// Get reference reading.
+				_equipment.GasReference.Read();
+
+				// Calculate error.
+				double error = _equipment.GasReference.AnalyteConcentration - setpoint;
+
+				// Check tolerance.
+				if (Math.Abs(error) > errorTolerance)
+				{
+					// TODO:  Log an error, "Reference out of tolerance during DUT Read."
+
+					// Mark DUT as failed.
+					Device.Status = DutStatus.Fail;
+				}
+
+				// Read value from DUT.
+				double? dutValue = _equipment?.DutInterface?.ReadAnalog(Device.Index);
+
+				// Save the result.
+				Results.Add(new TestResults
+				{
+					Setpoint = setpoint,
+					Reference = _equipment.GasReference.AnalyteConcentration,
+					SensorValue = dutValue
+				});
+			}
 		}
 
 		public void ComputeCoefficients()
 		{
-			_analogSensor.ComputeCoefficients();
+			// Only process found or failed DUTs.
+			if ((Device.Status == DutStatus.Found) ||
+				(Device.Status == DutStatus.Fail))
+			Device.ComputeCoefficients();
 		}
 
 		#endregion

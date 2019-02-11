@@ -151,7 +151,7 @@ namespace Sensit.TestSDK.Devices
             }
             catch (KeyNotFoundException)
             {
-                throw new DeviceSettingNotSupportedException("Channel not configured for measurement.");
+                throw new DeviceSettingNotSupportedException("Keysight 34972A:  Channel " + dut + " not configured for measurement.");
             }
 
             // Return the requested reading.

@@ -1,4 +1,5 @@
-﻿using Sensit.TestSDK.Devices;
+﻿using System;
+using Sensit.TestSDK.Devices;
 using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.App.Calibration
@@ -16,6 +17,8 @@ namespace Sensit.App.Calibration
 	/// </remarks>
 	public class Equipment
 	{
+		private EquipmentSettings _settings;
+
 		// generic manual device, used whenever the user selects "Manual" option for equipment.
 		private Manual _manual;
 
@@ -31,12 +34,14 @@ namespace Sensit.App.Calibration
 		// datalogger (for analog sensor DUTs)
 		private Keysight_34972A _datalogger;
 
-		#region Properties
+		#region Delegates
 
-		/// <summary>
-		/// Equipment settings
-		/// </summary>
-		public EquipmentSettings Settings { private get; set; }
+		// Report test progress.
+		public Action<int, string> Update;
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		///  DUT interface device used to take readings from sensors/products/etc.
@@ -46,12 +51,12 @@ namespace Sensit.App.Calibration
 		/// <summary>
 		/// Gas Concentration Controller used to mix gasses.
 		/// </summary>
-		public IGasConcentrationController GasController => _manual;
+		public IGasMixController GasMixController => _gasMixer;
 
 		/// <summary>
 		/// Gas Concentration Reference used to determine gas composition.
 		/// </summary>
-		public IGasConcentrationReference GasReference => _manual;
+		public IGasConcentrationReference GasReference => _gasMixer;
 
 		#endregion
 
@@ -60,8 +65,10 @@ namespace Sensit.App.Calibration
 		/// <summary>
 		/// Constructor; creates equipment objects.
 		/// </summary>
-		public Equipment()
+		public Equipment(EquipmentSettings settings)
 		{
+			_settings = settings;
+
 			// Create test equipment objects.
 			// Only the ones chosen by the user will end up being used.
 			_mfcAnalyte = new ColeParmerMFC();
@@ -79,8 +86,8 @@ namespace Sensit.App.Calibration
 		public void Open()
 		{
 			// Configure the mass flow controllers.
-			_mfcAnalyte.Open(Settings?.AnalyteControllerPort);
-			_mfcDiluent.Open(Settings?.DiluentControllerPort);
+			_mfcAnalyte.Open(_settings?.AnalyteControllerPort);
+			_mfcDiluent.Open(_settings?.DiluentControllerPort);
 
 			// Configure the datalogger.
 			_datalogger.Open();
