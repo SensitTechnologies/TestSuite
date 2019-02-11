@@ -4,21 +4,25 @@
 /Sensit.App.Calibration/bin
 /Sensit.App.Calibration/obj
 /Sensit.App.Calibration/publish
+/Sensit.App.Calibration/*.pfx
 /Sensit.App.Calibration/*.user
 
 /Sensit.App.GasConcentration/bin
 /Sensit.App.GasConcentration/obj
 /Sensit.App.GasConcentration/publish
+/Sensit.App.GasConcentration/*.pfx
 /Sensit.App.GasConcentration/*.user
 
 /Sensit.App.Keysight_34972A/bin
 /Sensit.App.Keysight_34972A/obj
 /Sensit.App.Keysight_34972A/publish
+/Sensit.App.Keysight_34972A/*.pfx
 /Sensit.App.Keysight_34972A/*.user
 
 /Sensit.App.MassFlow/bin
 /Sensit.App.MassFlow/obj
 /Sensit.App.MassFlow/publish
+/Sensit.App.MassFlow/*.pfx
 /Sensit.App.MassFlow/*.user
 
 /Sensit.TestSDK/bin
