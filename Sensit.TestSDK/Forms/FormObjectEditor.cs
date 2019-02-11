@@ -27,7 +27,7 @@ namespace Sensit.TestSDK.Forms
                 // See if we can get the property propertyForText from the item
                 PropertyInfo propertyInfoForText = propertiesObject.GetType().GetProperty(propertyForText);
 
-				// TODO:  (Low priority) Tree view isn't implemented correctly.
+				// TODO:  Tree view isn't implemented correctly.
 				// If we can't access the property then it might not be a valid object, or not a valid property so return.
 				if (propertyInfoForText != null)
 				{
@@ -45,6 +45,7 @@ namespace Sensit.TestSDK.Forms
 		/// <returns>object from the property grid</returns>
 		public object FetchObject()
 		{
+			// TODO:  Saving settings does not work (XML file is corrupted).
 			return propertyGrid.SelectedObject;
 		}
 

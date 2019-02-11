@@ -5,7 +5,7 @@ namespace Sensit.TestSDK.Forms
 	// This class is an attempt to make the "InputDialog.cs" look nicer by using the form designer.
 	// It was set aside because it wasn't worth the time commitment at the time.
 	// If you decide to work on it, implement this class as a messagebox which returns a dialog result, then use this class instead of the "InputDialog.cs" class in the SDK.
-	// TODO:  (Low priority) Either improve InputDialog (make the form autosize), or replace with FormInputDialog (must support read-only messages to display manual setpoints to user).
+	// TODO:  Either improve InputDialog (make the form autosize), or replace with FormInputDialog (must support read-only messages to display manual setpoints to user).
 	public partial class FormInputDialog : Form
 	{
 		public FormInputDialog()
