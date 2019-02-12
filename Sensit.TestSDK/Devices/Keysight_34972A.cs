@@ -22,7 +22,7 @@ namespace Sensit.TestSDK.Devices
 	{
 		Ag3497x _v3497x;
 
-		private Dictionary<int,double> _readings = new Dictionary<int, double>();
+		private Dictionary<int, double> _readings = new Dictionary<int, double>();
 
 		public int NumberOfDuts { private get; set; }
 
@@ -126,15 +126,15 @@ namespace Sensit.TestSDK.Devices
 			// Transfers NVM readings to output buffer. 
 			_v3497x.SCPI.FETCh.QueryAllData(out string data);
 
-            string[] dataSeparated = data.Split(',');
+			string[] dataSeparated = data.Split(',');
 
-            for (int i = 0; i < dataSeparated.Length; i+=2) 
-            {
-                //Parse sensor output from string into double and add to list _readings. Timestamps and channel number are discarded for now.
-                int key = int.Parse(dataSeparated[(i + 1)]) % 100;
-                double value = double.Parse(dataSeparated[i], System.Globalization.NumberStyles.Any);
-                _readings.Add(key, value);
-            }
+			for (int i = 0; i < dataSeparated.Length; i += 2)
+			{
+				//Parse sensor output from string into double and add to list _readings. Timestamps and channel number are discarded for now.
+				int key = int.Parse(dataSeparated[(i + 1)]) % 100;
+				double value = double.Parse(dataSeparated[i], System.Globalization.NumberStyles.Any);
+				_readings.Add(key, value);
+			}
 		}
 
 		public int ReadCounts(int dut)
@@ -144,17 +144,17 @@ namespace Sensit.TestSDK.Devices
 
 		public double ReadAnalog(int dut)
 		{
-            double reading = 0;
-            try
-            {
-                reading = _readings[dut];
-            }
-            catch (KeyNotFoundException)
-            {
-                throw new DeviceSettingNotSupportedException("Keysight 34972A:  Channel " + dut + " not configured for measurement.");
-            }
+			double reading = 0;
+			try
+			{
+				reading = _readings[dut + 1];
+			}
+			catch (KeyNotFoundException)
+			{
+				throw new DeviceSettingNotSupportedException("Keysight 34972A:  Channel " + dut + " not configured for measurement.");
+			}
 
-            // Return the requested reading.
+			// Return the requested reading.
 			return reading;
 		}
 
