@@ -38,7 +38,7 @@ namespace Sensit.App.Calibration
 		private BackgroundWorker _testThread;   // task that will handle test operations
 		private TestSetting _settings;			// settings for test
 		private Equipment _equipment;			// test equipment object
-		private List<Dut> _duts;				// devices under test
+		private readonly List<Dut> _duts;		// devices under test
 
 		#region Delegates
 

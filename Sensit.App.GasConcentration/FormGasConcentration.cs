@@ -52,7 +52,7 @@ namespace Sensit.App.GasConcentration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+		private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Application.Exit();
 		}
@@ -62,7 +62,7 @@ namespace Sensit.App.GasConcentration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void radioButton_CheckedChanged(object sender, EventArgs e)
+		private void RadioButton_CheckedChanged(object sender, EventArgs e)
 		{
 			// Do stuff only if the radio button is checked.
 			// (Otherwise the actions will run twice.)
@@ -124,7 +124,7 @@ namespace Sensit.App.GasConcentration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void comboBoxSerialPortGasUnderTest_SelectedIndexChanged(object sender, EventArgs e)
+		private void ComboBoxSerialPortGasUnderTest_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			// Save the serial port selection in the application settings.
 			Properties.Settings.Default.PortAnalyte = comboBoxAnalytePort.Text;
@@ -135,7 +135,7 @@ namespace Sensit.App.GasConcentration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void comboBoxSerialPortDiluent_SelectedIndexChanged(object sender, EventArgs e)
+		private void ComboBoxSerialPortDiluent_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			// Save the serial port selection in the application settings.
 			Properties.Settings.Default.PortDiluent = comboBoxDiluentPort.Text;
@@ -162,7 +162,7 @@ namespace Sensit.App.GasConcentration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void buttonReadAll_Click(object sender, EventArgs e)
+		private void ButtonReadAll_Click(object sender, EventArgs e)
 		{
 			try
 			{
@@ -201,7 +201,7 @@ namespace Sensit.App.GasConcentration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void buttonWriteGas_Click(object sender, EventArgs e)
+		private void ButtonWriteGas_Click(object sender, EventArgs e)
 		{
 			try
 			{
@@ -234,7 +234,7 @@ namespace Sensit.App.GasConcentration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void buttonWrite_Click(object sender, EventArgs e)
+		private void ButtonWrite_Click(object sender, EventArgs e)
 		{
 			try
 			{
@@ -264,7 +264,7 @@ namespace Sensit.App.GasConcentration
 			}
 		}
 
-		private void buttonReadConcentration_Click(object sender, EventArgs e)
+		private void ButtonReadConcentration_Click(object sender, EventArgs e)
 		{
 			try
 			{
@@ -272,8 +272,8 @@ namespace Sensit.App.GasConcentration
 				_concentrationController.Read();
 
 				// Update the form.
-				textBoxGasConcentration.Text = _concentrationController.AnalyteConcentration.ToString();
-				textBoxGasConcentrationSetpoint.Text = _concentrationController.AnalyteConcentrationSetpoint.ToString();
+				textBoxGasConcentration.Text = _concentrationController.GasMix.ToString();
+				textBoxGasConcentrationSetpoint.Text = _concentrationController.GasMixSetpoint.ToString();
 				textBoxMassFlowSetpoint.Text = _concentrationController.MassFlowSetpoint.ToString();
 				textBoxAnalyteBottleConcentration.Text = _concentrationController.AnalyteBottleConcentration.ToString();
 			}
@@ -285,7 +285,7 @@ namespace Sensit.App.GasConcentration
 			}
 		}
 
-		private void buttonWriteGasConcentrationSetpoint_Click(object sender, EventArgs e)
+		private void ButtonWriteGasConcentrationSetpoint_Click(object sender, EventArgs e)
 		{
 			try
 			{
@@ -295,12 +295,12 @@ namespace Sensit.App.GasConcentration
 				double bottleConcentration = Convert.ToDouble(textBoxAnalyteBottleConcentration.Text);
 
 				// Write the properties.
-				_concentrationController.AnalyteConcentrationSetpoint = analyteConcentration;
+				_concentrationController.GasMixSetpoint = analyteConcentration;
 				_concentrationController.MassFlowSetpoint = massFlowSetpoint;
 				_concentrationController.AnalyteBottleConcentration = bottleConcentration;
 
 				// Write to mass flow controllers.
-				_concentrationController.WriteMassFlowSetpoint();
+				_concentrationController.WriteGasMixSetpoint();
 			}
 			catch (FormatException ex)
 			{

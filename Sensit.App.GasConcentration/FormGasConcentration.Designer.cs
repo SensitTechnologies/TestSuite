@@ -118,7 +118,7 @@
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
 			this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
 			this.exitToolStripMenuItem.Text = "&Exit";
-			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+			this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
 			// 
 			// groupBoxSerialPorts
 			// 
@@ -167,7 +167,7 @@
 			this.radioButtonClosed.TabStop = true;
 			this.radioButtonClosed.Text = "Closed";
 			this.radioButtonClosed.UseVisualStyleBackColor = true;
-			this.radioButtonClosed.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+			this.radioButtonClosed.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
 			// 
 			// radioButtonOpen
 			// 
@@ -178,7 +178,7 @@
 			this.radioButtonOpen.TabIndex = 1;
 			this.radioButtonOpen.Text = "Open";
 			this.radioButtonOpen.UseVisualStyleBackColor = true;
-			this.radioButtonOpen.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+			this.radioButtonOpen.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
 			// 
 			// comboBoxDiluentPort
 			// 
@@ -187,7 +187,7 @@
 			this.comboBoxDiluentPort.Name = "comboBoxDiluentPort";
 			this.comboBoxDiluentPort.Size = new System.Drawing.Size(121, 21);
 			this.comboBoxDiluentPort.TabIndex = 0;
-			this.comboBoxDiluentPort.SelectedIndexChanged += new System.EventHandler(this.comboBoxSerialPortDiluent_SelectedIndexChanged);
+			this.comboBoxDiluentPort.SelectedIndexChanged += new System.EventHandler(this.ComboBoxSerialPortDiluent_SelectedIndexChanged);
 			// 
 			// comboBoxAnalytePort
 			// 
@@ -196,7 +196,7 @@
 			this.comboBoxAnalytePort.Name = "comboBoxAnalytePort";
 			this.comboBoxAnalytePort.Size = new System.Drawing.Size(121, 21);
 			this.comboBoxAnalytePort.TabIndex = 0;
-			this.comboBoxAnalytePort.SelectedIndexChanged += new System.EventHandler(this.comboBoxSerialPortGasUnderTest_SelectedIndexChanged);
+			this.comboBoxAnalytePort.SelectedIndexChanged += new System.EventHandler(this.ComboBoxSerialPortGasUnderTest_SelectedIndexChanged);
 			// 
 			// groupBoxMassFlow
 			// 
@@ -484,7 +484,7 @@
 			this.buttonWriteSP.TabIndex = 10;
 			this.buttonWriteSP.Text = "Write SP";
 			this.buttonWriteSP.UseVisualStyleBackColor = true;
-			this.buttonWriteSP.Click += new System.EventHandler(this.buttonWrite_Click);
+			this.buttonWriteSP.Click += new System.EventHandler(this.ButtonWrite_Click);
 			// 
 			// buttonWriteGas
 			// 
@@ -494,7 +494,7 @@
 			this.buttonWriteGas.TabIndex = 17;
 			this.buttonWriteGas.Text = "Write Gas";
 			this.buttonWriteGas.UseVisualStyleBackColor = true;
-			this.buttonWriteGas.Click += new System.EventHandler(this.buttonWriteGas_Click);
+			this.buttonWriteGas.Click += new System.EventHandler(this.ButtonWriteGas_Click);
 			// 
 			// buttonReadMFCAll
 			// 
@@ -504,7 +504,7 @@
 			this.buttonReadMFCAll.TabIndex = 2;
 			this.buttonReadMFCAll.Text = "Read All";
 			this.buttonReadMFCAll.UseVisualStyleBackColor = true;
-			this.buttonReadMFCAll.Click += new System.EventHandler(this.buttonReadAll_Click);
+			this.buttonReadMFCAll.Click += new System.EventHandler(this.ButtonReadAll_Click);
 			// 
 			// labelDiluent
 			// 
@@ -608,7 +608,7 @@
 			this.buttonWriteAll.TabIndex = 12;
 			this.buttonWriteAll.Text = "Write All";
 			this.buttonWriteAll.UseVisualStyleBackColor = true;
-			this.buttonWriteAll.Click += new System.EventHandler(this.buttonWriteGasConcentrationSetpoint_Click);
+			this.buttonWriteAll.Click += new System.EventHandler(this.ButtonWriteGasConcentrationSetpoint_Click);
 			// 
 			// textBoxGasConcentrationSetpoint
 			// 
@@ -653,7 +653,7 @@
 			this.buttonReadAll.TabIndex = 14;
 			this.buttonReadAll.Text = "Read All";
 			this.buttonReadAll.UseVisualStyleBackColor = true;
-			this.buttonReadAll.Click += new System.EventHandler(this.buttonReadConcentration_Click);
+			this.buttonReadAll.Click += new System.EventHandler(this.ButtonReadConcentration_Click);
 			// 
 			// labelAnalyteBottleConcentration
 			// 
