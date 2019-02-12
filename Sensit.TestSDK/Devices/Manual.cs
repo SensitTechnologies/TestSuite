@@ -20,6 +20,9 @@ namespace Sensit.TestSDK.Devices
 
 		public Gas GasSelection { get; set; } = Gas.Air;
 
+		// TODO:  Move user prompts out of property getters.
+		// Will likely mean refactoring IReferenceDevice.
+
 		public double GasMix
 		{
 			get
