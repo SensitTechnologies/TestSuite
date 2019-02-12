@@ -90,3 +90,21 @@ as much as possible.  The following links describe best practices that should be
 considered by contributors to this project:
 * [Microsoft - C# Coding Conventions (C# Programming Guide)](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/inside-a-program/coding-conventions)
 * [Microsoft - Framework Design Guidelines](https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/)
+
+## Frequently Asked Questions
+* Why do I get a signing error when I build?
+  * The applications are written for click-once deployment.  After building,
+    you'll need to generate private keys.
+* Why does Sensit.App.Calibration have a "Remote Debug" build configuration?
+  * The calibration app is often used with a variety of test equipment, and so
+    it's convenient to have a way to debug on a remote system.  This configuration
+	has custom build and debug properties for a remote PC.
+	[This blog post](http://gpriaulx.co/2015/12/visual-studio-2015-remote-debugging/)
+	describes how to set it up.  To get this to work:
+	* Perform the "Client Preparation" procedure from the blog on the remote machine.
+	* The "Solution Preparation" is done except for setting the output path to
+	  the remote machine (step 5 on the blog).
+	  * Open the project properties for the Calibration app.
+	  * Navigate to the "Build" tab.
+	  * Set the Configuration to "Remote Debug".
+	  * Set the output path to a network-accessible folder on the remote machine.
