@@ -1,4 +1,5 @@
-﻿using Sensit.TestSDK.Calculations;
+﻿using System;
+using Sensit.TestSDK.Calculations;
 using Sensit.TestSDK.Exceptions;
 using Sensit.TestSDK.Interfaces;
 
@@ -14,8 +15,14 @@ namespace Sensit.TestSDK.Devices
 		private IMassFlowReference _analyteReference;
 		private IMassFlowReference _dilutentReference;
 
-		private double _analyteBottleConcentration;
+		// gas concentration of analyte
+		// (default to 100.0% volume so mass flow setpoint can be set between 0% - 100% initially)
+		private double _analyteBottleConcentration = 100.0;
+
+		// total mass flow (of both mass flow controllers combined)
 		private double _massFlowSetpoint;
+
+		// gas mixture setpoint [%V]; must never exceed analyte bottle concentration
 		private double _gasMixSetpoint;
 
 		public UnitOfMeasure.Flow FlowUnit { get; set; } = UnitOfMeasure.Flow.CubicFeetPerMinute;
@@ -69,9 +76,11 @@ namespace Sensit.TestSDK.Devices
 			set
 			{
 				// Check for valid value.
-				if ((value < 0.0) || (value > 100.0))
+				if ((value < 0.0) || (value > _analyteBottleConcentration))
 				{
-					throw new DeviceOutOfRangeException("Gas Mix Setpoint must be between 0.0% and 100.0%, inclusive.");
+					throw new DeviceOutOfRangeException("Gas Mix Setpoint must be between 0.0% and analyte bottle concentration, inclusive."
+						+ Environment.NewLine + "Analyte Bottle Concentration is:  " + _analyteBottleConcentration
+						+ Environment.NewLine + "Attempted Gas Mix Setpoint was:  " + value);
 				}
 
 				_gasMixSetpoint = value;
@@ -133,13 +142,6 @@ namespace Sensit.TestSDK.Devices
 			}
 		}
 
-		public double ReadMassFlowSetpoint()
-		{
-			ReadSetpoints();
-
-			return _massFlowSetpoint;
-		}
-
 		public void WriteGasMixSetpoint()
 		{
 			// For analyte:  mass Flow = desired flow rate / original concentration.
@@ -167,6 +169,13 @@ namespace Sensit.TestSDK.Devices
 
 			_massFlowSetpoint = dilutentFlow + analyteFlow;
 			_gasMixSetpoint = _analyteController.MassFlowSetpoint / _massFlowSetpoint * AnalyteBottleConcentration;
+		}
+
+		public double ReadMassFlowSetpoint()
+		{
+			ReadSetpoints();
+
+			return _massFlowSetpoint;
 		}
 
 		public double ReadGasMixSetpoint()

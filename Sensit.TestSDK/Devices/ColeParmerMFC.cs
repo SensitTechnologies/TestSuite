@@ -84,6 +84,9 @@ namespace Sensit.TestSDK.Devices
 		// specifier for a specific device on the serial port
 		private static readonly char ADDRESS = 'A';
 
+		// setpoint for mass flow
+		private double _massFlowSetpoint = 0.0;
+
 		/// <summary>
 		/// Enable the mass flow controller's streaming mode.
 		/// </summary>
@@ -361,14 +364,27 @@ namespace Sensit.TestSDK.Devices
 
 		#region Control Device Methods
 
-		public double MassFlowSetpoint { set; get; }
+		public double MassFlowSetpoint
+		{
+			set
+			{
+				if (value < 0.0)
+				{
+					throw new DeviceOutOfRangeException("Mass Flow Controller setpoint must be greater than or equal to 0."
+						+ Environment.NewLine + "Attempted setpoint was:  " + value);
+				}
+
+				_massFlowSetpoint = value;
+			}
+			get => _massFlowSetpoint;
+		}
 
 		public void WriteMassFlowSetpoint()
 		{
 			try
 			{
 				// "AS4.54" = Set setpoint to 4.54 on device A.
-				_serialPort.WriteLine(ADDRESS + Command.SetSetpoint + MassFlowSetpoint.ToString());
+				_serialPort.WriteLine(ADDRESS + Command.SetSetpoint + _massFlowSetpoint.ToString());
 
 				// Read the response from the serial port (until we get a \r character).
 				string message = _serialPort.ReadLine();
@@ -379,7 +395,7 @@ namespace Sensit.TestSDK.Devices
 				float returnedValue = Convert.ToSingle(words[5]);
 
 				// Check the setpoint.
-				if (returnedValue - MassFlowSetpoint > double.Epsilon)
+				if (returnedValue - _massFlowSetpoint > double.Epsilon)
 				{
 					throw new DeviceCommunicationException("Could not write setpoint to mass flow controller."
 						+ Environment.NewLine + "Value read from instrument (" + returnedValue.ToString() + ") was incorrect.");
@@ -399,7 +415,7 @@ namespace Sensit.TestSDK.Devices
 
 		public void WriteMassFlowSetpoint(double setpoint)
 		{
-			MassFlowSetpoint = setpoint;
+			_massFlowSetpoint = setpoint;
 
 			WriteMassFlowSetpoint();
 		}
@@ -419,10 +435,10 @@ namespace Sensit.TestSDK.Devices
 				string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
 
 				// Convert the setpoint to a number and set the property.
-				MassFlowSetpoint = Convert.ToSingle(words[5]);
+				_massFlowSetpoint = Convert.ToSingle(words[5]);
 
 				// Return the setpoint in case the user wants it.
-				return MassFlowSetpoint;
+				return _massFlowSetpoint;
 			}
 			catch (InvalidOperationException ex)
 			{
@@ -444,10 +460,20 @@ namespace Sensit.TestSDK.Devices
 
 		public void SetControlMode(ControlMode mode)
 		{
-			// This mass flow controller only supports control mode,
-			// so all this method does is throw exceptions if you try to change them.
-			if (mode != ControlMode.Control)
-				throw new DeviceSettingNotSupportedException("The device only supports Control mode.");
+			switch (mode)
+			{
+				case ControlMode.Ambient:
+				case ControlMode.Measure:
+					// Ambient and measure modes are the same and require simply setting a setpoint of zero.
+					WriteMassFlowSetpoint(0.0);
+					break;
+				case ControlMode.Control:
+					// Nothing to do here.
+					break;
+				default:
+					throw new DeviceSettingNotSupportedException("Cannot set mass flow controller control mode:"
+						+ Environment.NewLine + "Unrecognized mode.");
+			}
 		}
 
 		#endregion

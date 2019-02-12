@@ -116,24 +116,35 @@ namespace Sensit.TestSDK.Devices
 
 		public void Read()
 		{
-			// Changes from idle to wait-for-trigger state. 
-			// May want to move to "Open". Unsure if state is changed back to idle upon scan completion. 
-			_v3497x.SCPI.INITiate.Command();
-
-			// Sends trigger via bus source. 
-			_v3497x.SCPI.TRG.Command();
-
-			// Transfers NVM readings to output buffer. 
-			_v3497x.SCPI.FETCh.QueryAllData(out string data);
-
-			string[] dataSeparated = data.Split(',');
-
-			for (int i = 0; i < dataSeparated.Length; i += 2)
+			try
 			{
-				//Parse sensor output from string into double and add to list _readings. Timestamps and channel number are discarded for now.
-				int key = int.Parse(dataSeparated[(i + 1)]) % 100;
-				double value = double.Parse(dataSeparated[i], System.Globalization.NumberStyles.Any);
-				_readings.Add(key, value);
+				// Changes from idle to wait-for-trigger state. 
+				// May want to move to "Open". Unsure if state is changed back to idle upon scan completion. 
+				_v3497x.SCPI.INITiate.Command();
+
+				// Sends trigger via bus source. 
+				_v3497x.SCPI.TRG.Command();
+
+				// Transfers NVM readings to output buffer. 
+				_v3497x.SCPI.FETCh.QueryAllData(out string data);
+
+				string[] dataSeparated = data.Split(',');
+
+				// Remove any existing readings.
+				_readings.Clear();
+
+				for (int i = 0; i < dataSeparated.Length; i += 2)
+				{
+					// Parse sensor output from string into double and add to list _readings.
+					int key = int.Parse(dataSeparated[(i + 1)]) % 100;
+					double value = double.Parse(dataSeparated[i], System.Globalization.NumberStyles.Any);
+					_readings.Add(key, value);
+				}
+			}
+			catch (Exception ex)
+			{
+				throw new DeviceCommandFailedException("Could not read from Keysight datalogger.0"
+					+ Environment.NewLine + ex.Message);
 			}
 		}
 

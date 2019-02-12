@@ -104,12 +104,21 @@ namespace Sensit.App.Calibration
 			new TestSetting("Warm-Up Time"),
 			new TestSetting("Linearity")
 			{
+				
 				Components = new List<TestComponent>
 				{
-					new TestComponent("Verify")
+					new TestComponent("Characterize")
 					{
-						IndependentVariable = new TestVariable(Test.VariableType.GasConcentration),
-						Setpoints = new List<double> { 0.0, 10.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 90.0, 100.0 }
+						IndependentVariable = new TestVariable(Test.VariableType.GasConcentration)
+						{
+							// Take samples every 1 second.  Don't wait for stability.
+							Interval = new TimeSpan(0, 0, 1),
+							StabilityTime = new TimeSpan(0, 0, 0)
+						},
+						// Take 15 samples per setpoint (per sensor).
+						NumberOfSamples = 15,
+						// Setpoints for oxygen are 0% to 100% full scale, but full scale is 25% O2.
+						Setpoints = new List<double> { 0.0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0, 17.5, 20, 22.5, 25.0 }
 					}
 				}
 			},
