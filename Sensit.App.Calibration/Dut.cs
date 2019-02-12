@@ -121,7 +121,7 @@ namespace Sensit.App.Calibration
 				_equipment.GasReference.Read();
 
 				// Calculate error.
-				double error = _equipment.GasReference.AnalyteConcentration - setpoint;
+				double error = _equipment.GasReference.GasMix - setpoint;
 
 				// Check tolerance.
 				if (Math.Abs(error) > errorTolerance)
@@ -139,7 +139,7 @@ namespace Sensit.App.Calibration
 				Results.Add(new TestResults
 				{
 					Setpoint = setpoint,
-					Reference = _equipment.GasReference.AnalyteConcentration,
+					Reference = _equipment.GasReference.GasMix,
 					SensorValue = dutValue
 				});
 			}

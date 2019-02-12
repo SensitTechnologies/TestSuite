@@ -56,7 +56,7 @@ namespace Sensit.App.Calibration
 		/// <summary>
 		/// Gas Concentration Reference used to determine gas composition.
 		/// </summary>
-		public IGasConcentrationReference GasReference => _gasMixer;
+		public IGasMixReference GasReference => _gasMixer;
 
 		#endregion
 

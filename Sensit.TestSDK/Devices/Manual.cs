@@ -4,10 +4,10 @@ using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.TestSDK.Devices
 {
-	public class Manual : IGasConcentrationReference, IMassFlowReference, IVolumeFlowReference, IVelocityReference, IPressureReference, ITemperatureReference,
+	public class Manual : IGasMixReference, IMassFlowReference, IVolumeFlowReference, IVelocityReference, IPressureReference, ITemperatureReference,
 		IGasMixController, IMassFlowController, IVolumeFlowController, IVelocityController, IPressureController, ITemperatureController
 	{
-		private double _gasConcentration;
+		private double _gasMix;
 		private double _massFlow;
 		private double _volumeFlow;
 		private double _velocity;
@@ -20,12 +20,12 @@ namespace Sensit.TestSDK.Devices
 
 		public Gas GasSelection { get; set; } = Gas.Air;
 
-		public double AnalyteConcentration
+		public double GasMix
 		{
 			get
 			{
-				InputDialog.Numeric("Gas Concentration", ref _gasConcentration);
-				return _gasConcentration;
+				InputDialog.Numeric("Gas Mix", ref _gasMix);
+				return _gasMix;
 			}
 		}
 
@@ -84,53 +84,27 @@ namespace Sensit.TestSDK.Devices
 
 		#region Control Device Properties
 
-		public double AnalyteBottleConcentration
-		{
-			get;
-			set;
-		}
+		public double AnalyteBottleConcentration { get; set; }
 
-		public double AnalyteConcentrationSetpoint
-		{
-			get;
-			set;
-		}
+		public double GasMixSetpoint { get; set; }
 
-		public double MassFlowSetpoint
-		{
-			get;
-			set;
-		}
+		public double MassFlowSetpoint { get; set; }
 
-		public double VolumeFlowSetpoint
-		{
-			get;
-			set;
-		}
+		public double VolumeFlowSetpoint { get; set; }
 
-		public double VelocitySetpoint
-		{
-			get;
-			set;
-		}
+		public double VelocitySetpoint { get; set; }
 
-		public double PressureSetpoint
-		{
-			get;
-			set;
-		}
+		public double PressureSetpoint { get; set; }
 
-		public double TemperatureSetpoint
-		{
-			get;
-			set;
-		}
+		public double TemperatureSetpoint { get; set; }
 
 		#endregion
 
-		// Since there's nothing to communicate with, none of these methods
+		// Since there's nothing to communicate with, none of the methods
 		// have anything to do unless they get/set a property.
 
+		#region Reference Device Methods
+		
 		public void Configure()
 		{
 			// Nothing to do here.
@@ -139,6 +113,15 @@ namespace Sensit.TestSDK.Devices
 		public void Read()
 		{
 			// Nothing to do here.
+		}
+
+		#endregion
+
+		#region Control Device Methods
+
+		public double ReadGasMixSetpoint()
+		{
+			return GasMixSetpoint;
 		}
 
 		public double ReadMassFlowSetpoint()
@@ -220,5 +203,18 @@ namespace Sensit.TestSDK.Devices
 		{
 			VolumeFlowSetpoint = setpoint;
 		}
+
+		public void WriteGasMixSetpoint()
+		{
+			// Nothing to do here.
+		}
+
+		public void WriteGasMixSetpoint(double concentration, double massFlow)
+		{
+			MassFlowSetpoint = massFlow;
+			GasMixSetpoint = concentration;
+		}
+
+		#endregion
 	}
 }

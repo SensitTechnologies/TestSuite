@@ -27,7 +27,7 @@
 	}
 
 	/// <summary>
-	/// Device that controls gas concentration.
+	/// Device that controls gas concentration (and mass flow).
 	/// </summary>
 	public interface IGasMixController : IControlDevice
 	{
@@ -37,21 +37,19 @@
 		double AnalyteBottleConcentration { get; set; }
 
 		/// <summary>
-		/// Value the device should try to achieve when in Control mode.
+		/// Analyte concentration the device should try to achieve when in Control mode.
 		/// </summary>
-		double AnalyteConcentrationSetpoint { get; set; }
+		double GasMixSetpoint { get; set; }
 
 		/// <summary>
 		/// Value the device should try to achieve when in Control Mode.
 		/// </summary>
 		double MassFlowSetpoint { get; set; }
 
-		// void WriteAnalyteConcentrationSetpoint();
-		// void WriteAnalyteConcentrationSetpoint(double setpoint);
-		// double ReadAnalyteConcentationSetpoint();
-		void WriteSetpoint();
-		void WriteSetpoint(double concentration, double massFlow);
-		double ReadSetpoint();
+		void WriteGasMixSetpoint();
+		void WriteGasMixSetpoint(double concentration, double massFlow);
+		double ReadGasMixSetpoint();
+		double ReadMassFlowSetpoint();
 	}
 
 	/// <summary>

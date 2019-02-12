@@ -117,8 +117,8 @@ namespace Sensit.App.Calibration
 			// Set setpoint.
 			_equipment.GasMixController.AnalyteBottleConcentration = 25;
 			_equipment.GasMixController.MassFlowSetpoint = 300;
-			_equipment.GasMixController.AnalyteConcentrationSetpoint = setpoint;
-			_equipment.GasMixController.WriteMassFlowSetpoint();
+			_equipment.GasMixController.GasMixSetpoint = setpoint;
+			_equipment.GasMixController.WriteGasMixSetpoint();
 
 			// TODO:  (Low priority) Update GUI with setpoint.
 
@@ -146,7 +146,7 @@ namespace Sensit.App.Calibration
 
 				// Get reference reading.
 				_equipment.GasReference.Read();
-				double reading = _equipment.GasReference.AnalyteConcentration;
+				double reading = _equipment.GasReference.GasMix;
 
 				// Calculate error.
 				double error = reading - setpoint;
