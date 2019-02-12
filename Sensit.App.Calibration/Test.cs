@@ -38,7 +38,8 @@ namespace Sensit.App.Calibration
 		private BackgroundWorker _testThread;   // task that will handle test operations
 		private TestSetting _settings;			// settings for test
 		private Equipment _equipment;			// test equipment object
-		private readonly List<Dut> _duts;		// devices under test
+		private readonly List<Dut> _duts;       // devices under test
+		private Stopwatch _stopwatch;			// keeper of test's elapsed time
 
 		#region Delegates
 
@@ -49,6 +50,14 @@ namespace Sensit.App.Calibration
 		public Action Finished;
 
 		#endregion
+
+		public TimeSpan? ElapsedTime
+		{
+			get
+			{
+				return _stopwatch?.Elapsed;
+			}
+		}
 
 		/// <summary>
 		/// Constructor
@@ -115,6 +124,7 @@ namespace Sensit.App.Calibration
 		private void SetpointCycle(TestVariable variable, double setpoint)
 		{
 			// Set setpoint.
+			_testThread.ReportProgress(4, "Setting setpoint...");
 			_equipment.GasMixController.AnalyteBottleConcentration = 25;
 			_equipment.GasMixController.MassFlowSetpoint = 300;
 			_equipment.GasMixController.GasMixSetpoint = setpoint;
@@ -135,6 +145,7 @@ namespace Sensit.App.Calibration
 				if (_testThread.CancellationPending) { break; }
 
 				// Process timeouts.
+				// TODO:  Ensure stability timeout works correctly.
 				if (stopwatch.Elapsed > variable.Timeout)
 				{
 					// Prompt user; cancel test if requested.
@@ -162,12 +173,16 @@ namespace Sensit.App.Calibration
 					stopwatch.Restart();
 				}
 
+				// Update GUI.
+				_testThread.ReportProgress(4, "Setpoint time to go:  "
+					+ (variable.StabilityTime - stopwatch.Elapsed).ToString());
+
 				// Wait to get desired reading frequency.
 				Thread.Sleep(variable.Interval);
 			}
 		}
 
-		private void GasTest(TestComponent testComponent)
+		private void ComponentCycle(TestComponent testComponent)
 		{
 			// Set active control mode.
 			_equipment.GasMixController.SetControlMode(ControlMode.Control);
@@ -195,6 +210,9 @@ namespace Sensit.App.Calibration
 						// Abort if requested.
 						if (_testThread.CancellationPending) { break; }
 
+						// Update GUI.
+						_testThread.ReportProgress(4, "Reading DUT #" + dut.Device.Index);
+
 						// Read and process DUT data.
 						dut.Read(sp, testComponent.IndependentVariable.ErrorTolerance);
 					}
@@ -221,7 +239,7 @@ namespace Sensit.App.Calibration
 		private void TestThread(object sender, DoWorkEventArgs e)
 		{
 			// Get start time.
-			Stopwatch stopwatch = Stopwatch.StartNew();
+			_stopwatch = Stopwatch.StartNew();
 
 			try
 			{
@@ -234,9 +252,9 @@ namespace Sensit.App.Calibration
 					if (_testThread.CancellationPending) { break; }
 
 					// Initialize DUTs.
-					_testThread.ReportProgress(4, "Initializing DUTs...");
 					foreach (Dut dut in _duts)
 					{
+						_testThread.ReportProgress(4, "Initializing DUT #" + dut.Device.Index + "...");
 						dut.Open();
 						if (_testThread.CancellationPending) { break; }
 					}
@@ -244,7 +262,7 @@ namespace Sensit.App.Calibration
 					// Perform test actions.
 					foreach (TestComponent c in _settings.Components)
 					{
-						GasTest(c);
+						ComponentCycle(c);
 					}
 				} while (false);
 			}
@@ -257,8 +275,8 @@ namespace Sensit.App.Calibration
 			// and highly reliable since it cannot be cancelled.
 
 			// Calculate end time.
-			stopwatch.Stop();
-			TimeSpan elapsedtime = stopwatch.Elapsed;
+			_stopwatch.Stop();
+			TimeSpan elapsedtime = _stopwatch.Elapsed;
 
 			try
 			{
@@ -280,6 +298,7 @@ namespace Sensit.App.Calibration
 
 			// Update the GUI.
 			_testThread.ReportProgress(100, "Done.");
+			MessageBox.Show("Test complete.", "Notice");
 
 			// If the operation was cancelled by the user, set the cancel property.
 			if (_testThread.CancellationPending) { e.Cancel = true; }

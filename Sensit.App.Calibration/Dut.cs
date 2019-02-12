@@ -9,6 +9,7 @@ namespace Sensit.App.Calibration
 {
 	public class TestResults
 	{
+		public TimeSpan? ElapsedTime { get; set; }
 		public double? Setpoint { get; set; }
 		public double? Reference { get; set; }
 		public double? SensorValue { get; set; }
@@ -27,6 +28,7 @@ namespace Sensit.App.Calibration
 	{
 		private ModelSetting _settings;
 		private Equipment _equipment;
+		private Test _test;
 
 		// used when the user selects "Simulator" option for DUTs.
 		private Simulator _simulator;
@@ -50,10 +52,11 @@ namespace Sensit.App.Calibration
 
 		#region Constructor
 
-		public Dut(ModelSetting settings, Equipment equipment)
+		public Dut(ModelSetting settings, Equipment equipment, Test test)
 		{
 			_settings = settings;
 			_equipment = equipment;
+			_test = test;
 
 			// Create DUT object.
 			// Only the one chosen by the user will end up being used.
@@ -100,13 +103,17 @@ namespace Sensit.App.Calibration
 				// TODO:  (Low priority) Close DUT ports (if applicable).
 			}
 
-			// TODO:  Identify passing DUTs.
-
-			// Save test results to csv file.
-			using (var writer = new StreamWriter("results.csv"))
-			using (var csv = new CsvWriter(writer))
+			if ((Device.Status == DutStatus.Found) ||
+				(Device.Status == DutStatus.Fail))
 			{
-				csv.WriteRecords(Results);
+				// TODO:  Identify passing DUTs.
+
+				// Save test results to csv file.
+				using (var writer = new StreamWriter("DUT" + Device.Index + "Results.csv"))
+				using (var csv = new CsvWriter(writer))
+				{
+					csv.WriteRecords(Results);
+				}
 			}
 		}
 
@@ -138,6 +145,7 @@ namespace Sensit.App.Calibration
 				// Save the result.
 				Results.Add(new TestResults
 				{
+					ElapsedTime = _test.ElapsedTime,
 					Setpoint = setpoint,
 					Reference = _equipment.GasReference.GasMix,
 					SensorValue = dutValue

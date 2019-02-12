@@ -104,10 +104,9 @@ namespace Sensit.App.Calibration
 			new TestSetting("Warm-Up Time"),
 			new TestSetting("Linearity")
 			{
-				
 				Components = new List<TestComponent>
 				{
-					new TestComponent("Characterize")
+					new TestComponent("Run 1")
 					{
 						IndependentVariable = new TestVariable(Test.VariableType.GasConcentration)
 						{
@@ -116,7 +115,59 @@ namespace Sensit.App.Calibration
 							StabilityTime = new TimeSpan(0, 0, 0)
 						},
 						// Take 15 samples per setpoint (per sensor).
-						NumberOfSamples = 15,
+						NumberOfSamples = 120,
+						// Setpoints for oxygen are 0% to 100% full scale, but full scale is 25% O2.
+						Setpoints = new List<double> { 0.0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0, 17.5, 20, 22.5, 25.0 }
+					},
+					new TestComponent("Run 2")
+					{
+						IndependentVariable = new TestVariable(Test.VariableType.GasConcentration)
+						{
+							// Take samples every 1 second.  Don't wait for stability.
+							Interval = new TimeSpan(0, 0, 1),
+							StabilityTime = new TimeSpan(0, 0, 0)
+						},
+						// Take 15 samples per setpoint (per sensor).
+						NumberOfSamples = 120,
+						// Setpoints for oxygen are 0% to 100% full scale, but full scale is 25% O2.
+						Setpoints = new List<double> { 0.0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0, 17.5, 20, 22.5, 25.0 }
+					},
+					new TestComponent("Run 3")
+					{
+						IndependentVariable = new TestVariable(Test.VariableType.GasConcentration)
+						{
+							// Take samples every 1 second.  Don't wait for stability.
+							Interval = new TimeSpan(0, 0, 1),
+							StabilityTime = new TimeSpan(0, 0, 0)
+						},
+						// Take 15 samples per setpoint (per sensor).
+						NumberOfSamples = 120,
+						// Setpoints for oxygen are 0% to 100% full scale, but full scale is 25% O2.
+						Setpoints = new List<double> { 0.0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0, 17.5, 20, 22.5, 25.0 }
+					},
+					new TestComponent("Run 4")
+					{
+						IndependentVariable = new TestVariable(Test.VariableType.GasConcentration)
+						{
+							// Take samples every 1 second.  Don't wait for stability.
+							Interval = new TimeSpan(0, 0, 1),
+							StabilityTime = new TimeSpan(0, 0, 0)
+						},
+						// Take 15 samples per setpoint (per sensor).
+						NumberOfSamples = 120,
+						// Setpoints for oxygen are 0% to 100% full scale, but full scale is 25% O2.
+						Setpoints = new List<double> { 0.0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0, 17.5, 20, 22.5, 25.0 }
+					},
+					new TestComponent("Run 5")
+					{
+						IndependentVariable = new TestVariable(Test.VariableType.GasConcentration)
+						{
+							// Take samples every 1 second.  Don't wait for stability.
+							Interval = new TimeSpan(0, 0, 1),
+							StabilityTime = new TimeSpan(0, 0, 0)
+						},
+						// Take 15 samples per setpoint (per sensor).
+						NumberOfSamples = 120,
 						// Setpoints for oxygen are 0% to 100% full scale, but full scale is 25% O2.
 						Setpoints = new List<double> { 0.0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0, 17.5, 20, 22.5, 25.0 }
 					}

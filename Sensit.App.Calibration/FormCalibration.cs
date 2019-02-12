@@ -208,6 +208,8 @@ namespace Sensit.App.Calibration
 					Update = TestUpdate
 				};
 
+				// TODO: Calculate how many "steps" there are in the selected test.
+
 				_duts.Clear();
 				for (int i = 0; i < NumDuts; i++)
 				{
@@ -215,8 +217,8 @@ namespace Sensit.App.Calibration
 					CheckBox checkBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(0, i) as CheckBox;
 					TextBox textBoxSerial = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(1, i) as TextBox;
 
-					Dut dut = new Dut(modelSetting, _equipment);
-					dut.Device.Index = i;
+					Dut dut = new Dut(modelSetting, _equipment, _test);
+					dut.Device.Index = i + 1;
 					dut.Device.Selected = checkBox.Checked;
 					dut.Device.Status = DutStatus.Init;
 					dut.Device.SerialNumber = textBoxSerial.Text;
@@ -522,6 +524,12 @@ namespace Sensit.App.Calibration
 			{
 				Application.Exit();
 			}
+
+			// Update the progress bar.
+			toolStripProgressBar1.Value = 0;
+
+			// Update the status message.
+			toolStripStatusLabel1.Text = "Ready...";
 		}
 	}
 }

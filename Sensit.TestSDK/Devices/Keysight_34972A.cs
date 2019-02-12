@@ -158,11 +158,14 @@ namespace Sensit.TestSDK.Devices
 			double reading = 0;
 			try
 			{
-				reading = _readings[dut + 1];
+				reading = _readings[dut];
 			}
 			catch (KeyNotFoundException)
 			{
-				throw new DeviceSettingNotSupportedException("Keysight 34972A:  Channel " + dut + " not configured for measurement.");
+				if (dut == 0)
+					throw new DeviceSettingNotSupportedException("Keysight 34972A:  Channel 0 does not exist.");
+				else
+					throw new DeviceOutOfRangeException("Keysight 34972A:  Channel " + dut + " not configured for measurement.");
 			}
 
 			// Return the requested reading.
