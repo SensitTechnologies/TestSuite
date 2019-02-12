@@ -29,7 +29,7 @@ namespace Sensit.App.Keysight
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void buttonRefresh_Click(object sender, EventArgs e)
+		private void ButtonRefresh_Click(object sender, EventArgs e)
 		{
 			Find();
 		}
@@ -116,15 +116,17 @@ namespace Sensit.App.Keysight
 			Application.Exit();
 		}
 
-        private void numDut1_ValueChanged(object sender, EventArgs e)
+        private void NumDut1_ValueChanged(object sender, EventArgs e)
         {
             updownNumDut1.Minimum = 1;
             updownNumDut1.Maximum = 20;
-            Keysight_34972A dut1 = new Keysight_34972A();
-            dut1.NumberOfDuts = (int)updownNumDut1.Value;
-        }
+			Keysight_34972A dut1 = new Keysight_34972A
+			{
+				NumberOfDuts = (int)updownNumDut1.Value
+			};
+		}
 
-        private void buttonMeasure1_Click(object sender, EventArgs e)
+        private void ButtonMeasure1_Click(object sender, EventArgs e)
         {
             try
             {
