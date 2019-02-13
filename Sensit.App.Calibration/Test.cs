@@ -200,6 +200,9 @@ namespace Sensit.App.Calibration
 				// TODO:  (Low priority) Do not process setpoints outside range of the DUT.
 				for (int i = 0; i < testComponent.NumberOfSamples; i++)
 				{
+					// Abort if requested.
+					if (_testThread.CancellationPending) { break; }
+
 					// Take samples via DUT interface.
 					// TODO:  Update GUI with reference info.
 					_equipment.DutInterface.Read();
@@ -254,14 +257,18 @@ namespace Sensit.App.Calibration
 					// Initialize DUTs.
 					foreach (Dut dut in _duts)
 					{
+						if (_testThread.CancellationPending) { break; }
+
 						_testThread.ReportProgress(4, "Initializing DUT #" + dut.Device.Index + "...");
 						dut.Open();
-						if (_testThread.CancellationPending) { break; }
 					}
 
 					// Perform test actions.
 					foreach (TestComponent c in _settings.Components)
 					{
+						// Abort if requested.
+						if (_testThread.CancellationPending) { break; }
+
 						ComponentCycle(c);
 					}
 				} while (false);
