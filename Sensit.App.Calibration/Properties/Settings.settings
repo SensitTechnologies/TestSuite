@@ -14,13 +14,13 @@
     <Setting Name="NumDuts" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">8</Value>
     </Setting>
-    <Setting Name="SystemSettingsFile" Type="System.String" Scope="User">
+    <Setting Name="SystemSettingsFile" Type="System.String" Scope="Application">
       <Value Profile="(Default)">System Settings</Value>
     </Setting>
-    <Setting Name="DutSettingsFile" Type="System.String" Scope="User">
+    <Setting Name="DutSettingsFile" Type="System.String" Scope="Application">
       <Value Profile="(Default)">DUT Settings</Value>
     </Setting>
-    <Setting Name="TestSettingsFile" Type="System.String" Scope="User">
+    <Setting Name="TestSettingsFile" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Test Settings</Value>
     </Setting>
   </Settings>

@@ -71,39 +71,30 @@ namespace Sensit.App.Calibration.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("System Settings")]
         public string SystemSettingsFile {
             get {
                 return ((string)(this["SystemSettingsFile"]));
             }
-            set {
-                this["SystemSettingsFile"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("DUT Settings")]
         public string DutSettingsFile {
             get {
                 return ((string)(this["DutSettingsFile"]));
             }
-            set {
-                this["DutSettingsFile"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Test Settings")]
         public string TestSettingsFile {
             get {
                 return ((string)(this["TestSettingsFile"]));
-            }
-            set {
-                this["TestSettingsFile"] = value;
             }
         }
     }
