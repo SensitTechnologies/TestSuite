@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO.Ports;
+using System.Reflection;
 using System.Windows.Forms;
 using Sensit.TestSDK.Devices;
 using Sensit.TestSDK.Interfaces;
@@ -21,6 +22,9 @@ namespace Sensit.App.GasConcentration
 		{
 			// Initialize the form.
 			InitializeComponent();
+
+			// Add version string to title bar.
+			Text += " " + Assembly.GetEntryAssembly().GetName().Version.ToString();
 
 			// This has to be created in the constructor, because it references
 			// non-static objects.

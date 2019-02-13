@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Windows.Forms;
 using Sensit.TestSDK.Communication;
 using Sensit.TestSDK.Devices;
@@ -19,6 +20,9 @@ namespace Sensit.App.Keysight
 		{
 			// Initialize the form.
 			InitializeComponent();
+
+			// Add version string to title bar.
+			Text += " " + Assembly.GetEntryAssembly().GetName().Version.ToString();
 
 			// Find all available instruments.
 			Find();

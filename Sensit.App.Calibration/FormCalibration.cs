@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Windows.Forms;
 using Sensit.TestSDK.Forms;
 using Sensit.TestSDK.Interfaces;
@@ -93,6 +94,9 @@ namespace Sensit.App.Calibration
 		{
 			// Initialize the form.
 			InitializeComponent();
+
+			// Add version string to title bar.
+			Text += " " + Assembly.GetEntryAssembly().GetName().Version.ToString();
 
 			// Set the number of DUTs.
 			NumDuts = Properties.Settings.Default.NumDuts;

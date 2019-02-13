@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO.Ports;
+using System.Reflection;
 using System.Windows.Forms;
 using Sensit.TestSDK.Devices;
 using Sensit.TestSDK.Interfaces;
@@ -18,6 +19,9 @@ namespace Sensit.App.MassFlow
 		{
 			// Initialize the form.
 			InitializeComponent();
+
+			// Add version string to title bar.
+			Text += " " + Assembly.GetEntryAssembly().GetName().Version.ToString();
 
 			// Find all available serial ports.
 			foreach (string s in SerialPort.GetPortNames())
