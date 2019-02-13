@@ -175,7 +175,177 @@ namespace Sensit.App.Calibration
 			},
 			new TestSetting("Transient Response"),
 			new TestSetting("Sustained Hysteresis"),
-			new TestSetting("Short-term Stability"),
+			new TestSetting("Short-term Stability")
+			{
+				Components = new List<TestComponent>
+				{
+					// Take samples every second for 10 minutes with ambient air applied.
+					new TestComponent("Run 1")
+					{
+						IndependentVariable = new TestVariable(Test.VariableType.GasConcentration)
+						{
+							Interval = new TimeSpan(0, 0, 1),		// Take samples every 1 second.
+							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
+						},
+						NumberOfSamples = 600,						// 10 minutes of samples = 600 samples.
+						Setpoints = new List<double> { 21.0 }		// Apply amount of O2 we see in ambient air.
+					},
+					// Expose DUT to test gas for 3 minutes, recording data.
+					new TestComponent("Run 2")
+					{
+						IndependentVariable = new TestVariable(Test.VariableType.GasConcentration)
+						{
+							Interval = new TimeSpan(0, 0, 1),		// Take samples every 1 second.
+							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
+						},
+						NumberOfSamples = 180,						// 3 minutes
+						Setpoints = new List<double> { 25.0 }		// Apply 25% O2.
+					},
+					// Expose DUT to ambient air for 7 minutes.
+					new TestComponent("Run 3")
+					{
+						IndependentVariable = new TestVariable(Test.VariableType.GasConcentration)
+						{
+							Interval = new TimeSpan(0, 0, 1),		// Take samples every 1 second.
+							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
+						},
+						NumberOfSamples = 420,						// 7 minutes
+						Setpoints = new List<double> { 21.0 }		// Apply 25% O2.
+					},
+					// Expose DUT to test gas for 3 minutes, recording data.
+					new TestComponent("Run 4")
+					{
+						IndependentVariable = new TestVariable(Test.VariableType.GasConcentration)
+						{
+							Interval = new TimeSpan(0, 0, 1),		// Take samples every 1 second.
+							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
+						},
+						NumberOfSamples = 180,						// 3 minutes
+						Setpoints = new List<double> { 25.0 }		// Apply 25% O2.
+					},
+					// Expose DUT to ambient air for 7 minutes.
+					new TestComponent("Run 5")
+					{
+						IndependentVariable = new TestVariable(Test.VariableType.GasConcentration)
+						{
+							Interval = new TimeSpan(0, 0, 1),		// Take samples every 1 second.
+							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
+						},
+						NumberOfSamples = 420,						// 7 minutes
+						Setpoints = new List<double> { 21.0 }		// Apply 25% O2.
+					},
+					// Expose DUT to test gas for 3 minutes, recording data.
+					new TestComponent("Run 6")
+					{
+						IndependentVariable = new TestVariable(Test.VariableType.GasConcentration)
+						{
+							Interval = new TimeSpan(0, 0, 1),		// Take samples every 1 second.
+							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
+						},
+						NumberOfSamples = 180,						// 3 minutes
+						Setpoints = new List<double> { 25.0 }		// Apply 25% O2.
+					},
+					// Expose DUT to ambient air for 7 minutes.
+					new TestComponent("Run 7")
+					{
+						IndependentVariable = new TestVariable(Test.VariableType.GasConcentration)
+						{
+							Interval = new TimeSpan(0, 0, 1),		// Take samples every 1 second.
+							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
+						},
+						NumberOfSamples = 420,						// 7 minutes
+						Setpoints = new List<double> { 21.0 }		// Apply 25% O2.
+					},
+					// Expose DUT to test gas for 3 minutes, recording data.
+					new TestComponent("Run 8")
+					{
+						IndependentVariable = new TestVariable(Test.VariableType.GasConcentration)
+						{
+							Interval = new TimeSpan(0, 0, 1),		// Take samples every 1 second.
+							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
+						},
+						NumberOfSamples = 180,						// 3 minutes
+						Setpoints = new List<double> { 25.0 }		// Apply 25% O2.
+					},
+					// Expose DUT to ambient air for 7 minutes.
+					new TestComponent("Run 9")
+					{
+						IndependentVariable = new TestVariable(Test.VariableType.GasConcentration)
+						{
+							Interval = new TimeSpan(0, 0, 1),		// Take samples every 1 second.
+							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
+						},
+						NumberOfSamples = 420,						// 7 minutes
+						Setpoints = new List<double> { 21.0 }		// Apply 25% O2.
+					},
+					// Expose DUT to test gas for 3 minutes, recording data.
+					new TestComponent("Run 10")
+					{
+						IndependentVariable = new TestVariable(Test.VariableType.GasConcentration)
+						{
+							Interval = new TimeSpan(0, 0, 1),		// Take samples every 1 second.
+							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
+						},
+						NumberOfSamples = 180,						// 3 minutes
+						Setpoints = new List<double> { 25.0 }		// Apply 25% O2.
+					},
+					// Expose DUT to ambient air for 7 minutes.
+					new TestComponent("Run 11")
+					{
+						IndependentVariable = new TestVariable(Test.VariableType.GasConcentration)
+						{
+							Interval = new TimeSpan(0, 0, 1),		// Take samples every 1 second.
+							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
+						},
+						NumberOfSamples = 420,						// 7 minutes
+						Setpoints = new List<double> { 21.0 }		// Apply 25% O2.
+					},
+					// Expose DUT to test gas for 3 minutes, recording data.
+					new TestComponent("Run 12")
+					{
+						IndependentVariable = new TestVariable(Test.VariableType.GasConcentration)
+						{
+							Interval = new TimeSpan(0, 0, 1),		// Take samples every 1 second.
+							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
+						},
+						NumberOfSamples = 180,						// 3 minutes
+						Setpoints = new List<double> { 25.0 }		// Apply 25% O2.
+					},
+					// Expose DUT to ambient air for 7 minutes.
+					new TestComponent("Run 13")
+					{
+						IndependentVariable = new TestVariable(Test.VariableType.GasConcentration)
+						{
+							Interval = new TimeSpan(0, 0, 1),		// Take samples every 1 second.
+							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
+						},
+						NumberOfSamples = 420,						// 7 minutes
+						Setpoints = new List<double> { 21.0 }		// Apply 25% O2.
+					},
+					// Expose DUT to test gas for 3 minutes, recording data.
+					new TestComponent("Run 14")
+					{
+						IndependentVariable = new TestVariable(Test.VariableType.GasConcentration)
+						{
+							Interval = new TimeSpan(0, 0, 1),		// Take samples every 1 second.
+							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
+						},
+						NumberOfSamples = 180,						// 3 minutes
+						Setpoints = new List<double> { 25.0 }		// Apply 25% O2.
+					},
+					// Expose DUT to ambient air for 7 minutes.
+					new TestComponent("Run 3")
+					{
+						IndependentVariable = new TestVariable(Test.VariableType.GasConcentration)
+						{
+							Interval = new TimeSpan(0, 0, 1),		// Take samples every 1 second.
+							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
+						},
+						NumberOfSamples = 420,						// 7 minutes
+						Setpoints = new List<double> { 21.0 }		// Apply 25% O2.
+					}
+				}
+			},
 			new TestSetting("Long-term Stability"),
 			new TestSetting("Thermal Effects"),
 			new TestSetting("Thermal Transients"),
