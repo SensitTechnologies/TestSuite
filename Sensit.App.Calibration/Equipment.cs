@@ -29,7 +29,7 @@ namespace Sensit.App.Calibration
 		private ColeParmerMFC _mfcDiluent;
 
 		// both mass flow controllers combined for mixing gas
-		private GasConcentrationDevice _gasMixer;
+		private GasMixingDevice _gasMixer;
 
 		// datalogger (for analog sensor DUTs)
 		private Keysight_34972A _datalogger;
@@ -73,7 +73,7 @@ namespace Sensit.App.Calibration
 			// Only the ones chosen by the user will end up being used.
 			_mfcAnalyte = new ColeParmerMFC();
 			_mfcDiluent = new ColeParmerMFC();
-			_gasMixer = new GasConcentrationDevice(_mfcDiluent, _mfcDiluent, _mfcAnalyte, _mfcAnalyte);
+			_gasMixer = new GasMixingDevice(_mfcDiluent, _mfcDiluent, _mfcAnalyte, _mfcAnalyte);
 			_datalogger = new Keysight_34972A();
 			_manual = new Manual();
 		}

@@ -7,18 +7,18 @@ using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.App.GasConcentration
 {
-	public partial class FormGasConcentration : Form
+	public partial class FormGasMixer : Form
 	{
 		// mass flow controllers
 		// You need two to mix gasses and control gas concentration.
 		private ColeParmerMFC _mfcAnalyte = new ColeParmerMFC();
 		private ColeParmerMFC _mfcDiluent = new ColeParmerMFC();
-		private GasConcentrationDevice _concentrationController;
+		private GasMixingDevice _gasMixer;
 
 		/// <summary>
 		/// Runs when the application starts.
 		/// </summary>
-		public FormGasConcentration()
+		public FormGasMixer()
 		{
 			// Initialize the form.
 			InitializeComponent();
@@ -28,7 +28,7 @@ namespace Sensit.App.GasConcentration
 
 			// This has to be created in the constructor, because it references
 			// non-static objects.
-			_concentrationController = new GasConcentrationDevice(
+			_gasMixer = new GasMixingDevice(
 				_mfcDiluent, _mfcDiluent, _mfcAnalyte, _mfcAnalyte);
 
 			// Find all available serial ports.
@@ -273,13 +273,13 @@ namespace Sensit.App.GasConcentration
 			try
 			{
 				// Fetch new values from the mass flow controllers.
-				_concentrationController.Read();
+				_gasMixer.Read();
 
 				// Update the form.
-				textBoxGasConcentration.Text = _concentrationController.GasMix.ToString();
-				textBoxGasConcentrationSetpoint.Text = _concentrationController.GasMixSetpoint.ToString();
-				textBoxMassFlowSetpoint.Text = _concentrationController.MassFlowSetpoint.ToString();
-				textBoxAnalyteBottleConcentration.Text = _concentrationController.AnalyteBottleConcentration.ToString();
+				textBoxGasConcentration.Text = _gasMixer.GasMix.ToString();
+				textBoxGasConcentrationSetpoint.Text = _gasMixer.GasMixSetpoint.ToString();
+				textBoxMassFlowSetpoint.Text = _gasMixer.MassFlowSetpoint.ToString();
+				textBoxAnalyteBottleConcentration.Text = _gasMixer.AnalyteBottleConcentration.ToString();
 			}
 			catch (Exception ex)
 			{
@@ -299,12 +299,12 @@ namespace Sensit.App.GasConcentration
 				double bottleConcentration = Convert.ToDouble(textBoxAnalyteBottleConcentration.Text);
 
 				// Write the properties.
-				_concentrationController.GasMixSetpoint = analyteConcentration;
-				_concentrationController.MassFlowSetpoint = massFlowSetpoint;
-				_concentrationController.AnalyteBottleConcentration = bottleConcentration;
+				_gasMixer.GasMixSetpoint = analyteConcentration;
+				_gasMixer.MassFlowSetpoint = massFlowSetpoint;
+				_gasMixer.AnalyteBottleConcentration = bottleConcentration;
 
 				// Write to mass flow controllers.
-				_concentrationController.WriteGasMixSetpoint();
+				_gasMixer.WriteGasMixSetpoint();
 			}
 			catch (FormatException ex)
 			{

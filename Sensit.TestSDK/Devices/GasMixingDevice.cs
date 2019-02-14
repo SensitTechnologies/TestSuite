@@ -8,7 +8,7 @@ namespace Sensit.TestSDK.Devices
 	/// <summary>
 	/// Use two Mass Flow Controllers to mix two gasses.
 	/// </summary>
-	public class GasConcentrationDevice : IGasMixReference, IGasMixController, IMassFlowReference
+	public class GasMixingDevice : IGasMixReference, IGasMixController, IMassFlowReference
 	{
 		private IMassFlowController _analyteController;
 		private IMassFlowController _dilutentController;
@@ -102,7 +102,7 @@ namespace Sensit.TestSDK.Devices
 		/// <param name="dilutentController">mass flow controller for the dilutent gas</param>
 		/// <param name="gasUnderTestReference">mass flow reference for the gas under test</param>
 		/// <param name="dilutentReference">mass flow reference for the dilutent gas</param>
-		public GasConcentrationDevice(
+		public GasMixingDevice(
 			IMassFlowReference dilutentReference,
 			IMassFlowController dilutentController,
 			IMassFlowController gasUnderTestController,

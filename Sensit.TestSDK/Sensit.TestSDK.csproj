@@ -165,7 +165,7 @@
     <Compile Include="Communication\SCPI.cs" />
     <Compile Include="Communication\SerialDevice.cs" />
     <Compile Include="Communication\VisaDevice.cs" />
-    <Compile Include="Devices\GasConcentrationDevice.cs" />
+    <Compile Include="Devices\GasMixingDevice.cs" />
     <Compile Include="Devices\Manual.cs" />
     <Compile Include="Dut\AnalogSensor.cs" />
     <Compile Include="Controls\UserCustomStep.cs">
