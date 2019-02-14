@@ -226,8 +226,6 @@ namespace Sensit.App.Calibration
 					Update = TestUpdate
 				};
 
-				// TODO: Calculate how many "steps" there are in the selected test.
-
 				_duts.Clear();
 				for (int i = 0; i < NumDuts; i++)
 				{

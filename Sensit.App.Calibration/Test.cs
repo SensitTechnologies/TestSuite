@@ -39,7 +39,9 @@ namespace Sensit.App.Calibration
 		private TestSetting _settings;			// settings for test
 		private Equipment _equipment;			// test equipment object
 		private readonly List<Dut> _duts;       // devices under test
-		private Stopwatch _stopwatch;			// keeper of test's elapsed time
+		private Stopwatch _stopwatch;           // keeper of test's elapsed time
+		private int _stepsTotal;				// helps calculate percent complete
+		private int _stepsComplete = 0;			// helps calculate percent complete
 
 		#region Delegates
 
@@ -80,6 +82,20 @@ namespace Sensit.App.Calibration
 			_testThread.DoWork += TestThread;
 			_testThread.ProgressChanged += ProgressChanged;
 			_testThread.RunWorkerCompleted += RunWorkerCompleted;
+
+			// Calculate how many samples we'll take in the selected test.
+			// This allows us to calculate the test's percent progress.
+			_stepsTotal = 0;
+			foreach (TestComponent c in settings.Components)
+			{
+				int samples = 0;
+				foreach (double s in c.Setpoints)
+				{
+					samples++;
+				}
+				samples *= c.NumberOfSamples;
+				_stepsTotal += samples;
+			}
 		}
 
 		#region Thread Management
@@ -124,7 +140,7 @@ namespace Sensit.App.Calibration
 		private void SetpointCycle(TestVariable variable, double setpoint)
 		{
 			// Set setpoint.
-			_testThread.ReportProgress(4, "Setting setpoint...");
+			_testThread.ReportProgress(_stepsComplete / _stepsTotal, "Setting setpoint...");
 			_equipment.GasMixController.AnalyteBottleConcentration = 25;
 			_equipment.GasMixController.MassFlowSetpoint = 300;
 			_equipment.GasMixController.GasMixSetpoint = setpoint;
@@ -174,7 +190,7 @@ namespace Sensit.App.Calibration
 				}
 
 				// Update GUI.
-				_testThread.ReportProgress(4, "Setpoint time to go:  "
+				_testThread.ReportProgress(_stepsComplete / _stepsTotal, "Setpoint time to go:  "
 					+ (variable.StabilityTime - stopwatch.Elapsed).ToString());
 
 				// Wait to get desired reading frequency.
@@ -214,7 +230,8 @@ namespace Sensit.App.Calibration
 						if (_testThread.CancellationPending) { break; }
 
 						// Update GUI.
-						_testThread.ReportProgress(4, "Reading DUT #" + dut.Device.Index);
+						_stepsComplete++;
+						_testThread.ReportProgress(_stepsComplete / _stepsTotal, "Reading DUT #" + dut.Device.Index);
 
 						// Read and process DUT data.
 						dut.Read(sp, testComponent.IndependentVariable.ErrorTolerance);
@@ -250,7 +267,7 @@ namespace Sensit.App.Calibration
 				do
 				{
 					// Initialize test equipment.
-					_testThread.ReportProgress(3, "Configuring test equipment...");
+					_testThread.ReportProgress(0, "Configuring test equipment...");
 					_equipment.Open();
 					if (_testThread.CancellationPending) { break; }
 
@@ -259,7 +276,7 @@ namespace Sensit.App.Calibration
 					{
 						if (_testThread.CancellationPending) { break; }
 
-						_testThread.ReportProgress(4, "Initializing DUT #" + dut.Device.Index + "...");
+						_testThread.ReportProgress(0, "Initializing DUT #" + dut.Device.Index + "...");
 						dut.Open();
 					}
 
@@ -288,7 +305,7 @@ namespace Sensit.App.Calibration
 			try
 			{
 				// Close DUTs.
-				_testThread.ReportProgress(5, "Closing DUTs...");
+				_testThread.ReportProgress(99, "Closing DUTs...");
 				foreach (Dut dut in _duts)
 				{
 					dut.Close();
