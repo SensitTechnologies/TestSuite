@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Deployment.Application;
 using System.IO.Ports;
-using System.Reflection;
 using System.Windows.Forms;
 using Sensit.TestSDK.Devices;
 using Sensit.TestSDK.Interfaces;
@@ -24,7 +24,10 @@ namespace Sensit.App.GasConcentration
 			InitializeComponent();
 
 			// Add version string to title bar.
-			Text += " " + Assembly.GetEntryAssembly().GetName().Version.ToString();
+			if (ApplicationDeployment.IsNetworkDeployed)
+			{
+				Text += " " + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
+			}
 
 			// This has to be created in the constructor, because it references
 			// non-static objects.

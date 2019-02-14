@@ -44,8 +44,6 @@
 			this.tableLayoutPanelTestSetupButtons = new System.Windows.Forms.TableLayoutPanel();
 			this.buttonStart = new System.Windows.Forms.Button();
 			this.buttonStop = new System.Windows.Forms.Button();
-			this.groupBoxEquipmentSettings = new System.Windows.Forms.GroupBox();
-			this.tableLayoutPanelEquipmentSettings = new System.Windows.Forms.TableLayoutPanel();
 			this.checkBoxSelectAll = new System.Windows.Forms.CheckBox();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -105,7 +103,6 @@
 			this.tableLayoutPanelTestSettings.SuspendLayout();
 			this.groupBoxDevicesUnderTest.SuspendLayout();
 			this.tableLayoutPanelTestSetupButtons.SuspendLayout();
-			this.groupBoxEquipmentSettings.SuspendLayout();
 			this.tabPage2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
@@ -155,7 +152,6 @@
 			this.tableLayoutPanelOverview.Controls.Add(this.groupBoxTestSettings, 0, 0);
 			this.tableLayoutPanelOverview.Controls.Add(this.groupBoxDevicesUnderTest, 1, 0);
 			this.tableLayoutPanelOverview.Controls.Add(this.tableLayoutPanelTestSetupButtons, 0, 2);
-			this.tableLayoutPanelOverview.Controls.Add(this.groupBoxEquipmentSettings, 0, 1);
 			this.tableLayoutPanelOverview.Controls.Add(this.checkBoxSelectAll, 1, 2);
 			this.tableLayoutPanelOverview.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanelOverview.Location = new System.Drawing.Point(3, 3);
@@ -347,37 +343,6 @@
 			this.buttonStop.Text = "Stop";
 			this.buttonStop.UseVisualStyleBackColor = true;
 			this.buttonStop.Click += new System.EventHandler(this.buttonStop_Click);
-			// 
-			// groupBoxEquipmentSettings
-			// 
-			this.groupBoxEquipmentSettings.AutoSize = true;
-			this.groupBoxEquipmentSettings.Controls.Add(this.tableLayoutPanelEquipmentSettings);
-			this.groupBoxEquipmentSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.helpProvider1.SetHelpString(this.groupBoxEquipmentSettings, "Select which test equipment is used to perform the test.");
-			this.groupBoxEquipmentSettings.Location = new System.Drawing.Point(3, 109);
-			this.groupBoxEquipmentSettings.Name = "groupBoxEquipmentSettings";
-			this.helpProvider1.SetShowHelp(this.groupBoxEquipmentSettings, true);
-			this.groupBoxEquipmentSettings.Size = new System.Drawing.Size(215, 132);
-			this.groupBoxEquipmentSettings.TabIndex = 20;
-			this.groupBoxEquipmentSettings.TabStop = false;
-			this.groupBoxEquipmentSettings.Text = "Equipment Settings";
-			// 
-			// tableLayoutPanelEquipmentSettings
-			// 
-			this.tableLayoutPanelEquipmentSettings.AutoSize = true;
-			this.tableLayoutPanelEquipmentSettings.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutPanelEquipmentSettings.ColumnCount = 2;
-			this.tableLayoutPanelEquipmentSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanelEquipmentSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanelEquipmentSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanelEquipmentSettings.Location = new System.Drawing.Point(3, 16);
-			this.tableLayoutPanelEquipmentSettings.Name = "tableLayoutPanelEquipmentSettings";
-			this.tableLayoutPanelEquipmentSettings.RowCount = 1;
-			this.tableLayoutPanelEquipmentSettings.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelEquipmentSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 113F));
-			this.tableLayoutPanelEquipmentSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 113F));
-			this.tableLayoutPanelEquipmentSettings.Size = new System.Drawing.Size(209, 113);
-			this.tableLayoutPanelEquipmentSettings.TabIndex = 0;
 			// 
 			// checkBoxSelectAll
 			// 
@@ -841,7 +806,7 @@
 			// aboutToolStripMenuItem
 			// 
 			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.aboutToolStripMenuItem.Text = "&About";
 			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
 			// 
@@ -849,7 +814,7 @@
 			// 
 			this.supportToolStripMenuItem.Enabled = false;
 			this.supportToolStripMenuItem.Name = "supportToolStripMenuItem";
-			this.supportToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+			this.supportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.supportToolStripMenuItem.Text = "How Do I";
 			// 
 			// logDirectoryToolStripMenuItem
@@ -883,8 +848,6 @@
 			this.tableLayoutPanelTestSettings.PerformLayout();
 			this.groupBoxDevicesUnderTest.ResumeLayout(false);
 			this.tableLayoutPanelTestSetupButtons.ResumeLayout(false);
-			this.groupBoxEquipmentSettings.ResumeLayout(false);
-			this.groupBoxEquipmentSettings.PerformLayout();
 			this.tabPage2.ResumeLayout(false);
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
@@ -975,8 +938,6 @@
 		private System.Windows.Forms.TextBox textBoxVariable2Value;
 		private System.Windows.Forms.TextBox textBoxVariable2Setpoint;
 		private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
-		private System.Windows.Forms.GroupBox groupBoxEquipmentSettings;
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelEquipmentSettings;
 		private System.Windows.Forms.ToolStripMenuItem numberOfDUTsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem pauseToolStripMenuItem;
 		private System.Windows.Forms.CheckBox checkBoxSelectAll;

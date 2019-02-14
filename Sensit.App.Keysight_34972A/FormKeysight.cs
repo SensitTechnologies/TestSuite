@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
+using System.Deployment.Application;
 using System.Windows.Forms;
 using Sensit.TestSDK.Communication;
 using Sensit.TestSDK.Devices;
@@ -22,7 +22,10 @@ namespace Sensit.App.Keysight
 			InitializeComponent();
 
 			// Add version string to title bar.
-			Text += " " + Assembly.GetEntryAssembly().GetName().Version.ToString();
+			if (ApplicationDeployment.IsNetworkDeployed)
+			{
+				Text += " " + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
+			}
 
 			// Find all available instruments.
 			Find();
