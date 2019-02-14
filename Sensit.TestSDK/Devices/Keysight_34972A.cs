@@ -66,7 +66,6 @@ namespace Sensit.TestSDK.Devices
 				_v3497x.SCPI.DISPlay.TEXT.Command("SENSIT");
 
 				// Configure channels for DC voltage.
-				// In order to use the following driver class, you need to reference this assembly : [C:\ProgramData\Keysight\Command Expert\ScpiNetDrivers\Ag3497x_1_13.dll]
 				// TODO:  Replace hard-coded list of channels with configuration based on DUTs.
 				_v3497x.SCPI.CONFigure.VOLTage.DC.Command("AUTO", "DEF", "(@301,305,309,313,317)");
 
