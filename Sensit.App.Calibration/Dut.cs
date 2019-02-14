@@ -109,7 +109,9 @@ namespace Sensit.App.Calibration
 				// TODO:  Identify passing DUTs.
 
 				// Save test results to csv file.
-				using (var writer = new StreamWriter("DUT" + Device.Index + "Results.csv"))
+				string filename = "DUT" + Device.Index + "Results.csv";
+				string fullPath = Path.Combine(Properties.Settings.Default.LogDirectory, filename);
+				using (var writer = new StreamWriter(fullPath, true))
 				using (var csv = new CsvWriter(writer))
 				{
 					csv.WriteRecords(Results);

@@ -27,7 +27,7 @@
     <ProductName>Calibration App</ProductName>
     <PublisherName>Sensit Technologies</PublisherName>
     <SuiteName>Sensit Test Suite</SuiteName>
-    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationRevision>4</ApplicationRevision>
     <ApplicationVersion>0.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>

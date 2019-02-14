@@ -26,5 +26,8 @@
     <Setting Name="TestSettingsFile" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Test Settings</Value>
     </Setting>
+    <Setting Name="LogDirectory" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

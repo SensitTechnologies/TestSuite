@@ -465,6 +465,24 @@ namespace Sensit.App.Calibration
 		}
 
 		/// <summary>
+		/// When Settings --> Log Directory is selected, prompt the user to
+		/// select the directory where test results are stored.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void logDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			// Set the path first shown to the user to be the currently selected one.
+			folderBrowserDialog1.SelectedPath = Properties.Settings.Default.LogDirectory;
+
+			// Prompt the user to select a folder for output files.
+			if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+			{
+				Properties.Settings.Default.LogDirectory = folderBrowserDialog1.SelectedPath;
+			}
+		}
+
+		/// <summary>
 		/// When the user clicks Help --> About, show an about box.
 		/// </summary>
 		/// <param name="sender"></param>
