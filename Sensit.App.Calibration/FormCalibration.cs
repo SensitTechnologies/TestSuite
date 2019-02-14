@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using Sensit.TestSDK.Forms;
@@ -100,6 +102,18 @@ namespace Sensit.App.Calibration
 
 			// Set the number of DUTs.
 			NumDuts = Properties.Settings.Default.NumDuts;
+
+			// Select the most recently used DUTs.
+			if (Properties.Settings.Default.DutSelections != null)
+			{
+				List<string> list = Properties.Settings.Default.DutSelections.Cast<string>().ToList();
+				bool[] selections = list.Select(x => x == "true").ToArray();
+				for (int i = 0; i < NumDuts; i++)
+				{
+					CheckBox checkBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(0, i) as CheckBox;
+					checkBox.Checked = selections[i];
+				}
+			}
 
 			// Populate the Model combobox based on DUT settings.
 			comboBoxModel.Items.Clear();
@@ -318,6 +332,21 @@ namespace Sensit.App.Calibration
 					// Remember to close the application after the test finishes.
 					_closeAfterTest = true;
 				}
+			}
+
+			// Remember DUT selections.
+			if (Properties.Settings.Default.DutSelections == null)
+			{
+				Properties.Settings.Default.DutSelections = new System.Collections.Specialized.StringCollection();
+				for (int i = 0; i < NumDuts; i++)
+				{
+					Properties.Settings.Default.DutSelections.Add("false");
+				}
+			}
+			for (int i = 0; i < NumDuts; i++)
+			{
+				CheckBox checkBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(0, i) as CheckBox;
+				Properties.Settings.Default.DutSelections[i] = checkBox.Checked ? "true" : "false";
 			}
 
 			// Save settings.
