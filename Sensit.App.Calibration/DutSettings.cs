@@ -10,7 +10,8 @@ namespace Sensit.App.Calibration
 	[Serializable]
 	public class ModelSetting
 	{
-		// Default constructor.
+		#region Constructors
+
 		public ModelSetting() { }
 
 		// The following constructor has parameters for one of the properties.
@@ -36,6 +37,8 @@ namespace Sensit.App.Calibration
 			MaxVal = maxVal;
 		}
 
+		#endregion
+
 		[Category("Model Settings"), Description("Name of the DUT series (as it will appear to the operator).")]
 		public string Label { get; set; } = "";
 
@@ -58,6 +61,8 @@ namespace Sensit.App.Calibration
 	[Serializable]
 	public class RangeSetting
 	{
+		#region Constructors
+
 		// Default constructor.
 		public RangeSetting() { }
 
@@ -104,6 +109,8 @@ namespace Sensit.App.Calibration
 			ToleranceSettings = tolerances;
 		}
 
+		#endregion
+
 		[Category("Range Settings"), Description("Name of the range (as it will appear to the operator).")]
 		public string Label { get; set; } = "";
 
@@ -129,6 +136,8 @@ namespace Sensit.App.Calibration
 	[Serializable]
 	public class ToleranceSetting
 	{
+		#region Constructors
+
 		// Constructor with no parameters.
 		public ToleranceSetting() { }
 
@@ -140,6 +149,8 @@ namespace Sensit.App.Calibration
 			Tolerance = tolerance;
 			Type = type;
 		}
+
+		#endregion
 
 		[Category("Range Settings"), Description("Low bound of the tolerance range.")]
 		public double Low { get; set; }
