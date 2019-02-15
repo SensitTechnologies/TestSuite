@@ -231,7 +231,7 @@ namespace Sensit.App.Calibration
 
 						// Update GUI.
 						_stepsComplete++;
-						_testThread.ReportProgress(_stepsComplete / _stepsTotal, "Reading DUT #" + dut.Device.Index);
+						_testThread.ReportProgress((int)(_stepsComplete / (double)_stepsTotal), "Reading DUT #" + dut.Device.Index);
 
 						// Read and process DUT data.
 						dut.Read(sp, testComponent.IndependentVariable.ErrorTolerance);
