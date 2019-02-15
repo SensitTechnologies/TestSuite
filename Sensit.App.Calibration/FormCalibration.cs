@@ -14,10 +14,6 @@ namespace Sensit.App.Calibration
 	/// <summary>
 	/// GUI operations and settings access are handled here.
 	/// </summary>
-	/// TODO:  FormCalibration support for reading DUT selection, model.
-	/// TODO:  FormCalibration support for setting test equipment and fetching related user settings.
-	/// TODO:  FormCalibration support for setting test variables and updating their values.
-	/// TODO:  FormCalibration support for displaying data in a tab for each DUT.  Maybe show Excel in a web browser?
 	public partial class FormCalibration : Form
 	{
 		#region Fields
@@ -607,39 +603,57 @@ namespace Sensit.App.Calibration
 		public void SetDutStatus(int dut, DutStatus status)
 		{
 			// Find the applicable DUT status textbox.
-			TextBox textBoxStatus = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(2, dut) as TextBox;
+			// Remember that table layout panel has 0-based index, while DUTs have 1-based index.
+			TextBox textBoxStatus = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(2, dut - 1) as TextBox;
 
-			// Set the status text, and use bold text.
-			textBoxStatus.Text = status.GetDescription();
-			textBoxStatus.Font = new Font(textBoxStatus.Font, FontStyle.Bold);
-
-			// Apply formatting.
-			switch (status)
+			// If called from a different thread than the form, invoke the method on the form's thread.
+			// https://stackoverflow.com/questions/142003/cross-thread-operation-not-valid-control-accessed-from-a-thread-other-than-the
+			if (textBoxStatus.InvokeRequired)
 			{
-				case DutStatus.Pass:
-					textBoxStatus.ForeColor = Color.Black;
-					textBoxStatus.BackColor = Color.Green;
-					break;
-				case DutStatus.Found:
-					textBoxStatus.ForeColor = Color.Yellow;
-					textBoxStatus.BackColor = Color.Blue;
-					break;
-				case DutStatus.Fail:
-				case DutStatus.NotFound:
-				case DutStatus.PortError:
-					textBoxStatus.ForeColor = Color.Black;
-					textBoxStatus.BackColor = Color.Red;
-					break;
+				textBoxStatus.Invoke(new MethodInvoker(delegate { SetDutStatus(dut, status); }));
+			}
+			else
+			{
+				// Set the status text, and use bold text.
+				textBoxStatus.Text = status.GetDescription();
+				textBoxStatus.Font = new Font(textBoxStatus.Font, FontStyle.Bold);
+
+				// Apply formatting.
+				switch (status)
+				{
+					case DutStatus.Pass:
+						textBoxStatus.ForeColor = Color.Black;
+						textBoxStatus.BackColor = Color.Green;
+						break;
+					case DutStatus.Found:
+						textBoxStatus.ForeColor = Color.Yellow;
+						textBoxStatus.BackColor = Color.Blue;
+						break;
+					case DutStatus.Fail:
+					case DutStatus.NotFound:
+					case DutStatus.PortError:
+						textBoxStatus.ForeColor = Color.Black;
+						textBoxStatus.BackColor = Color.Red;
+						break;
+				}
 			}
 		}
 
 		public void SetDutSerialNumber(int dut, string serialNumber)
 		{
 			// Find the applicable DUT status textbox.
-			TextBox textBoxSerialNumber = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(1, dut) as TextBox;
+			TextBox textBoxSerialNumber = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(1, dut - 1) as TextBox;
 
-			// Set the text.
-			textBoxSerialNumber.Text = serialNumber;
+			// If called from a different thread than the form, invoke the method on the form's thread.
+			if (textBoxSerialNumber.InvokeRequired)
+			{
+				textBoxSerialNumber.Invoke(new MethodInvoker(delegate { SetDutSerialNumber(dut, serialNumber); }));
+			}
+			else
+			{
+				// Set the text.
+				textBoxSerialNumber.Text = serialNumber;
+			}
 		}
 
 		#endregion
