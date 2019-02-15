@@ -9,6 +9,8 @@ namespace Sensit.App.Calibration
 	/// </summary>
 	public class TestVariable
 	{
+		#region Constructors
+
 		// Default constructor.
 		public TestVariable() { }
 
@@ -17,6 +19,8 @@ namespace Sensit.App.Calibration
 		{
 			VariableType = type;
 		}
+
+		#endregion
 
 		[Category("Test Variable"), Description("Type of the variable.")]
 		public Test.VariableType VariableType { get; set; }
@@ -42,6 +46,8 @@ namespace Sensit.App.Calibration
 	/// </summary>
 	public class TestComponent
 	{
+		#region Constructors
+
 		// Default constructor.
 		public TestComponent() { }
 
@@ -50,6 +56,8 @@ namespace Sensit.App.Calibration
 		{
 			Label = label;
 		}
+
+		#endregion
 
 		[Category("Test Component"), Description("Name of the test component.")]
 		public string Label { get; set; } = "";
@@ -79,6 +87,8 @@ namespace Sensit.App.Calibration
 	[Serializable]
 	public class TestSetting
 	{
+		#region Constructors
+
 		// Default constructor.
 		public TestSetting() { }
 
@@ -87,6 +97,8 @@ namespace Sensit.App.Calibration
 		{
 			Label = label;
 		}
+
+		#endregion
 
 		[Category("Test Settings"), Description("Name of the test (as it will appear to the operator).")]
 		public string Label { get; set; } = "";
@@ -173,7 +185,25 @@ namespace Sensit.App.Calibration
 					}
 				}
 			},
-			new TestSetting("Transient Response"),
+			new TestSetting("Transient Response")
+			{
+				Components = new List<TestComponent>
+				{
+					new TestComponent("Run 1")
+					{
+						// TODO:  Add support for mass flow.
+						IndependentVariable = new TestVariable(Test.VariableType.MassFlow)
+						{
+							// Take samples every 1 second.  Don't wait for stability.
+							Interval = new TimeSpan(0, 0, 1),
+							StabilityTime = new TimeSpan(0, 0, 0)
+						},
+						// Take 1 hour of data with no gas flow.
+						NumberOfSamples = 3600,
+						Setpoints = new List<double> { 0,0 }
+					}
+				}
+			},
 			new TestSetting("Sustained Hysteresis"),
 			new TestSetting("Short-term Stability")
 			{
@@ -188,7 +218,7 @@ namespace Sensit.App.Calibration
 							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
 						},
 						NumberOfSamples = 600,						// 10 minutes of samples = 600 samples.
-						Setpoints = new List<double> { 21.0 }		// Apply amount of O2 we see in ambient air.
+						Setpoints = new List<double> { 21.0 }		// Apply 21% O2 (the amount in ambient air).
 					},
 					// Expose DUT to test gas for 3 minutes, recording data.
 					new TestComponent("Run 2")
@@ -210,7 +240,7 @@ namespace Sensit.App.Calibration
 							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
 						},
 						NumberOfSamples = 420,						// 7 minutes
-						Setpoints = new List<double> { 21.0 }		// Apply 25% O2.
+						Setpoints = new List<double> { 21.0 }		// Apply 21% O2.
 					},
 					// Expose DUT to test gas for 3 minutes, recording data.
 					new TestComponent("Run 4")
@@ -232,7 +262,7 @@ namespace Sensit.App.Calibration
 							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
 						},
 						NumberOfSamples = 420,						// 7 minutes
-						Setpoints = new List<double> { 21.0 }		// Apply 25% O2.
+						Setpoints = new List<double> { 21.0 }		// Apply 21% O2.
 					},
 					// Expose DUT to test gas for 3 minutes, recording data.
 					new TestComponent("Run 6")
