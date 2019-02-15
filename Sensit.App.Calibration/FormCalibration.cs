@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Deployment.Application;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Sensit.TestSDK.Forms;
 using Sensit.TestSDK.Interfaces;
 using Sensit.TestSDK.Settings;
+using Sensit.TestSDK.Utility;
 
 namespace Sensit.App.Calibration
 {
@@ -235,7 +237,12 @@ namespace Sensit.App.Calibration
 					CheckBox checkBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(0, i) as CheckBox;
 					TextBox textBoxSerial = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(1, i) as TextBox;
 
-					Dut dut = new Dut(modelSetting, _equipment, _test);
+					Dut dut = new Dut(modelSetting, _equipment)
+					{
+						SetSerialNumber = SetDutSerialNumber,
+						SetStatus = SetDutStatus,
+						GetElapsedTime = () => _test.ElapsedTime
+					};
 					dut.Device.Index = i + 1;
 					dut.Device.Selected = checkBox.Checked;
 					dut.Device.Status = DutStatus.Init;
@@ -550,6 +557,8 @@ namespace Sensit.App.Calibration
 
 		#endregion
 
+		#region Public Methods
+
 		/// <summary>
 		/// Update the form with the test's status.
 		/// </summary>
@@ -594,5 +603,45 @@ namespace Sensit.App.Calibration
 			// Update the status message.
 			toolStripStatusLabel1.Text = "Ready...";
 		}
+
+		public void SetDutStatus(int dut, DutStatus status)
+		{
+			// Find the applicable DUT status textbox.
+			TextBox textBoxStatus = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(2, dut) as TextBox;
+
+			// Set the status text, and use bold text.
+			textBoxStatus.Text = status.GetDescription();
+			textBoxStatus.Font = new Font(textBoxStatus.Font, FontStyle.Bold);
+
+			// Apply formatting.
+			switch (status)
+			{
+				case DutStatus.Pass:
+					textBoxStatus.ForeColor = Color.Black;
+					textBoxStatus.BackColor = Color.Green;
+					break;
+				case DutStatus.Found:
+					textBoxStatus.ForeColor = Color.Yellow;
+					textBoxStatus.BackColor = Color.Blue;
+					break;
+				case DutStatus.Fail:
+				case DutStatus.NotFound:
+				case DutStatus.PortError:
+					textBoxStatus.ForeColor = Color.Black;
+					textBoxStatus.BackColor = Color.Red;
+					break;
+			}
+		}
+
+		public void SetDutSerialNumber(int dut, string serialNumber)
+		{
+			// Find the applicable DUT status textbox.
+			TextBox textBoxSerialNumber = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(1, dut) as TextBox;
+
+			// Set the text.
+			textBoxSerialNumber.Text = serialNumber;
+		}
+
+		#endregion
 	}
 }

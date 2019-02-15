@@ -218,6 +218,7 @@
     <Compile Include="Office\Excel\Excel.cs" />
     <Compile Include="Settings\Serializer.cs" />
     <Compile Include="Settings\Settings.cs" />
+    <Compile Include="Utility\Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
