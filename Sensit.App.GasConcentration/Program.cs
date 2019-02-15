@@ -16,7 +16,7 @@ namespace Sensit.App.GasConcentration
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new FormGasConcentration());
+			Application.Run(new FormGasMixer());
 		}
 	}
 }

@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Deployment.Application;
+using System.Drawing;
 using System.Linq;
-using System.Reflection;
 using System.Windows.Forms;
 using Sensit.TestSDK.Forms;
 using Sensit.TestSDK.Interfaces;
 using Sensit.TestSDK.Settings;
+using Sensit.TestSDK.Utility;
 
 namespace Sensit.App.Calibration
 {
@@ -19,6 +20,8 @@ namespace Sensit.App.Calibration
 	/// TODO:  FormCalibration support for displaying data in a tab for each DUT.  Maybe show Excel in a web browser?
 	public partial class FormCalibration : Form
 	{
+		#region Fields
+
 		// allow the form to wait for tests to cancel/complete before closing application
 		private bool _closeAfterTest = false;
 
@@ -30,6 +33,8 @@ namespace Sensit.App.Calibration
 
 		// Object to represent tests.
 		private Test _test;
+
+		#endregion
 
 		#region Properties
 
@@ -90,7 +95,7 @@ namespace Sensit.App.Calibration
 
 		#endregion
 
-		#region Constructors
+		#region Form Events, Overview Tab
 
 		public FormCalibration()
 		{
@@ -98,7 +103,10 @@ namespace Sensit.App.Calibration
 			InitializeComponent();
 
 			// Add version string to title bar.
-			Text += " " + Assembly.GetEntryAssembly().GetName().Version.ToString();
+			if (ApplicationDeployment.IsNetworkDeployed)
+			{
+				Text += " " + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
+			}
 
 			// Set the number of DUTs.
 			NumDuts = Properties.Settings.Default.NumDuts;
@@ -141,10 +149,6 @@ namespace Sensit.App.Calibration
 			index = comboBoxTest.FindStringExact(Properties.Settings.Default.Test);
 			comboBoxTest.SelectedIndex = index == -1 ? 0 : index;
 		}
-
-		#endregion
-
-		#region Private Methods
 
 		private void UpdateRanges()
 		{
@@ -233,7 +237,12 @@ namespace Sensit.App.Calibration
 					CheckBox checkBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(0, i) as CheckBox;
 					TextBox textBoxSerial = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(1, i) as TextBox;
 
-					Dut dut = new Dut(modelSetting, _equipment, _test);
+					Dut dut = new Dut(modelSetting, _equipment)
+					{
+						SetSerialNumber = SetDutSerialNumber,
+						SetStatus = SetDutStatus,
+						GetElapsedTime = () => _test.ElapsedTime
+					};
 					dut.Device.Index = i + 1;
 					dut.Device.Selected = checkBox.Checked;
 					dut.Device.Status = DutStatus.Init;
@@ -280,38 +289,6 @@ namespace Sensit.App.Calibration
 		}
 
 		/// <summary>
-		/// When "Select/deselect all" checkbox is clicked, select/deselect all DUTs.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void checkBoxSelectAll_CheckedChanged(object sender, EventArgs e)
-		{
-			// Look through each control.
-			foreach (Control c in tableLayoutPanelDevicesUnderTest.Controls)
-			{
-				// If it's a checkbox...
-				if (c is CheckBox cb)
-				{
-					// Make its state match the select all checkbox.
-					cb.Checked = ((CheckBox)sender).Checked;
-				}
-			}
-		}
-
-		/// <summary>
-		/// When File --> Exit menu item is clicked, close the application.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			// This will invoke the "FormClosing" action, so nothing else to do here.
-
-			// Exit the application.
-			Application.Exit();
-		}
-
-		/// <summary>
 		/// Before exiting, check the user's wishes and safely end testing.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -352,6 +329,61 @@ namespace Sensit.App.Calibration
 		}
 
 		/// <summary>
+		/// When the "Model" selection is changed, save the new selection and fetch new ranges.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void comboBoxModel_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			// Remember the selected value.
+			Properties.Settings.Default.Model = comboBoxModel.SelectedItem.ToString();
+
+			// Re-populate the ranges available in the GUI.
+			UpdateRanges();
+		}
+
+		/// <summary>
+		/// When the "Range" selection is changed, save the new selection.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void comboBoxRange_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			// Remember the selected value.
+			Properties.Settings.Default.Range = comboBoxRange.SelectedItem.ToString();
+		}
+
+		/// <summary>
+		/// When the "Test" selection is changed, save the new selection.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void comboBoxTest_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			// Remember the selected value.
+			Properties.Settings.Default.Test = comboBoxTest.SelectedItem.ToString();
+		}
+
+		/// <summary>
+		/// When "Select/deselect all" checkbox is clicked, select/deselect all DUTs.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void checkBoxSelectAll_CheckedChanged(object sender, EventArgs e)
+		{
+			// Look through each control.
+			foreach (Control c in tableLayoutPanelDevicesUnderTest.Controls)
+			{
+				// If it's a checkbox...
+				if (c is CheckBox cb)
+				{
+					// Make its state match the select all checkbox.
+					cb.Checked = ((CheckBox)sender).Checked;
+				}
+			}
+		}
+
+		/// <summary>
 		/// Before exiting, check the user's wishes and safely end testing.
 		/// </summary>
 		/// <returns>true if we're quitting; false if cancelled</returns>
@@ -388,6 +420,60 @@ namespace Sensit.App.Calibration
 
 			// Return whether or not we're stopping the test.
 			return (result == DialogResult.OK);
+		}
+
+		#endregion
+
+		#region File Menu
+
+		/// <summary>
+		/// When File --> Exit menu item is clicked, close the application.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			// This will invoke the "FormClosing" action, so nothing else to do here.
+
+			// Exit the application.
+			Application.Exit();
+		}
+
+		#endregion
+
+		#region Settings Menu
+
+		/// <summary>
+		/// When Edit --> Number of DUTs is selected, prompt the user to select the number of DUTS.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void numberOfDUTsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			// Prompt user to enter desired number of DUTs (current value as default).
+			int numDuts = NumDuts;
+			DialogResult result = InputDialog.Numeric("Number of DUTs", ref numDuts, 1, 24);
+
+			// Update the property (which will also update the form).
+			NumDuts = numDuts;
+		}
+
+		/// <summary>
+		/// When Settings --> Log Directory is selected, prompt the user to
+		/// select the directory where test results are stored.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void logDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			// Set the path first shown to the user to be the currently selected one.
+			folderBrowserDialog1.SelectedPath = Properties.Settings.Default.LogDirectory;
+
+			// Prompt the user to select a folder for output files.
+			if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+			{
+				Properties.Settings.Default.LogDirectory = folderBrowserDialog1.SelectedPath;
+			}
 		}
 
 		/// <summary>
@@ -449,20 +535,9 @@ namespace Sensit.App.Calibration
 			EditSettings<TestSettings>(Properties.Settings.Default.TestSettingsFile);
 		}
 
-		/// <summary>
-		/// When Edit --> Number of DUTs is selected, prompt the user to select the number of DUTS.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void numberOfDUTsToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			// Prompt user to enter desired number of DUTs (current value as default).
-			int numDuts = NumDuts;
-			DialogResult result = InputDialog.Numeric("Number of DUTs", ref numDuts, 1, 24);
+		#endregion
 
-			// Update the property (which will also update the form).
-			NumDuts = numDuts;
-		}
+		#region Help Menu
 
 		/// <summary>
 		/// When the user clicks Help --> About, show an about box.
@@ -480,43 +555,9 @@ namespace Sensit.App.Calibration
 			formAbout.ShowDialog();
 		}
 
-		/// <summary>
-		/// When the "Model" selection is changed, save the new selection and fetch new ranges.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void comboBoxModel_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			// Remember the selected value.
-			Properties.Settings.Default.Model = comboBoxModel.SelectedItem.ToString();
-
-			// Re-populate the ranges available in the GUI.
-			UpdateRanges();
-		}
-
-		/// <summary>
-		/// When the "Range" selection is changed, save the new selection.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void comboBoxRange_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			// Remember the selected value.
-			Properties.Settings.Default.Range = comboBoxRange.SelectedItem.ToString();
-		}
-
-		/// <summary>
-		/// When the "Test" selection is changed, save the new selection.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void comboBoxTest_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			// Remember the selected value.
-			Properties.Settings.Default.Test = comboBoxTest.SelectedItem.ToString();
-		}
-
 		#endregion
+
+		#region Public Methods
 
 		/// <summary>
 		/// Update the form with the test's status.
@@ -562,5 +603,45 @@ namespace Sensit.App.Calibration
 			// Update the status message.
 			toolStripStatusLabel1.Text = "Ready...";
 		}
+
+		public void SetDutStatus(int dut, DutStatus status)
+		{
+			// Find the applicable DUT status textbox.
+			TextBox textBoxStatus = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(2, dut) as TextBox;
+
+			// Set the status text, and use bold text.
+			textBoxStatus.Text = status.GetDescription();
+			textBoxStatus.Font = new Font(textBoxStatus.Font, FontStyle.Bold);
+
+			// Apply formatting.
+			switch (status)
+			{
+				case DutStatus.Pass:
+					textBoxStatus.ForeColor = Color.Black;
+					textBoxStatus.BackColor = Color.Green;
+					break;
+				case DutStatus.Found:
+					textBoxStatus.ForeColor = Color.Yellow;
+					textBoxStatus.BackColor = Color.Blue;
+					break;
+				case DutStatus.Fail:
+				case DutStatus.NotFound:
+				case DutStatus.PortError:
+					textBoxStatus.ForeColor = Color.Black;
+					textBoxStatus.BackColor = Color.Red;
+					break;
+			}
+		}
+
+		public void SetDutSerialNumber(int dut, string serialNumber)
+		{
+			// Find the applicable DUT status textbox.
+			TextBox textBoxSerialNumber = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(1, dut) as TextBox;
+
+			// Set the text.
+			textBoxSerialNumber.Text = serialNumber;
+		}
+
+		#endregion
 	}
 }

@@ -71,6 +71,17 @@ namespace Sensit.App.Calibration.Properties {
             }
         }
         
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection DutSelections {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["DutSelections"]));
+            }
+            set {
+                this["DutSelections"] = value;
+            }
+        }
+        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("System Settings")]
@@ -100,12 +111,13 @@ namespace Sensit.App.Calibration.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection DutSelections {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LogDirectory {
             get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["DutSelections"]));
+                return ((string)(this["LogDirectory"]));
             }
             set {
-                this["DutSelections"] = value;
+                this["LogDirectory"] = value;
             }
         }
     }

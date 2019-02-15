@@ -165,7 +165,7 @@
     <Compile Include="Communication\SCPI.cs" />
     <Compile Include="Communication\SerialDevice.cs" />
     <Compile Include="Communication\VisaDevice.cs" />
-    <Compile Include="Devices\GasConcentrationDevice.cs" />
+    <Compile Include="Devices\GasMixingDevice.cs" />
     <Compile Include="Devices\Manual.cs" />
     <Compile Include="Dut\AnalogSensor.cs" />
     <Compile Include="Controls\UserCustomStep.cs">
@@ -218,6 +218,7 @@
     <Compile Include="Office\Excel\Excel.cs" />
     <Compile Include="Settings\Serializer.cs" />
     <Compile Include="Settings\Settings.cs" />
+    <Compile Include="Utility\Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

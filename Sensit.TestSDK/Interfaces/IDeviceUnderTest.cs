@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Sensit.TestSDK.Interfaces
 {
@@ -17,9 +18,12 @@ namespace Sensit.TestSDK.Interfaces
 
 	public enum DutStatus
 	{
+		[Description("")]
 		Init,
 		Found,
+		[Description("Not Found")]
 		NotFound,
+		[Description("Port Error")]
 		PortError,
 		Fail,
 		Pass

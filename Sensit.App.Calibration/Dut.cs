@@ -28,13 +28,25 @@ namespace Sensit.App.Calibration
 	{
 		private ModelSetting _settings;
 		private Equipment _equipment;
-		private Test _test;
 
 		// used when the user selects "Simulator" option for DUTs.
 		private Simulator _simulator;
 
 		// analog sensor device
 		private AnalogSensor _analogSensor;
+
+		#region Delegates
+
+		// Set DUT status.
+		public Action<int, DutStatus> SetStatus;
+
+		// Set DUT serial number.
+		public Action<int, string> SetSerialNumber;
+
+		// Get test's elapsed time.
+		public Func<TimeSpan?> GetElapsedTime;
+
+		#endregion
 
 		#region Properties
 
@@ -52,11 +64,10 @@ namespace Sensit.App.Calibration
 
 		#region Constructor
 
-		public Dut(ModelSetting settings, Equipment equipment, Test test)
+		public Dut(ModelSetting settings, Equipment equipment)
 		{
 			_settings = settings;
 			_equipment = equipment;
-			_test = test;
 
 			// Create DUT object.
 			// Only the one chosen by the user will end up being used.
@@ -84,6 +95,9 @@ namespace Sensit.App.Calibration
 				// TODO:  (Low priority) Talk to each DUT to verify communication.
 				// If communication succeeds, set status to "Found".
 				Device.Status = DutStatus.Found;
+
+				// Update GUI.
+				SetStatus(Device.Index, Device.Status);
 			}
 		}
 
@@ -107,9 +121,15 @@ namespace Sensit.App.Calibration
 				(Device.Status == DutStatus.Fail))
 			{
 				// TODO:  Identify passing DUTs.
+				Device.Status = DutStatus.Pass;
+
+				// Update GUI.
+				SetStatus(Device.Index, Device.Status);
 
 				// Save test results to csv file.
-				using (var writer = new StreamWriter("DUT" + Device.Index + "Results.csv"))
+				string filename = "DUT" + Device.Index + "Results.csv";
+				string fullPath = Path.Combine(Properties.Settings.Default.LogDirectory, filename);
+				using (var writer = new StreamWriter(fullPath, true))
 				using (var csv = new CsvWriter(writer))
 				{
 					csv.WriteRecords(Results);
@@ -137,6 +157,9 @@ namespace Sensit.App.Calibration
 
 					// Mark DUT as failed.
 					Device.Status = DutStatus.Fail;
+
+					// Update GUI.
+					SetStatus(Device.Index, Device.Status);
 				}
 
 				// Read value from DUT.
@@ -145,7 +168,7 @@ namespace Sensit.App.Calibration
 				// Save the result.
 				Results.Add(new TestResults
 				{
-					ElapsedTime = _test.ElapsedTime,
+					ElapsedTime = GetElapsedTime(),
 					Setpoint = setpoint,
 					Reference = _equipment.GasReference.GasMix,
 					SensorValue = dutValue

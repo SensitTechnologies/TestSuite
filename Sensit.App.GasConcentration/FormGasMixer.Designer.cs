@@ -1,6 +1,6 @@
 ﻿namespace Sensit.App.GasConcentration
 {
-	partial class FormGasConcentration
+	partial class FormGasMixer
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -709,7 +709,7 @@
 			this.labelUnitMassFlowSetpoint.TabIndex = 10;
 			this.labelUnitMassFlowSetpoint.Text = "SCCM";
 			// 
-			// FormGasConcentration
+			// FormGasMixer
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -720,8 +720,8 @@
 			this.Controls.Add(this.groupBoxSerialPorts);
 			this.Controls.Add(this.menuStrip1);
 			this.MainMenuStrip = this.menuStrip1;
-			this.Name = "FormGasConcentration";
-			this.Text = "Gas Concentration Controller";
+			this.Name = "FormGasMixer";
+			this.Text = "Gas Mix Utility";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormGasConcentration_FormClosed);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();

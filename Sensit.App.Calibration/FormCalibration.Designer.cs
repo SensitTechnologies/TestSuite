@@ -44,8 +44,6 @@
 			this.tableLayoutPanelTestSetupButtons = new System.Windows.Forms.TableLayoutPanel();
 			this.buttonStart = new System.Windows.Forms.Button();
 			this.buttonStop = new System.Windows.Forms.Button();
-			this.groupBoxEquipmentSettings = new System.Windows.Forms.GroupBox();
-			this.tableLayoutPanelEquipmentSettings = new System.Windows.Forms.TableLayoutPanel();
 			this.checkBoxSelectAll = new System.Windows.Forms.CheckBox();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -89,7 +87,6 @@
 			this.reconnectDUTsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.numberOfDUTsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.variablesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.dUTSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.terminalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -97,6 +94,8 @@
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.supportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpProvider1 = new System.Windows.Forms.HelpProvider();
+			this.logDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
 			this.tabControl1.SuspendLayout();
 			this.Overview.SuspendLayout();
 			this.tableLayoutPanelOverview.SuspendLayout();
@@ -104,7 +103,6 @@
 			this.tableLayoutPanelTestSettings.SuspendLayout();
 			this.groupBoxDevicesUnderTest.SuspendLayout();
 			this.tableLayoutPanelTestSetupButtons.SuspendLayout();
-			this.groupBoxEquipmentSettings.SuspendLayout();
 			this.tabPage2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
@@ -154,7 +152,6 @@
 			this.tableLayoutPanelOverview.Controls.Add(this.groupBoxTestSettings, 0, 0);
 			this.tableLayoutPanelOverview.Controls.Add(this.groupBoxDevicesUnderTest, 1, 0);
 			this.tableLayoutPanelOverview.Controls.Add(this.tableLayoutPanelTestSetupButtons, 0, 2);
-			this.tableLayoutPanelOverview.Controls.Add(this.groupBoxEquipmentSettings, 0, 1);
 			this.tableLayoutPanelOverview.Controls.Add(this.checkBoxSelectAll, 1, 2);
 			this.tableLayoutPanelOverview.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanelOverview.Location = new System.Drawing.Point(3, 3);
@@ -346,37 +343,6 @@
 			this.buttonStop.Text = "Stop";
 			this.buttonStop.UseVisualStyleBackColor = true;
 			this.buttonStop.Click += new System.EventHandler(this.buttonStop_Click);
-			// 
-			// groupBoxEquipmentSettings
-			// 
-			this.groupBoxEquipmentSettings.AutoSize = true;
-			this.groupBoxEquipmentSettings.Controls.Add(this.tableLayoutPanelEquipmentSettings);
-			this.groupBoxEquipmentSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.helpProvider1.SetHelpString(this.groupBoxEquipmentSettings, "Select which test equipment is used to perform the test.");
-			this.groupBoxEquipmentSettings.Location = new System.Drawing.Point(3, 109);
-			this.groupBoxEquipmentSettings.Name = "groupBoxEquipmentSettings";
-			this.helpProvider1.SetShowHelp(this.groupBoxEquipmentSettings, true);
-			this.groupBoxEquipmentSettings.Size = new System.Drawing.Size(215, 132);
-			this.groupBoxEquipmentSettings.TabIndex = 20;
-			this.groupBoxEquipmentSettings.TabStop = false;
-			this.groupBoxEquipmentSettings.Text = "Equipment Settings";
-			// 
-			// tableLayoutPanelEquipmentSettings
-			// 
-			this.tableLayoutPanelEquipmentSettings.AutoSize = true;
-			this.tableLayoutPanelEquipmentSettings.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutPanelEquipmentSettings.ColumnCount = 2;
-			this.tableLayoutPanelEquipmentSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanelEquipmentSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanelEquipmentSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanelEquipmentSettings.Location = new System.Drawing.Point(3, 16);
-			this.tableLayoutPanelEquipmentSettings.Name = "tableLayoutPanelEquipmentSettings";
-			this.tableLayoutPanelEquipmentSettings.RowCount = 1;
-			this.tableLayoutPanelEquipmentSettings.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelEquipmentSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 113F));
-			this.tableLayoutPanelEquipmentSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 113F));
-			this.tableLayoutPanelEquipmentSettings.Size = new System.Drawing.Size(209, 113);
-			this.tableLayoutPanelEquipmentSettings.TabIndex = 0;
 			// 
 			// checkBoxSelectAll
 			// 
@@ -683,58 +649,58 @@
 			// 
 			this.newToolStripMenuItem.Enabled = false;
 			this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-			this.newToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+			this.newToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.newToolStripMenuItem.Text = "&New";
 			// 
 			// openToolStripMenuItem
 			// 
 			this.openToolStripMenuItem.Enabled = false;
 			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-			this.openToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+			this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.openToolStripMenuItem.Text = "&Open Test";
 			// 
 			// closeToolStripMenuItem
 			// 
 			this.closeToolStripMenuItem.Enabled = false;
 			this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-			this.closeToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+			this.closeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.closeToolStripMenuItem.Text = "&Close Test";
 			// 
 			// saveToolStripMenuItem
 			// 
 			this.saveToolStripMenuItem.Enabled = false;
 			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-			this.saveToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+			this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.saveToolStripMenuItem.Text = "&Save Test";
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(129, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
 			// 
 			// printSetupToolStripMenuItem
 			// 
 			this.printSetupToolStripMenuItem.Enabled = false;
 			this.printSetupToolStripMenuItem.Name = "printSetupToolStripMenuItem";
-			this.printSetupToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+			this.printSetupToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.printSetupToolStripMenuItem.Text = "&Print Setup";
 			// 
 			// printToolStripMenuItem
 			// 
 			this.printToolStripMenuItem.Enabled = false;
 			this.printToolStripMenuItem.Name = "printToolStripMenuItem";
-			this.printToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+			this.printToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.printToolStripMenuItem.Text = "&Print";
 			// 
 			// toolStripSeparator3
 			// 
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(129, 6);
+			this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.exitToolStripMenuItem.Text = "&Exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
 			// 
@@ -754,7 +720,7 @@
 			// 
 			this.startToolStripMenuItem.Name = "startToolStripMenuItem";
 			this.startToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-			this.startToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+			this.startToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.startToolStripMenuItem.Text = "&Start";
 			this.startToolStripMenuItem.Click += new System.EventHandler(this.buttonStart_Click);
 			// 
@@ -763,7 +729,7 @@
 			this.pauseToolStripMenuItem.Enabled = false;
 			this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
 			this.pauseToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F6;
-			this.pauseToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+			this.pauseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.pauseToolStripMenuItem.Text = "&Pause";
 			this.pauseToolStripMenuItem.ToolTipText = "Hault the current test temporarily";
 			// 
@@ -772,66 +738,59 @@
 			this.abortToolStripMenuItem.Enabled = false;
 			this.abortToolStripMenuItem.Name = "abortToolStripMenuItem";
 			this.abortToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F7;
-			this.abortToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+			this.abortToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.abortToolStripMenuItem.Text = "&Abort";
 			this.abortToolStripMenuItem.Click += new System.EventHandler(this.buttonStop_Click);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(124, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
 			// 
 			// reconnectDUTsToolStripMenuItem
 			// 
 			this.reconnectDUTsToolStripMenuItem.Enabled = false;
 			this.reconnectDUTsToolStripMenuItem.Name = "reconnectDUTsToolStripMenuItem";
-			this.reconnectDUTsToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+			this.reconnectDUTsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.reconnectDUTsToolStripMenuItem.Text = "&Find DUTs";
 			// 
 			// toolsToolStripMenuItem
 			// 
 			this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.numberOfDUTsToolStripMenuItem,
-            this.variablesToolStripMenuItem,
+            this.logDirectoryToolStripMenuItem,
             this.optionsToolStripMenuItem,
             this.dUTSettingsToolStripMenuItem,
             this.terminalToolStripMenuItem});
 			this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-			this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
-			this.toolsToolStripMenuItem.Text = "&Tools";
+			this.toolsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+			this.toolsToolStripMenuItem.Text = "&Settings";
 			// 
 			// numberOfDUTsToolStripMenuItem
 			// 
 			this.numberOfDUTsToolStripMenuItem.Name = "numberOfDUTsToolStripMenuItem";
-			this.numberOfDUTsToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+			this.numberOfDUTsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.numberOfDUTsToolStripMenuItem.Text = "&Number of DUTs";
 			this.numberOfDUTsToolStripMenuItem.Click += new System.EventHandler(this.numberOfDUTsToolStripMenuItem_Click);
-			// 
-			// variablesToolStripMenuItem
-			// 
-			this.variablesToolStripMenuItem.Enabled = false;
-			this.variablesToolStripMenuItem.Name = "variablesToolStripMenuItem";
-			this.variablesToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
-			this.variablesToolStripMenuItem.Text = "&Variables";
 			// 
 			// optionsToolStripMenuItem
 			// 
 			this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.optionsToolStripMenuItem.Text = "&Equipment Settings";
 			this.optionsToolStripMenuItem.Click += new System.EventHandler(this.equipmentSettingsToolStripMenuItem_Click);
 			// 
 			// dUTSettingsToolStripMenuItem
 			// 
 			this.dUTSettingsToolStripMenuItem.Name = "dUTSettingsToolStripMenuItem";
-			this.dUTSettingsToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+			this.dUTSettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.dUTSettingsToolStripMenuItem.Text = "&DUT Settings";
 			this.dUTSettingsToolStripMenuItem.Click += new System.EventHandler(this.dUTSettingsToolStripMenuItem_Click);
 			// 
 			// terminalToolStripMenuItem
 			// 
 			this.terminalToolStripMenuItem.Name = "terminalToolStripMenuItem";
-			this.terminalToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+			this.terminalToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.terminalToolStripMenuItem.Text = "&Test Settings";
 			this.terminalToolStripMenuItem.Click += new System.EventHandler(this.testSettingsToolStripMenuItem_Click);
 			// 
@@ -847,7 +806,7 @@
 			// aboutToolStripMenuItem
 			// 
 			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.aboutToolStripMenuItem.Text = "&About";
 			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
 			// 
@@ -855,8 +814,15 @@
 			// 
 			this.supportToolStripMenuItem.Enabled = false;
 			this.supportToolStripMenuItem.Name = "supportToolStripMenuItem";
-			this.supportToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+			this.supportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.supportToolStripMenuItem.Text = "How Do I";
+			// 
+			// logDirectoryToolStripMenuItem
+			// 
+			this.logDirectoryToolStripMenuItem.Name = "logDirectoryToolStripMenuItem";
+			this.logDirectoryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.logDirectoryToolStripMenuItem.Text = "&Log Directory";
+			this.logDirectoryToolStripMenuItem.Click += new System.EventHandler(this.logDirectoryToolStripMenuItem_Click);
 			// 
 			// FormCalibration
 			// 
@@ -882,8 +848,6 @@
 			this.tableLayoutPanelTestSettings.PerformLayout();
 			this.groupBoxDevicesUnderTest.ResumeLayout(false);
 			this.tableLayoutPanelTestSetupButtons.ResumeLayout(false);
-			this.groupBoxEquipmentSettings.ResumeLayout(false);
-			this.groupBoxEquipmentSettings.PerformLayout();
 			this.tabPage2.ResumeLayout(false);
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
@@ -974,13 +938,12 @@
 		private System.Windows.Forms.TextBox textBoxVariable2Value;
 		private System.Windows.Forms.TextBox textBoxVariable2Setpoint;
 		private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
-		private System.Windows.Forms.GroupBox groupBoxEquipmentSettings;
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelEquipmentSettings;
 		private System.Windows.Forms.ToolStripMenuItem numberOfDUTsToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem variablesToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem pauseToolStripMenuItem;
 		private System.Windows.Forms.CheckBox checkBoxSelectAll;
 		private System.Windows.Forms.ToolStripMenuItem dUTSettingsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem logDirectoryToolStripMenuItem;
+		private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
 	}
 }
 
