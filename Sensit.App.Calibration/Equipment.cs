@@ -34,13 +34,6 @@ namespace Sensit.App.Calibration
 		// datalogger (for analog sensor DUTs)
 		private Keysight_34972A _datalogger;
 
-		#region Delegates
-
-		// Report test progress.
-		public Action<int, string> Update;
-
-		#endregion
-
 		#region Properties
 
 		/// <summary>
