@@ -146,8 +146,6 @@ namespace Sensit.App.Calibration
 			_equipment.GasMixController.GasMixSetpoint = setpoint;
 			_equipment.GasMixController.WriteGasMixSetpoint();
 
-			// TODO:  (Low priority) Update GUI with setpoint.
-
 			// Get start time.
 			Stopwatch stopwatch = Stopwatch.StartNew();
 
@@ -220,7 +218,6 @@ namespace Sensit.App.Calibration
 					if (_testThread.CancellationPending) { break; }
 
 					// Take samples via DUT interface.
-					// TODO:  Update GUI with reference info.
 					_equipment.DutInterface.Read();
 
 					// Get reading from each DUT.
