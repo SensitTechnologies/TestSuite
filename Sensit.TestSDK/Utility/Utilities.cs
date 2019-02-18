@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
 
-namespace Sensit.TestSDK.Utility
+namespace Sensit.TestSDK.Utilities
 {
 	public static class Utilities
 	{
@@ -15,7 +17,7 @@ namespace Sensit.TestSDK.Utility
 		/// https://stackoverflow.com/questions/1415140/can-my-enums-have-friendly-names
 		/// https://stackoverflow.com/questions/479410/enum-tostring-with-user-friendly-strings
 		/// </remarks>
-		/// <param name="value">description of the enumeration</param>
+		/// <param name="value">enumeration of interest</param>
 		/// <returns></returns>
 		public static string GetDescription(this Enum value)
 		{
@@ -28,9 +30,8 @@ namespace Sensit.TestSDK.Utility
 				FieldInfo field = type.GetField(name);
 				if (field != null)
 				{
-					DescriptionAttribute attribute = Attribute.GetCustomAttribute(field,
-						typeof(DescriptionAttribute)) as DescriptionAttribute;
-					if (attribute != null)
+					if (Attribute.GetCustomAttribute(field,
+						typeof(DescriptionAttribute)) is DescriptionAttribute attribute)
 					{
 						// If a description exists, use that.
 						description = attribute.Description;
@@ -44,6 +45,60 @@ namespace Sensit.TestSDK.Utility
 			}
 
 			return description;
+		}
+
+		/// <summary>
+		/// Extension method to read a description attribute associated with a type.
+		/// </summary>
+		/// <param name="type">type of interest</param>
+		/// <returns></returns>
+		public static string GetDescription(this Type type)
+		{
+			DescriptionAttribute description = (DescriptionAttribute)type.GetCustomAttribute(typeof(DescriptionAttribute));
+
+			if (description == null)
+			{
+				return type.Name;
+			}
+			else
+			{
+				return description.Description;
+			}
+		}
+
+		/// <summary>
+		/// Find classes that implement an interface or extend a base class.
+		/// </summary>
+		/// <remarks>
+		/// Inspiration:
+		/// https://stackoverflow.com/questions/26733/getting-all-types-that-implement-an-interface
+		/// </remarks>
+		/// <example><code>
+		/// FindDeviceTypes(typeof(IControlDevice));
+		/// </code></example>
+		/// <param name="type">base type</param>
+		/// <returns></returns>
+		public static List<Type> FindClasses(Type type)
+		{
+			IEnumerable<Type> types = AppDomain.CurrentDomain.GetAssemblies()
+				.SelectMany(s => s.GetTypes())
+				.Where(p => type.IsAssignableFrom(p) && p.IsClass);
+
+			return types.ToList();
+		}
+
+		/// <summary>
+		/// Find interfaces based on another interface.
+		/// </summary>
+		/// <param name="type">base interface</param>
+		/// <returns></returns>
+		public static List<Type> FindInterfaces(Type type)
+		{
+			IEnumerable<Type> types = AppDomain.CurrentDomain.GetAssemblies()
+				.SelectMany(s => s.GetTypes())
+				.Where(p => type.IsAssignableFrom(p) && p.IsInterface && p != type);
+
+			return types.ToList();
 		}
 	}
 }
