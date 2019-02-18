@@ -36,20 +36,31 @@ namespace Sensit.App.Calibration
 
 		#region Properties
 
-		/// <summary>
-		///  DUT interface device used to take readings from sensors/products/etc.
-		/// </summary>
 		public IDutInterfaceDevice DutInterface => _datalogger;
 
-		/// <summary>
-		/// Gas Concentration Controller used to mix gasses.
-		/// </summary>
 		public IGasMixController GasMixController => _gasMixer;
 
-		/// <summary>
-		/// Gas Concentration Reference used to determine gas composition.
-		/// </summary>
 		public IGasMixReference GasReference => _gasMixer;
+
+		public IMassFlowController GasFlowController => _manual;
+
+		public IMassFlowReference GasFlowReference => _manual;
+
+		public IVolumeFlowController VolumeFlowController => _manual;
+
+		public IVolumeFlowReference VolumeFlowReference => _manual;
+
+		public IVelocityController VelocityController => _manual;
+
+		public IVelocityReference VelocityReference => _manual;
+
+		public IPressureController PressureController => _manual;
+
+		public IPressureReference PressureReference => _manual;
+
+		public ITemperatureController TemperatureController => _manual;
+
+		public ITemperatureReference TemperatureReference => _manual;
 
 		#endregion
 
