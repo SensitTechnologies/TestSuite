@@ -113,6 +113,25 @@ namespace Sensit.App.Calibration
 		[Category("Test Settings"), Description("Settings describing tests that can be performed.")]
 		public List<TestSetting> Tests { get; set; } = new List<TestSetting>
 		{
+			new TestSetting("Diode Test")
+			{
+				Components = new List<TestComponent>
+				{
+					new TestComponent("Diode Test")
+					{
+						IndependentVariable = new TestVariable(Test.VariableType.GasConcentration)
+						{
+							// Take samples every 1 second.  Don't wait for stability.
+							Interval = new TimeSpan(0, 0, 1),
+							StabilityTime = new TimeSpan(0, 0, 0)
+						},
+						// Take a sample every minute for 15 hours.
+						NumberOfSamples = 900,
+						SampleInterval = new TimeSpan(0, 1, 0),
+						Setpoints = new List<double> { 0.0 }
+					}
+				}
+			},
 			new TestSetting("Warm-Up Time"),
 			new TestSetting("Linearity")
 			{
