@@ -36,7 +36,7 @@ namespace Sensit.App.Keysight
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void ButtonRefresh_Click(object sender, EventArgs e)
+		private void buttonRefresh_Click(object sender, EventArgs e)
 		{
 			Find();
 		}
@@ -133,7 +133,7 @@ namespace Sensit.App.Keysight
 			};
 		}
 
-        private void ButtonMeasure1_Click(object sender, EventArgs e)
+        private void buttonMeasure1_Click(object sender, EventArgs e)
         {
             try
             {

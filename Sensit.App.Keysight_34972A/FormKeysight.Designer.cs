@@ -79,7 +79,7 @@
             this.buttonRefresh.TabIndex = 3;
             this.buttonRefresh.Text = "Refresh";
             this.buttonRefresh.UseVisualStyleBackColor = true;
-            this.buttonRefresh.Click += new System.EventHandler(this.ButtonRefresh_Click);
+            this.buttonRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
             // 
             // radioButtonClosed
             // 
@@ -196,7 +196,7 @@
             this.buttonMeasure1.TabIndex = 0;
             this.buttonMeasure1.Text = "Measure";
             this.buttonMeasure1.UseVisualStyleBackColor = true;
-            this.buttonMeasure1.Click += new System.EventHandler(this.ButtonMeasure1_Click);
+            this.buttonMeasure1.Click += new System.EventHandler(this.buttonMeasure1_Click);
             // 
             // updownSelectedDut
             // 

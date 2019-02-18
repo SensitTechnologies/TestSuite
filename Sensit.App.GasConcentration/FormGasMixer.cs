@@ -59,7 +59,7 @@ namespace Sensit.App.GasConcentration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
+		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Application.Exit();
 		}
@@ -69,7 +69,7 @@ namespace Sensit.App.GasConcentration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void RadioButton_CheckedChanged(object sender, EventArgs e)
+		private void radioButton_CheckedChanged(object sender, EventArgs e)
 		{
 			// Do stuff only if the radio button is checked.
 			// (Otherwise the actions will run twice.)
@@ -131,7 +131,7 @@ namespace Sensit.App.GasConcentration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void ComboBoxSerialPortGasUnderTest_SelectedIndexChanged(object sender, EventArgs e)
+		private void comboBoxSerialPortGasUnderTest_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			// Save the serial port selection in the application settings.
 			Properties.Settings.Default.PortAnalyte = comboBoxAnalytePort.Text;
@@ -142,7 +142,7 @@ namespace Sensit.App.GasConcentration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void ComboBoxSerialPortDiluent_SelectedIndexChanged(object sender, EventArgs e)
+		private void comboBoxSerialPortDiluent_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			// Save the serial port selection in the application settings.
 			Properties.Settings.Default.PortDiluent = comboBoxDiluentPort.Text;
@@ -169,7 +169,7 @@ namespace Sensit.App.GasConcentration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void ButtonReadAll_Click(object sender, EventArgs e)
+		private void buttonReadAll_Click(object sender, EventArgs e)
 		{
 			try
 			{
@@ -208,7 +208,7 @@ namespace Sensit.App.GasConcentration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void ButtonWriteGas_Click(object sender, EventArgs e)
+		private void buttonWriteGas_Click(object sender, EventArgs e)
 		{
 			try
 			{
@@ -241,7 +241,7 @@ namespace Sensit.App.GasConcentration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void ButtonWrite_Click(object sender, EventArgs e)
+		private void buttonWrite_Click(object sender, EventArgs e)
 		{
 			try
 			{
@@ -271,7 +271,7 @@ namespace Sensit.App.GasConcentration
 			}
 		}
 
-		private void ButtonReadConcentration_Click(object sender, EventArgs e)
+		private void buttonReadConcentration_Click(object sender, EventArgs e)
 		{
 			try
 			{
@@ -292,7 +292,7 @@ namespace Sensit.App.GasConcentration
 			}
 		}
 
-		private void ButtonWriteGasConcentrationSetpoint_Click(object sender, EventArgs e)
+		private void buttonWriteGasConcentrationSetpoint_Click(object sender, EventArgs e)
 		{
 			try
 			{
