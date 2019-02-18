@@ -1,4 +1,5 @@
-﻿using Sensit.TestSDK.Calculations;      // define units of measure
+﻿using System.ComponentModel;
+using Sensit.TestSDK.Calculations;      // define units of measure
 
 namespace Sensit.TestSDK.Interfaces
 {
@@ -9,6 +10,7 @@ namespace Sensit.TestSDK.Interfaces
 	/// Don't implement this interface directly.
 	/// Devices should implement one of the more specific interfaces below.
 	/// </remarks>
+	[Description("Reference Device")]
 	public interface IReferenceDevice
 	{
 		/// <summary>
@@ -67,6 +69,7 @@ namespace Sensit.TestSDK.Interfaces
 	/// <summary>
 	/// Device that measures gas concentration.
 	/// </summary>
+	[Description("Gas Mix Reference")]
 	public interface IGasMixReference : IReferenceDevice
 	{
 		/// <summary>
@@ -81,6 +84,7 @@ namespace Sensit.TestSDK.Interfaces
 	/// <remarks>
 	/// May wish to split into two interfaces (mass and volumetric flow) in the future.
 	/// </remarks>
+	[Description("Gas Mass Flow Reference")]
 	public interface IMassFlowReference : IReferenceDevice
 	{
 		UnitOfMeasure.Flow FlowUnit { get; set; }
@@ -96,6 +100,7 @@ namespace Sensit.TestSDK.Interfaces
 	/// <summary>
 	/// Device that measures gas volumetric flow.
 	/// </summary>
+	[Description("Gas Volume Flow Reference")]
 	public interface IVolumeFlowReference : IReferenceDevice
 	{
 		UnitOfMeasure.Flow FlowUnit { get; set; }
@@ -106,6 +111,7 @@ namespace Sensit.TestSDK.Interfaces
 	/// <summary>
 	/// Device that measures gas velocity.
 	/// </summary>
+	[Description("Velocity Reference")]
 	public interface IVelocityReference : IReferenceDevice
 	{
 		UnitOfMeasure.Velocity VelocityUnit { get; set; }
@@ -116,6 +122,7 @@ namespace Sensit.TestSDK.Interfaces
 	/// <summary>
 	/// Device that measures pressure.
 	/// </summary>
+	[Description("Pressure Reference")]
 	public interface IPressureReference : IReferenceDevice
 	{
 		UnitOfMeasure.Pressure PressureUnit { get; set; }
@@ -126,6 +133,7 @@ namespace Sensit.TestSDK.Interfaces
 	/// <summary>
 	/// Device that measures temperature.
 	/// </summary>
+	[Description("Temperature Reference")]
 	public interface ITemperatureReference : IReferenceDevice
 	{
 		UnitOfMeasure.Temperature TemperatureUnit { get; set; }

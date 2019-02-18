@@ -1,4 +1,6 @@
-﻿namespace Sensit.TestSDK.Interfaces
+﻿using System.ComponentModel;
+
+namespace Sensit.TestSDK.Interfaces
 {
 	/// <summary>
 	/// What the device should try to do.
@@ -17,6 +19,7 @@
 	/// Don't implement this interface directly.
 	/// Devices should implement one of the more specific interfaces below.
 	/// </remarks>
+	[Description("Control Device")]
 	public interface IControlDevice
 	{
 		/// <summary>
@@ -29,6 +32,7 @@
 	/// <summary>
 	/// Device that controls gas concentration (and mass flow).
 	/// </summary>
+	[Description("Gas Mixer")]
 	public interface IGasMixController : IControlDevice
 	{
 		/// <summary>
@@ -55,6 +59,7 @@
 	/// <summary>
 	/// Device that controls gas mass flow.
 	/// </summary>
+	[Description("Mass Flow Controller")]
 	public interface IMassFlowController : IControlDevice
 	{
 		/// <summary>
@@ -94,6 +99,7 @@
 	/// <summary>
 	/// Device that controls gas volume flow.
 	/// </summary>
+	[Description("Volume Flow Controller")]
 	public interface IVolumeFlowController : IControlDevice
 	{
 		double VolumeFlowSetpoint { get; set; }
@@ -108,6 +114,7 @@
 	/// <summary>
 	/// Device that controls gas velocity (i.e. a wind tunnel).
 	/// </summary>
+	[Description("Velocity Controller")]
 	public interface IVelocityController : IControlDevice
 	{
 		double VelocitySetpoint { get; set; }
@@ -122,6 +129,7 @@
 	/// <summary>
 	/// Device that controls pressure.
 	/// </summary>
+	[Description("Pressure Controller")]
 	public interface IPressureController : IControlDevice
 	{
 		double PressureSetpoint { get; set; }
@@ -136,6 +144,7 @@
 	/// <summary>
 	/// Device that controls temperature.
 	/// </summary>
+	[Description("Temperature Controller")]
 	public interface ITemperatureController : IControlDevice
 	{
 		double TemperatureSetpoint { get; set; }
