@@ -53,13 +53,13 @@ namespace Sensit.App.Calibration
 
 		#endregion
 
-		public TimeSpan? ElapsedTime
-		{
-			get
-			{
-				return _stopwatch?.Elapsed;
-			}
-		}
+		#region Properties
+
+		public TimeSpan? ElapsedTime => _stopwatch?.Elapsed;
+
+		public int PercentProgress => (int)(_stepsComplete / (double)_stepsTotal * 100.0);
+
+		#endregion
 
 		/// <summary>
 		/// Constructor
@@ -140,7 +140,7 @@ namespace Sensit.App.Calibration
 		private void SetpointCycle(TestVariable variable, double setpoint)
 		{
 			// Set setpoint.
-			_testThread.ReportProgress(_stepsComplete / _stepsTotal, "Setting setpoint...");
+			_testThread.ReportProgress(PercentProgress, "Setting setpoint...");
 			_equipment.GasMixController.AnalyteBottleConcentration = 25;
 			_equipment.GasMixController.MassFlowSetpoint = 300;
 			_equipment.GasMixController.GasMixSetpoint = setpoint;
@@ -188,7 +188,7 @@ namespace Sensit.App.Calibration
 				}
 
 				// Update GUI.
-				_testThread.ReportProgress(_stepsComplete / _stepsTotal, "Setpoint time to go:  "
+				_testThread.ReportProgress(PercentProgress, "Setpoint time to go:  "
 					+ (variable.StabilityTime - stopwatch.Elapsed).ToString());
 
 				// Wait to get desired reading frequency.
@@ -228,11 +228,15 @@ namespace Sensit.App.Calibration
 
 						// Update GUI.
 						_stepsComplete++;
-						_testThread.ReportProgress((int)(_stepsComplete / (double)_stepsTotal), "Reading DUT #" + dut.Device.Index);
+						_testThread.ReportProgress(PercentProgress, "Reading DUT #" + dut.Device.Index);
 
 						// Read and process DUT data.
 						dut.Read(sp, testComponent.IndependentVariable.ErrorTolerance);
 					}
+
+					// Wait to get desired reading frequency.
+					_testThread.ReportProgress(PercentProgress, "Paused between samples...");
+					Thread.Sleep(testComponent.SampleInterval);
 				}
 			}
 
