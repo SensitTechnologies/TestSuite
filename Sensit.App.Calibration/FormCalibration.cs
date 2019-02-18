@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using Sensit.TestSDK.Forms;
 using Sensit.TestSDK.Interfaces;
 using Sensit.TestSDK.Settings;
-using Sensit.TestSDK.Utility;
+using Sensit.TestSDK.Utilities;
 
 namespace Sensit.App.Calibration
 {
@@ -91,7 +91,7 @@ namespace Sensit.App.Calibration
 
 		#endregion
 
-		#region Form Events, Overview Tab
+		#region Constructor
 
 		public FormCalibration()
 		{
@@ -103,6 +103,9 @@ namespace Sensit.App.Calibration
 			{
 				Text += " " + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
 			}
+
+			InitEquipmentMenu(typeof(IControlDevice));
+			InitEquipmentMenu(typeof(IReferenceDevice));
 
 			// Set the number of DUTs.
 			NumDuts = Properties.Settings.Default.NumDuts;
@@ -145,6 +148,10 @@ namespace Sensit.App.Calibration
 			index = comboBoxTest.FindStringExact(Properties.Settings.Default.Test);
 			comboBoxTest.SelectedIndex = index == -1 ? 0 : index;
 		}
+
+		#endregion
+
+		#region Overview
 
 		private void UpdateRanges()
 		{
@@ -433,6 +440,44 @@ namespace Sensit.App.Calibration
 
 			// Exit the application.
 			Application.Exit();
+		}
+
+		#endregion
+
+		#region Equipment Menu
+
+		private void InitEquipmentMenu(Type type)
+		{
+			// Populate the equipment menu.
+			List<Type> controlTypes = Utilities.FindInterfaces(type);
+			foreach (Type t in controlTypes)
+			{
+				// Add the class of device.
+				ToolStripDropDownItem equipmentType = new ToolStripMenuItem(t.GetDescription());
+				equipmentToolStripMenuItem.DropDownItems.Add(equipmentType);
+
+				// Find the applicable devices.
+				List<Type> deviceTypes = Utilities.FindClasses(t);
+				foreach (Type d in deviceTypes)
+				{
+					equipmentType.DropDownItems.Add(d.GetDescription(), null, menuEquipment_Click);
+				}
+			}
+		}
+
+		private void menuEquipment_Click(object sender, EventArgs e)
+		{
+			// Find the parent menu item, then children items.
+			Control parent = ((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl;
+
+			if (((ToolStripMenuItem)sender).Checked)
+			{
+				((ToolStripMenuItem)sender).Checked = false;
+			}
+			else
+			{
+				((ToolStripMenuItem)sender).Checked = true;
+			}
 		}
 
 		#endregion
