@@ -57,7 +57,19 @@ namespace Sensit.App.Calibration
 
 		public TimeSpan? ElapsedTime => _stopwatch?.Elapsed;
 
-		public int PercentProgress => (int)(_stepsComplete / (double)_stepsTotal * 100.0);
+		public int PercentProgress
+		{
+			get
+			{
+				int percent = (int)(_stepsComplete / (double)_stepsTotal * 100.0);
+
+				// Check for overflow or underflow.
+				if (percent < 0) { percent = 0; }
+				if (percent > 100) { percent = 100; }
+
+				return percent;
+			}
+		}
 
 		#endregion
 
@@ -220,6 +232,8 @@ namespace Sensit.App.Calibration
 					// Take samples via DUT interface.
 					_equipment.DutInterface.Read();
 
+					_stepsComplete++;
+
 					// Get reading from each DUT.
 					foreach (Dut dut in _duts)
 					{
@@ -227,7 +241,6 @@ namespace Sensit.App.Calibration
 						if (_testThread.CancellationPending) { break; }
 
 						// Update GUI.
-						_stepsComplete++;
 						_testThread.ReportProgress(PercentProgress, "Reading DUT #" + dut.Device.Index);
 
 						// Read and process DUT data.
