@@ -222,16 +222,28 @@ namespace Sensit.App.Calibration
 				}
 
 				//
+				// Disable most of the user controls.
+				//
+
+				// TODO:  Delete DUT tabs (if they exist) and any data on them.
+				// TODO:  Clear the DUT data on the Overview tab.
+
+				comboBoxModel.Enabled = false;
+				comboBoxRange.Enabled = false;
+				comboBoxTest.Enabled = false;
+				checkBoxSelectAll.Enabled = false;
+				foreach (Control c in tableLayoutPanelDevicesUnderTest.Controls)
+				{
+					c.Enabled = false;
+				}
+				buttonStop.Enabled = true;
+				buttonStart.Enabled = false;
+
+				//
 				// Create objects for equipment, test, and DUTs.
 				//
 
 				_equipment = new Equipment(equipmentSettings);
-
-				_test = new Test(testSetting, _equipment, _duts)
-				{
-					Finished = TestFinished,
-					Update = TestUpdate
-				};
 
 				_duts.Clear();
 				for (int i = 0; i < NumDuts; i++)
@@ -254,23 +266,11 @@ namespace Sensit.App.Calibration
 					_duts.Add(dut);
 				}
 
-				//
-				// Disable most of the user controls.
-				//
-
-				// TODO:  Delete DUT tabs (if they exist) and any data on them.
-				// TODO:  Clear the DUT data on the Overview tab.
-
-				comboBoxModel.Enabled = false;
-				comboBoxRange.Enabled = false;
-				comboBoxTest.Enabled = false;
-				checkBoxSelectAll.Enabled = false;
-				foreach (Control c in tableLayoutPanelDevicesUnderTest.Controls)
+				_test = new Test(testSetting, _equipment, _duts)
 				{
-					c.Enabled = false;
-				}
-				buttonStop.Enabled = true;
-				buttonStart.Enabled = false;
+					Finished = TestFinished,
+					Update = TestUpdate
+				};
 
 				// Start the test.
 				_test.Start();
@@ -401,23 +401,17 @@ namespace Sensit.App.Calibration
 				result = MessageBox.Show("Abort the test?", "Abort", MessageBoxButtons.OKCancel);
 			}
 
-			// If we're quitting...
+			// If we're quitting, cancel a test.
+			// Don't update GUI; the "TestFinished" method will do that.
 			if (result == DialogResult.OK)
 			{
 				try
 				{
-					// Cancel a test. Don't update GUI; if the test ends it must
-					// call the "TestFinished" method.
-					_test.Stop();
-				}
-				catch (NullReferenceException)
-				{
-					MessageBox.Show("The application has not assigned an action to run when a test is aborted!"
-						+ Environment.NewLine + "Please contact your engineering team.", "Error");
+					_test?.Stop();
 				}
 				catch (Exception ex)
 				{
-					MessageBox.Show(ex.Message, "Error");
+					MessageBox.Show("Could not stop test." + Environment.NewLine + ex.Message, "Error");
 				}
 			}
 
@@ -542,7 +536,7 @@ namespace Sensit.App.Calibration
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error");
+				MessageBox.Show("Could not edit settings." + Environment.NewLine + ex.Message, "Error");
 			}
 		}
 
