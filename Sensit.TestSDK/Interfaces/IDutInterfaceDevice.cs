@@ -1,4 +1,6 @@
-﻿namespace Sensit.TestSDK.Interfaces
+﻿using System.Collections.Generic;
+
+namespace Sensit.TestSDK.Interfaces
 {
 	/// <summary>
 	/// Device that controls several devices under test.
@@ -9,6 +11,13 @@
 		/// Number of devices under test controlled by the device.
 		/// </summary>
 		int NumberOfDuts { set; }
+
+		/// <summary>
+		/// Set active bank and channels.
+		/// </summary>
+		/// <param name="bank">bank to read the channels from</param>
+		/// <param name="channels">channels to configure</param>
+		void Configure(int bank, List<bool> channels);
 
 		/// <summary>
 		/// Apply power to the specified DUT.

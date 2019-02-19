@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Agilent.CommandExpert.ScpiNet.Ag3497x_1_13;
 using Sensit.TestSDK.Communication;
 using Sensit.TestSDK.Exceptions;
@@ -65,35 +66,52 @@ namespace Sensit.TestSDK.Devices
 				// Introduce yourself.
 				_v3497x.SCPI.DISPlay.TEXT.Command("SENSIT");
 
-				// Configure channels for DC voltage.
-				// TODO:  Replace hard-coded list of channels with configuration based on DUTs.
-				_v3497x.SCPI.CONFigure.VOLTage.DC.Command("AUTO", "DEF", "(@301,305,309,313,317)");
-
-				// Enable inclusion of channel number on log.
-				_v3497x.SCPI.FORMat.READing.CHANnel.Command(true);
-
-				// Enable inclusion of timestamp on log.
-				//_v3497x.SCPI.FORMat.READing.TIME.Command(true);
-
-				// Set format of timestamp.
-				//_v3497x.SCPI.FORMat.READing.TIME.TYPE.Command("ABSolute");
-
-				// Set trigger source to software trigger over bus.
-				_v3497x.SCPI.TRIGger.SOURce.Command("BUS");
-
-				// Set trigger-to-trigger interval. Currently: 1 second.
-				//_v3497x.SCPI.TRIGger.TIMer.Command(1D);
-
-				// Number of sweeps through the scan list before stopping scan. MIN = 1, MAX = 50000, INFinity = infinite.
-				_v3497x.SCPI.TRIGger.COUNt.Command("MIN");
-
-				// Sets channels to be included in scan list.
-				_v3497x.SCPI.ROUTe.SCAN.Command("@301,305,309,313,317");
-
 			}
 			catch (Exception ex)
 			{
 				throw new DeviceCommunicationException("Could not open datalogger."
+					+ Environment.NewLine + ex.Message);
+			}
+		}
+
+		public void Configure(int bank, List<bool> channels)
+		{
+			try
+			{
+				// Build the channel configuration string.
+				// Remember that the channels are 1-indexed.
+				StringBuilder sb = new StringBuilder("@");
+				for(int i = 0; i < channels.Count; i++)
+				{
+					if (channels[i])
+					{
+						if (i != 0)
+							sb.Append(',');
+						sb.Append(bank.ToString());
+						sb.Append((i + 1).ToString("D2"));
+					}
+				}
+				string config = sb.ToString();
+
+				// Configure channels for DC voltage.
+				_v3497x.SCPI.CONFigure.VOLTage.DC.Command("AUTO", "DEF", "(" + config + ")");
+
+				// Enable inclusion of channel number on log.
+				_v3497x.SCPI.FORMat.READing.CHANnel.Command(true);
+
+				// Set trigger source to software trigger over bus.
+				_v3497x.SCPI.TRIGger.SOURce.Command("BUS");
+
+				// Number of sweeps through the scan list before stopping scan.
+				// MIN = 1, MAX = 50000, INFinity = infinite.
+				_v3497x.SCPI.TRIGger.COUNt.Command("MIN");
+
+				// Sets channels to be included in scan list.
+				_v3497x.SCPI.ROUTe.SCAN.Command(config);
+			}
+			catch (Exception ex)
+			{
+				throw new DeviceCommunicationException("Could not configure datalogger."
 					+ Environment.NewLine + ex.Message);
 			}
 		}

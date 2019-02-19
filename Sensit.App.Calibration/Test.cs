@@ -273,13 +273,25 @@ namespace Sensit.App.Calibration
 					if (_testThread.CancellationPending) { break; }
 
 					// Initialize DUTs.
+					List<bool> selections = new List<bool>();
 					foreach (Dut dut in _duts)
 					{
 						if (_testThread.CancellationPending) { break; }
 
 						_testThread.ReportProgress(0, "Initializing DUT #" + dut.Device.Index + "...");
 						dut.Open();
+
+						// TODO:  This is ugly.  Make it go away.
+						if (dut.Device.Selected)
+							selections.Add(true);
+						else
+							selections.Add(false);
 					}
+
+					// Configure DUT interface device.
+					// TODO:  This should happen before DUTs are opened, or within dut.Open().
+					_testThread.ReportProgress(0, "Configuring DUT Interface Device...");
+					_equipment.DutInterface.Configure(3, selections);
 
 					// Perform test actions.
 					foreach (TestComponent c in _settings.Components)

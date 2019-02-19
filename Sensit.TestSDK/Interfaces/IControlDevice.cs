@@ -23,6 +23,11 @@ namespace Sensit.TestSDK.Interfaces
 	public interface IControlDevice
 	{
 		/// <summary>
+		/// Send configuration (set through properties) to device.
+		/// </summary>
+		void Configure();
+
+		/// <summary>
 		/// Change the device's control mode.
 		/// </summary>
 		/// <param name="mode"></param>
