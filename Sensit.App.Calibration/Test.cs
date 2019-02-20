@@ -100,12 +100,7 @@ namespace Sensit.App.Calibration
 			_stepsTotal = 0;
 			foreach (TestComponent c in settings.Components)
 			{
-				int samples = 0;
-				foreach (double s in c.Setpoints)
-				{
-					samples++;
-				}
-				samples *= c.NumberOfSamples;
+				int samples = c.Setpoints.Count * c.NumberOfSamples;
 				_stepsTotal += samples;
 			}
 		}
@@ -223,7 +218,6 @@ namespace Sensit.App.Calibration
 				SetpointCycle(testComponent.IndependentVariable, sp);
 
 				// Read data from each DUT.
-				// TODO:  (Low priority) Do not process setpoints outside range of the DUT.
 				for (int i = 0; i < testComponent.NumberOfSamples; i++)
 				{
 					// Abort if requested.
