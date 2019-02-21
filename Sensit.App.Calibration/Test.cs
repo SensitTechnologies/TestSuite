@@ -78,6 +78,8 @@ namespace Sensit.App.Calibration
 
 		#endregion
 
+		#region Thread Management
+
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -110,7 +112,36 @@ namespace Sensit.App.Calibration
 			}
 		}
 
-		#region Thread Management
+		/// <summary>
+		/// Start a new test.
+		/// </summary>
+		public void Start()
+		{
+			// Run "TestProcess" asynchronously (using a background worker).
+			if (_testThread.IsBusy == false)
+			{
+				// Start the asynchronous operation.
+				_testThread.RunWorkerAsync();
+			}
+		}
+
+		/// <summary>
+		/// Stop the test.
+		/// </summary>
+		public void Stop()
+		{
+			// Cancel the test operation.
+			_testThread.CancelAsync();
+		}
+
+		/// <summary>
+		/// Return whether a test is running.
+		/// </summary>
+		/// <returns>true if test is running; false otherwise</returns>
+		public bool IsBusy()
+		{
+			return _testThread.IsBusy;
+		}
 
 		private void ProgressChanged(object sender, ProgressChangedEventArgs e)
 		{
@@ -145,6 +176,7 @@ namespace Sensit.App.Calibration
 			// Stop the equipment to prevent damage to it.
 			_equipment.GasMixController.MassFlowSetpoint = 0.0;
 			_equipment.GasMixController.GasMixSetpoint = 0.0;
+			_equipment.GasMixController.WriteGasMixSetpoint();
 
 			// Alert the user.
 			DialogResult result = MessageBox.Show(errorMessage
@@ -164,6 +196,7 @@ namespace Sensit.App.Calibration
 			{
 				_equipment.GasMixController.MassFlowSetpoint = flowSetpoint;
 				_equipment.GasMixController.GasMixSetpoint = mixSetpoint;
+				_equipment.GasMixController.WriteGasMixSetpoint();
 			}
 		}
 
@@ -180,10 +213,13 @@ namespace Sensit.App.Calibration
 			Stopwatch stopwatch = Stopwatch.StartNew();
 			Stopwatch timeoutWatch = Stopwatch.StartNew();
 
-			double previous = setpoint;
+			double mixPrevious = setpoint;
+			double flowPrevious;
 			TimeSpan timeoutValue = TimeSpan.Zero;
 
 			// Take readings until they are within tolerance for the required settling time.
+			double massFlowError;
+			double mixError;
 			do
 			{
 				// Abort if requested.
@@ -201,29 +237,37 @@ namespace Sensit.App.Calibration
 
 				// Get reference reading.
 				_equipment.GasReference.Read();
-				double reading = _equipment.GasReference.GasMix;
+				double mixReading = _equipment.GasReference.GasMix;
+				double flowReading = _equipment.GasReference.MassFlow;
 
 				// Calculate error.
-				double error = reading - setpoint;
+				mixError = mixReading - setpoint;
+				massFlowError = flowReading - 300;
 
 				// Calculate rate of change.
-				double rate = (reading - previous)
+				double mixRate = (mixReading - mixPrevious)
 					/ (variable.Interval.TotalSeconds / 1000);
-				previous = reading;
+				double florRate = (flowReading - mixReading)
+					/ (variable.Interval.TotalSeconds / 1000);
+				mixPrevious = mixReading;
+				flowPrevious = flowReading;
 
 				// If tolerance has been exceeded, reset the stability time.
-				if (Math.Abs(error) > variable.ErrorTolerance)
+				if ((Math.Abs(mixError) > variable.ErrorTolerance) ||
+					(Math.Abs(massFlowError) > variable.ErrorTolerance))
 				{
 					stopwatch.Restart();
 				}
 
 				// Update GUI.
 				_testThread.ReportProgress(PercentProgress, "Setpoint time to go:  "
-					+ (variable.StabilityTime - stopwatch.Elapsed).ToString());
+					+ (variable.StabilityTime - stopwatch.Elapsed).ToString(@"hh\:mm\:ss"));
 
 				// Wait to get desired reading frequency.
 				Thread.Sleep(variable.Interval);
-			} while (stopwatch.Elapsed <= variable.StabilityTime);
+			} while ((stopwatch.Elapsed <= variable.StabilityTime) ||
+					(Math.Abs(mixError) > variable.ErrorTolerance) ||
+					(Math.Abs(massFlowError) > variable.ErrorTolerance));
 		}
 
 		private void ComponentCycle(TestComponent testComponent)
@@ -369,37 +413,6 @@ namespace Sensit.App.Calibration
 
 			// If the operation was cancelled by the user, set the cancel property.
 			if (_testThread.CancellationPending) { e.Cancel = true; }
-		}
-
-		/// <summary>
-		/// Start a new test.
-		/// </summary>
-		public void Start()
-		{
-			// Run "TestProcess" asynchronously (using a background worker).
-			if (_testThread.IsBusy == false)
-			{
-				// Start the asynchronous operation.
-				_testThread.RunWorkerAsync();
-			}
-		}
-
-		/// <summary>
-		/// Stop the test.
-		/// </summary>
-		public void Stop()
-		{
-			// Cancel the test operation.
-			_testThread.CancelAsync();
-		}
-
-		/// <summary>
-		/// Return whether a test is running.
-		/// </summary>
-		/// <returns>true if test is running; false otherwise</returns>
-		public bool IsBusy()
-		{
-			return _testThread.IsBusy;
 		}
 	}
 }
