@@ -71,7 +71,6 @@ namespace Sensit.App.Calibration
 
 			// Create DUT object.
 			// Only the one chosen by the user will end up being used.
-			// TODO:  Choose type of DUT based on settings.
 			switch (settings.Label)
 			{
 				case "Simulator":
