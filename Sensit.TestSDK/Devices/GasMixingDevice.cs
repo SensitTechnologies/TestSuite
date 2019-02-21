@@ -10,6 +10,9 @@ namespace Sensit.TestSDK.Devices
 	/// </summary>
 	public class GasMixingDevice : IGasMixReference, IGasMixController, IMassFlowReference
 	{
+		#region Fields
+
+		// mass flow controllers
 		private IMassFlowController _analyteController;
 		private IMassFlowController _dilutentController;
 		private IMassFlowReference _analyteReference;
@@ -25,11 +28,29 @@ namespace Sensit.TestSDK.Devices
 		// gas mixture setpoint [%V]; must never exceed analyte bottle concentration
 		private double _gasMixSetpoint;
 
+		#endregion
+
+		#region Properties
+
+		/// <summary>
+		/// Unit of measure for mass flow.
+		/// </summary>
 		public UnitOfMeasure.Flow FlowUnit { get; set; } = UnitOfMeasure.Flow.CubicFeetPerMinute;
 
+		/// <summary>
+		/// Analyte gas.
+		/// </summary>
 		public Gas GasSelection { get; set; } = Gas.Air;
 
+		/// <summary>
+		/// Actual total mass flow (summed from both mass flow controllers).
+		/// </summary>
 		public double MassFlow { get; private set; }
+
+		/// <summary>
+		/// Actual analyte concentration [%V] in mixed gas (calculated from mass flow controllers' measured flows).
+		/// </summary>
+		public double GasMix { get; private set; }
 
 		/// <summary>
 		/// Desired total mass flow of mixed gas.
@@ -87,10 +108,7 @@ namespace Sensit.TestSDK.Devices
 			}
 		}
 
-		/// <summary>
-		/// Actual analyte concentration [%V] in mixed gas (calculated from mass flow controllers' measured flows).
-		/// </summary>
-		public double GasMix { get; private set; }
+		#endregion
 
 		/// <summary>
 		/// Constructor
@@ -130,6 +148,9 @@ namespace Sensit.TestSDK.Devices
 		{
 			_dilutentReference.Read();
 			_analyteReference.Read();
+
+			// Calculate total mass flow.
+			MassFlow = _dilutentReference.MassFlow + _analyteReference.MassFlow;
 
 			// Calculate analyte concentration.
 			if (_massFlowSetpoint.Equals(0.0))
