@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
+using Sensit.TestSDK.Exceptions;
 using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.App.Calibration
@@ -64,8 +65,12 @@ namespace Sensit.App.Calibration
 				int percent = (int)(_stepsComplete / (double)_stepsTotal * 100.0);
 
 				// Check for overflow or underflow.
-				if (percent < 0) { percent = 0; }
-				if (percent > 100) { percent = 100; }
+				if ((percent < 0) || (percent > 100))
+				{
+					throw new TestException("Percent progress is out of range; please contact Engineering."
+						+ Environment.NewLine + "Steps Complete:  " + _stepsComplete.ToString()
+						+ Environment.NewLine + "Steps Total:  " + _stepsTotal.ToString());
+				}
 
 				return percent;
 			}
@@ -127,8 +132,20 @@ namespace Sensit.App.Calibration
 
 		#endregion
 
+		/// <summary>
+		/// If we can't reach a setpoint, stop the equipment and prompt the user.
+		/// </summary>
+		/// <param name="errorMessage">message to display to the user</param>
 		private void PopupAlarm(string errorMessage)
 		{
+			// Remember what the equipment setpoint was.
+			double flowSetpoint = _equipment.GasMixController.MassFlowSetpoint;
+			double mixSetpoint = _equipment.GasMixController.GasMixSetpoint;
+
+			// Stop the equipment to prevent damage to it.
+			_equipment.GasMixController.MassFlowSetpoint = 0.0;
+			_equipment.GasMixController.GasMixSetpoint = 0.0;
+
 			// Alert the user.
 			DialogResult result = MessageBox.Show(errorMessage
 				+ Environment.NewLine + "Abort the test?"
@@ -141,6 +158,12 @@ namespace Sensit.App.Calibration
 
 				// Abort the test.
 				_testThread.CancelAsync();
+			}
+			// If we're continuing to test, reset the equipment setpoint.
+			else
+			{
+				_equipment.GasMixController.MassFlowSetpoint = flowSetpoint;
+				_equipment.GasMixController.GasMixSetpoint = mixSetpoint;
 			}
 		}
 
@@ -155,25 +178,25 @@ namespace Sensit.App.Calibration
 
 			// Get start time.
 			Stopwatch stopwatch = Stopwatch.StartNew();
+			Stopwatch timeoutWatch = Stopwatch.StartNew();
 
 			double previous = setpoint;
 			TimeSpan timeoutValue = TimeSpan.Zero;
 
 			// Take readings until they are within tolerance for the required settling time.
-			while (stopwatch.Elapsed < variable.StabilityTime)
+			do
 			{
 				// Abort if requested.
 				if (_testThread.CancellationPending) { break; }
 
 				// Process timeouts.
-				// TODO:  Ensure stability timeout works correctly.
-				if (stopwatch.Elapsed > variable.Timeout)
+				if (timeoutWatch.Elapsed > variable.Timeout)
 				{
 					// Prompt user; cancel test if requested.
 					PopupAlarm("Not able to reach stability.");
 
-					// Reset the timer.
-					stopwatch.Restart();
+					// Reset the timeout stopwatch.
+					timeoutWatch.Restart();
 				}
 
 				// Get reference reading.
@@ -200,7 +223,7 @@ namespace Sensit.App.Calibration
 
 				// Wait to get desired reading frequency.
 				Thread.Sleep(variable.Interval);
-			}
+			} while (stopwatch.Elapsed <= variable.StabilityTime);
 		}
 
 		private void ComponentCycle(TestComponent testComponent)
