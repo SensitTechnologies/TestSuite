@@ -290,6 +290,9 @@ namespace Sensit.App.Calibration
 					// Abort if requested.
 					if (_testThread.CancellationPending) { break; }
 
+					// Update GUI.
+					_testThread.ReportProgress(PercentProgress, "Taking sample " + i.ToString() + " of " + testComponent.NumberOfSamples + ".");
+
 					// Take samples via DUT interface.
 					_equipment.DutInterface.Read();
 
@@ -300,9 +303,6 @@ namespace Sensit.App.Calibration
 					{
 						// Abort if requested.
 						if (_testThread.CancellationPending) { break; }
-
-						// Update GUI.
-						_testThread.ReportProgress(PercentProgress, "Reading DUT #" + dut.Device.Index);
 
 						// Read and process DUT data.
 						dut.Read(sp, testComponent.IndependentVariable.ErrorTolerance);
