@@ -313,7 +313,7 @@ namespace Sensit.App.Calibration
 							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
 						},
 						NumberOfSamples = 600,						// 10 minutes of samples = 600 samples.
-						SampleInterval = new TimeSpan(0, 0, 1),
+						SampleInterval = new TimeSpan(0, 0, 0, 0, 500),
 						Setpoints = new List<double> { 21.0 }		// Apply 21% O2 (the amount in ambient air).
 					},
 					// Expose DUT to test gas for 3 minutes, recording data.
@@ -325,7 +325,7 @@ namespace Sensit.App.Calibration
 							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
 						},
 						NumberOfSamples = 180,						// 3 minutes
-						SampleInterval = new TimeSpan(0, 0, 1),
+						SampleInterval = new TimeSpan(0, 0, 0, 0, 500),
 						Setpoints = new List<double> { 25.0 }		// Apply 25% O2.
 					},
 					// Expose DUT to ambient air for 7 minutes.
@@ -337,7 +337,7 @@ namespace Sensit.App.Calibration
 							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
 						},
 						NumberOfSamples = 420,						// 7 minutes
-						SampleInterval = new TimeSpan(0, 0, 1),
+						SampleInterval = new TimeSpan(0, 0, 0, 0, 500),
 						Setpoints = new List<double> { 21.0 }		// Apply 21% O2.
 					},
 					// Expose DUT to test gas for 3 minutes, recording data.
@@ -349,7 +349,7 @@ namespace Sensit.App.Calibration
 							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
 						},
 						NumberOfSamples = 180,						// 3 minutes
-						SampleInterval = new TimeSpan(0, 0, 1),
+						SampleInterval = new TimeSpan(0, 0, 0, 0, 500),
 						Setpoints = new List<double> { 25.0 }		// Apply 25% O2.
 					},
 					// Expose DUT to ambient air for 7 minutes.
@@ -361,7 +361,7 @@ namespace Sensit.App.Calibration
 							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
 						},
 						NumberOfSamples = 420,						// 7 minutes
-						SampleInterval = new TimeSpan(0, 0, 1),
+						SampleInterval = new TimeSpan(0, 0, 0, 0, 500),
 						Setpoints = new List<double> { 21.0 }		// Apply 21% O2.
 					},
 					// Expose DUT to test gas for 3 minutes, recording data.
@@ -373,7 +373,7 @@ namespace Sensit.App.Calibration
 							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
 						},
 						NumberOfSamples = 180,						// 3 minutes
-						SampleInterval = new TimeSpan(0, 0, 1),
+						SampleInterval = new TimeSpan(0, 0, 0, 0, 500),
 						Setpoints = new List<double> { 25.0 }		// Apply 25% O2.
 					},
 					// Expose DUT to ambient air for 7 minutes.
@@ -385,7 +385,7 @@ namespace Sensit.App.Calibration
 							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
 						},
 						NumberOfSamples = 420,						// 7 minutes
-						SampleInterval = new TimeSpan(0, 0, 1),
+						SampleInterval = new TimeSpan(0, 0, 0, 0, 500),
 						Setpoints = new List<double> { 21.0 }		// Apply 25% O2.
 					},
 					// Expose DUT to test gas for 3 minutes, recording data.
@@ -397,7 +397,7 @@ namespace Sensit.App.Calibration
 							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
 						},
 						NumberOfSamples = 180,						// 3 minutes
-						SampleInterval = new TimeSpan(0, 0, 1),
+						SampleInterval = new TimeSpan(0, 0, 0, 0, 500),
 						Setpoints = new List<double> { 25.0 }		// Apply 25% O2.
 					},
 					// Expose DUT to ambient air for 7 minutes.
@@ -409,7 +409,7 @@ namespace Sensit.App.Calibration
 							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
 						},
 						NumberOfSamples = 420,						// 7 minutes
-						SampleInterval = new TimeSpan(0, 0, 1),
+						SampleInterval = new TimeSpan(0, 0, 0, 0, 500),
 						Setpoints = new List<double> { 21.0 }		// Apply 25% O2.
 					},
 					// Expose DUT to test gas for 3 minutes, recording data.
@@ -421,7 +421,7 @@ namespace Sensit.App.Calibration
 							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
 						},
 						NumberOfSamples = 180,						// 3 minutes
-						SampleInterval = new TimeSpan(0, 0, 1),
+						SampleInterval = new TimeSpan(0, 0, 0, 0, 500),
 						Setpoints = new List<double> { 25.0 }		// Apply 25% O2.
 					},
 					// Expose DUT to ambient air for 7 minutes.
@@ -433,7 +433,7 @@ namespace Sensit.App.Calibration
 							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
 						},
 						NumberOfSamples = 420,						// 7 minutes
-						SampleInterval = new TimeSpan(0, 0, 1),
+						SampleInterval = new TimeSpan(0, 0, 0, 0, 500),
 						Setpoints = new List<double> { 21.0 }		// Apply 25% O2.
 					},
 					// Expose DUT to test gas for 3 minutes, recording data.
@@ -445,7 +445,7 @@ namespace Sensit.App.Calibration
 							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
 						},
 						NumberOfSamples = 180,						// 3 minutes
-						SampleInterval = new TimeSpan(0, 0, 1),
+						SampleInterval = new TimeSpan(0, 0, 0, 0, 500),
 						Setpoints = new List<double> { 25.0 }		// Apply 25% O2.
 					},
 					// Expose DUT to ambient air for 7 minutes.
@@ -457,7 +457,7 @@ namespace Sensit.App.Calibration
 							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
 						},
 						NumberOfSamples = 420,						// 7 minutes
-						SampleInterval = new TimeSpan(0, 0, 1),
+						SampleInterval = new TimeSpan(0, 0, 0, 0, 500),
 						Setpoints = new List<double> { 21.0 }		// Apply 25% O2.
 					},
 					// Expose DUT to test gas for 3 minutes, recording data.
@@ -469,7 +469,7 @@ namespace Sensit.App.Calibration
 							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
 						},
 						NumberOfSamples = 180,						// 3 minutes
-						SampleInterval = new TimeSpan(0, 0, 1),
+						SampleInterval = new TimeSpan(0, 0, 0, 0, 500),
 						Setpoints = new List<double> { 25.0 }		// Apply 25% O2.
 					},
 					// Expose DUT to ambient air for 7 minutes.
@@ -481,7 +481,7 @@ namespace Sensit.App.Calibration
 							StabilityTime = new TimeSpan(0, 0, 0)	// Don't wait for stability.
 						},
 						NumberOfSamples = 420,						// 7 minutes
-						SampleInterval = new TimeSpan(0, 0, 1),
+						SampleInterval = new TimeSpan(0, 0, 0, 0, 500),
 						Setpoints = new List<double> { 21.0 }		// Apply 25% O2.
 					}
 				}
