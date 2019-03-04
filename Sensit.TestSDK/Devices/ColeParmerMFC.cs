@@ -21,7 +21,7 @@ namespace Sensit.TestSDK.Devices
 	/// Once that's possible, this class can be extended to implement
 	/// IVolumeFlowController, IPressureController. This should be low priority.
 	/// </remarks>
-	public class ColeParmerMFC : SerialDevice, IMassFlowController, 
+	public class ColeParmerMFC : SerialDevice, IMassFlowController,
 		IMassFlowReference, IVolumeFlowReference, ITemperatureReference, IPressureReference
 	{
 		/// <summary>
@@ -84,8 +84,11 @@ namespace Sensit.TestSDK.Devices
 		// specifier for a specific device on the serial port
 		private static readonly char ADDRESS = 'A';
 
-		// setpoint for mass flow
 		private double _massFlowSetpoint = 0.0;
+		private double _temperature;
+		private double _pressure;
+		private double _massFlow;
+		private double _volumeFlow;
 
 		/// <summary>
 		/// Enable the mass flow controller's streaming mode.
@@ -111,7 +114,7 @@ namespace Sensit.TestSDK.Devices
 		/// <summary>
 		/// Set gas type (needed for accurate conversion between volumetric and mass flow).
 		/// </summary>
-		private void SetGas()
+		public void SetGas()
 		{
 			// Note the way we access the "GasSelection" Dictionary/Tuple.
 			string msg = ADDRESS + Command.GasSelect + GasCommand[GasSelection].Index;
@@ -148,6 +151,13 @@ namespace Sensit.TestSDK.Devices
 				throw new DeviceCommunicationException("No response from mass flow controller."
 					+ Environment.NewLine + ex.Message);
 			}
+		}
+
+		public void SetGas(Gas selection)
+		{
+			GasSelection = selection;
+
+			SetGas();
 		}
 
 		/// <summary>
@@ -297,27 +307,11 @@ namespace Sensit.TestSDK.Devices
 
 		public Gas GasSelection { get; set; } = Gas.Air;
 
-		public double VolumeFlow { get; private set; }
-
-		public double MassFlow { get; private set; }
-
 		public UnitOfMeasure.Temperature TemperatureUnit { get; set; } = UnitOfMeasure.Temperature.Celsius;
-
-		public double Temperature { get; private set; }
 
 		public UnitOfMeasure.Pressure PressureUnit { get; set; } = UnitOfMeasure.Pressure.PSI;
 
-		public double Pressure { get; private set; }
-
-		public void Configure()
-		{
-			// This device has only one settable property.
-			SetGas();
-
-			// TODO:  Figure out how to set mass flow controller's units of measure programmatically.
-		}
-
-		public void Read()
+		public void Update()
 		{
 			try
 			{
@@ -339,10 +333,10 @@ namespace Sensit.TestSDK.Devices
 				}
 
 				// Figure out which is which and update class properties.
-				Pressure = Convert.ToSingle(words[1]);
-				Temperature = Convert.ToSingle(words[2]);
-				VolumeFlow = Convert.ToSingle(words[3]);
-				MassFlow = Convert.ToSingle(words[4]);
+				_pressure = Convert.ToSingle(words[1]);
+				_temperature = Convert.ToSingle(words[2]);
+				_volumeFlow = Convert.ToSingle(words[3]);
+				_massFlow = Convert.ToSingle(words[4]);
 
 				// Probably don't update the control properties.
 				//Setpoint = Convert.ToSingle(words[5]);
@@ -360,29 +354,52 @@ namespace Sensit.TestSDK.Devices
 			}
 		}
 
+		public double Read(VariableType type)
+		{
+			// Return the desired value.
+			double value = 0;
+			switch (type)
+			{
+				case VariableType.MassFlow:
+					value = _massFlow;
+					break;
+				case VariableType.Pressure:
+					value = _pressure;
+					break;
+				case VariableType.Temperature:
+					value = _temperature;
+					break;
+				case VariableType.VolumeFlow:
+					value = _volumeFlow;
+					break;
+				default:
+					throw new DeviceSettingNotSupportedException("Cole Parmer MFC does not support the requested variable type.");
+			}
+			return value;
+		}
+
 		#endregion
 
 		#region Control Device Methods
 
-		public double MassFlowSetpoint
+		public void WriteSetpoint(VariableType type, double setpoint)
 		{
-			set
+			if (type != VariableType.MassFlow)
 			{
-				if (value < 0.0)
-				{
-					throw new DeviceOutOfRangeException("Mass Flow Controller setpoint must be greater than or equal to 0."
-						+ Environment.NewLine + "Attempted setpoint was:  " + value);
-				}
-
-				_massFlowSetpoint = value;
+				throw new DeviceSettingNotSupportedException("Cole Parmer MFC does not support requested setpoint.");
 			}
-			get => _massFlowSetpoint;
-		}
 
-		public void WriteMassFlowSetpoint()
-		{
 			try
 			{
+				// Check for valid setpoint values.
+				if (setpoint < 0.0)
+				{
+					throw new DeviceOutOfRangeException("Mass Flow Controller setpoint must be greater than or equal to 0."
+						+ Environment.NewLine + "Attempted setpoint was:  " + setpoint);
+				}
+
+				_massFlowSetpoint = setpoint;
+
 				// "AS4.54" = Set setpoint to 4.54 on device A.
 				_serialPort.WriteLine(ADDRESS + Command.SetSetpoint + _massFlowSetpoint.ToString());
 
@@ -413,14 +430,7 @@ namespace Sensit.TestSDK.Devices
 			}
 		}
 
-		public void WriteMassFlowSetpoint(double setpoint)
-		{
-			_massFlowSetpoint = setpoint;
-
-			WriteMassFlowSetpoint();
-		}
-
-		public double ReadMassFlowSetpoint()
+		public double ReadSetpoint(VariableType type)
 		{
 			try
 			{
@@ -465,10 +475,11 @@ namespace Sensit.TestSDK.Devices
 				case ControlMode.Ambient:
 				case ControlMode.Measure:
 					// Ambient and measure modes are the same and require simply setting a setpoint of zero.
-					WriteMassFlowSetpoint(0.0);
+					WriteSetpoint(VariableType.MassFlow, 0.0);
 					break;
 				case ControlMode.Control:
-					// Nothing to do here.
+					// In control mode, just update the setpoint.
+					WriteSetpoint(VariableType.MassFlow, _massFlowSetpoint);
 					break;
 				default:
 					throw new DeviceSettingNotSupportedException("Cannot set mass flow controller control mode:"

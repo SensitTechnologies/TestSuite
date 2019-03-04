@@ -23,10 +23,16 @@ namespace Sensit.TestSDK.Devices
 		private double _analyteBottleConcentration = 100.0;
 
 		// total mass flow (of both mass flow controllers combined)
-		private double _massFlowSetpoint;
+		private double _massFlowSetpoint = 0;
 
-		// gas mixture setpoint [%V]; must never exceed analyte bottle concentration
-		private double _gasMixSetpoint;
+		// desired analyte concentration in mixed gas [%V]; must never exceed analyte bottle concentration
+		private double _gasMixSetpoint = 0;
+
+		// actual total mass flow (summed from both mass flow controllers)
+		private double _massFlow;
+
+		// actual analyte concentration [%V] in mixed gas (calculated from mass flow controllers' measured flows)
+		private double _gasMix;
 
 		#endregion
 
@@ -43,34 +49,6 @@ namespace Sensit.TestSDK.Devices
 		public Gas GasSelection { get; set; } = Gas.Air;
 
 		/// <summary>
-		/// Actual total mass flow (summed from both mass flow controllers).
-		/// </summary>
-		public double MassFlow { get; private set; }
-
-		/// <summary>
-		/// Actual analyte concentration [%V] in mixed gas (calculated from mass flow controllers' measured flows).
-		/// </summary>
-		public double GasMix { get; private set; }
-
-		/// <summary>
-		/// Desired total mass flow of mixed gas.
-		/// </summary>
-		public double MassFlowSetpoint
-		{
-			get => _massFlowSetpoint;
-			set
-			{
-				// Check for valid value.
-				if (value < 0.0)
-				{
-					throw new DeviceOutOfRangeException("Total Flow Setpoint must be greater than or equal to 0.0.");
-				}
-
-				_massFlowSetpoint = value;
-			}
-		}
-
-		/// <summary>
 		/// Concentration of analyte gas cylinder [%V].
 		/// </summary>
 		public double AnalyteBottleConcentration
@@ -85,26 +63,6 @@ namespace Sensit.TestSDK.Devices
 				}
 
 				_analyteBottleConcentration = value;
-			}
-		}
-
-		/// <summary>
-		/// Desired analyte concentration in mixed gas [%V].
-		/// </summary>
-		public double GasMixSetpoint
-		{
-			get => _gasMixSetpoint;
-			set
-			{
-				// Check for valid value.
-				if ((value < 0.0) || (value > _analyteBottleConcentration))
-				{
-					throw new DeviceOutOfRangeException("Gas Mix Setpoint must be between 0.0% and analyte bottle concentration, inclusive."
-						+ Environment.NewLine + "Analyte Bottle Concentration is:  " + _analyteBottleConcentration
-						+ Environment.NewLine + "Attempted Gas Mix Setpoint was:  " + value);
-				}
-
-				_gasMixSetpoint = value;
 			}
 		}
 
@@ -132,78 +90,102 @@ namespace Sensit.TestSDK.Devices
 			_analyteReference = gasUnderTestReference;
 		}
 
-		public void Configure()
-		{
-			_dilutentReference.Configure();
-			_analyteReference.Configure();
-		}
-
 		public void SetControlMode(ControlMode mode)
 		{
 			_dilutentController.SetControlMode(mode);
 			_analyteController.SetControlMode(mode);
 		}
 
-		public void Read()
+		public void Update()
 		{
-			_dilutentReference.Read();
-			_analyteReference.Read();
+			double dilutentFlow = _dilutentController.ReadSetpoint(VariableType.MassFlow);
+			double analyteFlow = _analyteController.ReadSetpoint(VariableType.MassFlow);
+
+			_massFlowSetpoint = dilutentFlow + analyteFlow;
+			_gasMixSetpoint = _analyteController.ReadSetpoint(VariableType.MassFlow) / _massFlowSetpoint * AnalyteBottleConcentration;
 
 			// Calculate total mass flow.
-			MassFlow = _dilutentReference.MassFlow + _analyteReference.MassFlow;
+			_massFlow = _dilutentReference.Read(VariableType.MassFlow) + _analyteReference.Read(VariableType.MassFlow);
 
 			// Calculate analyte concentration.
 			if (_massFlowSetpoint.Equals(0.0))
 			{
-				GasMix = 0.0;
+				_gasMix = 0.0;
 			}
 			else
 			{
-				GasMix = _analyteReference.MassFlow / _massFlowSetpoint * _analyteBottleConcentration;
+				_gasMix = _analyteReference.Read(VariableType.MassFlow) / _massFlowSetpoint * _analyteBottleConcentration;
 			}
 		}
 
-		public void WriteGasMixSetpoint()
+		public double Read(VariableType type)
 		{
+			// Return the requested value.
+			if (type == VariableType.GasConcentration)
+			{
+				return _gasMix;
+			}
+			else if (type == VariableType.MassFlow)
+			{
+				return _massFlow;
+			}
+			else
+			{
+				throw new DeviceSettingNotSupportedException("Gas Mixing Device does not support requested reading.");
+			}
+		}
+
+		public void WriteSetpoint(VariableType type, double setpoint)
+		{
+			if (type == VariableType.MassFlow)
+			{
+				// Check for valid value.
+				if (setpoint < 0.0)
+				{
+					throw new DeviceOutOfRangeException("Total Flow Setpoint must be greater than or equal to 0.0.");
+				}
+
+				_massFlowSetpoint = setpoint;
+			}
+			else if (type == VariableType.GasConcentration)
+			{
+				// Check for valid value.
+				if ((setpoint < 0.0) || (setpoint > _analyteBottleConcentration))
+				{
+					throw new DeviceOutOfRangeException("Gas Mix Setpoint must be between 0.0% and analyte bottle concentration, inclusive."
+						+ Environment.NewLine + "Analyte Bottle Concentration is:  " + _analyteBottleConcentration
+						+ Environment.NewLine + "Attempted Gas Mix Setpoint was:  " + setpoint);
+				}
+
+				_gasMixSetpoint = setpoint;
+			}
+			else
+			{
+				throw new DeviceSettingNotSupportedException("Gas Mixing Device does not support the requested setpoint.");
+			}
+
 			// For analyte:  mass Flow = desired flow rate / original concentration.
-			_analyteController.MassFlowSetpoint = _massFlowSetpoint * (_gasMixSetpoint / _analyteBottleConcentration);
+			_analyteController.WriteSetpoint(VariableType.MassFlow, _massFlowSetpoint * (_gasMixSetpoint / _analyteBottleConcentration));
 
 			// For diluent:  mass flow = desired flow - gas under test flow.
-			_dilutentController.MassFlowSetpoint = MassFlowSetpoint - _analyteController.MassFlowSetpoint;
-
-			_dilutentController.WriteMassFlowSetpoint();
-			_analyteController.WriteMassFlowSetpoint();
+			_dilutentController.WriteSetpoint(VariableType.MassFlow, _massFlowSetpoint - _analyteController.ReadSetpoint(VariableType.MassFlow));
 		}
 
-		public void WriteGasMixSetpoint(double concentration, double massFlow)
+		public double ReadSetpoint(VariableType type)
 		{
-			MassFlowSetpoint = massFlow;
-			GasMixSetpoint = concentration;
-
-			WriteGasMixSetpoint();
-		}
-
-		private void ReadSetpoints()
-		{
-			double dilutentFlow = _dilutentController.ReadMassFlowSetpoint();
-			double analyteFlow = _analyteController.ReadMassFlowSetpoint();
-
-			_massFlowSetpoint = dilutentFlow + analyteFlow;
-			_gasMixSetpoint = _analyteController.MassFlowSetpoint / _massFlowSetpoint * AnalyteBottleConcentration;
-		}
-
-		public double ReadMassFlowSetpoint()
-		{
-			ReadSetpoints();
-
-			return _massFlowSetpoint;
-		}
-
-		public double ReadGasMixSetpoint()
-		{
-			ReadSetpoints();
-
-			return _gasMixSetpoint;
+			// Return the requested value.
+			if (type == VariableType.GasConcentration)
+			{
+				return _gasMixSetpoint;
+			}
+			else if (type == VariableType.MassFlow)
+			{
+				return _massFlowSetpoint;
+			}
+			else
+			{
+				throw new DeviceSettingNotSupportedException("Gas Mixing Device does not support requested setpoint.");
+			}
 		}
 	}
 }
