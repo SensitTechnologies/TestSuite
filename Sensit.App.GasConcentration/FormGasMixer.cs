@@ -177,20 +177,20 @@ namespace Sensit.App.GasConcentration
 				toolStripStatusLabel1.Text = "Reading from mass flow controllers...";
 
 				// Read status from the mass flow controllers.
-				_mfcAnalyte.Read();
-				_mfcDiluent.Read();
+				_mfcAnalyte.Update();
+				_mfcDiluent.Update();
 
 				// Update the form.
-				textBoxAnalytePressure.Text = _mfcAnalyte.Pressure.ToString();
-				textBoxDiluentPressure.Text = _mfcDiluent.Pressure.ToString();
-				textBoxAnalyteTemperature.Text = _mfcAnalyte.Temperature.ToString();
-				textBoxDiluentTemperature.Text = _mfcDiluent.Temperature.ToString();
-				textBoxAnalyteVolumetricFlow.Text = _mfcAnalyte.VolumeFlow.ToString();
-				textBoxDiluentVolumetricFlow.Text = _mfcDiluent.VolumeFlow.ToString();
-				textBoxAnalyteMassFlow.Text = _mfcAnalyte.MassFlow.ToString();
-				textBoxDiluentMassFlow.Text = _mfcDiluent.MassFlow.ToString();
-				textBoxAnalyteSetpoint.Text = _mfcAnalyte.MassFlowSetpoint.ToString();
-				textBoxDiluentSetpoint.Text = _mfcDiluent.MassFlowSetpoint.ToString();
+				textBoxAnalytePressure.Text = _mfcAnalyte.Read(VariableType.Pressure).ToString();
+				textBoxDiluentPressure.Text = _mfcDiluent.Read(VariableType.Pressure).ToString();
+				textBoxAnalyteTemperature.Text = _mfcAnalyte.Read(VariableType.Temperature).ToString();
+				textBoxDiluentTemperature.Text = _mfcDiluent.Read(VariableType.Temperature).ToString();
+				textBoxAnalyteVolumetricFlow.Text = _mfcAnalyte.Read(VariableType.VolumeFlow).ToString();
+				textBoxDiluentVolumetricFlow.Text = _mfcDiluent.Read(VariableType.VolumeFlow).ToString();
+				textBoxAnalyteMassFlow.Text = _mfcAnalyte.Read(VariableType.MassFlow).ToString();
+				textBoxDiluentMassFlow.Text = _mfcDiluent.Read(VariableType.MassFlow).ToString();
+				textBoxAnalyteSetpoint.Text = _mfcAnalyte.ReadSetpoint(VariableType.MassFlow).ToString();
+				textBoxDiluentSetpoint.Text = _mfcDiluent.ReadSetpoint(VariableType.MassFlow).ToString();
 				comboBoxAnalyteGas.Text = _mfcAnalyte.GasSelection.ToString();
 				comboBoxDiluentGas.Text = _mfcDiluent.GasSelection.ToString();
 				toolStripStatusLabel1.Text = "Success.";
@@ -220,10 +220,8 @@ namespace Sensit.App.GasConcentration
 				Enum.TryParse(comboBoxDiluentGas.Text, out Gas diluentGas);
 
 				// Send the gas selection to the mass flow controller.
-				_mfcAnalyte.GasSelection = analyteGas;
-				_mfcDiluent.GasSelection = diluentGas;
-				_mfcAnalyte.Configure();
-				_mfcDiluent.Configure();
+				_mfcAnalyte.SetGas(analyteGas);
+				_mfcDiluent.SetGas(diluentGas);
 
 				// Alert the user.
 				toolStripStatusLabel1.Text = "Success.";
@@ -250,8 +248,8 @@ namespace Sensit.App.GasConcentration
 				double diluentSetpoint = Convert.ToDouble(textBoxDiluentSetpoint.Text);
 
 				// Write setpoints to mass flow controllers.
-				_mfcAnalyte.WriteMassFlowSetpoint(analyteSetpoint);
-				_mfcDiluent.WriteMassFlowSetpoint(diluentSetpoint);
+				_mfcAnalyte.WriteSetpoint(VariableType.MassFlow, analyteSetpoint);
+				_mfcDiluent.WriteSetpoint(VariableType.MassFlow, diluentSetpoint);
 
 				// Alert the user.
 				toolStripStatusLabel1.Text = "Success.";
@@ -276,12 +274,12 @@ namespace Sensit.App.GasConcentration
 			try
 			{
 				// Fetch new values from the mass flow controllers.
-				_gasMixer.Read();
+				_gasMixer.Read(VariableType.MassFlow);
 
 				// Update the form.
-				textBoxGasConcentration.Text = _gasMixer.GasMix.ToString();
-				textBoxGasConcentrationSetpoint.Text = _gasMixer.GasMixSetpoint.ToString();
-				textBoxMassFlowSetpoint.Text = _gasMixer.MassFlowSetpoint.ToString();
+				textBoxGasConcentration.Text = _gasMixer.Read(VariableType.GasConcentration).ToString();
+				textBoxGasConcentrationSetpoint.Text = _gasMixer.ReadSetpoint(VariableType.GasConcentration).ToString();
+				textBoxMassFlowSetpoint.Text = _gasMixer.ReadSetpoint(VariableType.MassFlow).ToString();
 				textBoxAnalyteBottleConcentration.Text = _gasMixer.AnalyteBottleConcentration.ToString();
 			}
 			catch (Exception ex)
@@ -301,13 +299,11 @@ namespace Sensit.App.GasConcentration
 				double massFlowSetpoint = Convert.ToDouble(textBoxMassFlowSetpoint.Text);
 				double bottleConcentration = Convert.ToDouble(textBoxAnalyteBottleConcentration.Text);
 
-				// Write the properties.
-				_gasMixer.GasMixSetpoint = analyteConcentration;
-				_gasMixer.MassFlowSetpoint = massFlowSetpoint;
-				_gasMixer.AnalyteBottleConcentration = bottleConcentration;
-
 				// Write to mass flow controllers.
-				_gasMixer.WriteGasMixSetpoint();
+				_gasMixer.AnalyteBottleConcentration = bottleConcentration;
+				_gasMixer.WriteSetpoint(VariableType.GasConcentration, analyteConcentration);
+				_gasMixer.WriteSetpoint(VariableType.MassFlow, massFlowSetpoint);
+
 			}
 			catch (FormatException ex)
 			{
