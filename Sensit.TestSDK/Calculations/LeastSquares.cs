@@ -15,7 +15,7 @@ namespace Sensit.TestSDK.Calculations
 			double total = 0;
 			foreach (PointF pt in points)
 			{
-				double dy = pt.Y - Calculations.CalcPolynomial(coeffs, pt.X);
+				double dy = pt.Y - Calculations.Polynomial(coeffs, pt.X);
 				total += dy * dy;
 			}
 			return total;
