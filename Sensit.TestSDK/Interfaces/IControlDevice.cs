@@ -23,54 +23,10 @@ namespace Sensit.TestSDK.Interfaces
 	public interface IControlDevice
 	{
 		/// <summary>
-		/// Send configuration (set through properties) to device.
-		/// </summary>
-		void Configure();
-
-		/// <summary>
 		/// Change the device's control mode.
 		/// </summary>
 		/// <param name="mode"></param>
 		void SetControlMode(ControlMode mode);
-	}
-
-	/// <summary>
-	/// Device that controls gas concentration (and mass flow).
-	/// </summary>
-	[Description("Gas Mixer")]
-	public interface IGasMixController : IControlDevice
-	{
-		/// <summary>
-		/// Concentration of the gas under test before dilution.
-		/// </summary>
-		double AnalyteBottleConcentration { get; set; }
-
-		/// <summary>
-		/// Analyte concentration the device should try to achieve when in Control mode.
-		/// </summary>
-		double GasMixSetpoint { get; set; }
-
-		/// <summary>
-		/// Value the device should try to achieve when in Control Mode.
-		/// </summary>
-		double MassFlowSetpoint { get; set; }
-
-		void WriteGasMixSetpoint();
-		void WriteGasMixSetpoint(double concentration, double massFlow);
-		double ReadGasMixSetpoint();
-		double ReadMassFlowSetpoint();
-	}
-
-	/// <summary>
-	/// Device that controls gas mass flow.
-	/// </summary>
-	[Description("Mass Flow Controller")]
-	public interface IMassFlowController : IControlDevice
-	{
-		/// <summary>
-		/// Value the device should try to achieve when in Control Mode.
-		/// </summary>
-		double MassFlowSetpoint { get; set; }
 
 		/// <summary>
 		/// Write the setpoint to the device.
@@ -80,25 +36,36 @@ namespace Sensit.TestSDK.Interfaces
 		/// but only one variable needs to vary.
 		/// So this interface supports sending each setpoint individually.
 		/// </remarks>
-		void WriteMassFlowSetpoint();
-
-		/// <summary>
-		/// Write the setpoint to the device.
-		/// </summary>
-		/// <remarks>
-		/// For convenience, this method sets the property and writes it to the device.
-		/// So we can write one line of code instead of two.
-		/// </remarks>
+		/// <param name="type">variable of interest</param>
 		/// <param name="setpoint"></param>
-		void WriteMassFlowSetpoint(double setpoint);
+		void WriteSetpoint(VariableType type, double setpoint);
 
 		/// <summary>
 		/// Read the setpoint from the device.
 		/// </summary>
-		/// <remarks>
-		/// For convenience, this method updates the property and returns the value.
-		/// </remarks>
-		double ReadMassFlowSetpoint();
+		/// <param name="type"></param>
+		/// <returns></returns>
+		double ReadSetpoint(VariableType type);
+	}
+
+	/// <summary>
+	/// Device that controls gas concentration (and mass flow).
+	/// </summary>
+	[Description("Gas Mixer")]
+	public interface IGasMixController : IMassFlowController
+	{
+		/// <summary>
+		/// Concentration of the gas under test before dilution.
+		/// </summary>
+		double AnalyteBottleConcentration { get; set; }
+	}
+
+	/// <summary>
+	/// Device that controls gas mass flow.
+	/// </summary>
+	[Description("Mass Flow Controller")]
+	public interface IMassFlowController : IControlDevice
+	{
 	}
 
 	/// <summary>
@@ -107,13 +74,6 @@ namespace Sensit.TestSDK.Interfaces
 	[Description("Volume Flow Controller")]
 	public interface IVolumeFlowController : IControlDevice
 	{
-		double VolumeFlowSetpoint { get; set; }
-
-		void WriteVolumeFlowSetpoint();
-
-		void WriteVolumeFlowSetpoint(double setpoint);
-
-		double ReadVolumeFlowSetpoint();
 	}
 
 	/// <summary>
@@ -122,13 +82,6 @@ namespace Sensit.TestSDK.Interfaces
 	[Description("Velocity Controller")]
 	public interface IVelocityController : IControlDevice
 	{
-		double VelocitySetpoint { get; set; }
-
-		void WriteVelocitySetpoint();
-
-		void WriteVelocitySetpoint(double setpoint);
-
-		double ReadVelocitySetpoint();
 	}
 
 	/// <summary>
@@ -137,13 +90,6 @@ namespace Sensit.TestSDK.Interfaces
 	[Description("Pressure Controller")]
 	public interface IPressureController : IControlDevice
 	{
-		double PressureSetpoint { get; set; }
-
-		void WritePressureSetpoint();
-
-		void WritePressureSetpoint(double setpoint);
-
-		double ReadPressureSetpoint();
 	}
 
 	/// <summary>
@@ -152,12 +98,5 @@ namespace Sensit.TestSDK.Interfaces
 	[Description("Temperature Controller")]
 	public interface ITemperatureController : IControlDevice
 	{
-		double TemperatureSetpoint { get; set; }
-
-		void WriteTemperatureSetpoint();
-
-		void WriteTemperatureSetpoint(double setpoint);
-
-		double ReadTemperatureSetpoint();
 	}
 }

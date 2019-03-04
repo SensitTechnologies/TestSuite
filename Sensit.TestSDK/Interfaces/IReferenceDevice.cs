@@ -1,8 +1,73 @@
 ﻿using System.ComponentModel;
-using Sensit.TestSDK.Calculations;      // define units of measure
+using Sensit.TestSDK.Calculations;
 
 namespace Sensit.TestSDK.Interfaces
 {
+	public enum VariableType
+	{
+		[Description("Gas Mix")]
+		GasConcentration,
+		[Description("Mass Flow")]
+		MassFlow,
+		[Description("Volume Flow")]
+		VolumeFlow,
+		Velocity,
+		Pressure,
+		Temperature
+	}
+
+	/// <summary>
+	/// Gas Selection for Mass Flow Controllers
+	/// </summary>
+	public enum Gas
+	{
+		Air,
+		Argon,
+		Methane,
+		[Description("Carbon Monoxide")]
+		CarbonMonoxide,
+		[Description("Carbon Dioxide")]
+		CarbonDioxide,
+		Ethane,
+		Hydrogen,
+		Helium,
+		Nitrogen,
+		[Description("Nitrous Oxide")]
+		NitrousOxide,
+		Neon,
+		Oxygen,
+		Propane,
+		[Description("Normal Butane")]
+		normalButane,
+		Acetylene,
+		Ethylene,
+		isoButane,
+		Krypton,
+		Xenon,
+		[Description("Sulfur Hexafluoride")]
+		SulfurHexafluoride,
+		[Description("75% Argon / 25% CO2")]
+		C25,
+		[Description("90% Argon / 10% CO2")]
+		C10,
+		[Description("92% Argon / 8% CO2")]
+		C8,
+		[Description("98% Argon / 2% CO2")]
+		C2,
+		[Description("75% CO2 / 25% Argon")]
+		C75,
+		[Description("75% Argon / 25% Helium")]
+		He25,
+		[Description("75% Helium / 25% Argon")]
+		He75,
+		[Description("90% Helium / 7.5% Argon / 2.5% CO2 (Praxair - Helistar® A1025)")]
+		A1025,
+		[Description("90% Argon / 8% CO2 / 2% Oxygen (Praxair - Stargon® CS)")]
+		Star29,
+		[Description("95% Argon / 5% Methane")]
+		P5,
+	}
+
 	/// <summary>
 	/// Device that measures one or more dependent variables in a test.
 	/// </summary>
@@ -14,56 +79,23 @@ namespace Sensit.TestSDK.Interfaces
 	public interface IReferenceDevice
 	{
 		/// <summary>
-		/// Send configuration (set through properties) to device.
-		/// </summary>
-		void Configure();
-
-		/// <summary>
-		/// Fetch the device's current readings/settings (accessible through properties).
+		/// Fetch new values from the device.
 		/// </summary>
 		/// <remarks>
-		/// Some processes need fast reads, and some devices measure multiple parameters
-		/// with a single query.  So this interface supports reading all parameters
-		/// at once.
+		/// Some devices read out several variables in a single communication.
+		/// For those devices, this method is where that single communication should happen,
+		/// and then the Read command can fetch the individual values separately as needed.
 		/// </remarks>
-		void Read();
-	}
+		void Update();
 
-	/// <summary>
-	/// Gas Selection for Mass Flow Controllers
-	/// </summary>
-	public enum Gas
-	{
-		Air,
-		Argon,
-		Methane,
-		CarbonMonoxide,
-		CarbonDioxide,
-		Ethane,
-		Hydrogen,
-		Helium,
-		Nitrogen,
-		NitrousOxide,
-		Neon,
-		Oxygen,
-		Propane,
-		normalButane,
-		Acetylene,
-		Ethylene,
-		isoButane,
-		Krypton,
-		Xenon,
-		SulfurHexafluoride,
-		C25,					// 75% Argon / 25% CO2
-		C10,					// 90% Argon / 10% CO2
-		C8,						// 92% Argon / 8% CO2
-		C2,						// 98% Argon / 2% CO2
-		C75,					// 75% CO2 / 25% Argon
-		He25,					// 75% Argon / 25% Helium
-		He75,					// 75% Helium / 25% Argon
-		A1025,					// 90% Helium / 7.5% Argon / 2.5% CO2 (Praxair - Helistar® A1025)
-		Star29,					// 90% Argon / 8% CO2 / 2% Oxygen (Praxair - Stargon® CS)
-		P5,						// 95% Argon / 5% Methane
+		/// <summary>
+		/// Fetch the device's current readings/settings.
+		/// </summary>
+		/// <remarks>
+		/// For convenience, this method returns the specified variable.
+		/// </remarks>
+		/// /// <param name="type">variable of interest</param>
+		double Read(VariableType type);
 	}
 
 	/// <summary>
@@ -72,10 +104,6 @@ namespace Sensit.TestSDK.Interfaces
 	[Description("Gas Mix Reference")]
 	public interface IGasMixReference : IMassFlowReference
 	{
-		/// <summary>
-		/// Percent concentration by volume of analyte gas.
-		/// </summary>
-		double GasMix { get; }
 	}
 
 	/// <summary>
@@ -93,8 +121,6 @@ namespace Sensit.TestSDK.Interfaces
 		/// Gas used by device to calculate mass flow from volumetric flow.
 		/// </summary>
 		Gas GasSelection { get; set; }
-
-		double MassFlow { get; }
 	}
 
 	/// <summary>
@@ -104,8 +130,6 @@ namespace Sensit.TestSDK.Interfaces
 	public interface IVolumeFlowReference : IReferenceDevice
 	{
 		UnitOfMeasure.Flow FlowUnit { get; set; }
-
-		double VolumeFlow { get; }
 	}
 
 	/// <summary>
@@ -115,8 +139,6 @@ namespace Sensit.TestSDK.Interfaces
 	public interface IVelocityReference : IReferenceDevice
 	{
 		UnitOfMeasure.Velocity VelocityUnit { get; set; }
-
-		double Velocity { get; }
 	}
 
 	/// <summary>
@@ -126,8 +148,6 @@ namespace Sensit.TestSDK.Interfaces
 	public interface IPressureReference : IReferenceDevice
 	{
 		UnitOfMeasure.Pressure PressureUnit { get; set; }
-
-		double Pressure { get; }
 	}
 
 	/// <summary>
@@ -137,7 +157,5 @@ namespace Sensit.TestSDK.Interfaces
 	public interface ITemperatureReference : IReferenceDevice
 	{
 		UnitOfMeasure.Temperature TemperatureUnit { get; set; }
-
-		double Temperature { get; }
 	}
 }
