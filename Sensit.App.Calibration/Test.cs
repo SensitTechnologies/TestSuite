@@ -309,7 +309,6 @@ namespace Sensit.App.Calibration
 					}
 
 					// Wait to get desired reading frequency.
-					_testThread.ReportProgress(PercentProgress, "Paused between samples...");
 					Thread.Sleep(testComponent.SampleInterval);
 				}
 			}
