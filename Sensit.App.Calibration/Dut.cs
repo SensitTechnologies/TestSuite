@@ -142,12 +142,11 @@ namespace Sensit.App.Calibration
 			if ((Device.Status == DutStatus.Found) ||
 				(Device.Status == DutStatus.Fail))
 			{
-				// TODO:  foreach (IReferenceDevice ref in _testSettings.References)
 				// Get reference reading.
-				_equipment.GasReference.Read();
+				double gasMix = _equipment.References[VariableType.GasConcentration].Read(VariableType.GasConcentration);
 
 				// Calculate error.
-				double error = _equipment.GasReference.GasMix - setpoint;
+				double error = gasMix - setpoint;
 
 				// Check tolerance.
 				if (Math.Abs(error) > errorTolerance)
@@ -169,7 +168,7 @@ namespace Sensit.App.Calibration
 				{
 					ElapsedTime = GetElapsedTime(),
 					Setpoint = setpoint,
-					Reference = _equipment.GasReference.GasMix,
+					Reference = gasMix,
 					SensorValue = dutValue
 				});
 			}

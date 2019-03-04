@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using Sensit.TestSDK.Devices;
 using Sensit.TestSDK.Interfaces;
 
@@ -17,7 +17,7 @@ namespace Sensit.App.Calibration
 	/// </remarks>
 	public class Equipment
 	{
-		private EquipmentSettings _settings;
+		private readonly EquipmentSettings _settings;
 
 		// generic manual device, used whenever the user selects "Manual" option for equipment.
 		private Manual _manual;
@@ -36,31 +36,11 @@ namespace Sensit.App.Calibration
 
 		#region Properties
 
+		public Dictionary<VariableType, IControlDevice> Controllers;
+
+		public Dictionary<VariableType, IReferenceDevice> References;
+
 		public IDutInterfaceDevice DutInterface => _datalogger;
-
-		public IGasMixController GasMixController => _gasMixer;
-
-		public IGasMixReference GasReference => _gasMixer;
-
-		public IMassFlowController GasFlowController => _manual;
-
-		public IMassFlowReference GasFlowReference => _manual;
-
-		public IVolumeFlowController VolumeFlowController => _manual;
-
-		public IVolumeFlowReference VolumeFlowReference => _manual;
-
-		public IVelocityController VelocityController => _manual;
-
-		public IVelocityReference VelocityReference => _manual;
-
-		public IPressureController PressureController => _manual;
-
-		public IPressureReference PressureReference => _manual;
-
-		public ITemperatureController TemperatureController => _manual;
-
-		public ITemperatureReference TemperatureReference => _manual;
 
 		#endregion
 
@@ -80,6 +60,11 @@ namespace Sensit.App.Calibration
 			_gasMixer = new GasMixingDevice(_mfcDiluent, _mfcDiluent, _mfcAnalyte, _mfcAnalyte);
 			_datalogger = new Keysight_34972A();
 			_manual = new Manual();
+
+			Controllers.Add(VariableType.GasConcentration, _gasMixer);
+			Controllers.Add(VariableType.MassFlow, _gasMixer);
+			References.Add(VariableType.GasConcentration, _gasMixer);
+			References.Add(VariableType.MassFlow, _gasMixer);
 		}
 
 		#endregion

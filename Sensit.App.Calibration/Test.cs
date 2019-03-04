@@ -13,20 +13,12 @@ namespace Sensit.App.Calibration
 	{
 		public enum DutCommand
 		{
+			TurnOff,	// Remove power from DUT.
+			TurnOn,		// Apply power to DUT.			  
 			Default,    // Set factory default settings.
 			Range,      // Set range settings.
 			Zero,       // Perform zero-calibration.
 			Span,       // Perform span-calibration.
-		}
-
-		public enum VariableType
-		{
-			GasConcentration,
-			MassFlow,
-			VolumeFlow,
-			Velocity,
-			Pressure,
-			Temperature
 		}
 
 		public enum ToleranceType
@@ -41,8 +33,8 @@ namespace Sensit.App.Calibration
 		private Equipment _equipment;			// test equipment object
 		private readonly List<Dut> _duts;       // devices under test
 		private Stopwatch _stopwatch;           // keeper of test's elapsed time
-		private int _stepsTotal;				// helps calculate percent complete
-		private int _stepsComplete = 0;			// helps calculate percent complete
+		private int _samplesTotal;				// helps calculate percent complete
+		private int _samplesComplete = 0;		// helps calculate percent complete
 
 		#region Delegates
 
@@ -58,23 +50,32 @@ namespace Sensit.App.Calibration
 
 		public TimeSpan? ElapsedTime => _stopwatch?.Elapsed;
 
+		// TODO:  Perhaps replace this single property with properties for SamplesComplete and SamplesTotal?
 		public int PercentProgress
 		{
 			get
 			{
-				int percent = (int)(_stepsComplete / (double)_stepsTotal * 100.0);
+				int percent = (int)(_samplesComplete / (double)_samplesTotal * 100.0);
 
 				// Check for overflow or underflow.
 				if ((percent < 0) || (percent > 100))
 				{
 					throw new TestException("Percent progress is out of range; please contact Engineering."
-						+ Environment.NewLine + "Steps Complete:  " + _stepsComplete.ToString()
-						+ Environment.NewLine + "Steps Total:  " + _stepsTotal.ToString());
+						+ Environment.NewLine + "Steps Complete:  " + _samplesComplete.ToString()
+						+ Environment.NewLine + "Steps Total:  " + _samplesTotal.ToString());
 				}
 
 				return percent;
 			}
 		}
+
+		/// <summary>
+		/// Controlled/independent variables for the current test component.
+		/// </summary>
+		/// <remarks>
+		/// This will be accessed by the FormCalibration to display the variables values.
+		/// </remarks>
+		public List<TestVariable> Variables;
 
 		#endregion
 
@@ -104,11 +105,10 @@ namespace Sensit.App.Calibration
 
 			// Calculate how many samples we'll take in the selected test.
 			// This allows us to calculate the test's percent progress.
-			_stepsTotal = 0;
+			_samplesTotal = 0;
 			foreach (TestComponent c in settings.Components)
 			{
-				int samples = c.Setpoints.Count * c.NumberOfSamples;
-				_stepsTotal += samples;
+				_samplesTotal += c.Samples;
 			}
 		}
 
@@ -169,19 +169,20 @@ namespace Sensit.App.Calibration
 		/// <param name="errorMessage">message to display to the user</param>
 		private void PopupAlarm(string errorMessage)
 		{
-			// Remember what the equipment setpoint was.
-			double flowSetpoint = _equipment.GasMixController.MassFlowSetpoint;
-			double mixSetpoint = _equipment.GasMixController.GasMixSetpoint;
-
-			// Stop the equipment to prevent damage to it.
-			_equipment.GasMixController.MassFlowSetpoint = 0.0;
-			_equipment.GasMixController.GasMixSetpoint = 0.0;
-			_equipment.GasMixController.WriteGasMixSetpoint();
+			// Stop the equipment to reduce change of damage.
+			// TODO:  Ensure measure/vent mode is supported for all devices.
+			// Measure mode should save active setpoints but not use them.  Vent mode might discard setpoints?
+			// TODO:  Equipment should have a property for control devices and reference devices.
+			// Those properties could be Dictionaries with the key being the variable type.
+			// Then we can initialize them in Equipment.cs, iterate through them here, and set parameters when needed.
+			foreach (KeyValuePair<VariableType, IControlDevice> c in _equipment.Controllers)
+			{
+				c.Value.SetControlMode(ControlMode.Measure);
+			}
 
 			// Alert the user.
 			DialogResult result = MessageBox.Show(errorMessage
-				+ Environment.NewLine + "Abort the test?"
-				, "Test Error", MessageBoxButtons.YesNo);
+				+ Environment.NewLine + "Abort the test?", "Test Error", MessageBoxButtons.YesNo);
 
 			// If requested, cancel the test.
 			if (result == DialogResult.Yes)
@@ -191,35 +192,35 @@ namespace Sensit.App.Calibration
 				// Abort the test.
 				_testThread.CancelAsync();
 			}
-			// If we're continuing to test, reset the equipment setpoint.
+			// If we're continuing to test, attempt to control variables again.
 			else
 			{
-				_equipment.GasMixController.MassFlowSetpoint = flowSetpoint;
-				_equipment.GasMixController.GasMixSetpoint = mixSetpoint;
-				_equipment.GasMixController.WriteGasMixSetpoint();
+				foreach (KeyValuePair<VariableType, IControlDevice> c in _equipment.Controllers)
+				{
+					c.Value.SetControlMode(ControlMode.Control);
+				}
 			}
 		}
 
+		// TODO:  Use timer instead of Thread.Sleep.
 		private void SetpointCycle(TestVariable variable, double setpoint)
 		{
 			// Set setpoint.
 			_testThread.ReportProgress(PercentProgress, "Setting setpoint...");
-			_equipment.GasMixController.AnalyteBottleConcentration = 25;
-			_equipment.GasMixController.MassFlowSetpoint = 300;
-			_equipment.GasMixController.GasMixSetpoint = setpoint;
-			_equipment.GasMixController.WriteGasMixSetpoint();
+			// TODO:  Figure out how to set analyte bottle concentration.
+			//_equipment.GasMixController.AnalyteBottleConcentration = 25;
+			_equipment.Controllers[variable.VariableType].SetControlMode(ControlMode.Control);
+			_equipment.Controllers[variable.VariableType].WriteSetpoint(variable.VariableType, setpoint);
 
 			// Get start time.
 			Stopwatch stopwatch = Stopwatch.StartNew();
 			Stopwatch timeoutWatch = Stopwatch.StartNew();
 
-			double mixPrevious = setpoint;
-			double flowPrevious;
+			double previous = setpoint;
 			TimeSpan timeoutValue = TimeSpan.Zero;
 
 			// Take readings until they are within tolerance for the required settling time.
-			double massFlowError;
-			double mixError;
+			double error;
 			do
 			{
 				// Abort if requested.
@@ -236,25 +237,17 @@ namespace Sensit.App.Calibration
 				}
 
 				// Get reference reading.
-				_equipment.GasReference.Read();
-				double mixReading = _equipment.GasReference.GasMix;
-				double flowReading = _equipment.GasReference.MassFlow;
+				double reading = _equipment.References[variable.VariableType].Read(variable.VariableType);
 
 				// Calculate error.
-				mixError = mixReading - setpoint;
-				massFlowError = flowReading - 300;
+				error = reading - setpoint;
 
 				// Calculate rate of change.
-				double mixRate = (mixReading - mixPrevious)
-					/ (variable.Interval.TotalSeconds / 1000);
-				double florRate = (flowReading - mixReading)
-					/ (variable.Interval.TotalSeconds / 1000);
-				mixPrevious = mixReading;
-				flowPrevious = flowReading;
+				double rate = (reading - previous); // / (variable.Interval.TotalSeconds / 1000);
+				previous = reading;
 
 				// If tolerance has been exceeded, reset the stability time.
-				if ((Math.Abs(mixError) > variable.ErrorTolerance) ||
-					(Math.Abs(massFlowError) > variable.ErrorTolerance))
+				if (Math.Abs(error) > variable.ErrorTolerance)
 				{
 					stopwatch.Restart();
 				}
@@ -264,57 +257,66 @@ namespace Sensit.App.Calibration
 					+ (variable.StabilityTime - stopwatch.Elapsed).ToString(@"hh\:mm\:ss"));
 
 				// Wait to get desired reading frequency.
-				Thread.Sleep(variable.Interval);
+				Thread.Sleep(1000);
 			} while ((stopwatch.Elapsed <= variable.StabilityTime) ||
-					(Math.Abs(mixError) > variable.ErrorTolerance) ||
-					(Math.Abs(massFlowError) > variable.ErrorTolerance));
+					(Math.Abs(error) > variable.ErrorTolerance));
 		}
 
 		private void ComponentCycle(TestComponent testComponent)
 		{
-			// Set active control mode.
-			_equipment.GasMixController.SetControlMode(ControlMode.Control);
-
-			// Collect data.
-			foreach (double sp in testComponent.Setpoints)
+			// Achieve setpoint(s).
+			foreach (TestVariable v in testComponent.Variables)
 			{
 				// Abort if requested.
 				if (_testThread.CancellationPending) { break; }
+			
+				// Set active control mode.
+				_equipment.Controllers[v.VariableType].SetControlMode(ControlMode.Control);
 
-				// Achieve the setpoint.
-				SetpointCycle(testComponent.IndependentVariable, sp);
-
-				// Read data from each DUT.
-				for (int i = 0; i < testComponent.NumberOfSamples; i++)
+				// Collect data.
+				foreach (double sp in v.Setpoints)
 				{
 					// Abort if requested.
 					if (_testThread.CancellationPending) { break; }
 
-					// Update GUI.
-					_testThread.ReportProgress(PercentProgress, "Taking sample " + i.ToString() + " of " + testComponent.NumberOfSamples + ".");
+					// Achieve the setpoint.
+					SetpointCycle(v, sp);
 
-					// Take samples via DUT interface.
-					_equipment.DutInterface.Read();
-
-					_stepsComplete++;
-
-					// Get reading from each DUT.
-					foreach (Dut dut in _duts)
+					// Read data from each DUT.
+					for (int i = 0; i < testComponent.Samples; i++)
 					{
 						// Abort if requested.
 						if (_testThread.CancellationPending) { break; }
 
-						// Read and process DUT data.
-						dut.Read(sp, testComponent.IndependentVariable.ErrorTolerance);
-					}
+						// Update GUI.
+						_testThread.ReportProgress(PercentProgress, "Taking sample " + i.ToString() + " of " + testComponent.Samples + ".");
 
-					// Wait to get desired reading frequency.
-					Thread.Sleep(testComponent.SampleInterval);
+						// Take samples via DUT interface.
+						_equipment.DutInterface.Read();
+
+						_samplesComplete++;
+
+						// Get reading from each DUT.
+						foreach (Dut dut in _duts)
+						{
+							// Abort if requested.
+							if (_testThread.CancellationPending) { break; }
+
+							// Read and process DUT data.
+							dut.Read(sp, v.ErrorTolerance);
+						}
+
+						// Wait to get desired reading frequency.
+						Thread.Sleep(testComponent.Interval);
+					}
 				}
 			}
 
-			// Set controller to passive mode.
-			_equipment.GasMixController.SetControlMode(ControlMode.Ambient);
+			// Set controller(s) to passive mode.
+			foreach (TestVariable v in testComponent.Variables)
+			{
+				_equipment.Controllers[v.VariableType].SetControlMode(ControlMode.Ambient);
+			}
 		}
 
 		/// <summary>

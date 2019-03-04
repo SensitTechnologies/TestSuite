@@ -9,7 +9,7 @@ namespace Sensit.App.Calibration
 	public class ReferenceSetting
 	{
 		[Category("Reference Setting"), Description("Variable that device measures.")]
-		public Test.VariableType DeviceType { get; set; }
+		public VariableType DeviceType { get; set; }
 
 		[Category("Reference Setting"), Description("Serial ports used by device.")]
 		public List<string> SerialPorts { get; set; }
@@ -22,7 +22,7 @@ namespace Sensit.App.Calibration
 	public class ControlSetting
 	{
 		[Category("Control Setting"), Description("Interface used by control device.")]
-		public Test.VariableType DeviceType { get; set; }
+		public VariableType DeviceType { get; set; }
 
 		[Category("Control Setting"), Description("Serial ports used by device.")]
 		public List<string> SerialPorts { get; set; }
