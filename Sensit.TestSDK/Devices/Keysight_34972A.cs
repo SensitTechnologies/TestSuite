@@ -23,9 +23,9 @@ namespace Sensit.TestSDK.Devices
 	{
 		Ag3497x _v3497x;
 
-		private Dictionary<int, double> _readings = new Dictionary<int, double>();
+		private Dictionary<uint, double> _readings = new Dictionary<uint, double>();
 
-		public int NumberOfDuts { private get; set; }
+		public uint NumberOfDuts { private get; set; }
 
 		public void Open()
 		{
@@ -116,17 +116,17 @@ namespace Sensit.TestSDK.Devices
 			}
 		}
 
-		public void PowerOn(int dut)
+		public void PowerOn(uint dut)
 		{
 			// Nothing to do here.
 		}
 
-		public void PowerOff(int dut)
+		public void PowerOff(uint dut)
 		{
 			// Nothing to do here.
 		}
 
-		public void Find(int dut)
+		public void Find(uint dut)
 		{
 			// Nothing to do here.
 		}
@@ -153,7 +153,7 @@ namespace Sensit.TestSDK.Devices
 				for (int i = 0; i < dataSeparated.Length; i += 2)
 				{
 					// Parse sensor output from string into double and add to list _readings.
-					int key = int.Parse(dataSeparated[(i + 1)]) % 100;
+					uint key = uint.Parse(dataSeparated[(i + 1)]) % 100;
 					double value = double.Parse(dataSeparated[i], System.Globalization.NumberStyles.Any);
 					_readings.Add(key, value);
 				}
@@ -165,12 +165,12 @@ namespace Sensit.TestSDK.Devices
 			}
 		}
 
-		public int ReadCounts(int dut)
+		public int ReadCounts(uint dut)
 		{
 			throw new NotImplementedException("Cannot read counts from Keysight datalogger.");
 		}
 
-		public double ReadAnalog(int dut)
+		public double ReadAnalog(uint dut)
 		{
 			double reading = 0;
 			try

@@ -12,7 +12,7 @@ namespace Sensit.TestSDK.Dut
 	/// </summary>
 	public class Simulator : IFirmwareBasedDUT, IAnalogDUT
 	{
-		public int Index { get; set; }
+		public uint Index { get; set; }
 
 		public string Model { get; set; }
 

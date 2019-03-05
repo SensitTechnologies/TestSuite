@@ -41,7 +41,7 @@ namespace Sensit.TestSDK.Interfaces
 		/// <summary>
 		/// DUT's fixture position or channel
 		/// </summary>
-		int Index { get; set; }
+		uint Index { get; set; }
 
 		/// <summary>
 		/// true if under test; false if idle

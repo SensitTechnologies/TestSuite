@@ -38,10 +38,10 @@ namespace Sensit.App.Calibration
 		#region Delegates
 
 		// Set DUT status.
-		public Action<int, DutStatus> SetStatus;
+		public Action<uint, DutStatus> SetStatus;
 
 		// Set DUT serial number.
-		public Action<int, string> SetSerialNumber;
+		public Action<uint, string> SetSerialNumber;
 
 		// Get test's elapsed time.
 		public Func<TimeSpan?> GetElapsedTime;

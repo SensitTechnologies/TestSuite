@@ -246,11 +246,11 @@ namespace Sensit.App.Calibration
 				_equipment = new Equipment(equipmentSettings);
 
 				_duts.Clear();
-				for (int i = 0; i < NumDuts; i++)
+				for (uint i = 0; i < NumDuts; i++)
 				{
 					// Fetch user settings for DUT.
-					CheckBox checkBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(0, i) as CheckBox;
-					TextBox textBoxSerial = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(1, i) as TextBox;
+					CheckBox checkBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(0, (int)i) as CheckBox;
+					TextBox textBoxSerial = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(1, (int)i) as TextBox;
 
 					Dut dut = new Dut(modelSetting, _equipment)
 					{
@@ -639,11 +639,11 @@ namespace Sensit.App.Calibration
 			toolStripStatusLabel1.Text = "Ready...";
 		}
 
-		public void SetDutStatus(int dut, DutStatus status)
+		public void SetDutStatus(uint dut, DutStatus status)
 		{
 			// Find the applicable DUT status textbox.
 			// Remember that table layout panel has 0-based index, while DUTs have 1-based index.
-			TextBox textBoxStatus = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(2, dut - 1) as TextBox;
+			TextBox textBoxStatus = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(2, (int)dut - 1) as TextBox;
 
 			// If called from a different thread than the form, invoke the method on the form's thread.
 			// https://stackoverflow.com/questions/142003/cross-thread-operation-not-valid-control-accessed-from-a-thread-other-than-the
@@ -678,10 +678,10 @@ namespace Sensit.App.Calibration
 			}
 		}
 
-		public void SetDutSerialNumber(int dut, string serialNumber)
+		public void SetDutSerialNumber(uint dut, string serialNumber)
 		{
 			// Find the applicable DUT status textbox.
-			TextBox textBoxSerialNumber = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(1, dut - 1) as TextBox;
+			TextBox textBoxSerialNumber = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(1, (int)dut - 1) as TextBox;
 
 			// If called from a different thread than the form, invoke the method on the form's thread.
 			if (textBoxSerialNumber.InvokeRequired)

@@ -10,7 +10,7 @@ namespace Sensit.TestSDK.Interfaces
 		/// <summary>
 		/// Number of devices under test controlled by the device.
 		/// </summary>
-		int NumberOfDuts { set; }
+		uint NumberOfDuts { set; }
 
 		/// <summary>
 		/// Set active bank and channels.
@@ -23,13 +23,13 @@ namespace Sensit.TestSDK.Interfaces
 		/// Apply power to the specified DUT.
 		/// </summary>
 		/// <param name="dut">device to act upon</param>
-		void PowerOn(int dut);
+		void PowerOn(uint dut);
 
 		/// <summary>
 		/// Remove power from the specified DUT.
 		/// </summary>
 		/// <param name="dut">device to act upon</param>
-		void PowerOff(int dut);
+		void PowerOff(uint dut);
 
 		/// <summary>
 		/// Fetch the device's current readings/settings.
@@ -48,20 +48,20 @@ namespace Sensit.TestSDK.Interfaces
 		/// previously stored calibration or setting a memory write enable.
 		/// </remarks>
 		/// <param name="dut">the device to act upon</param>
-		void Find(int dut);
+		void Find(uint dut);
 
 		/// <summary>
 		/// Collect digital output data.
 		/// </summary>
 		/// <param name="dut">the device to act upon</param>
 		/// <returns>the device's reported output value</returns>
-		int ReadCounts(int dut);
+		int ReadCounts(uint dut);
 
 		/// <summary>
 		/// Collect analog output data.
 		/// </summary>
 		/// <param name="dut"></param>
 		/// <returns></returns>
-		double ReadAnalog(int dut);
+		double ReadAnalog(uint dut);
 	}
 }
