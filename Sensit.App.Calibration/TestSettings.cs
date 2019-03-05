@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Sensit.TestSDK.Calculations;
 using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.App.Calibration
