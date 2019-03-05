@@ -209,7 +209,6 @@ namespace Sensit.App.Calibration
 			_testThread.ReportProgress(PercentProgress, "Setting setpoint...");
 			// TODO:  Figure out how to set analyte bottle concentration.
 			//_equipment.GasMixController.AnalyteBottleConcentration = 25;
-			_equipment.Controllers[variable.VariableType].SetControlMode(ControlMode.Control);
 			_equipment.Controllers[variable.VariableType].WriteSetpoint(variable.VariableType, setpoint);
 
 			// Get start time.
@@ -237,6 +236,7 @@ namespace Sensit.App.Calibration
 				}
 
 				// Get reference reading.
+				_equipment.References[variable.VariableType].Update();
 				double reading = _equipment.References[variable.VariableType].Read(variable.VariableType);
 
 				// Calculate error.
@@ -262,60 +262,91 @@ namespace Sensit.App.Calibration
 					(Math.Abs(error) > variable.ErrorTolerance));
 		}
 
+		private void CommandCycle(uint dut, DutCommand? command)
+		{
+			switch (command)
+			{
+				case DutCommand.TurnOff:
+					_equipment.DutInterface.PowerOff(dut);
+					break;
+				case DutCommand.TurnOn:
+					_equipment.DutInterface.PowerOn(dut);
+					break;
+				case DutCommand.Default:
+				case DutCommand.Range:
+				case DutCommand.Span:
+				case DutCommand.Zero:
+				default:
+					break;
+			}
+		}
+
 		private void ComponentCycle(TestComponent testComponent)
 		{
-			// Achieve setpoint(s).
-			foreach (TestVariable v in testComponent.Variables)
+			// Perform DUT command (if one is specified).
+			if (testComponent?.DutCommand != null)
 			{
-				// Abort if requested.
-				if (_testThread.CancellationPending) { break; }
-			
-				// Set active control mode.
-				_equipment.Controllers[v.VariableType].SetControlMode(ControlMode.Control);
-
-				// Collect data.
-				foreach (double sp in v.Setpoints)
+				foreach (Dut dut in _duts)
 				{
 					// Abort if requested.
 					if (_testThread.CancellationPending) { break; }
 
-					// Achieve the setpoint.
-					SetpointCycle(v, sp);
+					CommandCycle(dut.Device.Index, testComponent?.DutCommand);
+				}
+			}
 
-					// Read data from each DUT.
-					for (int i = 0; i < testComponent.Samples; i++)
+			// Measure variable(s).
+			if (testComponent?.Variables != null)
+			{
+				foreach (TestVariable v in testComponent.Variables)
+				{
+					// Abort if requested.
+					if (_testThread.CancellationPending) { break; }
+
+					// Achieve setpoint(s).
+					if (v?.Setpoints != null)
 					{
-						// Abort if requested.
-						if (_testThread.CancellationPending) { break; }
+						// Set active control mode.
+						_equipment.Controllers[v.VariableType].SetControlMode(ControlMode.Control);
 
-						// Update GUI.
-						_testThread.ReportProgress(PercentProgress, "Taking sample " + i.ToString() + " of " + testComponent.Samples + ".");
-
-						// Take samples via DUT interface.
-						_equipment.DutInterface.Read();
-
-						_samplesComplete++;
-
-						// Get reading from each DUT.
-						foreach (Dut dut in _duts)
+						foreach (double sp in v.Setpoints)
 						{
 							// Abort if requested.
 							if (_testThread.CancellationPending) { break; }
 
-							// Read and process DUT data.
-							dut.Read(sp, v.ErrorTolerance);
-						}
+							// Achieve the setpoint.
+							SetpointCycle(v, sp);
 
-						// Wait to get desired reading frequency.
-						Thread.Sleep(testComponent.Interval);
+							// Read data from each DUT.
+							for (int i = 0; i < testComponent.Samples; i++)
+							{
+								// Abort if requested.
+								if (_testThread.CancellationPending) { break; }
+
+								// Update GUI.
+								_testThread.ReportProgress(PercentProgress, "Taking sample " + i.ToString() + " of " + testComponent.Samples + ".");
+
+								// Take samples via DUT interface.
+								_equipment.DutInterface.Read();
+
+								_samplesComplete++;
+
+								// Get reading from each DUT.
+								foreach (Dut dut in _duts)
+								{
+									// Abort if requested.
+									if (_testThread.CancellationPending) { break; }
+
+									// Read and process DUT data.
+									dut.Read(sp, v.ErrorTolerance);
+								}
+
+								// Wait to get desired reading frequency.
+								Thread.Sleep(testComponent.Interval);
+							}
+						}
 					}
 				}
-			}
-
-			// Set controller(s) to passive mode.
-			foreach (TestVariable v in testComponent.Variables)
-			{
-				_equipment.Controllers[v.VariableType].SetControlMode(ControlMode.Ambient);
 			}
 		}
 
