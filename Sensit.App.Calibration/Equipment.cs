@@ -81,6 +81,9 @@ namespace Sensit.App.Calibration
 			_mfcAnalyte.Open(_settings?.AnalyteControllerPort);
 			_mfcDiluent.Open(_settings?.DiluentControllerPort);
 
+			// TODO:  Set analyte bottle concentration from equipment settings.
+			_gasMixer.AnalyteBottleConcentration = 25;
+
 			// Configure the datalogger.
 			_datalogger.Open();
 		}

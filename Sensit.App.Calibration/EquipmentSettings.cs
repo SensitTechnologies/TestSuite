@@ -21,6 +21,8 @@ namespace Sensit.App.Calibration
 	[Serializable]
 	public class ControlSetting
 	{
+		// TODO:  Analyte bottle concentration should be part of equipment settings, not test settings!
+
 		[Category("Control Setting"), Description("Interface used by control device.")]
 		public VariableType DeviceType { get; set; }
 
