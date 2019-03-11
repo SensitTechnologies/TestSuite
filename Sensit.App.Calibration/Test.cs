@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Threading;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Sensit.TestSDK.Exceptions;
 using Sensit.TestSDK.Interfaces;
@@ -75,7 +76,7 @@ namespace Sensit.App.Calibration
 		/// <remarks>
 		/// This will be accessed by the FormCalibration to display the variables values.
 		/// </remarks>
-		public List<TestVariable> Variables;
+		public List<TestControlledVariable> Variables;
 
 		#endregion
 
@@ -202,13 +203,12 @@ namespace Sensit.App.Calibration
 			}
 		}
 
-		// TODO:  Use timer instead of Thread.Sleep.
-		private void SetpointCycle(TestVariable variable, double setpoint)
+		private async void SetpointCycle(TestControlledVariable variable, double setpoint, TimeSpan interval)
 		{
-			// Set setpoint.
+			// Update GUI.
 			_testThread.ReportProgress(PercentProgress, "Setting setpoint...");
-			// TODO:  Figure out how to set analyte bottle concentration.
-			//_equipment.GasMixController.AnalyteBottleConcentration = 25;
+
+			// Set setpoint.
 			_equipment.Controllers[variable.VariableType].WriteSetpoint(variable.VariableType, setpoint);
 
 			// Get start time.
@@ -257,12 +257,12 @@ namespace Sensit.App.Calibration
 					+ (variable.StabilityTime - stopwatch.Elapsed).ToString(@"hh\:mm\:ss"));
 
 				// Wait to get desired reading frequency.
-				Thread.Sleep(1000);
+				await Task.Delay(interval);
 			} while ((stopwatch.Elapsed <= variable.StabilityTime) ||
 					(Math.Abs(error) > variable.ErrorTolerance));
 		}
 
-		private void CommandCycle(uint dut, DutCommand? command)
+		private void PerformDutCommand(uint dut, DutCommand? command)
 		{
 			switch (command)
 			{
@@ -281,69 +281,79 @@ namespace Sensit.App.Calibration
 			}
 		}
 
-		private void ComponentCycle(TestComponent testComponent)
+		private async void TestCycle()
 		{
-			// Perform DUT command (if one is specified).
-			if (testComponent?.DutCommand != null)
+			// For each component...
+			foreach (TestComponent c in _settings.Components)
 			{
-				foreach (Dut dut in _duts)
+				// Abort if requested.
+				if (_testThread.CancellationPending) { break; }
+
+				// For each DUT command...
+				foreach (DutCommand d in c?.DutCommands ?? Enumerable.Empty<DutCommand>())
 				{
 					// Abort if requested.
 					if (_testThread.CancellationPending) { break; }
 
-					CommandCycle(dut.Device.Index, testComponent?.DutCommand);
-				}
-			}
-
-			// Measure variable(s).
-			if (testComponent?.Variables != null)
-			{
-				foreach (TestVariable v in testComponent.Variables)
-				{
-					// Abort if requested.
-					if (_testThread.CancellationPending) { break; }
-
-					// Achieve setpoint(s).
-					if (v?.Setpoints != null)
+					// For each DUT...
+					foreach (Dut dut in _duts)
 					{
-						// Set active control mode.
-						_equipment.Controllers[v.VariableType].SetControlMode(ControlMode.Control);
+						// Abort if requested.
+						if (_testThread.CancellationPending) { break; }
 
-						foreach (double sp in v.Setpoints)
+						// Perform DUT command.
+						PerformDutCommand(dut.Device.Index, d);
+					}
+				}
+
+				// For each controlled variable...
+				foreach (TestControlledVariable v in c.ControlledVariables)
+				{
+					// Abort if requested.
+					if (_testThread.CancellationPending) { break; }
+
+					// Set active control mode.
+					_equipment.Controllers[v.VariableType].SetControlMode(ControlMode.Control);
+
+					// For each setpoint...
+					foreach (double sp in v?.Setpoints ?? Enumerable.Empty<double>())
+					{
+						// Abort if requested.
+						if (_testThread.CancellationPending) { break; }
+
+						// Set the setpoint.
+						SetpointCycle(v, sp, c.Interval);
+
+						// For each sample.
+						for (int i = 0; i < c.Samples; i++)
 						{
 							// Abort if requested.
 							if (_testThread.CancellationPending) { break; }
 
-							// Achieve the setpoint.
-							SetpointCycle(v, sp);
+							// Update GUI.
+							_testThread.ReportProgress(PercentProgress, "Taking sample " + i.ToString() + " of " + c.Samples + ".");
 
-							// Read data from each DUT.
-							for (int i = 0; i < testComponent.Samples; i++)
+							// TODO:  Record reference data.
+
+							// TODO:  Check stability of all controlled variables.
+
+							// Record DUT data.
+							_equipment.DutInterface.Read();
+
+							_samplesComplete++;
+
+							// TODO:  Get rid of this chunk.
+							foreach (Dut dut in _duts)
 							{
 								// Abort if requested.
 								if (_testThread.CancellationPending) { break; }
 
-								// Update GUI.
-								_testThread.ReportProgress(PercentProgress, "Taking sample " + i.ToString() + " of " + testComponent.Samples + ".");
-
-								// Take samples via DUT interface.
-								_equipment.DutInterface.Read();
-
-								_samplesComplete++;
-
-								// Get reading from each DUT.
-								foreach (Dut dut in _duts)
-								{
-									// Abort if requested.
-									if (_testThread.CancellationPending) { break; }
-
-									// Read and process DUT data.
-									dut.Read(sp, v.ErrorTolerance);
-								}
-
-								// Wait to get desired reading frequency.
-								Thread.Sleep(testComponent.Interval);
+								// Read and process DUT data.
+								dut.Read(sp, v.ErrorTolerance);
 							}
+
+							// Wait to get desired reading frequency.
+							await Task.Delay(c.Interval);
 						}
 					}
 				}
@@ -384,9 +394,6 @@ namespace Sensit.App.Calibration
 					{
 						if (_testThread.CancellationPending) { break; }
 
-						_testThread.ReportProgress(0, "Initializing DUT #" + dut.Device.Index + "...");
-						dut.Open();
-
 						// TODO:  This is ugly.  Make it go away.
 						if (dut.Device.Selected)
 							selections.Add(true);
@@ -400,13 +407,7 @@ namespace Sensit.App.Calibration
 					_equipment.DutInterface.Configure(3, selections);
 
 					// Perform test actions.
-					foreach (TestComponent c in _settings.Components)
-					{
-						// Abort if requested.
-						if (_testThread.CancellationPending) { break; }
-
-						ComponentCycle(c);
-					}
+					TestCycle();
 				} while (false);
 			}
 			catch (Exception ex)
@@ -423,13 +424,6 @@ namespace Sensit.App.Calibration
 
 			try
 			{
-				// Close DUTs.
-				_testThread.ReportProgress(99, "Closing DUTs...");
-				foreach (Dut dut in _duts)
-				{
-					dut.Close();
-				}
-
 				// Close test equipment.
 				_testThread.ReportProgress(99, "Closing test equipment...");
 				_equipment.Close();

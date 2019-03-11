@@ -6,9 +6,9 @@ using Sensit.TestSDK.Interfaces;
 namespace Sensit.App.Calibration
 {
 	/// <summary>
-	/// Configuration for a variable being measured or controlled during a test.
+	/// Configuration for a variable being controlled during a test.
 	/// </summary>
-	public class TestVariable
+	public class TestControlledVariable
 	{
 		[Category("Test Variable"), Description("Type of the variable.")]
 		public VariableType VariableType { get; set; }
@@ -50,11 +50,11 @@ namespace Sensit.App.Calibration
 		[Category("Test Component"), Description("Name for this part of the test.")]
 		public string Label { get; set; } = "";
 
-		[Category("Test Component"), Description("Action to perform on the DUT during this test component.")]
-		public Test.DutCommand DutCommand { get; set; }
+		[Category("Test Component"), Description("Actions to perform on the DUT during this test component.")]
+		public List<Test.DutCommand> DutCommands { get; set; }
 
-		[Category("Test Component"), Description("Controlled/independent variables for this part of the test.")]
-		public List<TestVariable> Variables { get; set; }
+		[Category("Test Component"), Description("Controlled variables for this part of the test.")]
+		public List<TestControlledVariable> ControlledVariables { get; set; }
 
 		[Category("Test Component"), Description("Number of samples taken from DUT at each setpoint.")]
 		public int Samples { get; set; } = 1;
@@ -87,6 +87,9 @@ namespace Sensit.App.Calibration
 
 		[Category("Test Settings"), Description("Actions performed during the test.")]
 		public List<TestComponent> Components { get; set; }
+
+		[Category("Test Settings"), Description("Variables measured (with reference devices) during the test.")]
+		public List<VariableType> References { get; set; }
 	}
 
 	[Serializable]
@@ -114,15 +117,15 @@ namespace Sensit.App.Calibration
 					// Apply gas for 5 minutes.
 					new TestComponent("Apply gas")
 					{
-						DutCommand = Test.DutCommand.TurnOff,
-						Variables = new List<TestVariable>
+						DutCommands = new List<Test.DutCommand> { Test.DutCommand.TurnOff },
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								StabilityTime = new TimeSpan(0, 5, 0),
@@ -133,15 +136,15 @@ namespace Sensit.App.Calibration
 					// Measure stability every second for 30 minutes.
 					new TestComponent("Measure stability")
 					{
-						DutCommand = Test.DutCommand.TurnOn,
-						Variables = new List<TestVariable>
+						DutCommands = new List<Test.DutCommand> { Test.DutCommand.TurnOn },
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 25.0 }
@@ -161,14 +164,14 @@ namespace Sensit.App.Calibration
 					// Take 15 samples per setpoint (per sensor).
 					new TestComponent("Up 1")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0.0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0, 17.5, 20.0, 22.5, 25.0 }
@@ -179,14 +182,14 @@ namespace Sensit.App.Calibration
 					},
 					new TestComponent("Down 1")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 25.0, 22.5, 20.0, 17.5, 15.0, 12.5, 10.0, 7.5, 5.0, 2.5, 0.0 }
@@ -197,14 +200,14 @@ namespace Sensit.App.Calibration
 					},
 					new TestComponent("Up 2")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0.0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0, 17.5, 20.0, 22.5, 25.0 }
@@ -215,14 +218,14 @@ namespace Sensit.App.Calibration
 					},
 					new TestComponent("Down 2")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 25.0, 22.5, 20.0, 17.5, 15.0, 12.5, 10.0, 7.5, 5.0, 2.5, 0.0 }
@@ -233,14 +236,14 @@ namespace Sensit.App.Calibration
 					},
 					new TestComponent("Up 3")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0.0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0, 17.5, 20.0, 22.5, 25.0 }
@@ -251,14 +254,14 @@ namespace Sensit.App.Calibration
 					},
 					new TestComponent("Down 3")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 25.0, 22.5, 20.0, 17.5, 15.0, 12.5, 10.0, 7.5, 5.0, 2.5, 0.0 }
@@ -270,14 +273,14 @@ namespace Sensit.App.Calibration
 					},
 					new TestComponent("Up 4")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0.0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0, 17.5, 20.0, 22.5, 25.0 }
@@ -288,14 +291,14 @@ namespace Sensit.App.Calibration
 					},
 					new TestComponent("Down 4")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 25.0, 22.5, 20.0, 17.5, 15.0, 12.5, 10.0, 7.5, 5.0, 2.5, 0.0 }
@@ -306,14 +309,14 @@ namespace Sensit.App.Calibration
 					},
 					new TestComponent("Up 5")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0.0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0, 17.5, 20.0, 22.5, 25.0 }
@@ -324,14 +327,14 @@ namespace Sensit.App.Calibration
 					},
 					new TestComponent("Down 5")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 25.0, 22.5, 20.0, 17.5, 15.0, 12.5, 10.0, 7.5, 5.0, 2.5, 0.0 }
@@ -349,14 +352,14 @@ namespace Sensit.App.Calibration
 					// Allow DUT to stabilize for 1 hour with normal air applied.
 					new TestComponent("Stabilize")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0.0 }
@@ -368,14 +371,14 @@ namespace Sensit.App.Calibration
 					// Apply test gas mixure; record response.
 					new TestComponent("Step Up 1")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 25.0 }
@@ -387,14 +390,14 @@ namespace Sensit.App.Calibration
 					// Apply normal air; record response.
 					new TestComponent("Step Down 1")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable
+							new TestControlledVariable
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0.0 }
@@ -406,14 +409,14 @@ namespace Sensit.App.Calibration
 					// Apply test gas mixure; record response.
 					new TestComponent("Step Up 2")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 25.0 }
@@ -425,14 +428,14 @@ namespace Sensit.App.Calibration
 					// Apply normal air; record response.
 					new TestComponent("Step Down 2")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0.0 }
@@ -444,14 +447,14 @@ namespace Sensit.App.Calibration
 					// Apply test gas mixure; record response.
 					new TestComponent("Step Up 3")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 25.0 }
@@ -463,14 +466,14 @@ namespace Sensit.App.Calibration
 					// Apply normal air; record response.
 					new TestComponent("Step Down 3")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0.0 }
@@ -482,14 +485,14 @@ namespace Sensit.App.Calibration
 					// Apply test gas mixure; record response.
 					new TestComponent("Step Up 4")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 25.0 }
@@ -501,14 +504,14 @@ namespace Sensit.App.Calibration
 					// Apply normal air; record response.
 					new TestComponent("Step Down 4")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0.0 }
@@ -520,14 +523,14 @@ namespace Sensit.App.Calibration
 					// Apply test gas mixure; record response.
 					new TestComponent("Step Up 5")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 25.0 }
@@ -539,14 +542,14 @@ namespace Sensit.App.Calibration
 					// Apply normal air; record response.
 					new TestComponent("Step Down 5")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0.0 }
@@ -565,14 +568,14 @@ namespace Sensit.App.Calibration
 					// Take samples every second for 10 minutes with 21% O2 (the amount in ambient air) applied.
 					new TestComponent("Run 1")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 21.0 }
@@ -584,14 +587,14 @@ namespace Sensit.App.Calibration
 					// Expose DUT to test gas for 3 minutes, recording data.
 					new TestComponent("Run 2")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 25.0 }
@@ -603,14 +606,14 @@ namespace Sensit.App.Calibration
 					// Expose DUT to ambient air for 7 minutes.
 					new TestComponent("Run 3")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 21.0 }
@@ -622,14 +625,14 @@ namespace Sensit.App.Calibration
 					// Expose DUT to test gas for 3 minutes, recording data.
 					new TestComponent("Run 4")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 25.0 }
@@ -641,14 +644,14 @@ namespace Sensit.App.Calibration
 					// Expose DUT to ambient air for 7 minutes.
 					new TestComponent("Run 5")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 21.0 }
@@ -660,14 +663,14 @@ namespace Sensit.App.Calibration
 					// Expose DUT to test gas for 3 minutes, recording data.
 					new TestComponent("Run 6")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 25.0 }
@@ -679,14 +682,14 @@ namespace Sensit.App.Calibration
 					// Expose DUT to ambient air for 7 minutes.
 					new TestComponent("Run 7")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 21.0 }
@@ -698,14 +701,14 @@ namespace Sensit.App.Calibration
 					// Expose DUT to test gas for 3 minutes, recording data.
 					new TestComponent("Run 8")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 25.0 }
@@ -717,14 +720,14 @@ namespace Sensit.App.Calibration
 					// Expose DUT to ambient air for 7 minutes.
 					new TestComponent("Run 9")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 21.0 }
@@ -736,14 +739,14 @@ namespace Sensit.App.Calibration
 					// Expose DUT to test gas for 3 minutes, recording data.
 					new TestComponent("Run 10")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 25.0 }
@@ -755,14 +758,14 @@ namespace Sensit.App.Calibration
 					// Expose DUT to ambient air for 7 minutes.
 					new TestComponent("Run 11")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 21.0 }
@@ -774,14 +777,14 @@ namespace Sensit.App.Calibration
 					// Expose DUT to test gas for 3 minutes, recording data.
 					new TestComponent("Run 12")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 25.0 }
@@ -793,14 +796,14 @@ namespace Sensit.App.Calibration
 					// Expose DUT to ambient air for 7 minutes.
 					new TestComponent("Run 13")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 21.0 }
@@ -812,14 +815,14 @@ namespace Sensit.App.Calibration
 					// Expose DUT to test gas for 3 minutes, recording data.
 					new TestComponent("Run 14")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 25.0 }
@@ -831,14 +834,14 @@ namespace Sensit.App.Calibration
 					// Expose DUT to ambient air for 7 minutes.
 					new TestComponent("Run 3")
 					{
-						Variables = new List<TestVariable>
+						ControlledVariables = new List<TestControlledVariable>
 						{
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 300.0 }
 							},
-							new TestVariable()
+							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 21.0 }
