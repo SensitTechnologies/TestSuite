@@ -243,7 +243,7 @@ namespace Sensit.App.Calibration
 				error = reading - setpoint;
 
 				// Calculate rate of change.
-				double rate = (reading - previous); // / (variable.Interval.TotalSeconds / 1000);
+				double rate = (reading - previous) / (interval.TotalSeconds / 1000);
 				previous = reading;
 
 				// If tolerance has been exceeded, reset the stability time.
@@ -284,7 +284,7 @@ namespace Sensit.App.Calibration
 		private async void TestCycle()
 		{
 			// For each component...
-			foreach (TestComponent c in _settings.Components)
+			foreach (TestComponent c in _settings?.Components ?? Enumerable.Empty<TestComponent>())
 			{
 				// Abort if requested.
 				if (_testThread.CancellationPending) { break; }
@@ -307,7 +307,7 @@ namespace Sensit.App.Calibration
 				}
 
 				// For each controlled variable...
-				foreach (TestControlledVariable v in c.ControlledVariables)
+				foreach (TestControlledVariable v in c?.ControlledVariables ?? Enumerable.Empty<TestControlledVariable>())
 				{
 					// Abort if requested.
 					if (_testThread.CancellationPending) { break; }
