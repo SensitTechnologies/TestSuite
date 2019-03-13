@@ -19,7 +19,7 @@ namespace Sensit.App.Calibration
 		[Category("Test Variable"), Description("Tolerated rate of change of setpoints [% full scale / s].  If exceeded, Stability Time will reset.")]
 		public double RateTolerance { get; set; } = 2.0;
 
-		[Category("Test Variable"), Description("Setpoints [% full scale]; Required if calibration is part of the test.")]
+		[Category("Test Variable"), Description("Setpoints [% full scale].")]
 		public List<double> Setpoints { get; set; }
 
 		[Category("Test Variable"), Description("Required time to be at setpoint before continuing test.")]
@@ -160,8 +160,6 @@ namespace Sensit.App.Calibration
 				Components = new List<TestComponent>
 				{
 					// Ramp up and down 5 times.  Measure gas every 1 second.  Don't wait for stability.
-					// Setpoints for oxygen are 0% to 100% full scale, but full scale is 25% O2.
-					// Take 15 samples per setpoint (per sensor).
 					new TestComponent("Up 1")
 					{
 						ControlledVariables = new List<TestControlledVariable>
@@ -169,12 +167,13 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
+								Setpoints = new List<double> { 500.0 }
 							},
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double> { 0.0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0, 17.5, 20.0, 22.5, 25.0 }
+								// Setpoints = new List<double> { 0.0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0, 17.5, 20.0, 22.5, 25.0 },
+								Setpoints = new List<double> { 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 }
 							}
 						},
 						Samples = 240,
@@ -187,12 +186,13 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
+								Setpoints = new List<double> { 500.0 }
 							},
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double> { 25.0, 22.5, 20.0, 17.5, 15.0, 12.5, 10.0, 7.5, 5.0, 2.5, 0.0 }
+								// Setpoints = new List<double> { 25.0, 22.5, 20.0, 17.5, 15.0, 12.5, 10.0, 7.5, 5.0, 2.5, 0.0 }
+								Setpoints = new List<double> { 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0 }
 							}
 						},
 						Samples = 240,
@@ -205,12 +205,12 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
+								Setpoints = new List<double> { 500.0 }
 							},
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double> { 0.0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0, 17.5, 20.0, 22.5, 25.0 }
+								Setpoints = new List<double> { 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 }
 							}
 						},
 						Samples = 240,
@@ -223,12 +223,12 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
+								Setpoints = new List<double> { 500.0 }
 							},
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double> { 25.0, 22.5, 20.0, 17.5, 15.0, 12.5, 10.0, 7.5, 5.0, 2.5, 0.0 }
+								Setpoints = new List<double> { 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0 }
 							}
 						},
 						Samples = 240,
@@ -241,13 +241,12 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
+								Setpoints = new List<double> { 500.0 }
 							},
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double> { 0.0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0, 17.5, 20.0, 22.5, 25.0 }
-							}
+								Setpoints = new List<double> { 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 }                         }
 						},
 						Samples = 240,
 						Interval = new TimeSpan(0, 0, 0, 0, 500)
@@ -259,12 +258,12 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
+								Setpoints = new List<double> { 500.0 }
 							},
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double> { 25.0, 22.5, 20.0, 17.5, 15.0, 12.5, 10.0, 7.5, 5.0, 2.5, 0.0 }
+								Setpoints = new List<double> { 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0 }
 							}
 						},
 						// Take 15 samples per setpoint (per sensor).
@@ -278,12 +277,12 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
+								Setpoints = new List<double> { 500.0 }
 							},
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double> { 0.0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0, 17.5, 20.0, 22.5, 25.0 }
+								Setpoints = new List<double> { 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 }
 							}
 						},
 						Samples = 240,
@@ -296,12 +295,12 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
+								Setpoints = new List<double> { 500.0 }
 							},
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double> { 25.0, 22.5, 20.0, 17.5, 15.0, 12.5, 10.0, 7.5, 5.0, 2.5, 0.0 }
+								Setpoints = new List<double> { 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0 }
 							}
 						},
 						Samples = 240,
@@ -314,12 +313,12 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
+								Setpoints = new List<double> { 500.0 }
 							},
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double> { 0.0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0, 17.5, 20.0, 22.5, 25.0 }
+								Setpoints = new List<double> { 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 }
 							}
 						},
 						Samples = 240,
@@ -332,12 +331,12 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
+								Setpoints = new List<double> { 500.0 }
 							},
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double> { 25.0, 22.5, 20.0, 17.5, 15.0, 12.5, 10.0, 7.5, 5.0, 2.5, 0.0 }
+								Setpoints = new List<double> { 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0 }
 							}
 						},
 						Samples = 240,
