@@ -404,6 +404,7 @@
 			this.Controls.Add(this.groupBoxSerialPort);
 			this.Controls.Add(this.menuStrip1);
 			this.MainMenuStrip = this.menuStrip1;
+			this.MaximizeBox = false;
 			this.Name = "FormMassFlow";
 			this.Text = "Mass Flow Controller";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
