@@ -61,13 +61,17 @@ namespace Sensit.App.Calibration
 			_datalogger = new Keysight_34972A();
 			_manual = new Manual();
 
-			Controllers = new Dictionary<VariableType, IControlDevice>();
-			Controllers.Add(VariableType.GasConcentration, _gasMixer);
-			Controllers.Add(VariableType.MassFlow, _gasMixer);
+			Controllers = new Dictionary<VariableType, IControlDevice>
+			{
+				{ VariableType.GasConcentration, _gasMixer },
+				{ VariableType.MassFlow, _gasMixer }
+			};
 
-			References = new Dictionary<VariableType, IReferenceDevice>();
-			References.Add(VariableType.GasConcentration, _gasMixer);
-			References.Add(VariableType.MassFlow, _gasMixer);
+			References = new Dictionary<VariableType, IReferenceDevice>
+			{
+				{ VariableType.GasConcentration, _gasMixer },
+				{ VariableType.MassFlow, _gasMixer }
+			};
 		}
 
 		#endregion
