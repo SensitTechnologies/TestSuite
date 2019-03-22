@@ -252,11 +252,10 @@ namespace Sensit.App.Calibration
 					CheckBox checkBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(0, (int)i) as CheckBox;
 					TextBox textBoxSerial = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(1, (int)i) as TextBox;
 
-					Dut dut = new Dut(modelSetting, _equipment)
+					Dut dut = new Dut(modelSetting)
 					{
 						SetSerialNumber = SetDutSerialNumber,
 						SetStatus = SetDutStatus,
-						GetElapsedTime = () => _test.ElapsedTime
 					};
 					dut.Device.Index = i + 1;
 					dut.Device.Selected = checkBox.Checked;

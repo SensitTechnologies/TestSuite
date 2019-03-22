@@ -51,7 +51,7 @@ namespace Sensit.App.Calibration
 		public string Label { get; set; } = "";
 
 		[Category("Test Component"), Description("Actions to perform on the DUT during this test component.")]
-		public List<Test.DutCommand> DutCommands { get; set; }
+		public List<Test.Command> Commands { get; set; }
 
 		[Category("Test Component"), Description("Controlled variables for this part of the test.")]
 		public List<TestControlledVariable> ControlledVariables { get; set; }
@@ -117,7 +117,7 @@ namespace Sensit.App.Calibration
 					// Apply gas for 5 minutes.
 					new TestComponent("Apply gas")
 					{
-						DutCommands = new List<Test.DutCommand> { Test.DutCommand.TurnOff },
+						Commands = new List<Test.Command> { Test.Command.TurnDutsOff },
 						ControlledVariables = new List<TestControlledVariable>
 						{
 							new TestControlledVariable()
@@ -136,7 +136,7 @@ namespace Sensit.App.Calibration
 					// Measure stability every second for 30 minutes.
 					new TestComponent("Measure stability")
 					{
-						DutCommands = new List<Test.DutCommand> { Test.DutCommand.TurnOn },
+						Commands = new List<Test.Command> { Test.Command.TurnDutsOn },
 						ControlledVariables = new List<TestControlledVariable>
 						{
 							new TestControlledVariable()

@@ -13,7 +13,6 @@ namespace Sensit.App.Calibration
 		public double? Setpoint { get; set; }
 		public double? Reference { get; set; }
 		public double? SensorValue { get; set; }
-		//public double? Error { get; set; }
 	}
 
 	/// <summary>
@@ -26,8 +25,8 @@ namespace Sensit.App.Calibration
 	/// </remarks>
 	public class Dut
 	{
+		// settings for the DUT
 		private ModelSetting _settings;
-		private Equipment _equipment;
 
 		// used when the user selects "Simulator" option for DUTs.
 		private Simulator _simulator;
@@ -42,9 +41,6 @@ namespace Sensit.App.Calibration
 
 		// Set DUT serial number.
 		public Action<uint, string> SetSerialNumber;
-
-		// Get test's elapsed time.
-		public Func<TimeSpan?> GetElapsedTime;
 
 		#endregion
 
@@ -64,10 +60,9 @@ namespace Sensit.App.Calibration
 
 		#region Constructor
 
-		public Dut(ModelSetting settings, Equipment equipment)
+		public Dut(ModelSetting settings)
 		{
 			_settings = settings;
-			_equipment = equipment;
 
 			// Create DUT object.
 			// Only the one chosen by the user will end up being used.
@@ -84,15 +79,13 @@ namespace Sensit.App.Calibration
 			}
 		}
 
+		#endregion
+
 		public void Open()
 		{
 			if (Device.Selected == true)
 			{
-				_equipment?.DutInterface?.PowerOn(Device.Index);
-
-				// TODO:  (Low priority) Open DUT ports (if applicable); throw exception is no DUT ports could be opened.
-				// TODO:  (Low priority) Talk to each DUT to verify communication.
-				// If communication succeeds, set status to "Found".
+				// Set status to "Found".
 				Device.Status = DutStatus.Found;
 
 				// Update GUI.
@@ -102,24 +95,10 @@ namespace Sensit.App.Calibration
 
 		public void Close()
 		{
-			// Turn off DUTs that have been found, passed, failed.
-			if ((Device.Status != DutStatus.PortError) &&
-				(Device.Status != DutStatus.NotFound))
-			{
-				_equipment?.DutInterface?.PowerOff(Device.Index);
-			}
-
-			if ((Device.Status == DutStatus.Found) ||
-				(Device.Status == DutStatus.Fail) ||
-				(Device.Status == DutStatus.NotFound))
-			{
-				// TODO:  (Low priority) Close DUT ports (if applicable).
-			}
-
 			if ((Device.Status == DutStatus.Found) ||
 				(Device.Status == DutStatus.Fail))
 			{
-				// TODO:  Identify passing DUTs.
+				// Set status to Pass.
 				Device.Status = DutStatus.Pass;
 
 				// Update GUI.
@@ -136,44 +115,6 @@ namespace Sensit.App.Calibration
 			}
 		}
 
-		public void Read(double setpoint, double errorTolerance)
-		{
-			// Only process found or failed DUTs.
-			if ((Device.Status == DutStatus.Found) ||
-				(Device.Status == DutStatus.Fail))
-			{
-				// Get reference reading.
-				double gasMix = _equipment.References[VariableType.GasConcentration].Read(VariableType.GasConcentration);
-
-				// Calculate error.
-				double error = gasMix - setpoint;
-
-				// Check tolerance.
-				if (Math.Abs(error) > errorTolerance)
-				{
-					// TODO:  Log an error, "Reference out of tolerance during DUT Read."
-
-					// Mark DUT as failed.
-					Device.Status = DutStatus.Fail;
-
-					// Update GUI.
-					SetStatus(Device.Index, Device.Status);
-				}
-
-				// Read value from DUT.
-				double? dutValue = _equipment?.DutInterface?.ReadAnalog(Device.Index);
-
-				// Save the result.
-				Results.Add(new TestResults
-				{
-					ElapsedTime = GetElapsedTime(),
-					Setpoint = setpoint,
-					Reference = gasMix,
-					SensorValue = dutValue
-				});
-			}
-		}
-
 		public void ComputeCoefficients()
 		{
 			// Only process found or failed DUTs.
@@ -181,7 +122,5 @@ namespace Sensit.App.Calibration
 				(Device.Status == DutStatus.Fail))
 			Device.ComputeCoefficients();
 		}
-
-		#endregion
 	}
 }

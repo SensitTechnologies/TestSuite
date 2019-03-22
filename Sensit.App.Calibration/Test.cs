@@ -12,14 +12,14 @@ namespace Sensit.App.Calibration
 {
 	public class Test
 	{
-		public enum DutCommand
+		public enum Command
 		{
-			TurnOff,	// Remove power from DUT.
-			TurnOn,		// Apply power to DUT.			  
-			Default,    // Set factory default settings.
-			Range,      // Set range settings.
-			Zero,       // Perform zero-calibration.
-			Span,       // Perform span-calibration.
+			TurnDutsOff,	// Remove power from DUT.
+			TurnDutsOn,		// Apply power to DUT.			  
+			Default,		// Set factory default settings.
+			Range,			// Set range settings.
+			Zero,			// Perform zero-calibration.
+			Span,			// Perform span-calibration.
 		}
 
 		public enum ToleranceType
@@ -33,7 +33,7 @@ namespace Sensit.App.Calibration
 		private TestSetting _settings;			// settings for test
 		private Equipment _equipment;			// test equipment object
 		private readonly List<Dut> _duts;       // devices under test
-		private Stopwatch _stopwatch;           // keeper of test's elapsed time
+		private Stopwatch _elapsedTimeStopwatch;// keeper of test's elapsed time
 		private int _samplesTotal;				// helps calculate percent complete
 		private int _samplesComplete = 0;		// helps calculate percent complete
 
@@ -48,8 +48,6 @@ namespace Sensit.App.Calibration
 		#endregion
 
 		#region Properties
-
-		public TimeSpan? ElapsedTime => _stopwatch?.Elapsed;
 
 		// TODO:  Perhaps replace this single property with properties for SamplesComplete and SamplesTotal?
 		public int PercentProgress
@@ -203,7 +201,22 @@ namespace Sensit.App.Calibration
 			}
 		}
 
-		private async void SetpointCycle(TestControlledVariable variable, double setpoint, TimeSpan interval)
+		private void ProcessCommand(Command? command)
+		{
+			switch (command)
+			{
+				case Command.TurnDutsOff:
+				case Command.TurnDutsOn:
+				case Command.Default:
+				case Command.Range:
+				case Command.Span:
+				case Command.Zero:
+				default:
+					break;
+			}
+		}
+
+		private async void ProcessSetpoint(TestControlledVariable variable, double setpoint, TimeSpan interval)
 		{
 			// Update GUI.
 			_testThread.ReportProgress(PercentProgress, "Setting setpoint...");
@@ -262,101 +275,104 @@ namespace Sensit.App.Calibration
 					(Math.Abs(error) > variable.ErrorTolerance));
 		}
 
-		private void PerformDutCommand(uint dut, DutCommand? command)
+		private void ProcessSamples(double setpoint)
 		{
-			switch (command)
+			// Create an object to hold reference device readings.
+			Dictionary<VariableType, double> referenceReadings = new Dictionary<VariableType, double>();
+
+			// Fetch reference data and add it to the dictionary.
+			foreach (VariableType reference in _settings?.References ?? Enumerable.Empty<VariableType>())
 			{
-				case DutCommand.TurnOff:
-					_equipment.DutInterface.PowerOff(dut);
-					break;
-				case DutCommand.TurnOn:
-					_equipment.DutInterface.PowerOn(dut);
-					break;
-				case DutCommand.Default:
-				case DutCommand.Range:
-				case DutCommand.Span:
-				case DutCommand.Zero:
-				default:
-					break;
+				double value = _equipment.References[reference].Read(reference);
+
+				referenceReadings.Add(reference, value);
+			}
+
+			// Fetch readings from the DUTs.
+			List<double> dutValue = _equipment.DutInterface.Read();
+
+			// Record the data applicable to each DUT.
+			foreach (Dut dut in _duts)
+			{
+				// Only process found or failed DUTs.
+				if ((dut.Device.Status == DutStatus.Found) ||
+					(dut.Device.Status == DutStatus.Fail))
+				{
+					// Save the result.
+					dut.Results.Add(new TestResults
+					{
+						ElapsedTime = _elapsedTimeStopwatch.Elapsed,
+						Setpoint = setpoint,
+						Reference = referenceReadings[VariableType.GasConcentration],
+						SensorValue = dutValue[(int)(dut.Device.Index - 1)]
+					});
+				}
+
+				if (_testThread.CancellationPending) { break; }
 			}
 		}
 
-		private async void TestCycle()
+		/// <summary>
+		/// Perform all requested test actions in order.
+		/// </summary>
+		/// <remarks>
+		/// This method is basically a bunch of nested foreach loops corresponding to the test settings object.
+		/// Note that for cancelling a test to work correctly, each foreach loop must contain this line, or
+		/// else it will hang in that loop when a test is aborted:
+		/// <code>
+		/// if (_testThread.CancellationPending) { break; }
+		/// </code>
+		/// </remarks>
+		private async void ProcessTest()
 		{
 			// For each component...
 			foreach (TestComponent c in _settings?.Components ?? Enumerable.Empty<TestComponent>())
 			{
-				// Abort if requested.
-				if (_testThread.CancellationPending) { break; }
-
 				// For each DUT command...
-				foreach (DutCommand d in c?.DutCommands ?? Enumerable.Empty<DutCommand>())
+				foreach (Command command in c?.Commands ?? Enumerable.Empty<Command>())
 				{
-					// Abort if requested.
+					// Perform DUT command.
+					ProcessCommand(command);
+
 					if (_testThread.CancellationPending) { break; }
-
-					// For each DUT...
-					foreach (Dut dut in _duts)
-					{
-						// Abort if requested.
-						if (_testThread.CancellationPending) { break; }
-
-						// Perform DUT command.
-						PerformDutCommand(dut.Device.Index, d);
-					}
 				}
 
 				// For each controlled variable...
 				foreach (TestControlledVariable v in c?.ControlledVariables ?? Enumerable.Empty<TestControlledVariable>())
 				{
-					// Abort if requested.
-					if (_testThread.CancellationPending) { break; }
-
 					// Set active control mode.
 					_equipment.Controllers[v.VariableType].SetControlMode(ControlMode.Control);
 
 					// For each setpoint...
 					foreach (double sp in v?.Setpoints ?? Enumerable.Empty<double>())
 					{
-						// Abort if requested.
-						if (_testThread.CancellationPending) { break; }
-
 						// Set the setpoint.
-						SetpointCycle(v, sp, c.Interval);
+						ProcessSetpoint(v, sp, c.Interval);
 
 						// For each sample.
 						for (int i = 0; i < c.Samples; i++)
 						{
-							// Abort if requested.
-							if (_testThread.CancellationPending) { break; }
-
-							// Update GUI.
-							_testThread.ReportProgress(PercentProgress, "Taking sample " + i.ToString() + " of " + c.Samples + ".");
-
-							// TODO:  Record reference data.
-
 							// TODO:  Check stability of all controlled variables.
 
-							// Record DUT data.
-							_equipment.DutInterface.Read();
-
-							_samplesComplete++;
-
-							// TODO:  Get rid of this chunk.
-							foreach (Dut dut in _duts)
-							{
-								// Abort if requested.
-								if (_testThread.CancellationPending) { break; }
-
-								// Read and process DUT data.
-								dut.Read(sp, v.ErrorTolerance);
-							}
+							// Take sample data.
+							_testThread.ReportProgress(PercentProgress, "Taking sample " + i.ToString() + " of " + c.Samples + ".");
+							ProcessSamples(sp);
 
 							// Wait to get desired reading frequency.
 							await Task.Delay(c.Interval);
+
+							_samplesComplete++;
+
+							if (_testThread.CancellationPending) { break; }
 						}
+
+						if (_testThread.CancellationPending) { break; }
 					}
+
+					if (_testThread.CancellationPending) { break; }
 				}
+
+				if (_testThread.CancellationPending) { break; }
 			}
 		}
 
@@ -376,7 +392,7 @@ namespace Sensit.App.Calibration
 		private void TestThread(object sender, DoWorkEventArgs e)
 		{
 			// Get start time.
-			_stopwatch = Stopwatch.StartNew();
+			_elapsedTimeStopwatch = Stopwatch.StartNew();
 
 			try
 			{
@@ -407,7 +423,7 @@ namespace Sensit.App.Calibration
 					_equipment.DutInterface.Configure(3, selections);
 
 					// Perform test actions.
-					TestCycle();
+					ProcessTest();
 				} while (false);
 			}
 			catch (Exception ex)
@@ -419,8 +435,8 @@ namespace Sensit.App.Calibration
 			// and highly reliable since it cannot be cancelled.
 
 			// Calculate end time.
-			_stopwatch.Stop();
-			TimeSpan elapsedtime = _stopwatch.Elapsed;
+			_elapsedTimeStopwatch.Stop();
+			TimeSpan elapsedtime = _elapsedTimeStopwatch.Elapsed;
 
 			try
 			{
