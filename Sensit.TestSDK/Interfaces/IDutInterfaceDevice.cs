@@ -8,11 +8,6 @@ namespace Sensit.TestSDK.Interfaces
 	public interface IDutInterfaceDevice
 	{
 		/// <summary>
-		/// Number of devices under test controlled by the device.
-		/// </summary>
-		uint NumberOfDuts { set; }
-
-		/// <summary>
 		/// Set active bank and channels.
 		/// </summary>
 		/// <param name="bank">bank to read the channels from</param>
@@ -34,11 +29,8 @@ namespace Sensit.TestSDK.Interfaces
 		/// <summary>
 		/// Fetch the device's current readings/settings.
 		/// </summary>
-		/// <remarks>
-		/// Some devices (i.e. Agilent DAQs) return all readings at once.
-		/// Those devices should use this method to update values returned by the individual methods.
-		/// </remarks>
-		void Read();
+		/// <returns>readings from device</returns>
+		List<double> Read();
 
 		/// <summary>
 		/// Confirm that a DUT is present.
@@ -49,19 +41,5 @@ namespace Sensit.TestSDK.Interfaces
 		/// </remarks>
 		/// <param name="dut">the device to act upon</param>
 		void Find(uint dut);
-
-		/// <summary>
-		/// Collect digital output data.
-		/// </summary>
-		/// <param name="dut">the device to act upon</param>
-		/// <returns>the device's reported output value</returns>
-		int ReadCounts(uint dut);
-
-		/// <summary>
-		/// Collect analog output data.
-		/// </summary>
-		/// <param name="dut"></param>
-		/// <returns></returns>
-		double ReadAnalog(uint dut);
 	}
 }

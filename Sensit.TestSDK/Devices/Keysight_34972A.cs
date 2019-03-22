@@ -23,10 +23,6 @@ namespace Sensit.TestSDK.Devices
 	{
 		Ag3497x _v3497x;
 
-		private Dictionary<uint, double> _readings = new Dictionary<uint, double>();
-
-		public uint NumberOfDuts { private get; set; }
-
 		public void Open()
 		{
 			// The device uses a USB VISA interface, so look for devices with that pattern.
@@ -131,8 +127,10 @@ namespace Sensit.TestSDK.Devices
 			// Nothing to do here.
 		}
 
-		public void Read()
+		public List<double> Read()
 		{
+			List<double> readings = new List<double>();
+
 			try
 			{
 				// Changes from idle to wait-for-trigger state. 
@@ -147,46 +145,21 @@ namespace Sensit.TestSDK.Devices
 
 				string[] dataSeparated = data.Split(',');
 
-				// Remove any existing readings.
-				_readings.Clear();
-
 				for (int i = 0; i < dataSeparated.Length; i += 2)
 				{
-					// Parse sensor output from string into double and add to list _readings.
-					uint key = uint.Parse(dataSeparated[(i + 1)]) % 100;
+					// Parse sensor output from string into double and add to list of readings.
+					//uint key = uint.Parse(dataSeparated[(i + 1)]) % 100;
 					double value = double.Parse(dataSeparated[i], System.Globalization.NumberStyles.Any);
-					_readings.Add(key, value);
+					readings.Add(value);
 				}
 			}
 			catch (Exception ex)
 			{
-				throw new DeviceCommandFailedException("Could not read from Keysight datalogger.0"
+				throw new DeviceCommandFailedException("Could not read from Keysight datalogger."
 					+ Environment.NewLine + ex.Message);
 			}
-		}
 
-		public int ReadCounts(uint dut)
-		{
-			throw new NotImplementedException("Cannot read counts from Keysight datalogger.");
-		}
-
-		public double ReadAnalog(uint dut)
-		{
-			double reading = 0;
-			try
-			{
-				reading = _readings[dut];
-			}
-			catch (KeyNotFoundException)
-			{
-				if (dut == 0)
-					throw new DeviceSettingNotSupportedException("Keysight 34972A:  Channel 0 does not exist.");
-				else
-					throw new DeviceOutOfRangeException("Keysight 34972A:  Channel " + dut + " not configured for measurement.");
-			}
-
-			// Return the requested reading.
-			return reading;
+			return readings;
 		}
 
 		public void Close()

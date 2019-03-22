@@ -27,8 +27,39 @@ namespace Sensit.App.Keysight
 				Text += " " + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
 			}
 
+			// Set up the data view.
+			dataGridViewMeasurements.ColumnCount = 2;
+			dataGridViewMeasurements.Columns[0].Name = "Channel";
+			dataGridViewMeasurements.Columns[1].Name = "Measurement";
+
+			// Populate options from saved settings.
+			numericUpDownBank.Value = Properties.Settings.Default.Bank;
+			numericUpDownNumChannels.Value = Properties.Settings.Default.Channels;
+
 			// Find all available instruments.
 			Find();
+		}
+
+		/// <summary>
+		/// When File --> Exit menu item is clicked, close the application.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			Application.Exit();
+		}
+
+		/// <summary>
+		/// When the application closes, save current settings.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void FormKeysight_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			Properties.Settings.Default.Bank = Convert.ToUInt32(numericUpDownBank.Value);
+			Properties.Settings.Default.Channels = Convert.ToUInt32(numericUpDownNumChannels.Value);
+			Properties.Settings.Default.Save();
 		}
 
 		/// <summary>
@@ -85,7 +116,8 @@ namespace Sensit.App.Keysight
 						_datalogger.Open(comboBoxResources.Text);
 
 						// Update the user interface.
-						toolStripStatusLabel1.Text = "VISA open.";
+						groupBoxConfiguration.Enabled = true;
+						toolStripStatusLabel1.Text = "VISA connection opened.";
 					}
 					// If the "Closed" radio button has been checked...
 					else if (((RadioButton)sender) == radioButtonClosed)
@@ -97,7 +129,8 @@ namespace Sensit.App.Keysight
 						_datalogger.Close();
 
 						// Update user interface.
-						toolStripStatusLabel1.Text = "VISA closed.";
+						groupBoxConfiguration.Enabled = false;
+						toolStripStatusLabel1.Text = "VISA connection closed.";
 					}
 				}
 				// If an error occurs...
@@ -114,44 +147,47 @@ namespace Sensit.App.Keysight
 		}
 
 		/// <summary>
-		/// When File --> Exit menu item is clicked, close the application.
+		/// When the "Configure" button is clicked, set up the instrument.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+		private void buttonConfigure_Click(object sender, EventArgs e)
 		{
-			Application.Exit();
-		}
+			List<bool> channels = new List<bool>();
 
-        private void NumDut1_ValueChanged(object sender, EventArgs e)
-        {
-            updownNumDut1.Minimum = 1;
-            updownNumDut1.Maximum = 20;
-			Keysight_34972A dut1 = new Keysight_34972A
+			for(int i = 0; i < numericUpDownNumChannels.Value; i++)
 			{
-				NumberOfDuts = (int)updownNumDut1.Value
-			};
+				channels.Add(true);
+			}
+
+			_datalogger.Configure((int)numericUpDownBank.Value, channels);
 		}
 
-        private void buttonMeasure1_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                //Prevent user from modifying DUT number while retrieving data. 
-                updownNumDut1.Enabled = false;
-                Keysight_34972A analogMeas = new Keysight_34972A();
-                analogMeas.Open();
-                analogMeas.Read();
-                int value = decimal.ToInt32(updownSelectedDut.Value);
-                textboxVout1.Text = analogMeas.ReadAnalog(value).ToString();
-                analogMeas.Close();
-                //Re-enable DUT number selection. 
-                updownNumDut1.Enabled = true;
-            }
-            catch (DeviceSettingNotSupportedException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-    }
+		/// <summary>
+		/// When the "Measure" button is clicked, read from all channels.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void buttonMeasure_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// Read from datalogger.
+				List<double> readings = _datalogger.Read();
+
+				// Update GUI.
+				dataGridViewMeasurements.Rows.Clear();
+				for (int i = 0; i < readings.Count; i++)
+				{
+					string[] row = { (i + 1).ToString(), readings[i].ToString() };
+					dataGridViewMeasurements.Rows.Add(row);
+				}
+
+			}
+			catch (DeviceSettingNotSupportedException ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
+		}
+	}
 }
