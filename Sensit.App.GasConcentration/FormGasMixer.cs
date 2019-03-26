@@ -177,8 +177,8 @@ namespace Sensit.App.GasConcentration
 				toolStripStatusLabel1.Text = "Reading from mass flow controllers...";
 
 				// Read status from the mass flow controllers.
-				_mfcAnalyte.Update();
-				_mfcDiluent.Update();
+				_mfcAnalyte.Read();
+				_mfcDiluent.Read();
 
 				// Update the form.
 				textBoxAnalytePressure.Text = _mfcAnalyte.Readings[VariableType.Pressure].ToString();
@@ -274,7 +274,7 @@ namespace Sensit.App.GasConcentration
 			try
 			{
 				// Fetch new values from the mass flow controllers.
-				_gasMixer.Update();
+				_gasMixer.Read();
 
 				// Update the form.
 				textBoxGasConcentration.Text = _gasMixer.Readings[VariableType.GasConcentration].ToString();

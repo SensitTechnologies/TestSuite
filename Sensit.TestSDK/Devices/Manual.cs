@@ -45,7 +45,7 @@ namespace Sensit.TestSDK.Devices
 
 		#region Reference Device Methods
 
-		public void Update()
+		public void Read()
 		{
 			// Nothing to do here.
 		}

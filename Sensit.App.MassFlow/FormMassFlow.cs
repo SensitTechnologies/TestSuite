@@ -145,7 +145,7 @@ namespace Sensit.App.MassFlow
 				toolStripStatusLabel1.Text = "Reading from mass flow controller...";
 
 				// Read status from the mass flow controller.
-				_massFlowController.Update();
+				_massFlowController.Read();
 
 				// Update the form.
 				textBoxPressure.Text = _massFlowController.Readings[VariableType.Pressure].ToString();

@@ -315,7 +315,7 @@ namespace Sensit.TestSDK.Devices
 
 		public UnitOfMeasure.Pressure PressureUnit { get; set; } = UnitOfMeasure.Pressure.PSI;
 
-		public void Update()
+		public void Read()
 		{
 			try
 			{

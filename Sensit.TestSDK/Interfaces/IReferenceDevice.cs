@@ -84,7 +84,7 @@ namespace Sensit.TestSDK.Interfaces
 		/// <summary>
 		/// Fetch new values from the device.
 		/// </summary>
-		void Update();
+		void Read();
 	}
 
 	/// <summary>

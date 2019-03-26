@@ -100,7 +100,7 @@ namespace Sensit.TestSDK.Devices
 			_analyteController.SetControlMode(mode);
 		}
 
-		public void Update()
+		public void Read()
 		{
 			// Update setpoints.
 			double diluentFlowSetpoint = _dilutentController.ReadSetpoint(VariableType.MassFlow);
@@ -110,8 +110,8 @@ namespace Sensit.TestSDK.Devices
 			_gasMixSetpoint = _analyteController.ReadSetpoint(VariableType.MassFlow) / _massFlowSetpoint * AnalyteBottleConcentration;
 
 			// Update references.
-			_dilutentReference.Update();
-			_analyteReference.Update();
+			_dilutentReference.Read();
+			_analyteReference.Read();
 
 			// Calculate total mass flow.
 			Readings[VariableType.MassFlow] = _dilutentReference.Readings[VariableType.MassFlow] + _analyteReference.Readings[VariableType.MassFlow];
