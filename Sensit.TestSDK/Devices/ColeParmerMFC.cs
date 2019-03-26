@@ -85,10 +85,6 @@ namespace Sensit.TestSDK.Devices
 		private static readonly char ADDRESS = 'A';
 
 		private double _massFlowSetpoint = 0.0;
-		private double _temperature;
-		private double _pressure;
-		private double _massFlow;
-		private double _volumeFlow;
 
 		/// <summary>
 		/// Enable the mass flow controller's streaming mode.
@@ -303,6 +299,14 @@ namespace Sensit.TestSDK.Devices
 
 		#region Reference Device Methods
 
+		public Dictionary<VariableType, double> Readings { get; private set; } = new Dictionary<VariableType, double>
+		{
+			{ VariableType.MassFlow, 0.0 },
+			{ VariableType.Pressure, 0.0 },
+			{ VariableType.Temperature, 0.0 },
+			{ VariableType.VolumeFlow, 0.0 }
+		};
+
 		public UnitOfMeasure.Flow FlowUnit { get; set; } = UnitOfMeasure.Flow.CubicFeetPerMinute;
 
 		public Gas GasSelection { get; set; } = Gas.Air;
@@ -333,10 +337,10 @@ namespace Sensit.TestSDK.Devices
 				}
 
 				// Figure out which is which and update class properties.
-				_pressure = Convert.ToSingle(words[1]);
-				_temperature = Convert.ToSingle(words[2]);
-				_volumeFlow = Convert.ToSingle(words[3]);
-				_massFlow = Convert.ToSingle(words[4]);
+				Readings[VariableType.Pressure] = Convert.ToSingle(words[1]);
+				Readings[VariableType.Temperature] = Convert.ToSingle(words[2]);
+				Readings[VariableType.VolumeFlow] = Convert.ToSingle(words[3]);
+				Readings[VariableType.MassFlow] = Convert.ToSingle(words[4]);
 
 				// Probably don't update the control properties.
 				//Setpoint = Convert.ToSingle(words[5]);
@@ -354,30 +358,6 @@ namespace Sensit.TestSDK.Devices
 			}
 		}
 
-		public double Read(VariableType type)
-		{
-			// Return the desired value.
-			double value = 0;
-			switch (type)
-			{
-				case VariableType.MassFlow:
-					value = _massFlow;
-					break;
-				case VariableType.Pressure:
-					value = _pressure;
-					break;
-				case VariableType.Temperature:
-					value = _temperature;
-					break;
-				case VariableType.VolumeFlow:
-					value = _volumeFlow;
-					break;
-				default:
-					throw new DeviceSettingNotSupportedException("Cole Parmer MFC does not support the requested variable type.");
-			}
-			return value;
-		}
-
 		#endregion
 
 		#region Control Device Methods
@@ -389,17 +369,22 @@ namespace Sensit.TestSDK.Devices
 				throw new DeviceSettingNotSupportedException("Cole Parmer MFC does not support requested setpoint.");
 			}
 
+			// Check for valid setpoint values.
+			if (setpoint < 0.0)
+			{
+				throw new DeviceOutOfRangeException("Mass Flow Controller setpoint must be greater than or equal to 0."
+					+ Environment.NewLine + "Attempted setpoint was:  " + setpoint);
+			}
+
+			_massFlowSetpoint = setpoint;
+
+			WriteMassFlowSetpoint(type, _massFlowSetpoint);
+		}
+
+		private void WriteMassFlowSetpoint(VariableType type, double setpoint)
+		{
 			try
 			{
-				// Check for valid setpoint values.
-				if (setpoint < 0.0)
-				{
-					throw new DeviceOutOfRangeException("Mass Flow Controller setpoint must be greater than or equal to 0."
-						+ Environment.NewLine + "Attempted setpoint was:  " + setpoint);
-				}
-
-				_massFlowSetpoint = setpoint;
-
 				// "AS4.54" = Set setpoint to 4.54 on device A.
 				_serialPort.WriteLine(ADDRESS + Command.SetSetpoint + _massFlowSetpoint.ToString());
 
@@ -412,7 +397,7 @@ namespace Sensit.TestSDK.Devices
 				float returnedValue = Convert.ToSingle(words[5]);
 
 				// Check the setpoint.
-				if (returnedValue - _massFlowSetpoint > double.Epsilon)
+				if (returnedValue - setpoint > double.Epsilon)
 				{
 					throw new DeviceCommunicationException("Could not write setpoint to mass flow controller."
 						+ Environment.NewLine + "Value read from instrument (" + returnedValue.ToString() + ") was incorrect.");
@@ -432,6 +417,11 @@ namespace Sensit.TestSDK.Devices
 
 		public double ReadSetpoint(VariableType type)
 		{
+			return _massFlowSetpoint;
+		}
+
+		private double ReadMassFlowSetpoint(VariableType type)
+		{
 			try
 			{
 				// Read (when in polling mode) by sending the device address.
@@ -445,10 +435,10 @@ namespace Sensit.TestSDK.Devices
 				string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
 
 				// Convert the setpoint to a number and set the property.
-				_massFlowSetpoint = Convert.ToSingle(words[5]);
+				double setpoint = Convert.ToSingle(words[5]);
 
 				// Return the setpoint in case the user wants it.
-				return _massFlowSetpoint;
+				return setpoint;
 			}
 			catch (InvalidOperationException ex)
 			{
@@ -475,11 +465,11 @@ namespace Sensit.TestSDK.Devices
 				case ControlMode.Ambient:
 				case ControlMode.Measure:
 					// Ambient and measure modes are the same and require simply setting a setpoint of zero.
-					WriteSetpoint(VariableType.MassFlow, 0.0);
+					WriteMassFlowSetpoint(VariableType.MassFlow, 0.0);
 					break;
 				case ControlMode.Control:
 					// In control mode, just update the setpoint.
-					WriteSetpoint(VariableType.MassFlow, _massFlowSetpoint);
+					WriteMassFlowSetpoint(VariableType.MassFlow, _massFlowSetpoint);
 					break;
 				default:
 					throw new DeviceSettingNotSupportedException("Cannot set mass flow controller control mode:"

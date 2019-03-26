@@ -181,14 +181,14 @@ namespace Sensit.App.GasConcentration
 				_mfcDiluent.Update();
 
 				// Update the form.
-				textBoxAnalytePressure.Text = _mfcAnalyte.Read(VariableType.Pressure).ToString();
-				textBoxDiluentPressure.Text = _mfcDiluent.Read(VariableType.Pressure).ToString();
-				textBoxAnalyteTemperature.Text = _mfcAnalyte.Read(VariableType.Temperature).ToString();
-				textBoxDiluentTemperature.Text = _mfcDiluent.Read(VariableType.Temperature).ToString();
-				textBoxAnalyteVolumetricFlow.Text = _mfcAnalyte.Read(VariableType.VolumeFlow).ToString();
-				textBoxDiluentVolumetricFlow.Text = _mfcDiluent.Read(VariableType.VolumeFlow).ToString();
-				textBoxAnalyteMassFlow.Text = _mfcAnalyte.Read(VariableType.MassFlow).ToString();
-				textBoxDiluentMassFlow.Text = _mfcDiluent.Read(VariableType.MassFlow).ToString();
+				textBoxAnalytePressure.Text = _mfcAnalyte.Readings[VariableType.Pressure].ToString();
+				textBoxDiluentPressure.Text = _mfcDiluent.Readings[VariableType.Pressure].ToString();
+				textBoxAnalyteTemperature.Text = _mfcAnalyte.Readings[VariableType.Temperature].ToString();
+				textBoxDiluentTemperature.Text = _mfcDiluent.Readings[VariableType.Temperature].ToString();
+				textBoxAnalyteVolumetricFlow.Text = _mfcAnalyte.Readings[VariableType.VolumeFlow].ToString();
+				textBoxDiluentVolumetricFlow.Text = _mfcDiluent.Readings[VariableType.VolumeFlow].ToString();
+				textBoxAnalyteMassFlow.Text = _mfcAnalyte.Readings[VariableType.MassFlow].ToString();
+				textBoxDiluentMassFlow.Text = _mfcDiluent.Readings[VariableType.MassFlow].ToString();
 				textBoxAnalyteSetpoint.Text = _mfcAnalyte.ReadSetpoint(VariableType.MassFlow).ToString();
 				textBoxDiluentSetpoint.Text = _mfcDiluent.ReadSetpoint(VariableType.MassFlow).ToString();
 				comboBoxAnalyteGas.Text = _mfcAnalyte.GasSelection.ToString();
@@ -199,7 +199,7 @@ namespace Sensit.App.GasConcentration
 			{
 				// If an error occurs, alert the user.
 				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
-				toolStripStatusLabel1.Text = ex.Message;
+				toolStripStatusLabel1.Text = ex.GetType().ToString();
 			}
 		}
 
@@ -230,7 +230,7 @@ namespace Sensit.App.GasConcentration
 			{
 				// If an error occurs, alert the user.
 				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
-				toolStripStatusLabel1.Text = ex.Message;
+				toolStripStatusLabel1.Text = ex.GetType().ToString();
 			}
 		}
 
@@ -259,13 +259,13 @@ namespace Sensit.App.GasConcentration
 				// If the user didn't enter a valid number, prompt the user.
 				MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine +
 					"Did you type a valid setpoint?", ex.GetType().Name.ToString());
-				toolStripStatusLabel1.Text = ex.Message;
+				toolStripStatusLabel1.Text = ex.GetType().ToString();
 			}
 			catch (Exception ex)
 			{
 				// If an error occurs, alert the user.
 				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
-				toolStripStatusLabel1.Text = ex.Message;
+				toolStripStatusLabel1.Text = ex.GetType().ToString();
 			}
 		}
 
@@ -274,19 +274,22 @@ namespace Sensit.App.GasConcentration
 			try
 			{
 				// Fetch new values from the mass flow controllers.
-				_gasMixer.Read(VariableType.MassFlow);
+				_gasMixer.Update();
 
 				// Update the form.
-				textBoxGasConcentration.Text = _gasMixer.Read(VariableType.GasConcentration).ToString();
+				textBoxGasConcentration.Text = _gasMixer.Readings[VariableType.GasConcentration].ToString();
 				textBoxGasConcentrationSetpoint.Text = _gasMixer.ReadSetpoint(VariableType.GasConcentration).ToString();
 				textBoxMassFlowSetpoint.Text = _gasMixer.ReadSetpoint(VariableType.MassFlow).ToString();
 				textBoxAnalyteBottleConcentration.Text = _gasMixer.AnalyteBottleConcentration.ToString();
+
+				// Alert the user.
+				toolStripStatusLabel1.Text = "Success.";
 			}
 			catch (Exception ex)
 			{
 				// If an error occurs, alert the user.
 				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
-				toolStripStatusLabel1.Text = ex.Message;
+				toolStripStatusLabel1.Text = ex.GetType().ToString();
 			}
 		}
 
@@ -304,19 +307,21 @@ namespace Sensit.App.GasConcentration
 				_gasMixer.WriteSetpoint(VariableType.GasConcentration, analyteConcentration);
 				_gasMixer.WriteSetpoint(VariableType.MassFlow, massFlowSetpoint);
 
+				// Alert the user.
+				toolStripStatusLabel1.Text = "Success.";
 			}
 			catch (FormatException ex)
 			{
 				// If the user didn't enter a valid number, prompt the user.
 				MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine +
 					"Did you type a valid setpoint?", ex.GetType().Name.ToString());
-				toolStripStatusLabel1.Text = ex.Message;
+				toolStripStatusLabel1.Text = ex.GetType().ToString();
 			}
 			catch (Exception ex)
 			{
 				// If an error occurs, alert the user.
 				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
-				toolStripStatusLabel1.Text = ex.Message;
+				toolStripStatusLabel1.Text = ex.GetType().ToString();
 			}
 		}
 	}

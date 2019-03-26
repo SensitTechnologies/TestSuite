@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using Sensit.TestSDK.Calculations;
 
 namespace Sensit.TestSDK.Interfaces
@@ -78,24 +79,12 @@ namespace Sensit.TestSDK.Interfaces
 	[Description("Reference Device")]
 	public interface IReferenceDevice
 	{
+		Dictionary<VariableType, double> Readings { get; }
+
 		/// <summary>
 		/// Fetch new values from the device.
 		/// </summary>
-		/// <remarks>
-		/// Some devices read out several variables in a single communication.
-		/// For those devices, this method is where that single communication should happen,
-		/// and then the Read command can fetch the individual values separately as needed.
-		/// </remarks>
 		void Update();
-
-		/// <summary>
-		/// Fetch the device's current readings/settings.
-		/// </summary>
-		/// <remarks>
-		/// For convenience, this method returns the specified variable.
-		/// </remarks>
-		/// /// <param name="type">variable of interest</param>
-		double Read(VariableType type);
 	}
 
 	/// <summary>

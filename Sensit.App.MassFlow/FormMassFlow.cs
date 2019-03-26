@@ -145,13 +145,13 @@ namespace Sensit.App.MassFlow
 				toolStripStatusLabel1.Text = "Reading from mass flow controller...";
 
 				// Read status from the mass flow controller.
-				_massFlowController.Read(VariableType.MassFlow);
+				_massFlowController.Update();
 
 				// Update the form.
-				textBoxPressure.Text = _massFlowController.Read(VariableType.Pressure).ToString();
-				textBoxTemperature.Text = _massFlowController.Read(VariableType.Temperature).ToString();
-				textBoxVolumetricFlow.Text = _massFlowController.Read(VariableType.VolumeFlow).ToString();
-				textBoxMassFlow.Text = _massFlowController.Read(VariableType.MassFlow).ToString();
+				textBoxPressure.Text = _massFlowController.Readings[VariableType.Pressure].ToString();
+				textBoxTemperature.Text = _massFlowController.Readings[VariableType.Temperature].ToString();
+				textBoxVolumetricFlow.Text = _massFlowController.Readings[VariableType.VolumeFlow].ToString();
+				textBoxMassFlow.Text = _massFlowController.Readings[VariableType.MassFlow].ToString();
 				textBoxSetpoint.Text = _massFlowController.ReadSetpoint(VariableType.MassFlow).ToString();
 				comboBoxGas.Text = _massFlowController.GasSelection.ToString();
 				toolStripStatusLabel1.Text = "Success.";

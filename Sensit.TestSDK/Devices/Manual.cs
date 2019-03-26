@@ -9,11 +9,10 @@ namespace Sensit.TestSDK.Devices
 	public class Manual : IGasMixReference, IMassFlowReference, IVolumeFlowReference, IVelocityReference, IPressureReference, ITemperatureReference,
 		IGasMixController, IMassFlowController, IVolumeFlowController, IVelocityController, IPressureController, ITemperatureController
 	{
-		private readonly Dictionary<VariableType, double> _values;
+		#region Reference Device Properties
 
-		public Manual()
-		{
-			_values = new Dictionary<VariableType, double>
+		public Dictionary<VariableType, double> Readings { get; private set; }
+			= new Dictionary<VariableType, double>
 			{
 				{ VariableType.GasConcentration, 0.0 },
 				{ VariableType.MassFlow, 0.0 },
@@ -22,9 +21,6 @@ namespace Sensit.TestSDK.Devices
 				{ VariableType.Velocity, 0.0 },
 				{ VariableType.VolumeFlow, 0.0 }
 			};
-		}
-
-		#region Reference Device Properties
 
 		public UnitOfMeasure.Flow FlowUnit { get; set; }
 
@@ -54,19 +50,6 @@ namespace Sensit.TestSDK.Devices
 			// Nothing to do here.
 		}
 
-		public double Read(VariableType type)
-		{
-			// Prompt the user for a new value.
-			double value = _values[type];
-			InputDialog.Numeric(type.GetDescription(), ref value);
-
-			// Remember the value.
-			_values[type] = value;
-
-			// Return the value.
-			return _values[type];
-		}
-
 		#endregion
 
 		#region Control Device Methods
@@ -78,12 +61,12 @@ namespace Sensit.TestSDK.Devices
 
 		public void WriteSetpoint(VariableType type, double setpoint)
 		{
-			_values[type] = setpoint;
+			Readings[type] = setpoint;
 		}
 
 		public double ReadSetpoint(VariableType type)
 		{
-			return _values[type];
+			return Readings[type];
 		}
 
 		#endregion

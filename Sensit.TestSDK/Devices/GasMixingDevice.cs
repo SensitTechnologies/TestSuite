@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Sensit.TestSDK.Calculations;
 using Sensit.TestSDK.Exceptions;
 using Sensit.TestSDK.Interfaces;
@@ -28,15 +29,18 @@ namespace Sensit.TestSDK.Devices
 		// desired analyte concentration in mixed gas [%V]; must never exceed analyte bottle concentration
 		private double _gasMixSetpoint = 0;
 
-		// actual total mass flow (summed from both mass flow controllers)
-		private double _massFlow;
-
-		// actual analyte concentration [%V] in mixed gas (calculated from mass flow controllers' measured flows)
-		private double _gasMix;
-
 		#endregion
 
 		#region Properties
+
+		public Dictionary<VariableType, double> Readings { get; private set; } = new Dictionary<VariableType, double>
+		{
+			// actual analyte concentration [%V] in mixed gas (calculated from mass flow controllers' measured flows)
+			{ VariableType.GasConcentration, 0.0 },
+
+			// actual total mass flow (summed from both mass flow controllers)
+			{ VariableType.MassFlow, 0.0 }
+		};
 
 		/// <summary>
 		/// Unit of measure for mass flow.
@@ -98,40 +102,28 @@ namespace Sensit.TestSDK.Devices
 
 		public void Update()
 		{
-			double dilutentFlow = _dilutentController.ReadSetpoint(VariableType.MassFlow);
-			double analyteFlow = _analyteController.ReadSetpoint(VariableType.MassFlow);
+			// Update setpoints.
+			double diluentFlowSetpoint = _dilutentController.ReadSetpoint(VariableType.MassFlow);
+			double analyteFlowSetpoint = _analyteController.ReadSetpoint(VariableType.MassFlow);
 
-			_massFlowSetpoint = dilutentFlow + analyteFlow;
+			_massFlowSetpoint = diluentFlowSetpoint + analyteFlowSetpoint;
 			_gasMixSetpoint = _analyteController.ReadSetpoint(VariableType.MassFlow) / _massFlowSetpoint * AnalyteBottleConcentration;
 
+			// Update references.
+			_dilutentReference.Update();
+			_analyteReference.Update();
+
 			// Calculate total mass flow.
-			_massFlow = _dilutentReference.Read(VariableType.MassFlow) + _analyteReference.Read(VariableType.MassFlow);
+			Readings[VariableType.MassFlow] = _dilutentReference.Readings[VariableType.MassFlow] + _analyteReference.Readings[VariableType.MassFlow];
 
 			// Calculate analyte concentration.
 			if (_massFlowSetpoint.Equals(0.0))
 			{
-				_gasMix = 0.0;
+				Readings[VariableType.GasConcentration] = 0.0;
 			}
 			else
 			{
-				_gasMix = _analyteReference.Read(VariableType.MassFlow) / _massFlowSetpoint * _analyteBottleConcentration;
-			}
-		}
-
-		public double Read(VariableType type)
-		{
-			// Return the requested value.
-			if (type == VariableType.GasConcentration)
-			{
-				return _gasMix;
-			}
-			else if (type == VariableType.MassFlow)
-			{
-				return _massFlow;
-			}
-			else
-			{
-				throw new DeviceSettingNotSupportedException("Gas Mixing Device does not support requested reading.");
+				Readings[VariableType.GasConcentration] = _analyteReference.Readings[VariableType.MassFlow] / _massFlowSetpoint * _analyteBottleConcentration;
 			}
 		}
 
