@@ -173,13 +173,13 @@ namespace Sensit.App.Keysight
 			try
 			{
 				// Read from datalogger.
-				List<double> readings = _datalogger.Read();
+				_datalogger.Read();
 
 				// Update GUI.
 				dataGridViewMeasurements.Rows.Clear();
-				for (int i = 0; i < readings.Count; i++)
+				for (int i = 0; i < _datalogger.Readings.Count; i++)
 				{
-					string[] row = { (i + 1).ToString(), readings[i].ToString() };
+					string[] row = { (i + 1).ToString(), _datalogger.Readings[i].ToString() };
 					dataGridViewMeasurements.Rows.Add(row);
 				}
 

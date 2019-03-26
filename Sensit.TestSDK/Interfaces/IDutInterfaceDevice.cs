@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Sensit.TestSDK.Interfaces
 {
@@ -7,6 +8,11 @@ namespace Sensit.TestSDK.Interfaces
 	/// </summary>
 	public interface IDutInterfaceDevice
 	{
+		/// <summary>
+		/// Readings from device.
+		/// </summary>
+		List<double> Readings { get; }
+
 		/// <summary>
 		/// Set active bank and channels.
 		/// </summary>
@@ -17,7 +23,6 @@ namespace Sensit.TestSDK.Interfaces
 		/// <summary>
 		/// Fetch the device's current readings/settings.
 		/// </summary>
-		/// <returns>readings from device</returns>
-		List<double> Read();
+		void Read();
 	}
 }

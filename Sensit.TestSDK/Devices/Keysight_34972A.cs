@@ -23,6 +23,8 @@ namespace Sensit.TestSDK.Devices
 	{
 		Ag3497x _v3497x;
 
+		public List<double> Readings { get; private set; } = new List<double>();
+
 		public void Open()
 		{
 			// The device uses a USB VISA interface, so look for devices with that pattern.
@@ -127,14 +129,12 @@ namespace Sensit.TestSDK.Devices
 			// Nothing to do here.
 		}
 
-		public List<double> Read()
+		public void Read()
 		{
-			List<double> readings = new List<double>();
-
 			try
 			{
-				// Changes from idle to wait-for-trigger state. 
-				// May want to move to "Open". Unsure if state is changed back to idle upon scan completion. 
+				// Changes from idle to wait-for-trigger state.
+				// May want to move to "Open". Unsure if state is changed back to idle upon scan completion.
 				_v3497x.SCPI.INITiate.Command();
 
 				// Sends trigger via bus source. 
@@ -150,7 +150,7 @@ namespace Sensit.TestSDK.Devices
 					// Parse sensor output from string into double and add to list of readings.
 					//uint key = uint.Parse(dataSeparated[(i + 1)]) % 100;
 					double value = double.Parse(dataSeparated[i], System.Globalization.NumberStyles.Any);
-					readings.Add(value);
+					Readings.Add(value);
 				}
 			}
 			catch (Exception ex)
@@ -158,8 +158,6 @@ namespace Sensit.TestSDK.Devices
 				throw new DeviceCommandFailedException("Could not read from Keysight datalogger."
 					+ Environment.NewLine + ex.Message);
 			}
-
-			return readings;
 		}
 
 		public void Close()
