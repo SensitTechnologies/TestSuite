@@ -112,6 +112,11 @@ namespace Sensit.App.Calibration
 			},
 			new TestSetting("Warm-Up Stability")
 			{
+				References = new List<VariableType>
+				{
+					VariableType.MassFlow,
+					VariableType.GasConcentration
+				},
 				Components = new List<TestComponent>
 				{
 					// Apply gas for 5 minutes.
@@ -157,6 +162,11 @@ namespace Sensit.App.Calibration
 			},
 			new TestSetting("Linearity")
 			{
+				References = new List<VariableType>
+				{
+					VariableType.MassFlow,
+					VariableType.GasConcentration
+				},
 				Components = new List<TestComponent>
 				{
 					// Ramp up and down 5 times.  Measure gas every 1 second.  Don't wait for stability.
@@ -346,6 +356,11 @@ namespace Sensit.App.Calibration
 			},
 			new TestSetting("Transient Response")
 			{
+				References = new List<VariableType>
+				{
+					VariableType.MassFlow,
+					VariableType.GasConcentration
+				},
 				Components = new List<TestComponent>
 				{
 					// Allow DUT to stabilize for 1 hour with normal air applied.
@@ -562,6 +577,11 @@ namespace Sensit.App.Calibration
 			new TestSetting("Sustained Hysteresis"),
 			new TestSetting("Short-term Stability")
 			{
+				References = new List<VariableType>
+				{
+					VariableType.MassFlow,
+					VariableType.GasConcentration
+				},
 				Components = new List<TestComponent>
 				{
 					// Take samples every second for 10 minutes with 21% O2 (the amount in ambient air) applied.
