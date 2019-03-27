@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 using Sensit.TestSDK.Exceptions;
 using Sensit.TestSDK.Interfaces;
@@ -12,6 +12,14 @@ namespace Sensit.App.Calibration
 {
 	public class Test
 	{
+		#region Enumerations
+
+		/// <summary>
+		/// Non-measurement related commands that can be executed during a test.
+		/// </summary>
+		/// <remarks>
+		/// These actions can activate a relay, send info to the DUTs, etc.
+		/// </remarks>
 		public enum Command
 		{
 			TurnDutsOff,	// Remove power from DUT.
@@ -22,6 +30,9 @@ namespace Sensit.App.Calibration
 			Span,			// Perform span-calibration.
 		}
 
+		/// <summary>
+		/// Types of tolerances for DUT ranges
+		/// </summary>
 		public enum ToleranceType
 		{
 			Absolute,			// Quantity of range.
@@ -29,13 +40,19 @@ namespace Sensit.App.Calibration
 			PercentReading      // Percent of reading.
 		}
 
+		#endregion
+
+		#region Fields
+
 		private BackgroundWorker _testThread;   // task that will handle test operations
 		private TestSetting _settings;			// settings for test
 		private Equipment _equipment;			// test equipment object
 		private readonly List<Dut> _duts;       // devices under test
 		private Stopwatch _elapsedTimeStopwatch;// keeper of test's elapsed time
 		private int _samplesTotal;				// helps calculate percent complete
-		private int _samplesComplete = 0;		// helps calculate percent complete
+		private int _samplesComplete = 0;       // helps calculate percent complete
+
+		#endregion
 
 		#region Delegates
 
@@ -49,7 +66,9 @@ namespace Sensit.App.Calibration
 
 		#region Properties
 
-		// TODO:  Perhaps replace this single property with properties for SamplesComplete and SamplesTotal?
+		/// <summary>
+		/// Progress of the test, in percent.
+		/// </summary>
 		public int PercentProgress
 		{
 			get
@@ -165,15 +184,17 @@ namespace Sensit.App.Calibration
 		/// <summary>
 		/// If we can't reach a setpoint, stop the equipment and prompt the user.
 		/// </summary>
+		/// <remarks>
+		/// Measure/vent mode must be supported for all devices.
+		/// Measure mode should save active setpoints but not use them.
+		/// /// Equipment has properties for control devices and reference devices.
+		/// Those properties are Dictionaries with the key being the variable type.
+		/// Then we can initialize them in Equipment.cs, iterate through them here, and set parameters when needed.
+		/// </remarks>
 		/// <param name="errorMessage">message to display to the user</param>
 		private void PopupAlarm(string errorMessage)
 		{
 			// Stop the equipment to reduce change of damage.
-			// TODO:  Ensure measure/vent mode is supported for all devices.
-			// Measure mode should save active setpoints but not use them.  Vent mode might discard setpoints?
-			// TODO:  Equipment should have a property for control devices and reference devices.
-			// Those properties could be Dictionaries with the key being the variable type.
-			// Then we can initialize them in Equipment.cs, iterate through them here, and set parameters when needed.
 			foreach (KeyValuePair<VariableType, IControlDevice> c in _equipment.Controllers)
 			{
 				c.Value.SetControlMode(ControlMode.Measure);
@@ -196,7 +217,33 @@ namespace Sensit.App.Calibration
 			{
 				foreach (KeyValuePair<VariableType, IControlDevice> c in _equipment.Controllers)
 				{
+					// Resume control mode.
 					c.Value.SetControlMode(ControlMode.Control);
+
+					// Delay for controller to get to setpoint.
+					Thread.Sleep(2000);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Check whether all controlled variables are within stability tolerances.
+		/// </summary>
+		private void StabilityCheck(List<TestControlledVariable> controlledVariables)
+		{
+			// For each controller...
+			foreach (TestControlledVariable v in controlledVariables)
+			{
+				// Read the setpoint.
+				double setpoint = _equipment.Controllers[v.VariableType].ReadSetpoint(v.VariableType);
+
+				// Read the reference reading.
+				double reading = _equipment.References[v.VariableType].Readings[v.VariableType];
+
+				// If the reading is out of tolerance...
+				if (Math.Abs(setpoint - reading) > v.ErrorTolerance)
+				{
+					PopupAlarm(v.VariableType.ToString() + " is out of tolerance.");
 				}
 			}
 		}
@@ -216,7 +263,7 @@ namespace Sensit.App.Calibration
 			}
 		}
 
-		private async void ProcessSetpoint(TestControlledVariable variable, double setpoint, TimeSpan interval)
+		private void ProcessSetpoint(TestControlledVariable variable, double setpoint, TimeSpan interval)
 		{
 			// Update GUI.
 			_testThread.ReportProgress(PercentProgress, "Setting setpoint...");
@@ -233,6 +280,7 @@ namespace Sensit.App.Calibration
 
 			// Take readings until they are within tolerance for the required settling time.
 			double error;
+			double rate;
 			do
 			{
 				// Abort if requested.
@@ -249,14 +297,14 @@ namespace Sensit.App.Calibration
 				}
 
 				// Get reference reading.
-				_equipment.References[variable.VariableType].Update();
-				double reading = _equipment.References[variable.VariableType].Read(variable.VariableType);
+				_equipment.References[variable.VariableType].Read();
+				double reading = _equipment.References[variable.VariableType].Readings[variable.VariableType];
 
 				// Calculate error.
 				error = reading - setpoint;
 
 				// Calculate rate of change.
-				double rate = (reading - previous) / (interval.TotalSeconds / 1000);
+				rate = (reading - previous) / (interval.TotalSeconds);
 				previous = reading;
 
 				// If tolerance has been exceeded, reset the stability time.
@@ -270,9 +318,10 @@ namespace Sensit.App.Calibration
 					+ (variable.StabilityTime - stopwatch.Elapsed).ToString(@"hh\:mm\:ss"));
 
 				// Wait to get desired reading frequency.
-				await Task.Delay(interval);
+				Thread.Sleep(interval);
 			} while ((stopwatch.Elapsed <= variable.StabilityTime) ||
-					(Math.Abs(error) > variable.ErrorTolerance));
+					(Math.Abs(error) > variable.ErrorTolerance) /* ||
+					(Math.Abs(rate) > variable.RateTolerance)*/);
 		}
 
 		private void ProcessSamples(double setpoint)
@@ -283,13 +332,11 @@ namespace Sensit.App.Calibration
 			// Fetch reference data and add it to the dictionary.
 			foreach (VariableType reference in _settings?.References ?? Enumerable.Empty<VariableType>())
 			{
-				double value = _equipment.References[reference].Read(reference);
+				_equipment.References[reference].Read();
+				double value = _equipment.References[reference].Readings[reference];
 
 				referenceReadings.Add(reference, value);
 			}
-
-			// Fetch readings from the DUTs.
-			List<double> dutValue = _equipment.DutInterface.Read();
 
 			// Record the data applicable to each DUT.
 			foreach (Dut dut in _duts)
@@ -304,7 +351,7 @@ namespace Sensit.App.Calibration
 						ElapsedTime = _elapsedTimeStopwatch.Elapsed,
 						Setpoint = setpoint,
 						Reference = referenceReadings[VariableType.GasConcentration],
-						SensorValue = dutValue[(int)(dut.Device.Index - 1)]
+						SensorValue = _equipment.DutInterface.Readings[(int)(dut.Device.Index - 1)]
 					});
 				}
 
@@ -323,7 +370,7 @@ namespace Sensit.App.Calibration
 		/// if (_testThread.CancellationPending) { break; }
 		/// </code>
 		/// </remarks>
-		private async void ProcessTest()
+		private void ProcessTest()
 		{
 			// For each component...
 			foreach (TestComponent c in _settings?.Components ?? Enumerable.Empty<TestComponent>())
@@ -352,14 +399,20 @@ namespace Sensit.App.Calibration
 						// For each sample.
 						for (int i = 0; i < c.Samples; i++)
 						{
-							// TODO:  Check stability of all controlled variables.
+							// Update GUI.
+							_testThread.ReportProgress(PercentProgress, "Taking sample " + i.ToString() + " of " + c.Samples + ".");
+
+							// Fetch readings from the DUTs.
+							_equipment.DutInterface.Read();
+
+							// Check stability of all controlled variables.
+							StabilityCheck(c.ControlledVariables);
 
 							// Take sample data.
-							_testThread.ReportProgress(PercentProgress, "Taking sample " + i.ToString() + " of " + c.Samples + ".");
 							ProcessSamples(sp);
 
 							// Wait to get desired reading frequency.
-							await Task.Delay(c.Interval);
+							Thread.Sleep(c.Interval);
 
 							_samplesComplete++;
 
@@ -404,22 +457,21 @@ namespace Sensit.App.Calibration
 					_equipment.Open();
 					if (_testThread.CancellationPending) { break; }
 
-					// Initialize DUTs.
+					// Initialize DUT interface device.
+					_testThread.ReportProgress(0, "Configuring DUT Interface Device...");
+					// TODO:  This is ugly.  Make it go away.
 					List<bool> selections = new List<bool>();
 					foreach (Dut dut in _duts)
 					{
 						if (_testThread.CancellationPending) { break; }
 
-						// TODO:  This is ugly.  Make it go away.
 						if (dut.Device.Selected)
 							selections.Add(true);
 						else
 							selections.Add(false);
-					}
 
-					// Configure DUT interface device.
-					// TODO:  This should happen before DUTs are opened, or within dut.Open().
-					_testThread.ReportProgress(0, "Configuring DUT Interface Device...");
+						dut.Open();
+					}
 					_equipment.DutInterface.Configure(3, selections);
 
 					// Perform test actions.
@@ -440,6 +492,18 @@ namespace Sensit.App.Calibration
 
 			try
 			{
+				// Stop all controllers.
+				foreach (KeyValuePair<VariableType, IControlDevice> c in _equipment.Controllers)
+				{
+					c.Value.SetControlMode(ControlMode.Ambient);
+				}
+
+				// Close DUTs; save CSV files.
+				foreach (Dut dut in _duts)
+				{
+					dut.Close();
+				}
+
 				// Close test equipment.
 				_testThread.ReportProgress(99, "Closing test equipment...");
 				_equipment.Close();
