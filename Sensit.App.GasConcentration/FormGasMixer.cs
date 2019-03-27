@@ -189,10 +189,6 @@ namespace Sensit.App.GasConcentration
 				textBoxDiluentVolumetricFlow.Text = _mfcDiluent.Readings[VariableType.VolumeFlow].ToString();
 				textBoxAnalyteMassFlow.Text = _mfcAnalyte.Readings[VariableType.MassFlow].ToString();
 				textBoxDiluentMassFlow.Text = _mfcDiluent.Readings[VariableType.MassFlow].ToString();
-				textBoxAnalyteSetpoint.Text = _mfcAnalyte.ReadSetpoint(VariableType.MassFlow).ToString();
-				textBoxDiluentSetpoint.Text = _mfcDiluent.ReadSetpoint(VariableType.MassFlow).ToString();
-				comboBoxAnalyteGas.Text = _mfcAnalyte.GasSelection.ToString();
-				comboBoxDiluentGas.Text = _mfcDiluent.GasSelection.ToString();
 				toolStripStatusLabel1.Text = "Success.";
 			}
 			catch (Exception ex)
