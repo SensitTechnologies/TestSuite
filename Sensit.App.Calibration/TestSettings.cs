@@ -110,6 +110,82 @@ namespace Sensit.App.Calibration
 					}
 				}
 			},
+			new TestSetting("Flow Rate Test")
+			{
+				References = new List<VariableType>
+				{
+					VariableType.MassFlow,
+					VariableType.GasConcentration
+				},
+				Components = new List<TestComponent>
+				{
+					new TestComponent("100 sccm")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 100.0 }
+							}
+						},
+						Samples = 240,
+						Interval = new TimeSpan(0, 0, 0, 0, 500)
+					},
+					new TestComponent("200 sccm")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 200.0 }
+							}
+						},
+						Samples = 240,
+						Interval = new TimeSpan(0, 0, 0, 0, 500)
+					},
+					new TestComponent("300 sccm")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							}
+						},
+						Samples = 240,
+						Interval = new TimeSpan(0, 0, 0, 0, 500)
+					},
+					new TestComponent("400 sccm")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 400.0 }
+							}
+						},
+						Samples = 240,
+						Interval = new TimeSpan(0, 0, 0, 0, 500)
+					},
+					new TestComponent("500 sccm")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 500.0 }
+							}
+						},
+						Samples = 240,
+						Interval = new TimeSpan(0, 0, 0, 0, 500)
+					},
+				}
+			},
 			new TestSetting("Warm-Up Stability")
 			{
 				References = new List<VariableType>
