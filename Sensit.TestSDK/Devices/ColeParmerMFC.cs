@@ -397,9 +397,11 @@ namespace Sensit.TestSDK.Devices
 				float returnedValue = Convert.ToSingle(words[5]);
 
 				// Check the setpoint.
-				if (returnedValue - setpoint > double.Epsilon)
+				// Had trouble with this statment.  Neither Double.Epsilon or double.Equals work.
+				// So I ensure the difference is less than 1.
+				if (Math.Abs(returnedValue - setpoint) > 1.0)
 				{
-					throw new DeviceCommunicationException("Could not write setpoint to mass flow controller."
+					throw new DeviceCommunicationException("Could not write setpoint (" + _massFlowSetpoint.ToString() + ") to mass flow controller."
 						+ Environment.NewLine + "Value read from instrument (" + returnedValue.ToString() + ") was incorrect.");
 				}
 			}
