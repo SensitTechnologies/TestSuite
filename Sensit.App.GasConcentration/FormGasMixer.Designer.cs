@@ -720,6 +720,7 @@
 			this.Controls.Add(this.groupBoxSerialPorts);
 			this.Controls.Add(this.menuStrip1);
 			this.MainMenuStrip = this.menuStrip1;
+			this.MaximizeBox = false;
 			this.Name = "FormGasMixer";
 			this.Text = "Gas Mix Utility";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormGasConcentration_FormClosed);
