@@ -102,13 +102,6 @@ namespace Sensit.TestSDK.Devices
 
 		public void Read()
 		{
-			// Update setpoints.
-			double diluentFlowSetpoint = _dilutentController.ReadSetpoint(VariableType.MassFlow);
-			double analyteFlowSetpoint = _analyteController.ReadSetpoint(VariableType.MassFlow);
-
-			_massFlowSetpoint = diluentFlowSetpoint + analyteFlowSetpoint;
-			_gasMixSetpoint = _analyteController.ReadSetpoint(VariableType.MassFlow) / _massFlowSetpoint * AnalyteBottleConcentration;
-
 			// Update references.
 			_dilutentReference.Read();
 			_analyteReference.Read();
@@ -117,7 +110,7 @@ namespace Sensit.TestSDK.Devices
 			Readings[VariableType.MassFlow] = _dilutentReference.Readings[VariableType.MassFlow] + _analyteReference.Readings[VariableType.MassFlow];
 
 			// Calculate analyte concentration.
-			if (_massFlowSetpoint.Equals(0.0))
+			if (Readings[VariableType.MassFlow].Equals(0.0))
 			{
 				Readings[VariableType.GasConcentration] = 0.0;
 			}
@@ -165,6 +158,22 @@ namespace Sensit.TestSDK.Devices
 
 		public double ReadSetpoint(VariableType type)
 		{
+			// Update setpoints.
+			double diluentFlowSetpoint = _dilutentController.ReadSetpoint(VariableType.MassFlow);
+			double analyteFlowSetpoint = _analyteController.ReadSetpoint(VariableType.MassFlow);
+
+			_massFlowSetpoint = diluentFlowSetpoint + analyteFlowSetpoint;
+
+			// Avoid divide-by-zero error.
+			if (_massFlowSetpoint.Equals(0.0))
+			{
+				_gasMixSetpoint = 0.0;
+			}
+			else
+			{
+				_gasMixSetpoint = _analyteController.ReadSetpoint(VariableType.MassFlow) / _massFlowSetpoint * AnalyteBottleConcentration;
+			}
+
 			// Return the requested value.
 			if (type == VariableType.GasConcentration)
 			{
