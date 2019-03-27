@@ -386,7 +386,7 @@ namespace Sensit.TestSDK.Devices
 			try
 			{
 				// "AS4.54" = Set setpoint to 4.54 on device A.
-				_serialPort.WriteLine(ADDRESS + Command.SetSetpoint + _massFlowSetpoint.ToString());
+				_serialPort.WriteLine(ADDRESS + Command.SetSetpoint + setpoint.ToString());
 
 				// Read the response from the serial port (until we get a \r character).
 				string message = _serialPort.ReadLine();
@@ -401,7 +401,7 @@ namespace Sensit.TestSDK.Devices
 				// So I ensure the difference is less than 1.
 				if (Math.Abs(returnedValue - setpoint) > 1.0)
 				{
-					throw new DeviceCommunicationException("Could not write setpoint (" + _massFlowSetpoint.ToString() + ") to mass flow controller."
+					throw new DeviceCommunicationException("Could not write setpoint (" + setpoint.ToString() + ") to mass flow controller."
 						+ Environment.NewLine + "Value read from instrument (" + returnedValue.ToString() + ") was incorrect.");
 				}
 			}
