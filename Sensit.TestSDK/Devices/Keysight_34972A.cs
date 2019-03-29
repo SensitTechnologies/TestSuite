@@ -114,16 +114,6 @@ namespace Sensit.TestSDK.Devices
 			}
 		}
 
-		public void PowerOn(uint dut)
-		{
-			// Nothing to do here.
-		}
-
-		public void PowerOff(uint dut)
-		{
-			// Nothing to do here.
-		}
-
 		public void Find(uint dut)
 		{
 			// Nothing to do here.
@@ -144,6 +134,9 @@ namespace Sensit.TestSDK.Devices
 				_v3497x.SCPI.FETCh.QueryAllData(out string data);
 
 				string[] dataSeparated = data.Split(',');
+
+				// Remove previous readings.
+				Readings.Clear();
 
 				for (int i = 0; i < dataSeparated.Length; i += 2)
 				{
