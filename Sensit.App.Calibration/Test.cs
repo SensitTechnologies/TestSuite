@@ -126,7 +126,10 @@ namespace Sensit.App.Calibration
 			_samplesTotal = 0;
 			foreach (TestComponent c in settings.Components)
 			{
-				_samplesTotal += c.Samples;
+				foreach (TestControlledVariable v in c.ControlledVariables)
+				{
+					_samplesTotal += v.Samples;
+				}
 			}
 		}
 
@@ -394,13 +397,13 @@ namespace Sensit.App.Calibration
 					foreach (double sp in v?.Setpoints ?? Enumerable.Empty<double>())
 					{
 						// Set the setpoint.
-						ProcessSetpoint(v, sp, c.Interval);
+						ProcessSetpoint(v, sp, v.Interval);
 
-						// For each sample.
-						for (int i = 0; i < c.Samples; i++)
+						// For each sample...
+						for (int i = 0; i < v.Samples; i++)
 						{
 							// Update GUI.
-							_testThread.ReportProgress(PercentProgress, "Taking sample " + i.ToString() + " of " + c.Samples + ".");
+							_testThread.ReportProgress(PercentProgress, "Taking sample " + i.ToString() + " of " + v.Samples + ".");
 
 							// Fetch readings from the DUTs.
 							_equipment.DutInterface.Read();
@@ -412,7 +415,7 @@ namespace Sensit.App.Calibration
 							ProcessSamples(sp);
 
 							// Wait to get desired reading frequency.
-							Thread.Sleep(c.Interval);
+							Thread.Sleep(v.Interval);
 
 							_samplesComplete++;
 
