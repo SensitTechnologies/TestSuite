@@ -274,6 +274,7 @@ namespace Sensit.App.GasConcentration
 
 				// Update the form.
 				textBoxGasConcentration.Text = _gasMixer.Readings[VariableType.GasConcentration].ToString();
+				textBoxTotalMassFlow.Text = _gasMixer.Readings[VariableType.MassFlow].ToString();
 				textBoxGasConcentrationSetpoint.Text = _gasMixer.ReadSetpoint(VariableType.GasConcentration).ToString();
 				textBoxMassFlowSetpoint.Text = _gasMixer.ReadSetpoint(VariableType.MassFlow).ToString();
 				textBoxAnalyteBottleConcentration.Text = _gasMixer.AnalyteBottleConcentration.ToString();
