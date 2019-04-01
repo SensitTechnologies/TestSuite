@@ -224,7 +224,7 @@ namespace Sensit.App.Calibration
 					c.Value.SetControlMode(ControlMode.Control);
 
 					// Delay for controller to get to setpoint.
-					Thread.Sleep(2000);
+					Thread.Sleep(5000);
 				}
 			}
 		}
@@ -332,10 +332,9 @@ namespace Sensit.App.Calibration
 			// Create an object to hold reference device readings.
 			Dictionary<VariableType, double> referenceReadings = new Dictionary<VariableType, double>();
 
-			// Fetch reference data and add it to the dictionary.
+			// Add reference data to the dictionary.
 			foreach (VariableType reference in _settings?.References ?? Enumerable.Empty<VariableType>())
 			{
-				_equipment.References[reference].Read();
 				double value = _equipment.References[reference].Readings[reference];
 
 				referenceReadings.Add(reference, value);
@@ -405,13 +404,13 @@ namespace Sensit.App.Calibration
 							// Update GUI.
 							_testThread.ReportProgress(PercentProgress, "Taking sample " + i.ToString() + " of " + v.Samples + ".");
 
-							// Fetch readings from the DUTs.
-							_equipment.DutInterface.Read();
+							// Fetch readings from references and DUTs.
+							_equipment.Read();
 
 							// Check stability of all controlled variables.
 							StabilityCheck(c.ControlledVariables);
 
-							// Take sample data.
+							// Record sample data.
 							ProcessSamples(sp);
 
 							// Wait to get desired reading frequency.
