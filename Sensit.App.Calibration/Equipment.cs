@@ -11,9 +11,6 @@ namespace Sensit.App.Calibration
 	/// We have one of each possible type of device.  Depending on the user's
 	/// selections, we choose which device(s) to use and pass to the user for
 	/// each needed interface.
-	/// 
-	/// DUT interface devices are a different sort of beast that may make more
-	/// sense to manage elsewhere, but they're here for now.
 	/// </remarks>
 	public class Equipment
 	{
@@ -93,11 +90,21 @@ namespace Sensit.App.Calibration
 		}
 
 		/// <summary>
+		/// Update readings from all devices.
+		/// </summary>
+		public void Read()
+		{
+			_gasMixer.Read();
+			_datalogger.Read();
+
+			// TODO:  Update GUI with new values.
+		}
+
+		/// <summary>
 		/// Close all equipment.
 		/// </summary>
 		public void Close()
 		{
-			// Close all devices.
 			_mfcAnalyte?.Close();
 			_mfcDiluent?.Close();
 			_datalogger?.Close();
