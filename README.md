@@ -18,6 +18,7 @@ After building, [publish the solution](https://docs.microsoft.com/en-us/dotnet/c
 To use the Calibration app (Sensit.App.Calibration), you'll need to have the following equipment (until the Simulator is supported):
 * [Keysight 34972A Datalogger](https://www.keysight.com/en/pd-1756491-pn-34972A/lxi-data-acquisition-data-logger-switch-unit)
 * [Cole-Parmer Mass Flow Controller for Gas](https://www.coleparmer.com/p/cole-parmer-mass-flow-controllers-for-gas/43456)
+
 Select the Model and Range of your sensor under test.  Select how many sensors to test.  Click "Start", then wait for the test to complete.
 
 ## Contributing
