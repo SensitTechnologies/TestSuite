@@ -1,54 +1,59 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.App.Calibration
 {
 	[Serializable]
-	public class ReferenceSetting
+	public class SerialPortSetting
 	{
-		[Category("Reference Setting"), Description("Variable that device measures.")]
-		public VariableType DeviceType { get; set; }
+		[Category("Serial Port"), Description("Serial port used by device.")]
+		public string SerialPort { get; set; }
 
-		[Category("Reference Setting"), Description("Serial ports used by device.")]
-		public List<string> SerialPorts { get; set; }
-
-		[Category("Reference Setting"), Description("Gas measured by device.")]
-		public List<Gas> GasSelection { get; set; }
+		[Category("Serial Port"), Description("Baud rate used by device.")]
+		public int BaudRate { get; set; }
 	}
 
-	[Serializable]
-	public class ControlSetting
+	public class GasMixerSetting
 	{
-		// TODO:  Analyte bottle concentration should be part of equipment settings, not test settings!
+		[Category("Mass Flow Controllers"), Description("Serial port used by device.")]
+		public SerialPortSetting AnalyteMFC { get; set; } = new SerialPortSetting()
+		{
+			SerialPort = "COM7",
+		};
 
-		[Category("Control Setting"), Description("Interface used by control device.")]
-		public VariableType DeviceType { get; set; }
+		[Category("Mass Flow Controllers"), Description("Serial port used by device.")]
+		public SerialPortSetting DiluentMFC { get; set; } = new SerialPortSetting()
+		{
+			SerialPort = "COM6"
+		};
 
-		[Category("Control Setting"), Description("Serial ports used by device.")]
-		public List<string> SerialPorts { get; set; }
+		[Category("Gas"), Description("Concentration of bottle of analyte gas.")]
+		public double AnalyteBottleConcentration { get; set; }
 
-		[Category("Control Setting"), Description("Gas controlled by device.")]
-		public List<Gas> GasSelection { get; set; }
+		[Category("Gas"), Description("Analyte gas.")]
+		public Gas Analyte { get; set; }
 
-		[Category("Control Setting"), Description("Devices used to form a composite device (i.e. gas mixer using two mass flow controllers).")]
-		public List<ReferenceSetting> SubDevice { get; set; }
+		[Category("Gas"), Description("Diluent gas.")]
+		public Gas Diluent { get; set; }
+	}
+
+	public class DataloggerSetting
+	{
+		[Description("Datalogger bank used to interface with DUTs.")]
+		public int Bank { get; set; } = 3;
 	}
 
 	[Serializable]
 	public class EquipmentSettings : Attribute
 	{
-		[Category("Equipment Settings"), Description("Settings for control devices.")]
-		public List<ControlSetting> ControlSettings { get; set; }
+		[Category("Control Devices"), Description("Settings for Gas Mixer, which is really two Mass Flow Controllers working together.")]
+		public GasMixerSetting GasMixer { get; set; }
 
-		[Category("Equipment Settings"), Description("Settings for reference devices.")]
-		public List<ReferenceSetting> ReferenceSettings { get; set; }
+		[Category("Control Devices"), Description("Settings for Mass Flow Controller.")]
+		public SerialPortSetting ColeParmerMFC { get; set; }
 
-		[Category("Equipment Settings"), Description("Serial Port for Analyte Mass Flow Controller")]
-		public string AnalyteControllerPort { get; set; } = "COM7";
-
-		[Category("Equipment Settings"), Description("Serial Port for Diluent Mass Flow Controller")]
-		public string DiluentControllerPort { get; set; } = "COM6";
+		[Category("DUT Interface Devices"), Description("Settings for datalogger.")]
+		public DataloggerSetting Datalogger { get; set; }
 	}
 }

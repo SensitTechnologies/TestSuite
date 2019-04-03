@@ -79,13 +79,14 @@ namespace Sensit.App.Calibration
 		public void Open()
 		{
 			// Configure the mass flow controllers.
-			_mfcAnalyte.Open(_settings?.AnalyteControllerPort);
-			_mfcDiluent.Open(_settings?.DiluentControllerPort);
+			_mfcAnalyte.Open(_settings.GasMixer.AnalyteMFC.SerialPort);
+			_mfcDiluent.Open(_settings.GasMixer.DiluentMFC.SerialPort);
 
-			// TODO:  Set analyte bottle concentration from equipment settings.
-			_gasMixer.AnalyteBottleConcentration = 100;
+			// Configure the gas mixer.
+			_gasMixer.AnalyteBottleConcentration = _settings.GasMixer.AnalyteBottleConcentration;
 
 			// Configure the datalogger.
+			_datalogger.Bank = _settings.Datalogger.Bank;
 			_datalogger.Open();
 		}
 

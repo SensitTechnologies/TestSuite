@@ -25,6 +25,10 @@ namespace Sensit.TestSDK.Devices
 
 		public List<double> Readings { get; private set; } = new List<double>();
 
+		public int Bank { get; set; }
+
+		public List<bool> Channels { get; set; }
+
 		public void Open()
 		{
 			// The device uses a USB VISA interface, so look for devices with that pattern.
@@ -72,20 +76,20 @@ namespace Sensit.TestSDK.Devices
 			}
 		}
 
-		public void Configure(int bank, List<bool> channels)
+		public void Configure()
 		{
 			try
 			{
 				// Build the channel configuration string.
 				// Remember that the channels are 1-indexed.
 				StringBuilder sb = new StringBuilder("@");
-				for(int i = 0; i < channels.Count; i++)
+				for (int i = 0; i < Channels.Count; i++)
 				{
-					if (channels[i])
+					if (Channels[i])
 					{
 						if (i != 0)
 							sb.Append(',');
-						sb.Append(bank.ToString());
+						sb.Append(Bank.ToString());
 						sb.Append((i + 1).ToString("D2"));
 					}
 				}
@@ -112,6 +116,21 @@ namespace Sensit.TestSDK.Devices
 				throw new DeviceCommunicationException("Could not configure datalogger."
 					+ Environment.NewLine + ex.Message);
 			}
+		}
+
+		public void Configure(List<bool> channels)
+		{
+			Channels = channels;
+
+			Configure();
+		}
+
+		public void Configure(int bank, List<bool> channels)
+		{
+			Bank = bank;
+			Channels = channels;
+
+			Configure();
 		}
 
 		public void Find(uint dut)
