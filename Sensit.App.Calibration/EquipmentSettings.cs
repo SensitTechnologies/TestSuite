@@ -29,7 +29,7 @@ namespace Sensit.App.Calibration
 		};
 
 		[Category("Gas"), Description("Concentration of bottle of analyte gas.")]
-		public double AnalyteBottleConcentration { get; set; }
+		public double AnalyteBottleConcentration { get; set; } = 100;
 
 		[Category("Gas"), Description("Analyte gas.")]
 		public Gas Analyte { get; set; }
@@ -48,12 +48,12 @@ namespace Sensit.App.Calibration
 	public class EquipmentSettings : Attribute
 	{
 		[Category("Control Devices"), Description("Settings for Gas Mixer, which is really two Mass Flow Controllers working together.")]
-		public GasMixerSetting GasMixer { get; set; }
+		public GasMixerSetting GasMixer { get; set; } = new GasMixerSetting();
 
 		[Category("Control Devices"), Description("Settings for Mass Flow Controller.")]
-		public SerialPortSetting ColeParmerMFC { get; set; }
+		public SerialPortSetting ColeParmerMFC { get; set; } = new SerialPortSetting();
 
 		[Category("DUT Interface Devices"), Description("Settings for datalogger.")]
-		public DataloggerSetting Datalogger { get; set; }
+		public DataloggerSetting Datalogger { get; set; } = new DataloggerSetting();
 	}
 }
