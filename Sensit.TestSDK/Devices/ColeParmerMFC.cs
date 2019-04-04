@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO.Ports;
 using Sensit.TestSDK.Calculations;
-using Sensit.TestSDK.Interfaces;
-using Sensit.TestSDK.Exceptions;
-using System.Collections.Generic;
 using Sensit.TestSDK.Communication;
+using Sensit.TestSDK.Exceptions;
+using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.TestSDK.Devices
 {
