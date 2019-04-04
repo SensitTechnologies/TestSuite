@@ -125,23 +125,71 @@ namespace Sensit.App.Calibration
 				},
 				Components = new List<TestComponent>
 				{
-					new TestComponent("100 sccm")
+					new TestComponent("Purge")
 					{
 						ControlledVariables = new List<TestControlledVariable>
 						{
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 500.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								StabilityTime = new TimeSpan(0, 4, 0),
+								Timeout = new TimeSpan(0, 10, 0),
+								Interval = new TimeSpan(0, 0, 1)
+							}
+						}
+					},
+					new TestComponent("100 sccm")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 100 },
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
 								Setpoints = new List<double> { 100.0 },
 								Samples = 240,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
+							},
 						},
+					},
+					new TestComponent("Purge")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 500.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								StabilityTime = new TimeSpan(0, 4, 0),
+								Timeout = new TimeSpan(0, 10, 0),
+								Interval = new TimeSpan(0, 0, 1)
+							}
+						}
 					},
 					new TestComponent("200 sccm")
 					{
 						ControlledVariables = new List<TestControlledVariable>
 						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 100 },
+							},
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
@@ -151,10 +199,34 @@ namespace Sensit.App.Calibration
 							}
 						},
 					},
+					new TestComponent("Purge")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 500.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								StabilityTime = new TimeSpan(0, 4, 0),
+								Timeout = new TimeSpan(0, 10, 0),
+								Interval = new TimeSpan(0, 0, 1)
+							}
+						}
+					},
 					new TestComponent("300 sccm")
 					{
 						ControlledVariables = new List<TestControlledVariable>
 						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 100 },
+							},
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
@@ -164,10 +236,34 @@ namespace Sensit.App.Calibration
 							}
 						},
 					},
+					new TestComponent("Purge")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 500.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								StabilityTime = new TimeSpan(0, 4, 0),
+								Timeout = new TimeSpan(0, 10, 0),
+								Interval = new TimeSpan(0, 0, 1)
+							}
+						}
+					},
 					new TestComponent("400 sccm")
 					{
 						ControlledVariables = new List<TestControlledVariable>
 						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 100 },
+							},
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
@@ -177,10 +273,34 @@ namespace Sensit.App.Calibration
 							}
 						},
 					},
+					new TestComponent("Purge")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 500.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								StabilityTime = new TimeSpan(0, 4, 0),
+								Timeout = new TimeSpan(0, 10, 0),
+								Interval = new TimeSpan(0, 0, 1)
+							}
+						}
+					},
 					new TestComponent("500 sccm")
 					{
 						ControlledVariables = new List<TestControlledVariable>
 						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 100 },
+							},
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
@@ -656,7 +776,7 @@ namespace Sensit.App.Calibration
 					}
 				}
 			},
-			new TestSetting("Sustained Hysteresis"),
+			//new TestSetting("Sustained Hysteresis"),
 			new TestSetting("Short-term Stability")
 			{
 				References = new List<VariableType>
@@ -953,11 +1073,11 @@ namespace Sensit.App.Calibration
 					}
 				}
 			},
-			new TestSetting("Long-term Stability"),
-			new TestSetting("Thermal Effects"),
-			new TestSetting("Thermal Transients"),
-			new TestSetting("Cross-Sensitivity"),
-			new TestSetting("Humidity Effects")
+			//new TestSetting("Long-term Stability"),
+			//new TestSetting("Thermal Effects"),
+			//new TestSetting("Thermal Transients"),
+			//new TestSetting("Cross-Sensitivity"),
+			//new TestSetting("Humidity Effects")
 		};
 	}
 }
