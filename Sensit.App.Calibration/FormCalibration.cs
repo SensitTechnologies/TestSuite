@@ -67,21 +67,28 @@ namespace Sensit.App.Calibration
 					{
 						Name = "checkBoxSelected" + i.ToString(),
 						Text = "DUT" + i.ToString(),
-						AutoSize = true
+						AutoSize = true,
+						Anchor = AnchorStyles.Left,
+						Dock = DockStyle.None
 					};
 					tableLayoutPanelDevicesUnderTest.Controls.Add(checkBox, 0, i - 1);
 
 					TextBox textBoxSerialNumber = new TextBox
 					{
-						Name = "textBoxSerialNumber" + i.ToString()
+						Name = "textBoxSerialNumber" + i.ToString(),
+						Anchor = AnchorStyles.Left,
+						Dock = DockStyle.None
 					};
 					tableLayoutPanelDevicesUnderTest.Controls.Add(textBoxSerialNumber, 1, i - 1);
 
-					TextBox textBoxStatus = new TextBox
+					Label labelStatus = new Label
 					{
-						Name = "textBoxStatus" + i.ToString()
+						Name = "labelStatus" + i.ToString(),
+						AutoSize = true,
+						Anchor = AnchorStyles.Left,
+						Dock = DockStyle.None
 					};
-					tableLayoutPanelDevicesUnderTest.Controls.Add(textBoxStatus, 2, i - 1);
+					tableLayoutPanelDevicesUnderTest.Controls.Add(labelStatus, 2, i - 1);
 				}
 
 				// Make the GUI act normally again.
@@ -642,36 +649,33 @@ namespace Sensit.App.Calibration
 		{
 			// Find the applicable DUT status textbox.
 			// Remember that table layout panel has 0-based index, while DUTs have 1-based index.
-			TextBox textBoxStatus = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(2, (int)dut - 1) as TextBox;
+			Label labelStatus = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(2, (int)dut - 1) as Label;
 
 			// If called from a different thread than the form, invoke the method on the form's thread.
 			// https://stackoverflow.com/questions/142003/cross-thread-operation-not-valid-control-accessed-from-a-thread-other-than-the
-			if (textBoxStatus.InvokeRequired)
+			if (labelStatus.InvokeRequired)
 			{
-				textBoxStatus.Invoke(new MethodInvoker(delegate { SetDutStatus(dut, status); }));
+				labelStatus.Invoke(new MethodInvoker(delegate { SetDutStatus(dut, status); }));
 			}
 			else
 			{
 				// Set the status text, and use bold text.
-				textBoxStatus.Text = status.GetDescription();
-				textBoxStatus.Font = new Font(textBoxStatus.Font, FontStyle.Bold);
+				labelStatus.Text = status.GetDescription();
+				labelStatus.Font = new Font(labelStatus.Font, FontStyle.Bold);
 
 				// Apply formatting.
 				switch (status)
 				{
 					case DutStatus.Pass:
-						textBoxStatus.ForeColor = Color.Black;
-						textBoxStatus.BackColor = Color.Green;
+						labelStatus.ForeColor = Color.Green;
 						break;
 					case DutStatus.Found:
-						textBoxStatus.ForeColor = Color.Yellow;
-						textBoxStatus.BackColor = Color.Blue;
+						labelStatus.ForeColor = Color.Blue;
 						break;
 					case DutStatus.Fail:
 					case DutStatus.NotFound:
 					case DutStatus.PortError:
-						textBoxStatus.ForeColor = Color.Black;
-						textBoxStatus.BackColor = Color.Red;
+						labelStatus.ForeColor = Color.Red;
 						break;
 				}
 			}
