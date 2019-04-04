@@ -61,9 +61,9 @@ namespace Sensit.TestSDK.Devices
 			set
 			{
 				// Check for valid value.
-				if ((value < 0.0) || (value > 100.0))
+				if ((value < 0.0) || (value > 100.0) || (value.Equals(0)))
 				{
-					throw new DeviceOutOfRangeException("Analyte Bottle Concentration must be between 0.0% and 100.%, inclusive.");
+					throw new DeviceOutOfRangeException("Analyte Bottle Concentration must be greater than 0% and less than or equal to 100%.");
 				}
 
 				_analyteBottleConcentration = value;
