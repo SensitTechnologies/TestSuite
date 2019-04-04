@@ -12,14 +12,17 @@ The first full release is not yet available, so installation requires building f
 * [Visual Studio 2017](https://visualstudio.microsoft.com) or later with Microsoft .NET Framework 4.7.2.
 * [Keysight IO Libraries Suite](https://www.keysight.com/en/pd-1985909/io-libraries-suite)
 * [Keysight Command Expert](https://www.keysight.com/en/pd-2036130/command-expert)
-After building, [publish the solution](https://docs.microsoft.com/en-us/dotnet/core/tutorials/publishing-with-visual-studio) to create an installer.  Run the installer.  Then you'll see
+
+After building, [publish the solution](https://docs.microsoft.com/en-us/dotnet/core/tutorials/publishing-with-visual-studio) to create an installer.  After running the installer, each program in the suite will be available from the Windows Start menu.
 
 ## Usage
 To use the Calibration app (Sensit.App.Calibration), you'll need to have the following equipment (until the Simulator is supported):
 * [Keysight 34972A Datalogger](https://www.keysight.com/en/pd-1756491-pn-34972A/lxi-data-acquisition-data-logger-switch-unit)
 * [Cole-Parmer Mass Flow Controller for Gas](https://www.coleparmer.com/p/cole-parmer-mass-flow-controllers-for-gas/43456)
 
-Select the Model and Range of your sensor under test.  Select how many sensors to test.  Click "Start", then wait for the test to complete.
+Select the Model and Range of your sensor under test.  Select how many devices to test.  Click "Start", then wait for the test to complete.
+
+For detailed information about using the other apps in the software suite, see the project's wiki.
 
 ## Contributing
 Attention was given to making this software suite as easy to read and modify as possible, and one part of that is making sure to follow community best practices as much as possible.  The following links describe best practices that should be considered by contributors to this project:
