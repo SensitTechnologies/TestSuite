@@ -126,9 +126,12 @@ namespace Sensit.App.Calibration
 			_samplesTotal = 0;
 			foreach (TestComponent c in settings.Components)
 			{
-				foreach (TestControlledVariable v in c.ControlledVariables)
+				foreach (TestControlledVariable v in c?.ControlledVariables ?? Enumerable.Empty<TestControlledVariable>())
 				{
-					_samplesTotal += v.Samples;
+					foreach (double sp in v?.Setpoints ?? Enumerable.Empty<double>())
+					{
+						_samplesTotal += v.Samples;
+					}
 				}
 			}
 		}
@@ -474,7 +477,7 @@ namespace Sensit.App.Calibration
 
 						dut.Open();
 					}
-					_equipment.DutInterface.Configure(3, selections);
+					_equipment.DutInterface.Configure(selections);
 
 					// Perform test actions.
 					ProcessTest();
