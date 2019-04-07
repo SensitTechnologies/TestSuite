@@ -42,11 +42,11 @@ namespace Sensit.TestSDK.Forms
 		/// <summary>
 		/// Get the object (presumably to save it after user modifications).
 		/// </summary>
+		/// <typeparam name="T">must be same type as passed into "AddObject" method</typeparam>
 		/// <returns>object from the property grid</returns>
-		public object FetchObject()
+		public T FetchObject<T>()
 		{
-			// TODO:  Saving settings does not work (XML file is corrupted).
-			return propertyGrid.SelectedObject;
+			return (T)propertyGrid.SelectedObject;
 		}
 
 		/// <summary>
