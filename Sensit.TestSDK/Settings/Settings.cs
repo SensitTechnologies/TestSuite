@@ -28,7 +28,7 @@ namespace Sensit.TestSDK.Settings
 			string filepath = GetSettingsFilePath(filename);
 
 			// Start with a null settings class.
-			T settings = default(T);
+			T settings = default;
 
 			// If the file exists...
 			if (File.Exists(filepath))
@@ -41,7 +41,7 @@ namespace Sensit.TestSDK.Settings
 			// put default values into the settings object.
 			if (settings == null)
 			{
-				settings = (T)Activator.CreateInstance<T>();
+				settings = Activator.CreateInstance<T>();
 			}
 
 			return settings;
@@ -59,7 +59,7 @@ namespace Sensit.TestSDK.Settings
 			string filepath = GetSettingsFilePath(filename);
 
 			// Save the settings as an XML file.
-			Serializer.SerializeXML<T>(settings, filepath);
+			Serializer.SerializeXML(settings, filepath);
 		}
 
 		#region HelperMethods
