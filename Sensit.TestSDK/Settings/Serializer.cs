@@ -48,8 +48,14 @@ namespace Sensit.TestSDK.Settings
 			// Create a filestream to read the file.
 			FileStream myFileStream = new FileStream(filename, FileMode.Open);
 
+			// Read the file.
+			T data = (T)mySerializer.Deserialize(myFileStream);
+
+			// Close the file.
+			myFileStream.Close();
+
 			// Deserialize the file and cast to the object type.
-			return (T)mySerializer.Deserialize(myFileStream);
+			return data;
 		}
 	}
 }
