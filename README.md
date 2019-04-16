@@ -8,7 +8,7 @@ The first iteration of the project will be a desktop app which automates testing
 * The second iteration of the project will add a Dwyer Temperature Controller to control gas temperature.
 
 ## Installation
-The first full release is not yet available, so installation requires building from source.  See the Requirements page on the project wiki for more information, but at minimum you need:
+The first full release is not yet available, so installation requires building from source.  See the [Requirements](https://github.com/SensitTechnologies/TestSuite/wiki/Requirements) page on the project wiki for more information, but at minimum you need:
 * [Visual Studio 2017](https://visualstudio.microsoft.com) or later with Microsoft .NET Framework 4.7.2.
 * [Keysight IO Libraries Suite](https://www.keysight.com/en/pd-1985909/io-libraries-suite)
 * [Keysight Command Expert](https://www.keysight.com/en/pd-2036130/command-expert)
