@@ -356,7 +356,7 @@ namespace Sensit.App.Calibration
 						ElapsedTime = _elapsedTimeStopwatch.Elapsed,
 						Setpoint = setpoint,
 						Reference = referenceReadings[VariableType.GasConcentration],
-						SensorValue = _equipment.DutInterface.Readings[(int)(dut.Device.Index - 1)]
+						SensorValue = _equipment.DutInterface.Readings[dut.Device.Index]
 					});
 				}
 

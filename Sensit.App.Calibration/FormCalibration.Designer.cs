@@ -363,7 +363,7 @@
 			this.tabPage2.Location = new System.Drawing.Point(4, 22);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(536, 285);
+			this.tabPage2.Size = new System.Drawing.Size(476, 285);
 			this.tabPage2.TabIndex = 4;
 			this.tabPage2.Text = "Status";
 			this.tabPage2.UseVisualStyleBackColor = true;
@@ -381,8 +381,8 @@
 			// splitContainer1.Panel2
 			// 
 			this.splitContainer1.Panel2.Controls.Add(this.groupBox2);
-			this.splitContainer1.Size = new System.Drawing.Size(530, 279);
-			this.splitContainer1.SplitterDistance = 271;
+			this.splitContainer1.Size = new System.Drawing.Size(470, 279);
+			this.splitContainer1.SplitterDistance = 240;
 			this.splitContainer1.TabIndex = 0;
 			// 
 			// groupBox3
@@ -391,7 +391,7 @@
 			this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox3.Location = new System.Drawing.Point(0, 0);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(271, 279);
+			this.groupBox3.Size = new System.Drawing.Size(240, 279);
 			this.groupBox3.TabIndex = 0;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Controlled Variables";
@@ -404,7 +404,7 @@
 			this.flowLayoutPanelControlledVariables.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.flowLayoutPanelControlledVariables.Location = new System.Drawing.Point(3, 16);
 			this.flowLayoutPanelControlledVariables.Name = "flowLayoutPanelControlledVariables";
-			this.flowLayoutPanelControlledVariables.Size = new System.Drawing.Size(265, 260);
+			this.flowLayoutPanelControlledVariables.Size = new System.Drawing.Size(234, 260);
 			this.flowLayoutPanelControlledVariables.TabIndex = 0;
 			// 
 			// groupBoxVariable1
@@ -470,7 +470,7 @@
 			this.groupBoxVariable2.Controls.Add(this.textBoxVariable2Value);
 			this.groupBoxVariable2.Controls.Add(this.textBoxVariable2Setpoint);
 			this.groupBoxVariable2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.groupBoxVariable2.Location = new System.Drawing.Point(132, 3);
+			this.groupBoxVariable2.Location = new System.Drawing.Point(3, 111);
 			this.groupBoxVariable2.Name = "groupBoxVariable2";
 			this.groupBoxVariable2.Size = new System.Drawing.Size(123, 102);
 			this.groupBoxVariable2.TabIndex = 1;
@@ -521,7 +521,7 @@
 			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox2.Location = new System.Drawing.Point(0, 0);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(255, 279);
+			this.groupBox2.Size = new System.Drawing.Size(226, 279);
 			this.groupBox2.TabIndex = 0;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Independent Variable";
@@ -541,7 +541,7 @@
 			this.tableLayoutPanelIndependentVariables.RowCount = 2;
 			this.tableLayoutPanelIndependentVariables.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelIndependentVariables.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanelIndependentVariables.Size = new System.Drawing.Size(249, 260);
+			this.tableLayoutPanelIndependentVariables.Size = new System.Drawing.Size(220, 260);
 			this.tableLayoutPanelIndependentVariables.TabIndex = 1;
 			// 
 			// labelError
@@ -549,7 +549,7 @@
 			this.labelError.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.labelError.AutoSize = true;
 			this.labelError.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelError.Location = new System.Drawing.Point(40, 0);
+			this.labelError.Location = new System.Drawing.Point(33, 0);
 			this.labelError.Name = "labelError";
 			this.labelError.Size = new System.Drawing.Size(44, 20);
 			this.labelError.TabIndex = 18;
@@ -559,7 +559,7 @@
 			// 
 			this.trackBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
 			this.trackBar1.LargeChange = 20;
-			this.trackBar1.Location = new System.Drawing.Point(39, 23);
+			this.trackBar1.Location = new System.Drawing.Point(32, 23);
 			this.trackBar1.Maximum = 100;
 			this.trackBar1.Minimum = -100;
 			this.trackBar1.Name = "trackBar1";
@@ -574,7 +574,7 @@
 			this.labelRate.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.labelRate.AutoSize = true;
 			this.labelRate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelRate.Location = new System.Drawing.Point(164, 0);
+			this.labelRate.Location = new System.Drawing.Point(143, 0);
 			this.labelRate.Name = "labelRate";
 			this.labelRate.Size = new System.Drawing.Size(44, 20);
 			this.labelRate.TabIndex = 19;
@@ -584,7 +584,7 @@
 			// 
 			this.trackBar2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
 			this.trackBar2.LargeChange = 20;
-			this.trackBar2.Location = new System.Drawing.Point(164, 23);
+			this.trackBar2.Location = new System.Drawing.Point(142, 23);
 			this.trackBar2.Maximum = 100;
 			this.trackBar2.Minimum = -100;
 			this.trackBar2.Name = "trackBar2";

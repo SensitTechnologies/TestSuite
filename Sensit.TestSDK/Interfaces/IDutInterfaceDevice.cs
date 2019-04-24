@@ -8,10 +8,13 @@ namespace Sensit.TestSDK.Interfaces
 	/// </summary>
 	public interface IDutInterfaceDevice
 	{
-		/// <summary>
+		///  <summary>
 		/// Readings from device.
 		/// </summary>
-		List<double> Readings { get; }
+		/// <remarks>
+		/// Key is channel number, value is the reading.
+		/// </remarks>
+		Dictionary<uint, double> Readings { get; }
 
 		/// <summary>
 		/// Bank to read the channels from.

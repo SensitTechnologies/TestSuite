@@ -68,7 +68,7 @@ namespace Sensit.App.Calibration
 						Name = "checkBoxSelected" + i.ToString(),
 						Text = "DUT" + i.ToString(),
 						AutoSize = true,
-						Anchor = AnchorStyles.Left,
+						Anchor = AnchorStyles.Left | AnchorStyles.Top,
 						Dock = DockStyle.None
 					};
 					tableLayoutPanelDevicesUnderTest.Controls.Add(checkBox, 0, i - 1);
@@ -76,7 +76,7 @@ namespace Sensit.App.Calibration
 					TextBox textBoxSerialNumber = new TextBox
 					{
 						Name = "textBoxSerialNumber" + i.ToString(),
-						Anchor = AnchorStyles.Left,
+						Anchor = AnchorStyles.Left | AnchorStyles.Top,
 						Dock = DockStyle.None
 					};
 					tableLayoutPanelDevicesUnderTest.Controls.Add(textBoxSerialNumber, 1, i - 1);
@@ -85,7 +85,7 @@ namespace Sensit.App.Calibration
 					{
 						Name = "labelStatus" + i.ToString(),
 						AutoSize = true,
-						Anchor = AnchorStyles.Left,
+						Anchor = AnchorStyles.Left | AnchorStyles.Top,
 						Dock = DockStyle.None
 					};
 					tableLayoutPanelDevicesUnderTest.Controls.Add(labelStatus, 2, i - 1);
@@ -318,19 +318,21 @@ namespace Sensit.App.Calibration
 				}
 			}
 
-			// Remember DUT selections.
+			// Initialize or clear DUT selections.
 			if (Properties.Settings.Default.DutSelections == null)
 			{
 				Properties.Settings.Default.DutSelections = new System.Collections.Specialized.StringCollection();
-				for (int i = 0; i < NumDuts; i++)
-				{
-					Properties.Settings.Default.DutSelections.Add("false");
-				}
 			}
+			else
+			{
+				Properties.Settings.Default.DutSelections.Clear();
+			}
+
+			// Remember DUT selections.
 			for (int i = 0; i < NumDuts; i++)
 			{
 				CheckBox checkBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(0, i) as CheckBox;
-				Properties.Settings.Default.DutSelections[i] = checkBox.Checked ? "true" : "false";
+				Properties.Settings.Default.DutSelections.Add(checkBox.Checked ? "true" : "false");
 			}
 
 			// Save settings.

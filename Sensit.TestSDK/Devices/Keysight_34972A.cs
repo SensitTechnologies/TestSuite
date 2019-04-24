@@ -23,7 +23,7 @@ namespace Sensit.TestSDK.Devices
 	{
 		Ag3497x _v3497x;
 
-		public List<double> Readings { get; private set; } = new List<double>();
+		public Dictionary<uint, double> Readings { get; private set; } = new Dictionary<uint, double>();
 
 		public int Bank { get; set; }
 
@@ -160,9 +160,9 @@ namespace Sensit.TestSDK.Devices
 				for (int i = 0; i < dataSeparated.Length; i += 2)
 				{
 					// Parse sensor output from string into double and add to list of readings.
-					//uint key = uint.Parse(dataSeparated[(i + 1)]) % 100;
+					uint key = uint.Parse(dataSeparated[(i + 1)]) % 100;
 					double value = double.Parse(dataSeparated[i], System.Globalization.NumberStyles.Any);
-					Readings.Add(value);
+					Readings.Add(key, value);
 				}
 			}
 			catch (Exception ex)
