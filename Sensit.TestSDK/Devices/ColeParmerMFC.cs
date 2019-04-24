@@ -17,9 +17,30 @@ namespace Sensit.TestSDK.Devices
 	/// Instruction manual:
 	/// https://pim-resources.coleparmer.com/instruction-manual/cole-parmer-mass-flow-controller-manual.pdf
 	/// 
-	/// TODO:  Figure out how to set control variable over serial interface.
-	/// Once that's possible, this class can be extended to implement
-	/// IVolumeFlowController, IPressureController. This should be low priority.
+	/// The following info came from Cole-Parmer tech support, and is not in the manual:
+	/// 
+	/// To set control variable, adjust via menu setting or via register 122.
+	/// The command to read the register is ID + R + 122, and to write the
+	/// register is ID + W + 122.  For a unit with ID "A", the commands would
+	/// be "AR122" and "AW122" respectively.
+	/// 
+	/// The return value from register 122 will be one of the following:
+	/// 0 or 1 - indicates control variable has been set via menu.
+	/// 34 - control variable is absolute pressure
+	/// 36 - control variable is volume flow
+	/// 37 - control variable is mass flow
+	/// 
+	/// The device was not designed to measure mass flow without controlling it,
+	/// but you can do just that for SHORT PERIODS by sending a large mass flow
+	/// setpoint to the device and not providing enough gas to meet that setpoint.
+	/// This will cause the controller to fully open the valve in an attempt to
+	/// increase flow, and you'll be able to read the flow without the valve in
+	/// the way.  However, THE VALVE WILL BE STRESSED AND BE DAMAGED OVER TIME.
+	/// Colloquially, this damage takes more than a day, so this is fine for small tests.
+	/// 
+	/// Also, there are two firmware versions that I've seen.  They have identical
+	/// serial interfaces, but some menu differences and major electronics differences.
+	/// 
 	/// </remarks>
 	public class ColeParmerMFC : SerialDevice, IMassFlowController,
 		IMassFlowReference, IVolumeFlowReference, ITemperatureReference, IPressureReference
