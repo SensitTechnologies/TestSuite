@@ -33,17 +33,42 @@ namespace Sensit.TestSDK.Devices
 		{
 			// The device uses a USB VISA interface, so look for devices with that pattern.
 			string[] resourceStrings = VisaDevice.Find(VisaPattern.USB).ToArray();
+			string errorMessage = string.Empty;
+			bool success = false;
 
-			try
+			// Try each resource, and use the first one that opens successfully.
+			foreach (string resouceName in resourceStrings)
 			{
-				// Open a connection to the desired instrument.
-				Open(resourceStrings[0]);
+				bool status = true;
+				try
+				{
+					// Open a connection to the desired instrument.
+					Open(resouceName);
+				}
+				catch (DeviceCommunicationException ex)
+				{
+					// Save the error message to display to the user later.
+					errorMessage = ex.Message;
+
+					// Note that the instrument didn't open.
+					status = false;
+				}
+
+				// Stop when one of the resource strings connects successfully.
+				if (status == true)
+				{
+					success = true;
+					break;
+				}
 			}
-			catch (IndexOutOfRangeException ex)
+
+			// If none of the resource strings yielded an instrument connection, throw
+			// an exception.
+			if (success == false)
 			{
 				throw new DeviceCommunicationException("Device was not found."
-					+ Environment.NewLine + "Details:"
-					+ Environment.NewLine + ex.Message);
+						  + Environment.NewLine + "Details:"
+						  + Environment.NewLine + errorMessage);
 			}
 		}
 
