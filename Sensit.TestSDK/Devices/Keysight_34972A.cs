@@ -108,12 +108,18 @@ namespace Sensit.TestSDK.Devices
 				// Build the channel configuration string.
 				// Remember that the channels are 1-indexed.
 				StringBuilder sb = new StringBuilder("@");
+				bool firstChannel = true;
 				for (int i = 0; i < Channels.Count; i++)
 				{
+					// Add a comma in between each channel
+					// (but not before the first channel).
 					if (Channels[i])
 					{
-						if (i != 0)
+						if (firstChannel)
+							firstChannel = false;
+						else
 							sb.Append(',');
+
 						sb.Append(Bank.ToString());
 						sb.Append((i + 1).ToString("D2"));
 					}
