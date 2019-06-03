@@ -168,6 +168,7 @@
     <Compile Include="Communication\VisaDevice.cs" />
     <Compile Include="Devices\GasMixingDevice.cs" />
     <Compile Include="Devices\Manual.cs" />
+    <Compile Include="Devices\SensitG3.cs" />
     <Compile Include="Dut\AnalogSensor.cs" />
     <Compile Include="Controls\UserCustomStep.cs">
       <SubType>UserControl</SubType>

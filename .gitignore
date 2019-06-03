@@ -13,6 +13,12 @@
 /Sensit.App.GasConcentration/*.pfx
 /Sensit.App.GasConcentration/*.user
 
+/Sensit.App.G3Console/bin
+/Sensit.App.G3Console/obj
+/Sensit.App.G3Console/publish
+/Sensit.App.G3Console/*.pfx
+/Sensit.App.G3Console/*.user
+
 /Sensit.App.Keysight_34972A/bin
 /Sensit.App.Keysight_34972A/obj
 /Sensit.App.Keysight_34972A/publish
