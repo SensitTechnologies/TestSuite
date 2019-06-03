@@ -9,7 +9,7 @@ namespace Sensit.TestSDK.Devices
 	/// <summary>
 	/// Use two Mass Flow Controllers to mix two gasses.
 	/// </summary>
-	public class GasMixingDevice : IGasMixReference, IGasMixController, IMassFlowReference
+	public class GasMixingDevice : IGasConcentrationReference, IGasMixController, IMassFlowReference
 	{
 		#region Fields
 
@@ -46,6 +46,12 @@ namespace Sensit.TestSDK.Devices
 		/// Unit of measure for mass flow.
 		/// </summary>
 		public UnitOfMeasure.Flow FlowUnit { get; set; } = UnitOfMeasure.Flow.CubicFeetPerMinute;
+
+		/// <summary>
+		/// Unit of measure for gas concentration.
+		/// </summary>
+		/// TODO: Use this property to change the unit of the readings.
+		public UnitOfMeasure.Concentration ConcentrationUnit { get; set; } = UnitOfMeasure.Concentration.PercentVolume;
 
 		/// <summary>
 		/// Analyte gas.

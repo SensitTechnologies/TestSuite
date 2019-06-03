@@ -31,6 +31,10 @@ namespace Sensit.TestSDK.Interfaces
 		CarbonDioxide,
 		Ethane,
 		Hydrogen,
+		[Description("Hydrogen Sulfide")]
+		HydrogenSulfide,
+		[Description("Hydrogen Cyanide")]
+		HydrogenCyanide,
 		Helium,
 		Nitrogen,
 		[Description("Nitrous Oxide")]
@@ -90,9 +94,20 @@ namespace Sensit.TestSDK.Interfaces
 	/// <summary>
 	/// Device that measures gas concentration.
 	/// </summary>
-	[Description("Gas Mix Reference")]
-	public interface IGasMixReference : IMassFlowReference
+	[Description("Gas Concentration Reference")]
+	public interface IGasConcentrationReference : IReferenceDevice
 	{
+		UnitOfMeasure.Concentration ConcentrationUnit { get; set; }
+
+		/// <summary>
+		/// Gas the device is calibrated for.
+		/// </summary>
+		/// <remarks>
+		/// Often gas-sensing devices will have sensors which respond to
+		/// multiple types of gas, and are calibrated for a specific gas.
+		/// This property holds the gas for which the device is calibrated.
+		/// </remarks>
+		Gas GasSelection { get; set; }
 	}
 
 	/// <summary>

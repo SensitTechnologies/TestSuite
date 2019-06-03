@@ -6,7 +6,7 @@ using Sensit.TestSDK.Utilities;
 
 namespace Sensit.TestSDK.Devices
 {
-	public class Manual : IGasMixReference, IMassFlowReference, IVolumeFlowReference, IVelocityReference, IPressureReference, ITemperatureReference,
+	public class Manual : IGasConcentrationReference, IMassFlowReference, IVolumeFlowReference, IVelocityReference, IPressureReference, ITemperatureReference,
 		IGasMixController, IMassFlowController, IVolumeFlowController, IVelocityController, IPressureController, ITemperatureController
 	{
 		#region Reference Device Properties
@@ -23,6 +23,9 @@ namespace Sensit.TestSDK.Devices
 			};
 
 		public UnitOfMeasure.Flow FlowUnit { get; set; }
+
+		public UnitOfMeasure.Concentration ConcentrationUnit { get; set; }
+
 
 		public Gas GasSelection { get; set; } = Gas.Air;
 
