@@ -56,6 +56,14 @@ namespace Sensit.TestSDK.Calculations
 			CubicFeetPerMinute,
 		}
 
+		public enum Concentration
+		{
+			PartsPerBillion,
+			PartsPerMillion,
+			PartsPerTrillion,
+			PercentVolume
+		}
+
 		public enum Temperature
 		{
 			Celsius,
@@ -121,6 +129,15 @@ namespace Sensit.TestSDK.Calculations
 			{ Flow.CubicMetersPerSecond, 1.0 },
 			{ Flow.CubicMetersPerHour, 3600.0 },
 			{ Flow.CubicFeetPerMinute, 2118.88 }
+		};
+
+		// Conversion factors for gas concentration; parts per million is the base unit.
+		private static readonly Dictionary<Concentration, double> ConcentrationConversion = new Dictionary<Concentration, double>()
+		{
+			{ Concentration.PartsPerTrillion, 1000000.0 },
+			{ Concentration.PartsPerBillion, 1000.0 },
+			{ Concentration.PartsPerMillion, 1.0 },
+			{ Concentration.PercentVolume, 1.0 / 10000.0 }
 		};
 
 		// Conversion factors for temperature; Celsius is the base unit.
@@ -194,6 +211,19 @@ namespace Sensit.TestSDK.Calculations
 		{
 			// Look up conversion from old unit to new unit.
 			return (oldVal / FlowConversion[oldUnit] * FlowConversion[newUnit]);
+		}
+
+		/// <summary>
+		/// Converts between various units of gas concentration.
+		/// </summary>
+		/// <param name="oldVal">the value to be converted</param>
+		/// <param name="oldUnit">the original unit of measure</param>
+		/// <param name="newUnit">the new unit of measure</param>
+		/// <returns></returns>
+		public static double ConvertConcentration(double oldVal, Concentration oldUnit, Concentration newUnit)
+		{
+			// Look up conversion from old unit to new unit.
+			return (oldVal / ConcentrationConversion[oldUnit] * ConcentrationConversion[newUnit]);
 		}
 
 		/// <summary>
