@@ -177,7 +177,7 @@ namespace Sensit.App.Keysight
 
 				// Update GUI.
 				dataGridViewMeasurements.Rows.Clear();
-				for (int i = 0; i < _datalogger.Readings.Count; i++)
+				for (uint i = 0; i < _datalogger.Readings.Count; i++)
 				{
 					string[] row = { (i + 1).ToString(), _datalogger.Readings[i].ToString() };
 					dataGridViewMeasurements.Rows.Add(row);
