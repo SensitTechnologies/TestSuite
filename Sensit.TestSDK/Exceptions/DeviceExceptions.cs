@@ -10,12 +10,26 @@
 namespace Sensit.TestSDK.Exceptions
 {
 	/// <summary>
+	/// Custom class of exceptions for devices
+	/// </summary>
+	/// <remarks>
+	/// Don't throw this exception; best practice is to throw one of the derived classes below.
+	/// Catch this exception in application-level code so your application handles all device errors.
+	/// </remarks>
+	public class DeviceException : Exception
+	{
+		public DeviceException() { }
+		public DeviceException(string message) : base(message) { }
+		public DeviceException(string message, Exception inner) : base(message, inner) { }
+	}
+
+	/// <summary>
 	/// Device dependency is not present or not working.
 	/// </summary>
 	/// <remarks>
 	/// This exception indicates problems such as COM port failure or DLL missing.
 	/// </remarks>
-	public class DevicePortException : Exception
+	public class DevicePortException : DeviceException
 	{
 		public DevicePortException() { }
 		public DevicePortException(string message) : base(message) { }
@@ -25,7 +39,7 @@ namespace Sensit.TestSDK.Exceptions
 	/// <summary>
 	/// Device is not present or not working.
 	/// </summary>
-	public class DeviceCommunicationException : Exception
+	public class DeviceCommunicationException : DeviceException
 	{
 		public DeviceCommunicationException() { }
 		public DeviceCommunicationException(string message) : base(message) { }
@@ -35,7 +49,7 @@ namespace Sensit.TestSDK.Exceptions
 	/// <summary>
 	/// Device does not support a requested setting.
 	/// </summary>
-	public class DeviceSettingNotSupportedException : Exception
+	public class DeviceSettingNotSupportedException : DeviceException
 	{
 		public DeviceSettingNotSupportedException() { }
 		public DeviceSettingNotSupportedException(string message) : base(message) { }
@@ -45,7 +59,7 @@ namespace Sensit.TestSDK.Exceptions
 	/// <summary>
 	/// Device failed to execute the command.
 	/// </summary>
-	public class DeviceCommandFailedException : Exception
+	public class DeviceCommandFailedException : DeviceException
 	{
 		public DeviceCommandFailedException() { }
 		public DeviceCommandFailedException(string message) : base(message) { }
@@ -55,7 +69,7 @@ namespace Sensit.TestSDK.Exceptions
 	/// <summary>
 	/// Device is out of measurement range.
 	/// </summary>
-	public class DeviceOutOfRangeException : Exception
+	public class DeviceOutOfRangeException : DeviceException
 	{
 		public DeviceOutOfRangeException() { }
 		public DeviceOutOfRangeException(string message) : base(message) { }
@@ -65,7 +79,7 @@ namespace Sensit.TestSDK.Exceptions
 	/// <summary>
 	/// Device data could not be linearized.
 	/// </summary>
-	public class DeviceCalibrationFailedException : Exception
+	public class DeviceCalibrationFailedException : DeviceException
 	{
 		public DeviceCalibrationFailedException() { }
 		public DeviceCalibrationFailedException(string message) : base(message) { }
