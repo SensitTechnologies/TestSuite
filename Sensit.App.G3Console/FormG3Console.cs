@@ -45,6 +45,11 @@ namespace Sensit.App.G3Console
 			Application.Exit();
 		}
 
+		/// <summary>
+		/// When a radio button is clicked, open or close the device.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void RadioButton_CheckedChanged(object sender, EventArgs e)
 		{
 			// Do stuff only if the radio button is checked.
@@ -59,7 +64,7 @@ namespace Sensit.App.G3Console
 						// Alert the user.
 						toolStripStatusLabel1.Text = "Opening serial port...";
 
-						// Open the Mass Flow Controller (and let it know what serial port to use).
+						// Open the device (and let it know what serial port to use).
 						_sensitG3.Open(Properties.Settings.Default.Port);
 
 						// Update the user interface.
