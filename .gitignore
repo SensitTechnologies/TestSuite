@@ -7,6 +7,12 @@
 /Sensit.App.Calibration/*.pfx
 /Sensit.App.Calibration/*.user
 
+/Sensit.App.G2GLT/bin
+/Sensit.App.G2GLT/obj
+/Sensit.App.G2GLT/publich
+/Sensit.App.G2GLT/*.pfx
+/Sensit.App.G2GLT/*.user
+
 /Sensit.App.GasConcentration/bin
 /Sensit.App.GasConcentration/obj
 /Sensit.App.GasConcentration/publish
@@ -30,6 +36,12 @@
 /Sensit.App.MassFlow/publish
 /Sensit.App.MassFlow/*.pfx
 /Sensit.App.MassFlow/*.user
+
+/Sensit.App.WebSensors/bin
+/Sensit.App.WebSensors/obj
+/Sensit.App.WebSensors/publich
+/Sensit.App.WebSensors/*.pfx
+/Sensit.App.WebSensors/*.user
 
 /Sensit.TestSDK/bin
 /Sensit.TestSDK/obj

@@ -161,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calculations\Calculations.cs" />
+    <Compile Include="Calculations\Checksum.cs" />
     <Compile Include="Calculations\LeastSquares.cs" />
     <Compile Include="Calculations\UnitOfMeasure.cs" />
     <Compile Include="Communication\SCPI.cs" />
@@ -168,6 +169,7 @@
     <Compile Include="Communication\VisaDevice.cs" />
     <Compile Include="Devices\GasMixingDevice.cs" />
     <Compile Include="Devices\Manual.cs" />
+    <Compile Include="Devices\SensitG2GLT.cs" />
     <Compile Include="Devices\SensitG3.cs" />
     <Compile Include="Dut\AnalogSensor.cs" />
     <Compile Include="Controls\UserCustomStep.cs">
