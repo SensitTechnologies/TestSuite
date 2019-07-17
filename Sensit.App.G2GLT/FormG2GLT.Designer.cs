@@ -38,9 +38,28 @@
 			this.radioButtonOpen = new System.Windows.Forms.RadioButton();
 			this.comboBoxSerialPortRx = new System.Windows.Forms.ComboBox();
 			this.comboBoxSerialPortTx = new System.Windows.Forms.ComboBox();
+			this.groupBoxConsoleCommands = new System.Windows.Forms.GroupBox();
+			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			this.labelMethane = new System.Windows.Forms.Label();
+			this.labelOxygen = new System.Windows.Forms.Label();
+			this.labelCarbonMonoxide = new System.Windows.Forms.Label();
+			this.labelHydrogenSulfide = new System.Windows.Forms.Label();
+			this.labeHydrogenCyanide = new System.Windows.Forms.Label();
+			this.buttonReadMethane = new System.Windows.Forms.Button();
+			this.buttonReadOxygen = new System.Windows.Forms.Button();
+			this.buttonReadCarbonMonoxide = new System.Windows.Forms.Button();
+			this.buttonReadHydrogenSulfide = new System.Windows.Forms.Button();
+			this.buttonReadHydrogenCyanide = new System.Windows.Forms.Button();
+			this.textBoxOxygen = new System.Windows.Forms.TextBox();
+			this.textBoxMethane = new System.Windows.Forms.TextBox();
+			this.textBoxCarbonMonoxide = new System.Windows.Forms.TextBox();
+			this.textBoxHydrogenSulfide = new System.Windows.Forms.TextBox();
+			this.textBoxHydrogenCyanide = new System.Windows.Forms.TextBox();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.groupBoxSerialPorts.SuspendLayout();
+			this.groupBoxConsoleCommands.SuspendLayout();
+			this.tableLayoutPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -142,11 +161,199 @@
 			this.comboBoxSerialPortTx.TabIndex = 0;
 			this.comboBoxSerialPortTx.SelectedIndexChanged += new System.EventHandler(this.ComboBoxSerialPortTx_SelectedIndexChanged);
 			// 
+			// groupBoxConsoleCommands
+			// 
+			this.groupBoxConsoleCommands.Controls.Add(this.tableLayoutPanel1);
+			this.groupBoxConsoleCommands.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBoxConsoleCommands.Enabled = false;
+			this.groupBoxConsoleCommands.Location = new System.Drawing.Point(0, 84);
+			this.groupBoxConsoleCommands.Name = "groupBoxConsoleCommands";
+			this.groupBoxConsoleCommands.Size = new System.Drawing.Size(394, 344);
+			this.groupBoxConsoleCommands.TabIndex = 5;
+			this.groupBoxConsoleCommands.TabStop = false;
+			this.groupBoxConsoleCommands.Text = "Console Commands";
+			// 
+			// tableLayoutPanel1
+			// 
+			this.tableLayoutPanel1.AutoSize = true;
+			this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.tableLayoutPanel1.ColumnCount = 3;
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanel1.Controls.Add(this.labelMethane, 0, 0);
+			this.tableLayoutPanel1.Controls.Add(this.labelOxygen, 0, 1);
+			this.tableLayoutPanel1.Controls.Add(this.labelCarbonMonoxide, 0, 2);
+			this.tableLayoutPanel1.Controls.Add(this.labelHydrogenSulfide, 0, 3);
+			this.tableLayoutPanel1.Controls.Add(this.labeHydrogenCyanide, 0, 4);
+			this.tableLayoutPanel1.Controls.Add(this.buttonReadMethane, 1, 0);
+			this.tableLayoutPanel1.Controls.Add(this.buttonReadOxygen, 1, 1);
+			this.tableLayoutPanel1.Controls.Add(this.buttonReadCarbonMonoxide, 1, 2);
+			this.tableLayoutPanel1.Controls.Add(this.buttonReadHydrogenSulfide, 1, 3);
+			this.tableLayoutPanel1.Controls.Add(this.buttonReadHydrogenCyanide, 1, 4);
+			this.tableLayoutPanel1.Controls.Add(this.textBoxOxygen, 2, 1);
+			this.tableLayoutPanel1.Controls.Add(this.textBoxMethane, 2, 0);
+			this.tableLayoutPanel1.Controls.Add(this.textBoxCarbonMonoxide, 2, 2);
+			this.tableLayoutPanel1.Controls.Add(this.textBoxHydrogenSulfide, 2, 3);
+			this.tableLayoutPanel1.Controls.Add(this.textBoxHydrogenCyanide, 2, 4);
+			this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 19);
+			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+			this.tableLayoutPanel1.RowCount = 5;
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(287, 145);
+			this.tableLayoutPanel1.TabIndex = 1;
+			// 
+			// labelMethane
+			// 
+			this.labelMethane.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelMethane.AutoSize = true;
+			this.labelMethane.Location = new System.Drawing.Point(3, 8);
+			this.labelMethane.Name = "labelMethane";
+			this.labelMethane.Size = new System.Drawing.Size(49, 13);
+			this.labelMethane.TabIndex = 0;
+			this.labelMethane.Text = "Methane";
+			// 
+			// labelOxygen
+			// 
+			this.labelOxygen.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelOxygen.AutoSize = true;
+			this.labelOxygen.Location = new System.Drawing.Point(3, 37);
+			this.labelOxygen.Name = "labelOxygen";
+			this.labelOxygen.Size = new System.Drawing.Size(43, 13);
+			this.labelOxygen.TabIndex = 1;
+			this.labelOxygen.Text = "Oxygen";
+			// 
+			// labelCarbonMonoxide
+			// 
+			this.labelCarbonMonoxide.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelCarbonMonoxide.AutoSize = true;
+			this.labelCarbonMonoxide.Location = new System.Drawing.Point(3, 66);
+			this.labelCarbonMonoxide.Name = "labelCarbonMonoxide";
+			this.labelCarbonMonoxide.Size = new System.Drawing.Size(90, 13);
+			this.labelCarbonMonoxide.TabIndex = 4;
+			this.labelCarbonMonoxide.Text = "Carbon Monoxide";
+			// 
+			// labelHydrogenSulfide
+			// 
+			this.labelHydrogenSulfide.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelHydrogenSulfide.AutoSize = true;
+			this.labelHydrogenSulfide.Location = new System.Drawing.Point(3, 95);
+			this.labelHydrogenSulfide.Name = "labelHydrogenSulfide";
+			this.labelHydrogenSulfide.Size = new System.Drawing.Size(88, 13);
+			this.labelHydrogenSulfide.TabIndex = 6;
+			this.labelHydrogenSulfide.Text = "Hydrogen Sulfide";
+			// 
+			// labeHydrogenCyanide
+			// 
+			this.labeHydrogenCyanide.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labeHydrogenCyanide.AutoSize = true;
+			this.labeHydrogenCyanide.Location = new System.Drawing.Point(3, 124);
+			this.labeHydrogenCyanide.Name = "labeHydrogenCyanide";
+			this.labeHydrogenCyanide.Size = new System.Drawing.Size(94, 13);
+			this.labeHydrogenCyanide.TabIndex = 15;
+			this.labeHydrogenCyanide.Text = "Hydrogen Cyanide";
+			// 
+			// buttonReadMethane
+			// 
+			this.buttonReadMethane.Location = new System.Drawing.Point(103, 3);
+			this.buttonReadMethane.Name = "buttonReadMethane";
+			this.buttonReadMethane.Size = new System.Drawing.Size(75, 23);
+			this.buttonReadMethane.TabIndex = 2;
+			this.buttonReadMethane.Text = "Read";
+			this.buttonReadMethane.UseVisualStyleBackColor = true;
+			this.buttonReadMethane.Click += new System.EventHandler(this.ButtonReadMethane_Click);
+			// 
+			// buttonReadOxygen
+			// 
+			this.buttonReadOxygen.Location = new System.Drawing.Point(103, 32);
+			this.buttonReadOxygen.Name = "buttonReadOxygen";
+			this.buttonReadOxygen.Size = new System.Drawing.Size(75, 23);
+			this.buttonReadOxygen.TabIndex = 17;
+			this.buttonReadOxygen.Text = "Read";
+			this.buttonReadOxygen.UseVisualStyleBackColor = true;
+			this.buttonReadOxygen.Click += new System.EventHandler(this.ButtonReadOxygen_Click);
+			// 
+			// buttonReadCarbonMonoxide
+			// 
+			this.buttonReadCarbonMonoxide.Location = new System.Drawing.Point(103, 61);
+			this.buttonReadCarbonMonoxide.Name = "buttonReadCarbonMonoxide";
+			this.buttonReadCarbonMonoxide.Size = new System.Drawing.Size(75, 23);
+			this.buttonReadCarbonMonoxide.TabIndex = 18;
+			this.buttonReadCarbonMonoxide.Text = "Read";
+			this.buttonReadCarbonMonoxide.UseVisualStyleBackColor = true;
+			this.buttonReadCarbonMonoxide.Click += new System.EventHandler(this.ButtonReadCarbonMonoxide_Click);
+			// 
+			// buttonReadHydrogenSulfide
+			// 
+			this.buttonReadHydrogenSulfide.Location = new System.Drawing.Point(103, 90);
+			this.buttonReadHydrogenSulfide.Name = "buttonReadHydrogenSulfide";
+			this.buttonReadHydrogenSulfide.Size = new System.Drawing.Size(75, 23);
+			this.buttonReadHydrogenSulfide.TabIndex = 19;
+			this.buttonReadHydrogenSulfide.Text = "Read";
+			this.buttonReadHydrogenSulfide.UseVisualStyleBackColor = true;
+			this.buttonReadHydrogenSulfide.Click += new System.EventHandler(this.ButtonReadHydrogenSulfide_Click);
+			// 
+			// buttonReadHydrogenCyanide
+			// 
+			this.buttonReadHydrogenCyanide.Location = new System.Drawing.Point(103, 119);
+			this.buttonReadHydrogenCyanide.Name = "buttonReadHydrogenCyanide";
+			this.buttonReadHydrogenCyanide.Size = new System.Drawing.Size(75, 23);
+			this.buttonReadHydrogenCyanide.TabIndex = 10;
+			this.buttonReadHydrogenCyanide.Text = "Read";
+			this.buttonReadHydrogenCyanide.UseVisualStyleBackColor = true;
+			this.buttonReadHydrogenCyanide.Click += new System.EventHandler(this.ButtonReadHydrogenCyanide_Click);
+			// 
+			// textBoxOxygen
+			// 
+			this.textBoxOxygen.Location = new System.Drawing.Point(184, 32);
+			this.textBoxOxygen.Name = "textBoxOxygen";
+			this.textBoxOxygen.ReadOnly = true;
+			this.textBoxOxygen.Size = new System.Drawing.Size(100, 20);
+			this.textBoxOxygen.TabIndex = 3;
+			// 
+			// textBoxMethane
+			// 
+			this.textBoxMethane.Location = new System.Drawing.Point(184, 3);
+			this.textBoxMethane.Name = "textBoxMethane";
+			this.textBoxMethane.ReadOnly = true;
+			this.textBoxMethane.Size = new System.Drawing.Size(100, 20);
+			this.textBoxMethane.TabIndex = 5;
+			// 
+			// textBoxCarbonMonoxide
+			// 
+			this.textBoxCarbonMonoxide.Location = new System.Drawing.Point(184, 61);
+			this.textBoxCarbonMonoxide.Name = "textBoxCarbonMonoxide";
+			this.textBoxCarbonMonoxide.ReadOnly = true;
+			this.textBoxCarbonMonoxide.Size = new System.Drawing.Size(100, 20);
+			this.textBoxCarbonMonoxide.TabIndex = 7;
+			// 
+			// textBoxHydrogenSulfide
+			// 
+			this.textBoxHydrogenSulfide.Location = new System.Drawing.Point(184, 90);
+			this.textBoxHydrogenSulfide.Name = "textBoxHydrogenSulfide";
+			this.textBoxHydrogenSulfide.ReadOnly = true;
+			this.textBoxHydrogenSulfide.Size = new System.Drawing.Size(100, 20);
+			this.textBoxHydrogenSulfide.TabIndex = 20;
+			// 
+			// textBoxHydrogenCyanide
+			// 
+			this.textBoxHydrogenCyanide.Location = new System.Drawing.Point(184, 119);
+			this.textBoxHydrogenCyanide.Name = "textBoxHydrogenCyanide";
+			this.textBoxHydrogenCyanide.ReadOnly = true;
+			this.textBoxHydrogenCyanide.Size = new System.Drawing.Size(100, 20);
+			this.textBoxHydrogenCyanide.TabIndex = 21;
+			// 
 			// FormG2GLT
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(394, 450);
+			this.Controls.Add(this.groupBoxConsoleCommands);
 			this.Controls.Add(this.groupBoxSerialPorts);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.menuStrip1);
@@ -159,6 +366,10 @@
 			this.statusStrip1.PerformLayout();
 			this.groupBoxSerialPorts.ResumeLayout(false);
 			this.groupBoxSerialPorts.PerformLayout();
+			this.groupBoxConsoleCommands.ResumeLayout(false);
+			this.groupBoxConsoleCommands.PerformLayout();
+			this.tableLayoutPanel1.ResumeLayout(false);
+			this.tableLayoutPanel1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -176,6 +387,23 @@
 		private System.Windows.Forms.RadioButton radioButtonOpen;
 		private System.Windows.Forms.ComboBox comboBoxSerialPortRx;
 		private System.Windows.Forms.ComboBox comboBoxSerialPortTx;
+		private System.Windows.Forms.GroupBox groupBoxConsoleCommands;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+		private System.Windows.Forms.Label labelMethane;
+		private System.Windows.Forms.Label labelOxygen;
+		private System.Windows.Forms.Label labelCarbonMonoxide;
+		private System.Windows.Forms.Label labelHydrogenSulfide;
+		private System.Windows.Forms.Label labeHydrogenCyanide;
+		private System.Windows.Forms.Button buttonReadMethane;
+		private System.Windows.Forms.Button buttonReadOxygen;
+		private System.Windows.Forms.Button buttonReadCarbonMonoxide;
+		private System.Windows.Forms.Button buttonReadHydrogenSulfide;
+		private System.Windows.Forms.Button buttonReadHydrogenCyanide;
+		private System.Windows.Forms.TextBox textBoxOxygen;
+		private System.Windows.Forms.TextBox textBoxMethane;
+		private System.Windows.Forms.TextBox textBoxCarbonMonoxide;
+		private System.Windows.Forms.TextBox textBoxHydrogenSulfide;
+		private System.Windows.Forms.TextBox textBoxHydrogenCyanide;
 	}
 }
 

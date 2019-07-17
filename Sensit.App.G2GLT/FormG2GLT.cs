@@ -2,19 +2,26 @@
 using System.Deployment.Application;
 using System.IO.Ports;
 using System.Windows.Forms;
+using Sensit.TestSDK.Devices;
+using Sensit.TestSDK.Exceptions;
+using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.App.G2GLT
 {
 	public partial class FormG2GLT : Form
 	{
+		// Sensit G2-GLT instrument
+		private SensitG2GLT _sensitG2 = new SensitG2GLT();
+
 		public FormG2GLT()
 		{
 			// Initialize the form.
 			InitializeComponent();
 
-			// Add version string to title bar.
+			// If the application has been published...
 			if (ApplicationDeployment.IsNetworkDeployed)
 			{
+				// Add version string to title bar.
 				Text += " " + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
 			}
 
@@ -60,8 +67,9 @@ namespace Sensit.App.G2GLT
 						// Alert the user.
 						toolStripStatusLabel1.Text = "Opening serial port...";
 
-						// TODO:  Open the G2 (and let it know what serial ports to use).
-						//_sensitG3.Open(Properties.Settings.Default.PortRx, Properties.Settings.Default.PortTx);
+						// Open the G2 (and let it know what serial ports to use).
+						_sensitG2.ReadPort.Open(Properties.Settings.Default.PortRx);
+						_sensitG2.WritePort.Open(Properties.Settings.Default.PortTx);
 
 						// TODO:  Update the user interface.
 						comboBoxSerialPortRx.Enabled = false;
@@ -74,8 +82,9 @@ namespace Sensit.App.G2GLT
 						// Alert the user.
 						toolStripStatusLabel1.Text = "Closing serial port...";
 
-						// TODO:  Close the serial port.
-						//_sensitG3.Close();
+						// Close the serial ports.
+						_sensitG2.ReadPort.Close();
+						_sensitG2.WritePort.Close();
 
 						// TODO:  Update user interface.
 						comboBoxSerialPortRx.Enabled = true;
@@ -131,6 +140,101 @@ namespace Sensit.App.G2GLT
 			// Store the current values of the application settings properties.
 			// If this call is omitted, then the settings will not be saved after the application quits.
 			Properties.Settings.Default.Save();
+		}
+
+		private void ButtonReadMethane_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// Select the desired gas.
+				_sensitG2.GasSelection = Gas.Methane;
+
+				// Fetch sensor data from instrument.
+				_sensitG2.Read();
+
+				// Fetch the readings.
+				textBoxMethane.Text = _sensitG2.Readings[VariableType.GasConcentration].ToString();
+			}
+			catch (DeviceException ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
+		}
+
+		private void ButtonReadOxygen_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// Select the desired gas.
+				_sensitG2.GasSelection = Gas.Oxygen;
+
+				// Fetch sensor data from instrument.
+				_sensitG2.Read();
+
+				// Fetch the readings.
+				textBoxOxygen.Text = _sensitG2.Readings[VariableType.GasConcentration].ToString();
+			}
+			catch (DeviceException ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
+		}
+
+		private void ButtonReadCarbonMonoxide_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// Select the desired gas.
+				_sensitG2.GasSelection = Gas.CarbonMonoxide;
+
+				// Fetch sensor data from instrument.
+				_sensitG2.Read();
+
+				// Fetch the readings.
+				textBoxCarbonMonoxide.Text = _sensitG2.Readings[VariableType.GasConcentration].ToString();
+			}
+			catch (DeviceException ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
+		}
+
+		private void ButtonReadHydrogenSulfide_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// Select the desired gas.
+				_sensitG2.GasSelection = Gas.HydrogenSulfide;
+
+				// Fetch sensor data from instrument.
+				_sensitG2.Read();
+
+				// Fetch the readings.
+				textBoxHydrogenSulfide.Text = _sensitG2.Readings[VariableType.GasConcentration].ToString();
+			}
+			catch (DeviceException ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
+		}
+
+		private void ButtonReadHydrogenCyanide_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				// Select the desired gas.
+				_sensitG2.GasSelection = Gas.HydrogenCyanide;
+
+				// Fetch sensor data from instrument.
+				_sensitG2.Read();
+
+				// Fetch the readings.
+				textBoxHydrogenCyanide.Text = _sensitG2.Readings[VariableType.GasConcentration].ToString();
+			}
+			catch (DeviceException ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 	}
 }
