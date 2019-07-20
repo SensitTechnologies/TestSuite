@@ -153,6 +153,13 @@ namespace Sensit.TestSDK.Devices
 			NONE
 		}
 
+		public enum ALARM_STATE
+		{
+			NONE = 0,
+			LOW,
+			HIGH
+		}
+
 		#endregion
 
 		#region Reference Device Methods
@@ -298,42 +305,47 @@ namespace Sensit.TestSDK.Devices
 
 		#endregion
 
-		private void InitializeGLT()
+		private bool InitializeGLT()
 		{
 			// Stop display buffer stream.
 			_serialPort.Write(CreateMessage(CMDS.STOP_STREAMING));
 
-			string message1 = ReadBlocking();
+			bool result = ValidateChecksum(ReadBlocking());
 
 			// Get instrument info.
 			_serialPort.Write(CreateMessage(CMDS.GET_INSTRUMENT_INFO));
 
-			string message2 = ReadBlocking();
+			result = ValidateChecksum(ReadBlocking());
 
 			// Request Monitoring Mode.
 			_serialPort.Write("$b * 59802\n");
 
-			string message3 = ReadBlocking();
+			result = ValidateChecksum(ReadBlocking());
+
+			return result;
 		}
 
-		private bool ValidateChecksum(byte[] message)
+		private bool ValidateChecksum(string message)
 		{
+			// Convert the message to a byte array.
+			byte[] messageBytes = Encoding.ASCII.GetBytes(message);
+
 			ushort rx_crc;
 			ushort calc_crc;
 			int i = 0;
-			int max_i = message.GetUpperBound(0) - 1;
+			int max_i = messageBytes.GetUpperBound(0) - 1;
 			int size = 0;
-			while (message[i++] != (byte)'*')
+			while (messageBytes[i++] != (byte)'*')
 			{
 				if (i >= max_i) return false;
 			}
 
 			size = i - 1;
-			calc_crc = Checksum.Calculate(0, message, size);
+			calc_crc = Checksum.Calculate(0, messageBytes, size);
 			string rx_crc_str = "";
-			while (message[i] != (byte)'\n')
+			while (messageBytes[i] != (byte)'\n')
 			{
-				rx_crc_str = rx_crc_str + ((char)message[i++]).ToString();
+				rx_crc_str = rx_crc_str + ((char)messageBytes[i++]).ToString();
 			}
 			rx_crc = ushort.Parse(rx_crc_str);
 			if (rx_crc == calc_crc) { return true; }
@@ -391,6 +403,9 @@ namespace Sensit.TestSDK.Devices
 
 			public ushort SensorCount { get; set; }
 
+			/// <summary>
+			/// Configuration of the instruments' sensors
+			/// </summary>
 			public List<G2SensorConfig> Sensors { get; set; }
 
 			public bool WDPKTestEnable { get; set; }
@@ -398,6 +413,11 @@ namespace Sensit.TestSDK.Devices
 			public bool InertModeTestEnable { get; set; }
 
 			public bool StandbyEnable { get; set; }
+
+			/// <summary>
+			/// Actual data readings from sensors
+			/// </summary>
+			public List<G2SensorReading> SensorLiveData { get; set; }
 		}
 
 		private class G2SensorConfig
@@ -423,6 +443,19 @@ namespace Sensit.TestSDK.Devices
 			public double MaxValue { get; set; }
 		}
 
+		private class G2SensorReading
+		{
+			public SENSOR_ID SensorID { get; set; }
+
+			public int Reading { get; set; }
+
+			public UNIT UnitOfMeasure { get; set; }
+
+			public SENSOR_STATE SensorState { get; set; }
+
+			public ALARM_STATE AlarmState { get; set; }
+		}
+
 		private G2StatusInfo AnalyzeStatusInfo(string[] message)
 		{
 			int i = 2;
@@ -442,7 +475,7 @@ namespace Sensit.TestSDK.Devices
 			return g2Status;
 		}
 
-		private void AnalyzeInstrumentInfo(string[] message)
+		private G2StatusInfo AnalyzeInstrumentInfo(string[] message)
 		{
 			int max_values = message.GetUpperBound(0);
 
@@ -559,92 +592,49 @@ namespace Sensit.TestSDK.Devices
 				g2Status.COTestEnable = g2Status.CFTestEnable = false;
 
 			#endregion
+
+			return g2Status;
 		}
 
-		/*
-		private void AnalyzeLiveData(string[] str)
+		private G2StatusInfo AnalyzeLiveData(string[] message)
 		{
-			int max_values = str.GetUpperBound(0);
-			int i = 0;
-			//str[0] = "$#"
-			i++;
-			//str[1] = CMD.GET_INSTRUMENT_INFO
-			i++;
-			DEVICE_STATES OldDeviceState = InstrumentViewModelObject.DeviceState;
-			SENSOR_STATES OldSensorState = InstrumentViewModelObject.LELSensorState;
-			DEVICE_MODES OldDeviceMode = InstrumentViewModelObject.DeviceMode;
-			bool OldIsBattLow = InstrumentViewModelObject.IsBattLow;
+			int max_values = message.GetUpperBound(0);
 
-			InstrumentViewModelObject.DeviceState = (DEVICE_STATES)ushort.Parse(str[i++]);
-			//System.Diagnostics.Debug.WriteLine("Device State: " + InstrumentViewModelObject.DeviceState);
+			int i = 2;
 
-			InstrumentViewModelObject.LELSensorState = (SENSOR_STATES)ushort.Parse(str[i++]);
-			TICK OldTickState = InstrumentViewModelObject.TickStatus;
+			// str[0] = "$#"
+			// str[1] = CMD.GET_INSTRUMENT_INFO
 
-			InstrumentViewModelObject.DeviceMode = (DEVICE_MODES)ushort.Parse(str[i++]);
-			InstrumentViewModelObject.SetCalDue = Convert.ToBoolean(int.Parse(str[i++]));
-			InstrumentViewModelObject.IsBattLow = Convert.ToBoolean(int.Parse(str[i++]));
-			InstrumentViewModelObject.TickStatus = (TICK)ushort.Parse(str[i++]);
+			G2StatusInfo g2Status = new G2StatusInfo();
 
-			int j = 0;
-			InstrumentViewModelObject.UnitLiveData.SensorRead.Clear();
-			for (; j < 4; j++)//InstrumentViewModelObject for each sensor
+			g2Status.DeviceState = (DEVICE_STATE)ushort.Parse(message[i++]);
+
+			g2Status.SensorState = (SENSOR_STATE)ushort.Parse(message[i++]);
+
+			g2Status.DeviceMode = (DEVICE_MODE)ushort.Parse(message[i++]);
+			g2Status.CalibrationDue = Convert.ToBoolean(int.Parse(message[i++]));
+			g2Status.BatteryLow = Convert.ToBoolean(int.Parse(message[i++]));
+			g2Status.TickState = (TICK_STATE)ushort.Parse(message[i++]);
+
+			// For each sensor in the instrument...
+			for (int j = 0; j < 4; j++)
 			{
-				if (i >= max_values - 1) break;
-				SensorRead sr = new SensorRead();
-				sr.id = (SENSOR_IDS)ushort.Parse(str[i++]);
+				if (i >= max_values - 1)
+					break;
 
-				sr.reading = int.Parse(str[i++]);
-				sr.unit = (UNITS)ushort.Parse(str[i++]);
-				sr.sensor_status = (SENSOR_STATES)ushort.Parse(str[i++]);
-				sr.alarm = (ALARMS)ushort.Parse(str[i++]);
-				InstrumentViewModelObject.UnitLiveData.SensorRead.Add(sr);
+				G2SensorReading sr = new G2SensorReading();
+				sr.SensorID = (SENSOR_ID)ushort.Parse(message[i++]);
+
+				sr.Reading = int.Parse(message[i++]);
+				sr.UnitOfMeasure = (UNIT)ushort.Parse(message[i++]);
+				sr.SensorState = (SENSOR_STATE)ushort.Parse(message[i++]);
+				sr.AlarmState = (ALARM_STATE)ushort.Parse(message[i++]);
+
+				g2Status.SensorLiveData.Add(sr);
 			}
 
-			if (IsGetLiveDataFirstTime)
-			{
-				ManageUnitRadioButtons();
-				AdjustSliderValues();
-				AdjustDeviceControl();
-
-				//Trial Run
-				DecideNSCNSRFromSensorState(InstrumentViewModelObject.LELSensorState);
-
-				IsGetLiveDataFirstTime = false;
-			}
-
-			if (((OldDeviceState != InstrumentViewModelObject.DeviceState) ||
-				 OldTickState != InstrumentViewModelObject.TickStatus ||
-				 OldIsBattLow != InstrumentViewModelObject.IsBattLow ||
-				 OldDeviceMode != InstrumentViewModelObject.DeviceMode) &&
-				InstrumentViewModelObject.DeviceMode == DEVICE_MODES.TRAINING)
-			{
-				AdjustDeviceControl();
-				ManageUnitRadioButtons();
-			}
-
-			if ((OldSensorState != InstrumentViewModelObject.LELSensorState) || (OldDeviceState != InstrumentViewModelObject.DeviceState))
-				DecideNSCNSRFromSensorState(InstrumentViewModelObject.LELSensorState);
-
-			//*********************************************************************************************************
-			// Specific Conditions
-			//*********************************************************************************************************
-
-			if (OldDeviceState != DEVICE_STATES.MENU && ((int)OldDeviceState >= (int)DEVICE_STATES.BARHOLE_START) || OldDeviceState == DEVICE_STATES.NORMAL)
-				OldPatchedState = OldDeviceState;
-
-			if (OldPatchedState != InstrumentViewModelObject.DeviceState &&
-				(InstrumentViewModelObject.DeviceState == DEVICE_STATES.NORMAL || InstrumentViewModelObject.DeviceState == DEVICE_STATES.LEAK_SEARCH || InstrumentViewModelObject.DeviceState == DEVICE_STATES.WORK_DISPLAY_PEAK))
-			{
-				AdjustRadioButtonInLowerPossibleCondition();
-			}
-
-			if (OldDeviceState != DEVICE_STATES.MENU && (int)OldDeviceState >= (int)DEVICE_STATES.BARHOLE_START)
-				OldPatchedState = InstrumentViewModelObject.DeviceState;
-			//*********************************************************************************************************
-		} 
-		*/
-
+			return g2Status;
+		}
 
 		private string ReadBlocking()
 		{
