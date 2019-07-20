@@ -62,27 +62,6 @@ namespace Sensit.TestSDK.Calculations
 		};
 
 		/**
-         * Reflect all bits of a \a data word of \a data_len bytes.
-         *
-         * \param data         The data word to be reflected.
-         * \param data_len     The width of \a data expressed in number of bits.
-         * \return             The reflected data.
-         *****************************************************************************/
-		public static ushort crc_reflect(ushort data, int data_len)
-		{
-			ushort i;
-			ushort ret;
-
-			ret = (ushort)(data & 0x0001);
-			for (i = 1; i < data_len; i++)
-			{
-				data >>= 1;
-				ret = (ushort)((ushort)(ret << 1) | (ushort)(data & 0x01));
-			}
-			return ret;
-		}
-
-		/**
          * Update the crc value with new data.
          *
          * \param crc      The current crc value.
@@ -90,7 +69,7 @@ namespace Sensit.TestSDK.Calculations
          * \param data_len Number of bytes in the \a data buffer.
          * \return         The updated crc value.
          *****************************************************************************/
-		public static ushort crc_update(ushort crc, byte[] data, int data_len)
+		public static ushort Calculate(ushort crc, byte[] data, int data_len)
 		{
 			ushort tbl_idx;
 			int i = 0;

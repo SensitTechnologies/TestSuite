@@ -33,13 +33,12 @@
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-			this.groupBoxSerialPorts = new System.Windows.Forms.GroupBox();
+			this.groupBoxSerialPort = new System.Windows.Forms.GroupBox();
 			this.radioButtonClosed = new System.Windows.Forms.RadioButton();
 			this.radioButtonOpen = new System.Windows.Forms.RadioButton();
-			this.comboBoxSerialPortRx = new System.Windows.Forms.ComboBox();
-			this.comboBoxSerialPortTx = new System.Windows.Forms.ComboBox();
-			this.groupBoxConsoleCommands = new System.Windows.Forms.GroupBox();
-			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			this.comboBoxSerialPort = new System.Windows.Forms.ComboBox();
+			this.groupBoxCommands = new System.Windows.Forms.GroupBox();
+			this.tableLayoutPanelCommands = new System.Windows.Forms.TableLayoutPanel();
 			this.labelMethane = new System.Windows.Forms.Label();
 			this.labelOxygen = new System.Windows.Forms.Label();
 			this.labelCarbonMonoxide = new System.Windows.Forms.Label();
@@ -55,11 +54,19 @@
 			this.textBoxCarbonMonoxide = new System.Windows.Forms.TextBox();
 			this.textBoxHydrogenSulfide = new System.Windows.Forms.TextBox();
 			this.textBoxHydrogenCyanide = new System.Windows.Forms.TextBox();
+			this.groupBoxConsole = new System.Windows.Forms.GroupBox();
+			this.tableLayoutPanelConsole = new System.Windows.Forms.TableLayoutPanel();
+			this.labelCommand = new System.Windows.Forms.Label();
+			this.labelResponse = new System.Windows.Forms.Label();
+			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.textBox2 = new System.Windows.Forms.TextBox();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
-			this.groupBoxSerialPorts.SuspendLayout();
-			this.groupBoxConsoleCommands.SuspendLayout();
-			this.tableLayoutPanel1.SuspendLayout();
+			this.groupBoxSerialPort.SuspendLayout();
+			this.groupBoxCommands.SuspendLayout();
+			this.tableLayoutPanelCommands.SuspendLayout();
+			this.groupBoxConsole.SuspendLayout();
+			this.tableLayoutPanelConsole.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -103,27 +110,26 @@
 			this.toolStripStatusLabel1.Size = new System.Drawing.Size(39, 17);
 			this.toolStripStatusLabel1.Text = "Ready";
 			// 
-			// groupBoxSerialPorts
+			// groupBoxSerialPort
 			// 
-			this.groupBoxSerialPorts.AutoSize = true;
-			this.groupBoxSerialPorts.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.groupBoxSerialPorts.Controls.Add(this.radioButtonClosed);
-			this.groupBoxSerialPorts.Controls.Add(this.radioButtonOpen);
-			this.groupBoxSerialPorts.Controls.Add(this.comboBoxSerialPortRx);
-			this.groupBoxSerialPorts.Controls.Add(this.comboBoxSerialPortTx);
-			this.groupBoxSerialPorts.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBoxSerialPorts.Location = new System.Drawing.Point(0, 24);
-			this.groupBoxSerialPorts.Name = "groupBoxSerialPorts";
-			this.groupBoxSerialPorts.Size = new System.Drawing.Size(394, 60);
-			this.groupBoxSerialPorts.TabIndex = 4;
-			this.groupBoxSerialPorts.TabStop = false;
-			this.groupBoxSerialPorts.Text = "Serial Ports";
+			this.groupBoxSerialPort.AutoSize = true;
+			this.groupBoxSerialPort.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.groupBoxSerialPort.Controls.Add(this.radioButtonClosed);
+			this.groupBoxSerialPort.Controls.Add(this.radioButtonOpen);
+			this.groupBoxSerialPort.Controls.Add(this.comboBoxSerialPort);
+			this.groupBoxSerialPort.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBoxSerialPort.Location = new System.Drawing.Point(0, 24);
+			this.groupBoxSerialPort.Name = "groupBoxSerialPort";
+			this.groupBoxSerialPort.Size = new System.Drawing.Size(394, 60);
+			this.groupBoxSerialPort.TabIndex = 4;
+			this.groupBoxSerialPort.TabStop = false;
+			this.groupBoxSerialPort.Text = "Serial Port";
 			// 
 			// radioButtonClosed
 			// 
 			this.radioButtonClosed.AutoSize = true;
 			this.radioButtonClosed.Checked = true;
-			this.radioButtonClosed.Location = new System.Drawing.Point(324, 21);
+			this.radioButtonClosed.Location = new System.Drawing.Point(190, 21);
 			this.radioButtonClosed.Name = "radioButtonClosed";
 			this.radioButtonClosed.Size = new System.Drawing.Size(57, 17);
 			this.radioButtonClosed.TabIndex = 2;
@@ -135,7 +141,7 @@
 			// radioButtonOpen
 			// 
 			this.radioButtonOpen.AutoSize = true;
-			this.radioButtonOpen.Location = new System.Drawing.Point(267, 21);
+			this.radioButtonOpen.Location = new System.Drawing.Point(140, 21);
 			this.radioButtonOpen.Name = "radioButtonOpen";
 			this.radioButtonOpen.Size = new System.Drawing.Size(51, 17);
 			this.radioButtonOpen.TabIndex = 1;
@@ -143,70 +149,63 @@
 			this.radioButtonOpen.UseVisualStyleBackColor = true;
 			this.radioButtonOpen.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
 			// 
-			// comboBoxSerialPortRx
+			// comboBoxSerialPort
 			// 
-			this.comboBoxSerialPortRx.FormattingEnabled = true;
-			this.comboBoxSerialPortRx.Location = new System.Drawing.Point(140, 20);
-			this.comboBoxSerialPortRx.Name = "comboBoxSerialPortRx";
-			this.comboBoxSerialPortRx.Size = new System.Drawing.Size(121, 21);
-			this.comboBoxSerialPortRx.TabIndex = 0;
-			this.comboBoxSerialPortRx.SelectedIndexChanged += new System.EventHandler(this.ComboBoxSerialPortRx_SelectedIndexChanged);
+			this.comboBoxSerialPort.FormattingEnabled = true;
+			this.comboBoxSerialPort.Location = new System.Drawing.Point(13, 20);
+			this.comboBoxSerialPort.Name = "comboBoxSerialPort";
+			this.comboBoxSerialPort.Size = new System.Drawing.Size(121, 21);
+			this.comboBoxSerialPort.TabIndex = 0;
+			this.comboBoxSerialPort.SelectedIndexChanged += new System.EventHandler(this.ComboBoxSerialPort_SelectedIndexChanged);
 			// 
-			// comboBoxSerialPortTx
+			// groupBoxCommands
 			// 
-			this.comboBoxSerialPortTx.FormattingEnabled = true;
-			this.comboBoxSerialPortTx.Location = new System.Drawing.Point(13, 20);
-			this.comboBoxSerialPortTx.Name = "comboBoxSerialPortTx";
-			this.comboBoxSerialPortTx.Size = new System.Drawing.Size(121, 21);
-			this.comboBoxSerialPortTx.TabIndex = 0;
-			this.comboBoxSerialPortTx.SelectedIndexChanged += new System.EventHandler(this.ComboBoxSerialPortTx_SelectedIndexChanged);
+			this.groupBoxCommands.AutoSize = true;
+			this.groupBoxCommands.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.groupBoxCommands.Controls.Add(this.tableLayoutPanelCommands);
+			this.groupBoxCommands.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBoxCommands.Enabled = false;
+			this.groupBoxCommands.Location = new System.Drawing.Point(0, 84);
+			this.groupBoxCommands.Name = "groupBoxCommands";
+			this.groupBoxCommands.Size = new System.Drawing.Size(394, 183);
+			this.groupBoxCommands.TabIndex = 5;
+			this.groupBoxCommands.TabStop = false;
+			this.groupBoxCommands.Text = "Commands";
 			// 
-			// groupBoxConsoleCommands
+			// tableLayoutPanelCommands
 			// 
-			this.groupBoxConsoleCommands.Controls.Add(this.tableLayoutPanel1);
-			this.groupBoxConsoleCommands.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBoxConsoleCommands.Enabled = false;
-			this.groupBoxConsoleCommands.Location = new System.Drawing.Point(0, 84);
-			this.groupBoxConsoleCommands.Name = "groupBoxConsoleCommands";
-			this.groupBoxConsoleCommands.Size = new System.Drawing.Size(394, 344);
-			this.groupBoxConsoleCommands.TabIndex = 5;
-			this.groupBoxConsoleCommands.TabStop = false;
-			this.groupBoxConsoleCommands.Text = "Console Commands";
-			// 
-			// tableLayoutPanel1
-			// 
-			this.tableLayoutPanel1.AutoSize = true;
-			this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutPanel1.ColumnCount = 3;
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel1.Controls.Add(this.labelMethane, 0, 0);
-			this.tableLayoutPanel1.Controls.Add(this.labelOxygen, 0, 1);
-			this.tableLayoutPanel1.Controls.Add(this.labelCarbonMonoxide, 0, 2);
-			this.tableLayoutPanel1.Controls.Add(this.labelHydrogenSulfide, 0, 3);
-			this.tableLayoutPanel1.Controls.Add(this.labeHydrogenCyanide, 0, 4);
-			this.tableLayoutPanel1.Controls.Add(this.buttonReadMethane, 1, 0);
-			this.tableLayoutPanel1.Controls.Add(this.buttonReadOxygen, 1, 1);
-			this.tableLayoutPanel1.Controls.Add(this.buttonReadCarbonMonoxide, 1, 2);
-			this.tableLayoutPanel1.Controls.Add(this.buttonReadHydrogenSulfide, 1, 3);
-			this.tableLayoutPanel1.Controls.Add(this.buttonReadHydrogenCyanide, 1, 4);
-			this.tableLayoutPanel1.Controls.Add(this.textBoxOxygen, 2, 1);
-			this.tableLayoutPanel1.Controls.Add(this.textBoxMethane, 2, 0);
-			this.tableLayoutPanel1.Controls.Add(this.textBoxCarbonMonoxide, 2, 2);
-			this.tableLayoutPanel1.Controls.Add(this.textBoxHydrogenSulfide, 2, 3);
-			this.tableLayoutPanel1.Controls.Add(this.textBoxHydrogenCyanide, 2, 4);
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 19);
-			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.RowCount = 5;
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(287, 145);
-			this.tableLayoutPanel1.TabIndex = 1;
+			this.tableLayoutPanelCommands.AutoSize = true;
+			this.tableLayoutPanelCommands.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.tableLayoutPanelCommands.ColumnCount = 3;
+			this.tableLayoutPanelCommands.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelCommands.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelCommands.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelCommands.Controls.Add(this.labelMethane, 0, 0);
+			this.tableLayoutPanelCommands.Controls.Add(this.labelOxygen, 0, 1);
+			this.tableLayoutPanelCommands.Controls.Add(this.labelCarbonMonoxide, 0, 2);
+			this.tableLayoutPanelCommands.Controls.Add(this.labelHydrogenSulfide, 0, 3);
+			this.tableLayoutPanelCommands.Controls.Add(this.labeHydrogenCyanide, 0, 4);
+			this.tableLayoutPanelCommands.Controls.Add(this.buttonReadMethane, 1, 0);
+			this.tableLayoutPanelCommands.Controls.Add(this.buttonReadOxygen, 1, 1);
+			this.tableLayoutPanelCommands.Controls.Add(this.buttonReadCarbonMonoxide, 1, 2);
+			this.tableLayoutPanelCommands.Controls.Add(this.buttonReadHydrogenSulfide, 1, 3);
+			this.tableLayoutPanelCommands.Controls.Add(this.buttonReadHydrogenCyanide, 1, 4);
+			this.tableLayoutPanelCommands.Controls.Add(this.textBoxOxygen, 2, 1);
+			this.tableLayoutPanelCommands.Controls.Add(this.textBoxMethane, 2, 0);
+			this.tableLayoutPanelCommands.Controls.Add(this.textBoxCarbonMonoxide, 2, 2);
+			this.tableLayoutPanelCommands.Controls.Add(this.textBoxHydrogenSulfide, 2, 3);
+			this.tableLayoutPanelCommands.Controls.Add(this.textBoxHydrogenCyanide, 2, 4);
+			this.tableLayoutPanelCommands.Location = new System.Drawing.Point(6, 19);
+			this.tableLayoutPanelCommands.Name = "tableLayoutPanelCommands";
+			this.tableLayoutPanelCommands.RowCount = 5;
+			this.tableLayoutPanelCommands.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelCommands.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelCommands.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelCommands.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelCommands.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelCommands.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanelCommands.Size = new System.Drawing.Size(287, 145);
+			this.tableLayoutPanelCommands.TabIndex = 1;
 			// 
 			// labelMethane
 			// 
@@ -348,13 +347,85 @@
 			this.textBoxHydrogenCyanide.Size = new System.Drawing.Size(100, 20);
 			this.textBoxHydrogenCyanide.TabIndex = 21;
 			// 
+			// groupBoxConsole
+			// 
+			this.groupBoxConsole.AutoSize = true;
+			this.groupBoxConsole.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.groupBoxConsole.Controls.Add(this.tableLayoutPanelConsole);
+			this.groupBoxConsole.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBoxConsole.Location = new System.Drawing.Point(0, 267);
+			this.groupBoxConsole.Name = "groupBoxConsole";
+			this.groupBoxConsole.Size = new System.Drawing.Size(394, 161);
+			this.groupBoxConsole.TabIndex = 6;
+			this.groupBoxConsole.TabStop = false;
+			this.groupBoxConsole.Text = "Console";
+			// 
+			// tableLayoutPanelConsole
+			// 
+			this.tableLayoutPanelConsole.ColumnCount = 2;
+			this.tableLayoutPanelConsole.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanelConsole.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanelConsole.Controls.Add(this.labelCommand, 0, 0);
+			this.tableLayoutPanelConsole.Controls.Add(this.labelResponse, 1, 0);
+			this.tableLayoutPanelConsole.Controls.Add(this.textBox1, 0, 1);
+			this.tableLayoutPanelConsole.Controls.Add(this.textBox2, 1, 1);
+			this.tableLayoutPanelConsole.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableLayoutPanelConsole.Location = new System.Drawing.Point(3, 16);
+			this.tableLayoutPanelConsole.Name = "tableLayoutPanelConsole";
+			this.tableLayoutPanelConsole.RowCount = 2;
+			this.tableLayoutPanelConsole.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelConsole.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanelConsole.Size = new System.Drawing.Size(388, 142);
+			this.tableLayoutPanelConsole.TabIndex = 0;
+			// 
+			// labelCommand
+			// 
+			this.labelCommand.Anchor = System.Windows.Forms.AnchorStyles.Top;
+			this.labelCommand.AutoSize = true;
+			this.labelCommand.Location = new System.Drawing.Point(70, 0);
+			this.labelCommand.Name = "labelCommand";
+			this.labelCommand.Size = new System.Drawing.Size(54, 13);
+			this.labelCommand.TabIndex = 0;
+			this.labelCommand.Text = "Command";
+			// 
+			// labelResponse
+			// 
+			this.labelResponse.Anchor = System.Windows.Forms.AnchorStyles.Top;
+			this.labelResponse.AutoSize = true;
+			this.labelResponse.Location = new System.Drawing.Point(263, 0);
+			this.labelResponse.Name = "labelResponse";
+			this.labelResponse.Size = new System.Drawing.Size(55, 13);
+			this.labelResponse.TabIndex = 1;
+			this.labelResponse.Text = "Response";
+			// 
+			// textBox1
+			// 
+			this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.textBox1.Location = new System.Drawing.Point(3, 16);
+			this.textBox1.Multiline = true;
+			this.textBox1.Name = "textBox1";
+			this.textBox1.ReadOnly = true;
+			this.textBox1.Size = new System.Drawing.Size(188, 123);
+			this.textBox1.TabIndex = 2;
+			// 
+			// textBox2
+			// 
+			this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.textBox2.Location = new System.Drawing.Point(197, 16);
+			this.textBox2.Multiline = true;
+			this.textBox2.Name = "textBox2";
+			this.textBox2.ReadOnly = true;
+			this.textBox2.Size = new System.Drawing.Size(188, 123);
+			this.textBox2.TabIndex = 3;
+			// 
 			// FormG2GLT
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(394, 450);
-			this.Controls.Add(this.groupBoxConsoleCommands);
-			this.Controls.Add(this.groupBoxSerialPorts);
+			this.Controls.Add(this.groupBoxConsole);
+			this.Controls.Add(this.groupBoxCommands);
+			this.Controls.Add(this.groupBoxSerialPort);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.menuStrip1);
 			this.Name = "FormG2GLT";
@@ -364,12 +435,15 @@
 			this.menuStrip1.PerformLayout();
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();
-			this.groupBoxSerialPorts.ResumeLayout(false);
-			this.groupBoxSerialPorts.PerformLayout();
-			this.groupBoxConsoleCommands.ResumeLayout(false);
-			this.groupBoxConsoleCommands.PerformLayout();
-			this.tableLayoutPanel1.ResumeLayout(false);
-			this.tableLayoutPanel1.PerformLayout();
+			this.groupBoxSerialPort.ResumeLayout(false);
+			this.groupBoxSerialPort.PerformLayout();
+			this.groupBoxCommands.ResumeLayout(false);
+			this.groupBoxCommands.PerformLayout();
+			this.tableLayoutPanelCommands.ResumeLayout(false);
+			this.tableLayoutPanelCommands.PerformLayout();
+			this.groupBoxConsole.ResumeLayout(false);
+			this.tableLayoutPanelConsole.ResumeLayout(false);
+			this.tableLayoutPanelConsole.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -382,13 +456,12 @@
 		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
 		private System.Windows.Forms.StatusStrip statusStrip1;
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-		private System.Windows.Forms.GroupBox groupBoxSerialPorts;
+		private System.Windows.Forms.GroupBox groupBoxSerialPort;
 		private System.Windows.Forms.RadioButton radioButtonClosed;
 		private System.Windows.Forms.RadioButton radioButtonOpen;
-		private System.Windows.Forms.ComboBox comboBoxSerialPortRx;
-		private System.Windows.Forms.ComboBox comboBoxSerialPortTx;
-		private System.Windows.Forms.GroupBox groupBoxConsoleCommands;
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+		private System.Windows.Forms.ComboBox comboBoxSerialPort;
+		private System.Windows.Forms.GroupBox groupBoxCommands;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelCommands;
 		private System.Windows.Forms.Label labelMethane;
 		private System.Windows.Forms.Label labelOxygen;
 		private System.Windows.Forms.Label labelCarbonMonoxide;
@@ -404,6 +477,12 @@
 		private System.Windows.Forms.TextBox textBoxCarbonMonoxide;
 		private System.Windows.Forms.TextBox textBoxHydrogenSulfide;
 		private System.Windows.Forms.TextBox textBoxHydrogenCyanide;
+		private System.Windows.Forms.GroupBox groupBoxConsole;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelConsole;
+		private System.Windows.Forms.Label labelCommand;
+		private System.Windows.Forms.Label labelResponse;
+		private System.Windows.Forms.TextBox textBox1;
+		private System.Windows.Forms.TextBox textBox2;
 	}
 }
 

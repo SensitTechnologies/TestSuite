@@ -26,24 +26,12 @@ namespace Sensit.App.G2GLT.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string PortTx {
+        public string Port {
             get {
-                return ((string)(this["PortTx"]));
+                return ((string)(this["Port"]));
             }
             set {
-                this["PortTx"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string PortRx {
-            get {
-                return ((string)(this["PortRx"]));
-            }
-            set {
-                this["PortRx"] = value;
+                this["Port"] = value;
             }
         }
     }

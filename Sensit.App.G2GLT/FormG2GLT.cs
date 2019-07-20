@@ -28,14 +28,12 @@ namespace Sensit.App.G2GLT
 			// Find all available serial ports.
 			foreach (string s in SerialPort.GetPortNames())
 			{
-				comboBoxSerialPortRx.Items.Add(s);
-				comboBoxSerialPortTx.Items.Add(s);
+				comboBoxSerialPort.Items.Add(s);
 			}
 
-			// Select the most recently used ports.
-			// The most recently used ports are fetched from applications settings.
-			comboBoxSerialPortRx.Text = Properties.Settings.Default.PortRx;
-			comboBoxSerialPortTx.Text = Properties.Settings.Default.PortTx;
+			// Select the most recently used port.
+			// The most recently used port is fetched from applications settings.
+			comboBoxSerialPort.Text = Properties.Settings.Default.Port;
 		}
 
 		/// <summary>
@@ -67,14 +65,12 @@ namespace Sensit.App.G2GLT
 						// Alert the user.
 						toolStripStatusLabel1.Text = "Opening serial port...";
 
-						// Open the G2 (and let it know what serial ports to use).
-						_sensitG2.ReadPort.Open(Properties.Settings.Default.PortRx);
-						_sensitG2.WritePort.Open(Properties.Settings.Default.PortTx);
+						// Open the G2 (and let it know what serial port to use).
+						_sensitG2.Open(Properties.Settings.Default.Port);
 
-						// TODO:  Update the user interface.
-						comboBoxSerialPortRx.Enabled = false;
-						comboBoxSerialPortTx.Enabled = false;
-						//groupBoxConsoleCommands.Enabled = true;
+						// Update the user interface.
+						comboBoxSerialPort.Enabled = false;
+						groupBoxCommands.Enabled = true;
 						toolStripStatusLabel1.Text = "Port open.";
 					}
 					else if (((RadioButton)sender) == radioButtonClosed)
@@ -82,14 +78,12 @@ namespace Sensit.App.G2GLT
 						// Alert the user.
 						toolStripStatusLabel1.Text = "Closing serial port...";
 
-						// Close the serial ports.
-						_sensitG2.ReadPort.Close();
-						_sensitG2.WritePort.Close();
+						// Close the serial port.
+						_sensitG2.Close();
 
-						// TODO:  Update user interface.
-						comboBoxSerialPortRx.Enabled = true;
-						comboBoxSerialPortTx.Enabled = true;
-						//groupBoxConsoleCommands.Enabled = false;
+						// Update user interface.
+						comboBoxSerialPort.Enabled = true;
+						groupBoxCommands.Enabled = false;
 						toolStripStatusLabel1.Text = "Port closed.";
 					}
 				}
@@ -106,25 +100,14 @@ namespace Sensit.App.G2GLT
 		}
 
 		/// <summary>
-		/// Remember the most recently selected "transmit" serial port.
+		/// Remember the most recently selected serial port.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void ComboBoxSerialPortTx_SelectedIndexChanged(object sender, EventArgs e)
+		private void ComboBoxSerialPort_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			// Save the serial port selection in the application settings.
-			Properties.Settings.Default.PortTx = comboBoxSerialPortTx.Text;
-		}
-
-		/// <summary>
-		/// Remember the most recently selected "receive" serial port.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ComboBoxSerialPortRx_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			// Save the serial port selection in the application settings.
-			Properties.Settings.Default.PortRx = comboBoxSerialPortRx.Text;
+			Properties.Settings.Default.Port = comboBoxSerialPort.Text;
 		}
 
 		/// <summary>

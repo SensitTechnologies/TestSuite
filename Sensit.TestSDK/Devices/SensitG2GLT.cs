@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO.Ports;
+using System.Text;
+using System.Threading;
 using Sensit.TestSDK.Calculations;
 using Sensit.TestSDK.Communication;
 using Sensit.TestSDK.Exceptions;
@@ -8,11 +10,152 @@ using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.TestSDK.Devices
 {
-	public class SensitG2GLT : IGasConcentrationReference
+	public class SensitG2GLT : SerialDevice, IGasConcentrationReference
 	{
-		// Sensit G2-GLT uses two serial ports.  Devices for each port.
-		public SensitG2GLTPort ReadPort = new SensitG2GLTPort();
-		public SensitG2GLTPort WritePort = new SensitG2GLTPort();
+		#region Enumerations
+
+		public enum CMDS
+		{
+			NULL = 0,
+			ACK = 0x06,
+			NAK = 0x15,
+			RESPONSE = '#',
+			STATUS_INFO = 'a',
+			MONITORING_MODE = 'b',
+			TRAINING_MODE = 'c',
+			GET_INSTRUMENT_INFO = 'd',
+			GET_LIVE_DATA = 'e',
+			UPDATE_SENSOR_READING = 'f',
+			PERFORM_AUTOZERO = 'g',
+			FLOW_BLOCKED = 'h',
+			CLEAR_FLOW_BLOCKED = 'i',
+			SELECT_BH_MODE = 'j',
+			START_BH_TEST = 'k',
+			EXIT_BH_TEST = 'l',
+			GET_BH_DATA = 'm',
+			BATTERY_LOW = 'n',
+			CLEAR_BATTERY_LOW = 'o',
+			START_LEAKSEARCH = 'p',
+			EXIT_LEAKSEARCH = 'q',
+			GET_LEAK_SEARCH_DATA = 'r',
+			START_PURGE_TEST = 's',
+			EXIT_PURGE_TEST = 't',
+			GET_PURGE_TEST_DATA = 'u',
+			GET_DISPLAY_BUFF = 'v',
+			START_STREAMING = 'w',
+			STOP_STREAMING = 'x',
+			START_NSC = 'y',
+			CLEAR_NSC = 'z',
+			START_NSR = 'A',
+			CLEAR_NSR = 'B',
+			CAL_DUE = 'C',
+			START_TICK = 'D',
+			EXIT_TICK = 'E',
+			SELECT_CO_TEST = 'F',
+			START_CO_TEST = 'G',
+			EXIT_CO_TEST = 'H',
+			SELECT_CF_TEST = 'I',
+			START_CF_TEST = 'J',
+			EXIT_CF_TEST = 'K',
+			START_WDPK = 'L',
+			EXIT_WDPK = 'M',
+			SELECT_IM_MODE = 'N',
+			IM_ACK = 'O',
+			IM_EXIT = 'P',
+			TICK_RESET_CMD = 'Q',
+			START_STAND_BY = 'R',
+			EXIT_STAND_BY = 'S'
+		}
+
+		public enum SENSOR_ID
+		{
+			NONE = 0,
+			EX_TC,
+			EX,
+			CO,
+			O2,
+			H2S,
+			HCN,
+		}
+
+		public enum UNIT
+		{
+			PPM = 0,
+			LEL,
+			LEL1DP,
+			LEL2DP,
+			VOL,
+			VOL1DP,
+			VOL2DP,
+		}
+
+		public enum LEL_UNIT
+		{
+			VOL = 0,
+			LEL
+		}
+
+		public enum DEVICE_STATE
+		{
+			UNKNOWN = 0,
+			WAIT,
+			STARTUP,
+			WARMUP,
+			NORMAL,
+			AUTOZERO,
+			FLOW_BLOCKED,
+			BARHOLE_START,
+			BARHOLE_IN_PROGRESS,
+			BARHOLE_RESULT,
+			MENU,
+			LEAK_SEARCH,
+			PURGE_TEST,
+			SHUTTING_DOWN,
+			CO_START,
+			CO_IN_PROGRESS,
+			CO_RESULT,
+			CF_START,
+			CF_IN_PROGRESS,
+			CF_RESULT,
+			WORK_DISPLAY_PEAK,
+			IM_SELECT_ACK,
+			IM_RUN,
+			IM_EXIST_ACK,
+			STAND_BY
+		}
+
+		public enum SENSOR_STATE
+		{
+			NORMAL = 0,
+			NSC,
+			NSR,
+			FAIL,
+			NONE
+		}
+
+		public enum DEVICE_MODE
+		{
+			MONITORING = 0,
+			TRAINING,
+			NONE,
+		}
+
+		public enum TC_MODE
+		{
+			PRO = 0,
+			NAT,
+		}
+
+		public enum TICK_STATE
+		{
+			DISABLE = 0,
+			ENABLE,
+			NONE
+		}
+
+		#endregion
+
+		#region Reference Device Methods
 
 		public UnitOfMeasure.Concentration ConcentrationUnit { get; set; } = UnitOfMeasure.Concentration.PartsPerMillion;
 
@@ -28,24 +171,34 @@ namespace Sensit.TestSDK.Devices
 			switch (GasSelection)
 			{
 				case Gas.Methane:
-					// Read from the appropriate sensor.
-					WritePort.Write("message");
-
+					// Read from the appropriate sensor. "$x*8731\n"
+					string msg = CreateMessage(CMDS.STOP_STREAMING);
+					_serialPort.Write(msg);
 					break;
+
+				case Gas.Oxygen:
+					// Get instrument info. "$d*60186"
+					string msg2 = CreateMessage(CMDS.GET_INSTRUMENT_INFO);
+					_serialPort.Write(msg2);
+					break;
+
 				default:
 					throw new DeviceSettingNotSupportedException("Gas selection " + GasSelection.ToString() + " is not supported.");
 			}
 
+			Thread.Sleep(200);
+
 			// Read from the serial port.
-			string message = ReadPort.ReadBlocking();
-			
-			// TODO:  Parse the reading.
+			string message = ReadBlocking();
+
+			// TODO:  Parse the reading and add it to the response queue.
 
 		}
-	}
 
-	public class SensitG2GLTPort : SerialDevice
-	{
+		#endregion
+
+		#region Serial Device Methods
+
 		public new int BaudRate
 		{
 			set
@@ -126,10 +279,15 @@ namespace Sensit.TestSDK.Devices
 				_serialPort.ReadTimeout = 500;
 				_serialPort.WriteTimeout = 500;
 
-				// Messages are terminated with a line feed.
-
 				// Open the serial port.
 				_serialPort.Open();
+
+				// Wait before attempting communication.
+				// Not sure why...but the GLT app did this.
+				Thread.Sleep(2000);
+
+				// Initialize communication with the instrument.
+				InitializeGLT();
 			}
 			catch (SystemException ex)
 			{
@@ -138,12 +296,357 @@ namespace Sensit.TestSDK.Devices
 			}
 		}
 
-		public void Write(string message)
+		#endregion
+
+		private void InitializeGLT()
 		{
-			_serialPort.Write(message);
+			// Stop display buffer stream.
+			_serialPort.Write(CreateMessage(CMDS.STOP_STREAMING));
+
+			string message1 = ReadBlocking();
+
+			// Get instrument info.
+			_serialPort.Write(CreateMessage(CMDS.GET_INSTRUMENT_INFO));
+
+			string message2 = ReadBlocking();
+
+			// Request Monitoring Mode.
+			_serialPort.Write("$b * 59802\n");
+
+			string message3 = ReadBlocking();
 		}
 
-		public string ReadBlocking()
+		private bool ValidateChecksum(byte[] message)
+		{
+			ushort rx_crc;
+			ushort calc_crc;
+			int i = 0;
+			int max_i = message.GetUpperBound(0) - 1;
+			int size = 0;
+			while (message[i++] != (byte)'*')
+			{
+				if (i >= max_i) return false;
+			}
+
+			size = i - 1;
+			calc_crc = Checksum.Calculate(0, message, size);
+			string rx_crc_str = "";
+			while (message[i] != (byte)'\n')
+			{
+				rx_crc_str = rx_crc_str + ((char)message[i++]).ToString();
+			}
+			rx_crc = ushort.Parse(rx_crc_str);
+			if (rx_crc == calc_crc) { return true; }
+			else { return false; }
+		}
+
+		private class G2StatusInfo
+		{
+			public DEVICE_STATE DeviceState { get; set; }
+
+			public SENSOR_STATE SensorState { get; set; }
+
+			public DEVICE_MODE DeviceMode { get; set; }
+
+			public TICK_STATE TickState { get; set; }
+
+			public bool CalibrationDue { get; set; }
+
+			public bool BatteryLow { get; set; }
+			
+			public string ModelName { get; set; }
+
+			public ushort SerialNumber { get; set; }
+
+			public string FirmwareRev { get; set; }
+
+			public TC_MODE NatProMode { get; set; }
+
+			public ushort LELEquivalent { get; set; }
+
+			public bool BarholeEnable { get; set; }
+
+			public bool LeakSearchEnable { get; set; }
+
+			public bool PurgeTestEnable { get; set; }
+
+			public bool COTestEnable { get; set; }
+
+			public bool CFTestEnable { get; set; }
+
+			public bool NSCEnable { get; set; }
+
+			public bool NSREnable { get; set; }
+
+			public bool FlowBlockVisible { get; set; }
+
+			/// <summary>
+			/// Unit of measure when in LEL range.
+			/// </summary>
+			public LEL_UNIT LELUnit { get; set; }
+
+			public ushort ExPPMRange { get; set; }
+
+			public ushort LeakSearchPPM { get; set; }
+
+			public ushort SensorCount { get; set; }
+
+			public List<G2SensorConfig> Sensors { get; set; }
+
+			public bool WDPKTestEnable { get; set; }
+
+			public bool InertModeTestEnable { get; set; }
+
+			public bool StandbyEnable { get; set; }
+		}
+
+		private class G2SensorConfig
+		{
+			/// <summary>
+			/// Type of sensor (i.e. what gas it detects)
+			/// </summary>
+			public SENSOR_ID SensorID { get; set; }
+
+			/// <summary>
+			/// Low Alarm value
+			/// </summary>
+			public double LowAlarm { get; set; }
+
+			/// <summary>
+			/// High Alarm value
+			/// </summary>
+			public double HighAlarm { get; set; }
+
+			/// <summary>
+			/// Sensor's range
+			/// </summary>
+			public double MaxValue { get; set; }
+		}
+
+		private G2StatusInfo AnalyzeStatusInfo(string[] message)
+		{
+			int i = 2;
+
+			// str[0] = "$#"
+			// str[1] = CMD.GET_INSTRUMENT_INFO
+			
+			G2StatusInfo g2Status = new G2StatusInfo();
+
+			g2Status.DeviceState = (DEVICE_STATE)ushort.Parse(message[i++]);
+			g2Status.SensorState = (SENSOR_STATE)ushort.Parse(message[i++]);
+			g2Status.DeviceMode = (DEVICE_MODE)ushort.Parse(message[i++]);
+			g2Status.CalibrationDue = Convert.ToBoolean(int.Parse(message[i++]));
+			g2Status.BatteryLow = Convert.ToBoolean(int.Parse(message[i++]));
+			g2Status.TickState = (TICK_STATE)ushort.Parse(message[i++]);
+
+			return g2Status;
+		}
+
+		private void AnalyzeInstrumentInfo(string[] message)
+		{
+			int max_values = message.GetUpperBound(0);
+
+			int i = 2;
+
+			// str[0] = "$#"
+			// str[1] = CMD.GET_INSTRUMENT_INFO
+
+			G2StatusInfo g2Status = new G2StatusInfo();
+
+			if (message.Length >= i + 1)
+				g2Status.DeviceState = (DEVICE_STATE)ushort.Parse(message[i++]);
+
+			if (message.Length >= i + 1)
+				g2Status.SensorState = (SENSOR_STATE)ushort.Parse(message[i++]);
+
+			if (message.Length >= i + 1)
+				g2Status.DeviceMode = (DEVICE_MODE)ushort.Parse(message[i++]);
+
+			if (message.Length >= i + 1)
+				g2Status.CalibrationDue = Convert.ToBoolean(int.Parse(message[i++]));
+
+			if (message.Length >= i + 1)
+				g2Status.BatteryLow = Convert.ToBoolean(int.Parse(message[i++]));
+
+			if (message.Length >= i + 1)
+				g2Status.TickState = (TICK_STATE)ushort.Parse(message[i++]);
+
+			if (message.Length >= i + 1)
+				g2Status.ModelName = message[i++];
+
+			if (message.Length >= i + 1)
+				g2Status.SerialNumber = ushort.Parse(message[i++]);
+
+			if (message.Length >= i + 1)
+				g2Status.FirmwareRev = message[i++];
+
+			if (message.Length >= i + 1)
+				g2Status.NatProMode = (TC_MODE)ushort.Parse(message[i++]);
+
+			if (message.Length >= i + 1)
+				g2Status.LELEquivalent = ushort.Parse(message[i++]);// / 10;
+
+			if (message.Length >= i + 1)
+				g2Status.BarholeEnable = Convert.ToBoolean(int.Parse(message[i++]));
+
+			if (message.Length >= i + 1)
+				g2Status.LeakSearchEnable = Convert.ToBoolean(int.Parse(message[i++]));
+
+			if (message.Length >= i + 1)
+				g2Status.PurgeTestEnable = Convert.ToBoolean(int.Parse(message[i++]));
+
+			if (message.Length >= i + 1)
+				g2Status.COTestEnable = Convert.ToBoolean(int.Parse(message[i++]));
+
+			if (message.Length >= i + 1)
+				g2Status.CFTestEnable = Convert.ToBoolean(int.Parse(message[i++]));
+
+			if (message.Length >= i + 1)
+				g2Status.NSCEnable = Convert.ToBoolean(int.Parse(message[i++]));
+
+			if (message.Length >= i + 1)
+				g2Status.NSREnable = Convert.ToBoolean(int.Parse(message[i++]));
+
+			if (message.Length >= i + 1)
+				g2Status.FlowBlockVisible = Convert.ToBoolean(int.Parse(message[i++]));
+
+			if (message.Length >= i + 1)
+				g2Status.LELUnit = (LEL_UNIT)Enum.Parse(typeof(LEL_UNIT), message[i++]); //(LEL_MODE)UInt16.Parse(str[i++]);
+
+			if (message.Length >= i + 1)
+				g2Status.ExPPMRange = ushort.Parse(message[i++]);
+
+			if (message.Length >= i + 1)
+				g2Status.LeakSearchPPM = ushort.Parse(message[i++]);
+
+			if (message.Length >= i + 1)
+				g2Status.SensorCount = ushort.Parse(message[i++]);
+
+			// For each sensor in the instrument...
+			for (int j = 0; j < g2Status.SensorCount; j++)
+			{
+				if (i >= max_values - 1)
+					break;
+
+				if (message.Length < i + 4)
+					break;
+
+				G2SensorConfig sensorConfig = new G2SensorConfig
+				{
+					SensorID = (SENSOR_ID)ushort.Parse(message[i++]),
+					LowAlarm = ushort.Parse(message[i++]),
+					HighAlarm = ushort.Parse(message[i++]),
+					MaxValue = ushort.Parse(message[i++]),
+				};
+
+				g2Status.Sensors.Add(sensorConfig);
+			}
+
+			if (message.Length >= i + 1)
+				g2Status.WDPKTestEnable = Convert.ToBoolean(int.Parse(message[i++]));
+
+			if (message.Length >= i + 1)
+				g2Status.InertModeTestEnable = Convert.ToBoolean(int.Parse(message[i++]));
+
+			if (message.Length >= i + 1)
+				g2Status.StandbyEnable = Convert.ToBoolean(int.Parse(message[i++]));
+
+			#region "Firmware Version Specific Conditions"
+
+			// Firmware versions greater than 2.02 contain CO test.
+			// For versions less than this, consider the CO test disabled.
+			if (Convert.ToDouble(g2Status.FirmwareRev) < 2.02)
+				g2Status.COTestEnable = g2Status.CFTestEnable = false;
+
+			#endregion
+		}
+
+		/*
+		private void AnalyzeLiveData(string[] str)
+		{
+			int max_values = str.GetUpperBound(0);
+			int i = 0;
+			//str[0] = "$#"
+			i++;
+			//str[1] = CMD.GET_INSTRUMENT_INFO
+			i++;
+			DEVICE_STATES OldDeviceState = InstrumentViewModelObject.DeviceState;
+			SENSOR_STATES OldSensorState = InstrumentViewModelObject.LELSensorState;
+			DEVICE_MODES OldDeviceMode = InstrumentViewModelObject.DeviceMode;
+			bool OldIsBattLow = InstrumentViewModelObject.IsBattLow;
+
+			InstrumentViewModelObject.DeviceState = (DEVICE_STATES)ushort.Parse(str[i++]);
+			//System.Diagnostics.Debug.WriteLine("Device State: " + InstrumentViewModelObject.DeviceState);
+
+			InstrumentViewModelObject.LELSensorState = (SENSOR_STATES)ushort.Parse(str[i++]);
+			TICK OldTickState = InstrumentViewModelObject.TickStatus;
+
+			InstrumentViewModelObject.DeviceMode = (DEVICE_MODES)ushort.Parse(str[i++]);
+			InstrumentViewModelObject.SetCalDue = Convert.ToBoolean(int.Parse(str[i++]));
+			InstrumentViewModelObject.IsBattLow = Convert.ToBoolean(int.Parse(str[i++]));
+			InstrumentViewModelObject.TickStatus = (TICK)ushort.Parse(str[i++]);
+
+			int j = 0;
+			InstrumentViewModelObject.UnitLiveData.SensorRead.Clear();
+			for (; j < 4; j++)//InstrumentViewModelObject for each sensor
+			{
+				if (i >= max_values - 1) break;
+				SensorRead sr = new SensorRead();
+				sr.id = (SENSOR_IDS)ushort.Parse(str[i++]);
+
+				sr.reading = int.Parse(str[i++]);
+				sr.unit = (UNITS)ushort.Parse(str[i++]);
+				sr.sensor_status = (SENSOR_STATES)ushort.Parse(str[i++]);
+				sr.alarm = (ALARMS)ushort.Parse(str[i++]);
+				InstrumentViewModelObject.UnitLiveData.SensorRead.Add(sr);
+			}
+
+			if (IsGetLiveDataFirstTime)
+			{
+				ManageUnitRadioButtons();
+				AdjustSliderValues();
+				AdjustDeviceControl();
+
+				//Trial Run
+				DecideNSCNSRFromSensorState(InstrumentViewModelObject.LELSensorState);
+
+				IsGetLiveDataFirstTime = false;
+			}
+
+			if (((OldDeviceState != InstrumentViewModelObject.DeviceState) ||
+				 OldTickState != InstrumentViewModelObject.TickStatus ||
+				 OldIsBattLow != InstrumentViewModelObject.IsBattLow ||
+				 OldDeviceMode != InstrumentViewModelObject.DeviceMode) &&
+				InstrumentViewModelObject.DeviceMode == DEVICE_MODES.TRAINING)
+			{
+				AdjustDeviceControl();
+				ManageUnitRadioButtons();
+			}
+
+			if ((OldSensorState != InstrumentViewModelObject.LELSensorState) || (OldDeviceState != InstrumentViewModelObject.DeviceState))
+				DecideNSCNSRFromSensorState(InstrumentViewModelObject.LELSensorState);
+
+			//*********************************************************************************************************
+			// Specific Conditions
+			//*********************************************************************************************************
+
+			if (OldDeviceState != DEVICE_STATES.MENU && ((int)OldDeviceState >= (int)DEVICE_STATES.BARHOLE_START) || OldDeviceState == DEVICE_STATES.NORMAL)
+				OldPatchedState = OldDeviceState;
+
+			if (OldPatchedState != InstrumentViewModelObject.DeviceState &&
+				(InstrumentViewModelObject.DeviceState == DEVICE_STATES.NORMAL || InstrumentViewModelObject.DeviceState == DEVICE_STATES.LEAK_SEARCH || InstrumentViewModelObject.DeviceState == DEVICE_STATES.WORK_DISPLAY_PEAK))
+			{
+				AdjustRadioButtonInLowerPossibleCondition();
+			}
+
+			if (OldDeviceState != DEVICE_STATES.MENU && (int)OldDeviceState >= (int)DEVICE_STATES.BARHOLE_START)
+				OldPatchedState = InstrumentViewModelObject.DeviceState;
+			//*********************************************************************************************************
+		} 
+		*/
+
+
+		private string ReadBlocking()
 		{
 			string message = string.Empty;
 
@@ -170,6 +673,87 @@ namespace Sensit.TestSDK.Devices
 			}
 
 			return message;
+		}
+
+		private string CreateMessage(CMDS command)
+		{
+			// Create a string builder, and the message starts with "$".
+			StringBuilder message = new StringBuilder("$", 10);
+
+			// Add the command.
+			message.Append((char)command);
+
+			// Calculate checksum and convert to string.
+			string checksum = Checksum.Calculate(0, Encoding.ASCII.GetBytes(message.ToString()), message.Length).ToString();
+
+			// Add checksum to the message, preceeded by an asterisk.
+			message.Append('*' + checksum + '\n');
+
+			return message.ToString();
+		}
+
+		private string CreateMessage(CMDS command, SENSOR_ID sensor, uint ppm)
+		{
+			// Create a byte array.
+			byte[] outbuff = new byte[30];
+
+			// Keep track of the message length.
+			int i = 0;
+
+			// Message starts with "$".
+			outbuff[i++] = (byte)'$';
+
+			// Add the command.
+			outbuff[i++] = (byte)command;
+
+			// Add comma delimiter.
+			outbuff[i++] = (byte)',';
+
+			// Add the sensor ID.
+			string str = ((int)sensor).ToString();
+			for (int j = 0; j < str.Length; j++)
+			{
+				outbuff[i++] = (byte)str[j];
+			}
+
+			// Add comma delimiter.
+			outbuff[i++] = (byte)',';
+
+			// Add sensor data.
+			str = ppm.ToString();
+			for (int j = 0; j < str.Length; j++)
+			{
+				outbuff[i++] = (byte)str[j];
+			}
+
+			// Add comma delimiter.
+			outbuff[i++] = (byte)',';
+
+			// Add unit of measure.
+			str = ((int)UNIT.PPM).ToString();
+			for (int j = 0; j < str.Length; j++)
+			{
+				outbuff[i++] = (byte)str[j];
+			}
+
+			// Calculate checksum.
+			ushort crc_value = Checksum.Calculate(0, outbuff, i);
+
+			// Checksum is preceeded by an asterisk.
+			outbuff[i++] = (byte)'*';
+
+			// Add the checksum to the message.
+			string crc_str = crc_value.ToString();
+			int crc_str_size = crc_str.Length;
+			for (int j = 0; j < crc_str_size; j++)
+			{
+				outbuff[i++] = (byte)crc_str[j];
+			}
+
+			// Terminate message with newline.
+			outbuff[i++] = (byte)('\n');
+
+			return Encoding.ASCII.GetString(outbuff);
 		}
 	}
 }
