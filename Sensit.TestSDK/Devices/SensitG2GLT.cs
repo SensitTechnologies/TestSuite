@@ -12,6 +12,8 @@ namespace Sensit.TestSDK.Devices
 {
 	public class SensitG2GLT : SerialDevice, IGasConcentrationReference
 	{
+		const int NUM_RETRIES = 20;
+
 		#region Enumerations
 
 		public enum CMDS
@@ -175,28 +177,27 @@ namespace Sensit.TestSDK.Devices
 
 		public void Read()
 		{
+			// Read sensor data from instrument.
+			string message = TrySendingCommand(CreateMessage(CMDS.GET_LIVE_DATA));
+
+			// Parse the response.
+			G2StatusInfo g2StatusInfo = AnalyzeLiveData(message);
+
 			switch (GasSelection)
 			{
 				case Gas.Methane:
-					// Read from the appropriate sensor. "$x*8731\n"
-					string msg = CreateMessage(CMDS.STOP_STREAMING);
-					_serialPort.Write(msg);
+					// TODO:  Parse the response.
+					//Readings[VariableType.GasConcentration] = g2StatusInfo.SensorLiveData[0].Reading;
 					break;
 
 				case Gas.Oxygen:
-					// Get instrument info. "$d*60186"
-					string msg2 = CreateMessage(CMDS.GET_INSTRUMENT_INFO);
-					_serialPort.Write(msg2);
+					// TODO:  Parse the response.
+					//Readings[VariableType.GasConcentration] = g2StatusInfo.SensorLiveData[1].Reading;
 					break;
 
 				default:
 					throw new DeviceSettingNotSupportedException("Gas selection " + GasSelection.ToString() + " is not supported.");
 			}
-
-			Thread.Sleep(200);
-
-			// Read from the serial port.
-			string message = ReadBlocking();
 
 			// TODO:  Parse the reading and add it to the response queue.
 
@@ -293,8 +294,15 @@ namespace Sensit.TestSDK.Devices
 				// Not sure why...but the GLT app did this.
 				Thread.Sleep(2000);
 
-				// Initialize communication with the instrument.
-				InitializeGLT();
+				// Stop display buffer stream.
+				TrySendingCommand(CreateMessage(CMDS.STOP_STREAMING));
+
+				// Get instrument info.
+				TrySendingCommand(CreateMessage(CMDS.GET_INSTRUMENT_INFO));
+
+				// Request Monitoring Mode.
+				TrySendingCommand(CreateMessage(CMDS.MONITORING_MODE));
+
 			}
 			catch (SystemException ex)
 			{
@@ -305,24 +313,53 @@ namespace Sensit.TestSDK.Devices
 
 		#endregion
 
-		private bool InitializeGLT()
+		private string TrySendingCommand(string command)
 		{
-			// Stop display buffer stream.
-			_serialPort.Write(CreateMessage(CMDS.STOP_STREAMING));
+			// how many times to retry a command
+			uint retries = NUM_RETRIES;
 
-			bool result = ValidateChecksum(ReadBlocking());
+			// Attempt sending command until we succeed or run out of retries.
+			string reply;
+			bool result = false;
+			string errorMessage = string.Empty;
+			do
+			{
+				// Send the command over the serial port.
+				Console.Write(command);
+				_serialPort.Write(command);
 
-			// Get instrument info.
-			_serialPort.Write(CreateMessage(CMDS.GET_INSTRUMENT_INFO));
+				// Read the reply.
+				reply = ReadBlocking();
 
-			result = ValidateChecksum(ReadBlocking());
+				// If no reply was received...
+				if (string.Compare(reply, string.Empty) == 0)
+				{
+					errorMessage = "No response from G2-GLT.";
+				}
+				// If checksum was invalid...
+				else if (ValidateChecksum(reply) == false)
+				{
+					errorMessage = "Invalid checksum from G2-GLT.";
+				}
+				// If message was received and was valid...
+				else
+				{
+					// Success!  We're done!
+					result = true;
+				}
 
-			// Request Monitoring Mode.
-			_serialPort.Write("$b * 59802\n");
+				// Remember how many times we've attempted communication.
+				retries--;
+			} while ((result == false) && (retries != 0));
 
-			result = ValidateChecksum(ReadBlocking());
+			// If we never got a valid response to our message...
+			if (result == false)
+				// Alert the application that something went wrong.
+				throw new DeviceCommandFailedException(errorMessage);
 
-			return result;
+			// Return the reply from the instrument.
+			Console.Write(reply);
+			return reply;
 		}
 
 		private bool ValidateChecksum(string message)
@@ -406,7 +443,7 @@ namespace Sensit.TestSDK.Devices
 			/// <summary>
 			/// Configuration of the instruments' sensors
 			/// </summary>
-			public List<G2SensorConfig> Sensors { get; set; }
+			public List<G2SensorConfig> Sensors { get; set; } = new List<G2SensorConfig>();
 
 			public bool WDPKTestEnable { get; set; }
 
@@ -417,7 +454,7 @@ namespace Sensit.TestSDK.Devices
 			/// <summary>
 			/// Actual data readings from sensors
 			/// </summary>
-			public List<G2SensorReading> SensorLiveData { get; set; }
+			public List<G2SensorReading> SensorLiveData { get; set; } = new List<G2SensorReading>();
 		}
 
 		private class G2SensorConfig
@@ -456,8 +493,12 @@ namespace Sensit.TestSDK.Devices
 			public ALARM_STATE AlarmState { get; set; }
 		}
 
-		private G2StatusInfo AnalyzeStatusInfo(string[] message)
+		private G2StatusInfo AnalyzeStatusInfo(string message)
 		{
+			// Split the string using commas to separate each word.
+			char[] separators = new char[] { ',', '*', '\n' };
+			string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+
 			int i = 2;
 
 			// str[0] = "$#"
@@ -465,95 +506,110 @@ namespace Sensit.TestSDK.Devices
 			
 			G2StatusInfo g2Status = new G2StatusInfo();
 
-			g2Status.DeviceState = (DEVICE_STATE)ushort.Parse(message[i++]);
-			g2Status.SensorState = (SENSOR_STATE)ushort.Parse(message[i++]);
-			g2Status.DeviceMode = (DEVICE_MODE)ushort.Parse(message[i++]);
-			g2Status.CalibrationDue = Convert.ToBoolean(int.Parse(message[i++]));
-			g2Status.BatteryLow = Convert.ToBoolean(int.Parse(message[i++]));
-			g2Status.TickState = (TICK_STATE)ushort.Parse(message[i++]);
+			if (words.Length >= i + 1)
+				g2Status.DeviceState = (DEVICE_STATE)ushort.Parse(words[i++]);
+
+			if (words.Length >= i + 1)
+				g2Status.SensorState = (SENSOR_STATE)ushort.Parse(words[i++]);
+
+			if (words.Length >= i + 1)
+				g2Status.DeviceMode = (DEVICE_MODE)ushort.Parse(words[i++]);
+
+			if (words.Length >= i + 1)
+				g2Status.CalibrationDue = Convert.ToBoolean(int.Parse(words[i++]));
+
+			if (words.Length >= i + 1)
+				g2Status.BatteryLow = Convert.ToBoolean(int.Parse(words[i++]));
+
+			if (words.Length >= i + 1)
+				g2Status.TickState = (TICK_STATE)ushort.Parse(words[i++]);
 
 			return g2Status;
 		}
 
-		private G2StatusInfo AnalyzeInstrumentInfo(string[] message)
+		private G2StatusInfo AnalyzeInstrumentInfo(string message)
 		{
-			int max_values = message.GetUpperBound(0);
+			// Split the string using commas to separate each word.
+			char[] separators = new char[] { ',','*','\n' };
+			string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+
+			int max_values = words.GetUpperBound(0);
 
 			int i = 2;
 
-			// str[0] = "$#"
-			// str[1] = CMD.GET_INSTRUMENT_INFO
+			// words[0] = "$#"
+			// words[1] = CMD.GET_INSTRUMENT_INFO
 
 			G2StatusInfo g2Status = new G2StatusInfo();
 
-			if (message.Length >= i + 1)
-				g2Status.DeviceState = (DEVICE_STATE)ushort.Parse(message[i++]);
+			if (words.Length >= i + 1)
+				g2Status.DeviceState = (DEVICE_STATE)ushort.Parse(words[i++]);
 
-			if (message.Length >= i + 1)
-				g2Status.SensorState = (SENSOR_STATE)ushort.Parse(message[i++]);
+			if (words.Length >= i + 1)
+				g2Status.SensorState = (SENSOR_STATE)ushort.Parse(words[i++]);
 
-			if (message.Length >= i + 1)
-				g2Status.DeviceMode = (DEVICE_MODE)ushort.Parse(message[i++]);
+			if (words.Length >= i + 1)
+				g2Status.DeviceMode = (DEVICE_MODE)ushort.Parse(words[i++]);
 
-			if (message.Length >= i + 1)
-				g2Status.CalibrationDue = Convert.ToBoolean(int.Parse(message[i++]));
+			if (words.Length >= i + 1)
+				g2Status.CalibrationDue = Convert.ToBoolean(int.Parse(words[i++]));
 
-			if (message.Length >= i + 1)
-				g2Status.BatteryLow = Convert.ToBoolean(int.Parse(message[i++]));
+			if (words.Length >= i + 1)
+				g2Status.BatteryLow = Convert.ToBoolean(int.Parse(words[i++]));
 
-			if (message.Length >= i + 1)
-				g2Status.TickState = (TICK_STATE)ushort.Parse(message[i++]);
+			if (words.Length >= i + 1)
+				g2Status.TickState = (TICK_STATE)ushort.Parse(words[i++]);
 
-			if (message.Length >= i + 1)
-				g2Status.ModelName = message[i++];
+			if (words.Length >= i + 1)
+				g2Status.ModelName = words[i++];
 
-			if (message.Length >= i + 1)
-				g2Status.SerialNumber = ushort.Parse(message[i++]);
+			if (words.Length >= i + 1)
+				g2Status.SerialNumber = ushort.Parse(words[i++]);
 
-			if (message.Length >= i + 1)
-				g2Status.FirmwareRev = message[i++];
+			if (words.Length >= i + 1)
+				g2Status.FirmwareRev = words[i++];
 
-			if (message.Length >= i + 1)
-				g2Status.NatProMode = (TC_MODE)ushort.Parse(message[i++]);
+			if (words.Length >= i + 1)
+				g2Status.NatProMode = (TC_MODE)ushort.Parse(words[i++]);
 
-			if (message.Length >= i + 1)
-				g2Status.LELEquivalent = ushort.Parse(message[i++]);// / 10;
+			if (words.Length >= i + 1)
+				g2Status.LELEquivalent = ushort.Parse(words[i++]);
 
-			if (message.Length >= i + 1)
-				g2Status.BarholeEnable = Convert.ToBoolean(int.Parse(message[i++]));
+			if (words.Length >= i + 1)
+				g2Status.BarholeEnable = Convert.ToBoolean(int.Parse(words[i++]));
 
-			if (message.Length >= i + 1)
-				g2Status.LeakSearchEnable = Convert.ToBoolean(int.Parse(message[i++]));
+			if (words.Length >= i + 1)
+				g2Status.LeakSearchEnable = Convert.ToBoolean(int.Parse(words[i++]));
 
-			if (message.Length >= i + 1)
-				g2Status.PurgeTestEnable = Convert.ToBoolean(int.Parse(message[i++]));
+			if (words.Length >= i + 1)
+				g2Status.PurgeTestEnable = Convert.ToBoolean(int.Parse(words[i++]));
 
-			if (message.Length >= i + 1)
-				g2Status.COTestEnable = Convert.ToBoolean(int.Parse(message[i++]));
+			if (words.Length >= i + 1)
+				g2Status.COTestEnable = Convert.ToBoolean(int.Parse(words[i++]));
 
-			if (message.Length >= i + 1)
-				g2Status.CFTestEnable = Convert.ToBoolean(int.Parse(message[i++]));
+			if (words.Length >= i + 1)
+				g2Status.CFTestEnable = Convert.ToBoolean(int.Parse(words[i++]));
 
-			if (message.Length >= i + 1)
-				g2Status.NSCEnable = Convert.ToBoolean(int.Parse(message[i++]));
+			if (words.Length >= i + 1)
+				g2Status.NSCEnable = Convert.ToBoolean(int.Parse(words[i++]));
 
-			if (message.Length >= i + 1)
-				g2Status.NSREnable = Convert.ToBoolean(int.Parse(message[i++]));
+			if (words.Length >= i + 1)
+				g2Status.NSREnable = Convert.ToBoolean(int.Parse(words[i++]));
 
-			if (message.Length >= i + 1)
-				g2Status.FlowBlockVisible = Convert.ToBoolean(int.Parse(message[i++]));
+			if (words.Length >= i + 1)
+				g2Status.FlowBlockVisible = Convert.ToBoolean(int.Parse(words[i++]));
 
-			if (message.Length >= i + 1)
-				g2Status.LELUnit = (LEL_UNIT)Enum.Parse(typeof(LEL_UNIT), message[i++]); //(LEL_MODE)UInt16.Parse(str[i++]);
+			if (words.Length >= i + 1)
+				g2Status.LELUnit = (LEL_UNIT)Enum.Parse(typeof(LEL_UNIT), words[i++]); //(LEL_MODE)UInt16.Parse(words[i++]);
 
-			if (message.Length >= i + 1)
-				g2Status.ExPPMRange = ushort.Parse(message[i++]);
+			if (words.Length >= i + 1)
+				g2Status.ExPPMRange = ushort.Parse(words[i++]);
 
-			if (message.Length >= i + 1)
-				g2Status.LeakSearchPPM = ushort.Parse(message[i++]);
+			if (words.Length >= i + 1)
+				g2Status.LeakSearchPPM = ushort.Parse(words[i++]);
 
-			if (message.Length >= i + 1)
-				g2Status.SensorCount = ushort.Parse(message[i++]);
+			if (words.Length >= i + 1)
+				g2Status.SensorCount = ushort.Parse(words[i++]);
 
 			// For each sensor in the instrument...
 			for (int j = 0; j < g2Status.SensorCount; j++)
@@ -561,28 +617,28 @@ namespace Sensit.TestSDK.Devices
 				if (i >= max_values - 1)
 					break;
 
-				if (message.Length < i + 4)
+				if (words.Length < i + 4)
 					break;
 
 				G2SensorConfig sensorConfig = new G2SensorConfig
 				{
-					SensorID = (SENSOR_ID)ushort.Parse(message[i++]),
-					LowAlarm = ushort.Parse(message[i++]),
-					HighAlarm = ushort.Parse(message[i++]),
-					MaxValue = ushort.Parse(message[i++]),
+					SensorID = (SENSOR_ID)ushort.Parse(words[i++]),
+					LowAlarm = ushort.Parse(words[i++]),
+					HighAlarm = ushort.Parse(words[i++]),
+					MaxValue = ushort.Parse(words[i++]),
 				};
 
 				g2Status.Sensors.Add(sensorConfig);
 			}
 
-			if (message.Length >= i + 1)
-				g2Status.WDPKTestEnable = Convert.ToBoolean(int.Parse(message[i++]));
+			if (words.Length >= i + 1)
+				g2Status.WDPKTestEnable = Convert.ToBoolean(int.Parse(words[i++]));
 
-			if (message.Length >= i + 1)
-				g2Status.InertModeTestEnable = Convert.ToBoolean(int.Parse(message[i++]));
+			if (words.Length >= i + 1)
+				g2Status.InertModeTestEnable = Convert.ToBoolean(int.Parse(words[i++]));
 
-			if (message.Length >= i + 1)
-				g2Status.StandbyEnable = Convert.ToBoolean(int.Parse(message[i++]));
+			if (words.Length >= i + 1)
+				g2Status.StandbyEnable = Convert.ToBoolean(int.Parse(words[i++]));
 
 			#region "Firmware Version Specific Conditions"
 
@@ -596,9 +652,13 @@ namespace Sensit.TestSDK.Devices
 			return g2Status;
 		}
 
-		private G2StatusInfo AnalyzeLiveData(string[] message)
+		private G2StatusInfo AnalyzeLiveData(string message)
 		{
-			int max_values = message.GetUpperBound(0);
+			// Split the string using commas to separate each word.
+			char[] separators = new char[] { ',', '*', '\n' };
+			string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+
+			int max_values = words.GetUpperBound(0);
 
 			int i = 2;
 
@@ -607,14 +667,14 @@ namespace Sensit.TestSDK.Devices
 
 			G2StatusInfo g2Status = new G2StatusInfo();
 
-			g2Status.DeviceState = (DEVICE_STATE)ushort.Parse(message[i++]);
+			g2Status.DeviceState = (DEVICE_STATE)ushort.Parse(words[i++]);
 
-			g2Status.SensorState = (SENSOR_STATE)ushort.Parse(message[i++]);
+			g2Status.SensorState = (SENSOR_STATE)ushort.Parse(words[i++]);
 
-			g2Status.DeviceMode = (DEVICE_MODE)ushort.Parse(message[i++]);
-			g2Status.CalibrationDue = Convert.ToBoolean(int.Parse(message[i++]));
-			g2Status.BatteryLow = Convert.ToBoolean(int.Parse(message[i++]));
-			g2Status.TickState = (TICK_STATE)ushort.Parse(message[i++]);
+			g2Status.DeviceMode = (DEVICE_MODE)ushort.Parse(words[i++]);
+			g2Status.CalibrationDue = Convert.ToBoolean(int.Parse(words[i++]));
+			g2Status.BatteryLow = Convert.ToBoolean(int.Parse(words[i++]));
+			g2Status.TickState = (TICK_STATE)ushort.Parse(words[i++]);
 
 			// For each sensor in the instrument...
 			for (int j = 0; j < 4; j++)
@@ -623,12 +683,12 @@ namespace Sensit.TestSDK.Devices
 					break;
 
 				G2SensorReading sr = new G2SensorReading();
-				sr.SensorID = (SENSOR_ID)ushort.Parse(message[i++]);
+				sr.SensorID = (SENSOR_ID)ushort.Parse(words[i++]);
 
-				sr.Reading = int.Parse(message[i++]);
-				sr.UnitOfMeasure = (UNIT)ushort.Parse(message[i++]);
-				sr.SensorState = (SENSOR_STATE)ushort.Parse(message[i++]);
-				sr.AlarmState = (ALARM_STATE)ushort.Parse(message[i++]);
+				sr.Reading = int.Parse(words[i++]);
+				sr.UnitOfMeasure = (UNIT)ushort.Parse(words[i++]);
+				sr.SensorState = (SENSOR_STATE)ushort.Parse(words[i++]);
+				sr.AlarmState = (ALARM_STATE)ushort.Parse(words[i++]);
 
 				g2Status.SensorLiveData.Add(sr);
 			}
