@@ -73,7 +73,7 @@ namespace Sensit.TestSDK.Devices
 				// Parse the string.
 				string[] words = message.Split(' ');
 
-				// TODO:  Parse the reading.
+				// Parse the reading.
 				Readings[VariableType.GasConcentration] = Convert.ToDouble(words[4]);
 			}
 			catch (InvalidOperationException ex)
