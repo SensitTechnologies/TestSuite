@@ -54,19 +54,11 @@
 			this.textBoxCarbonMonoxide = new System.Windows.Forms.TextBox();
 			this.textBoxHydrogenSulfide = new System.Windows.Forms.TextBox();
 			this.textBoxHydrogenCyanide = new System.Windows.Forms.TextBox();
-			this.groupBoxConsole = new System.Windows.Forms.GroupBox();
-			this.tableLayoutPanelConsole = new System.Windows.Forms.TableLayoutPanel();
-			this.labelCommand = new System.Windows.Forms.Label();
-			this.labelResponse = new System.Windows.Forms.Label();
-			this.textBox1 = new System.Windows.Forms.TextBox();
-			this.textBox2 = new System.Windows.Forms.TextBox();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.groupBoxSerialPort.SuspendLayout();
 			this.groupBoxCommands.SuspendLayout();
 			this.tableLayoutPanelCommands.SuspendLayout();
-			this.groupBoxConsole.SuspendLayout();
-			this.tableLayoutPanelConsole.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -75,7 +67,7 @@
             this.fileToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(394, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(384, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -98,9 +90,9 @@
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 428);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 269);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(394, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(384, 22);
 			this.statusStrip1.TabIndex = 3;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
@@ -120,7 +112,7 @@
 			this.groupBoxSerialPort.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBoxSerialPort.Location = new System.Drawing.Point(0, 24);
 			this.groupBoxSerialPort.Name = "groupBoxSerialPort";
-			this.groupBoxSerialPort.Size = new System.Drawing.Size(394, 60);
+			this.groupBoxSerialPort.Size = new System.Drawing.Size(384, 60);
 			this.groupBoxSerialPort.TabIndex = 4;
 			this.groupBoxSerialPort.TabStop = false;
 			this.groupBoxSerialPort.Text = "Serial Port";
@@ -163,11 +155,11 @@
 			this.groupBoxCommands.AutoSize = true;
 			this.groupBoxCommands.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.groupBoxCommands.Controls.Add(this.tableLayoutPanelCommands);
-			this.groupBoxCommands.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBoxCommands.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBoxCommands.Enabled = false;
 			this.groupBoxCommands.Location = new System.Drawing.Point(0, 84);
 			this.groupBoxCommands.Name = "groupBoxCommands";
-			this.groupBoxCommands.Size = new System.Drawing.Size(394, 183);
+			this.groupBoxCommands.Size = new System.Drawing.Size(384, 185);
 			this.groupBoxCommands.TabIndex = 5;
 			this.groupBoxCommands.TabStop = false;
 			this.groupBoxCommands.Text = "Commands";
@@ -347,83 +339,11 @@
 			this.textBoxHydrogenCyanide.Size = new System.Drawing.Size(100, 20);
 			this.textBoxHydrogenCyanide.TabIndex = 21;
 			// 
-			// groupBoxConsole
-			// 
-			this.groupBoxConsole.AutoSize = true;
-			this.groupBoxConsole.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.groupBoxConsole.Controls.Add(this.tableLayoutPanelConsole);
-			this.groupBoxConsole.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBoxConsole.Location = new System.Drawing.Point(0, 267);
-			this.groupBoxConsole.Name = "groupBoxConsole";
-			this.groupBoxConsole.Size = new System.Drawing.Size(394, 161);
-			this.groupBoxConsole.TabIndex = 6;
-			this.groupBoxConsole.TabStop = false;
-			this.groupBoxConsole.Text = "Console";
-			// 
-			// tableLayoutPanelConsole
-			// 
-			this.tableLayoutPanelConsole.ColumnCount = 2;
-			this.tableLayoutPanelConsole.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanelConsole.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanelConsole.Controls.Add(this.labelCommand, 0, 0);
-			this.tableLayoutPanelConsole.Controls.Add(this.labelResponse, 1, 0);
-			this.tableLayoutPanelConsole.Controls.Add(this.textBox1, 0, 1);
-			this.tableLayoutPanelConsole.Controls.Add(this.textBox2, 1, 1);
-			this.tableLayoutPanelConsole.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanelConsole.Location = new System.Drawing.Point(3, 16);
-			this.tableLayoutPanelConsole.Name = "tableLayoutPanelConsole";
-			this.tableLayoutPanelConsole.RowCount = 2;
-			this.tableLayoutPanelConsole.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelConsole.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanelConsole.Size = new System.Drawing.Size(388, 142);
-			this.tableLayoutPanelConsole.TabIndex = 0;
-			// 
-			// labelCommand
-			// 
-			this.labelCommand.Anchor = System.Windows.Forms.AnchorStyles.Top;
-			this.labelCommand.AutoSize = true;
-			this.labelCommand.Location = new System.Drawing.Point(70, 0);
-			this.labelCommand.Name = "labelCommand";
-			this.labelCommand.Size = new System.Drawing.Size(54, 13);
-			this.labelCommand.TabIndex = 0;
-			this.labelCommand.Text = "Command";
-			// 
-			// labelResponse
-			// 
-			this.labelResponse.Anchor = System.Windows.Forms.AnchorStyles.Top;
-			this.labelResponse.AutoSize = true;
-			this.labelResponse.Location = new System.Drawing.Point(263, 0);
-			this.labelResponse.Name = "labelResponse";
-			this.labelResponse.Size = new System.Drawing.Size(55, 13);
-			this.labelResponse.TabIndex = 1;
-			this.labelResponse.Text = "Response";
-			// 
-			// textBox1
-			// 
-			this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBox1.Location = new System.Drawing.Point(3, 16);
-			this.textBox1.Multiline = true;
-			this.textBox1.Name = "textBox1";
-			this.textBox1.ReadOnly = true;
-			this.textBox1.Size = new System.Drawing.Size(188, 123);
-			this.textBox1.TabIndex = 2;
-			// 
-			// textBox2
-			// 
-			this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBox2.Location = new System.Drawing.Point(197, 16);
-			this.textBox2.Multiline = true;
-			this.textBox2.Name = "textBox2";
-			this.textBox2.ReadOnly = true;
-			this.textBox2.Size = new System.Drawing.Size(188, 123);
-			this.textBox2.TabIndex = 3;
-			// 
 			// FormG2GLT
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(394, 450);
-			this.Controls.Add(this.groupBoxConsole);
+			this.ClientSize = new System.Drawing.Size(384, 291);
 			this.Controls.Add(this.groupBoxCommands);
 			this.Controls.Add(this.groupBoxSerialPort);
 			this.Controls.Add(this.statusStrip1);
@@ -441,9 +361,6 @@
 			this.groupBoxCommands.PerformLayout();
 			this.tableLayoutPanelCommands.ResumeLayout(false);
 			this.tableLayoutPanelCommands.PerformLayout();
-			this.groupBoxConsole.ResumeLayout(false);
-			this.tableLayoutPanelConsole.ResumeLayout(false);
-			this.tableLayoutPanelConsole.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -477,12 +394,6 @@
 		private System.Windows.Forms.TextBox textBoxCarbonMonoxide;
 		private System.Windows.Forms.TextBox textBoxHydrogenSulfide;
 		private System.Windows.Forms.TextBox textBoxHydrogenCyanide;
-		private System.Windows.Forms.GroupBox groupBoxConsole;
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelConsole;
-		private System.Windows.Forms.Label labelCommand;
-		private System.Windows.Forms.Label labelResponse;
-		private System.Windows.Forms.TextBox textBox1;
-		private System.Windows.Forms.TextBox textBox2;
 	}
 }
 
