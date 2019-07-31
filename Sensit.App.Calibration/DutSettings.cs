@@ -20,18 +20,10 @@ namespace Sensit.App.Calibration
 			Label = label;
 		}
 
-		// This constructor has parameters for the label and list.
-		public ModelSetting(string label, List<RangeSetting> rangeSettings)
-		{
-			Label = label;
-			RangeSettings = rangeSettings;
-		}
-
 		// This constructor has parameters for all of the properties.
-		public ModelSetting(string label, List<RangeSetting> rangeSettings, string type, int minVal, int maxVal)
+		public ModelSetting(string label, string type, int minVal, int maxVal)
 		{
 			Label = label;
-			RangeSettings = rangeSettings;
 			Type = type;
 			MinVal = minVal;
 			MaxVal = maxVal;
@@ -41,9 +33,6 @@ namespace Sensit.App.Calibration
 
 		[Category("Model Settings"), Description("Name of the DUT series (as it will appear to the operator).")]
 		public string Label { get; set; } = "";
-
-		[Category("Model Settings"), Description("Input ranges associated with the DUT series.")]
-		public List<RangeSetting> RangeSettings { get; set; }
 
 		[Category("Model Settings"), Description("DUT's minimum output")]
 		public double MinVal { get; set; } = 0.0;
@@ -174,77 +163,32 @@ namespace Sensit.App.Calibration
 		[Category("DUT Settings"), Description("Settings describing a product series.")]
 		public List<ModelSetting> ModelSettings { get; set; } = new List<ModelSetting>
 		{
-			new ModelSetting("Simulator", new List<RangeSetting>
-			{
-				new RangeSetting("0 - 10,000 PPM (1% V)", 0.0, 1.0, 10.0, Test.ToleranceType.PercentReading),
-				new RangeSetting("0 - 100 %LEL (2.2% V)", 0.0, 2.2, 10.0, Test.ToleranceType.PercentReading),
-				new RangeSetting("2.2 - 100% V",          2.2, 100, 5.0, Test.ToleranceType.PercentReading),
-				new RangeSetting("0 - 25% V", 0.0, 25.0, new List<ToleranceSetting>
-				{
-					new ToleranceSetting(0.0, 0.2, 0.2, Test.ToleranceType.Absolute),
-					new ToleranceSetting(0.2, 25.0, 10.0, Test.ToleranceType.PercentReading)
-				}),
-				new RangeSetting("0 - 2,000 PPM", 0.0000, 0.2000, new List<ToleranceSetting>
-				{
-					new ToleranceSetting(0.0000, 0.0010, 0.0005, Test.ToleranceType.Absolute),
-					new ToleranceSetting(0.0010, 0.2000, 5.0, Test.ToleranceType.PercentReading)
-				})
-			}),
-			new ModelSetting("Propane", new List<RangeSetting>
-			{
-				new RangeSetting("0 - 10,000 PPM (1% V)", 0.0, 1.0, 10.0, Test.ToleranceType.PercentReading),
-				new RangeSetting("0 - 100 %LEL (2.2% V)", 0.0, 2.2, 10.0, Test.ToleranceType.PercentReading),
-				new RangeSetting("2.2 - 100% V",          2.2, 100, 5.0, Test.ToleranceType.PercentReading)
-			}),
-			new ModelSetting("Methane", new List<RangeSetting>
-			{
-				new RangeSetting("0 - 10,000 PPM (1% V)", 0.0, 1.0, 10.0, Test.ToleranceType.PercentReading),
-				new RangeSetting("0 - 100 %LEL (5.0% V)", 0.0, 5.0, 10.0, Test.ToleranceType.PercentReading),
-				new RangeSetting("2.2 - 100% V",          5.0, 100, 5.0, Test.ToleranceType.PercentReading)
-			}),
-			new ModelSetting("Oxygen (O2)", new List<RangeSetting>
-			{
-				new RangeSetting("0 - 25% V", 0.0, 25.0, new List<ToleranceSetting>
-				{
-					new ToleranceSetting(0.0, 0.2, 0.2, Test.ToleranceType.Absolute),
-					new ToleranceSetting(0.2, 25.0, 10.0, Test.ToleranceType.PercentReading)
-				})
-			}),
-			new ModelSetting("Carbon Monoxide (CO)", new List<RangeSetting>
-			{
-				new RangeSetting("0 - 2,000 PPM", 0.0000, 0.2000, new List<ToleranceSetting>
-				{
-					new ToleranceSetting(0.0000, 0.0010, 0.0005, Test.ToleranceType.Absolute),
-					new ToleranceSetting(0.0010, 0.2000, 5.0, Test.ToleranceType.PercentReading)
-				})
-			}),
-
-			// Specification for CO2 is unknown at present.
+			new ModelSetting("Simulator"),
+			new ModelSetting("Propane"),
+			new ModelSetting("Methane"),
+			new ModelSetting("Oxygen (O2)"),
+			new ModelSetting("Carbon Monoxide (CO)"),
 			new ModelSetting("Carbon Dioxide (CO2)"),
+			new ModelSetting("Hydrogen Sulfide (H2S)"),
+			new ModelSetting("Hydrogen Cyanide (HCN)"),
+			new ModelSetting("Sulfer Dioxide (SO2)")
+		};
 
-			new ModelSetting("Hydrogen Sulfide (H2S)", new List<RangeSetting>
+		[Category("DUT Settings"), Description("Settings describing product ranges.")]
+		public List<RangeSetting> RangeSettings { get; set; } = new List<RangeSetting>
+		{
+			new RangeSetting("0 - 10,000 PPM (1% V)", 0.0, 1.0, 10.0, Test.ToleranceType.PercentReading),
+			new RangeSetting("0 - 100 %LEL (2.2% V)", 0.0, 2.2, 10.0, Test.ToleranceType.PercentReading),
+			new RangeSetting("2.2 - 100% V",          2.2, 100, 5.0, Test.ToleranceType.PercentReading),
+			new RangeSetting("0 - 25% V", 0.0, 25.0, new List<ToleranceSetting>
 			{
-				new RangeSetting("0 - 100 PPM", 0.0000, 0.0100, new List<ToleranceSetting>
-				{
-					new ToleranceSetting(0.0000, 0.0004, 0.0002, Test.ToleranceType.Absolute),
-					new ToleranceSetting(0.0004, 0.0100, 5.0, Test.ToleranceType.PercentReading)
-				})
+				new ToleranceSetting(0.0, 0.2, 0.2, Test.ToleranceType.Absolute),
+				new ToleranceSetting(0.2, 25.0, 10.0, Test.ToleranceType.PercentReading)
 			}),
-			new ModelSetting("Hydrogen Cyanide (HCN)", new List<RangeSetting>
+			new RangeSetting("0 - 2,000 PPM", 0.0000, 0.2000, new List<ToleranceSetting>
 			{
-				new RangeSetting("0 - 30 PPM", 0.0000, 0.0030, new List<ToleranceSetting>
-				{
-					new ToleranceSetting(0.0000, 0.0004, 0.0002, Test.ToleranceType.Absolute),
-					new ToleranceSetting(0.0004, 0.0030, 5.0, Test.ToleranceType.PercentReading)
-				})
-			}),
-			new ModelSetting("Sulfer Dioxide (SO2)", new List<RangeSetting>
-			{
-				new RangeSetting("0 - 20 PPM", 0.0000, 0.0020, new List<ToleranceSetting>
-				{
-					new ToleranceSetting(0.0000, 0.0010, 0.0001, Test.ToleranceType.Absolute),
-					new ToleranceSetting(0.0010, 0.0020, 5.0, Test.ToleranceType.PercentReading)
-				})
+				new ToleranceSetting(0.0000, 0.0010, 0.0005, Test.ToleranceType.Absolute),
+				new ToleranceSetting(0.0010, 0.2000, 5.0, Test.ToleranceType.PercentReading)
 			})
 		};
 	}

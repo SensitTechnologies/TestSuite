@@ -16,6 +16,17 @@ namespace Sensit.App.Calibration
 	/// </summary>
 	public partial class FormCalibration : Form
 	{
+		#region Constants
+
+		// These constants specify the order that controls appear in the 
+		// columns of tableLayoutPanelDevicesUnderTest.
+		private const int DUT_COLUMN_CHECKBOX = 0;
+		private const int DUT_COLUMN_SERIALNUM = 1;
+		private const int DUT_COLUMN_MODEL = 2;
+		private const int DUT_COLUMN_STATUS = 3;
+
+		#endregion
+
 		#region Fields
 
 		// allow the form to wait for tests to cancel/complete before closing application
@@ -66,20 +77,29 @@ namespace Sensit.App.Calibration
 					CheckBox checkBox = new CheckBox
 					{
 						Name = "checkBoxSelected" + i.ToString(),
-						Text = "DUT" + i.ToString(),
 						AutoSize = true,
 						Anchor = AnchorStyles.Left | AnchorStyles.Top,
 						Dock = DockStyle.None
 					};
-					tableLayoutPanelDevicesUnderTest.Controls.Add(checkBox, 0, i - 1);
+					tableLayoutPanelDevicesUnderTest.Controls.Add(checkBox, DUT_COLUMN_CHECKBOX, i - 1);
 
 					TextBox textBoxSerialNumber = new TextBox
 					{
 						Name = "textBoxSerialNumber" + i.ToString(),
 						Anchor = AnchorStyles.Left | AnchorStyles.Top,
-						Dock = DockStyle.None
+						Dock = DockStyle.None,
+						Text = "DUT" + i.ToString()
 					};
-					tableLayoutPanelDevicesUnderTest.Controls.Add(textBoxSerialNumber, 1, i - 1);
+					tableLayoutPanelDevicesUnderTest.Controls.Add(textBoxSerialNumber, DUT_COLUMN_SERIALNUM, i - 1);
+
+					ComboBox comboBoxModel = new ComboBox
+					{
+						Name = "comboBoxModel" + i.ToString(),
+						Anchor = AnchorStyles.Left | AnchorStyles.Top,
+						Dock = DockStyle.None,
+						DropDownStyle = ComboBoxStyle.DropDownList
+					};
+					tableLayoutPanelDevicesUnderTest.Controls.Add(comboBoxModel, DUT_COLUMN_MODEL, i - 1);
 
 					Label labelStatus = new Label
 					{
@@ -88,7 +108,7 @@ namespace Sensit.App.Calibration
 						Anchor = AnchorStyles.Left | AnchorStyles.Top,
 						Dock = DockStyle.None
 					};
-					tableLayoutPanelDevicesUnderTest.Controls.Add(labelStatus, 2, i - 1);
+					tableLayoutPanelDevicesUnderTest.Controls.Add(labelStatus, DUT_COLUMN_STATUS, i - 1);
 				}
 
 				// Make the GUI act normally again.
@@ -124,24 +144,54 @@ namespace Sensit.App.Calibration
 				bool[] selections = list.Select(x => x == "true").ToArray();
 				for (int i = 0; i < NumDuts; i++)
 				{
-					CheckBox checkBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(0, i) as CheckBox;
+					CheckBox checkBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CHECKBOX, i) as CheckBox;
 					checkBox.Checked = selections[i];
 				}
 			}
 
-			// Populate the Model combobox based on DUT settings.
+			// Populate the Model combobox (at the bottom of the form, which updates all the individual controls) based on DUT settings.
 			comboBoxModel.Items.Clear();
 			DutSettings dutSettings = Settings.Load<DutSettings>(Properties.Settings.Default.DutSettingsFile);
 			foreach (ModelSetting model in dutSettings.ModelSettings ?? new List<ModelSetting>())
 			{
 				comboBoxModel.Items.Add(model.Label);
+
+				// Do the same for the Model selection combobox for each DUT.
+				for (int i = 0; i < NumDuts; i++)
+				{
+					ComboBox comboBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_MODEL, i) as ComboBox;
+					comboBox.Items.Add(model.Label);
+				}
 			}
 
 			// Select the most recently used model, or the first if that's not available.
+			// This has to be done before setting the individual model selections, or it will override them.
 			int index = comboBoxModel.FindStringExact(Properties.Settings.Default.Model);
 			comboBoxModel.SelectedIndex = index == -1 ? 0 : index;
 
-			UpdateRanges();
+			// Select the individual Models.
+			// This must be done after selecting the "Set all models" comboBox, or it will override the individual settings.
+			if (Properties.Settings.Default.ModelSelections != null)
+			{
+				List<string> list = Properties.Settings.Default.ModelSelections.Cast<string>().ToList();
+				for (int i = 0; i < NumDuts; i++)
+				{
+					ComboBox comboBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_MODEL, i) as ComboBox;
+					int j = comboBox.FindStringExact(list[i]);
+					comboBox.SelectedIndex = j == -1 ? 0 : j;
+				}
+			}
+
+			// Populate the Range combobox based on the DUT settings.
+			comboBoxRange.Items.Clear();
+			foreach (RangeSetting r in dutSettings.RangeSettings ?? new List<RangeSetting>())
+			{
+				comboBoxRange.Items.Add(r.Label);
+			}
+
+			// Select the most recently used range, or the first if that's not available.
+			index = comboBoxRange.FindStringExact(Properties.Settings.Default.Range);
+			comboBoxRange.SelectedIndex = index == -1 ? 0 : index;
 
 			// Populate the Test combobox based on the test settings.
 			comboBoxTest.Items.Clear();
@@ -160,26 +210,6 @@ namespace Sensit.App.Calibration
 
 		#region Overview
 
-		private void UpdateRanges()
-		{
-			// Read the DUT settings file.
-			DutSettings dutSettings = Settings.Load<DutSettings>(Properties.Settings.Default.DutSettingsFile);
-
-			// Find the ranges associated with the selected model.
-			ModelSetting m = dutSettings.ModelSettings.Find(x => x.Label == comboBoxModel.Text);
-
-			// Populate the Range combobox based on the DUT settings.
-			comboBoxRange.Items.Clear();
-			foreach (RangeSetting r in m?.RangeSettings ?? new List<RangeSetting>())
-			{
-				comboBoxRange.Items.Add(r.Label);
-			}
-
-			// Select the most recently used range, or the first if that's not available.
-			int index = comboBoxRange.FindStringExact(Properties.Settings.Default.Range);
-			comboBoxRange.SelectedIndex = index == -1 ? 0 : index;
-		}
-
 		/// <summary>
 		/// When "Start" button is clicked, fetch settings, create equipment/test/DUTs, start test.
 		/// </summary>
@@ -189,12 +219,11 @@ namespace Sensit.App.Calibration
 		{
 			try
 			{
-				// Ensure the user has selected a model, range, and test.
-				if ((comboBoxModel.SelectedItem == null) ||
-					(comboBoxRange.SelectedItem == null) ||
+				// Ensure the user has selected a range and test.
+				if ((comboBoxRange.SelectedItem == null) ||
 					(comboBoxTest.SelectedItem == null))
 				{
-					throw new Exception("Please select model, range, test before starting test.");
+					throw new Exception("Please select range and test before starting test.");
 				}
 
 				//
@@ -208,14 +237,7 @@ namespace Sensit.App.Calibration
 				}
 
 				DutSettings dutSettings = Settings.Load<DutSettings>(Properties.Settings.Default.DutSettingsFile);
-
-				ModelSetting modelSetting = dutSettings.ModelSettings.Find(i => i.Label == comboBoxModel.Text);
-				if (modelSetting == null)
-				{
-					throw new Exception("Model settings not found. Please contact Engineering.");
-				}
-
-				RangeSetting rangeSetting = modelSetting.RangeSettings.Find(i => i.Label == comboBoxRange.Text);
+				RangeSetting rangeSetting = dutSettings.RangeSettings.Find(i => i.Label == comboBoxRange.Text);
 				if (rangeSetting == null)
 				{
 					throw new Exception("Range settings not found. Please contact Engineering.");
@@ -256,8 +278,15 @@ namespace Sensit.App.Calibration
 				for (uint i = 0; i < NumDuts; i++)
 				{
 					// Fetch user settings for DUT.
-					CheckBox checkBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(0, (int)i) as CheckBox;
-					TextBox textBoxSerial = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(1, (int)i) as TextBox;
+					CheckBox checkBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CHECKBOX, (int)i) as CheckBox;
+					TextBox textBoxSerial = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_SERIALNUM, (int)i) as TextBox;
+					ComboBox comboBoxModel = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_MODEL, (int)i) as ComboBox;
+
+					ModelSetting modelSetting = dutSettings.ModelSettings.Find(j => j.Label == comboBoxModel.Text);
+					if (modelSetting == null)
+					{
+						throw new Exception("Model settings not found. Please contact Engineering.");
+					}
 
 					Dut dut = new Dut(modelSetting)
 					{
@@ -331,8 +360,25 @@ namespace Sensit.App.Calibration
 			// Remember DUT selections.
 			for (int i = 0; i < NumDuts; i++)
 			{
-				CheckBox checkBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(0, i) as CheckBox;
+				CheckBox checkBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CHECKBOX, i) as CheckBox;
 				Properties.Settings.Default.DutSelections.Add(checkBox.Checked ? "true" : "false");
+			}
+
+			// Initialize or clear Model selections.
+			if (Properties.Settings.Default.ModelSelections == null)
+			{
+				Properties.Settings.Default.ModelSelections = new System.Collections.Specialized.StringCollection();
+			}
+			else
+			{
+				Properties.Settings.Default.ModelSelections.Clear();
+			}
+
+			// Remember Model selections.
+			for (int i = 0; i < NumDuts; i++)
+			{
+				ComboBox comboBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_MODEL, i) as ComboBox;
+				Properties.Settings.Default.ModelSelections.Add(comboBox.SelectedItem.ToString());
 			}
 
 			// Save settings.
@@ -349,8 +395,13 @@ namespace Sensit.App.Calibration
 			// Remember the selected value.
 			Properties.Settings.Default.Model = comboBoxModel.SelectedItem.ToString();
 
-			// Re-populate the ranges available in the GUI.
-			UpdateRanges();
+			// Update the individual selections for all DUTs.
+			for (int i = 0; i < NumDuts; i++)
+			{
+				ComboBox comboBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_MODEL, i) as ComboBox;
+				int j = comboBox.FindStringExact(comboBoxModel.SelectedItem.ToString());
+				comboBox.SelectedIndex = j == -1 ? 0 : j;
+			}
 		}
 
 		/// <summary>
@@ -651,7 +702,7 @@ namespace Sensit.App.Calibration
 		{
 			// Find the applicable DUT status textbox.
 			// Remember that table layout panel has 0-based index, while DUTs have 1-based index.
-			Label labelStatus = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(2, (int)dut - 1) as Label;
+			Label labelStatus = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_STATUS, (int)dut - 1) as Label;
 
 			// If called from a different thread than the form, invoke the method on the form's thread.
 			// https://stackoverflow.com/questions/142003/cross-thread-operation-not-valid-control-accessed-from-a-thread-other-than-the
@@ -685,8 +736,8 @@ namespace Sensit.App.Calibration
 
 		public void SetDutSerialNumber(uint dut, string serialNumber)
 		{
-			// Find the applicable DUT status textbox.
-			TextBox textBoxSerialNumber = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(1, (int)dut - 1) as TextBox;
+			// Find the applicable DUT serial number textbox.
+			TextBox textBoxSerialNumber = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_SERIALNUM, (int)dut - 1) as TextBox;
 
 			// If called from a different thread than the form, invoke the method on the form's thread.
 			if (textBoxSerialNumber.InvokeRequired)
