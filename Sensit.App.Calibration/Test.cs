@@ -208,18 +208,10 @@ namespace Sensit.App.Calibration
 
 			// Alert the user.
 			DialogResult result = MessageBox.Show(errorMessage
-				+ Environment.NewLine + "Abort the test?", "Test Error", MessageBoxButtons.YesNo);
+				+ Environment.NewLine + "Retry?", "Test Error", MessageBoxButtons.YesNo);
 
-			// If requested, cancel the test.
-			if (result == DialogResult.Yes)
-			{
-				// TODO:  Log the abort action.
-
-				// Abort the test.
-				_testThread.CancelAsync();
-			}
 			// If we're continuing to test, attempt to control variables again.
-			else
+			if (result == DialogResult.Yes)
 			{
 				foreach (KeyValuePair<VariableType, IControlDevice> c in _equipment.Controllers)
 				{
@@ -227,8 +219,17 @@ namespace Sensit.App.Calibration
 					c.Value.SetControlMode(ControlMode.Control);
 
 					// Delay for controller to get to setpoint.
+					// TODO:  Replace this hardcoded delay with something dynamic.
 					Thread.Sleep(5000);
 				}
+			}
+			// If requested, cancel the test.
+			else
+			{
+				// TODO:  Log the abort action.
+
+				// Abort the test.
+				_testThread.CancelAsync();
 			}
 		}
 
@@ -346,19 +347,7 @@ namespace Sensit.App.Calibration
 			// Record the data applicable to each DUT.
 			foreach (Dut dut in _duts)
 			{
-				// Only process found or failed DUTs.
-				if ((dut.Device.Status == DutStatus.Found) ||
-					(dut.Device.Status == DutStatus.Fail))
-				{
-					// Save the result.
-					dut.Results.Add(new TestResults
-					{
-						ElapsedTime = _elapsedTimeStopwatch.Elapsed,
-						Setpoint = setpoint,
-						Reference = referenceReadings[VariableType.GasConcentration],
-						SensorValue = _equipment.DutInterface.Readings[dut.Device.Index]
-					});
-				}
+				dut.Read(_elapsedTimeStopwatch.Elapsed, setpoint, referenceReadings[VariableType.GasConcentration]);
 
 				if (_testThread.CancellationPending) { break; }
 			}
@@ -462,22 +451,17 @@ namespace Sensit.App.Calibration
 					_equipment.Open();
 					if (_testThread.CancellationPending) { break; }
 
-					// Initialize DUT interface device.
+					// Initialize DUTs.
 					_testThread.ReportProgress(0, "Configuring DUT Interface Device...");
-					// TODO:  This is ugly.  Make it go away.
-					List<bool> selections = new List<bool>();
 					foreach (Dut dut in _duts)
 					{
 						if (_testThread.CancellationPending) { break; }
 
-						if (dut.Device.Selected)
-							selections.Add(true);
-						else
-							selections.Add(false);
-
 						dut.Open();
 					}
-					_equipment.DutInterface.Configure(selections);
+
+					// Initialize DUT interface device.
+					_equipment.DutInterface.Configure();
 
 					// Perform test actions.
 					ProcessTest();

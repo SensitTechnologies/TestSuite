@@ -171,7 +171,6 @@
     <Compile Include="Devices\Manual.cs" />
     <Compile Include="Devices\SensitG2GLT.cs" />
     <Compile Include="Devices\SensitG3.cs" />
-    <Compile Include="Dut\AnalogSensor.cs" />
     <Compile Include="Controls\UserCustomStep.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -186,7 +185,6 @@
     </Compile>
     <Compile Include="Devices\Keysight_34972A.cs" />
     <Compile Include="Devices\ColeParmerMFC.cs" />
-    <Compile Include="Dut\Simulator.cs" />
     <Compile Include="Email\Email.cs" />
     <Compile Include="Exceptions\DeviceExceptions.cs" />
     <Compile Include="Exceptions\TestExceptions.cs" />
@@ -216,7 +214,6 @@
     </Compile>
     <Compile Include="Forms\InputDialog.cs" />
     <Compile Include="Interfaces\IControlDevice.cs" />
-    <Compile Include="Interfaces\IDeviceUnderTest.cs" />
     <Compile Include="Interfaces\IDutInterfaceDevice.cs" />
     <Compile Include="Interfaces\IReferenceDevice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

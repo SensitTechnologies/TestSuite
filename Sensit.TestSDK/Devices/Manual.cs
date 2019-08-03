@@ -1,13 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using Sensit.TestSDK.Calculations;
 using Sensit.TestSDK.Forms;
 using Sensit.TestSDK.Interfaces;
-using Sensit.TestSDK.Utilities;
 
 namespace Sensit.TestSDK.Devices
 {
-	public class Manual : IGasConcentrationReference, IMassFlowReference, IVolumeFlowReference, IVelocityReference, IPressureReference, ITemperatureReference,
-		IGasMixController, IMassFlowController, IVolumeFlowController, IVelocityController, IPressureController, ITemperatureController
+	/// <summary>
+	/// A virtual device.
+	/// </summary>
+	/// <remarks>
+	/// Useful for testing software and test equipment, or as a DUT to make manual
+	/// data entries.
+	/// </remarks>
+	public class Manual : IGasConcentrationReference, IMassFlowReference,
+		IVolumeFlowReference, IVelocityReference, IPressureReference,
+		ITemperatureReference, IGasMixController, IMassFlowController,
+		IVolumeFlowController, IVelocityController, IPressureController,
+		ITemperatureController
 	{
 		#region Reference Device Properties
 
@@ -25,7 +36,6 @@ namespace Sensit.TestSDK.Devices
 		public UnitOfMeasure.Flow FlowUnit { get; set; }
 
 		public UnitOfMeasure.Concentration ConcentrationUnit { get; set; }
-
 
 		public Gas GasSelection { get; set; } = Gas.Air;
 
@@ -50,7 +60,17 @@ namespace Sensit.TestSDK.Devices
 
 		public void Read()
 		{
-			// Nothing to do here.
+			// Prompt user to enter a value.
+			int value = 0;
+			DialogResult result = InputDialog.Numeric("Enter count value", ref value, 0, 65535);
+
+			// If user cancels, throw an error.
+			if (result != DialogResult.OK)
+				throw new Exception("Could not read from DUT.");
+
+			// Store the result.
+			// TODO:  How to choose which variable to store?
+			Readings[VariableType.GasConcentration] = value;
 		}
 
 		#endregion

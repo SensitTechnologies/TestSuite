@@ -274,6 +274,10 @@ namespace Sensit.App.Calibration
 
 				_equipment = new Equipment(equipmentSettings);
 
+				// Initialize the number of DUTs to configure the datalogger for.
+				// TODO:  Move this somewhere more intuitive.
+				_equipment.DutInterface.Channels = new List<bool>(new bool[NumDuts]);
+
 				_duts.Clear();
 				for (uint i = 0; i < NumDuts; i++)
 				{
@@ -293,11 +297,12 @@ namespace Sensit.App.Calibration
 						SetSerialNumber = SetDutSerialNumber,
 						SetStatus = SetDutStatus,
 					};
-					dut.Device.Index = i + 1;
-					dut.Device.Selected = checkBox.Checked;
-					dut.Device.Status = DutStatus.Init;
-					dut.Device.SerialNumber = textBoxSerial.Text;
-					dut.Device.Message = string.Empty;
+					dut.DutInterface = _equipment.DutInterface;
+					dut.Index = i + 1;
+					dut.Selected = checkBox.Checked;
+					dut.Status = DutStatus.Init;
+					dut.SerialNumber = textBoxSerial.Text;
+					dut.Message = string.Empty;
 					_duts.Add(dut);
 				}
 
@@ -548,8 +553,12 @@ namespace Sensit.App.Calibration
 			int numDuts = NumDuts;
 			DialogResult result = InputDialog.Numeric("Number of DUTs", ref numDuts, 1, 24);
 
-			// Update the property (which will also update the form).
-			NumDuts = numDuts;
+			// If the user clicks "OK"...
+			if (result == DialogResult.OK)
+			{
+				// Update the property (which will also update the form).
+				NumDuts = numDuts;
+			}
 		}
 
 		/// <summary>

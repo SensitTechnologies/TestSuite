@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Deployment.Application;
 using System.Drawing;
 using System.Linq;
@@ -16,6 +17,19 @@ namespace Sensit.App.WebSensors
 	/// </summary>
 	public partial class FormSensors : Form
 	{
+		public enum DutStatus
+		{
+			[Description("")]
+			Init,
+			Found,
+			[Description("Not Found")]
+			NotFound,
+			[Description("Port Error")]
+			PortError,
+			Fail,
+			Pass
+		}
+
 		#region Fields
 
 		// allow the form to wait for sensor readings to cancel/complete before closing application

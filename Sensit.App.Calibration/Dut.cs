@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using CsvHelper;
-using Sensit.TestSDK.Dut;
+using Sensit.TestSDK.Devices;
+using System.ComponentModel;
 using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.App.Calibration
@@ -15,6 +16,19 @@ namespace Sensit.App.Calibration
 		public double? SensorValue { get; set; }
 	}
 
+	public enum DutStatus
+	{
+		[Description("")]
+		Init,
+		Found,
+		[Description("Not Found")]
+		NotFound,
+		[Description("Port Error")]
+		PortError,
+		Fail,
+		Pass
+	}
+
 	/// <summary>
 	/// Manage devices under test.
 	/// </summary>
@@ -25,14 +39,18 @@ namespace Sensit.App.Calibration
 	/// </remarks>
 	public class Dut
 	{
+		#region Fields
+
 		// settings for the DUT
-		private ModelSetting _settings;
+		private readonly ModelSetting _settings;
 
-		// used when the user selects "Simulator" option for DUTs.
-		private Simulator _simulator;
+		// generic manual device, used whenever the user selects "Manual" option for DUTs.
+		private Manual _manual;
 
-		// analog sensor device
-		private AnalogSensor _analogSensor;
+		// Sensit G3 device
+		private SensitG3 _sensitG3;
+
+		#endregion
 
 		#region Delegates
 
@@ -45,6 +63,10 @@ namespace Sensit.App.Calibration
 		#endregion
 
 		#region Properties
+		/// <summary>
+		/// Datalogger (for analog sensor DUTs)
+		/// </summary>
+		public IDutInterfaceDevice DutInterface { get; set; }
 
 		/// <summary>
 		/// Data collected during a test.
@@ -52,9 +74,29 @@ namespace Sensit.App.Calibration
 		public List<TestResults> Results { get; set; } = new List<TestResults>();
 
 		/// <summary>
-		/// Type of device under test.
+		/// DUT's fixture position or channel
 		/// </summary>
-		public IDeviceUnderTest Device { get; private set; }
+		public uint Index { get; set; }
+
+		/// <summary>
+		/// true if under test; false if idle
+		/// </summary>
+		public bool Selected { get; set; }
+
+		/// <summary>
+		/// DUT status (pass, fail, etc.)
+		/// </summary>
+		public DutStatus Status { get; set; }
+
+		/// <summary>
+		/// DUT's unique identification number
+		/// </summary>
+		public string SerialNumber { get; set; }
+
+		/// <summary>
+		/// A message to be added to the log
+		/// </summary>
+		public string Message { get; set; }
 
 		#endregion
 
@@ -68,13 +110,21 @@ namespace Sensit.App.Calibration
 			// Only the one chosen by the user will end up being used.
 			switch (settings.Label)
 			{
-				case "Simulator":
-					_simulator = new Simulator();
-					Device = _simulator;
+				// Analog sensors use the DUT Interface device from the
+				// Equipment class, so we need do nothing here.
+				case "Analog Sensor":
 					break;
+
+				// Create a Sensit G3 console device.
+				case "Sensit G3":
+					_sensitG3 = new SensitG3();
+					break;
+
+				// "Manual" DUTs require an object that will prompt the user.
+				// If the DUT type is not recognized, assume it's this type.
+				case "Manual":
 				default:
-					_analogSensor = new AnalogSensor();
-					Device = _analogSensor;
+					_manual = new Manual();
 					break;
 			}
 		}
@@ -83,29 +133,43 @@ namespace Sensit.App.Calibration
 
 		public void Open()
 		{
-			if (Device.Selected == true)
+			// If the DUT has been enabled by the user...
+			if (Selected)
 			{
+				// If the DUT is an analog sensor (a.k.a. uses a datalogger)...
+				if ((_settings.Label == "Analog Sensor") && (DutInterface != null))
+				{
+					// Configure DUT Interface device.
+					DutInterface.Channels[(int)Index - 1] = Selected;
+				}
+				// If the DUT is a G3...
+				else if (_sensitG3 != null)
+				{
+					// Connect to it.
+					_sensitG3.Open();
+				}
+
 				// Set status to "Found".
-				Device.Status = DutStatus.Found;
+				Status = DutStatus.Found;
 
 				// Update GUI.
-				SetStatus(Device.Index, Device.Status);
+				SetStatus(Index, Status);
 			}
 		}
 
 		public void Close()
 		{
-			if ((Device.Status == DutStatus.Found) ||
-				(Device.Status == DutStatus.Fail))
+			if ((Status == DutStatus.Found) ||
+				(Status == DutStatus.Fail))
 			{
 				// Set status to Pass.
-				Device.Status = DutStatus.Pass;
+				Status = DutStatus.Pass;
 
 				// Update GUI.
-				SetStatus(Device.Index, Device.Status);
+				SetStatus(Index, Status);
 
 				// Save test results to csv file.
-				string filename = "DUT" + Device.Index + "Results.csv";
+				string filename = SerialNumber + ".csv";
 				string fullPath = Path.Combine(Properties.Settings.Default.LogDirectory, filename);
 				using (var writer = new StreamWriter(fullPath, true))
 				using (var csv = new CsvWriter(writer))
@@ -115,12 +179,43 @@ namespace Sensit.App.Calibration
 			}
 		}
 
-		public void ComputeCoefficients()
+		public void Read(TimeSpan elapsedTime, double setpoint, double reference)
 		{
 			// Only process found or failed DUTs.
-			if ((Device.Status == DutStatus.Found) ||
-				(Device.Status == DutStatus.Fail))
-			Device.ComputeCoefficients();
+			if ((Status == DutStatus.Found) ||
+				(Status == DutStatus.Fail))
+			{
+				double reading = 0.0;
+
+				// If the DUT is an analog sensor (a.k.a. uses a datalogger)...
+				if ((_settings.Label == "Analog Sensor") && (DutInterface != null))
+				{
+					reading = DutInterface.Readings[Index];
+				}
+				// If the DUT is a G3...
+				else if (_sensitG3 != null)
+				{
+					_sensitG3.Read();
+
+					reading = _sensitG3.Readings[VariableType.GasConcentration];
+				}
+				// If the DUT is a "manual" device...
+				else if (_manual != null)
+				{
+					_manual.Read();
+
+					reading = _manual.Readings[VariableType.GasConcentration];
+				}
+
+				// Save the result.
+				Results.Add(new TestResults
+				{
+					ElapsedTime = elapsedTime,
+					Setpoint = setpoint,
+					Reference = reference,
+					SensorValue = reading
+				});
+			}
 		}
 	}
 }
