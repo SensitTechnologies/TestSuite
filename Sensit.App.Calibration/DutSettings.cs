@@ -163,15 +163,9 @@ namespace Sensit.App.Calibration
 		[Category("DUT Settings"), Description("Settings describing a product series.")]
 		public List<ModelSetting> ModelSettings { get; set; } = new List<ModelSetting>
 		{
-			new ModelSetting("Simulator"),
-			new ModelSetting("Propane"),
-			new ModelSetting("Methane"),
-			new ModelSetting("Oxygen (O2)"),
-			new ModelSetting("Carbon Monoxide (CO)"),
-			new ModelSetting("Carbon Dioxide (CO2)"),
-			new ModelSetting("Hydrogen Sulfide (H2S)"),
-			new ModelSetting("Hydrogen Cyanide (HCN)"),
-			new ModelSetting("Sulfer Dioxide (SO2)")
+			new ModelSetting("Manual"),
+			new ModelSetting("Analog Sensor"),
+			new ModelSetting("Sensit G3")
 		};
 
 		[Category("DUT Settings"), Description("Settings describing product ranges.")]
