@@ -90,14 +90,15 @@ namespace Sensit.TestSDK.Forms
 				Value = (decimal)input,
 				Increment = (decimal)increment,
 				Minimum = (decimal)min,
-				Maximum = (decimal)max
+				Maximum = (decimal)max,
+				DecimalPlaces = 2,
 			};
 
 			inputBox.Controls.Add(numericInput);
 
 			// Show the form; read and return user input.
 			DialogResult result = inputBox.ShowDialog();
-			input = Convert.ToInt32(numericInput.Value);
+			input = Convert.ToDouble(numericInput.Value);
 			return result;
 		}
 
