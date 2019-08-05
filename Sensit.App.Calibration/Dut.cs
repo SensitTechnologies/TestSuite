@@ -146,7 +146,7 @@ namespace Sensit.App.Calibration
 				else if (_sensitG3 != null)
 				{
 					// Connect to it.
-					_sensitG3.Open();
+					_sensitG3.Open("COM11");
 				}
 
 				// Set status to "Found".
