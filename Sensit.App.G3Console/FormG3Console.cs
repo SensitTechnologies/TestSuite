@@ -139,7 +139,7 @@ namespace Sensit.App.G3Console
 			}
 			catch (DeviceException ex)
 			{
-				MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
 			}
 		}
 
@@ -158,7 +158,7 @@ namespace Sensit.App.G3Console
 			}
 			catch (DeviceException ex)
 			{
-				MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
 			}
 		}
 
@@ -177,7 +177,7 @@ namespace Sensit.App.G3Console
 			}
 			catch (DeviceException ex)
 			{
-				MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
 			}
 		}
 
@@ -196,7 +196,7 @@ namespace Sensit.App.G3Console
 			}
 			catch (DeviceException ex)
 			{
-				MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
 			}
 		}
 
@@ -215,7 +215,7 @@ namespace Sensit.App.G3Console
 			}
 			catch (DeviceException ex)
 			{
-				MessageBox.Show(ex.Message);
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
 			}
 		}
 	}
