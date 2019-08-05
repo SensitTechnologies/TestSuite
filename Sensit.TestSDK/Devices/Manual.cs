@@ -62,7 +62,7 @@ namespace Sensit.TestSDK.Devices
 		{
 			// Prompt user to enter a value.
 			double value = 0;
-			DialogResult result = InputDialog.Numeric("Enter gas concentration [ppm]", ref value, 0.0, 100.0);
+			DialogResult result = InputDialog.Numeric("Enter concentration", ref value, 0.0, 100.0);
 
 			// If user cancels, throw an error.
 			if (result != DialogResult.OK)
