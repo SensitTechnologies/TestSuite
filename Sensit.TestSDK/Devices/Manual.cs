@@ -61,8 +61,8 @@ namespace Sensit.TestSDK.Devices
 		public void Read()
 		{
 			// Prompt user to enter a value.
-			int value = 0;
-			DialogResult result = InputDialog.Numeric("Enter count value", ref value, 0, 65535);
+			double value = 0;
+			DialogResult result = InputDialog.Numeric("Enter gas concentration [ppm]", ref value, 0.0, 100.0);
 
 			// If user cancels, throw an error.
 			if (result != DialogResult.OK)
