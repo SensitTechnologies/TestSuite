@@ -22,7 +22,7 @@ namespace Sensit.TestSDK.Devices
 
 		public UnitOfMeasure.Concentration ConcentrationUnit { get; set; } = UnitOfMeasure.Concentration.PartsPerMillion;
 
-		public Gas GasSelection { get; set; }
+		public Gas GasSelection { get; set; } = Gas.Methane;
 
 		public Dictionary<VariableType, double> Readings { get; private set; } = new Dictionary<VariableType, double>
 		{
