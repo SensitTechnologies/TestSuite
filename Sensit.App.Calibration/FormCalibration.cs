@@ -92,14 +92,24 @@ namespace Sensit.App.Calibration
 					};
 					tableLayoutPanelDevicesUnderTest.Controls.Add(textBoxSerialNumber, DUT_COLUMN_SERIALNUM, i - 1);
 
-					ComboBox comboBoxModel = new ComboBox
+					ComboBox comboBox = new ComboBox
 					{
 						Name = "comboBoxModel" + i.ToString(),
 						Anchor = AnchorStyles.Left | AnchorStyles.Top,
 						Dock = DockStyle.None,
 						DropDownStyle = ComboBoxStyle.DropDownList
 					};
-					tableLayoutPanelDevicesUnderTest.Controls.Add(comboBoxModel, DUT_COLUMN_MODEL, i - 1);
+					tableLayoutPanelDevicesUnderTest.Controls.Add(comboBox, DUT_COLUMN_MODEL, i - 1);
+
+					// Populate the Model combobox based on DUT settings.
+					comboBox.Items.Clear();
+					DutSettings dutSettings = Settings.Load<DutSettings>(Properties.Settings.Default.DutSettingsFile);
+					foreach (ModelSetting model in dutSettings.ModelSettings ?? new List<ModelSetting>())
+					{
+						comboBox.Items.Add(model.Label);
+					}
+					// Select whatever model has been selected by the combo box at the bottom of the form.
+					comboBox.SelectedIndex = comboBoxModel.SelectedIndex;
 
 					Label labelStatus = new Label
 					{
@@ -155,13 +165,6 @@ namespace Sensit.App.Calibration
 			foreach (ModelSetting model in dutSettings.ModelSettings ?? new List<ModelSetting>())
 			{
 				comboBoxModel.Items.Add(model.Label);
-
-				// Do the same for the Model selection combobox for each DUT.
-				for (int i = 0; i < NumDuts; i++)
-				{
-					ComboBox comboBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_MODEL, i) as ComboBox;
-					comboBox.Items.Add(model.Label);
-				}
 			}
 
 			// Select the most recently used model, or the first if that's not available.
@@ -284,9 +287,9 @@ namespace Sensit.App.Calibration
 					// Fetch user settings for DUT.
 					CheckBox checkBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CHECKBOX, (int)i) as CheckBox;
 					TextBox textBoxSerial = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_SERIALNUM, (int)i) as TextBox;
-					ComboBox comboBoxModel = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_MODEL, (int)i) as ComboBox;
+					ComboBox comboBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_MODEL, (int)i) as ComboBox;
 
-					ModelSetting modelSetting = dutSettings.ModelSettings.Find(j => j.Label == comboBoxModel.Text);
+					ModelSetting modelSetting = dutSettings.ModelSettings.Find(j => j.Label == comboBox.Text);
 					if (modelSetting == null)
 					{
 						throw new Exception("Model settings not found. Please contact Engineering.");
