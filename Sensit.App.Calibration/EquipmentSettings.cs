@@ -19,13 +19,13 @@ namespace Sensit.App.Calibration
 		[Category("Mass Flow Controllers"), Description("Serial port used by device.")]
 		public SerialPortSetting AnalyteMFC { get; set; } = new SerialPortSetting()
 		{
-			SerialPort = "COM7",
+			SerialPort = "COM7",	// COM10
 		};
 
 		[Category("Mass Flow Controllers"), Description("Serial port used by device.")]
 		public SerialPortSetting DiluentMFC { get; set; } = new SerialPortSetting()
 		{
-			SerialPort = "COM6"
+			SerialPort = "COM6"	// COM11
 		};
 
 		[Category("Gas"), Description("Concentration of bottle of analyte gas.")]
@@ -55,5 +55,12 @@ namespace Sensit.App.Calibration
 
 		[Category("DUT Interface Devices"), Description("Settings for datalogger.")]
 		public DataloggerSetting Datalogger { get; set; } = new DataloggerSetting();
+
+		[Category("Reference Devices"), Description("Settings for Sensit G3 Console.")]
+		public SerialPortSetting G3Setting { get; set; } = new SerialPortSetting()
+		{
+			SerialPort = "COM9",
+			BaudRate = 115200
+		};
 	}
 }
