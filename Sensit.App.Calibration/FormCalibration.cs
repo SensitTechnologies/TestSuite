@@ -185,6 +185,17 @@ namespace Sensit.App.Calibration
 				}
 			}
 
+			// Set the DUT Serial Numbers based on saved settings.
+			if (Properties.Settings.Default.DutSerialNumbers != null)
+			{
+				List<string> list = Properties.Settings.Default.DutSerialNumbers.Cast<string>().ToList();
+				for (int i = 0; i < NumDuts; i++)
+				{
+					TextBox textBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_SERIALNUM, i) as TextBox;
+					textBox.Text = list[i];
+				}
+			}
+
 			// Populate the Range combobox based on the DUT settings.
 			comboBoxRange.Items.Clear();
 			foreach (RangeSetting r in dutSettings.RangeSettings ?? new List<RangeSetting>())
@@ -387,6 +398,23 @@ namespace Sensit.App.Calibration
 			{
 				ComboBox comboBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_MODEL, i) as ComboBox;
 				Properties.Settings.Default.ModelSelections.Add(comboBox.SelectedItem.ToString());
+			}
+
+			// Initialize or clear DUT Serial Numbers.
+			if (Properties.Settings.Default.DutSerialNumbers == null)
+			{
+				Properties.Settings.Default.DutSerialNumbers = new System.Collections.Specialized.StringCollection();
+			}
+			else
+			{
+				Properties.Settings.Default.DutSerialNumbers.Clear();
+			}
+
+			// Remember DUT Serial Numbers.
+			for (int i = 0; i < NumDuts; i++)
+			{
+				TextBox textBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_SERIALNUM, i) as TextBox;
+				Properties.Settings.Default.DutSerialNumbers.Add(textBox.Text);
 			}
 
 			// Save settings.
