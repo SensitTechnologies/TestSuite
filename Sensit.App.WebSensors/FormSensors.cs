@@ -7,7 +7,6 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using Sensit.TestSDK.Forms;
-using Sensit.TestSDK.Interfaces;
 using Sensit.TestSDK.Utilities;
 
 namespace Sensit.App.WebSensors
