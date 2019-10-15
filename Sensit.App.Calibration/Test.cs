@@ -22,12 +22,12 @@ namespace Sensit.App.Calibration
 		/// </remarks>
 		public enum Command
 		{
-			TurnDutsOff,	// Remove power from DUT.
-			TurnDutsOn,		// Apply power to DUT.			  
-			Default,		// Set factory default settings.
-			Range,			// Set range settings.
-			Zero,			// Perform zero-calibration.
-			Span,			// Perform span-calibration.
+			TurnOff,	// Remove power from DUT.
+			TurnOn,		// Apply power to DUT.			  
+			Default,	// Set factory default settings.
+			Range,		// Set range settings.
+			Zero,		// Perform zero-calibration.
+			Span,		// Perform span-calibration.
 		}
 
 		/// <summary>
@@ -193,7 +193,7 @@ namespace Sensit.App.Calibration
 		/// <remarks>
 		/// Measure/vent mode must be supported for all devices.
 		/// Measure mode should save active setpoints but not use them.
-		/// /// Equipment has properties for control devices and reference devices.
+		/// Equipment has properties for control devices and reference devices.
 		/// Those properties are Dictionaries with the key being the variable type.
 		/// Then we can initialize them in Equipment.cs, iterate through them here, and set parameters when needed.
 		/// </remarks>
@@ -217,10 +217,6 @@ namespace Sensit.App.Calibration
 				{
 					// Resume control mode.
 					c.Value.SetControlMode(ControlMode.Control);
-
-					// Delay for controller to get to setpoint.
-					// TODO:  Replace this hardcoded delay with something dynamic.
-					Thread.Sleep(5000);
 				}
 			}
 			// If requested, cancel the test.
@@ -250,7 +246,11 @@ namespace Sensit.App.Calibration
 				// If the reading is out of tolerance...
 				if (Math.Abs(setpoint - reading) > v.ErrorTolerance)
 				{
+					// Alert the user.
 					PopupAlarm(v.VariableType.ToString() + " is out of tolerance.");
+
+					// Attempt to achieve the setpoint again.
+					ProcessSetpoint(v, setpoint, v.Interval);
 				}
 			}
 		}
@@ -259,8 +259,8 @@ namespace Sensit.App.Calibration
 		{
 			switch (command)
 			{
-				case Command.TurnDutsOff:
-				case Command.TurnDutsOn:
+				case Command.TurnOff:
+				case Command.TurnOn:
 				case Command.Default:
 				case Command.Range:
 				case Command.Span:
@@ -283,7 +283,6 @@ namespace Sensit.App.Calibration
 			Stopwatch timeoutWatch = Stopwatch.StartNew();
 
 			double previous = setpoint;
-			TimeSpan timeoutValue = TimeSpan.Zero;
 
 			// Take readings until they are within tolerance for the required settling time.
 			double error;

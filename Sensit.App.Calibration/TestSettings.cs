@@ -306,7 +306,7 @@ namespace Sensit.App.Calibration
 					// Apply gas for 5 minutes.
 					new TestComponent("Apply gas")
 					{
-						Commands = new List<Test.Command> { Test.Command.TurnDutsOff },
+						Commands = new List<Test.Command> { Test.Command.TurnOff },
 						ControlledVariables = new List<TestControlledVariable>
 						{
 							new TestControlledVariable()
@@ -325,7 +325,7 @@ namespace Sensit.App.Calibration
 					// Measure stability every second for 30 minutes.
 					new TestComponent("Measure stability")
 					{
-						Commands = new List<Test.Command> { Test.Command.TurnDutsOn },
+						Commands = new List<Test.Command> { Test.Command.TurnOn },
 						ControlledVariables = new List<TestControlledVariable>
 						{
 							new TestControlledVariable()
