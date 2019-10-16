@@ -198,7 +198,8 @@ namespace Sensit.App.Calibration
 		/// Then we can initialize them in Equipment.cs, iterate through them here, and set parameters when needed.
 		/// </remarks>
 		/// <param name="errorMessage">message to display to the user</param>
-		private void PopupAlarm(string errorMessage)
+		/// <param name="caption">caption for the message</param>
+		private void PopupRetryAbort(string errorMessage, string caption)
 		{
 			// Stop the equipment to reduce change of damage.
 			foreach (KeyValuePair<VariableType, IControlDevice> c in _equipment.Controllers)
@@ -206,9 +207,9 @@ namespace Sensit.App.Calibration
 				c.Value.SetControlMode(ControlMode.Measure);
 			}
 
-			// Alert the user.
+			// Alert the user (asking if they wish to retry or not).
 			DialogResult result = MessageBox.Show(errorMessage
-				+ Environment.NewLine + "Retry?", "Test Error", MessageBoxButtons.YesNo);
+				+ Environment.NewLine + "Retry?", caption, MessageBoxButtons.YesNo);
 
 			// If we're continuing to test, attempt to control variables again.
 			if (result == DialogResult.Yes)
@@ -230,6 +231,23 @@ namespace Sensit.App.Calibration
 		}
 
 		/// <summary>
+		/// If some uncorrectable error occurs, stop the equipment and alert the user.
+		/// </summary>
+		/// <param name="errorMessage">message to display to the user</param>
+		/// <param name="caption">caption for the message</param>
+		private void PopupAbort(string errorMessage, string caption)
+		{
+			// Stop the equipment to reduce change of damage.
+			foreach (KeyValuePair<VariableType, IControlDevice> c in _equipment.Controllers)
+			{
+				c.Value.SetControlMode(ControlMode.Measure);
+			}
+
+			// Alert the user.
+			DialogResult result = MessageBox.Show(errorMessage, caption);
+		}
+
+		/// <summary>
 		/// Check whether all controlled variables are within stability tolerances.
 		/// </summary>
 		private void StabilityCheck(List<TestControlledVariable> controlledVariables)
@@ -247,7 +265,7 @@ namespace Sensit.App.Calibration
 				if (Math.Abs(setpoint - reading) > v.ErrorTolerance)
 				{
 					// Alert the user.
-					PopupAlarm(v.VariableType.ToString() + " is out of tolerance.");
+					PopupRetryAbort(v.VariableType.ToString() + " is out of tolerance.", "Stability Error");
 
 					// Attempt to achieve the setpoint again.
 					ProcessSetpoint(v, setpoint, v.Interval);
@@ -296,7 +314,7 @@ namespace Sensit.App.Calibration
 				if (timeoutWatch.Elapsed > variable.Timeout)
 				{
 					// Prompt user; cancel test if requested.
-					PopupAlarm("Not able to reach stability.");
+					PopupRetryAbort("Not able to reach stability.", "Stability Error");
 
 					// Reset the timeout stopwatch.
 					timeoutWatch.Restart();
@@ -468,7 +486,7 @@ namespace Sensit.App.Calibration
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, ex.GetType().ToString());
+				PopupAbort(ex.Message, ex.GetType().ToString());
 			}
 
 			// Everything between here and the end of the test should be fast
