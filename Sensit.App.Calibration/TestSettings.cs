@@ -344,7 +344,7 @@ namespace Sensit.App.Calibration
 					}
 				}
 			},
-			new TestSetting("Linearity: 1-cycle, 500 sccm")
+			new TestSetting("Linearity: 1-cycle, 300 sccm")
 			{
 				References = new List<VariableType>
 				{
@@ -361,7 +361,7 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 500.0 }
+								Setpoints = new List<double> { 300.0 }
 							},
 							new TestControlledVariable()
 							{
@@ -381,7 +381,7 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 500.0 }
+								Setpoints = new List<double> { 300.0 }
 							},
 							new TestControlledVariable()
 							{
@@ -396,7 +396,7 @@ namespace Sensit.App.Calibration
 					},
 				}
 			},
-			new TestSetting("Linearity: 5-cycle, 500 sccm")
+			new TestSetting("Linearity: 5-cycle, 300 sccm")
 			{
 				References = new List<VariableType>
 				{
@@ -413,7 +413,7 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 500.0 }
+								Setpoints = new List<double> { 300.0 }
 							},
 							new TestControlledVariable()
 							{
@@ -433,7 +433,7 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 500.0 }
+								Setpoints = new List<double> { 300.0 }
 							},
 							new TestControlledVariable()
 							{
@@ -453,7 +453,7 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 500.0 }
+								Setpoints = new List<double> { 300.0 }
 							},
 							new TestControlledVariable()
 							{
@@ -471,7 +471,7 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 500.0 }
+								Setpoints = new List<double> { 300.0 }
 							},
 							new TestControlledVariable()
 							{
@@ -489,7 +489,7 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 500.0 }
+								Setpoints = new List<double> { 300.0 }
 							},
 							new TestControlledVariable()
 							{
@@ -507,7 +507,7 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 500.0 }
+								Setpoints = new List<double> { 300.0 }
 							},
 							new TestControlledVariable()
 							{
@@ -525,7 +525,7 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 500.0 }
+								Setpoints = new List<double> { 300.0 }
 							},
 							new TestControlledVariable()
 							{
@@ -543,7 +543,7 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 500.0 }
+								Setpoints = new List<double> { 300.0 }
 							},
 							new TestControlledVariable()
 							{
@@ -561,7 +561,7 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 500.0 }
+								Setpoints = new List<double> { 300.0 }
 							},
 							new TestControlledVariable()
 							{
@@ -579,7 +579,7 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 500.0 }
+								Setpoints = new List<double> { 300.0 }
 							},
 							new TestControlledVariable()
 							{
