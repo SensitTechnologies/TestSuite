@@ -759,10 +759,10 @@ namespace Sensit.App.Calibration
 				// Apply formatting.
 				switch (status)
 				{
-					case DutStatus.Pass:
+					case DutStatus.Done:
 						labelStatus.ForeColor = Color.Green;
 						break;
-					case DutStatus.Found:
+					case DutStatus.Testing:
 						labelStatus.ForeColor = Color.Blue;
 						break;
 					case DutStatus.Fail:

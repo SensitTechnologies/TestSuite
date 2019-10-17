@@ -20,13 +20,13 @@ namespace Sensit.App.Calibration
 	{
 		[Description("")]
 		Init,
-		Found,
+		Testing,
 		[Description("Not Found")]
 		NotFound,
 		[Description("Port Error")]
 		PortError,
 		Fail,
-		Pass
+		Done
 	}
 
 	/// <summary>
@@ -149,8 +149,8 @@ namespace Sensit.App.Calibration
 					_sensitG3.Open("COM11");
 				}
 
-				// Set status to "Found".
-				Status = DutStatus.Found;
+				// Set status to "Testing".
+				Status = DutStatus.Testing;
 
 				// Update GUI.
 				SetStatus(Index, Status);
@@ -159,11 +159,11 @@ namespace Sensit.App.Calibration
 
 		public void Close()
 		{
-			if ((Status == DutStatus.Found) ||
+			if ((Status == DutStatus.Testing) ||
 				(Status == DutStatus.Fail))
 			{
-				// Set status to Pass.
-				Status = DutStatus.Pass;
+				// Set status to "Done."
+				Status = DutStatus.Done;
 
 				// Update GUI.
 				SetStatus(Index, Status);
@@ -182,7 +182,7 @@ namespace Sensit.App.Calibration
 		public void Read(TimeSpan elapsedTime, double setpoint, double reference)
 		{
 			// Only process found or failed DUTs.
-			if ((Status == DutStatus.Found) ||
+			if ((Status == DutStatus.Testing) ||
 				(Status == DutStatus.Fail))
 			{
 				double reading = 0.0;
