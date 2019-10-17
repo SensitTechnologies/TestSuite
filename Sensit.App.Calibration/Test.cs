@@ -233,6 +233,11 @@ namespace Sensit.App.Calibration
 		/// <summary>
 		/// If some uncorrectable error occurs, stop the equipment and alert the user.
 		/// </summary>
+		/// <remarks>
+		/// Because this is called when an uncorrectable error occurs, we can't allow
+		/// this method to be interrupted by exceptions.  So we log them, but allow the
+		/// method to continue.
+		/// </remarks>
 		/// <param name="errorMessage">message to display to the user</param>
 		/// <param name="caption">caption for the message</param>
 		private void PopupAbort(string errorMessage, string caption)
@@ -240,11 +245,18 @@ namespace Sensit.App.Calibration
 			// Stop the equipment to reduce change of damage.
 			foreach (KeyValuePair<VariableType, IControlDevice> c in _equipment.Controllers)
 			{
-				c.Value.SetControlMode(ControlMode.Measure);
+				try
+				{
+					c.Value.SetControlMode(ControlMode.Measure);
+				}
+				catch (DeviceException)
+				{
+					// TODO:  Log failures.
+				}
 			}
 
 			// Alert the user.
-			DialogResult result = MessageBox.Show(errorMessage, caption);
+			MessageBox.Show(errorMessage, caption);
 		}
 
 		/// <summary>
@@ -264,9 +276,6 @@ namespace Sensit.App.Calibration
 				// If the reading is out of tolerance...
 				if (Math.Abs(setpoint - reading) > v.ErrorTolerance)
 				{
-					// Alert the user.
-					PopupRetryAbort(v.VariableType.ToString() + " is out of tolerance.", "Stability Error");
-
 					// Attempt to achieve the setpoint again.
 					ProcessSetpoint(v, setpoint, v.Interval);
 				}
@@ -337,15 +346,21 @@ namespace Sensit.App.Calibration
 					stopwatch.Restart();
 				}
 
-				// Update GUI.
-				_testThread.ReportProgress(PercentProgress, "Setpoint time to go:  "
-					+ (variable.StabilityTime - stopwatch.Elapsed).ToString(@"hh\:mm\:ss"));
+				// Update GUI (include dwell time if applicable).
+				string message = "Waiting for stability...";
+				if (variable.DwellTime > new TimeSpan(0, 0, 0) &&
+					(Math.Abs(error) < variable.ErrorTolerance) &&
+					(Math.Abs(rate) < variable.RateTolerance))
+				{
+					message += "dwell time left:  " + (variable.DwellTime - stopwatch.Elapsed).ToString(@"hh\:mm\:ss");
+				}
+				_testThread.ReportProgress(PercentProgress, message);
 
 				// Wait to get desired reading frequency.
 				Thread.Sleep(interval);
-			} while ((stopwatch.Elapsed <= variable.StabilityTime) ||
-					(Math.Abs(error) > variable.ErrorTolerance) /* ||
-					(Math.Abs(rate) > variable.RateTolerance)*/);
+			} while ((stopwatch.Elapsed <= variable.DwellTime) ||
+					(Math.Abs(error) > variable.ErrorTolerance) ||
+					(Math.Abs(rate) > variable.RateTolerance));
 		}
 
 		private void ProcessSamples(double setpoint)
@@ -408,7 +423,7 @@ namespace Sensit.App.Calibration
 						ProcessSetpoint(v, sp, v.Interval);
 
 						// For each sample...
-						for (int i = 0; i < v.Samples; i++)
+						for (int i = 1; i <= v.Samples; i++)
 						{
 							// Update GUI.
 							_testThread.ReportProgress(PercentProgress, "Taking sample " + i.ToString() + " of " + v.Samples + ".");

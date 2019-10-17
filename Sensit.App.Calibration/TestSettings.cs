@@ -14,16 +14,16 @@ namespace Sensit.App.Calibration
 		public VariableType VariableType { get; set; }
 
 		[Category("Test Variable"), Description("Error tolerance around setpoints [% full scale].  If exceeded, Stability Time will reset.")]
-		public double ErrorTolerance { get; set; } = 25.0;
+		public double ErrorTolerance { get; set; } = 2.0;
 
 		[Category("Test Variable"), Description("Tolerated rate of change of setpoints [% full scale / s].  If exceeded, Stability Time will reset.")]
-		public double RateTolerance { get; set; } = 2.0;
+		public double RateTolerance { get; set; } = 0.5;
 
 		[Category("Test Variable"), Description("Setpoints [% full scale].")]
 		public List<double> Setpoints { get; set; }
 
 		[Category("Test Variable"), Description("Required time to be at setpoint before continuing test.")]
-		public TimeSpan StabilityTime { get; set; } = new TimeSpan(0, 0, 1);
+		public TimeSpan DwellTime { get; set; } = new TimeSpan(0, 0, 0);
 
 		[Category("Test Variable"), Description("Timeout before aborting control.")]
 		public TimeSpan Timeout { get; set; } = new TimeSpan(0, 0, 30);
@@ -120,7 +120,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0.0 },
-								StabilityTime = new TimeSpan(0, 4, 0),
+								DwellTime = new TimeSpan(0, 4, 0),
 								Timeout = new TimeSpan(0, 10, 0),
 								Interval = new TimeSpan(0, 0, 1)
 							}
@@ -157,7 +157,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0.0 },
-								StabilityTime = new TimeSpan(0, 4, 0),
+								DwellTime = new TimeSpan(0, 4, 0),
 								Timeout = new TimeSpan(0, 10, 0),
 								Interval = new TimeSpan(0, 0, 1)
 							}
@@ -194,7 +194,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0.0 },
-								StabilityTime = new TimeSpan(0, 4, 0),
+								DwellTime = new TimeSpan(0, 4, 0),
 								Timeout = new TimeSpan(0, 10, 0),
 								Interval = new TimeSpan(0, 0, 1)
 							}
@@ -231,7 +231,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0.0 },
-								StabilityTime = new TimeSpan(0, 4, 0),
+								DwellTime = new TimeSpan(0, 4, 0),
 								Timeout = new TimeSpan(0, 10, 0),
 								Interval = new TimeSpan(0, 0, 1)
 							}
@@ -268,7 +268,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0.0 },
-								StabilityTime = new TimeSpan(0, 4, 0),
+								DwellTime = new TimeSpan(0, 4, 0),
 								Timeout = new TimeSpan(0, 10, 0),
 								Interval = new TimeSpan(0, 0, 1)
 							}
@@ -317,7 +317,7 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
-								StabilityTime = new TimeSpan(0, 5, 0),
+								DwellTime = new TimeSpan(0, 5, 0),
 								Setpoints = new List<double> { 25.0 }
 							}
 						}
@@ -381,7 +381,7 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
+								Setpoints = new List<double> { 300.0 },
 							},
 							new TestControlledVariable()
 							{
@@ -1108,6 +1108,43 @@ namespace Sensit.App.Calibration
 						},
 					}
 				}
+			},
+			new TestSetting("Mass Flow Debugger")
+			{
+				References = new List<VariableType>
+				{
+					VariableType.MassFlow,
+					VariableType.GasConcentration
+				},
+				Components = new List<TestComponent>
+				{
+					// Ramp up and down many times to test the mass flow controller.  Measure gas every 1 second.  Don't wait for stability.
+					new TestComponent("Up")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double>
+								{
+									0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0,
+									0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0,
+									0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0,
+									0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0,
+									0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0,
+								},
+								Samples = 5,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
+				},
 			},
 			//new TestSetting("Long-term Stability"),
 			//new TestSetting("Thermal Effects"),
