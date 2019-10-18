@@ -480,20 +480,26 @@ namespace Sensit.App.Calibration
 				{
 					// Initialize test equipment.
 					_testThread.ReportProgress(0, "Configuring test equipment...");
-					_equipment.Open();
-					if (_testThread.CancellationPending) { break; }
-
-					// Initialize DUTs.
-					_testThread.ReportProgress(0, "Configuring DUT Interface Device...");
+					bool useDatalogger = false;
 					foreach (Dut dut in _duts)
 					{
 						if (_testThread.CancellationPending) { break; }
 
 						dut.Open();
-					}
 
-					// Initialize DUT interface device.
-					_equipment.DutInterface.Configure();
+						// Figure out if we need to configure the datalogger.
+						if (dut.Type.Equals("Datalogger"))
+						{
+							useDatalogger = true;
+						}
+					}
+					_equipment.Open(useDatalogger);
+
+					// Initialize DUT interface device if necessary.
+					if (useDatalogger)
+					{
+						_equipment.DutInterface.Configure();
+					}
 
 					// Perform test actions.
 					ProcessTest();

@@ -164,7 +164,7 @@ namespace Sensit.App.Calibration
 		public List<ModelSetting> ModelSettings { get; set; } = new List<ModelSetting>
 		{
 			new ModelSetting("Manual"),
-			new ModelSetting("Analog Sensor"),
+			new ModelSetting("Datalogger"),
 			new ModelSetting("Sensit G3")
 		};
 

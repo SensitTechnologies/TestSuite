@@ -14,6 +14,7 @@ namespace Sensit.App.Calibration
 	/// </remarks>
 	public class Equipment
 	{
+		// holds settings for the equipment
 		private readonly EquipmentSettings _settings;
 
 		// generic manual device, used whenever the user selects "Manual" option for equipment.
@@ -30,6 +31,9 @@ namespace Sensit.App.Calibration
 
 		// datalogger (for analog sensor DUTs)
 		private Keysight_34972A _datalogger;
+
+		// whether or not to configure a datalogger to interface with one or more DUTs.
+		private bool _useDatalogger;
 
 		#region Properties
 
@@ -76,18 +80,27 @@ namespace Sensit.App.Calibration
 		/// <summary>
 		/// Initializes all equipment.
 		/// </summary>
-		public void Open()
+		public void Open(bool useDatalogger)
 		{
+			// Remember whether we're using the datalogger or not.
+			_useDatalogger = useDatalogger;
+
 			// Configure the mass flow controllers.
-			_mfcAnalyte.Open(_settings.GasMixer.AnalyteMFC.SerialPort);
-			_mfcDiluent.Open(_settings.GasMixer.DiluentMFC.SerialPort);
+			_mfcAnalyte?.Open(_settings.GasMixer.AnalyteMFC.SerialPort);
+			_mfcDiluent?.Open(_settings.GasMixer.DiluentMFC.SerialPort);
 
 			// Configure the gas mixer.
-			_gasMixer.AnalyteBottleConcentration = _settings.GasMixer.AnalyteBottleConcentration;
+			if (_gasMixer != null)
+			{
+				_gasMixer.AnalyteBottleConcentration = _settings.GasMixer.AnalyteBottleConcentration;
+			}
 
 			// Configure the datalogger.
-			_datalogger.Bank = _settings.Datalogger.Bank;
-			_datalogger.Open();
+			if ((_useDatalogger == true) && (_datalogger != null))
+			{
+				_datalogger.Bank = _settings.Datalogger.Bank;
+				_datalogger.Open();
+			}
 		}
 
 		/// <summary>
@@ -95,8 +108,12 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		public void Read()
 		{
-			_gasMixer.Read();
-			_datalogger.Read();
+			_gasMixer?.Read();
+
+			if (_useDatalogger == true)
+			{
+				_datalogger?.Read();
+			}
 
 			// TODO:  Update GUI with new values.
 		}
