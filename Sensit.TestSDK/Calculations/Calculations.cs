@@ -77,36 +77,6 @@ namespace Sensit.TestSDK.Calculations
 		}
 
 		/// <summary>
-		/// Calculates area of a shape given the type of shape, its width, and length.
-		/// </summary>
-		/// 
-		/// <remarks>
-		/// If the function doesn't recognize the type of shape, it assumes an ellipse.
-		/// </remarks>
-		/// 
-		/// <param name="shape">enumerated type of shape</param>
-		/// <param name="xDim">x dimension of the shape</param>
-		/// <param name="yDim">y dimension of the shape</param>
-		/// <returns></returns>
-		public static double Area(UnitOfMeasure.Shape shape, double xDim, double yDim)
-		{
-			double area;
-
-			// RECTANGLE:  A = (x)(y)
-			if (shape == UnitOfMeasure.Shape.Rectangle)
-			{
-				area = xDim * yDim;
-			}
-			// CIRCLE & ELLIPSE:  A = PI(r1)(r2)
-			else
-			{
-				area = Math.PI * (xDim / 2) * (yDim / 2);
-			}
-
-			return area;
-		}
-
-		/// <summary>
 		/// Calculates a moving average (without a buffer).
 		/// </summary>
 		/// 
@@ -236,73 +206,6 @@ namespace Sensit.TestSDK.Calculations
 
 			// Take the square root and multiple by kFact to complete the equation.
 			return Math.Sqrt(velocitySquared) * kFact * sign;
-		}
-
-		/// <summary>
-		/// Calculates volumetric flow from velocity and area.
-		/// </summary>
-		/// <param name="velocity">air velocity</param>
-		/// <param name="area">area of duct</param>
-		/// <returns>area of the shape</returns>
-		public static double Flow(double velocity, double area)
-		{
-			return velocity * area;
-		}
-
-		/// <summary>
-		/// Calculate Actual air velocity given standard air velocity, ambient temperature,
-		/// dew point temperature and barometeric pressure. 
-		/// (Output velocity unit same as input velocity unit)
-		/// </summary>
-		/// <param name="std_velocity">Standard velocity</param>
-		/// <param name="ambient_temp">Ambient temperature in °C</param>
-		/// <param name="dewpoint_temp">Dew Point temperature in °C</param>
-		/// <param name="bp">Barometeric pressure in mmHg</param>
-		/// <returns>Actual air velocity</returns>
-		public static double ActualVelocity(double std_velocity, double ambient_temp, double dewpoint_temp, double bp)
-		{
-			// Correct for Temperature and Pressure
-			double velocity_dry = std_velocity * ((273 + ambient_temp) / (273 + 21.1)) * (760 / bp);
-
-			// Correct for Humidity
-			return bp * velocity_dry / (bp - VaporPressure(dewpoint_temp));
-		}
-
-		/// <summary>
-		/// Calculate the Wet Bulb temperature given the dry bulb (ambient)
-		/// temperature, relative humidity and barometric pressure.
-		/// </summary>
-		/// <param name="db_temp">Dry Bulb (ambient) temperature in °C</param>
-		/// <param name="rh">Relative Humidity in % (e.g. 50% = 50)</param>
-		/// <param name="bp">Barometric Pressure in mb/hPa</param>
-		/// <returns>Wet Bulb temperature in °C</returns>
-		public static double Wetbulb(double db_temp, double rh, double bp)
-		{
-			// Initialize constants for above water
-			double B = 0.00066;
-			double alpha = 6.112;
-			double beta = 17.62;
-			double lamda = 243.12;
-
-			if (db_temp < 0)
-			{
-				// Constants for above ice
-				beta = 22.46;
-				lamda = 272.62;
-			}
-
-			return db_temp - (alpha/(B * bp) * Math.Pow(Math.E, beta * db_temp/(lamda + db_temp)) * (1 - (rh / 100)));
-		}
-
-		/// <summary>
-		/// Generic function to calculate saturated or actual vapor pressure of air
-		/// given dew point or ambient temperature respectively.
-		/// </summary>
-		/// <param name="temperature">Dew point or Ambient temperature in °C</param>
-		/// <returns>Saturated or actual vapor pressure in millibars(mb)/hPa</returns>
-		private static double VaporPressure(double temperature)
-		{
-			return 6.11 * Math.Pow(10, (7.5 * temperature) / (237.7 + temperature));
 		}
 
 		#endregion

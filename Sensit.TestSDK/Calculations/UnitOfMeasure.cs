@@ -7,13 +7,6 @@ namespace Sensit.TestSDK.Calculations
 	/// </summary>
 	public static class UnitOfMeasure
 	{
-		public enum Shape
-		{
-			Circle,
-			Rectangle,
-			Oval,
-		}
-
 		public enum Length
 		{
 			Meters,
