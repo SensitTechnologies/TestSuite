@@ -185,6 +185,15 @@ namespace Sensit.App.Calibration
 			Finished?.Invoke();
 		}
 
+		/// <summary>
+		/// Pause the test.
+		/// </summary>
+		public void Pause()
+		{
+			// All we need to do is call the error method with a message for the user.
+			PopupRetryAbort("The test is paused.  Continue?", "Notice");
+		}
+
 		#endregion
 
 		/// <summary>
@@ -197,9 +206,9 @@ namespace Sensit.App.Calibration
 		/// Those properties are Dictionaries with the key being the variable type.
 		/// Then we can initialize them in Equipment.cs, iterate through them here, and set parameters when needed.
 		/// </remarks>
-		/// <param name="errorMessage">message to display to the user</param>
+		/// <param name="message">message to display to the user</param>
 		/// <param name="caption">caption for the message</param>
-		private void PopupRetryAbort(string errorMessage, string caption)
+		private void PopupRetryAbort(string message, string caption)
 		{
 			// Stop the equipment to reduce change of damage.
 			foreach (KeyValuePair<VariableType, IControlDevice> c in _equipment.Controllers)
@@ -207,9 +216,15 @@ namespace Sensit.App.Calibration
 				c.Value.SetControlMode(ControlMode.Measure);
 			}
 
+			// Pause the elapsed time timer.
+			_elapsedTimeStopwatch.Stop();
+
 			// Alert the user (asking if they wish to retry or not).
-			DialogResult result = MessageBox.Show(errorMessage
+			DialogResult result = MessageBox.Show(message
 				+ Environment.NewLine + "Retry?", caption, MessageBoxButtons.YesNo);
+
+			// Resume timing elapsed time.
+			_elapsedTimeStopwatch.Start();
 
 			// If we're continuing to test, attempt to control variables again.
 			if (result == DialogResult.Yes)

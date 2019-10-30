@@ -281,6 +281,9 @@ namespace Sensit.App.Calibration
 				}
 				buttonStop.Enabled = true;
 				buttonStart.Enabled = false;
+				startToolStripMenuItem.Enabled = false;
+				pauseToolStripMenuItem.Enabled = true;
+				abortToolStripMenuItem.Enabled = true;
 
 				//
 				// Create objects for equipment, test, and DUTs.
@@ -531,6 +534,16 @@ namespace Sensit.App.Calibration
 			Application.Exit();
 		}
 
+		/// <summary>
+		/// When Test --> Pause menu item is clicked, pause the test.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			_test?.Pause();
+		}
+
 		#endregion
 
 		#region Equipment Menu
@@ -724,6 +737,9 @@ namespace Sensit.App.Calibration
 			// Enable the "Start" button and disable the "Stop" button.
 			buttonStart.Enabled = true;
 			buttonStop.Enabled = false;
+			startToolStripMenuItem.Enabled = true;
+			pauseToolStripMenuItem.Enabled = false;
+			abortToolStripMenuItem.Enabled = false;
 
 			// If requested, close the application.
 			if (_closeAfterTest)
