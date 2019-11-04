@@ -49,6 +49,7 @@ namespace Sensit.App.Calibration
 		private Equipment _equipment;			// test equipment object
 		private readonly List<Dut> _duts;       // devices under test
 		private Stopwatch _elapsedTimeStopwatch;// keeper of test's elapsed time
+		private bool _pause = false;			// whether test is paused
 		private int _samplesTotal;				// helps calculate percent complete
 		private int _samplesComplete = 0;       // helps calculate percent complete
 
@@ -58,6 +59,16 @@ namespace Sensit.App.Calibration
 
 		// Report test progress.
 		public Action<int, string> Update;
+
+		// Report the error in the independent variable.
+		public Action<double> UpdateError;
+
+		// Report the rate of change of the independent variable.
+		public Action<double> UpdateRate;
+
+		// Report the controlled variables and their values.
+		public Action<Dictionary<VariableType, double>> UpdateVariables;
+
 
 		// Report test results.
 		public Action Finished;
@@ -86,6 +97,8 @@ namespace Sensit.App.Calibration
 				return percent;
 			}
 		}
+
+		public float ErrorValue { get; private set; }
 
 		/// <summary>
 		/// Controlled/independent variables for the current test component.
@@ -159,6 +172,15 @@ namespace Sensit.App.Calibration
 		}
 
 		/// <summary>
+		/// Pause the test.
+		/// </summary>
+		public void Pause()
+		{
+			// Set a global flag which will cause the test to pause at a convenient spot.
+			_pause = true;
+		}
+
+		/// <summary>
 		/// Return whether a test is running.
 		/// </summary>
 		/// <returns>true if test is running; false otherwise</returns>
@@ -183,15 +205,6 @@ namespace Sensit.App.Calibration
 
 			// Run actions required when test is completed (i.e. update GUI).
 			Finished?.Invoke();
-		}
-
-		/// <summary>
-		/// Pause the test.
-		/// </summary>
-		public void Pause()
-		{
-			// All we need to do is call the error method with a message for the user.
-			PopupRetryAbort("The test is paused.  Continue?", "Notice");
 		}
 
 		#endregion
@@ -220,8 +233,7 @@ namespace Sensit.App.Calibration
 			_elapsedTimeStopwatch.Stop();
 
 			// Alert the user (asking if they wish to retry or not).
-			DialogResult result = MessageBox.Show(message
-				+ Environment.NewLine + "Retry?", caption, MessageBoxButtons.YesNo);
+			DialogResult result = MessageBox.Show(message, caption, MessageBoxButtons.YesNo);
 
 			// Resume timing elapsed time.
 			_elapsedTimeStopwatch.Start();
@@ -288,6 +300,20 @@ namespace Sensit.App.Calibration
 				// Read the reference reading.
 				double reading = _equipment.References[v.VariableType].Readings[v.VariableType];
 
+				// TODO:  Update the error and rate of change for the independent variable only.
+				if (v.VariableType == VariableType.GasConcentration)
+				{
+					// Update the error in the independent variable.
+					UpdateError?.Invoke(reading - setpoint);
+
+					// Calculate rate of change.
+					//double rate = (reading - _previous) / (v.Interval.TotalSeconds);
+					//_previous = reading;
+
+					// Update the rate of change of the independent variable.
+					//UpdateRate?.Invoke(rate);
+				}
+
 				// If the reading is out of tolerance...
 				if (Math.Abs(setpoint - reading) > v.ErrorTolerance)
 				{
@@ -295,6 +321,22 @@ namespace Sensit.App.Calibration
 					ProcessSetpoint(v, setpoint, v.Interval);
 				}
 			}
+		}
+
+		/// <summary>
+		/// Check if the test should be paused.
+		/// </summary>
+		/// <remarks>
+		/// This should be called at convenient intervals within the test thread
+		/// where the test can be paused.
+		/// </remarks>
+		private void ProcessPause()
+	{
+			// All we need to do is call the error method with a message for the user.
+			PopupRetryAbort("The test is paused.  Continue?", "Notice");
+
+			// Reset the flag once the user resumes the test.
+			_pause = false;
 		}
 
 		private void ProcessCommand(Command? command)
@@ -338,10 +380,25 @@ namespace Sensit.App.Calibration
 				if (timeoutWatch.Elapsed > variable.Timeout)
 				{
 					// Prompt user; cancel test if requested.
-					PopupRetryAbort("Not able to reach stability.", "Stability Error");
+					PopupRetryAbort("Not able to reach stability." + Environment.NewLine + "Retry ?", "Stability Error");
 
 					// Reset the timeout stopwatch.
 					timeoutWatch.Restart();
+				}
+
+				// Process pause requests.
+				if (_pause == true)
+				{
+					// Stop the clocks.
+					stopwatch.Stop();
+					timeoutWatch.Stop();
+
+					// Pause the test.
+					ProcessPause();
+
+					// Restart the clocks.
+					stopwatch.Start();
+					timeoutWatch.Start();
 				}
 
 				// Get reference reading.
@@ -351,9 +408,15 @@ namespace Sensit.App.Calibration
 				// Calculate error.
 				error = reading - setpoint;
 
+				// Update the error in the independent variable.
+				UpdateError?.Invoke(error);
+
 				// Calculate rate of change.
 				rate = (reading - previous) / (interval.TotalSeconds);
 				previous = reading;
+
+				// Update the rate of change of the independent variable.
+				UpdateRate?.Invoke(rate);
 
 				// If tolerance has been exceeded, reset the stability time.
 				if (Math.Abs(error) > variable.ErrorTolerance)
@@ -368,6 +431,9 @@ namespace Sensit.App.Calibration
 					(Math.Abs(rate) < variable.RateTolerance))
 				{
 					message += "dwell time left:  " + (variable.DwellTime - stopwatch.Elapsed).ToString(@"hh\:mm\:ss");
+
+					// Reset the timeout stopwatch.
+					timeoutWatch.Restart();
 				}
 				_testThread.ReportProgress(PercentProgress, message);
 
@@ -394,6 +460,8 @@ namespace Sensit.App.Calibration
 			// Record the data applicable to each DUT.
 			foreach (Dut dut in _duts)
 			{
+				// TODO:  The DUT doesn't really care about the reference reading.
+				// Take it out and log it elsewhere (maybe a few lines above?).
 				dut.Read(_elapsedTimeStopwatch.Elapsed, setpoint, referenceReadings[VariableType.GasConcentration]);
 
 				if (_testThread.CancellationPending) { break; }
@@ -448,6 +516,12 @@ namespace Sensit.App.Calibration
 
 							// Check stability of all controlled variables.
 							StabilityCheck(c.ControlledVariables);
+
+							// Pause the test if necessary.
+							if (_pause == true)
+							{
+								ProcessPause();
+							}
 
 							// Record sample data.
 							ProcessSamples(sp);
