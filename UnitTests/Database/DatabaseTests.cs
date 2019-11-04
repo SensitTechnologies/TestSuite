@@ -5,50 +5,50 @@ using Newtonsoft.Json.Linq;
 
 namespace Sensit.TestSDK.Database.Tests
 {
-    [TestClass()]
+	[TestClass]
     public class DatabaseTests
     {
-        [TestMethod()]
+		[TestMethod]
         public void CheckConnection()
         {
-            SqlServer database = new SqlServer();
+			SqlServer database = new SqlServer();
             database.CheckConnection();
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ModularQueryNoResult()
         {
             SqlServer database = new SqlServer();
             database.ModularQueryNoResult("update Equipment set Name ='New Tool' where EquipmentID = 1");
-            String result = database.ModularQueryWithResult("select * from Equipment where Name = 'New Tool'", "Equipment", "");
+			string result = database.ModularQueryWithResult("select * from Equipment where Name = 'New Tool'", "Equipment", "");
             var jo = JArray.Parse(result);
-            String finalResult = (String) jo[0]["Name"];
+			string finalResult = (string) jo[0]["Name"];
             Assert.AreEqual(finalResult,"New Tool");
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void InsertIntoTestSuites()
         {
             SqlServer database = new SqlServer();
             database.InsertIntoTestSuites("New Product");
-            String result = database.ModularQueryWithResult("select * from TestSuites where Product = 'New Product'", "TestSuites", "");
+			string result = database.ModularQueryWithResult("select * from TestSuites where Product = 'New Product'", "TestSuites", "");
             var jo = JArray.Parse(result);
-            String finalResult = (String)jo[0]["Product"];
+			string finalResult = (string)jo[0]["Product"];
             Assert.AreEqual(finalResult, "New Product");
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void InsertIntoTestCases()
         {
             SqlServer database = new SqlServer();
             database.InsertIntoTestCases("A New Name", "New Objective", "Owner 2", "A long time", "New Product");
-            String result = database.ModularQueryWithResult("select * from TestCases where Objective = 'New Objective'", "TestCases", "");
+			string result = database.ModularQueryWithResult("select * from TestCases where Objective = 'New Objective'", "TestCases", "");
             var jo = JArray.Parse(result);
-            String finalResult = (String)jo[0]["Objective"];
+			string finalResult = (string)jo[0]["Objective"];
             Assert.AreEqual(finalResult, "New Objective");
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void InsertIntoDeviceUnderTests()
         {
             SqlServer database = new SqlServer();
@@ -56,58 +56,58 @@ namespace Sensit.TestSDK.Database.Tests
             // No need to test this execution since the database will throw an error if there's a problem with the insertion since the primary key is the only thing being added to the table
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void InsertIntoTestRuns()
         {
             SqlServer database = new SqlServer();
             database.InsertIntoTestRuns("A New Date", "Tester", "Notes", "Issue", "Status");
-            String result = database.ModularQueryWithResult("select * from TestRuns where Date = 'A New Date'", "TestRuns", "");
+			string result = database.ModularQueryWithResult("select * from TestRuns where Date = 'A New Date'", "TestRuns", "");
             var jo = JArray.Parse(result);
-            String finalResult = (String)jo[0]["Date"];
+			string finalResult = (string)jo[0]["Date"];
             Assert.AreEqual(finalResult, "A New Date");
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void InsertIntoDeviceComponents()
         {
             SqlServer database = new SqlServer();
             database.InsertIntoDeviceComponents("A New Name", "Version 2");
-            String result = database.ModularQueryWithResult("select * from DeviceComponents where Name = 'A New Name'", "DeviceComponents", "");
+			string result = database.ModularQueryWithResult("select * from DeviceComponents where Name = 'A New Name'", "DeviceComponents", "");
             var jo = JArray.Parse(result);
-            String finalResult = (String)jo[0]["Name"];
+			string finalResult = (string)jo[0]["Name"];
             Assert.AreEqual(finalResult, "A New Name");
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void InsertIntoEquipment()
         {
             SqlServer database = new SqlServer();
             database.InsertIntoEquipment("New Equipment", "Many");
-            String result = database.ModularQueryWithResult("select * from Equipment where Name = 'New Equipment'", "Equipment", "");
+			string result = database.ModularQueryWithResult("select * from Equipment where Name = 'New Equipment'", "Equipment", "");
             var jo = JArray.Parse(result);
-            String finalResult = (String)jo[0]["Equipment"];
+			string finalResult = (string)jo[0]["Equipment"];
             Assert.AreEqual(finalResult, "New Equipment");
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void InsertIntoTestSteps()
         {
             SqlServer database = new SqlServer();
             database.InsertIntoTestSteps("New Step", "Expected Result");
-            String result = database.ModularQueryWithResult("select * from TestSteps where Step = 'New Step'", "TestSteps", "");
+			string result = database.ModularQueryWithResult("select * from TestSteps where Step = 'New Step'", "TestSteps", "");
             var jo = JArray.Parse(result);
-            String finalResult = (String)jo[0]["Step"];
+			string finalResult = (string)jo[0]["Step"];
             Assert.AreEqual(finalResult, "New Step");
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void InsertIntoTestStepResults()
         {
             SqlServer database = new SqlServer();
             database.InsertIntoTestStepResults("New Actual Result", "Status", "New ID");
-            String result = database.ModularQueryWithResult("select * from TestStepResults where ActualResult = 'New Actual Result'", "TestStepResults", "");
+			string result = database.ModularQueryWithResult("select * from TestStepResults where ActualResult = 'New Actual Result'", "TestStepResults", "");
             var jo = JArray.Parse(result);
-            String finalResult = (String)jo[0]["ActualResult"];
+			string finalResult = (string)jo[0]["ActualResult"];
             Assert.AreEqual(finalResult, "New Actual Result");
         }
     }
