@@ -126,6 +126,62 @@ namespace Sensit.App.Calibration
 			}
 		}
 
+		/// <summary>
+		/// Difference between desired and actual value of the test's independent variable.
+		/// </summary>
+		public double ErrorValue
+		{
+			// TODO:  Convert to integer based on max, min range.
+			set
+			{
+				// If called from a different thread than the form, invoke the method on the form's thread.
+				if (trackBarError.InvokeRequired)
+				{
+					trackBarError.Invoke(new MethodInvoker(delegate { ErrorValue = value; }));
+				}
+				else
+				{
+					// Constrain the value to fit on the trackbar.
+					if (value > trackBarError.Maximum)
+						value = trackBarError.Maximum;
+					else if (value < trackBarError.Minimum)
+						value = trackBarError.Minimum;
+
+					// Set the value.
+					trackBarError.Value = (int)value;
+				}
+				
+			}
+		}
+
+		/// <summary>
+		/// Rate of change of the test's independent variable.
+		/// </summary>
+		public double RateValue
+		{
+			// TODO:  Convert to integer based on max, min range.
+			// TODO:  Fix cross-thread operation.
+			set
+			{
+				// If called from a different thread than the form, invoke the method on the form's thread.
+				if (trackBarRate.InvokeRequired)
+				{
+					trackBarRate.Invoke(new MethodInvoker(delegate { RateValue = value; }));
+				}
+				else
+				{
+					// Constrain the value to fit on the trackbar.
+					if (value > trackBarRate.Maximum)
+						value = trackBarRate.Maximum;
+					else if (value < trackBarRate.Minimum)
+						value = trackBarRate.Minimum;
+
+					// Set the value.
+					trackBarRate.Value = (int)value;
+				}
+			}
+		}
+
 		#endregion
 
 		#region Constructor
@@ -326,7 +382,10 @@ namespace Sensit.App.Calibration
 				_test = new Test(testSetting, _equipment, _duts)
 				{
 					Finished = TestFinished,
-					Update = TestUpdate
+					Update = TestUpdate,
+					// https://syncor.blogspot.com/2010/11/passing-getter-and-setter-of-c-property.html
+					UpdateError = value => ErrorValue = value,
+					UpdateRate = value => RateValue = value
 				};
 
 				// Start the test.

@@ -62,9 +62,9 @@
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanelIndependentVariables = new System.Windows.Forms.TableLayoutPanel();
 			this.labelError = new System.Windows.Forms.Label();
-			this.trackBar1 = new System.Windows.Forms.TrackBar();
+			this.trackBarError = new System.Windows.Forms.TrackBar();
 			this.labelRate = new System.Windows.Forms.Label();
-			this.trackBar2 = new System.Windows.Forms.TrackBar();
+			this.trackBarRate = new System.Windows.Forms.TrackBar();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -116,8 +116,8 @@
 			this.groupBoxVariable2.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.tableLayoutPanelIndependentVariables.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.trackBarError)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.trackBarRate)).BeginInit();
 			this.statusStrip1.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -533,9 +533,9 @@
 			this.tableLayoutPanelIndependentVariables.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.tableLayoutPanelIndependentVariables.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.tableLayoutPanelIndependentVariables.Controls.Add(this.labelError, 0, 0);
-			this.tableLayoutPanelIndependentVariables.Controls.Add(this.trackBar1, 0, 1);
+			this.tableLayoutPanelIndependentVariables.Controls.Add(this.trackBarError, 0, 1);
 			this.tableLayoutPanelIndependentVariables.Controls.Add(this.labelRate, 1, 0);
-			this.tableLayoutPanelIndependentVariables.Controls.Add(this.trackBar2, 1, 1);
+			this.tableLayoutPanelIndependentVariables.Controls.Add(this.trackBarRate, 1, 1);
 			this.tableLayoutPanelIndependentVariables.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanelIndependentVariables.Location = new System.Drawing.Point(3, 16);
 			this.tableLayoutPanelIndependentVariables.Name = "tableLayoutPanelIndependentVariables";
@@ -556,19 +556,19 @@
 			this.labelError.TabIndex = 18;
 			this.labelError.Text = "Error";
 			// 
-			// trackBar1
+			// trackBarError
 			// 
-			this.trackBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-			this.trackBar1.LargeChange = 20;
-			this.trackBar1.Location = new System.Drawing.Point(38, 23);
-			this.trackBar1.Maximum = 100;
-			this.trackBar1.Minimum = -100;
-			this.trackBar1.Name = "trackBar1";
-			this.trackBar1.Orientation = System.Windows.Forms.Orientation.Vertical;
-			this.trackBar1.Size = new System.Drawing.Size(45, 234);
-			this.trackBar1.TabIndex = 0;
-			this.trackBar1.TickFrequency = 10;
-			this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.Both;
+			this.trackBarError.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+			this.trackBarError.LargeChange = 20;
+			this.trackBarError.Location = new System.Drawing.Point(38, 23);
+			this.trackBarError.Maximum = 100;
+			this.trackBarError.Minimum = -100;
+			this.trackBarError.Name = "trackBarError";
+			this.trackBarError.Orientation = System.Windows.Forms.Orientation.Vertical;
+			this.trackBarError.Size = new System.Drawing.Size(45, 234);
+			this.trackBarError.TabIndex = 0;
+			this.trackBarError.TickFrequency = 10;
+			this.trackBarError.TickStyle = System.Windows.Forms.TickStyle.Both;
 			// 
 			// labelRate
 			// 
@@ -581,19 +581,19 @@
 			this.labelRate.TabIndex = 19;
 			this.labelRate.Text = "Rate";
 			// 
-			// trackBar2
+			// trackBarRate
 			// 
-			this.trackBar2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-			this.trackBar2.LargeChange = 20;
-			this.trackBar2.Location = new System.Drawing.Point(161, 23);
-			this.trackBar2.Maximum = 100;
-			this.trackBar2.Minimum = -100;
-			this.trackBar2.Name = "trackBar2";
-			this.trackBar2.Orientation = System.Windows.Forms.Orientation.Vertical;
-			this.trackBar2.Size = new System.Drawing.Size(45, 234);
-			this.trackBar2.TabIndex = 1;
-			this.trackBar2.TickFrequency = 10;
-			this.trackBar2.TickStyle = System.Windows.Forms.TickStyle.Both;
+			this.trackBarRate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+			this.trackBarRate.LargeChange = 20;
+			this.trackBarRate.Location = new System.Drawing.Point(161, 23);
+			this.trackBarRate.Maximum = 100;
+			this.trackBarRate.Minimum = -100;
+			this.trackBarRate.Name = "trackBarRate";
+			this.trackBarRate.Orientation = System.Windows.Forms.Orientation.Vertical;
+			this.trackBarRate.Size = new System.Drawing.Size(45, 234);
+			this.trackBarRate.TabIndex = 1;
+			this.trackBarRate.TickFrequency = 10;
+			this.trackBarRate.TickStyle = System.Windows.Forms.TickStyle.Both;
 			// 
 			// statusStrip1
 			// 
@@ -723,7 +723,7 @@
 			// 
 			this.startToolStripMenuItem.Name = "startToolStripMenuItem";
 			this.startToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-			this.startToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.startToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
 			this.startToolStripMenuItem.Text = "&Start";
 			this.startToolStripMenuItem.Click += new System.EventHandler(this.buttonStart_Click);
 			// 
@@ -732,7 +732,7 @@
 			this.pauseToolStripMenuItem.Enabled = false;
 			this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
 			this.pauseToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F6;
-			this.pauseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.pauseToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
 			this.pauseToolStripMenuItem.Text = "&Pause";
 			this.pauseToolStripMenuItem.ToolTipText = "Hault the current test temporarily";
 			this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
@@ -742,20 +742,20 @@
 			this.abortToolStripMenuItem.Enabled = false;
 			this.abortToolStripMenuItem.Name = "abortToolStripMenuItem";
 			this.abortToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F7;
-			this.abortToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.abortToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
 			this.abortToolStripMenuItem.Text = "&Abort";
 			this.abortToolStripMenuItem.Click += new System.EventHandler(this.buttonStop_Click);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(124, 6);
 			// 
 			// reconnectDUTsToolStripMenuItem
 			// 
 			this.reconnectDUTsToolStripMenuItem.Enabled = false;
 			this.reconnectDUTsToolStripMenuItem.Name = "reconnectDUTsToolStripMenuItem";
-			this.reconnectDUTsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.reconnectDUTsToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
 			this.reconnectDUTsToolStripMenuItem.Text = "&Find DUTs";
 			// 
 			// equipmentToolStripMenuItem
@@ -779,35 +779,35 @@
 			// numberOfDUTsToolStripMenuItem
 			// 
 			this.numberOfDUTsToolStripMenuItem.Name = "numberOfDUTsToolStripMenuItem";
-			this.numberOfDUTsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.numberOfDUTsToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
 			this.numberOfDUTsToolStripMenuItem.Text = "&Number of DUTs";
 			this.numberOfDUTsToolStripMenuItem.Click += new System.EventHandler(this.numberOfDUTsToolStripMenuItem_Click);
 			// 
 			// logDirectoryToolStripMenuItem
 			// 
 			this.logDirectoryToolStripMenuItem.Name = "logDirectoryToolStripMenuItem";
-			this.logDirectoryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.logDirectoryToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
 			this.logDirectoryToolStripMenuItem.Text = "&Log Directory";
 			this.logDirectoryToolStripMenuItem.Click += new System.EventHandler(this.logDirectoryToolStripMenuItem_Click);
 			// 
 			// optionsToolStripMenuItem
 			// 
 			this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
 			this.optionsToolStripMenuItem.Text = "&Equipment Settings";
 			this.optionsToolStripMenuItem.Click += new System.EventHandler(this.equipmentSettingsToolStripMenuItem_Click);
 			// 
 			// dUTSettingsToolStripMenuItem
 			// 
 			this.dUTSettingsToolStripMenuItem.Name = "dUTSettingsToolStripMenuItem";
-			this.dUTSettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.dUTSettingsToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
 			this.dUTSettingsToolStripMenuItem.Text = "&DUT Settings";
 			this.dUTSettingsToolStripMenuItem.Click += new System.EventHandler(this.dUTSettingsToolStripMenuItem_Click);
 			// 
 			// terminalToolStripMenuItem
 			// 
 			this.terminalToolStripMenuItem.Name = "terminalToolStripMenuItem";
-			this.terminalToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.terminalToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
 			this.terminalToolStripMenuItem.Text = "&Test Settings";
 			this.terminalToolStripMenuItem.Click += new System.EventHandler(this.testSettingsToolStripMenuItem_Click);
 			// 
@@ -823,7 +823,7 @@
 			// aboutToolStripMenuItem
 			// 
 			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
 			this.aboutToolStripMenuItem.Text = "&About";
 			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
 			// 
@@ -831,7 +831,7 @@
 			// 
 			this.supportToolStripMenuItem.Enabled = false;
 			this.supportToolStripMenuItem.Name = "supportToolStripMenuItem";
-			this.supportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.supportToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
 			this.supportToolStripMenuItem.Text = "How Do I";
 			// 
 			// FormCalibration
@@ -875,8 +875,8 @@
 			this.groupBox2.ResumeLayout(false);
 			this.tableLayoutPanelIndependentVariables.ResumeLayout(false);
 			this.tableLayoutPanelIndependentVariables.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.trackBarError)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.trackBarRate)).EndInit();
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();
 			this.menuStrip1.ResumeLayout(false);
@@ -933,9 +933,9 @@
 		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelIndependentVariables;
 		private System.Windows.Forms.Label labelError;
-		private System.Windows.Forms.TrackBar trackBar1;
+		private System.Windows.Forms.TrackBar trackBarError;
 		private System.Windows.Forms.Label labelRate;
-		private System.Windows.Forms.TrackBar trackBar2;
+		private System.Windows.Forms.TrackBar trackBarRate;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelControlledVariables;
 		private System.Windows.Forms.GroupBox groupBoxVariable1;
 		private System.Windows.Forms.TextBox textBoxVariable1Value;
