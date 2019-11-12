@@ -165,41 +165,6 @@ namespace Sensit.App.GasConcentration
 		}
 
 		/// <summary>
-		/// When the "Update" button is clicked, fetch readings/settings from the mass flow controllers.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void buttonReadAll_Click(object sender, EventArgs e)
-		{
-			try
-			{
-				// Alert the user.
-				toolStripStatusLabel1.Text = "Reading from mass flow controllers...";
-
-				// Read status from the mass flow controllers.
-				_mfcAnalyte.Read();
-				_mfcDiluent.Read();
-
-				// Update the form.
-				textBoxAnalytePressure.Text = _mfcAnalyte.Readings[VariableType.Pressure].ToString();
-				textBoxDiluentPressure.Text = _mfcDiluent.Readings[VariableType.Pressure].ToString();
-				textBoxAnalyteTemperature.Text = _mfcAnalyte.Readings[VariableType.Temperature].ToString();
-				textBoxDiluentTemperature.Text = _mfcDiluent.Readings[VariableType.Temperature].ToString();
-				textBoxAnalyteVolumetricFlow.Text = _mfcAnalyte.Readings[VariableType.VolumeFlow].ToString();
-				textBoxDiluentVolumetricFlow.Text = _mfcDiluent.Readings[VariableType.VolumeFlow].ToString();
-				textBoxAnalyteMassFlow.Text = _mfcAnalyte.Readings[VariableType.MassFlow].ToString();
-				textBoxDiluentMassFlow.Text = _mfcDiluent.Readings[VariableType.MassFlow].ToString();
-				toolStripStatusLabel1.Text = "Success.";
-			}
-			catch (Exception ex)
-			{
-				// If an error occurs, alert the user.
-				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
-				toolStripStatusLabel1.Text = ex.GetType().ToString();
-			}
-		}
-
-		/// <summary>
 		/// When the "Write Gas" button is clicked, send the gas selection to the mass flow controller.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -230,41 +195,6 @@ namespace Sensit.App.GasConcentration
 			}
 		}
 
-		/// <summary>
-		/// When the "Write SP" button is clicked, send the setpoint to the mass flow controller.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void buttonWrite_Click(object sender, EventArgs e)
-		{
-			try
-			{
-				// Convert the setpoints to numbers.
-				double analyteSetpoint = Convert.ToDouble(textBoxAnalyteSetpoint.Text);
-				double diluentSetpoint = Convert.ToDouble(textBoxDiluentSetpoint.Text);
-
-				// Write setpoints to mass flow controllers.
-				_mfcAnalyte.WriteSetpoint(VariableType.MassFlow, analyteSetpoint);
-				_mfcDiluent.WriteSetpoint(VariableType.MassFlow, diluentSetpoint);
-
-				// Alert the user.
-				toolStripStatusLabel1.Text = "Success.";
-			}
-			catch (FormatException ex)
-			{
-				// If the user didn't enter a valid number, prompt the user.
-				MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine +
-					"Did you type a valid setpoint?", ex.GetType().Name.ToString());
-				toolStripStatusLabel1.Text = ex.GetType().ToString();
-			}
-			catch (Exception ex)
-			{
-				// If an error occurs, alert the user.
-				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
-				toolStripStatusLabel1.Text = ex.GetType().ToString();
-			}
-		}
-
 		private void buttonReadConcentration_Click(object sender, EventArgs e)
 		{
 			try
@@ -277,7 +207,6 @@ namespace Sensit.App.GasConcentration
 				textBoxTotalMassFlow.Text = _gasMixer.Readings[VariableType.MassFlow].ToString();
 				textBoxGasConcentrationSetpoint.Text = _gasMixer.ReadSetpoint(VariableType.GasConcentration).ToString();
 				textBoxMassFlowSetpoint.Text = _gasMixer.ReadSetpoint(VariableType.MassFlow).ToString();
-				textBoxAnalyteBottleConcentration.Text = _gasMixer.AnalyteBottleConcentration.ToString();
 
 				// Alert the user.
 				toolStripStatusLabel1.Text = "Success.";
@@ -297,10 +226,8 @@ namespace Sensit.App.GasConcentration
 				// Convert the setpoints to numbers.
 				double analyteConcentration = Convert.ToDouble(textBoxGasConcentrationSetpoint.Text);
 				double massFlowSetpoint = Convert.ToDouble(textBoxMassFlowSetpoint.Text);
-				double bottleConcentration = Convert.ToDouble(textBoxAnalyteBottleConcentration.Text);
 
 				// Write to mass flow controllers.
-				_gasMixer.AnalyteBottleConcentration = bottleConcentration;
 				_gasMixer.WriteSetpoint(VariableType.GasConcentration, analyteConcentration);
 				_gasMixer.WriteSetpoint(VariableType.MassFlow, massFlowSetpoint);
 

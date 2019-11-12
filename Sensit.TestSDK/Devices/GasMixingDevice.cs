@@ -35,7 +35,7 @@ namespace Sensit.TestSDK.Devices
 
 		public Dictionary<VariableType, double> Readings { get; private set; } = new Dictionary<VariableType, double>
 		{
-			// actual analyte concentration [%V] in mixed gas (calculated from mass flow controllers' measured flows)
+			// percent of analyte in mixed gas (calculated from mass flow controllers' measured flows)
 			{ VariableType.GasConcentration, 0.0 },
 
 			// actual total mass flow (summed from both mass flow controllers)
@@ -57,24 +57,6 @@ namespace Sensit.TestSDK.Devices
 		/// Analyte gas.
 		/// </summary>
 		public Gas GasSelection { get; set; } = Gas.Air;
-
-		/// <summary>
-		/// Concentration of analyte gas cylinder [%V].
-		/// </summary>
-		public double AnalyteBottleConcentration
-		{
-			get => _analyteBottleConcentration;
-			set
-			{
-				// Check for valid value.
-				if ((value < 0.0) || (value > 100.0) || (value.Equals(0)))
-				{
-					throw new DeviceOutOfRangeException("Analyte Bottle Concentration must be greater than 0% and less than or equal to 100%.");
-				}
-
-				_analyteBottleConcentration = value;
-			}
-		}
 
 		#endregion
 
@@ -177,7 +159,7 @@ namespace Sensit.TestSDK.Devices
 			}
 			else
 			{
-				_gasMixSetpoint = _analyteController.ReadSetpoint(VariableType.MassFlow) / _massFlowSetpoint * AnalyteBottleConcentration;
+				_gasMixSetpoint = _analyteController.ReadSetpoint(VariableType.MassFlow) / _massFlowSetpoint;
 			}
 
 			// Return the requested value.

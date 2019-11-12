@@ -54,10 +54,6 @@ namespace Sensit.TestSDK.Interfaces
 	[Description("Gas Mixer")]
 	public interface IGasMixController : IMassFlowController
 	{
-		/// <summary>
-		/// Concentration of the gas under test before dilution.
-		/// </summary>
-		double AnalyteBottleConcentration { get; set; }
 	}
 
 	/// <summary>
