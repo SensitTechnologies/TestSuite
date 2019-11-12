@@ -28,6 +28,22 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine1 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine2 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine3 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine4 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine5 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 5D);
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine6 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine7 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine8 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine9 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine10 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint2 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 5D);
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.Overview = new System.Windows.Forms.TabPage();
 			this.tableLayoutPanelOverview = new System.Windows.Forms.TableLayoutPanel();
@@ -61,10 +77,12 @@
 			this.textBoxVariable2Setpoint = new System.Windows.Forms.TextBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanelIndependentVariables = new System.Windows.Forms.TableLayoutPanel();
-			this.labelError = new System.Windows.Forms.Label();
-			this.trackBarError = new System.Windows.Forms.TrackBar();
+			this.labelValue = new System.Windows.Forms.Label();
 			this.labelRate = new System.Windows.Forms.Label();
-			this.trackBarRate = new System.Windows.Forms.TrackBar();
+			this.chartError = new System.Windows.Forms.DataVisualization.Charting.Chart();
+			this.chartRate = new System.Windows.Forms.DataVisualization.Charting.Chart();
+			this.labelValueNum = new System.Windows.Forms.Label();
+			this.labelRateNum = new System.Windows.Forms.Label();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -116,8 +134,8 @@
 			this.groupBoxVariable2.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.tableLayoutPanelIndependentVariables.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.trackBarError)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.trackBarRate)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.chartError)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.chartRate)).BeginInit();
 			this.statusStrip1.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -130,7 +148,7 @@
 			this.tabControl1.Location = new System.Drawing.Point(0, 24);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(534, 311);
+			this.tabControl1.Size = new System.Drawing.Size(534, 309);
 			this.tabControl1.TabIndex = 0;
 			// 
 			// Overview
@@ -139,7 +157,7 @@
 			this.Overview.Location = new System.Drawing.Point(4, 22);
 			this.Overview.Name = "Overview";
 			this.Overview.Padding = new System.Windows.Forms.Padding(3);
-			this.Overview.Size = new System.Drawing.Size(526, 285);
+			this.Overview.Size = new System.Drawing.Size(526, 283);
 			this.Overview.TabIndex = 2;
 			this.Overview.Text = "Overview";
 			this.Overview.UseVisualStyleBackColor = true;
@@ -162,7 +180,7 @@
 			this.tableLayoutPanelOverview.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelOverview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanelOverview.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelOverview.Size = new System.Drawing.Size(520, 279);
+			this.tableLayoutPanelOverview.Size = new System.Drawing.Size(520, 277);
 			this.tableLayoutPanelOverview.TabIndex = 17;
 			// 
 			// groupBoxTestSettings
@@ -255,7 +273,7 @@
 			this.groupBoxDevicesUnderTest.Location = new System.Drawing.Point(224, 3);
 			this.groupBoxDevicesUnderTest.Name = "groupBoxDevicesUnderTest";
 			this.tableLayoutPanelOverview.SetRowSpan(this.groupBoxDevicesUnderTest, 2);
-			this.groupBoxDevicesUnderTest.Size = new System.Drawing.Size(293, 238);
+			this.groupBoxDevicesUnderTest.Size = new System.Drawing.Size(293, 236);
 			this.groupBoxDevicesUnderTest.TabIndex = 17;
 			this.groupBoxDevicesUnderTest.TabStop = false;
 			this.groupBoxDevicesUnderTest.Text = "Devices Under Test";
@@ -274,7 +292,7 @@
 			this.tableLayoutPanelDevicesUnderTest.Name = "tableLayoutPanelDevicesUnderTest";
 			this.tableLayoutPanelDevicesUnderTest.RowCount = 1;
 			this.tableLayoutPanelDevicesUnderTest.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelDevicesUnderTest.Size = new System.Drawing.Size(287, 219);
+			this.tableLayoutPanelDevicesUnderTest.Size = new System.Drawing.Size(287, 217);
 			this.tableLayoutPanelDevicesUnderTest.TabIndex = 0;
 			// 
 			// tableLayoutPanelTestSetupButtons
@@ -288,7 +306,7 @@
 			this.tableLayoutPanelTestSetupButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanelTestSetupButtons.Controls.Add(this.buttonStart, 0, 0);
 			this.tableLayoutPanelTestSetupButtons.Controls.Add(this.buttonStop, 1, 0);
-			this.tableLayoutPanelTestSetupButtons.Location = new System.Drawing.Point(29, 247);
+			this.tableLayoutPanelTestSetupButtons.Location = new System.Drawing.Point(29, 245);
 			this.tableLayoutPanelTestSetupButtons.Name = "tableLayoutPanelTestSetupButtons";
 			this.tableLayoutPanelTestSetupButtons.RowCount = 1;
 			this.tableLayoutPanelTestSetupButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -329,7 +347,7 @@
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel1.Controls.Add(this.checkBoxSelectAll, 0, 0);
 			this.tableLayoutPanel1.Controls.Add(this.comboBoxModel, 1, 0);
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(224, 247);
+			this.tableLayoutPanel1.Location = new System.Drawing.Point(224, 245);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 1;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -364,7 +382,7 @@
 			this.tabPage2.Location = new System.Drawing.Point(4, 22);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(526, 285);
+			this.tabPage2.Size = new System.Drawing.Size(526, 283);
 			this.tabPage2.TabIndex = 4;
 			this.tabPage2.Text = "Status";
 			this.tabPage2.UseVisualStyleBackColor = true;
@@ -382,7 +400,7 @@
 			// splitContainer1.Panel2
 			// 
 			this.splitContainer1.Panel2.Controls.Add(this.groupBox2);
-			this.splitContainer1.Size = new System.Drawing.Size(520, 279);
+			this.splitContainer1.Size = new System.Drawing.Size(520, 277);
 			this.splitContainer1.SplitterDistance = 265;
 			this.splitContainer1.TabIndex = 0;
 			// 
@@ -392,7 +410,7 @@
 			this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox3.Location = new System.Drawing.Point(0, 0);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(265, 279);
+			this.groupBox3.Size = new System.Drawing.Size(265, 277);
 			this.groupBox3.TabIndex = 0;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Controlled Variables";
@@ -405,7 +423,7 @@
 			this.flowLayoutPanelControlledVariables.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.flowLayoutPanelControlledVariables.Location = new System.Drawing.Point(3, 16);
 			this.flowLayoutPanelControlledVariables.Name = "flowLayoutPanelControlledVariables";
-			this.flowLayoutPanelControlledVariables.Size = new System.Drawing.Size(259, 260);
+			this.flowLayoutPanelControlledVariables.Size = new System.Drawing.Size(259, 258);
 			this.flowLayoutPanelControlledVariables.TabIndex = 0;
 			// 
 			// groupBoxVariable1
@@ -522,7 +540,7 @@
 			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox2.Location = new System.Drawing.Point(0, 0);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(251, 279);
+			this.groupBox2.Size = new System.Drawing.Size(251, 277);
 			this.groupBox2.TabIndex = 0;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Independent Variable";
@@ -532,43 +550,32 @@
 			this.tableLayoutPanelIndependentVariables.ColumnCount = 2;
 			this.tableLayoutPanelIndependentVariables.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.tableLayoutPanelIndependentVariables.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanelIndependentVariables.Controls.Add(this.labelError, 0, 0);
-			this.tableLayoutPanelIndependentVariables.Controls.Add(this.trackBarError, 0, 1);
+			this.tableLayoutPanelIndependentVariables.Controls.Add(this.labelValue, 0, 0);
 			this.tableLayoutPanelIndependentVariables.Controls.Add(this.labelRate, 1, 0);
-			this.tableLayoutPanelIndependentVariables.Controls.Add(this.trackBarRate, 1, 1);
+			this.tableLayoutPanelIndependentVariables.Controls.Add(this.chartError, 0, 2);
+			this.tableLayoutPanelIndependentVariables.Controls.Add(this.labelValueNum, 0, 1);
+			this.tableLayoutPanelIndependentVariables.Controls.Add(this.labelRateNum, 1, 1);
+			this.tableLayoutPanelIndependentVariables.Controls.Add(this.chartRate, 1, 2);
 			this.tableLayoutPanelIndependentVariables.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanelIndependentVariables.Location = new System.Drawing.Point(3, 16);
 			this.tableLayoutPanelIndependentVariables.Name = "tableLayoutPanelIndependentVariables";
-			this.tableLayoutPanelIndependentVariables.RowCount = 2;
-			this.tableLayoutPanelIndependentVariables.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelIndependentVariables.RowCount = 3;
 			this.tableLayoutPanelIndependentVariables.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanelIndependentVariables.Size = new System.Drawing.Size(245, 260);
+			this.tableLayoutPanelIndependentVariables.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanelIndependentVariables.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanelIndependentVariables.Size = new System.Drawing.Size(245, 258);
 			this.tableLayoutPanelIndependentVariables.TabIndex = 1;
 			// 
-			// labelError
+			// labelValue
 			// 
-			this.labelError.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.labelError.AutoSize = true;
-			this.labelError.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelError.Location = new System.Drawing.Point(39, 0);
-			this.labelError.Name = "labelError";
-			this.labelError.Size = new System.Drawing.Size(44, 20);
-			this.labelError.TabIndex = 18;
-			this.labelError.Text = "Error";
-			// 
-			// trackBarError
-			// 
-			this.trackBarError.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-			this.trackBarError.LargeChange = 20;
-			this.trackBarError.Location = new System.Drawing.Point(38, 23);
-			this.trackBarError.Maximum = 100;
-			this.trackBarError.Minimum = -100;
-			this.trackBarError.Name = "trackBarError";
-			this.trackBarError.Orientation = System.Windows.Forms.Orientation.Vertical;
-			this.trackBarError.Size = new System.Drawing.Size(45, 234);
-			this.trackBarError.TabIndex = 0;
-			this.trackBarError.TickFrequency = 10;
-			this.trackBarError.TickStyle = System.Windows.Forms.TickStyle.Both;
+			this.labelValue.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.labelValue.AutoSize = true;
+			this.labelValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelValue.Location = new System.Drawing.Point(36, 0);
+			this.labelValue.Name = "labelValue";
+			this.labelValue.Size = new System.Drawing.Size(50, 20);
+			this.labelValue.TabIndex = 18;
+			this.labelValue.Text = "Value";
 			// 
 			// labelRate
 			// 
@@ -581,26 +588,123 @@
 			this.labelRate.TabIndex = 19;
 			this.labelRate.Text = "Rate";
 			// 
-			// trackBarRate
+			// chartError
 			// 
-			this.trackBarRate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-			this.trackBarRate.LargeChange = 20;
-			this.trackBarRate.Location = new System.Drawing.Point(161, 23);
-			this.trackBarRate.Maximum = 100;
-			this.trackBarRate.Minimum = -100;
-			this.trackBarRate.Name = "trackBarRate";
-			this.trackBarRate.Orientation = System.Windows.Forms.Orientation.Vertical;
-			this.trackBarRate.Size = new System.Drawing.Size(45, 234);
-			this.trackBarRate.TabIndex = 1;
-			this.trackBarRate.TickFrequency = 10;
-			this.trackBarRate.TickStyle = System.Windows.Forms.TickStyle.Both;
+			this.chartError.Anchor = System.Windows.Forms.AnchorStyles.None;
+			chartArea1.AxisX.LabelAutoFitMinFontSize = 10;
+			chartArea1.AxisX.LabelStyle.Enabled = false;
+			chartArea1.AxisX.MajorGrid.Enabled = false;
+			chartArea1.AxisX.MajorTickMark.Enabled = false;
+			chartArea1.AxisY.IsLabelAutoFit = false;
+			chartArea1.AxisY.LabelAutoFitStyle = ((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.StaggeredLabels | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.WordWrap)));
+			chartArea1.AxisY.LabelStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			chartArea1.AxisY.Maximum = 10D;
+			chartArea1.AxisY.Minimum = 0D;
+			stripLine1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+			stripLine1.StripWidth = 3D;
+			stripLine2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+			stripLine2.IntervalOffset = 2D;
+			stripLine2.StripWidth = 2D;
+			stripLine3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+			stripLine3.IntervalOffset = 4D;
+			stripLine3.StripWidth = 2D;
+			stripLine4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+			stripLine4.IntervalOffset = 6D;
+			stripLine4.StripWidth = 2D;
+			stripLine5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+			stripLine5.IntervalOffset = 8D;
+			stripLine5.StripWidth = 2D;
+			chartArea1.AxisY.StripLines.Add(stripLine1);
+			chartArea1.AxisY.StripLines.Add(stripLine2);
+			chartArea1.AxisY.StripLines.Add(stripLine3);
+			chartArea1.AxisY.StripLines.Add(stripLine4);
+			chartArea1.AxisY.StripLines.Add(stripLine5);
+			chartArea1.Name = "ChartArea1";
+			this.chartError.ChartAreas.Add(chartArea1);
+			this.chartError.Location = new System.Drawing.Point(41, 49);
+			this.chartError.Name = "chartError";
+			series1.ChartArea = "ChartArea1";
+			series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+			series1.MarkerSize = 10;
+			series1.Name = "Series1";
+			series1.Points.Add(dataPoint1);
+			this.chartError.Series.Add(series1);
+			this.chartError.Size = new System.Drawing.Size(40, 200);
+			this.chartError.TabIndex = 2;
+			this.chartError.Text = "Error";
+			// 
+			// chartRate
+			// 
+			this.chartRate.Anchor = System.Windows.Forms.AnchorStyles.None;
+			chartArea2.AxisX.IsLabelAutoFit = false;
+			chartArea2.AxisX.LabelStyle.Enabled = false;
+			chartArea2.AxisX.MajorGrid.Enabled = false;
+			chartArea2.AxisX.MajorTickMark.Enabled = false;
+			chartArea2.AxisY.IsLabelAutoFit = false;
+			chartArea2.AxisY.LabelAutoFitMaxFontSize = 12;
+			chartArea2.AxisY.LabelAutoFitMinFontSize = 12;
+			chartArea2.AxisY.LabelStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			chartArea2.AxisY.Maximum = 10D;
+			chartArea2.AxisY.Minimum = 0D;
+			stripLine6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+			stripLine6.StripWidth = 3D;
+			stripLine7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+			stripLine7.IntervalOffset = 2D;
+			stripLine7.StripWidth = 2D;
+			stripLine8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+			stripLine8.IntervalOffset = 4D;
+			stripLine8.StripWidth = 2D;
+			stripLine9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+			stripLine9.IntervalOffset = 6D;
+			stripLine9.StripWidth = 2D;
+			stripLine10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+			stripLine10.IntervalOffset = 8D;
+			stripLine10.StripWidth = 2D;
+			chartArea2.AxisY.StripLines.Add(stripLine6);
+			chartArea2.AxisY.StripLines.Add(stripLine7);
+			chartArea2.AxisY.StripLines.Add(stripLine8);
+			chartArea2.AxisY.StripLines.Add(stripLine9);
+			chartArea2.AxisY.StripLines.Add(stripLine10);
+			chartArea2.Name = "ChartArea1";
+			this.chartRate.ChartAreas.Add(chartArea2);
+			this.chartRate.Location = new System.Drawing.Point(163, 49);
+			this.chartRate.Name = "chartRate";
+			series2.ChartArea = "ChartArea1";
+			series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+			series2.MarkerSize = 10;
+			series2.Name = "Series1";
+			series2.Points.Add(dataPoint2);
+			this.chartRate.Series.Add(series2);
+			this.chartRate.Size = new System.Drawing.Size(40, 200);
+			this.chartRate.TabIndex = 20;
+			this.chartRate.Text = "Error";
+			// 
+			// labelValueNum
+			// 
+			this.labelValueNum.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.labelValueNum.AutoSize = true;
+			this.labelValueNum.Location = new System.Drawing.Point(47, 23);
+			this.labelValueNum.Name = "labelValueNum";
+			this.labelValueNum.Size = new System.Drawing.Size(28, 13);
+			this.labelValueNum.TabIndex = 21;
+			this.labelValueNum.Text = "0.00";
+			// 
+			// labelRateNum
+			// 
+			this.labelRateNum.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.labelRateNum.AutoSize = true;
+			this.labelRateNum.Location = new System.Drawing.Point(169, 23);
+			this.labelRateNum.Name = "labelRateNum";
+			this.labelRateNum.Size = new System.Drawing.Size(28, 13);
+			this.labelRateNum.TabIndex = 22;
+			this.labelRateNum.Text = "0.00";
 			// 
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar1,
             this.toolStripStatusLabel1});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 335);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 333);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(534, 26);
 			this.statusStrip1.TabIndex = 1;
@@ -839,7 +943,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoSize = true;
-			this.ClientSize = new System.Drawing.Size(534, 361);
+			this.ClientSize = new System.Drawing.Size(534, 359);
 			this.Controls.Add(this.tabControl1);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.menuStrip1);
@@ -875,8 +979,8 @@
 			this.groupBox2.ResumeLayout(false);
 			this.tableLayoutPanelIndependentVariables.ResumeLayout(false);
 			this.tableLayoutPanelIndependentVariables.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.trackBarError)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.trackBarRate)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.chartError)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.chartRate)).EndInit();
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();
 			this.menuStrip1.ResumeLayout(false);
@@ -932,10 +1036,8 @@
 		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelIndependentVariables;
-		private System.Windows.Forms.Label labelError;
-		private System.Windows.Forms.TrackBar trackBarError;
+		private System.Windows.Forms.Label labelValue;
 		private System.Windows.Forms.Label labelRate;
-		private System.Windows.Forms.TrackBar trackBarRate;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelControlledVariables;
 		private System.Windows.Forms.GroupBox groupBoxVariable1;
 		private System.Windows.Forms.TextBox textBoxVariable1Value;
@@ -957,6 +1059,10 @@
 		private System.Windows.Forms.ToolStripMenuItem equipmentToolStripMenuItem;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private System.Windows.Forms.ComboBox comboBoxModel;
+		private System.Windows.Forms.DataVisualization.Charting.Chart chartError;
+		private System.Windows.Forms.DataVisualization.Charting.Chart chartRate;
+		private System.Windows.Forms.Label labelValueNum;
+		private System.Windows.Forms.Label labelRateNum;
 	}
 }
 

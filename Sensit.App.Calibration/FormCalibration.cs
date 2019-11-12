@@ -129,57 +129,156 @@ namespace Sensit.App.Calibration
 		/// <summary>
 		/// Difference between desired and actual value of the test's independent variable.
 		/// </summary>
-		public double ErrorValue
+		public double VariableValue
 		{
-			// TODO:  Convert to integer based on max, min range.
 			set
 			{
 				// If called from a different thread than the form, invoke the method on the form's thread.
-				if (trackBarError.InvokeRequired)
+				if (chartError.InvokeRequired)
 				{
-					trackBarError.Invoke(new MethodInvoker(delegate { ErrorValue = value; }));
+					chartError.Invoke(new MethodInvoker(delegate { VariableValue = value; }));
 				}
 				else
 				{
 					// Constrain the value to fit on the trackbar.
-					if (value > trackBarError.Maximum)
-						value = trackBarError.Maximum;
-					else if (value < trackBarError.Minimum)
-						value = trackBarError.Minimum;
+					if (value > ErrorRange.max)
+						value = ErrorRange.max;
+					else if (value < ErrorRange.min)
+						value = ErrorRange.min;
 
 					// Set the value.
-					trackBarError.Value = (int)value;
+					chartError.Series[0].Points.Clear();
+					chartError.Series[0].Points.AddXY(0, value);
+					labelValueNum.Text = value.ToString("0.0");
 				}
-				
 			}
 		}
 
 		/// <summary>
 		/// Rate of change of the test's independent variable.
 		/// </summary>
-		public double RateValue
+		public double VariableRate
 		{
-			// TODO:  Convert to integer based on max, min range.
-			// TODO:  Fix cross-thread operation.
 			set
 			{
 				// If called from a different thread than the form, invoke the method on the form's thread.
-				if (trackBarRate.InvokeRequired)
+				if (chartRate.InvokeRequired)
 				{
-					trackBarRate.Invoke(new MethodInvoker(delegate { RateValue = value; }));
+					chartRate.Invoke(new MethodInvoker(delegate { VariableRate = value; }));
 				}
 				else
 				{
 					// Constrain the value to fit on the trackbar.
-					if (value > trackBarRate.Maximum)
-						value = trackBarRate.Maximum;
-					else if (value < trackBarRate.Minimum)
-						value = trackBarRate.Minimum;
+					if (value > RateRange.max)
+						value = RateRange.max;
+					else if (value < RateRange.min)
+						value = RateRange.min;
 
 					// Set the value.
-					trackBarRate.Value = (int)value;
+					chartRate.Series[0].Points.Clear();
+					chartRate.Series[0].Points.AddXY(0, value);
+					labelRateNum.Text = value.ToString("0.0");
 				}
 			}
+		}
+
+		/// <summary>
+		/// Maximum desired error value of the test's independent variable.
+		/// </summary>
+		/// <remarks>
+		/// This property is a tuple so min and max are updated at the same time.
+		/// This helps prevent weird states if only one is updated.
+		/// </remarks>
+		public (double min, double max) ErrorRange
+		{
+			// Fetch the max value from the chart.
+			// The max value is the lower boundry of the yellow strip line.
+			// The min value is the lower boundry of the green strip line.
+			private get => (chartError.ChartAreas[0].AxisY.StripLines[2].IntervalOffset,
+							chartError.ChartAreas[0].AxisY.StripLines[3].IntervalOffset);
+			set
+			{
+				// If called from a different thread than the form, invoke the method on the form's thread.
+				if (chartError.InvokeRequired)
+				{
+					chartError.Invoke(new MethodInvoker(delegate { ErrorRange = value; }));
+				}
+				else
+				{
+					// Check for invalid values.
+					if (value.min >= value.max)
+					{
+						throw new ArgumentOutOfRangeException("ErrorRange requires that Min ("
+							+ value.min.ToString("0.00") + ") must be less than Max ("
+							+ value.max.ToString("0.00") + ".");
+					}
+
+					// Update the chart.
+					StatusChartUpdate(chartError, value.min, value.max);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Maximum allowed rate of change of the test's independent variable.
+		/// </summary>
+		public (double min, double max) RateRange
+		{
+			// Fetch the max value from the chart.
+			// The max value is the lower boundry of the yellow strip line.
+			// The min value is the lower boundry of the green strip line.
+			private get => (chartRate.ChartAreas[0].AxisY.StripLines[2].IntervalOffset,
+							chartRate.ChartAreas[0].AxisY.StripLines[3].IntervalOffset);
+			set
+			{
+				// If called from a different thread than the form, invoke the method on the form's thread.
+				if (chartRate.InvokeRequired)
+				{
+					chartRate.Invoke(new MethodInvoker(delegate { RateRange = value; }));
+				}
+				else
+				{
+					// Check for invalid values.
+					if (value.min >= value.max)
+					{
+						throw new ArgumentOutOfRangeException("RateRange requires that Min ("
+							+ value.min.ToString("0.00") + ") must be less than Max ("
+							+ value.max.ToString("0.00") + ".");
+					}
+
+					// Update the chart.
+					StatusChartUpdate(chartRate, value.min, value.max);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Helper method to configure the Error and Rate charts.
+		/// </summary>
+		/// <param name="chart">which chart to update (either chartError or chartRate)</param>
+		/// <param name="max">high value of green area</param>
+		/// <param name="min">low value of green area</param>
+		private void StatusChartUpdate(System.Windows.Forms.DataVisualization.Charting.Chart chart, double min, double max)
+		{
+			// Update the chart's Y-axis.  Total distance shown on chart is 5 times the difference between max and min.
+			chart.ChartAreas[0].AxisY.Maximum = max + 2 * (max - min);
+			chart.ChartAreas[0].AxisY.Minimum = min - 2 * (max - min);
+
+			// Update the strip lines (the colored areas on the chart).
+			// The interval offset property sets the lower bound of the strip line on the axis.
+			chart.ChartAreas[0].AxisY.StripLines[4].IntervalOffset = max + 1 * (max - min);
+			chart.ChartAreas[0].AxisY.StripLines[3].IntervalOffset = max;
+			chart.ChartAreas[0].AxisY.StripLines[2].IntervalOffset = min;
+			chart.ChartAreas[0].AxisY.StripLines[1].IntervalOffset = min - 1 * (max - min);
+			chart.ChartAreas[0].AxisY.StripLines[0].IntervalOffset = min - 2 * (max - min);
+
+			// Set the width of the strip lines.
+			// Each strip line has width equal to the difference between max and min.
+			chart.ChartAreas[0].AxisY.StripLines[4].StripWidth = max - min;
+			chart.ChartAreas[0].AxisY.StripLines[3].StripWidth = max - min;
+			chart.ChartAreas[0].AxisY.StripLines[2].StripWidth = max - min;
+			chart.ChartAreas[0].AxisY.StripLines[1].StripWidth = max - min;
+			chart.ChartAreas[0].AxisY.StripLines[0].StripWidth = max - min;
 		}
 
 		#endregion
@@ -341,16 +440,15 @@ namespace Sensit.App.Calibration
 				pauseToolStripMenuItem.Enabled = true;
 				abortToolStripMenuItem.Enabled = true;
 
-				//
-				// Create objects for equipment, test, and DUTs.
-				//
-
+				// Create object for the equipment.
 				_equipment = new Equipment(equipmentSettings);
 
 				// Initialize the number of DUTs to configure the datalogger for.
 				// TODO:  Move this somewhere more intuitive.
 				_equipment.DutInterface.Channels = new List<bool>(new bool[NumDuts]);
 
+
+				// Create objects for each DUT.
 				_duts.Clear();
 				for (uint i = 0; i < NumDuts; i++)
 				{
@@ -379,13 +477,16 @@ namespace Sensit.App.Calibration
 					_duts.Add(dut);
 				}
 
+				// Create test object and link its actions to actions on this form.
 				_test = new Test(testSetting, _equipment, _duts)
 				{
 					Finished = TestFinished,
-					Update = TestUpdate,
+					UpdateProgress = TestUpdate,
 					// https://syncor.blogspot.com/2010/11/passing-getter-and-setter-of-c-property.html
-					UpdateError = value => ErrorValue = value,
-					UpdateRate = value => RateValue = value
+					UpdateIndependentVariable = value => VariableValue = value,
+					UpdateRateOfChange = value => VariableRate = value,
+					UpdateIndependentVariableRange = value => ErrorRange = value,
+					UpdateRateRange = value => RateRange = value,
 				};
 
 				// Start the test.

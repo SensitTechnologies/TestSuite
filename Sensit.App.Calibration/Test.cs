@@ -52,23 +52,29 @@ namespace Sensit.App.Calibration
 		private bool _pause = false;			// whether test is paused
 		private int _samplesTotal;				// helps calculate percent complete
 		private int _samplesComplete = 0;       // helps calculate percent complete
+		private double? _previous = null;		// used to calculate rate of change in StabilityCheck
 
 		#endregion
 
 		#region Delegates
 
 		// Report test progress.
-		public Action<int, string> Update;
+		public Action<int, string> UpdateProgress;
 
-		// Report the error in the independent variable.
-		public Action<double> UpdateError;
+		// Report the value of the independent variable.
+		public Action<double> UpdateIndependentVariable;
 
 		// Report the rate of change of the independent variable.
-		public Action<double> UpdateRate;
+		public Action<double> UpdateRateOfChange;
+
+		// Report the independent variable's maximum and minimum allowed value.
+		public Action<(double min, double max)> UpdateIndependentVariableRange;
+
+		// Report the independent variable's maximum and minimum allowed rate of change.
+		public Action<(double min, double max)> UpdateRateRange;
 
 		// Report the controlled variables and their values.
 		public Action<Dictionary<VariableType, double>> UpdateVariables;
-
 
 		// Report test results.
 		public Action Finished;
@@ -192,7 +198,7 @@ namespace Sensit.App.Calibration
 		private void ProgressChanged(object sender, ProgressChangedEventArgs e)
 		{
 			// Run action required as test progresses (i.e. update GUI).
-			Update(e.ProgressPercentage, e.UserState as string);
+			UpdateProgress(e.ProgressPercentage, e.UserState as string);
 		}
 
 		private void RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -200,7 +206,7 @@ namespace Sensit.App.Calibration
 			// If the test was cancelled, update the GUI's status accordingly.
 			if (e.Cancelled)
 			{
-				Update(0, "Test cancelled.");
+				UpdateProgress(0, "Test cancelled.");
 			}
 
 			// Run actions required when test is completed (i.e. update GUI).
@@ -304,14 +310,20 @@ namespace Sensit.App.Calibration
 				if (v.VariableType == VariableType.GasConcentration)
 				{
 					// Update the error in the independent variable.
-					UpdateError?.Invoke(reading - setpoint);
+					UpdateIndependentVariable?.Invoke(reading);
 
-					// Calculate rate of change.
-					//double rate = (reading - _previous) / (v.Interval.TotalSeconds);
-					//_previous = reading;
+					// If we know the previous reading...
+					if (_previous != null)
+					{
+						// Calculate rate of change.
+						double rate = (reading - (double)_previous) / v.Interval.TotalSeconds;
 
-					// Update the rate of change of the independent variable.
-					//UpdateRate?.Invoke(rate);
+						// Update the rate of change of the independent variable.
+						UpdateRateOfChange?.Invoke(rate);
+					}
+
+					// Save the previous reading.
+					_previous = reading;
 				}
 
 				// If the reading is out of tolerance...
@@ -409,14 +421,14 @@ namespace Sensit.App.Calibration
 				error = reading - setpoint;
 
 				// Update the error in the independent variable.
-				UpdateError?.Invoke(error);
+				UpdateIndependentVariable?.Invoke(reading);
 
 				// Calculate rate of change.
 				rate = (reading - previous) / (interval.TotalSeconds);
 				previous = reading;
 
 				// Update the rate of change of the independent variable.
-				UpdateRate?.Invoke(rate);
+				UpdateRateOfChange?.Invoke(rate);
 
 				// If tolerance has been exceeded, reset the stability time.
 				if (Math.Abs(error) > variable.ErrorTolerance)
@@ -502,6 +514,10 @@ namespace Sensit.App.Calibration
 					// For each setpoint...
 					foreach (double sp in v?.Setpoints ?? Enumerable.Empty<double>())
 					{
+						// Update the form.
+						UpdateIndependentVariableRange((sp - v.ErrorTolerance, sp + v.ErrorTolerance));
+						UpdateRateRange((v.RateTolerance * -1.0, v.RateTolerance));
+
 						// Set the setpoint.
 						ProcessSetpoint(v, sp, v.Interval);
 
