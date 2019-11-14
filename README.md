@@ -25,4 +25,4 @@ Select the Model and Range of your sensor under test.  Select how many devices t
 For detailed information about using the other apps in the software suite, see the [project's wiki](https://github.com/SensitTechnologies/TestSuite/wiki).
 
 ## Contributing
-Feel free to contribute, but first read the Contributions file to see how we do things.
+Feel free to contribute, but first read the [Contributing Guidelines](https://github.com/SensitTechnologies/TestSuite/blob/master/CONTRIBUTING.md) to see how we do things.
