@@ -11,21 +11,37 @@ namespace Sensit.TestSDK.Forms
 	/// This form is the same as the stock "AboutBox" form, which you get from
 	/// Right click --> Add --> New Item --> About Box, except that
 	/// "GetExecutingAssembly" has been replaced with "GetEntryAssembly" in
-	/// the Asembly Attribute Accessors.
+	/// the Asembly Attribute Accessors, and the option to add to the description.
 	/// </remarks>
 	public partial class FormAbout : Form
 	{
+		#region Constructors
+
 		public FormAbout()
+		{
+			Initialize();
+		}
+
+		public FormAbout(string description)
+		{
+			Initialize();
+
+			textBoxDescription.Text += Environment.NewLine + description;
+		}
+
+		private void Initialize()
 		{
 			InitializeComponent();
 
-			this.Text = String.Format("About {0}", AssemblyTitle);
-			this.labelProductName.Text = AssemblyProduct;
-			this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
-			this.labelCopyright.Text = AssemblyCopyright;
-			this.labelCompanyName.Text = AssemblyCompany;
-			this.textBoxDescription.Text = AssemblyDescription;
+			Text = $"About {AssemblyTitle}";
+			labelProductName.Text = AssemblyProduct;
+			labelVersion.Text = $"Version {AssemblyVersion}";
+			labelCopyright.Text = AssemblyCopyright;
+			labelCompanyName.Text = AssemblyCompany;
+			textBoxDescription.Text = AssemblyDescription;
 		}
+
+		#endregion
 
 		#region Assembly Attribute Accessors
 
@@ -37,7 +53,9 @@ namespace Sensit.TestSDK.Forms
 				if (attributes.Length > 0)
 				{
 					AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
-					if (titleAttribute.Title != "")
+
+					// If a title string exists...
+					if (string.IsNullOrEmpty(titleAttribute.Title) == false)
 					{
 						return titleAttribute.Title;
 					}
