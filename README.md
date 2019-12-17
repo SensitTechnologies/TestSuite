@@ -22,9 +22,7 @@ To use the Calibration app (Sensit.App.Calibration), you'll need to have the fol
 
 Select the Model and Range of your sensor under test.  Select how many devices to test.  Click "Start", then wait for the test to complete.
 
-For detailed information about using the other apps in the software suite, see the project's wiki.
+For detailed information about using the other apps in the software suite, see the [project's wiki](https://github.com/SensitTechnologies/TestSuite/wiki).
 
 ## Contributing
-Attention was given to making this software suite as easy to read and modify as possible, and one part of that is making sure to follow community best practices as much as possible.  The following links describe best practices that should be considered by contributors to this project:
-* [Microsoft - C# Coding Conventions (C# Programming Guide)](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/inside-a-program/coding-conventions)
-* [Microsoft - Framework Design Guidelines](https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/)
+Feel free to contribute, but first read the [Contributing Guidelines](https://github.com/SensitTechnologies/TestSuite/blob/master/CONTRIBUTING.md) to see how we do things.
