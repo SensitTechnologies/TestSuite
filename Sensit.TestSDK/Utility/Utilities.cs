@@ -67,6 +67,25 @@ namespace Sensit.TestSDK.Utilities
 		}
 
 		/// <summary>
+		/// Extension method to read a category attribute associated with a type.
+		/// </summary>
+		/// <param name="type">type of interest</param>
+		/// <returns></returns>
+		public static string GetCategory(this Type type)
+		{
+			CategoryAttribute category = (CategoryAttribute)type.GetCustomAttribute(typeof(CategoryAttribute));
+
+			if (category == null)
+			{
+				return type.Name;
+			}
+			else
+			{
+				return category.Category;
+			}
+		}
+
+		/// <summary>
 		/// Find classes that implement an interface or extend a base class.
 		/// </summary>
 		/// <remarks>
