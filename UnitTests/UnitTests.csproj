@@ -61,6 +61,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calculations\UnitOfMeasureTests.cs" />
     <Compile Include="Database\DatabaseTests.cs" />
     <Compile Include="Exceptions\DeviceExceptionTests.cs" />
     <Compile Include="Exceptions\TestExceptionTests.cs" />
