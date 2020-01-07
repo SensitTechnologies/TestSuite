@@ -1,11 +1,14 @@
 ﻿using System;
 
 /// <summary>
-/// Custom exceptions for the SDK.
+/// Custom exceptions for device communication.
 /// </summary>
 /// <remarks>
 /// See this document for information on how to define user-defined exceptions:
 /// https://docs.microsoft.com/en-us/dotnet/standard/exceptions/how-to-create-user-defined-exceptions
+/// Used as an example of how to code unit tests for custom exceptions:
+/// Perhaps someday the recommendations on serialization will also be applicable.
+/// https://docs.microsoft.com/en-us/archive/blogs/agileer/the-correct-way-to-code-a-custom-exception-class
 /// </remarks>
 namespace Sensit.TestSDK.Exceptions
 {
