@@ -853,13 +853,20 @@ namespace Sensit.App.Calibration
 		/// <param name="e"></param>
 		private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			// Create an about box.
-			FormAbout formAbout = new FormAbout();
+			// Show the repository where this program can be found.
+			// For the sake of future engineers.
+			string description = "Source code can be found at:" + Environment.NewLine
+				+ "https://github.com/SensitTechnologies/TestSuite";
 
-			// Show the about box.
-			// ShowDialog() disables interaction with the app's other forms.
-			// Show() does not.
-			formAbout.ShowDialog();
+			// Create an about box.
+			using (FormAbout formAbout = new FormAbout(description))
+			{
+
+				// Show the about box.
+				// ShowDialog() disables interaction with the app's other forms.
+				// Show() does not.
+				formAbout.ShowDialog();
+			}
 		}
 
 		#endregion
