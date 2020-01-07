@@ -50,11 +50,11 @@ namespace Sensit.TestSDK.Devices
 		/// </summary>
 		private static class Command
 		{
-			public static readonly string SetAddress = "*@=";   // set the device address; set polling/streaming mode
-			public static readonly string SetSetpoint = "S";    // set the flow setpoint
-			public static readonly string ReadRegister = "*R";  // read a register (low-level; not typically used)
-			public static readonly string WriteRegister = "*W"; // write a register (low-level; not typically used)
-			public static readonly string GasSelect = "$$";     // select gas (for conversion from volume flow to mass flow)
+			public const string SetAddress = "*@=";   // set the device address; set polling/streaming mode
+			public const string SetSetpoint = "S";    // set the flow setpoint
+			public const string ReadRegister = "*R";  // read a register (low-level; not typically used)
+			public const string WriteRegister = "*W"; // write a register (low-level; not typically used)
+			public const string GasSelect = "$$";     // select gas (for conversion from volume flow to mass flow)
 		}
 
 		/// <summary>
@@ -103,7 +103,7 @@ namespace Sensit.TestSDK.Devices
 		};
 
 		// specifier for a specific device on the serial port
-		private static readonly char ADDRESS = 'A';
+		private const char ADDRESS = 'A';
 
 		private double _massFlowSetpoint = 0.0;
 
