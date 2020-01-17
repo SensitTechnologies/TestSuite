@@ -585,7 +585,7 @@ namespace Sensit.App.Calibration
 		}
 
 		/// <summary>
-		/// When the "Model" selection is changed, save the new selection and fetch new ranges.
+		/// When the "Model" selection is changed, update the model of each individual DUT.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
