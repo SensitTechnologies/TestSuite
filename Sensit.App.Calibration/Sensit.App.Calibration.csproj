@@ -110,7 +110,6 @@
       <DependentUpon>FormCalibration.cs</DependentUpon>
     </Compile>
     <Compile Include="DutSettings.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="TestSettings.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
