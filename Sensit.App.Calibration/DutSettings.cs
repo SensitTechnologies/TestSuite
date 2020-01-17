@@ -119,7 +119,7 @@ namespace Sensit.App.Calibration
 	/// A ranged tolerance.
 	/// </summary>
 	/// <remarks>
-	/// A range setting has one or more tolerance settings.  This happens, for
+	/// A range setting may have more than one tolerance settings.  This happens, for
 	/// example, if accuracy is "5 PPM or 10% of reading, whichever is greater."
 	/// </remarks>
 	[Serializable]
