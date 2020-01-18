@@ -1,25 +1,25 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 // Fix when adding Nuget Packages to the Project -> https://github.com/Microsoft/testfx/issues/216
 
 namespace Sensit.TestSDK.Database.Tests
 {
-	[TestClass]
+    [TestClass]
     public class DatabaseTests
     {
 		[TestMethod]
         public void CheckConnection()
         {
 			SqlServer database = new SqlServer();
-            database.CheckConnection();
+            database.Open();
         }
 
         [TestMethod]
         public void ModularQueryNoResult()
         {
+            // Arrange.
             SqlServer database = new SqlServer();
-            database.ModularQueryNoResult("update Equipment set Name ='New Tool' where EquipmentID = 1");
+            database.SendQuery("update Equipment set Name ='New Tool' where EquipmentID = 1");
 			string result = database.ModularQueryWithResult("select * from Equipment where Name = 'New Tool'", "Equipment", "");
             var jo = JArray.Parse(result);
 			string finalResult = (string) jo[0]["Name"];
@@ -53,7 +53,9 @@ namespace Sensit.TestSDK.Database.Tests
         {
             SqlServer database = new SqlServer();
             database.InsertIntoDeviceUnderTests();
-            // No need to test this execution since the database will throw an error if there's a problem with the insertion since the primary key is the only thing being added to the table
+            // No need to test this execution since the database will throw an error
+            // if there's a problem with the insertion since the primary key is the
+            // only thing being added to the table
         }
 
         [TestMethod]
