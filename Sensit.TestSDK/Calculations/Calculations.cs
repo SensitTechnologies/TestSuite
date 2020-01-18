@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Sensit.TestSDK.Calculations
 {
-	public class Calculations
+	public static class Calculate
 	{
 		#region Constants
 
@@ -59,17 +59,19 @@ namespace Sensit.TestSDK.Calculations
 		/// <returns>the dependent variable</returns>
 		public static double Polynomial(List<double> c, double x)
 		{
+			// Validate that c is not null.
+			if (c == null)
+			{
+				throw new ArgumentNullException(nameof(c), "No coefficients were passed to Polynomial method.");
+			}
+
 			// Start with the first coefficient.
-			double y = c[c.Count];
+			double y = c[0];
 
 			// For each coefficient...
-			foreach (var v in c)
+			for (int i = 1; i < c.Count; i++)
 			{
-				// Multiply by x.
-				y *= x;
-
-				// Add next coefficient.
-				y += v;
+				y = y * x + c[i];
 			}
 
 			// Return the result.
@@ -146,7 +148,7 @@ namespace Sensit.TestSDK.Calculations
 		/// Calculate velocity from pressure, temperature, and k-factor.
 		/// </summary>
 		/// 
-		/// <param name="pressure"> differential pitot tube pressure</param>
+		/// <param name="pressure">differential pitot tube pressure [C]</param>
 		/// <param name="temperature">ambient temperature [°C]</param>
 		/// <param name="kFact">k-factor (hopefully of the duct under test)</param>
 		/// 

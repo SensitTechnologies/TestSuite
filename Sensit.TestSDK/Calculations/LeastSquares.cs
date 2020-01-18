@@ -15,7 +15,7 @@ namespace Sensit.TestSDK.Calculations
 			double total = 0;
 			foreach (PointF pt in points)
 			{
-				double dy = pt.Y - Calculations.Polynomial(coeffs, pt.X);
+				double dy = pt.Y - Calculate.Polynomial(coeffs, pt.X);
 				total += dy * dy;
 			}
 			return total;
@@ -56,7 +56,7 @@ namespace Sensit.TestSDK.Calculations
 			double[] answer = GaussianElimination(coeffs);
 
 			// Return the result converted into a List<double>.
-			return answer.ToList<double>();
+			return answer.ToList();
 		}
 
 		// Perform Gaussian elimination on these coefficients.
@@ -97,7 +97,7 @@ namespace Sensit.TestSDK.Calculations
 				double coeff_i_i = coeffs[i, i];
 				if (coeff_i_i == 0)
 				{
-					throw new ArithmeticException(String.Format(
+					throw new ArithmeticException(string.Format(
 						"There is no unique solution for these points.",
 						coeffs.GetUpperBound(0) - 1));
 				}

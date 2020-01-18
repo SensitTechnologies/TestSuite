@@ -1,32 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sensit.TestSDK.Calculations
+﻿namespace Sensit.TestSDK.Calculations
 {
-	class Checksum
+	public static class Checksum
 	{
-		/**
-         * \file crc.c
-         * Functions and types for CRC checks.
-         *
-         * Generated on Fri Feb  4 16:09:40 2011,
-         * by pycrc v0.7.6, http://www.tty1.net/pycrc/
-         * using the configuration:
-         *    Width        = 16
-         *    Poly         = 0x8005
-         *    XorIn        = 0x0000
-         *    ReflectIn    = True
-         *    XorOut       = 0x0000
-         *    ReflectOut   = True
-         *    Algorithm    = table-driven
-         *****************************************************************************/
-		/**
-        * Static table used for the table_driven implementation.
-        *****************************************************************************/
-		static readonly ushort[] crc_table = {
+		/// <summary>
+		/// table used for the CRC calculation
+		/// </summary>
+		/// <remarks>
+		/// One application that can generate this table:
+		/// pycrc v0.7.6, http://www.tty1.net/pycrc/
+		/// using the configuration:
+		/// Width        = 16
+		/// Poly         = 0x8005
+		/// XorIn        = 0x0000
+		/// ReflectIn    = True
+		/// XorOut = 0x0000
+		/// ReflectOut = True
+		/// Algorithm = table - driven
+		/// </remarks>
+		static readonly ushort[] crcTable = {
 			0x0000, 0xc0c1, 0xc181, 0x0140, 0xc301, 0x03c0, 0x0280, 0xc241,
 			0xc601, 0x06c0, 0x0780, 0xc741, 0x0500, 0xc5c1, 0xc481, 0x0440,
 			0xcc01, 0x0cc0, 0x0d80, 0xcd41, 0x0f00, 0xcfc1, 0xce81, 0x0e40,
@@ -61,26 +52,20 @@ namespace Sensit.TestSDK.Calculations
 			0x8201, 0x42c0, 0x4380, 0x8341, 0x4100, 0x81c1, 0x8081, 0x4040
 		};
 
-		/**
-         * Update the crc value with new data.
-         *
-         * \param crc      The current crc value.
-         * \param data     Pointer to a buffer of \a data_len bytes.
-         * \param data_len Number of bytes in the \a data buffer.
-         * \return         The updated crc value.
-         *****************************************************************************/
-		public static ushort Calculate(ushort crc, byte[] data, int data_len)
+		/// <summary>
+		/// Calculate a 16-bit CRC value.
+		/// </summary>
+		/// <param name="data">array of bytes to calculate a CRC of</param>
+		/// <returns></returns>
+		public static ushort Calculate(byte[] data)
 		{
-			ushort tbl_idx;
-			int i = 0;
-			while (i < data_len)
-			{
-				tbl_idx = (ushort)((ushort)(crc ^ data[i]) & 0xff);
-				ushort temp = (ushort)(crc >> 8);
-				crc = (ushort)((ushort)(crc_table[tbl_idx] ^ temp) & 0xffff);
+			ushort crc = 0xFFFF;
 
-				i++;
+			foreach (byte datum in data)
+			{
+				crc = (ushort)((crc >> 8) ^ crcTable[(crc ^ datum) & 0xFF]);
 			}
+
 			return crc;
 		}
 	}

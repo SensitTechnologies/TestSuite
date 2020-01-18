@@ -378,7 +378,7 @@ namespace Sensit.TestSDK.Devices
 			}
 
 			size = i - 1;
-			calc_crc = Checksum.Calculate(0, messageBytes, size);
+			calc_crc = Checksum.Calculate(messageBytes);
 			string rx_crc_str = "";
 			while (messageBytes[i] != (byte)'\n')
 			{
@@ -734,7 +734,7 @@ namespace Sensit.TestSDK.Devices
 			message.Append((char)command);
 
 			// Calculate checksum and convert to string.
-			string checksum = Checksum.Calculate(0, Encoding.ASCII.GetBytes(message.ToString()), message.Length).ToString();
+			string checksum = Checksum.Calculate(Encoding.ASCII.GetBytes(message.ToString())).ToString();
 
 			// Add checksum to the message, preceeded by an asterisk.
 			message.Append('*' + checksum + '\n');
@@ -787,7 +787,7 @@ namespace Sensit.TestSDK.Devices
 			}
 
 			// Calculate checksum.
-			ushort crc_value = Checksum.Calculate(0, outbuff, i);
+			ushort crc_value = Checksum.Calculate(outbuff);
 
 			// Checksum is preceeded by an asterisk.
 			outbuff[i++] = (byte)'*';
