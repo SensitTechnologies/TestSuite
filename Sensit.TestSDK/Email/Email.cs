@@ -25,49 +25,29 @@ namespace Sensit.TestSDK.Email
 			GmailService.Scope.GmailSend,		// Gmail Send is used to send emails 
 			GmailService.Scope.GmailReadonly	// GmailReadonly is used to read emails
 		};
-		private string _applicationName = "STP Email Client API";	// Name of the application in your Google API Console
 
-		private string _body;			// email's body
-		private string _subject;		// email's subject line
-		private string[] _recipients;	// array of emails to send to
-		private string _fromAddress;	// address the email will appear to be from
-		private string _clientSecret;   // client secret from Google API console
+		// Name of the application in your Google API Console
+		private readonly string _applicationName = "STP Email Client API";
 
 		/// <summary>
 		/// Email's body
 		/// </summary>
-		public string Body 
-		{
-			get => _body;
-			set => _body = value;
-		}
+		public string Body { get; set; }
 
 		/// <summary>
 		/// Email's subject line
 		/// </summary>
-		public string Subject
-		{
-			get => _subject;
-			set => _subject = value;
-		}
+		public string Subject { get; set; }
 
 		/// <summary>
 		/// Email's recipient list
 		/// </summary>
-		public string[] Recipients
-		{
-			get => _recipients;
-			set => _recipients = value;
-		}
+		public string[] Recipients { get; set; }
 
 		/// <summary>
 		/// Address email will appear to be sent from
 		/// </summary>
-		public string FromAddress
-		{
-			get => _fromAddress;
-			set => _fromAddress = value;
-		}
+		public string FromAddress { get; set; }
 
 		/// <summary>
 		/// Name of the client secret JSON file used to authenticate with Gmail
@@ -76,11 +56,7 @@ namespace Sensit.TestSDK.Email
 		/// This file is obtained from Gmail by following instructions found in
 		/// the quickstart guide referenced above.
 		/// </remarks>
-		public string ClientSecret
-		{
-			get => _clientSecret;
-			set => _clientSecret = value;
-		}
+		public string ClientSecret { get; set; }
 
 		/// <summary>
 		/// Base64 Encodes an input string
@@ -105,26 +81,25 @@ namespace Sensit.TestSDK.Email
 		/// </remarks>
 		public void SendEmail()
 		{
-			UserCredential credential;
-
 			// Check to see if there's the client secret file in the proper location before continuing on to send the email
-			if (!File.Exists(_clientSecret))
+			if (!File.Exists(ClientSecret))
 			{
 				throw new Exception("Client Secret JSON file is missing from the application.");
 			}
 
 			// Checks to verify the email has a body, subject, from address, and an array of recipients
-			if ((_body == null) || (_subject == null) || (_recipients == null) || (_fromAddress == null))
+			if ((Body == null) || (Subject == null) || (Recipients == null) || (FromAddress == null))
 			{
 				throw new Exception("The email has not been formatted properly.  Be sure to include a body, subject, fromAddress, and an array of recipients.");
 			}
 
-			// Verifies client credentials using client_secret.json file
-			using (var stream =
-				new FileStream(_clientSecret, FileMode.Open, FileAccess.Read)) // Make sure client_secret.json is the specified location
+			// Verify client credentials using client_secret.json file.
+			UserCredential credential;
+			// Make sure client_secret.json is the specified location
+			using (FileStream stream = new FileStream(ClientSecret, FileMode.Open, FileAccess.Read))
 			{
-				string credPath = System.Environment.GetFolderPath(
-					System.Environment.SpecialFolder.Personal);
+				string credPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+
 				credPath = Path.Combine(credPath, ".credentials/gmail-dotnet-quickstart.json");
 
 				credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
@@ -133,6 +108,7 @@ namespace Sensit.TestSDK.Email
 					"user",
 					CancellationToken.None,
 					new FileDataStore(credPath, true)).Result;
+
 				Console.WriteLine("Credential file saved to: " + credPath);
 			}
 
@@ -150,13 +126,13 @@ namespace Sensit.TestSDK.Email
 			// Creates a message with the provided list of recipients, subject, and body that were passed into the method
 			var msg = new AE.Net.Mail.MailMessage
 			{
-				Subject = _subject,
-				Body = _body,
-				From = new MailAddress(_fromAddress)
+				Subject = Subject,
+				Body = Body,
+				From = new MailAddress(FromAddress)
 			};
 
 			// Loops through all the values in the recipients array and adds them to the email
-			foreach (var recipient in _recipients)
+			foreach (var recipient in Recipients)
 			{
 				msg.To.Add(new MailAddress(recipient));
 			}
@@ -167,7 +143,7 @@ namespace Sensit.TestSDK.Email
 			msg.Save(msgStr);
 
 			// Sends an email message using the provided list of recipients, subject, and body that were passed into the method
-			var result = service.Users.Messages.Send(new Message
+			service.Users.Messages.Send(new Message
 			{
 				Raw = Base64UrlEncode(msgStr.ToString())  // Make sure to Base64Encode the message, otherwise it will fail
 			}, "me").Execute();
