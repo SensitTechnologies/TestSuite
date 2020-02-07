@@ -222,6 +222,7 @@ namespace Sensit.TestSDK.Devices
 
 		public new int BaudRate
 		{
+			get => _serialPort.BaudRate;
 			set
 			{
 				if ((value != 2400) &&
@@ -239,6 +240,7 @@ namespace Sensit.TestSDK.Devices
 
 		public new int DataBits
 		{
+			get => _serialPort.DataBits;
 			set
 			{
 				if (value != 8)
@@ -252,6 +254,7 @@ namespace Sensit.TestSDK.Devices
 
 		public new Parity Parity
 		{
+			get => _serialPort.Parity;
 			set
 			{
 				if (value != Parity.None)
@@ -263,6 +266,7 @@ namespace Sensit.TestSDK.Devices
 
 		public new StopBits StopBits
 		{
+			get => _serialPort.StopBits;
 			set
 			{
 				if (value != StopBits.One)
@@ -320,7 +324,7 @@ namespace Sensit.TestSDK.Devices
 
 		#region Reference Device Methods
 
-		public Dictionary<VariableType, double> Readings { get; private set; } = new Dictionary<VariableType, double>
+		public Dictionary<VariableType, double> Readings { get; } = new Dictionary<VariableType, double>
 		{
 			{ VariableType.MassFlow, 0.0 },
 			{ VariableType.Pressure, 0.0 },
