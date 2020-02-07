@@ -89,12 +89,6 @@ namespace Sensit.App.Calibration
 			_mfcAnalyte?.Open(_settings.GasMixer.AnalyteMFC.SerialPort);
 			_mfcDiluent?.Open(_settings.GasMixer.DiluentMFC.SerialPort);
 
-			// Configure the gas mixer.
-			if (_gasMixer != null)
-			{
-				_gasMixer.AnalyteBottleConcentration = _settings.GasMixer.AnalyteBottleConcentration;
-			}
-
 			// Configure the datalogger.
 			if ((_useDatalogger == true) && (_datalogger != null))
 			{
