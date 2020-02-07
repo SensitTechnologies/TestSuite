@@ -65,9 +65,21 @@ namespace Sensit.TestSDK.Calculations
 			Fahrenheit,
 		}
 
+		public enum Current
+		{
+			Amp,
+			Milliamp
+		}
+
+		public enum Voltage
+		{
+			Volt,
+			Millivolt
+		}
+
 		#region Constants
 
-		public  static readonly double OFFSET_F_TO_R = 459.67;  // offset between °F and °R
+		public static readonly double OFFSET_F_TO_R = 459.67;  // offset between °F and °R
 		public static readonly double OFFSET_C_TO_K = 273.15;  // offset between °C and K
 		public static readonly double OFFSET_C_TO_F = 32.0;    // offset between °C and °F
 
@@ -140,6 +152,20 @@ namespace Sensit.TestSDK.Calculations
 			{ Temperature.Kelvin, 1.0 },
 			{ Temperature.Rankine, 9.0 / 5.0 },
 			{ Temperature.Fahrenheit, 9.0 / 5.0 }
+		};
+
+		// Conversion factors for current; Amp is the base unit.
+		private static readonly Dictionary<Current, double> CurrentConversion = new Dictionary<Current, double>()
+		{
+			{ Current.Amp, 1.0 },
+			{ Current.Milliamp, 1000.0 }
+		};
+
+		// Conversion factors for voltage; Volt is the base unit.
+		private static readonly Dictionary<Voltage, double> VoltageConversion = new Dictionary<Voltage, double>()
+		{
+			{ Voltage.Volt, 1.0 },
+			{ Voltage.Millivolt, 1000.0 }
 		};
 
 		#endregion
@@ -277,6 +303,32 @@ namespace Sensit.TestSDK.Calculations
 			}
 
 			return temp;
+		}
+
+		/// <summary>
+		/// Converts between various units of electrical current.
+		/// </summary>
+		/// <param name="oldVal">the value to be converted</param>
+		/// <param name="oldUnit">the original unit of measure</param>
+		/// <param name="newUnit">the new unit of measure</param>
+		/// <returns></returns>
+		public static double ConvertCurrent(double oldVal, Current oldUnit, Current newUnit)
+		{
+			// Look up conversion from old unit to new unit.
+			return (oldVal / CurrentConversion[oldUnit] * CurrentConversion[newUnit]);
+		}
+
+		/// <summary>
+		/// Converts between various units of electrical voltage.
+		/// </summary>
+		/// <param name="oldVal">the value to be converted</param>
+		/// <param name="oldUnit">the original unit of measure</param>
+		/// <param name="newUnit">the new unit of measure</param>
+		/// <returns></returns>
+		public static double ConvertVoltage(double oldVal, Voltage oldUnit, Voltage newUnit)
+		{
+			// Look up conversion from old unit to new unit.
+			return (oldVal / VoltageConversion[oldUnit] * VoltageConversion[newUnit]);
 		}
 
 		#endregion
