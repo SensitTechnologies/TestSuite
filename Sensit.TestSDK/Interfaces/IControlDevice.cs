@@ -95,4 +95,20 @@ namespace Sensit.TestSDK.Interfaces
 	public interface ITemperatureController : IControlDevice
 	{
 	}
+
+	/// <summary>
+	/// Device that controls electrical current.
+	/// </summary>
+	[Description("Current Controller")]
+	public interface ICurrentController : IControlDevice
+	{
+	}
+
+	/// <summary>
+	/// Device that controls electrical voltage.
+	/// </summary>
+	[Description("Voltage Controller")]
+	public interface IVoltageController : IControlDevice
+	{
+	}
 }

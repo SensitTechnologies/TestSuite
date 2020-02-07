@@ -14,7 +14,9 @@ namespace Sensit.TestSDK.Interfaces
 		VolumeFlow,
 		Velocity,
 		Pressure,
-		Temperature
+		Temperature,
+		Current,
+		Voltage
 	}
 
 	/// <summary>
@@ -161,5 +163,23 @@ namespace Sensit.TestSDK.Interfaces
 	public interface ITemperatureReference : IReferenceDevice
 	{
 		UnitOfMeasure.Temperature TemperatureUnit { get; set; }
+	}
+
+	/// <summary>
+	/// Device that measures electrical current.
+	/// </summary>
+	[Description("Current Reference")]
+	public interface ICurrentReference : IReferenceDevice
+	{
+		UnitOfMeasure.Current CurrentUnit { get; set; }
+	}
+
+	/// <summary>
+	/// Device that measures electrical voltage.
+	/// </summary>
+	[Description("Voltage Reference")]
+	public interface IVoltageReference : IReferenceDevice
+	{
+		UnitOfMeasure.Voltage VoltageUnit { get; set; }
 	}
 }
