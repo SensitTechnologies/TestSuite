@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Sensit.TestSDK.Interfaces
 {
@@ -24,7 +23,7 @@ namespace Sensit.TestSDK.Interfaces
 		/// <summary>
 		/// Configured channels of the bank.
 		/// </summary>
-		List<bool> Channels { get; set; }
+		List<bool> Channels { get; }
 
 		/// <summary>
 		/// Set active bank and channels.

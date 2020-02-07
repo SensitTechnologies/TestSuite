@@ -445,8 +445,7 @@ namespace Sensit.App.Calibration
 
 				// Initialize the number of DUTs to configure the datalogger for.
 				// TODO:  Move this somewhere more intuitive.
-				_equipment.DutInterface.Channels = new List<bool>(new bool[NumDuts]);
-
+				_equipment.DutInterface.Channels.AddRange(new bool[NumDuts]);
 
 				// Create objects for each DUT.
 				_duts.Clear();
