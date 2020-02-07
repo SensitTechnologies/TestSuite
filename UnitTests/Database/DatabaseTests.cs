@@ -19,10 +19,14 @@ namespace Sensit.TestSDK.Database.Tests
         {
             // Arrange.
             SqlServer database = new SqlServer();
+
+            // Act.
             database.SendQuery("update Equipment set Name ='New Tool' where EquipmentID = 1");
 			string result = database.ModularQueryWithResult("select * from Equipment where Name = 'New Tool'", "Equipment", "");
             var jo = JArray.Parse(result);
 			string finalResult = (string) jo[0]["Name"];
+
+            // Assert.
             Assert.AreEqual(finalResult,"New Tool");
         }
 
@@ -34,6 +38,8 @@ namespace Sensit.TestSDK.Database.Tests
 			string result = database.ModularQueryWithResult("select * from TestSuites where Product = 'New Product'", "TestSuites", "");
             var jo = JArray.Parse(result);
 			string finalResult = (string)jo[0]["Product"];
+
+            // Assert.
             Assert.AreEqual(finalResult, "New Product");
         }
 
@@ -45,6 +51,8 @@ namespace Sensit.TestSDK.Database.Tests
 			string result = database.ModularQueryWithResult("select * from TestCases where Objective = 'New Objective'", "TestCases", "");
             var jo = JArray.Parse(result);
 			string finalResult = (string)jo[0]["Objective"];
+
+            // Assert.
             Assert.AreEqual(finalResult, "New Objective");
         }
 
@@ -55,7 +63,7 @@ namespace Sensit.TestSDK.Database.Tests
             database.InsertIntoDeviceUnderTests();
             // No need to test this execution since the database will throw an error
             // if there's a problem with the insertion since the primary key is the
-            // only thing being added to the table
+            // only thing being added to the table.
         }
 
         [TestMethod]
@@ -66,6 +74,8 @@ namespace Sensit.TestSDK.Database.Tests
 			string result = database.ModularQueryWithResult("select * from TestRuns where Date = 'A New Date'", "TestRuns", "");
             var jo = JArray.Parse(result);
 			string finalResult = (string)jo[0]["Date"];
+
+            // Assert.
             Assert.AreEqual(finalResult, "A New Date");
         }
 
@@ -77,6 +87,8 @@ namespace Sensit.TestSDK.Database.Tests
 			string result = database.ModularQueryWithResult("select * from DeviceComponents where Name = 'A New Name'", "DeviceComponents", "");
             var jo = JArray.Parse(result);
 			string finalResult = (string)jo[0]["Name"];
+
+            // Assert.
             Assert.AreEqual(finalResult, "A New Name");
         }
 
@@ -88,6 +100,8 @@ namespace Sensit.TestSDK.Database.Tests
 			string result = database.ModularQueryWithResult("select * from Equipment where Name = 'New Equipment'", "Equipment", "");
             var jo = JArray.Parse(result);
 			string finalResult = (string)jo[0]["Equipment"];
+
+            // Assert.
             Assert.AreEqual(finalResult, "New Equipment");
         }
 
@@ -99,6 +113,8 @@ namespace Sensit.TestSDK.Database.Tests
 			string result = database.ModularQueryWithResult("select * from TestSteps where Step = 'New Step'", "TestSteps", "");
             var jo = JArray.Parse(result);
 			string finalResult = (string)jo[0]["Step"];
+
+            // Assert.
             Assert.AreEqual(finalResult, "New Step");
         }
 
@@ -110,6 +126,8 @@ namespace Sensit.TestSDK.Database.Tests
 			string result = database.ModularQueryWithResult("select * from TestStepResults where ActualResult = 'New Actual Result'", "TestStepResults", "");
             var jo = JArray.Parse(result);
 			string finalResult = (string)jo[0]["ActualResult"];
+
+            // Assert.
             Assert.AreEqual(finalResult, "New Actual Result");
         }
     }
