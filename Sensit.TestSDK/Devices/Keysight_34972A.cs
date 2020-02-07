@@ -27,7 +27,7 @@ namespace Sensit.TestSDK.Devices
 
 		public int Bank { get; set; }
 
-		public List<bool> Channels { get; set; }
+		public List<bool> Channels { get; } = new List<bool>();
 
 		public void Open()
 		{
@@ -149,17 +149,20 @@ namespace Sensit.TestSDK.Devices
 			}
 		}
 
-		public void Configure(List<bool> channels)
+		public void Configure(bool[] channels)
 		{
-			Channels = channels;
+			Channels.Clear();
+			Channels.AddRange(channels);
 
 			Configure();
 		}
 
-		public void Configure(int bank, List<bool> channels)
+		public void Configure(int bank, bool[] channels)
 		{
 			Bank = bank;
-			Channels = channels;
+
+			Channels.Clear();
+			Channels.AddRange(channels);
 
 			Configure();
 		}

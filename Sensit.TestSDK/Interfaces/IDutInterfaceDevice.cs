@@ -40,7 +40,7 @@ namespace Sensit.TestSDK.Interfaces
 		/// Bank is set via properties.
 		/// </remarks>
 		/// <param name="channels"></param>
-		void Configure(List<bool> channels);
+		void Configure(bool[] channels);
 
 		/// <summary>
 		/// Set active bank and channels.
@@ -50,7 +50,7 @@ namespace Sensit.TestSDK.Interfaces
 		/// </remarks>
 		/// <param name="bank">bank to read the channels from</param>
 		/// <param name="channels">channels to configure</param>
-		void Configure(int bank, List<bool> channels);
+		void Configure(int bank, bool[] channels);
 
 		/// <summary>
 		/// Fetch the device's current readings/settings.
