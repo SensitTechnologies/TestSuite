@@ -28,9 +28,6 @@ namespace Sensit.App.Calibration
 			SerialPort = "COM6"	// COM11
 		};
 
-		[Category("Gas"), Description("Concentration of bottle of analyte gas.")]
-		public double AnalyteBottleConcentration { get; set; } = 100;
-
 		[Category("Gas"), Description("Analyte gas.")]
 		public Gas Analyte { get; set; }
 
