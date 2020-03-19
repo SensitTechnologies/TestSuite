@@ -37,23 +37,23 @@ namespace Sensit.TestSDK.Devices
 				{
 					case Gas.Methane:
 						// Read from the appropriate sensor.
-						_serialPort.Write("1dd");
+						_serialPort.WriteLine("5dd");
 						break;
 					case Gas.Oxygen:
 						// Read from the appropriate sensor.
-						_serialPort.Write("2dd");
+						_serialPort.WriteLine("1dd");
 						break;
 					case Gas.CarbonMonoxide:
 						// Read from the appropriate sensor.
-						_serialPort.Write("3dd");
+						_serialPort.WriteLine("2dd");
 						break;
 					case Gas.HydrogenSulfide:
 						// Read from the appropriate sensor.
-						_serialPort.Write("4dd");
+						_serialPort.WriteLine("3dd");
 						break;
 					case Gas.HydrogenCyanide:
 						// Read from the appropriate sensor.
-						_serialPort.Write("5dd");
+						_serialPort.WriteLine("4dd");
 						break;
 					default:
 						throw new DeviceSettingNotSupportedException("Gas selection " + GasSelection.ToString() + " is not supported.");
@@ -74,7 +74,16 @@ namespace Sensit.TestSDK.Devices
 				string[] words = message.Split(' ');
 
 				// Parse the reading.
-				Readings[VariableType.GasConcentration] = Convert.ToDouble(words[4]);
+				switch (GasSelection)
+				{
+					case Gas.Methane:
+						Readings[VariableType.GasConcentration] = Convert.ToDouble(words[6]);
+						break;
+					default:
+						Readings[VariableType.GasConcentration] = Convert.ToDouble(words[4]);
+						break;
+				}
+
 			}
 			catch (InvalidOperationException ex)
 			{
