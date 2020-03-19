@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Sensit.App.G3Console
+namespace Sensit.App.G3
 {
 	static class Program
 	{
@@ -16,7 +13,7 @@ namespace Sensit.App.G3Console
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new FormG3Console());
+			Application.Run(new FormG3());
 		}
 	}
 }

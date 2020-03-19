@@ -6,14 +6,14 @@ using Sensit.TestSDK.Devices;
 using Sensit.TestSDK.Exceptions;
 using Sensit.TestSDK.Interfaces;
 
-namespace Sensit.App.G3Console
+namespace Sensit.App.G3
 {
-	public partial class FormG3Console : Form
+	public partial class FormG3 : Form
 	{
 		// Sensit G3 Debugger Console
 		private SensitG3 _sensitG3 = new SensitG3();
 
-		public FormG3Console()
+		public FormG3()
 		{
 			// Initialize the form.
 			InitializeComponent();

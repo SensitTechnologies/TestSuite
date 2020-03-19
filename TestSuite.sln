@@ -15,11 +15,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.Calibration", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.GasConcentration", "Sensit.App.GasConcentration\Sensit.App.GasConcentration.csproj", "{172798F2-78C7-4AFB-8F28-B713CFA8E125}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.G3Console", "Sensit.App.G3Console\Sensit.App.G3Console.csproj", "{55287E39-3D25-4D00-BE0B-FD3170B028B0}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.WebSensors", "Sensit.App.WebSensors\Sensit.App.WebSensors.csproj", "{EF6B5909-0869-4511-BA0A-7C8B38CC4D7C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.G2GLT", "Sensit.App.G2GLT\Sensit.App.G2GLT.csproj", "{A753E264-0128-4F85-8889-905218232E90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.G3", "Sensit.App.G3\Sensit.App.G3.csproj", "{55287E39-3D25-4D00-BE0B-FD3170B028B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -64,12 +64,6 @@ Global
 		{172798F2-78C7-4AFB-8F28-B713CFA8E125}.Release|Any CPU.Build.0 = Release|Any CPU
 		{172798F2-78C7-4AFB-8F28-B713CFA8E125}.Remote Debug|Any CPU.ActiveCfg = Remote Debug|Any CPU
 		{172798F2-78C7-4AFB-8F28-B713CFA8E125}.Remote Debug|Any CPU.Build.0 = Remote Debug|Any CPU
-		{55287E39-3D25-4D00-BE0B-FD3170B028B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{55287E39-3D25-4D00-BE0B-FD3170B028B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{55287E39-3D25-4D00-BE0B-FD3170B028B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{55287E39-3D25-4D00-BE0B-FD3170B028B0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{55287E39-3D25-4D00-BE0B-FD3170B028B0}.Remote Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{55287E39-3D25-4D00-BE0B-FD3170B028B0}.Remote Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF6B5909-0869-4511-BA0A-7C8B38CC4D7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EF6B5909-0869-4511-BA0A-7C8B38CC4D7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF6B5909-0869-4511-BA0A-7C8B38CC4D7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -82,6 +76,12 @@ Global
 		{A753E264-0128-4F85-8889-905218232E90}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A753E264-0128-4F85-8889-905218232E90}.Remote Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A753E264-0128-4F85-8889-905218232E90}.Remote Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55287E39-3D25-4D00-BE0B-FD3170B028B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55287E39-3D25-4D00-BE0B-FD3170B028B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55287E39-3D25-4D00-BE0B-FD3170B028B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55287E39-3D25-4D00-BE0B-FD3170B028B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55287E39-3D25-4D00-BE0B-FD3170B028B0}.Remote Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55287E39-3D25-4D00-BE0B-FD3170B028B0}.Remote Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

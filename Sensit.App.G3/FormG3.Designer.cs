@@ -1,6 +1,6 @@
-﻿namespace Sensit.App.G3Console
+﻿namespace Sensit.App.G3
 {
-	partial class FormG3Console
+	partial class FormG3
 	{
 		/// <summary>
 		/// Required designer variable.
