@@ -96,7 +96,7 @@ namespace Sensit.App.Calibration
 
 					ComboBox comboBox = new ComboBox
 					{
-						Name = "comboBoxModel" + i.ToString(),
+						Name = "comboBoxType" + i.ToString(),
 						Anchor = AnchorStyles.Left | AnchorStyles.Top,
 						Dock = DockStyle.None,
 						DropDownStyle = ComboBoxStyle.DropDownList
@@ -104,7 +104,7 @@ namespace Sensit.App.Calibration
 					tableLayoutPanelDevicesUnderTest.Controls.Add(comboBox, DUT_COLUMN_MODEL, i - 1);
 
 					// Add an event handler to run when the comboBox's value is changed.
-					comboBox.SelectedIndexChanged += new EventHandler(ComboBoxModel_SelectedIndexChanged);
+					comboBox.SelectedIndexChanged += new EventHandler(ComboBoxType_SelectedIndexChanged);
 
 					// Populate the Model combobox based on DUT settings.
 					comboBox.Items.Clear();
@@ -390,7 +390,7 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void buttonStart_Click(object sender, EventArgs e)
+		private void ButtonStart_Click(object sender, EventArgs e)
 		{
 			try
 			{
@@ -518,7 +518,7 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void buttonStop_Click(object sender, EventArgs e)
+		private void ButtonStop_Click(object sender, EventArgs e)
 		{
 			ConfirmAbort();
 		}
@@ -604,7 +604,7 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void comboBoxModel_SelectedIndexChanged(object sender, EventArgs e)
+		private void ComboBoxModel_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			// Remember the selected value.
 			Properties.Settings.Default.Model = comboBoxModel.SelectedItem.ToString();
@@ -623,7 +623,7 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void comboBoxRange_SelectedIndexChanged(object sender, EventArgs e)
+		private void ComboBoxRange_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			// Remember the selected value.
 			Properties.Settings.Default.Range = comboBoxRange.SelectedItem.ToString();
@@ -634,7 +634,7 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void comboBoxTest_SelectedIndexChanged(object sender, EventArgs e)
+		private void ComboBoxTest_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			// Remember the selected value.
 			Properties.Settings.Default.Test = comboBoxTest.SelectedItem.ToString();
@@ -645,7 +645,7 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void checkBoxSelectAll_CheckedChanged(object sender, EventArgs e)
+		private void CheckBoxSelectAll_CheckedChanged(object sender, EventArgs e)
 		{
 			// Look through each control.
 			foreach (Control c in tableLayoutPanelDevicesUnderTest.Controls)
@@ -697,7 +697,7 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void ComboBoxModel_SelectedIndexChanged(object sender, EventArgs e)
+		private void ComboBoxType_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			// Find the control's position.
 			TableLayoutPanelCellPosition position = tableLayoutPanelDevicesUnderTest.GetPositionFromControl(((ComboBox)sender));
@@ -738,7 +738,7 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+		private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			// This will invoke the "FormClosing" action, so nothing else to do here.
 
@@ -751,7 +751,7 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
+		private void PauseToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			_test?.Pause();
 		}
@@ -774,12 +774,12 @@ namespace Sensit.App.Calibration
 				List<Type> deviceTypes = Utilities.FindClasses(t);
 				foreach (Type d in deviceTypes)
 				{
-					equipmentType.DropDownItems.Add(d.GetDescription(), null, menuEquipment_Click);
+					equipmentType.DropDownItems.Add(d.GetDescription(), null, MenuEquipment_Click);
 				}
 			}
 		}
 
-		private void menuEquipment_Click(object sender, EventArgs e)
+		private void MenuEquipment_Click(object sender, EventArgs e)
 		{
 			// Find the parent menu item, then children items.
 			Control parent = ((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl;
@@ -803,7 +803,7 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void numberOfDUTsToolStripMenuItem_Click(object sender, EventArgs e)
+		private void NumberOfDUTsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			// Prompt user to enter desired number of DUTs (current value as default).
 			int numDuts = NumDuts;
@@ -823,7 +823,7 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void logDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
+		private void LogDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			// Set the path first shown to the user to be the currently selected one.
 			folderBrowserDialog1.SelectedPath = Properties.Settings.Default.LogDirectory;
@@ -869,7 +869,7 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void equipmentSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+		private void EquipmentSettingsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			EditSettings<EquipmentSettings>(Properties.Settings.Default.SystemSettingsFile);
 		}
@@ -879,7 +879,7 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void dUTSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+		private void DUTSettingsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			EditSettings<DutSettings>(Properties.Settings.Default.DutSettingsFile);
 		}
@@ -889,7 +889,7 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void testSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+		private void TestSettingsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			EditSettings<TestSettings>(Properties.Settings.Default.TestSettingsFile);
 		}
@@ -903,7 +903,7 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+		private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			// Show the repository where this program can be found.
 			// For the sake of future engineers.

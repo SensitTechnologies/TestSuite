@@ -250,7 +250,7 @@
 			this.helpProvider1.SetShowHelp(this.comboBoxRange, true);
 			this.comboBoxRange.Size = new System.Drawing.Size(140, 21);
 			this.comboBoxRange.TabIndex = 1;
-			this.comboBoxRange.SelectedIndexChanged += new System.EventHandler(this.comboBoxRange_SelectedIndexChanged);
+			this.comboBoxRange.SelectedIndexChanged += new System.EventHandler(this.ComboBoxRange_SelectedIndexChanged);
 			// 
 			// comboBoxTest
 			// 
@@ -263,7 +263,7 @@
 			this.helpProvider1.SetShowHelp(this.comboBoxTest, true);
 			this.comboBoxTest.Size = new System.Drawing.Size(140, 21);
 			this.comboBoxTest.TabIndex = 2;
-			this.comboBoxTest.SelectedIndexChanged += new System.EventHandler(this.comboBoxTest_SelectedIndexChanged);
+			this.comboBoxTest.SelectedIndexChanged += new System.EventHandler(this.ComboBoxTest_SelectedIndexChanged);
 			// 
 			// groupBoxDevicesUnderTest
 			// 
@@ -324,7 +324,7 @@
 			this.buttonStart.TabIndex = 0;
 			this.buttonStart.Text = "Start";
 			this.buttonStart.UseVisualStyleBackColor = true;
-			this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
+			this.buttonStart.Click += new System.EventHandler(this.ButtonStart_Click);
 			// 
 			// buttonStop
 			// 
@@ -337,7 +337,7 @@
 			this.buttonStop.TabIndex = 1;
 			this.buttonStop.Text = "Stop";
 			this.buttonStop.UseVisualStyleBackColor = true;
-			this.buttonStop.Click += new System.EventHandler(this.buttonStop_Click);
+			this.buttonStop.Click += new System.EventHandler(this.ButtonStop_Click);
 			// 
 			// tableLayoutPanel1
 			// 
@@ -365,7 +365,7 @@
 			this.checkBoxSelectAll.TabIndex = 21;
 			this.checkBoxSelectAll.Text = "Select/deselect all";
 			this.checkBoxSelectAll.UseVisualStyleBackColor = true;
-			this.checkBoxSelectAll.CheckedChanged += new System.EventHandler(this.checkBoxSelectAll_CheckedChanged);
+			this.checkBoxSelectAll.CheckedChanged += new System.EventHandler(this.CheckBoxSelectAll_CheckedChanged);
 			// 
 			// comboBoxModel
 			// 
@@ -375,7 +375,7 @@
 			this.comboBoxModel.Name = "comboBoxModel";
 			this.comboBoxModel.Size = new System.Drawing.Size(121, 21);
 			this.comboBoxModel.TabIndex = 22;
-			this.comboBoxModel.SelectedIndexChanged += new System.EventHandler(this.comboBoxModel_SelectedIndexChanged);
+			this.comboBoxModel.SelectedIndexChanged += new System.EventHandler(this.ComboBoxModel_SelectedIndexChanged);
 			// 
 			// tabPage2
 			// 
@@ -810,7 +810,7 @@
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
 			this.exitToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
 			this.exitToolStripMenuItem.Text = "&Exit";
-			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+			this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
 			// 
 			// testToolStripMenuItem
 			// 
@@ -830,7 +830,7 @@
 			this.startToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
 			this.startToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
 			this.startToolStripMenuItem.Text = "&Start";
-			this.startToolStripMenuItem.Click += new System.EventHandler(this.buttonStart_Click);
+			this.startToolStripMenuItem.Click += new System.EventHandler(this.ButtonStart_Click);
 			// 
 			// pauseToolStripMenuItem
 			// 
@@ -840,7 +840,7 @@
 			this.pauseToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
 			this.pauseToolStripMenuItem.Text = "&Pause";
 			this.pauseToolStripMenuItem.ToolTipText = "Hault the current test temporarily";
-			this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
+			this.pauseToolStripMenuItem.Click += new System.EventHandler(this.PauseToolStripMenuItem_Click);
 			// 
 			// abortToolStripMenuItem
 			// 
@@ -849,7 +849,7 @@
 			this.abortToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F7;
 			this.abortToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
 			this.abortToolStripMenuItem.Text = "&Abort";
-			this.abortToolStripMenuItem.Click += new System.EventHandler(this.buttonStop_Click);
+			this.abortToolStripMenuItem.Click += new System.EventHandler(this.ButtonStop_Click);
 			// 
 			// toolStripSeparator1
 			// 
@@ -886,35 +886,35 @@
 			this.numberOfDUTsToolStripMenuItem.Name = "numberOfDUTsToolStripMenuItem";
 			this.numberOfDUTsToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
 			this.numberOfDUTsToolStripMenuItem.Text = "&Number of DUTs";
-			this.numberOfDUTsToolStripMenuItem.Click += new System.EventHandler(this.numberOfDUTsToolStripMenuItem_Click);
+			this.numberOfDUTsToolStripMenuItem.Click += new System.EventHandler(this.NumberOfDUTsToolStripMenuItem_Click);
 			// 
 			// logDirectoryToolStripMenuItem
 			// 
 			this.logDirectoryToolStripMenuItem.Name = "logDirectoryToolStripMenuItem";
 			this.logDirectoryToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
 			this.logDirectoryToolStripMenuItem.Text = "&Log Directory";
-			this.logDirectoryToolStripMenuItem.Click += new System.EventHandler(this.logDirectoryToolStripMenuItem_Click);
+			this.logDirectoryToolStripMenuItem.Click += new System.EventHandler(this.LogDirectoryToolStripMenuItem_Click);
 			// 
 			// optionsToolStripMenuItem
 			// 
 			this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
 			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
 			this.optionsToolStripMenuItem.Text = "&Equipment Settings";
-			this.optionsToolStripMenuItem.Click += new System.EventHandler(this.equipmentSettingsToolStripMenuItem_Click);
+			this.optionsToolStripMenuItem.Click += new System.EventHandler(this.EquipmentSettingsToolStripMenuItem_Click);
 			// 
 			// dUTSettingsToolStripMenuItem
 			// 
 			this.dUTSettingsToolStripMenuItem.Name = "dUTSettingsToolStripMenuItem";
 			this.dUTSettingsToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
 			this.dUTSettingsToolStripMenuItem.Text = "&DUT Settings";
-			this.dUTSettingsToolStripMenuItem.Click += new System.EventHandler(this.dUTSettingsToolStripMenuItem_Click);
+			this.dUTSettingsToolStripMenuItem.Click += new System.EventHandler(this.DUTSettingsToolStripMenuItem_Click);
 			// 
 			// terminalToolStripMenuItem
 			// 
 			this.terminalToolStripMenuItem.Name = "terminalToolStripMenuItem";
 			this.terminalToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
 			this.terminalToolStripMenuItem.Text = "&Test Settings";
-			this.terminalToolStripMenuItem.Click += new System.EventHandler(this.testSettingsToolStripMenuItem_Click);
+			this.terminalToolStripMenuItem.Click += new System.EventHandler(this.TestSettingsToolStripMenuItem_Click);
 			// 
 			// helpToolStripMenuItem
 			// 
@@ -930,7 +930,7 @@
 			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
 			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
 			this.aboutToolStripMenuItem.Text = "&About";
-			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
 			// 
 			// supportToolStripMenuItem
 			// 
