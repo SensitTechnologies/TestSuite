@@ -80,9 +80,9 @@
 			this.labelValue = new System.Windows.Forms.Label();
 			this.labelRate = new System.Windows.Forms.Label();
 			this.chartError = new System.Windows.Forms.DataVisualization.Charting.Chart();
-			this.chartRate = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.labelValueNum = new System.Windows.Forms.Label();
 			this.labelRateNum = new System.Windows.Forms.Label();
+			this.chartRate = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -282,7 +282,8 @@
 			// 
 			this.tableLayoutPanelDevicesUnderTest.AutoScroll = true;
 			this.tableLayoutPanelDevicesUnderTest.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutPanelDevicesUnderTest.ColumnCount = 4;
+			this.tableLayoutPanelDevicesUnderTest.ColumnCount = 5;
+			this.tableLayoutPanelDevicesUnderTest.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanelDevicesUnderTest.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanelDevicesUnderTest.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanelDevicesUnderTest.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -633,6 +634,26 @@
 			this.chartError.TabIndex = 2;
 			this.chartError.Text = "Error";
 			// 
+			// labelValueNum
+			// 
+			this.labelValueNum.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.labelValueNum.AutoSize = true;
+			this.labelValueNum.Location = new System.Drawing.Point(47, 23);
+			this.labelValueNum.Name = "labelValueNum";
+			this.labelValueNum.Size = new System.Drawing.Size(28, 13);
+			this.labelValueNum.TabIndex = 21;
+			this.labelValueNum.Text = "0.00";
+			// 
+			// labelRateNum
+			// 
+			this.labelRateNum.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.labelRateNum.AutoSize = true;
+			this.labelRateNum.Location = new System.Drawing.Point(169, 23);
+			this.labelRateNum.Name = "labelRateNum";
+			this.labelRateNum.Size = new System.Drawing.Size(28, 13);
+			this.labelRateNum.TabIndex = 22;
+			this.labelRateNum.Text = "0.00";
+			// 
 			// chartRate
 			// 
 			this.chartRate.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -678,26 +699,6 @@
 			this.chartRate.Size = new System.Drawing.Size(40, 200);
 			this.chartRate.TabIndex = 20;
 			this.chartRate.Text = "Error";
-			// 
-			// labelValueNum
-			// 
-			this.labelValueNum.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.labelValueNum.AutoSize = true;
-			this.labelValueNum.Location = new System.Drawing.Point(47, 23);
-			this.labelValueNum.Name = "labelValueNum";
-			this.labelValueNum.Size = new System.Drawing.Size(28, 13);
-			this.labelValueNum.TabIndex = 21;
-			this.labelValueNum.Text = "0.00";
-			// 
-			// labelRateNum
-			// 
-			this.labelRateNum.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.labelRateNum.AutoSize = true;
-			this.labelRateNum.Location = new System.Drawing.Point(169, 23);
-			this.labelRateNum.Name = "labelRateNum";
-			this.labelRateNum.Size = new System.Drawing.Size(28, 13);
-			this.labelRateNum.TabIndex = 22;
-			this.labelRateNum.Text = "0.00";
 			// 
 			// statusStrip1
 			// 
@@ -820,14 +821,14 @@
             this.toolStripSeparator1,
             this.reconnectDUTsToolStripMenuItem});
 			this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-			this.testToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+			this.testToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
 			this.testToolStripMenuItem.Text = "&Test";
 			// 
 			// startToolStripMenuItem
 			// 
 			this.startToolStripMenuItem.Name = "startToolStripMenuItem";
 			this.startToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-			this.startToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+			this.startToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
 			this.startToolStripMenuItem.Text = "&Start";
 			this.startToolStripMenuItem.Click += new System.EventHandler(this.buttonStart_Click);
 			// 
@@ -836,7 +837,7 @@
 			this.pauseToolStripMenuItem.Enabled = false;
 			this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
 			this.pauseToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F6;
-			this.pauseToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+			this.pauseToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
 			this.pauseToolStripMenuItem.Text = "&Pause";
 			this.pauseToolStripMenuItem.ToolTipText = "Hault the current test temporarily";
 			this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
@@ -846,20 +847,20 @@
 			this.abortToolStripMenuItem.Enabled = false;
 			this.abortToolStripMenuItem.Name = "abortToolStripMenuItem";
 			this.abortToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F7;
-			this.abortToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+			this.abortToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
 			this.abortToolStripMenuItem.Text = "&Abort";
 			this.abortToolStripMenuItem.Click += new System.EventHandler(this.buttonStop_Click);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(124, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(123, 6);
 			// 
 			// reconnectDUTsToolStripMenuItem
 			// 
 			this.reconnectDUTsToolStripMenuItem.Enabled = false;
 			this.reconnectDUTsToolStripMenuItem.Name = "reconnectDUTsToolStripMenuItem";
-			this.reconnectDUTsToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+			this.reconnectDUTsToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
 			this.reconnectDUTsToolStripMenuItem.Text = "&Find DUTs";
 			// 
 			// equipmentToolStripMenuItem

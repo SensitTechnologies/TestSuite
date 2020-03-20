@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Deployment.Application;
 using System.Drawing;
+using System.IO.Ports;
 using System.Linq;
 using System.Windows.Forms;
 using Sensit.TestSDK.Forms;
@@ -23,7 +24,8 @@ namespace Sensit.App.Calibration
 		private const int DUT_COLUMN_CHECKBOX = 0;
 		private const int DUT_COLUMN_SERIALNUM = 1;
 		private const int DUT_COLUMN_MODEL = 2;
-		private const int DUT_COLUMN_STATUS = 3;
+		private const int DUT_COLUMN_CONFIG = 3;
+		private const int DUT_COLUMN_STATUS = 4;
 
 		#endregion
 
@@ -100,6 +102,9 @@ namespace Sensit.App.Calibration
 						DropDownStyle = ComboBoxStyle.DropDownList
 					};
 					tableLayoutPanelDevicesUnderTest.Controls.Add(comboBox, DUT_COLUMN_MODEL, i - 1);
+
+					// Add an event handler to run when the comboBox's value is changed.
+					comboBox.SelectedIndexChanged += new EventHandler(ComboBoxModel_SelectedIndexChanged);
 
 					// Populate the Model combobox based on DUT settings.
 					comboBox.Items.Clear();
@@ -184,7 +189,8 @@ namespace Sensit.App.Calibration
 
 		/// <summary>
 		/// Maximum desired error value of the test's independent variable.
-		/// </summary>
+		/// </summary>jSensors`1
+		/// 
 		/// <remarks>
 		/// This property is a tuple so min and max are updated at the same time.
 		/// This helps prevent weird states if only one is updated.
@@ -473,6 +479,16 @@ namespace Sensit.App.Calibration
 					dut.Status = DutStatus.Init;
 					dut.SerialNumber = textBoxSerial.Text;
 					dut.Message = string.Empty;
+
+					// If the DUT is a Sensit G3...
+					if (modelSetting.Label == "Sensit G3")
+					{
+						// Fetch the associated serial port.
+						ComboBox comboBoxConfig = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CONFIG, (int)i) as ComboBox;
+
+						// Assign the serial port to the DUT.
+						dut.CommPort = comboBoxConfig.Text;
+					}
 					_duts.Add(dut);
 				}
 
@@ -674,6 +690,43 @@ namespace Sensit.App.Calibration
 
 			// Return whether or not we're stopping the test.
 			return (result == DialogResult.OK);
+		}
+
+		/// <summary>
+		/// When a DUT's type is changed, show relevant settings.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ComboBoxModel_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			// Find the control's position.
+			TableLayoutPanelCellPosition position = tableLayoutPanelDevicesUnderTest.GetPositionFromControl(((ComboBox)sender));
+
+			// If the DUT is a G3...
+			if (((ComboBox)sender).SelectedItem.ToString().CompareTo("Sensit G3") == 0)
+			{
+				// Create a combobox for a serial port.
+				ComboBox comboBox = new ComboBox
+				{
+					Name = "comboBoxSerialPort" + position.Row.ToString(),
+					Anchor = AnchorStyles.Left | AnchorStyles.Top,
+					Dock = DockStyle.None,
+					DropDownStyle = ComboBoxStyle.DropDownList
+				};
+				tableLayoutPanelDevicesUnderTest.Controls.Add(comboBox, DUT_COLUMN_CONFIG, position.Row);
+
+				// Find all available serial ports.
+				foreach (string s in SerialPort.GetPortNames())
+				{
+					comboBox.Items.Add(s);
+				}
+			}
+			// Otherwise...
+			else
+			{
+				// Remove the combobox.
+				tableLayoutPanelDevicesUnderTest.Controls.Remove(tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CONFIG, position.Row));
+			}
 		}
 
 		#endregion
