@@ -63,6 +63,7 @@ namespace Sensit.App.Calibration
 		#endregion
 
 		#region Properties
+
 		/// <summary>
 		/// Datalogger (for analog sensor DUTs)
 		/// </summary>
@@ -102,6 +103,11 @@ namespace Sensit.App.Calibration
 		/// Type of DUT
 		/// </summary>
 		public string Type => _settings.Label;
+
+		/// <summary>
+		/// Serial port used for communication (e.g. "COM3")
+		/// </summary>
+		public string CommPort { get; set; }
 
 		#endregion
 
@@ -147,12 +153,9 @@ namespace Sensit.App.Calibration
 					// Configure DUT Interface device.
 					DutInterface.Channels[(int)Index - 1] = Selected;
 				}
-				// If the DUT is a G3...
-				else if (_sensitG3 != null)
-				{
-					// Connect to it.
-					_sensitG3.Open("COM11");
-				}
+
+				// If the DUT is a G3, connect to it.
+				_sensitG3?.Open(CommPort);
 
 				// Set status to "Testing".
 				Status = DutStatus.Testing;
@@ -167,6 +170,9 @@ namespace Sensit.App.Calibration
 			if ((Status == DutStatus.Testing) ||
 				(Status == DutStatus.Fail))
 			{
+				// If the DUT is a G3, close it.
+				_sensitG3?.Close();
+
 				// Set status to "Done."
 				Status = DutStatus.Done;
 
