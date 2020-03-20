@@ -160,7 +160,7 @@ namespace Sensit.App.Keysight
 				channels.Add(true);
 			}
 
-			_datalogger.Configure((int)numericUpDownBank.Value, channels);
+			_datalogger.Configure((int)numericUpDownBank.Value, channels.ToArray());
 		}
 
 		/// <summary>
