@@ -29,10 +29,10 @@
 		private void InitializeComponent()
 		{
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			this.buttonOk = new System.Windows.Forms.Button();
-			this.buttonCancel = new System.Windows.Forms.Button();
 			this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
 			this.label1 = new System.Windows.Forms.Label();
+			this.buttonOk = new System.Windows.Forms.Button();
+			this.buttonCancel = new System.Windows.Forms.Button();
 			this.tableLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
 			this.SuspendLayout();
@@ -58,26 +58,6 @@
 			this.tableLayoutPanel1.Size = new System.Drawing.Size(162, 78);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
-			// buttonOk
-			// 
-			this.buttonOk.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.buttonOk.Location = new System.Drawing.Point(3, 52);
-			this.buttonOk.Name = "buttonOk";
-			this.buttonOk.Size = new System.Drawing.Size(75, 23);
-			this.buttonOk.TabIndex = 0;
-			this.buttonOk.Text = "&OK";
-			this.buttonOk.UseVisualStyleBackColor = true;
-			// 
-			// buttonCancel
-			// 
-			this.buttonCancel.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.buttonCancel.Location = new System.Drawing.Point(84, 52);
-			this.buttonCancel.Name = "buttonCancel";
-			this.buttonCancel.Size = new System.Drawing.Size(75, 23);
-			this.buttonCancel.TabIndex = 1;
-			this.buttonCancel.Text = "&Cancel";
-			this.buttonCancel.UseVisualStyleBackColor = true;
-			// 
 			// numericUpDown1
 			// 
 			this.numericUpDown1.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -96,6 +76,27 @@
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(0, 13);
 			this.label1.TabIndex = 3;
+			// 
+			// buttonOk
+			// 
+			this.buttonOk.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.buttonOk.Location = new System.Drawing.Point(3, 52);
+			this.buttonOk.Name = "buttonOk";
+			this.buttonOk.Size = new System.Drawing.Size(75, 23);
+			this.buttonOk.TabIndex = 0;
+			this.buttonOk.Text = "&OK";
+			this.buttonOk.UseVisualStyleBackColor = true;
+			// 
+			// buttonCancel
+			// 
+			this.buttonCancel.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.buttonCancel.Location = new System.Drawing.Point(84, 52);
+			this.buttonCancel.Name = "buttonCancel";
+			this.buttonCancel.Size = new System.Drawing.Size(75, 23);
+			this.buttonCancel.TabIndex = 1;
+			this.buttonCancel.Text = "&Cancel";
+			this.buttonCancel.UseVisualStyleBackColor = true;
 			// 
 			// FormInputDialog
 			// 
