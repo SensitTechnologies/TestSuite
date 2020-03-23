@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Deployment.Application;
 using System.Drawing;
+using System.Globalization;
 using System.IO.Ports;
 using System.Linq;
 using System.Windows.Forms;
@@ -78,7 +79,7 @@ namespace Sensit.App.Calibration
 				{
 					CheckBox checkBox = new CheckBox
 					{
-						Name = "checkBoxSelected" + i.ToString(),
+						Name = "checkBoxSelected" + i.ToString(CultureInfo.InvariantCulture),
 						AutoSize = true,
 						Anchor = AnchorStyles.Left | AnchorStyles.Top,
 						Dock = DockStyle.None
@@ -87,7 +88,7 @@ namespace Sensit.App.Calibration
 
 					TextBox textBoxSerialNumber = new TextBox
 					{
-						Name = "textBoxSerialNumber" + i.ToString(),
+						Name = "textBoxSerialNumber" + i.ToString(CultureInfo.InvariantCulture),
 						Anchor = AnchorStyles.Left | AnchorStyles.Top,
 						Dock = DockStyle.None,
 						Text = "DUT" + i.ToString()
@@ -96,7 +97,7 @@ namespace Sensit.App.Calibration
 
 					ComboBox comboBox = new ComboBox
 					{
-						Name = "comboBoxType" + i.ToString(),
+						Name = "comboBoxType" + i.ToString(CultureInfo.InvariantCulture),
 						Anchor = AnchorStyles.Left | AnchorStyles.Top,
 						Dock = DockStyle.None,
 						DropDownStyle = ComboBoxStyle.DropDownList
@@ -118,7 +119,7 @@ namespace Sensit.App.Calibration
 
 					Label labelStatus = new Label
 					{
-						Name = "labelStatus" + i.ToString(),
+						Name = "labelStatus" + i.ToString(CultureInfo.InvariantCulture),
 						AutoSize = true,
 						Anchor = AnchorStyles.Left | AnchorStyles.Top,
 						Dock = DockStyle.None

@@ -59,25 +59,25 @@ namespace Sensit.App.Calibration
 		#region Delegates
 
 		// Report test progress.
-		public Action<int, string> UpdateProgress;
+		public Action<int, string> UpdateProgress { get; set; }
 
 		// Report the value of the independent variable.
-		public Action<double> UpdateIndependentVariable;
+		public Action<double> UpdateIndependentVariable { get; set; }
 
 		// Report the rate of change of the independent variable.
-		public Action<double> UpdateRateOfChange;
+		public Action<double> UpdateRateOfChange { get; set; }
 
 		// Report the independent variable's maximum and minimum allowed value.
-		public Action<(double min, double max)> UpdateIndependentVariableRange;
+		public Action<(double min, double max)> UpdateIndependentVariableRange { get; set; }
 
 		// Report the independent variable's maximum and minimum allowed rate of change.
-		public Action<(double min, double max)> UpdateRateRange;
+		public Action<(double min, double max)> UpdateRateRange { get; set; }
 
 		// Report the controlled variables and their values.
-		public Action<Dictionary<VariableType, double>> UpdateVariables;
+		public Action<Dictionary<VariableType, double>> UpdateVariables { get; set; }
 
 		// Report test results.
-		public Action Finished;
+		public Action Finished { get; set; }
 
 		#endregion
 
@@ -112,7 +112,7 @@ namespace Sensit.App.Calibration
 		/// <remarks>
 		/// This will be accessed by the FormCalibration to display the variables values.
 		/// </remarks>
-		public List<TestControlledVariable> Variables;
+		public List<TestControlledVariable> Variables { get; }
 
 		#endregion
 

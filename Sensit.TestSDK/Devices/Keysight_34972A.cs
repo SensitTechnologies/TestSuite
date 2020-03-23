@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using Agilent.CommandExpert.ScpiNet.Ag3497x_1_13;
@@ -85,7 +86,7 @@ namespace Sensit.TestSDK.Devices
 				// The second word is the model number.
 				string[] words = identity.Split(',');
 
-				if (words[1].Equals("34970A") == false && words[1].Equals("34972A") == false)
+				if (words[1].Equals("34970A", StringComparison.InvariantCulture) == false && words[1].Equals("34972A", StringComparison.InvariantCulture) == false)
 				{
 					throw new DeviceCommunicationException("Unexpected device model number.");
 				}
@@ -120,8 +121,8 @@ namespace Sensit.TestSDK.Devices
 						else
 							sb.Append(',');
 
-						sb.Append(Bank.ToString());
-						sb.Append((i + 1).ToString("D2"));
+						sb.Append(Bank.ToString(CultureInfo.InvariantCulture));
+						sb.Append((i + 1).ToString("D2", CultureInfo.InvariantCulture));
 					}
 				}
 				string config = sb.ToString();
@@ -194,8 +195,8 @@ namespace Sensit.TestSDK.Devices
 				for (int i = 0; i < dataSeparated.Length; i += 2)
 				{
 					// Parse sensor output from string into double and add to list of readings.
-					uint key = uint.Parse(dataSeparated[(i + 1)]) % 100;
-					double value = double.Parse(dataSeparated[i], System.Globalization.NumberStyles.Any);
+					uint key = uint.Parse(dataSeparated[(i + 1)], CultureInfo.InvariantCulture) % 100;
+					double value = double.Parse(dataSeparated[i], NumberStyles.Any, CultureInfo.InvariantCulture);
 					Readings.Add(key, value);
 				}
 			}
