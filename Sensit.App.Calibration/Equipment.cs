@@ -37,9 +37,9 @@ namespace Sensit.App.Calibration
 
 		#region Properties
 
-		public Dictionary<VariableType, IControlDevice> Controllers;
+		public Dictionary<VariableType, IControlDevice> Controllers { get; }
 
-		public Dictionary<VariableType, IReferenceDevice> References;
+		public Dictionary<VariableType, IReferenceDevice> References { get; }
 
 		public IDutInterfaceDevice DutInterface => _datalogger;
 

@@ -55,10 +55,10 @@ namespace Sensit.App.Calibration
 		#region Delegates
 
 		// Set DUT status.
-		public Action<uint, DutStatus> SetStatus;
+		public Action<uint, DutStatus> SetStatus { get; set; }
 
 		// Set DUT serial number.
-		public Action<uint, string> SetSerialNumber;
+		public Action<uint, string> SetSerialNumber { get; set; }
 
 		#endregion
 
