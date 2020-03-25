@@ -159,7 +159,7 @@ namespace Sensit.TestSDK.Devices
 			}
 			else
 			{
-				_gasMixSetpoint = _analyteController.ReadSetpoint(VariableType.MassFlow) / _massFlowSetpoint;
+				_gasMixSetpoint = _analyteController.ReadSetpoint(VariableType.MassFlow) / _massFlowSetpoint * 100;
 			}
 
 			// Return the requested value.
