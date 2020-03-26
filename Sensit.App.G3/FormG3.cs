@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Deployment.Application;
+using System.Globalization;
 using System.IO.Ports;
 using System.Windows.Forms;
 using Sensit.TestSDK.Devices;
@@ -90,7 +91,7 @@ namespace Sensit.App.G3
 				catch (Exception ex)
 				{
 					// Alert the user.
-					MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
+					MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 
 					// Undo the user action.
 					radioButtonClosed.Checked = true;
@@ -135,11 +136,11 @@ namespace Sensit.App.G3
 				_sensitG3.Read();
 
 				// Fetch the readings.
-				textBoxMethane.Text = _sensitG3.Readings[VariableType.GasConcentration].ToString();
+				textBoxMethane.Text = _sensitG3.Readings[VariableType.GasConcentration].ToString(CultureInfo.CurrentCulture);
 			}
 			catch (DeviceException ex)
 			{
-				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 			}
 		}
 
@@ -154,11 +155,11 @@ namespace Sensit.App.G3
 				_sensitG3.Read();
 
 				// Fetch the readings.
-				textBoxOxygen.Text = _sensitG3.Readings[VariableType.GasConcentration].ToString();
+				textBoxOxygen.Text = _sensitG3.Readings[VariableType.GasConcentration].ToString(CultureInfo.CurrentCulture);
 			}
 			catch (DeviceException ex)
 			{
-				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 			}
 		}
 
@@ -173,11 +174,11 @@ namespace Sensit.App.G3
 				_sensitG3.Read();
 
 				// Fetch the readings.
-				textBoxCarbonMonoxide.Text = _sensitG3.Readings[VariableType.GasConcentration].ToString();
+				textBoxCarbonMonoxide.Text = _sensitG3.Readings[VariableType.GasConcentration].ToString(CultureInfo.CurrentCulture);
 			}
 			catch (DeviceException ex)
 			{
-				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 			}
 		}
 
@@ -192,11 +193,11 @@ namespace Sensit.App.G3
 				_sensitG3.Read();
 
 				// Fetch the readings.
-				textBoxHydrogenSulfide.Text = _sensitG3.Readings[VariableType.GasConcentration].ToString();
+				textBoxHydrogenSulfide.Text = _sensitG3.Readings[VariableType.GasConcentration].ToString(CultureInfo.CurrentCulture);
 			}
 			catch (DeviceException ex)
 			{
-				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 			}
 		}
 
@@ -211,7 +212,19 @@ namespace Sensit.App.G3
 				_sensitG3.Read();
 
 				// Fetch the readings.
-				textBoxHydrogenCyanide.Text = _sensitG3.Readings[VariableType.GasConcentration].ToString();
+				textBoxHydrogenCyanide.Text = _sensitG3.Readings[VariableType.GasConcentration].ToString(CultureInfo.CurrentCulture);
+			}
+			catch (DeviceException ex)
+			{
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
+			}
+		}
+
+		private void ButtonTurnOff_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				_sensitG3.TurnOff();
 			}
 			catch (DeviceException ex)
 			{

@@ -353,16 +353,24 @@ namespace Sensit.App.Calibration
 
 		private void ProcessCommand(Command? command)
 		{
-			switch (command)
+			// Apply the command to each DUT.
+			foreach (Dut dut in _duts)
 			{
-				case Command.TurnOff:
-				case Command.TurnOn:
-				case Command.Default:
-				case Command.Range:
-				case Command.Span:
-				case Command.Zero:
-				default:
-					break;
+				switch (command)
+				{
+					case Command.TurnOff:
+						dut.TurnOff();
+						break;
+					case Command.TurnOn:
+					case Command.Default:
+					case Command.Range:
+					case Command.Span:
+					case Command.Zero:
+					default:
+						break;
+				}
+
+				if (_testThread.CancellationPending) { break; }
 			}
 		}
 

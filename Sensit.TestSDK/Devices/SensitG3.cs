@@ -29,6 +29,30 @@ namespace Sensit.TestSDK.Devices
 			{ VariableType.GasConcentration, 0.0 }
 		};
 
+		public void TurnOff()
+		{
+			try
+			{
+				// Send command to turn the instrument off.
+				_serialPort.WriteLine("666");
+			}
+			catch (InvalidOperationException ex)
+			{
+				throw new DevicePortException("Could not read from G3."
+					+ Environment.NewLine + ex.Message);
+			}
+			catch (TimeoutException ex)
+			{
+				throw new DeviceCommunicationException("No response from G3."
+					+ Environment.NewLine + ex.Message);
+			}
+			catch (Exception ex) when (ex is FormatException || ex is IndexOutOfRangeException)
+			{
+				throw new DeviceCommunicationException("Invalid response from G3."
+					+ Environment.NewLine + ex.Message);
+			}
+		}
+
 		public void Read()
 		{
 			try
