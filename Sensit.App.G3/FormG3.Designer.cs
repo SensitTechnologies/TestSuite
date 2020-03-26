@@ -43,6 +43,10 @@
 			this.labelHydrogenSulfide = new System.Windows.Forms.Label();
 			this.labeHydrogenCyanide = new System.Windows.Forms.Label();
 			this.buttonReadMethane = new System.Windows.Forms.Button();
+			this.buttonReadOxygen = new System.Windows.Forms.Button();
+			this.buttonReadCarbonMonoxide = new System.Windows.Forms.Button();
+			this.buttonReadHydrogenSulfide = new System.Windows.Forms.Button();
+			this.buttonReadHydrogenCyanide = new System.Windows.Forms.Button();
 			this.textBoxOxygen = new System.Windows.Forms.TextBox();
 			this.textBoxMethane = new System.Windows.Forms.TextBox();
 			this.textBoxCarbonMonoxide = new System.Windows.Forms.TextBox();
@@ -50,10 +54,7 @@
 			this.textBoxHydrogenCyanide = new System.Windows.Forms.TextBox();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-			this.buttonReadOxygen = new System.Windows.Forms.Button();
-			this.buttonReadCarbonMonoxide = new System.Windows.Forms.Button();
-			this.buttonReadHydrogenSulfide = new System.Windows.Forms.Button();
-			this.buttonReadHydrogenCyanide = new System.Windows.Forms.Button();
+			this.buttonTurnOff = new System.Windows.Forms.Button();
 			this.menuStrip1.SuspendLayout();
 			this.groupBoxSerialPort.SuspendLayout();
 			this.groupBoxConsoleCommands.SuspendLayout();
@@ -82,7 +83,7 @@
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(93, 22);
 			this.exitToolStripMenuItem.Text = "&Exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
 			// 
@@ -169,16 +170,17 @@
 			this.tableLayoutPanel1.Controls.Add(this.textBoxCarbonMonoxide, 2, 2);
 			this.tableLayoutPanel1.Controls.Add(this.textBoxHydrogenSulfide, 2, 3);
 			this.tableLayoutPanel1.Controls.Add(this.textBoxHydrogenCyanide, 2, 4);
+			this.tableLayoutPanel1.Controls.Add(this.buttonTurnOff, 2, 5);
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 19);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.RowCount = 5;
+			this.tableLayoutPanel1.RowCount = 6;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(287, 145);
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(287, 174);
 			this.tableLayoutPanel1.TabIndex = 1;
 			// 
 			// labelMethane
@@ -241,6 +243,46 @@
 			this.buttonReadMethane.UseVisualStyleBackColor = true;
 			this.buttonReadMethane.Click += new System.EventHandler(this.ButtonReadMethane_Click);
 			// 
+			// buttonReadOxygen
+			// 
+			this.buttonReadOxygen.Location = new System.Drawing.Point(103, 32);
+			this.buttonReadOxygen.Name = "buttonReadOxygen";
+			this.buttonReadOxygen.Size = new System.Drawing.Size(75, 23);
+			this.buttonReadOxygen.TabIndex = 17;
+			this.buttonReadOxygen.Text = "Read";
+			this.buttonReadOxygen.UseVisualStyleBackColor = true;
+			this.buttonReadOxygen.Click += new System.EventHandler(this.ButtonReadOxygen_Click);
+			// 
+			// buttonReadCarbonMonoxide
+			// 
+			this.buttonReadCarbonMonoxide.Location = new System.Drawing.Point(103, 61);
+			this.buttonReadCarbonMonoxide.Name = "buttonReadCarbonMonoxide";
+			this.buttonReadCarbonMonoxide.Size = new System.Drawing.Size(75, 23);
+			this.buttonReadCarbonMonoxide.TabIndex = 18;
+			this.buttonReadCarbonMonoxide.Text = "Read";
+			this.buttonReadCarbonMonoxide.UseVisualStyleBackColor = true;
+			this.buttonReadCarbonMonoxide.Click += new System.EventHandler(this.ButtonReadCarbonMonoxide_Click);
+			// 
+			// buttonReadHydrogenSulfide
+			// 
+			this.buttonReadHydrogenSulfide.Location = new System.Drawing.Point(103, 90);
+			this.buttonReadHydrogenSulfide.Name = "buttonReadHydrogenSulfide";
+			this.buttonReadHydrogenSulfide.Size = new System.Drawing.Size(75, 23);
+			this.buttonReadHydrogenSulfide.TabIndex = 19;
+			this.buttonReadHydrogenSulfide.Text = "Read";
+			this.buttonReadHydrogenSulfide.UseVisualStyleBackColor = true;
+			this.buttonReadHydrogenSulfide.Click += new System.EventHandler(this.ButtonReadHydrogenSulfide_Click);
+			// 
+			// buttonReadHydrogenCyanide
+			// 
+			this.buttonReadHydrogenCyanide.Location = new System.Drawing.Point(103, 119);
+			this.buttonReadHydrogenCyanide.Name = "buttonReadHydrogenCyanide";
+			this.buttonReadHydrogenCyanide.Size = new System.Drawing.Size(75, 23);
+			this.buttonReadHydrogenCyanide.TabIndex = 10;
+			this.buttonReadHydrogenCyanide.Text = "Read";
+			this.buttonReadHydrogenCyanide.UseVisualStyleBackColor = true;
+			this.buttonReadHydrogenCyanide.Click += new System.EventHandler(this.ButtonReadHydrogenCyanide_Click);
+			// 
 			// textBoxOxygen
 			// 
 			this.textBoxOxygen.Location = new System.Drawing.Point(184, 32);
@@ -297,47 +339,18 @@
 			this.statusStrip1.TabIndex = 2;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
-			// buttonReadOxygen
+			// buttonTurnOff
 			// 
-			this.buttonReadOxygen.Location = new System.Drawing.Point(103, 32);
-			this.buttonReadOxygen.Name = "buttonReadOxygen";
-			this.buttonReadOxygen.Size = new System.Drawing.Size(75, 23);
-			this.buttonReadOxygen.TabIndex = 17;
-			this.buttonReadOxygen.Text = "Read";
-			this.buttonReadOxygen.UseVisualStyleBackColor = true;
-			this.buttonReadOxygen.Click += new System.EventHandler(this.ButtonReadOxygen_Click);
+			this.buttonTurnOff.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.buttonTurnOff.Location = new System.Drawing.Point(209, 148);
+			this.buttonTurnOff.Name = "buttonTurnOff";
+			this.buttonTurnOff.Size = new System.Drawing.Size(75, 23);
+			this.buttonTurnOff.TabIndex = 22;
+			this.buttonTurnOff.Text = "Turn Off";
+			this.buttonTurnOff.UseVisualStyleBackColor = true;
+			this.buttonTurnOff.Click += new System.EventHandler(this.ButtonTurnOff_Click);
 			// 
-			// buttonReadCarbonMonoxide
-			// 
-			this.buttonReadCarbonMonoxide.Location = new System.Drawing.Point(103, 61);
-			this.buttonReadCarbonMonoxide.Name = "buttonReadCarbonMonoxide";
-			this.buttonReadCarbonMonoxide.Size = new System.Drawing.Size(75, 23);
-			this.buttonReadCarbonMonoxide.TabIndex = 18;
-			this.buttonReadCarbonMonoxide.Text = "Read";
-			this.buttonReadCarbonMonoxide.UseVisualStyleBackColor = true;
-			this.buttonReadCarbonMonoxide.Click += new System.EventHandler(this.ButtonReadCarbonMonoxide_Click);
-			// 
-			// buttonReadHydrogenSulfide
-			// 
-			this.buttonReadHydrogenSulfide.Location = new System.Drawing.Point(103, 90);
-			this.buttonReadHydrogenSulfide.Name = "buttonReadHydrogenSulfide";
-			this.buttonReadHydrogenSulfide.Size = new System.Drawing.Size(75, 23);
-			this.buttonReadHydrogenSulfide.TabIndex = 19;
-			this.buttonReadHydrogenSulfide.Text = "Read";
-			this.buttonReadHydrogenSulfide.UseVisualStyleBackColor = true;
-			this.buttonReadHydrogenSulfide.Click += new System.EventHandler(this.ButtonReadHydrogenSulfide_Click);
-			// 
-			// buttonReadHydrogenCyanide
-			// 
-			this.buttonReadHydrogenCyanide.Location = new System.Drawing.Point(103, 119);
-			this.buttonReadHydrogenCyanide.Name = "buttonReadHydrogenCyanide";
-			this.buttonReadHydrogenCyanide.Size = new System.Drawing.Size(75, 23);
-			this.buttonReadHydrogenCyanide.TabIndex = 10;
-			this.buttonReadHydrogenCyanide.Text = "Read";
-			this.buttonReadHydrogenCyanide.UseVisualStyleBackColor = true;
-			this.buttonReadHydrogenCyanide.Click += new System.EventHandler(this.ButtonReadHydrogenCyanide_Click);
-			// 
-			// FormG3Console
+			// FormG3
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -347,7 +360,7 @@
 			this.Controls.Add(this.groupBoxSerialPort);
 			this.Controls.Add(this.menuStrip1);
 			this.MainMenuStrip = this.menuStrip1;
-			this.Name = "FormG3Console";
+			this.Name = "FormG3";
 			this.Text = "G3 Console";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormG3Console_FormClosed);
 			this.menuStrip1.ResumeLayout(false);
@@ -393,6 +406,7 @@
 		private System.Windows.Forms.Button buttonReadCarbonMonoxide;
 		private System.Windows.Forms.Button buttonReadHydrogenSulfide;
 		private System.Windows.Forms.Button buttonReadHydrogenCyanide;
+		private System.Windows.Forms.Button buttonTurnOff;
 	}
 }
 
