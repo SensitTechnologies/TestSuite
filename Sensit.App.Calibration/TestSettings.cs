@@ -541,6 +541,40 @@ namespace Sensit.App.Calibration
 					},
 				}
 			},
+			new TestSetting("Linearity: 5% increment")
+			{
+				References = new List<VariableType>
+				{
+					VariableType.MassFlow,
+					VariableType.GasConcentration
+				},
+				Components = new List<TestComponent>
+				{
+					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
+					new TestComponent("Up and Down")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double>
+								{
+									0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100,
+									100, 95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 10, 5, 0
+								},
+								Samples = 240,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
+				}
+			},
 			new TestSetting("Transient Response")
 			{
 				References = new List<VariableType>
