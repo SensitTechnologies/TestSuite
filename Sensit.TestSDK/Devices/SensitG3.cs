@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO.Ports;
+using System.Text.RegularExpressions;
 using System.Threading;
 using Sensit.TestSDK.Calculations;
 using Sensit.TestSDK.Communication;
@@ -95,7 +96,8 @@ namespace Sensit.TestSDK.Devices
 				_serialPort.DiscardInBuffer();
 
 				// Save the whole string as a message to be logged.
-				Message = message;
+				// Replace any newlines or tabs with spaces to avoid weird log files.
+				Message = Regex.Replace(message, @"\t|\n|\r", " ");
 
 				// Parse the string.
 				string[] words = message.Split(' ');
