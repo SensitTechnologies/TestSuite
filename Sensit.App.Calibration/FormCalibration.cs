@@ -479,7 +479,7 @@ namespace Sensit.App.Calibration
 					dut.Selected = checkBox.Checked;
 					dut.Status = DutStatus.Init;
 					dut.SerialNumber = textBoxSerial.Text;
-					dut.Message = string.Empty;
+					dut.StatusMessage = string.Empty;
 
 					// If the DUT is a Sensit G3...
 					if (modelSetting.Label == "Sensit G3")

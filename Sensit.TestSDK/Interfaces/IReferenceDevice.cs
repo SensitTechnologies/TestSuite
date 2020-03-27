@@ -182,4 +182,16 @@ namespace Sensit.TestSDK.Interfaces
 	{
 		UnitOfMeasure.Voltage VoltageUnit { get; set; }
 	}
+
+	/// <summary>
+	/// Device that delivers generic messages as a text string.
+	/// </summary>
+	/// <remarks>
+	/// Intended to be a convenient way to support any UART-based device without
+	/// requiring modifications to this software.
+	/// </remarks>
+	public interface IMessageReference : IReferenceDevice
+	{
+		string Message { get; }
+	}
 }

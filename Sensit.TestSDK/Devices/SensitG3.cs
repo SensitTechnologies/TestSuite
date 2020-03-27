@@ -16,7 +16,7 @@ namespace Sensit.TestSDK.Devices
 	/// The serial interface here is just a debug console that is not present
 	/// in production firmware.
 	/// </remarks>
-	public class SensitG3 : SerialDevice, IGasConcentrationReference
+	public class SensitG3 : SerialDevice, IGasConcentrationReference, IMessageReference
 	{
 		#region Reference Device Methods
 
@@ -93,6 +93,9 @@ namespace Sensit.TestSDK.Devices
 
 				// Flush the port.
 				_serialPort.DiscardInBuffer();
+
+				// Save the whole string as a message to be logged.
+				Message = message;
 
 				// Parse the string.
 				string[] words = message.Split(' ');
@@ -181,6 +184,11 @@ namespace Sensit.TestSDK.Devices
 				_serialPort.StopBits = value;
 			}
 		}
+
+		/// <summary>
+		/// Contains the entire (unparsed) response from the G3, which can be logged to a file if desired.
+		/// </summary>
+		public string Message { get; private set; }
 
 		public override void WriteSerialProperties(int dataBits = 8, Parity parity = Parity.None, StopBits stopBits = StopBits.One)
 		{

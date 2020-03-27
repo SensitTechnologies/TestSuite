@@ -14,6 +14,8 @@ namespace Sensit.App.Calibration
 		public double? Setpoint { get; set; }
 		public double? Reference { get; set; }
 		public double? SensorValue { get; set; }
+		public string SensorMessage { get; set; } = string.Empty;
+		public string StatusMessage { get; set; } = string.Empty;
 	}
 
 	public enum DutStatus
@@ -72,7 +74,7 @@ namespace Sensit.App.Calibration
 		/// <summary>
 		/// Data collected during a test.
 		/// </summary>
-		public List<TestResults> Results { get; set; } = new List<TestResults>();
+		public List<TestResults> Results { get; } = new List<TestResults>();
 
 		/// <summary>
 		/// DUT's fixture position or channel
@@ -85,7 +87,7 @@ namespace Sensit.App.Calibration
 		public bool Selected { get; set; }
 
 		/// <summary>
-		/// DUT status (pass, fail, etc.)
+		/// DUT status (pass, fail, etc.) to be added to the log
 		/// </summary>
 		public DutStatus Status { get; set; }
 
@@ -95,9 +97,9 @@ namespace Sensit.App.Calibration
 		public string SerialNumber { get; set; }
 
 		/// <summary>
-		/// A message to be added to the log
+		/// A message from the calibration program to be added to the log
 		/// </summary>
-		public string Message { get; set; }
+		public string StatusMessage { get; set; }
 
 		/// <summary>
 		/// Type of DUT
@@ -119,7 +121,7 @@ namespace Sensit.App.Calibration
 
 			// Create DUT object.
 			// Only the one chosen by the user will end up being used.
-			switch (settings.Label)
+			switch (settings?.Label)
 			{
 				// Analog sensors use the DUT Interface device from the
 				// Equipment class, so we need do nothing here.
@@ -148,7 +150,7 @@ namespace Sensit.App.Calibration
 			if (Selected)
 			{
 				// If the DUT uses a datalogger...
-				if ((_settings.Label == "Datalogger") && (DutInterface != null))
+				if ((_settings?.Label == "Datalogger") && (DutInterface != null))
 				{
 					// Configure DUT Interface device.
 					DutInterface.Channels[(int)Index - 1] = Selected;
@@ -208,9 +210,10 @@ namespace Sensit.App.Calibration
 				(Status == DutStatus.Fail))
 			{
 				double reading = 0.0;
+				string message = string.Empty;
 
 				// If the DUT uses a datalogger...
-				if ((_settings.Label == "Datalogger") && (DutInterface != null))
+				if ((_settings?.Label == "Datalogger") && (DutInterface != null))
 				{
 					reading = DutInterface.Readings[Index];
 				}
@@ -220,6 +223,7 @@ namespace Sensit.App.Calibration
 					_sensitG3.Read();
 
 					reading = _sensitG3.Readings[VariableType.GasConcentration];
+					message = _sensitG3.Message;
 				}
 				// If the DUT is a "manual" device...
 				else if (_manual != null)
@@ -235,7 +239,8 @@ namespace Sensit.App.Calibration
 					ElapsedTime = elapsedTime,
 					Setpoint = setpoint,
 					Reference = reference,
-					SensorValue = reading
+					SensorValue = reading,
+					SensorMessage = message,
 				});
 			}
 		}
