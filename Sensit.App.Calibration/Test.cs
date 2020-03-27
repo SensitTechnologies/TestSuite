@@ -632,16 +632,16 @@ namespace Sensit.App.Calibration
 
 			try
 			{
-				// Stop all controllers.
-				foreach (KeyValuePair<VariableType, IControlDevice> c in _equipment.Controllers)
-				{
-					c.Value.SetControlMode(ControlMode.Ambient);
-				}
-
 				// Close DUTs; save CSV files.
 				foreach (Dut dut in _duts)
 				{
 					dut.Close();
+				}
+
+				// Stop all controllers.
+				foreach (KeyValuePair<VariableType, IControlDevice> c in _equipment.Controllers)
+				{
+					c.Value.SetControlMode(ControlMode.Ambient);
 				}
 
 				// Close test equipment.

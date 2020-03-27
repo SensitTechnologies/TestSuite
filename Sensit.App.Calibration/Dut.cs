@@ -5,6 +5,7 @@ using CsvHelper;
 using Sensit.TestSDK.Devices;
 using System.ComponentModel;
 using Sensit.TestSDK.Interfaces;
+using System.Threading;
 
 namespace Sensit.App.Calibration
 {
@@ -172,8 +173,15 @@ namespace Sensit.App.Calibration
 			if ((Status == DutStatus.Testing) ||
 				(Status == DutStatus.Fail))
 			{
-				// If the DUT is a G3, close it.
-				_sensitG3?.Close();
+				// If the DUT is a G3...
+				if (_sensitG3 != null)
+				{
+					// Turn it off.
+					_sensitG3.TurnOff();
+
+					// Wait 15 seconds to ensure it has time to purge gas.
+					Thread.Sleep(new TimeSpan(0, 0, 15));
+				}
 
 				// Set status to "Done."
 				Status = DutStatus.Done;
