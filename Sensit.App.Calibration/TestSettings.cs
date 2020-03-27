@@ -550,6 +550,25 @@ namespace Sensit.App.Calibration
 				},
 				Components = new List<TestComponent>
 				{
+					// Warm up for 1 hour.  Measure gas every 1 second.  Don't wait for stability.
+					new TestComponent("Warmup")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0 },
+								Samples = 3600,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
 					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
 					new TestComponent("Up and Down")
 					{
