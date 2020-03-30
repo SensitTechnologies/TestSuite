@@ -165,7 +165,8 @@ namespace Sensit.App.Calibration
 		{
 			new ModelSetting("Manual"),
 			new ModelSetting("Datalogger"),
-			new ModelSetting("Sensit G3")
+			new ModelSetting("Sensit G3"),
+			new ModelSetting("Serial Device")
 		};
 
 		[Category("DUT Settings"), Description("Settings describing product ranges.")]
