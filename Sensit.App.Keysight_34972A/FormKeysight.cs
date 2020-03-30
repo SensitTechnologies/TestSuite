@@ -188,6 +188,10 @@ namespace Sensit.App.Keysight
 			{
 				MessageBox.Show(ex.Message);
 			}
+			catch (DeviceCommandFailedException ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 		}
 	}
 }
