@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO.Ports;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using Sensit.TestSDK.Communication;
 using Sensit.TestSDK.Exceptions;
 using Sensit.TestSDK.Interfaces;
-using Sensit.TestSDK.Utilities;
 
 namespace Sensit.TestSDK.Devices
 {
@@ -21,6 +19,8 @@ namespace Sensit.TestSDK.Devices
 	/// </remarks>
 	public class GenericSerialDevice : SerialDevice, IMessageReference
 	{
+		public string Command { get; set; } = string.Empty;
+
 		#region Message Device Methods
 
 		// Unused.
@@ -36,9 +36,8 @@ namespace Sensit.TestSDK.Devices
 			try
 			{
 				// Write to the device.
-				// TODO:  Create a property for the command used here,
-				// and make it settable from the GUI of any program using this class.
-				_serialPort.WriteLine("5dd");
+				// TODO:  Make the command settable from the GUI of any program using this class.
+				_serialPort.WriteLine(Command);
 
 				// Read from the serial port.
 				Thread.Sleep(200);
