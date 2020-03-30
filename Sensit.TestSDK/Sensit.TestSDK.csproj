@@ -15,7 +15,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sensit.TestSDK</RootNamespace>
     <AssemblyName>Sensit.TestSDK</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
@@ -50,9 +50,6 @@
   <ItemGroup>
     <Reference Include="AE.Net.Mail, Version=1.7.10.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\AE.Net.Mail.1.7.10.0\lib\net45\AE.Net.Mail.dll</HintPath>
-    </Reference>
-    <Reference Include="Ag3497x_1_13">
-      <HintPath>..\..\..\..\..\..\ProgramData\Keysight\Command Expert\ScpiNetDrivers\Ag3497x_1_13.dll</HintPath>
     </Reference>
     <Reference Include="CsvHelper, Version=13.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
       <HintPath>..\packages\CsvHelper.13.0.0\lib\net47\CsvHelper.dll</HintPath>
