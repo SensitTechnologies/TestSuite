@@ -384,7 +384,7 @@ namespace Sensit.App.Calibration
 
 		#endregion
 
-		#region Overview
+		#region Test
 
 		/// <summary>
 		/// When "Start" button is clicked, fetch settings, create equipment/test/DUTs, start test.
