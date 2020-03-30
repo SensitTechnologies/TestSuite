@@ -19,7 +19,7 @@ namespace Sensit.TestSDK.Devices
 	/// </remarks>
 	public class SensitG3 : SerialDevice, IGasConcentrationReference, IMessageReference
 	{
-		#region Reference Device Methods
+		#region Message Device Methods
 
 		public UnitOfMeasure.Concentration ConcentrationUnit { get; set; } = UnitOfMeasure.Concentration.PartsPerMillion;
 
@@ -29,6 +29,11 @@ namespace Sensit.TestSDK.Devices
 		{
 			{ VariableType.GasConcentration, 0.0 }
 		};
+
+		/// <summary>
+		/// Contains the entire (unparsed) response from the G3, which can be logged to a file if desired.
+		/// </summary>
+		public string Message { get; private set; }
 
 		public void TurnOff()
 		{
@@ -186,11 +191,6 @@ namespace Sensit.TestSDK.Devices
 				_serialPort.StopBits = value;
 			}
 		}
-
-		/// <summary>
-		/// Contains the entire (unparsed) response from the G3, which can be logged to a file if desired.
-		/// </summary>
-		public string Message { get; private set; }
 
 		public override void WriteSerialProperties(int dataBits = 8, Parity parity = Parity.None, StopBits stopBits = StopBits.One)
 		{

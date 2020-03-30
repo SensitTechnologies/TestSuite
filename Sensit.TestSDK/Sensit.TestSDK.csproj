@@ -204,6 +204,7 @@
     </Compile>
     <Compile Include="Devices\Keysight_34972A.cs" />
     <Compile Include="Devices\ColeParmerMFC.cs" />
+    <Compile Include="Devices\GenericSerialDevice.cs" />
     <Compile Include="Devices\SerialStreamDevice.cs" />
     <Compile Include="Email\Email.cs" />
     <Compile Include="Exceptions\DeviceExceptions.cs" />

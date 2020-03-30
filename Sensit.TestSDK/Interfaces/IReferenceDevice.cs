@@ -85,6 +85,8 @@ namespace Sensit.TestSDK.Interfaces
 	[Description("Reference Device")]
 	public interface IReferenceDevice
 	{
+		// TODO:  Try removing this.
+		// Instead put individual readings as doubles (not dictionary) for each reference type.
 		Dictionary<VariableType, double> Readings { get; }
 
 		/// <summary>

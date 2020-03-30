@@ -18,7 +18,7 @@ namespace Sensit.TestSDK.Devices
 	/// of data it will send.  So this class is a generic reference device, and
 	/// will have a generic variable type which will be accessible as a string.
 	/// </remarks>
-	public class SerialStreamDevice : SerialDevice, IReferenceDevice
+	public class SerialStreamDevice : SerialDevice, IMessageReference
 	{
 		#region Reference Device Properties
 
@@ -37,7 +37,7 @@ namespace Sensit.TestSDK.Devices
 		/// <summary>
 		/// Most recent message from the device.
 		/// </summary>
-		private string _message = string.Empty;
+		public string Message { get; private set; }
 
 		#region Constructor
 
