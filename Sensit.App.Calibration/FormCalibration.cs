@@ -601,25 +601,6 @@ namespace Sensit.App.Calibration
 		}
 
 		/// <summary>
-		/// When the "Model" selection is changed, update the model of each individual DUT.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ComboBoxModel_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			// Remember the selected value.
-			Properties.Settings.Default.Model = comboBoxModel.SelectedItem.ToString();
-
-			// Update the individual selections for all DUTs.
-			for (int i = 0; i < NumDuts; i++)
-			{
-				ComboBox comboBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_MODEL, i) as ComboBox;
-				int j = comboBox.FindStringExact(comboBoxModel.SelectedItem.ToString());
-				comboBox.SelectedIndex = j == -1 ? 0 : j;
-			}
-		}
-
-		/// <summary>
 		/// When the "Range" selection is changed, save the new selection.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -639,25 +620,6 @@ namespace Sensit.App.Calibration
 		{
 			// Remember the selected value.
 			Properties.Settings.Default.Test = comboBoxTest.SelectedItem.ToString();
-		}
-
-		/// <summary>
-		/// When "Select/deselect all" checkbox is clicked, select/deselect all DUTs.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void CheckBoxSelectAll_CheckedChanged(object sender, EventArgs e)
-		{
-			// Look through each control.
-			foreach (Control c in tableLayoutPanelDevicesUnderTest.Controls)
-			{
-				// If it's a checkbox...
-				if (c is CheckBox cb)
-				{
-					// Make its state match the select all checkbox.
-					cb.Checked = ((CheckBox)sender).Checked;
-				}
-			}
 		}
 
 		/// <summary>
@@ -691,6 +653,48 @@ namespace Sensit.App.Calibration
 
 			// Return whether or not we're stopping the test.
 			return (result == DialogResult.OK);
+		}
+
+		#endregion
+
+		#region DUT
+
+		/// <summary>
+		/// When the "Model" selection is changed, update the model of each individual DUT.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ComboBoxModel_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			// Remember the selected value.
+			Properties.Settings.Default.Model = comboBoxModel.SelectedItem.ToString();
+
+			// Update the individual selections for all DUTs.
+			for (int i = 0; i < NumDuts; i++)
+			{
+				ComboBox comboBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_MODEL, i) as ComboBox;
+				int j = comboBox.FindStringExact(comboBoxModel.SelectedItem.ToString());
+				comboBox.SelectedIndex = j == -1 ? 0 : j;
+			}
+		}
+
+		/// <summary>
+		/// When "Select/deselect all" checkbox is clicked, select/deselect all DUTs.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void CheckBoxSelectAll_CheckedChanged(object sender, EventArgs e)
+		{
+			// Look through each control.
+			foreach (Control c in tableLayoutPanelDevicesUnderTest.Controls)
+			{
+				// If it's a checkbox...
+				if (c is CheckBox cb)
+				{
+					// Make its state match the select all checkbox.
+					cb.Checked = ((CheckBox)sender).Checked;
+				}
+			}
 		}
 
 		/// <summary>
