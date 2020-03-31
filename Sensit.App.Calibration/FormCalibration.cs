@@ -473,13 +473,13 @@ namespace Sensit.App.Calibration
 					{
 						SetSerialNumber = SetDutSerialNumber,
 						SetStatus = SetDutStatus,
+						DutInterface = _equipment.DutInterface,
+						Index = i + 1,
+						Selected = checkBox.Checked,
+						Status = DutStatus.Init,
+						SerialNumber = textBoxSerial.Text,
+						StatusMessage = string.Empty
 					};
-					dut.DutInterface = _equipment.DutInterface;
-					dut.Index = i + 1;
-					dut.Selected = checkBox.Checked;
-					dut.Status = DutStatus.Init;
-					dut.SerialNumber = textBoxSerial.Text;
-					dut.StatusMessage = string.Empty;
 
 					// If the DUT is a Sensit G3...
 					if (modelSetting.Label == "Sensit G3")
