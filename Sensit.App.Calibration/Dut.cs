@@ -16,7 +16,6 @@ namespace Sensit.App.Calibration
 		public double? Reference { get; set; }
 		public double? SensorValue { get; set; }
 		public string SensorMessage { get; set; } = string.Empty;
-		public string StatusMessage { get; set; } = string.Empty;
 	}
 
 	public enum DutStatus
@@ -47,6 +46,10 @@ namespace Sensit.App.Calibration
 		// settings for the DUT
 		private readonly ModelSetting _settings;
 
+		// CSV writer
+		StreamWriter writer;
+		CsvWriter csv;
+
 		// generic manual device, used whenever the user selects "Manual" option for DUTs.
 		private Manual _manual;
 
@@ -75,6 +78,9 @@ namespace Sensit.App.Calibration
 		/// <summary>
 		/// Data collected during a test.
 		/// </summary>
+		/// <remarks>
+		/// This is a public property so it can be data bound to the GUI to show to the user.
+		/// </remarks>
 		public List<TestResults> Results { get; } = new List<TestResults>();
 
 		/// <summary>
@@ -116,6 +122,10 @@ namespace Sensit.App.Calibration
 
 		#region Constructor
 
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="settings">applicable settings</param>
 		public Dut(ModelSetting settings)
 		{
 			_settings = settings;
@@ -165,6 +175,12 @@ namespace Sensit.App.Calibration
 
 				// Update GUI.
 				SetStatus(Index, Status);
+
+				// Initialize CSV file writer.
+				string filename = SerialNumber + ".csv";
+				string fullPath = Path.Combine(Properties.Settings.Default.LogDirectory, filename);
+				writer = new StreamWriter(fullPath, true);
+				csv = new CsvWriter(writer);
 			}
 		}
 
@@ -173,31 +189,26 @@ namespace Sensit.App.Calibration
 			if ((Status == DutStatus.Testing) ||
 				(Status == DutStatus.Fail))
 			{
-				// If the DUT is a G3...
-				if (_sensitG3 != null)
-				{
-					// Turn it off.
-					_sensitG3.TurnOff();
-
-					// Wait 15 seconds to ensure it has time to purge gas.
-					Thread.Sleep(new TimeSpan(0, 0, 15));
-				}
+				// Turn DUT off.  Should I keep this here?
+				TurnOff();
 
 				// Set status to "Done."
 				Status = DutStatus.Done;
 
 				// Update GUI.
 				SetStatus(Index, Status);
-
-				// Save test results to csv file.
-				string filename = SerialNumber + ".csv";
-				string fullPath = Path.Combine(Properties.Settings.Default.LogDirectory, filename);
-				using (var writer = new StreamWriter(fullPath, true))
-				using (var csv = new CsvWriter(writer))
-				{
-					csv.WriteRecords(Results);
-				}
 			}
+		}
+
+		public void Dispose()
+		{
+			// Dispose of the CSV writer if it is not null.
+			csv?.Dispose();
+			writer?.Dispose();
+
+			// Free the references.
+			csv = null;
+			writer = null;
 		}
 
 		public void TurnOff()
@@ -208,6 +219,8 @@ namespace Sensit.App.Calibration
 				// Turn it off.
 				_sensitG3.TurnOff();
 
+				// Wait 15 seconds to ensure it has time to purge gas.
+				Thread.Sleep(new TimeSpan(0, 0, 15));
 			}
 		}
 
@@ -241,15 +254,21 @@ namespace Sensit.App.Calibration
 					reading = _manual.Readings[VariableType.GasConcentration];
 				}
 
-				// Save the result.
-				Results.Add(new TestResults
+				// Format data from device.
+				var testResult = new TestResults
 				{
 					ElapsedTime = elapsedTime,
 					Setpoint = setpoint,
 					Reference = reference,
 					SensorValue = reading,
 					SensorMessage = message,
-				});
+				};
+
+				// Save test results to csv file.
+				csv?.WriteRecords(new List<TestResults> { testResult });
+
+				// Save the result.
+				Results.Add(testResult);
 			}
 		}
 	}

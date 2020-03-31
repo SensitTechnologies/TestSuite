@@ -282,9 +282,13 @@ namespace Sensit.App.Calibration
 				{
 					c.Value.SetControlMode(ControlMode.Measure);
 				}
-				catch (DeviceException)
+				catch (DeviceException ex)
 				{
-					// TODO:  Log failures.
+					// Log failures.
+					foreach (Dut d in _duts)
+					{
+						d.StatusMessage = ex.Message;
+					}
 				}
 			}
 
@@ -632,7 +636,7 @@ namespace Sensit.App.Calibration
 
 			try
 			{
-				// Close DUTs; save CSV files.
+				// Close DUTs.
 				foreach (Dut dut in _duts)
 				{
 					dut.Close();
@@ -651,6 +655,14 @@ namespace Sensit.App.Calibration
 			catch (Exception ex)
 			{
 				MessageBox.Show(ex.Message, ex.GetType().ToString());
+			}
+			finally
+			{
+				// Dispose of any used DUT resources.
+				foreach (Dut dut in _duts)
+				{
+					dut.Dispose();
+				}
 			}
 
 			// Update the GUI.
