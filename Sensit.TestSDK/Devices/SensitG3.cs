@@ -103,21 +103,6 @@ namespace Sensit.TestSDK.Devices
 				// Save the whole string as a message to be logged.
 				// Replace any newlines or tabs with spaces to avoid weird log files.
 				Message = Regex.Replace(message, @"\t|\n|\r", " ");
-
-				// Parse the string.
-				string[] words = message.Split(' ');
-
-				// Parse the reading.
-				switch (GasSelection)
-				{
-					case Gas.Methane:
-						Readings[VariableType.GasConcentration] = Convert.ToDouble(words[6]);
-						break;
-					default:
-						Readings[VariableType.GasConcentration] = Convert.ToDouble(words[4]);
-						break;
-				}
-
 			}
 			catch (InvalidOperationException ex)
 			{
