@@ -339,7 +339,7 @@ namespace Sensit.App.Calibration
 					}
 				}
 			},
-			new TestSetting("Linearity: 1-cycle, 100%")
+			new TestSetting("Linearity: 1-cycle, 100% / 10")
 			{
 				References = new List<VariableType>
 				{
@@ -369,7 +369,61 @@ namespace Sensit.App.Calibration
 					},
 				}
 			},
-			new TestSetting("Linearity: 1-cycle, 50%")
+			new TestSetting("Linearity: 1-cycle, 100% / 10, warmup")
+			{
+				References = new List<VariableType>
+				{
+					VariableType.MassFlow,
+					VariableType.GasConcentration
+				},
+				Components = new List<TestComponent>
+				{
+					// Warm up for 1 hour.  Measure gas every 1 second.  Don't wait for stability.
+					new TestComponent("Warmup")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0 },
+								Samples = 3600,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
+					// Perform zero calibration after warmup.
+					new TestComponent("Auto Zero")
+					{
+						Commands = new List<Test.Command> { Test.Command.Zero }
+					},
+					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
+					new TestComponent("Up and Down")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0 },
+								Samples = 240,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
+				}
+			},
+			new TestSetting("Linearity: 1-cycle, 50% / 5")
 			{
 				References = new List<VariableType>
 				{
@@ -399,7 +453,7 @@ namespace Sensit.App.Calibration
 					},
 				}
 			},
-			new TestSetting("Linearity: 1-cycle, 25%")
+			new TestSetting("Linearity: 1-cycle, 25% / 2.5")
 			{
 				References = new List<VariableType>
 				{
@@ -429,7 +483,7 @@ namespace Sensit.App.Calibration
 					},
 				}
 			},
-			new TestSetting("Linearity: 1-cycle, 100% by 5, warmup")
+			new TestSetting("Linearity: 1-cycle, 100% / 5, warmup")
 			{
 				References = new List<VariableType>
 				{
@@ -456,6 +510,11 @@ namespace Sensit.App.Calibration
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							}
 						},
+					},
+					// Perform zero calibration after warmup.
+					new TestComponent("Auto Zero")
+					{
+						Commands = new List<Test.Command> { Test.Command.Zero }
 					},
 					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
 					new TestComponent("Up and Down")
@@ -482,7 +541,7 @@ namespace Sensit.App.Calibration
 					},
 				}
 			},
-			new TestSetting("Linearity: 1-cycle, 50% by 5, warmup")
+			new TestSetting("Linearity: 1-cycle, 50% / 5, warmup")
 			{
 				References = new List<VariableType>
 				{
@@ -510,6 +569,11 @@ namespace Sensit.App.Calibration
 							}
 						},
 					},
+					// Perform zero calibration after warmup.
+					new TestComponent("Auto Zero")
+					{
+						Commands = new List<Test.Command> { Test.Command.Zero }
+					},
 					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
 					new TestComponent("Up and Down")
 					{
@@ -535,9 +599,9 @@ namespace Sensit.App.Calibration
 					},
 				}
 			},
-			new TestSetting("Linearity: 1-cycle, 25% by 5, warmup")
+			new TestSetting("Linearity: 1-cycle, 25% / 5, warmup")
 			{
-								References = new List<VariableType>
+				References = new List<VariableType>
 				{
 					VariableType.MassFlow,
 					VariableType.GasConcentration
@@ -562,6 +626,11 @@ namespace Sensit.App.Calibration
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							}
 						},
+					},
+					// Perform zero calibration after warmup.
+					new TestComponent("Auto Zero")
+					{
+						Commands = new List<Test.Command> { Test.Command.Zero }
 					},
 					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
 					new TestComponent("Up and Down")
@@ -588,7 +657,7 @@ namespace Sensit.App.Calibration
 					},
 				}
 			},
-			new TestSetting("Linearity: 5-cycle, 100%")
+			new TestSetting("Linearity: 5-cycle, 100% / 10")
 			{
 				References = new List<VariableType>
 				{
@@ -625,7 +694,7 @@ namespace Sensit.App.Calibration
 					},
 				}
 			},
-			new TestSetting("Linearity: 5-cycle, 50%")
+			new TestSetting("Linearity: 5-cycle, 50% / 5")
 			{
 				References = new List<VariableType>
 				{
@@ -663,7 +732,7 @@ namespace Sensit.App.Calibration
 					},
 				}
 			},
-			new TestSetting("Linearity: 5-cycle, 25%")
+			new TestSetting("Linearity: 5-cycle, 25% / 2.5")
 			{
 				References = new List<VariableType>
 				{
