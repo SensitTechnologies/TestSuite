@@ -627,6 +627,11 @@ namespace Sensit.App.Calibration
 							}
 						},
 					},
+					// Perform zero calibration after warmup.
+					new TestComponent("Auto Zero")
+					{
+						Commands = new List<Test.Command> { Test.Command.Zero }
+					},
 					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
 					new TestComponent("Up and Down")
 					{
