@@ -370,6 +370,8 @@ namespace Sensit.App.Calibration
 					case Command.Range:
 					case Command.Span:
 					case Command.Zero:
+						dut.Zero();
+						break;
 					default:
 						break;
 				}

@@ -224,6 +224,16 @@ namespace Sensit.App.Calibration
 			}
 		}
 
+		public void Zero()
+		{
+			// If the DUT is a G3...
+			if (_sensitG3 != null)
+			{
+				// Perform auto-zero.
+				_sensitG3.Zero();
+			}
+		}
+
 		public void Read(TimeSpan elapsedTime, double setpoint, double reference)
 		{
 			// Only process found or failed DUTs.
