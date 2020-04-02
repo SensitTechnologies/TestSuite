@@ -35,12 +35,12 @@ namespace Sensit.TestSDK.Devices
 		/// </summary>
 		public string Message { get; private set; }
 
-		public void TurnOff()
+		private void WriteToG3(string message)
 		{
 			try
 			{
 				// Send command to turn the instrument off.
-				_serialPort.WriteLine("666");
+				_serialPort.WriteLine(message);
 			}
 			catch (InvalidOperationException ex)
 			{
@@ -57,6 +57,18 @@ namespace Sensit.TestSDK.Devices
 				throw new DeviceCommunicationException("Invalid response from G3."
 					+ Environment.NewLine + ex.Message);
 			}
+		}
+
+		public void TurnOff()
+		{
+			// Send command to turn the instrument off.
+			WriteToG3("666");
+		}
+
+		public void Zero()
+		{
+			// Send command to perform auto-zero.
+			WriteToG3("5zz");
 		}
 
 		public void Read()
