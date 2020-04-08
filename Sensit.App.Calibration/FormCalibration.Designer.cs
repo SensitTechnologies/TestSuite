@@ -28,22 +28,22 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea11 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine51 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine52 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine53 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine54 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine55 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint11 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 5D);
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea12 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine56 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine57 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine58 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine59 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine60 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint12 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 5D);
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine1 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine2 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine3 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine4 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine5 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 5D);
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine6 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine7 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine8 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine9 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine10 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint2 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 5D);
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPageTest = new System.Windows.Forms.TabPage();
 			this.tableLayoutPanelTest = new System.Windows.Forms.TableLayoutPanel();
@@ -56,6 +56,13 @@
 			this.tableLayoutPanelTestSetupButtons = new System.Windows.Forms.TableLayoutPanel();
 			this.buttonStart = new System.Windows.Forms.Button();
 			this.buttonStop = new System.Windows.Forms.Button();
+			this.tabPageDut = new System.Windows.Forms.TabPage();
+			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			this.checkBoxSelectAll = new System.Windows.Forms.CheckBox();
+			this.comboBoxModel = new System.Windows.Forms.ComboBox();
+			this.groupBoxDevicesUnderTest = new System.Windows.Forms.GroupBox();
+			this.tableLayoutPanelDevicesUnderTest = new System.Windows.Forms.TableLayoutPanel();
 			this.tabPageStatus = new System.Windows.Forms.TabPage();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -110,19 +117,16 @@
 			this.supportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpProvider1 = new System.Windows.Forms.HelpProvider();
 			this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-			this.tabPageDut = new System.Windows.Forms.TabPage();
-			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-			this.groupBoxDevicesUnderTest = new System.Windows.Forms.GroupBox();
-			this.tableLayoutPanelDevicesUnderTest = new System.Windows.Forms.TableLayoutPanel();
-			this.comboBoxModel = new System.Windows.Forms.ComboBox();
-			this.checkBoxSelectAll = new System.Windows.Forms.CheckBox();
-			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.tabControl1.SuspendLayout();
 			this.tabPageTest.SuspendLayout();
 			this.tableLayoutPanelTest.SuspendLayout();
 			this.groupBoxTestSettings.SuspendLayout();
 			this.tableLayoutPanelTestSettings.SuspendLayout();
 			this.tableLayoutPanelTestSetupButtons.SuspendLayout();
+			this.tabPageDut.SuspendLayout();
+			this.tableLayoutPanel2.SuspendLayout();
+			this.tableLayoutPanel1.SuspendLayout();
+			this.groupBoxDevicesUnderTest.SuspendLayout();
 			this.tabPageStatus.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
@@ -138,10 +142,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.chartRate)).BeginInit();
 			this.statusStrip1.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
-			this.tabPageDut.SuspendLayout();
-			this.tableLayoutPanel2.SuspendLayout();
-			this.groupBoxDevicesUnderTest.SuspendLayout();
-			this.tableLayoutPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabControl1
@@ -309,6 +309,103 @@
 			this.buttonStop.Text = "Stop";
 			this.buttonStop.UseVisualStyleBackColor = true;
 			this.buttonStop.Click += new System.EventHandler(this.ButtonStop_Click);
+			// 
+			// tabPageDut
+			// 
+			this.tabPageDut.Controls.Add(this.tableLayoutPanel2);
+			this.tabPageDut.Location = new System.Drawing.Point(4, 22);
+			this.tabPageDut.Name = "tabPageDut";
+			this.tabPageDut.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageDut.Size = new System.Drawing.Size(526, 283);
+			this.tabPageDut.TabIndex = 5;
+			this.tabPageDut.Text = "DUT";
+			this.tabPageDut.UseVisualStyleBackColor = true;
+			// 
+			// tableLayoutPanel2
+			// 
+			this.tableLayoutPanel2.ColumnCount = 1;
+			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel1, 0, 2);
+			this.tableLayoutPanel2.Controls.Add(this.groupBoxDevicesUnderTest, 0, 0);
+			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+			this.tableLayoutPanel2.RowCount = 3;
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel2.Size = new System.Drawing.Size(520, 277);
+			this.tableLayoutPanel2.TabIndex = 0;
+			// 
+			// tableLayoutPanel1
+			// 
+			this.tableLayoutPanel1.AutoSize = true;
+			this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.tableLayoutPanel1.ColumnCount = 2;
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanel1.Controls.Add(this.checkBoxSelectAll, 0, 0);
+			this.tableLayoutPanel1.Controls.Add(this.comboBoxModel, 1, 0);
+			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 247);
+			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+			this.tableLayoutPanel1.RowCount = 1;
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(247, 27);
+			this.tableLayoutPanel1.TabIndex = 23;
+			// 
+			// checkBoxSelectAll
+			// 
+			this.checkBoxSelectAll.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.checkBoxSelectAll.AutoSize = true;
+			this.checkBoxSelectAll.Location = new System.Drawing.Point(3, 5);
+			this.checkBoxSelectAll.Name = "checkBoxSelectAll";
+			this.checkBoxSelectAll.Size = new System.Drawing.Size(114, 17);
+			this.checkBoxSelectAll.TabIndex = 21;
+			this.checkBoxSelectAll.Text = "Select/deselect all";
+			this.checkBoxSelectAll.UseVisualStyleBackColor = true;
+			this.checkBoxSelectAll.CheckedChanged += new System.EventHandler(this.CheckBoxSelectAll_CheckedChanged);
+			// 
+			// comboBoxModel
+			// 
+			this.comboBoxModel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxModel.FormattingEnabled = true;
+			this.comboBoxModel.Location = new System.Drawing.Point(123, 3);
+			this.comboBoxModel.Name = "comboBoxModel";
+			this.comboBoxModel.Size = new System.Drawing.Size(121, 21);
+			this.comboBoxModel.TabIndex = 22;
+			this.comboBoxModel.SelectedIndexChanged += new System.EventHandler(this.ComboBoxModel_SelectedIndexChanged);
+			// 
+			// groupBoxDevicesUnderTest
+			// 
+			this.groupBoxDevicesUnderTest.AutoSize = true;
+			this.groupBoxDevicesUnderTest.Controls.Add(this.tableLayoutPanelDevicesUnderTest);
+			this.groupBoxDevicesUnderTest.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBoxDevicesUnderTest.Location = new System.Drawing.Point(3, 3);
+			this.groupBoxDevicesUnderTest.Name = "groupBoxDevicesUnderTest";
+			this.tableLayoutPanel2.SetRowSpan(this.groupBoxDevicesUnderTest, 2);
+			this.groupBoxDevicesUnderTest.Size = new System.Drawing.Size(514, 238);
+			this.groupBoxDevicesUnderTest.TabIndex = 18;
+			this.groupBoxDevicesUnderTest.TabStop = false;
+			this.groupBoxDevicesUnderTest.Text = "Devices Under Test";
+			// 
+			// tableLayoutPanelDevicesUnderTest
+			// 
+			this.tableLayoutPanelDevicesUnderTest.AutoScroll = true;
+			this.tableLayoutPanelDevicesUnderTest.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.tableLayoutPanelDevicesUnderTest.ColumnCount = 6;
+			this.tableLayoutPanelDevicesUnderTest.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelDevicesUnderTest.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelDevicesUnderTest.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelDevicesUnderTest.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelDevicesUnderTest.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelDevicesUnderTest.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelDevicesUnderTest.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableLayoutPanelDevicesUnderTest.Location = new System.Drawing.Point(3, 16);
+			this.tableLayoutPanelDevicesUnderTest.Name = "tableLayoutPanelDevicesUnderTest";
+			this.tableLayoutPanelDevicesUnderTest.RowCount = 1;
+			this.tableLayoutPanelDevicesUnderTest.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelDevicesUnderTest.Size = new System.Drawing.Size(508, 219);
+			this.tableLayoutPanelDevicesUnderTest.TabIndex = 0;
 			// 
 			// tabPageStatus
 			// 
@@ -525,44 +622,44 @@
 			// chartError
 			// 
 			this.chartError.Anchor = System.Windows.Forms.AnchorStyles.None;
-			chartArea11.AxisX.LabelAutoFitMinFontSize = 10;
-			chartArea11.AxisX.LabelStyle.Enabled = false;
-			chartArea11.AxisX.MajorGrid.Enabled = false;
-			chartArea11.AxisX.MajorTickMark.Enabled = false;
-			chartArea11.AxisY.IsLabelAutoFit = false;
-			chartArea11.AxisY.LabelAutoFitStyle = ((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.StaggeredLabels | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.WordWrap)));
-			chartArea11.AxisY.LabelStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			chartArea11.AxisY.Maximum = 10D;
-			chartArea11.AxisY.Minimum = 0D;
-			stripLine51.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-			stripLine51.StripWidth = 3D;
-			stripLine52.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-			stripLine52.IntervalOffset = 2D;
-			stripLine52.StripWidth = 2D;
-			stripLine53.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-			stripLine53.IntervalOffset = 4D;
-			stripLine53.StripWidth = 2D;
-			stripLine54.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-			stripLine54.IntervalOffset = 6D;
-			stripLine54.StripWidth = 2D;
-			stripLine55.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-			stripLine55.IntervalOffset = 8D;
-			stripLine55.StripWidth = 2D;
-			chartArea11.AxisY.StripLines.Add(stripLine51);
-			chartArea11.AxisY.StripLines.Add(stripLine52);
-			chartArea11.AxisY.StripLines.Add(stripLine53);
-			chartArea11.AxisY.StripLines.Add(stripLine54);
-			chartArea11.AxisY.StripLines.Add(stripLine55);
-			chartArea11.Name = "ChartArea1";
-			this.chartError.ChartAreas.Add(chartArea11);
+			chartArea1.AxisX.LabelAutoFitMinFontSize = 10;
+			chartArea1.AxisX.LabelStyle.Enabled = false;
+			chartArea1.AxisX.MajorGrid.Enabled = false;
+			chartArea1.AxisX.MajorTickMark.Enabled = false;
+			chartArea1.AxisY.IsLabelAutoFit = false;
+			chartArea1.AxisY.LabelAutoFitStyle = ((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.StaggeredLabels | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.WordWrap)));
+			chartArea1.AxisY.LabelStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			chartArea1.AxisY.Maximum = 10D;
+			chartArea1.AxisY.Minimum = 0D;
+			stripLine1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+			stripLine1.StripWidth = 3D;
+			stripLine2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+			stripLine2.IntervalOffset = 2D;
+			stripLine2.StripWidth = 2D;
+			stripLine3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+			stripLine3.IntervalOffset = 4D;
+			stripLine3.StripWidth = 2D;
+			stripLine4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+			stripLine4.IntervalOffset = 6D;
+			stripLine4.StripWidth = 2D;
+			stripLine5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+			stripLine5.IntervalOffset = 8D;
+			stripLine5.StripWidth = 2D;
+			chartArea1.AxisY.StripLines.Add(stripLine1);
+			chartArea1.AxisY.StripLines.Add(stripLine2);
+			chartArea1.AxisY.StripLines.Add(stripLine3);
+			chartArea1.AxisY.StripLines.Add(stripLine4);
+			chartArea1.AxisY.StripLines.Add(stripLine5);
+			chartArea1.Name = "ChartArea1";
+			this.chartError.ChartAreas.Add(chartArea1);
 			this.chartError.Location = new System.Drawing.Point(41, 49);
 			this.chartError.Name = "chartError";
-			series11.ChartArea = "ChartArea1";
-			series11.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-			series11.MarkerSize = 10;
-			series11.Name = "Series1";
-			series11.Points.Add(dataPoint11);
-			this.chartError.Series.Add(series11);
+			series1.ChartArea = "ChartArea1";
+			series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+			series1.MarkerSize = 10;
+			series1.Name = "Series1";
+			series1.Points.Add(dataPoint1);
+			this.chartError.Series.Add(series1);
 			this.chartError.Size = new System.Drawing.Size(40, 200);
 			this.chartError.TabIndex = 2;
 			this.chartError.Text = "Error";
@@ -590,45 +687,45 @@
 			// chartRate
 			// 
 			this.chartRate.Anchor = System.Windows.Forms.AnchorStyles.None;
-			chartArea12.AxisX.IsLabelAutoFit = false;
-			chartArea12.AxisX.LabelStyle.Enabled = false;
-			chartArea12.AxisX.MajorGrid.Enabled = false;
-			chartArea12.AxisX.MajorTickMark.Enabled = false;
-			chartArea12.AxisY.IsLabelAutoFit = false;
-			chartArea12.AxisY.LabelAutoFitMaxFontSize = 12;
-			chartArea12.AxisY.LabelAutoFitMinFontSize = 12;
-			chartArea12.AxisY.LabelStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			chartArea12.AxisY.Maximum = 10D;
-			chartArea12.AxisY.Minimum = 0D;
-			stripLine56.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-			stripLine56.StripWidth = 3D;
-			stripLine57.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-			stripLine57.IntervalOffset = 2D;
-			stripLine57.StripWidth = 2D;
-			stripLine58.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-			stripLine58.IntervalOffset = 4D;
-			stripLine58.StripWidth = 2D;
-			stripLine59.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-			stripLine59.IntervalOffset = 6D;
-			stripLine59.StripWidth = 2D;
-			stripLine60.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-			stripLine60.IntervalOffset = 8D;
-			stripLine60.StripWidth = 2D;
-			chartArea12.AxisY.StripLines.Add(stripLine56);
-			chartArea12.AxisY.StripLines.Add(stripLine57);
-			chartArea12.AxisY.StripLines.Add(stripLine58);
-			chartArea12.AxisY.StripLines.Add(stripLine59);
-			chartArea12.AxisY.StripLines.Add(stripLine60);
-			chartArea12.Name = "ChartArea1";
-			this.chartRate.ChartAreas.Add(chartArea12);
+			chartArea2.AxisX.IsLabelAutoFit = false;
+			chartArea2.AxisX.LabelStyle.Enabled = false;
+			chartArea2.AxisX.MajorGrid.Enabled = false;
+			chartArea2.AxisX.MajorTickMark.Enabled = false;
+			chartArea2.AxisY.IsLabelAutoFit = false;
+			chartArea2.AxisY.LabelAutoFitMaxFontSize = 12;
+			chartArea2.AxisY.LabelAutoFitMinFontSize = 12;
+			chartArea2.AxisY.LabelStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			chartArea2.AxisY.Maximum = 10D;
+			chartArea2.AxisY.Minimum = 0D;
+			stripLine6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+			stripLine6.StripWidth = 3D;
+			stripLine7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+			stripLine7.IntervalOffset = 2D;
+			stripLine7.StripWidth = 2D;
+			stripLine8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+			stripLine8.IntervalOffset = 4D;
+			stripLine8.StripWidth = 2D;
+			stripLine9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+			stripLine9.IntervalOffset = 6D;
+			stripLine9.StripWidth = 2D;
+			stripLine10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+			stripLine10.IntervalOffset = 8D;
+			stripLine10.StripWidth = 2D;
+			chartArea2.AxisY.StripLines.Add(stripLine6);
+			chartArea2.AxisY.StripLines.Add(stripLine7);
+			chartArea2.AxisY.StripLines.Add(stripLine8);
+			chartArea2.AxisY.StripLines.Add(stripLine9);
+			chartArea2.AxisY.StripLines.Add(stripLine10);
+			chartArea2.Name = "ChartArea1";
+			this.chartRate.ChartAreas.Add(chartArea2);
 			this.chartRate.Location = new System.Drawing.Point(163, 49);
 			this.chartRate.Name = "chartRate";
-			series12.ChartArea = "ChartArea1";
-			series12.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-			series12.MarkerSize = 10;
-			series12.Name = "Series1";
-			series12.Points.Add(dataPoint12);
-			this.chartRate.Series.Add(series12);
+			series2.ChartArea = "ChartArea1";
+			series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+			series2.MarkerSize = 10;
+			series2.Name = "Series1";
+			series2.Points.Add(dataPoint2);
+			this.chartRate.Series.Add(series2);
 			this.chartRate.Size = new System.Drawing.Size(40, 200);
 			this.chartRate.TabIndex = 20;
 			this.chartRate.Text = "Error";
@@ -872,102 +969,6 @@
 			this.supportToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
 			this.supportToolStripMenuItem.Text = "How Do I";
 			// 
-			// tabPageDut
-			// 
-			this.tabPageDut.Controls.Add(this.tableLayoutPanel2);
-			this.tabPageDut.Location = new System.Drawing.Point(4, 22);
-			this.tabPageDut.Name = "tabPageDut";
-			this.tabPageDut.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageDut.Size = new System.Drawing.Size(526, 283);
-			this.tabPageDut.TabIndex = 5;
-			this.tabPageDut.Text = "DUT";
-			this.tabPageDut.UseVisualStyleBackColor = true;
-			// 
-			// tableLayoutPanel2
-			// 
-			this.tableLayoutPanel2.ColumnCount = 1;
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel1, 0, 2);
-			this.tableLayoutPanel2.Controls.Add(this.groupBoxDevicesUnderTest, 0, 0);
-			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
-			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-			this.tableLayoutPanel2.RowCount = 3;
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel2.Size = new System.Drawing.Size(520, 277);
-			this.tableLayoutPanel2.TabIndex = 0;
-			// 
-			// groupBoxDevicesUnderTest
-			// 
-			this.groupBoxDevicesUnderTest.AutoSize = true;
-			this.groupBoxDevicesUnderTest.Controls.Add(this.tableLayoutPanelDevicesUnderTest);
-			this.groupBoxDevicesUnderTest.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBoxDevicesUnderTest.Location = new System.Drawing.Point(3, 3);
-			this.groupBoxDevicesUnderTest.Name = "groupBoxDevicesUnderTest";
-			this.tableLayoutPanel2.SetRowSpan(this.groupBoxDevicesUnderTest, 2);
-			this.groupBoxDevicesUnderTest.Size = new System.Drawing.Size(514, 238);
-			this.groupBoxDevicesUnderTest.TabIndex = 18;
-			this.groupBoxDevicesUnderTest.TabStop = false;
-			this.groupBoxDevicesUnderTest.Text = "Devices Under Test";
-			// 
-			// tableLayoutPanelDevicesUnderTest
-			// 
-			this.tableLayoutPanelDevicesUnderTest.AutoScroll = true;
-			this.tableLayoutPanelDevicesUnderTest.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutPanelDevicesUnderTest.ColumnCount = 5;
-			this.tableLayoutPanelDevicesUnderTest.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanelDevicesUnderTest.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanelDevicesUnderTest.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanelDevicesUnderTest.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanelDevicesUnderTest.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanelDevicesUnderTest.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanelDevicesUnderTest.Location = new System.Drawing.Point(3, 16);
-			this.tableLayoutPanelDevicesUnderTest.Name = "tableLayoutPanelDevicesUnderTest";
-			this.tableLayoutPanelDevicesUnderTest.RowCount = 1;
-			this.tableLayoutPanelDevicesUnderTest.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelDevicesUnderTest.Size = new System.Drawing.Size(508, 219);
-			this.tableLayoutPanelDevicesUnderTest.TabIndex = 0;
-			// 
-			// comboBoxModel
-			// 
-			this.comboBoxModel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBoxModel.FormattingEnabled = true;
-			this.comboBoxModel.Location = new System.Drawing.Point(123, 3);
-			this.comboBoxModel.Name = "comboBoxModel";
-			this.comboBoxModel.Size = new System.Drawing.Size(121, 21);
-			this.comboBoxModel.TabIndex = 22;
-			this.comboBoxModel.SelectedIndexChanged += new System.EventHandler(this.ComboBoxModel_SelectedIndexChanged);
-			// 
-			// checkBoxSelectAll
-			// 
-			this.checkBoxSelectAll.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.checkBoxSelectAll.AutoSize = true;
-			this.checkBoxSelectAll.Location = new System.Drawing.Point(3, 5);
-			this.checkBoxSelectAll.Name = "checkBoxSelectAll";
-			this.checkBoxSelectAll.Size = new System.Drawing.Size(114, 17);
-			this.checkBoxSelectAll.TabIndex = 21;
-			this.checkBoxSelectAll.Text = "Select/deselect all";
-			this.checkBoxSelectAll.UseVisualStyleBackColor = true;
-			this.checkBoxSelectAll.CheckedChanged += new System.EventHandler(this.CheckBoxSelectAll_CheckedChanged);
-			// 
-			// tableLayoutPanel1
-			// 
-			this.tableLayoutPanel1.AutoSize = true;
-			this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutPanel1.ColumnCount = 2;
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel1.Controls.Add(this.checkBoxSelectAll, 0, 0);
-			this.tableLayoutPanel1.Controls.Add(this.comboBoxModel, 1, 0);
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 247);
-			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.RowCount = 1;
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(247, 27);
-			this.tableLayoutPanel1.TabIndex = 23;
-			// 
 			// FormCalibration
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -991,6 +992,12 @@
 			this.tableLayoutPanelTestSettings.ResumeLayout(false);
 			this.tableLayoutPanelTestSettings.PerformLayout();
 			this.tableLayoutPanelTestSetupButtons.ResumeLayout(false);
+			this.tabPageDut.ResumeLayout(false);
+			this.tableLayoutPanel2.ResumeLayout(false);
+			this.tableLayoutPanel2.PerformLayout();
+			this.tableLayoutPanel1.ResumeLayout(false);
+			this.tableLayoutPanel1.PerformLayout();
+			this.groupBoxDevicesUnderTest.ResumeLayout(false);
 			this.tabPageStatus.ResumeLayout(false);
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
@@ -1012,12 +1019,6 @@
 			this.statusStrip1.PerformLayout();
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
-			this.tabPageDut.ResumeLayout(false);
-			this.tableLayoutPanel2.ResumeLayout(false);
-			this.tableLayoutPanel2.PerformLayout();
-			this.groupBoxDevicesUnderTest.ResumeLayout(false);
-			this.tableLayoutPanel1.ResumeLayout(false);
-			this.tableLayoutPanel1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

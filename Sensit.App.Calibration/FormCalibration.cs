@@ -25,8 +25,9 @@ namespace Sensit.App.Calibration
 		private const int DUT_COLUMN_CHECKBOX = 0;
 		private const int DUT_COLUMN_SERIALNUM = 1;
 		private const int DUT_COLUMN_MODEL = 2;
-		private const int DUT_COLUMN_CONFIG = 3;
-		private const int DUT_COLUMN_STATUS = 4;
+		private const int DUT_COLUMN_CONFIG1 = 3;
+		private const int DUT_COLUMN_CONFIG2 = 4;
+		private const int DUT_COLUMN_STATUS = 5;
 
 		#endregion
 
@@ -481,15 +482,27 @@ namespace Sensit.App.Calibration
 						StatusMessage = string.Empty
 					};
 
-					// If the DUT is a Sensit G3...
-					if (modelSetting.Label == "Sensit G3")
+					// If the DUT has an associated serial port...
+					if ((modelSetting.Label == "Sensit G3") || 
+						(modelSetting.Label == "Serial Device"))
 					{
 						// Fetch the associated serial port.
-						ComboBox comboBoxConfig = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CONFIG, (int)i) as ComboBox;
+						ComboBox comboBoxConfig = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CONFIG1, (int)i) as ComboBox;
 
 						// Assign the serial port to the DUT.
 						dut.CommPort = comboBoxConfig.Text;
 					}
+
+					// If the DUT has an associated serial prompt...
+					if (modelSetting.Label == "Serial Device")
+					{
+						// Fetch the serial prompt.
+						TextBox textBoxSerialPrompt = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CONFIG2, (int)i) as TextBox;
+
+						// Assign the prompt to the DUT.
+						dut.CommPrompt = textBoxSerialPrompt.Text;
+					}
+
 					_duts.Add(dut);
 				}
 
@@ -707,8 +720,13 @@ namespace Sensit.App.Calibration
 			// Find the control's position.
 			TableLayoutPanelCellPosition position = tableLayoutPanelDevicesUnderTest.GetPositionFromControl(((ComboBox)sender));
 
+			// Remove any configuration controls previously added.
+			tableLayoutPanelDevicesUnderTest.Controls.Remove(tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CONFIG1, position.Row));
+			tableLayoutPanelDevicesUnderTest.Controls.Remove(tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CONFIG2, position.Row));
+
 			// If the DUT is a G3...
-			if (((ComboBox)sender).SelectedItem.ToString().CompareTo("Sensit G3") == 0)
+			if ((((ComboBox)sender).SelectedItem.ToString().CompareTo("Sensit G3") == 0) ||
+				(((ComboBox)sender).SelectedItem.ToString().CompareTo("Serial Device") == 0))
 			{
 				// Create a combobox for a serial port.
 				ComboBox comboBox = new ComboBox
@@ -718,19 +736,25 @@ namespace Sensit.App.Calibration
 					Dock = DockStyle.None,
 					DropDownStyle = ComboBoxStyle.DropDownList
 				};
-				tableLayoutPanelDevicesUnderTest.Controls.Add(comboBox, DUT_COLUMN_CONFIG, position.Row);
+				tableLayoutPanelDevicesUnderTest.Controls.Add(comboBox, DUT_COLUMN_CONFIG1, position.Row);
 
-				// Find all available serial ports.
+				// Add all available serial ports as options in the text box.
 				foreach (string s in SerialPort.GetPortNames())
 				{
 					comboBox.Items.Add(s);
 				}
 			}
-			// Otherwise...
-			else
+
+			if (((ComboBox)sender).SelectedItem.ToString().CompareTo("Serial Device") == 0)
 			{
-				// Remove the combobox.
-				tableLayoutPanelDevicesUnderTest.Controls.Remove(tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CONFIG, position.Row));
+				// Create a text box for prompt to send to device.
+				TextBox textBox = new TextBox
+				{
+					Name = "textBoxSerialPrompt" + position.Row.ToString(),
+					Anchor = AnchorStyles.Left | AnchorStyles.Top,
+					Dock = DockStyle.None,
+				};
+				tableLayoutPanelDevicesUnderTest.Controls.Add(textBox, DUT_COLUMN_CONFIG2, position.Row);
 			}
 		}
 
