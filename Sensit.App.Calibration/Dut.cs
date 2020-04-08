@@ -152,6 +152,11 @@ namespace Sensit.App.Calibration
 					_sensitG3 = new SensitG3();
 					break;
 
+				// Create a new generic serial device.
+				case "Serial Device":
+					_genericSerialDevice = new GenericSerialDevice();
+					break;
+
 				// "Manual" DUTs require an object that will prompt the user.
 				// If the DUT type is not recognized, assume it's this type.
 				case "Manual":
@@ -178,7 +183,13 @@ namespace Sensit.App.Calibration
 				// Connect to serial ports.
 				// TODO:  Make baud rate some sort of option.
 				_sensitG3?.Open(CommPort);
-				_genericSerialDevice?.Open(CommPort, 9600);
+
+				if (_genericSerialDevice != null)
+				{
+					_genericSerialDevice.WriteSerialProperties();
+					_genericSerialDevice.Open(CommPort, 9600);
+					_genericSerialDevice.Command = CommPrompt;
+				}
 
 				// Set status to "Testing".
 				Status = DutStatus.Testing;
