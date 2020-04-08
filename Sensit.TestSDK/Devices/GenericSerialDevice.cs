@@ -36,7 +36,6 @@ namespace Sensit.TestSDK.Devices
 			try
 			{
 				// Write to the device.
-				// TODO:  Make the command settable from the GUI of any program using this class.
 				_serialPort.WriteLine(Command);
 
 				// Read from the serial port.

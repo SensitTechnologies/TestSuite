@@ -56,6 +56,9 @@ namespace Sensit.App.Calibration
 		// Sensit G3 device
 		private SensitG3 _sensitG3;
 
+		// generic serial device (send a message, get a response)
+		private GenericSerialDevice _genericSerialDevice;
+
 		#endregion
 
 		#region Delegates
@@ -118,6 +121,11 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		public string CommPort { get; set; }
 
+		/// <summary>
+		/// Prompt sent to the DUT to read from it.
+		/// </summary>
+		public string CommPrompt { get; set; }
+
 		#endregion
 
 		#region Constructor
@@ -167,8 +175,10 @@ namespace Sensit.App.Calibration
 					DutInterface.Channels[(int)Index - 1] = Selected;
 				}
 
-				// If the DUT is a G3, connect to it.
+				// Connect to serial ports.
+				// TODO:  Make baud rate some sort of option.
 				_sensitG3?.Open(CommPort);
+				_genericSerialDevice?.Open(CommPort, 9600);
 
 				// Set status to "Testing".
 				Status = DutStatus.Testing;
@@ -255,6 +265,13 @@ namespace Sensit.App.Calibration
 
 					reading = _sensitG3.Readings[VariableType.GasConcentration];
 					message = _sensitG3.Message;
+				}
+				// If the DUT is a generic serial device...
+				else if (_genericSerialDevice != null)
+				{
+					_genericSerialDevice.Read();
+
+					message = _genericSerialDevice.Message;
 				}
 				// If the DUT is a "manual" device...
 				else if (_manual != null)
