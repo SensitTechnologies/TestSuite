@@ -219,6 +219,13 @@ namespace Sensit.App.Calibration
 				// Update GUI.
 				SetStatus(Index, Status);
 			}
+
+			if (Selected)
+			{
+				// Close serial ports.
+				_sensitG3?.Close();
+				_genericSerialDevice?.Close();
+			}
 		}
 
 		public void Dispose()
