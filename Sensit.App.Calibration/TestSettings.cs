@@ -339,6 +339,82 @@ namespace Sensit.App.Calibration
 					}
 				}
 			},
+			// Calibrate the G3's 2611 (using 70% LEL analyte)
+			new TestSetting("G3: 2611 Calibration (70% LEL analyte)")
+			{
+				References = new List<VariableType>
+				{
+					VariableType.MassFlow,
+					VariableType.GasConcentration
+				},
+				Components = new List<TestComponent>
+				{
+					// Warm up for 30 min.  Measure gas every 1 second.  Don't wait for stability.
+					new TestComponent("10-min Warmup")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0 },
+								Samples = 600,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
+					// Set gas to 2.5% V.
+					new TestComponent("Apply 2.5% LEL Methane")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								// 3.57% of 70% LEL is 2.5% LEL.
+								Setpoints = new List<double> { 3.57 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
+					// Calibrate at 2.5% V.
+					new TestComponent("Calibration")
+					{
+						Commands = new List<Test.Command> { Test.Command.Span }
+					},
+					// Monitor for a bit.
+					new TestComponent("1 minute at 2.5% LEL Methane")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								// 3.57% of 70% LEL is 2.5% LEL.
+								Setpoints = new List<double> { 3.57 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
+				}
+			},
 			// Test second curve on the G3 (up to 5000 ppm)
 			// Linearity: 1-cycle, 100% varying increments, warmup
 			new TestSetting("G3: 5000 ppm")
@@ -423,6 +499,8 @@ namespace Sensit.App.Calibration
 					},
 				}
 			},
+			// Test third curve on the G3 (5000 ppm to 70% LEL/3.5%V)
+			// Linearity: 1-cycle, 93% varying increments, warmup
 			new TestSetting("G3: 70% LEL")
 			{
 				References = new List<VariableType>
@@ -505,8 +583,7 @@ namespace Sensit.App.Calibration
 					},
 				}
 			},
-			// Test third curve on the G3 (5000 ppm to 70% LEL/3.5%V)
-			// Linearity: 1-cycle, 93% varying increments, warmup
+			// Same thing as the other 70% LEL test, but using 75% LEL analyte.
 			new TestSetting("G3: 70% LEL (using 75% LEL analyte)")
 			{
 				References = new List<VariableType>
