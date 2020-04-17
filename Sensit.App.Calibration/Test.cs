@@ -366,9 +366,14 @@ namespace Sensit.App.Calibration
 						dut.TurnOff();
 						break;
 					case Command.TurnOn:
+						break;
 					case Command.Default:
+						break;
 					case Command.Range:
+						break;
 					case Command.Span:
+						dut.Span();
+						break;
 					case Command.Zero:
 						dut.Zero();
 						break;

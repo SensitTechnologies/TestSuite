@@ -350,8 +350,8 @@ namespace Sensit.App.Calibration
 				},
 				Components = new List<TestComponent>
 				{
-					// Warm up for 1 hour.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("Warmup")
+					// Warm up for 30 min.  Measure gas every 1 second.  Don't wait for stability.
+					new TestComponent("30-min Warmup")
 					{
 						ControlledVariables = new List<TestControlledVariable>
 						{
@@ -364,7 +364,31 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0 },
-								Samples = 3600,
+								Samples = 1800,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
+					// Calibrate at 2.5% V.
+					new TestComponent("Calibration")
+					{
+						Commands = new List<Test.Command> { Test.Command.Span }
+					},
+					// Warm up for 30 min.  Measure gas every 1 second.  Don't wait for stability.
+					new TestComponent("30-min Warmup")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0 },
+								Samples = 1800,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							}
 						},
@@ -408,8 +432,8 @@ namespace Sensit.App.Calibration
 				},
 				Components = new List<TestComponent>
 				{
-					// Warm up for 1 hour.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("Warmup")
+					// Warm up for 30 min.  Measure gas every 1 second.  Don't wait for stability.
+					new TestComponent("30-min Warmup")
 					{
 						ControlledVariables = new List<TestControlledVariable>
 						{
@@ -422,7 +446,31 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0 },
-								Samples = 3600,
+								Samples = 1800,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
+					// Calibrate at 2.5% V.
+					new TestComponent("Calibration")
+					{
+						Commands = new List<Test.Command> { Test.Command.Span }
+					},
+					// Warm up for 30 min.  Measure gas every 1 second.  Don't wait for stability.
+					new TestComponent("30-min Warmup")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0 },
+								Samples = 1800,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							}
 						},
@@ -468,8 +516,8 @@ namespace Sensit.App.Calibration
 				},
 				Components = new List<TestComponent>
 				{
-					// Warm up for 1 hour.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("Warmup")
+					// Warm up for 30 min.  Measure gas every 1 second.  Don't wait for stability.
+					new TestComponent("30-min Warmup")
 					{
 						ControlledVariables = new List<TestControlledVariable>
 						{
@@ -482,7 +530,31 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0 },
-								Samples = 3600,
+								Samples = 1800,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
+					// Calibrate at 2.5% V.
+					new TestComponent("Calibration")
+					{
+						Commands = new List<Test.Command> { Test.Command.Span }
+					},
+					// Warm up for 30 min.  Measure gas every 1 second.  Don't wait for stability.
+					new TestComponent("30-min Warmup")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0 },
+								Samples = 1800,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							}
 						},
