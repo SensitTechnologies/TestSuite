@@ -359,17 +359,6 @@ namespace Sensit.App.Calibration
 				}
 			}
 
-			// Populate the Range combobox based on the DUT settings.
-			comboBoxRange.Items.Clear();
-			foreach (RangeSetting r in dutSettings.RangeSettings ?? new List<RangeSetting>())
-			{
-				comboBoxRange.Items.Add(r.Label);
-			}
-
-			// Select the most recently used range, or the first if that's not available.
-			index = comboBoxRange.FindStringExact(Properties.Settings.Default.Range);
-			comboBoxRange.SelectedIndex = index == -1 ? 0 : index;
-
 			// Populate the Test combobox based on the test settings.
 			comboBoxTest.Items.Clear();
 			TestSettings testSettings = Settings.Load<TestSettings>(Properties.Settings.Default.TestSettingsFile);
@@ -397,10 +386,9 @@ namespace Sensit.App.Calibration
 			try
 			{
 				// Ensure the user has selected a range and test.
-				if ((comboBoxRange.SelectedItem == null) ||
-					(comboBoxTest.SelectedItem == null))
+				if (comboBoxTest.SelectedItem == null)
 				{
-					throw new Exception("Please select range and test before starting test.");
+					throw new Exception("Please select test before starting test.");
 				}
 
 				//
@@ -411,13 +399,6 @@ namespace Sensit.App.Calibration
 				if (equipmentSettings == null)
 				{
 					throw new Exception("Equipment settings not found.  Please contact Engineering.");
-				}
-
-				DutSettings dutSettings = Settings.Load<DutSettings>(Properties.Settings.Default.DutSettingsFile);
-				RangeSetting rangeSetting = dutSettings.RangeSettings.Find(i => i.Label == comboBoxRange.Text);
-				if (rangeSetting == null)
-				{
-					throw new Exception("Range settings not found. Please contact Engineering.");
 				}
 
 				TestSettings testSettings = Settings.Load<TestSettings>(Properties.Settings.Default.TestSettingsFile);
@@ -435,7 +416,6 @@ namespace Sensit.App.Calibration
 				// TODO:  Clear the DUT data on the Overview tab.
 
 				comboBoxModel.Enabled = false;
-				comboBoxRange.Enabled = false;
 				comboBoxTest.Enabled = false;
 				checkBoxSelectAll.Enabled = false;
 				foreach (Control c in tableLayoutPanelDevicesUnderTest.Controls)
@@ -464,6 +444,7 @@ namespace Sensit.App.Calibration
 					TextBox textBoxSerial = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_SERIALNUM, (int)i) as TextBox;
 					ComboBox comboBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_MODEL, (int)i) as ComboBox;
 
+					DutSettings dutSettings = Settings.Load<DutSettings>(Properties.Settings.Default.DutSettingsFile);
 					ModelSetting modelSetting = dutSettings.ModelSettings.Find(j => j.Label == comboBox.Text);
 					if (modelSetting == null)
 					{
@@ -611,17 +592,6 @@ namespace Sensit.App.Calibration
 
 			// Save settings.
 			Properties.Settings.Default.Save();
-		}
-
-		/// <summary>
-		/// When the "Range" selection is changed, save the new selection.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ComboBoxRange_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			// Remember the selected value.
-			Properties.Settings.Default.Range = comboBoxRange.SelectedItem.ToString();
 		}
 
 		/// <summary>
@@ -974,7 +944,6 @@ namespace Sensit.App.Calibration
 		{
 			// Enable most of the controls.
 			comboBoxModel.Enabled = true;
-			comboBoxRange.Enabled = true;
 			comboBoxTest.Enabled = true;
 			checkBoxSelectAll.Enabled = true;
 			foreach (Control c in tableLayoutPanelDevicesUnderTest.Controls)
