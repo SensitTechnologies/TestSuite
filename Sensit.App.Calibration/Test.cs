@@ -363,6 +363,7 @@ namespace Sensit.App.Calibration
 				switch (command)
 				{
 					case Command.TurnOff:
+						_testThread.ReportProgress(PercentProgress, "Turning off DUT" + dut.Index + "...");
 						dut.TurnOff();
 						break;
 					case Command.TurnOn:
@@ -372,9 +373,11 @@ namespace Sensit.App.Calibration
 					case Command.Range:
 						break;
 					case Command.Span:
+						_testThread.ReportProgress(PercentProgress, "Span-calibrating DUT " + dut.Index + "...");
 						dut.Span();
 						break;
 					case Command.Zero:
+						_testThread.ReportProgress(PercentProgress, "Zero-calibrating DUT " + dut.Index + "...");
 						dut.Zero();
 						break;
 					default:
