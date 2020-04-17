@@ -248,17 +248,20 @@ namespace Sensit.App.Calibration
 				_sensitG3.TurnOff();
 
 				// Format data from device.
-				List<string> testResult = new List<string>()
+				var testResult = new TestResults
 				{
-					"",	// Elapsed Time
-					"",	// Setpoint
-					"",	// Reference
-					"",	// Sensor Value
-					_sensitG3.Message	// Sensor Message
+					ElapsedTime = new TimeSpan(),
+					Setpoint = 0.0,
+					Reference = 0.0,
+					SensorValue = _sensitG3.Readings[VariableType.GasConcentration],
+					SensorMessage = _sensitG3.Message,
 				};
 
 				// Save test results to csv file.
-				csv?.WriteRecords(testResult);
+				csv?.WriteRecords(new List<TestResults> { testResult });
+
+				// Save the result.
+				Results.Add(testResult);
 
 				// Wait 15 seconds to ensure it has time to purge gas.
 				Thread.Sleep(new TimeSpan(0, 0, 15));
@@ -274,17 +277,20 @@ namespace Sensit.App.Calibration
 				_sensitG3.Zero();
 
 				// Format data from device.
-				List<string> testResult = new List<string>()
+				var testResult = new TestResults
 				{
-					"",	// Elapsed Time
-					"",	// Setpoint
-					"",	// Reference
-					"",	// Sensor Value
-					_sensitG3.Message	// Sensor Message
+					ElapsedTime = new TimeSpan(),
+					Setpoint = 0.0,
+					Reference = 0.0,
+					SensorValue = _sensitG3.Readings[VariableType.GasConcentration],
+					SensorMessage = _sensitG3.Message,
 				};
 
 				// Save test results to csv file.
-				csv?.WriteRecords(testResult);
+				csv?.WriteRecords(new List<TestResults> { testResult });
+
+				// Save the result.
+				Results.Add(testResult);
 			}
 		}
 
@@ -297,17 +303,20 @@ namespace Sensit.App.Calibration
 				_sensitG3.Span();
 
 				// Format data from device.
-				List<string> testResult = new List<string>()
+				var testResult = new TestResults
 				{
-					"",	// Elapsed Time
-					"",	// Setpoint
-					"",	// Reference
-					"",	// Sensor Value
-					_sensitG3.Message	// Sensor Message
+					ElapsedTime = new TimeSpan(),
+					Setpoint = 0.0,
+					Reference = 0.0,
+					SensorValue = _sensitG3.Readings[VariableType.GasConcentration],
+					SensorMessage = _sensitG3.Message,
 				};
 
 				// Save test results to csv file.
-				csv?.WriteRecords(testResult);
+				csv?.WriteRecords(new List<TestResults> { testResult });
+
+				// Save the result.
+				Results.Add(testResult);
 			}
 		}
 
