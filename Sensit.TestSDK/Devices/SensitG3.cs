@@ -117,7 +117,7 @@ namespace Sensit.TestSDK.Devices
 				}
 
 				// Wait 45 seconds.
-				Thread.Sleep(4500);
+				Thread.Sleep(45000);
 
 				// Read from the serial port.
 				while (_serialPort.BytesToRead != 0)
