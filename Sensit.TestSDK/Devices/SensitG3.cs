@@ -63,12 +63,42 @@ namespace Sensit.TestSDK.Devices
 		{
 			// Send command to turn the instrument off.
 			WriteToG3("666");
+
+			// Read from the serial port.
+			Thread.Sleep(200);
+			string message = string.Empty;
+			while (_serialPort.BytesToRead != 0)
+			{
+				message += _serialPort.ReadExisting();
+			}
+
+			// Flush the port.
+			_serialPort.DiscardInBuffer();
+
+			// Save the whole string as a message to be logged.
+			// Replace any newlines or tabs with spaces to avoid weird log files.
+			Message = Regex.Replace(message, @"\t|\n|\r", " ");
 		}
 
 		public void Zero()
 		{
 			// Send command to perform auto-zero.
 			WriteToG3("5zz");
+
+			// Read from the serial port.
+			Thread.Sleep(200);
+			string message = string.Empty;
+			while (_serialPort.BytesToRead != 0)
+			{
+				message += _serialPort.ReadExisting();
+			}
+
+			// Flush the port.
+			_serialPort.DiscardInBuffer();
+
+			// Save the whole string as a message to be logged.
+			// Replace any newlines or tabs with spaces to avoid weird log files.
+			Message = Regex.Replace(message, @"\t|\n|\r", " ");
 		}
 
 		public void Span()
