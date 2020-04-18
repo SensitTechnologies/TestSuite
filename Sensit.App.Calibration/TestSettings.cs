@@ -368,8 +368,8 @@ namespace Sensit.App.Calibration
 							}
 						},
 					},
-					// Set gas to 2.5% V.
-					new TestComponent("Apply 2.5% LEL Methane")
+					// Set gas to 50% LEL (2.5% V).
+					new TestComponent("Apply 50% LEL Methane")
 					{
 						ControlledVariables = new List<TestControlledVariable>
 						{
@@ -381,20 +381,20 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
-								// 3.57% of 70% LEL is 2.5% LEL.
-								Setpoints = new List<double> { 3.57 },
+								// 71.43% of 70% LEL is 50% LEL.
+								Setpoints = new List<double> { 71.43 },
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							}
 						},
 					},
-					// Calibrate at 2.5% V.
+					// Calibrate.
 					new TestComponent("Calibration")
 					{
 						Commands = new List<Test.Command> { Test.Command.Span }
 					},
 					// Monitor for a bit.
-					new TestComponent("1 minute at 2.5% LEL Methane")
+					new TestComponent("1 minute at 50% LEL Methane")
 					{
 						ControlledVariables = new List<TestControlledVariable>
 						{
@@ -406,8 +406,8 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
-								// 3.57% of 70% LEL is 2.5% LEL.
-								Setpoints = new List<double> { 3.57 },
+								// 71.43% of 70% LEL is 50% LEL.
+								Setpoints = new List<double> { 71.43 },
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							}
@@ -505,8 +505,8 @@ namespace Sensit.App.Calibration
 							}
 						},
 					},
-					// Set gas to 2.5% V.
-					new TestComponent("Apply 2.5% LEL Methane")
+					// Set gas to 50% LEL (2.5% V).
+					new TestComponent("Apply 50% LEL Methane")
 					{
 						ControlledVariables = new List<TestControlledVariable>
 						{
@@ -518,14 +518,14 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
-								// 3.57% of 70% LEL is 2.5% LEL.
-								Setpoints = new List<double> { 3.57 },
+								// 71.43% of 70% LEL is 2.5% LEL.
+								Setpoints = new List<double> { 71.43 },
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							}
 						},
 					},
-					// Calibrate at 2.5% V.
+					// Calibrate.
 					new TestComponent("Calibration")
 					{
 						Commands = new List<Test.Command> { Test.Command.Span }
@@ -608,8 +608,8 @@ namespace Sensit.App.Calibration
 							}
 						},
 					},
-					// Set gas to 2.5% V.
-					new TestComponent("Apply 2.5% LEL Methane")
+					// Set gas to 50% LEL (2.5% V).
+					new TestComponent("Apply 50% LEL Methane")
 					{
 						ControlledVariables = new List<TestControlledVariable>
 						{
@@ -621,14 +621,14 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
-								// 3.33% of 75% LEL is 2.5% LEL.
-								Setpoints = new List<double> { 3.333333 },
+								// 66.66667% of 75% LEL is 50% LEL.
+								Setpoints = new List<double> { 66.66667 },
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							}
 						},
 					},
-					// Calibrate at 2.5% V.
+					// Calibrate.
 					new TestComponent("Calibration")
 					{
 						Commands = new List<Test.Command> { Test.Command.Span }
