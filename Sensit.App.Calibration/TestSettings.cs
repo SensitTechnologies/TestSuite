@@ -339,8 +339,85 @@ namespace Sensit.App.Calibration
 					}
 				}
 			},
+			// Calibrate the G3's 2611 (using 70% LEL analyte)
+			new TestSetting("G3: 2611 Calibration (70% LEL analyte)")
+			{
+				References = new List<VariableType>
+				{
+					VariableType.MassFlow,
+					VariableType.GasConcentration
+				},
+				Components = new List<TestComponent>
+				{
+					// Warm up for 30 min.  Measure gas every 1 second.  Don't wait for stability.
+					new TestComponent("30-min Warmup")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0 },
+								Samples = 1800,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
+					// Set gas to 50% LEL (2.5% V).
+					new TestComponent("Apply 50% LEL Methane")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								// 71.43% of 70% LEL is 50% LEL.
+								Setpoints = new List<double> { 71.43 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
+					// Calibrate.
+					new TestComponent("Calibration")
+					{
+						Commands = new List<Test.Command> { Test.Command.Span }
+					},
+					// Monitor for a bit.
+					new TestComponent("1 minute at 50% LEL Methane")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								// 71.43% of 70% LEL is 50% LEL.
+								Setpoints = new List<double> { 71.43 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
+				}
+			},
 			// Test second curve on the G3 (up to 5000 ppm)
-			new TestSetting("Linearity: 1-cycle, 100% varying increments, warmup")
+			// Linearity: 1-cycle, 100% varying increments, warmup
+			new TestSetting("G3: 5000 ppm")
 			{
 				References = new List<VariableType>
 				{
@@ -350,7 +427,7 @@ namespace Sensit.App.Calibration
 				Components = new List<TestComponent>
 				{
 					// Warm up for 1 hour.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("Warmup")
+					new TestComponent("1-hour Warmup")
 					{
 						ControlledVariables = new List<TestControlledVariable>
 						{
@@ -399,7 +476,8 @@ namespace Sensit.App.Calibration
 				}
 			},
 			// Test third curve on the G3 (5000 ppm to 70% LEL/3.5%V)
-			new TestSetting("Linearity: 1-cycle, 93% varying increments, warmup")
+			// Linearity: 1-cycle, 93% varying increments, warmup
+			new TestSetting("G3: 70% LEL")
 			{
 				References = new List<VariableType>
 				{
@@ -408,8 +486,8 @@ namespace Sensit.App.Calibration
 				},
 				Components = new List<TestComponent>
 				{
-					// Warm up for 1 hour.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("Warmup")
+					// Warm up for 30 min.  Measure gas every 1 second.  Don't wait for stability.
+					new TestComponent("30-min Warmup")
 					{
 						ControlledVariables = new List<TestControlledVariable>
 						{
@@ -422,7 +500,154 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0 },
-								Samples = 3600,
+								Samples = 1800,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
+					// Set gas to 50% LEL (2.5% V).
+					new TestComponent("Apply 50% LEL Methane")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								// 71.43% of 70% LEL is 2.5% LEL.
+								Setpoints = new List<double> { 71.43 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
+					// Calibrate.
+					new TestComponent("Calibration")
+					{
+						Commands = new List<Test.Command> { Test.Command.Span }
+					},
+					// Warm up for 30 min.  Measure gas every 1 second.  Don't wait for stability.
+					new TestComponent("30-min Warmup")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0 },
+								Samples = 1800,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
+					// Perform zero calibration after warmup.
+					new TestComponent("Auto Zero")
+					{
+						Commands = new List<Test.Command> { Test.Command.Zero }
+					},
+					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
+					new TestComponent("Up and Down")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double>
+								{
+									0, 3.57, 7.14, 10.71, 14.29, 17.86, 21.43, 25, 28.57, 42.86, 57.14, 71.43, 85.71, 100,
+									100, 85.71, 71.43, 57.14, 42.86, 28.57, 25, 21.43, 17.86, 14.29, 10.71, 7.14, 3.57, 0
+								},
+								Samples = 240,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
+				}
+			},
+			// Same thing as the other 70% LEL test, but using 75% LEL analyte.
+			new TestSetting("G3: 70% LEL (using 75% LEL analyte)")
+			{
+				References = new List<VariableType>
+				{
+					VariableType.MassFlow,
+					VariableType.GasConcentration
+				},
+				Components = new List<TestComponent>
+				{
+					// Warm up for 30 min.  Measure gas every 1 second.  Don't wait for stability.
+					new TestComponent("30-min Warmup")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0 },
+								Samples = 1800,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
+					// Set gas to 50% LEL (2.5% V).
+					new TestComponent("Apply 50% LEL Methane")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								// 66.66667% of 75% LEL is 50% LEL.
+								Setpoints = new List<double> { 66.66667 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
+					// Calibrate.
+					new TestComponent("Calibration")
+					{
+						Commands = new List<Test.Command> { Test.Command.Span }
+					},
+					// Warm up for 30 min.  Measure gas every 1 second.  Don't wait for stability.
+					new TestComponent("30-min Warmup")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0 },
+								Samples = 1800,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							}
 						},

@@ -152,6 +152,11 @@ namespace Sensit.App.Calibration
 					_sensitG3 = new SensitG3();
 					break;
 
+				// Create a new generic serial device.
+				case "Serial Device":
+					_genericSerialDevice = new GenericSerialDevice();
+					break;
+
 				// "Manual" DUTs require an object that will prompt the user.
 				// If the DUT type is not recognized, assume it's this type.
 				case "Manual":
@@ -178,7 +183,13 @@ namespace Sensit.App.Calibration
 				// Connect to serial ports.
 				// TODO:  Make baud rate some sort of option.
 				_sensitG3?.Open(CommPort);
-				_genericSerialDevice?.Open(CommPort, 9600);
+
+				if (_genericSerialDevice != null)
+				{
+					_genericSerialDevice.WriteSerialProperties();
+					_genericSerialDevice.Open(CommPort, 9600);
+					_genericSerialDevice.Command = CommPrompt;
+				}
 
 				// Set status to "Testing".
 				Status = DutStatus.Testing;
@@ -208,6 +219,13 @@ namespace Sensit.App.Calibration
 				// Update GUI.
 				SetStatus(Index, Status);
 			}
+
+			if (Selected)
+			{
+				// Close serial ports.
+				_sensitG3?.Close();
+				_genericSerialDevice?.Close();
+			}
 		}
 
 		public void Dispose()
@@ -229,6 +247,22 @@ namespace Sensit.App.Calibration
 				// Turn it off.
 				_sensitG3.TurnOff();
 
+				// Format data from device.
+				var testResult = new TestResults
+				{
+					ElapsedTime = new TimeSpan(),
+					Setpoint = 0.0,
+					Reference = 0.0,
+					SensorValue = _sensitG3.Readings[VariableType.GasConcentration],
+					SensorMessage = _sensitG3.Message,
+				};
+
+				// Save test results to csv file.
+				csv?.WriteRecords(new List<TestResults> { testResult });
+
+				// Save the result.
+				Results.Add(testResult);
+
 				// Wait 15 seconds to ensure it has time to purge gas.
 				Thread.Sleep(new TimeSpan(0, 0, 15));
 			}
@@ -241,6 +275,48 @@ namespace Sensit.App.Calibration
 			{
 				// Perform auto-zero.
 				_sensitG3.Zero();
+
+				// Format data from device.
+				var testResult = new TestResults
+				{
+					ElapsedTime = new TimeSpan(),
+					Setpoint = 0.0,
+					Reference = 0.0,
+					SensorValue = _sensitG3.Readings[VariableType.GasConcentration],
+					SensorMessage = _sensitG3.Message,
+				};
+
+				// Save test results to csv file.
+				csv?.WriteRecords(new List<TestResults> { testResult });
+
+				// Save the result.
+				Results.Add(testResult);
+			}
+		}
+
+		public void Span()
+		{
+			// If the DUT is a G3...
+			if (_sensitG3 != null)
+			{
+				// Perform span calibration.
+				_sensitG3.Span();
+
+				// Format data from device.
+				var testResult = new TestResults
+				{
+					ElapsedTime = new TimeSpan(),
+					Setpoint = 0.0,
+					Reference = 0.0,
+					SensorValue = _sensitG3.Readings[VariableType.GasConcentration],
+					SensorMessage = _sensitG3.Message,
+				};
+
+				// Save test results to csv file.
+				csv?.WriteRecords(new List<TestResults> { testResult });
+
+				// Save the result.
+				Results.Add(testResult);
 			}
 		}
 
