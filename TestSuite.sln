@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.Keysight", "Sens
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.Calibration", "Sensit.App.Calibration\Sensit.App.Calibration.csproj", "{1065271E-2906-499B-A9FA-43BFB1EB218B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.GasConcentration", "Sensit.App.GasConcentration\Sensit.App.GasConcentration.csproj", "{172798F2-78C7-4AFB-8F28-B713CFA8E125}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.GasMixer", "Sensit.App.GasMixer\Sensit.App.GasMixer.csproj", "{172798F2-78C7-4AFB-8F28-B713CFA8E125}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.G3", "Sensit.App.G3\Sensit.App.G3.csproj", "{55287E39-3D25-4D00-BE0B-FD3170B028B0}"
 EndProject
