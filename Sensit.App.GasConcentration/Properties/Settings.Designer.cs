@@ -46,5 +46,29 @@ namespace Sensit.App.GasConcentration.Properties {
                 this["PortDiluent"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Air")]
+        public string GasAnalyte {
+            get {
+                return ((string)(this["GasAnalyte"]));
+            }
+            set {
+                this["GasAnalyte"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Air")]
+        public string GasDiluent {
+            get {
+                return ((string)(this["GasDiluent"]));
+            }
+            set {
+                this["GasDiluent"] = value;
+            }
+        }
     }
 }

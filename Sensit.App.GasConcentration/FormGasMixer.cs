@@ -52,6 +52,14 @@ namespace Sensit.App.GasConcentration
 				comboBoxAnalyteGas.Items.Add(gas);
 				comboBoxDiluentGas.Items.Add(gas);
 			}
+
+			// Select the most recently used gas, or the first if that's not available.
+			int index = comboBoxAnalyteGas.FindStringExact(Properties.Settings.Default.GasAnalyte);
+			comboBoxAnalyteGas.SelectedIndex = index == -1 ? 0 : index;
+
+			// Select the most recently used gas, or the first if that's not available.
+			index = comboBoxDiluentGas.FindStringExact(Properties.Settings.Default.GasDiluent);
+			comboBoxDiluentGas.SelectedIndex = index == -1 ? 0 : index;
 		}
 
 		/// <summary>
@@ -96,8 +104,8 @@ namespace Sensit.App.GasConcentration
 						// Update the user interface.
 						comboBoxAnalytePort.Enabled = false;
 						comboBoxDiluentPort.Enabled = false;
-						groupBoxMassFlow.Enabled = true;
-						groupBoxGasConcentration.Enabled = true;
+						groupBoxGasses.Enabled = true;
+						groupBoxFlowAndMixture.Enabled = true;
 						toolStripStatusLabel1.Text = "Port open.";
 					}
 					else if (((RadioButton)sender) == radioButtonClosed)
@@ -109,8 +117,8 @@ namespace Sensit.App.GasConcentration
 						// Update the user interface.
 						comboBoxAnalytePort.Enabled = true;
 						comboBoxDiluentPort.Enabled = true;
-						groupBoxMassFlow.Enabled = false;
-						groupBoxGasConcentration.Enabled = false;
+						groupBoxGasses.Enabled = false;
+						groupBoxFlowAndMixture.Enabled = false;
 						toolStripStatusLabel1.Text = "Port closed.";
 					}
 				}
@@ -146,6 +154,28 @@ namespace Sensit.App.GasConcentration
 		{
 			// Save the serial port selection in the application settings.
 			Properties.Settings.Default.PortDiluent = comboBoxDiluentPort.Text;
+		}
+
+		/// <summary>
+		/// Remember the most recently selected analyte gas.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ComboBoxAnalyteGas_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			// Save the gas selection in the application settings.
+			Properties.Settings.Default.GasAnalyte = comboBoxAnalyteGas.Text;
+		}
+
+		/// <summary>
+		/// Remember the most recently selected diluent gas.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ComboBoxDiluentGas_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			// Save the gas selection in the application settings.
+			Properties.Settings.Default.GasDiluent = comboBoxDiluentGas.Text;
 		}
 
 		/// <summary>
@@ -204,9 +234,7 @@ namespace Sensit.App.GasConcentration
 
 				// Update the form.
 				textBoxGasConcentration.Text = _gasMixer.Readings[VariableType.GasConcentration].ToString();
-				textBoxTotalMassFlow.Text = _gasMixer.Readings[VariableType.MassFlow].ToString();
-				textBoxGasConcentrationSetpoint.Text = _gasMixer.ReadSetpoint(VariableType.GasConcentration).ToString();
-				textBoxMassFlowSetpoint.Text = _gasMixer.ReadSetpoint(VariableType.MassFlow).ToString();
+				textBoxMassFlow.Text = _gasMixer.Readings[VariableType.MassFlow].ToString();
 
 				// Alert the user.
 				toolStripStatusLabel1.Text = "Success.";
@@ -224,8 +252,8 @@ namespace Sensit.App.GasConcentration
 			try
 			{
 				// Convert the setpoints to numbers.
-				double analyteConcentration = Convert.ToDouble(textBoxGasConcentrationSetpoint.Text);
-				double massFlowSetpoint = Convert.ToDouble(textBoxMassFlowSetpoint.Text);
+				double analyteConcentration = Convert.ToDouble(textBoxGasConcentration.Text);
+				double massFlowSetpoint = Convert.ToDouble(textBoxMassFlow.Text);
 
 				// Write to mass flow controllers.
 				_gasMixer.WriteSetpoint(VariableType.GasConcentration, analyteConcentration);
