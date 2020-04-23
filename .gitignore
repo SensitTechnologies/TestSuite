@@ -13,11 +13,11 @@
 /Sensit.App.G2GLT/*.pfx
 /Sensit.App.G2GLT/*.user
 
-/Sensit.App.GasConcentration/bin
-/Sensit.App.GasConcentration/obj
-/Sensit.App.GasConcentration/publish
-/Sensit.App.GasConcentration/*.pfx
-/Sensit.App.GasConcentration/*.user
+/Sensit.App.GasMixer/bin
+/Sensit.App.GasMixer/obj
+/Sensit.App.GasMixer/publish
+/Sensit.App.GasMixer/*.pfx
+/Sensit.App.GasMixer/*.user
 
 /Sensit.App.G3/bin
 /Sensit.App.G3/obj

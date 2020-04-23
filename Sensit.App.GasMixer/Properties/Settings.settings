@@ -8,5 +8,11 @@
     <Setting Name="PortDiluent" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="GasAnalyte" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Air</Value>
+    </Setting>
+    <Setting Name="GasDiluent" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Air</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
