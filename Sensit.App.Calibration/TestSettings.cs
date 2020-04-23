@@ -340,7 +340,7 @@ namespace Sensit.App.Calibration
 				}
 			},
 			// Calibrate the G3's 2611 (using 70% LEL analyte)
-			new TestSetting("G3: 2611 Calibration (70% LEL analyte)")
+			new TestSetting("G3: Calibration (70% LEL analyte)")
 			{
 				References = new List<VariableType>
 				{
@@ -349,25 +349,6 @@ namespace Sensit.App.Calibration
 				},
 				Components = new List<TestComponent>
 				{
-					// Warm up for 10 min.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("10-min Warmup")
-					{
-						ControlledVariables = new List<TestControlledVariable>
-						{
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
-							},
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double> { 0 },
-								Samples = 600,
-								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
-						},
-					},
 					// Set gas to 50% LEL (2.5% V).
 					new TestComponent("Apply 50% LEL Methane")
 					{
@@ -393,6 +374,25 @@ namespace Sensit.App.Calibration
 					{
 						Commands = new List<Test.Command> { Test.Command.Span }
 					},
+					// Warm up for 5 min.  Measure gas every 1 second.  Don't wait for stability.
+					new TestComponent("Warmup")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0 },
+								Samples = 300,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
 					// Monitor for a bit.
 					new TestComponent("1 minute at 50% LEL Methane")
 					{
@@ -417,7 +417,7 @@ namespace Sensit.App.Calibration
 			},
 			// Test second curve on the G3 (up to 5000 ppm)
 			// Linearity: 1-cycle, 100% varying increments, warmup
-			new TestSetting("G3: 5000 ppm")
+			new TestSetting("G3: Linearity 5000 ppm")
 			{
 				References = new List<VariableType>
 				{
@@ -426,8 +426,8 @@ namespace Sensit.App.Calibration
 				},
 				Components = new List<TestComponent>
 				{
-					// Warm up for 1 hour.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("1-hour Warmup")
+					// Warm up for 5 min.  Measure gas every 1 second.  Don't wait for stability.
+					new TestComponent("Warmup")
 					{
 						ControlledVariables = new List<TestControlledVariable>
 						{
@@ -440,15 +440,10 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0 },
-								Samples = 3600,
+								Samples = 300,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							}
 						},
-					},
-					// Perform zero calibration after warmup.
-					new TestComponent("Auto Zero")
-					{
-						Commands = new List<Test.Command> { Test.Command.Zero }
 					},
 					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
 					new TestComponent("Up and Down")
@@ -477,7 +472,7 @@ namespace Sensit.App.Calibration
 			},
 			// Test third curve on the G3 (5000 ppm to 70% LEL/3.5%V)
 			// Linearity: 1-cycle, 93% varying increments, warmup
-			new TestSetting("G3: 70% LEL")
+			new TestSetting("G3: Linearity 70% LEL + Calibration")
 			{
 				References = new List<VariableType>
 				{
@@ -486,25 +481,6 @@ namespace Sensit.App.Calibration
 				},
 				Components = new List<TestComponent>
 				{
-					// Warm up for 10 min.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("10-min Warmup")
-					{
-						ControlledVariables = new List<TestControlledVariable>
-						{
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
-							},
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double> { 0 },
-								Samples = 600,
-								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
-						},
-					},
 					// Set gas to 50% LEL (2.5% V).
 					new TestComponent("Apply 50% LEL Methane")
 					{
@@ -530,8 +506,8 @@ namespace Sensit.App.Calibration
 					{
 						Commands = new List<Test.Command> { Test.Command.Span }
 					},
-					// Warm up for 30 min.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("30-min Warmup")
+					// Warm up for 5 min.  Measure gas every 1 second.  Don't wait for stability.
+					new TestComponent("5-min Warmup")
 					{
 						ControlledVariables = new List<TestControlledVariable>
 						{
@@ -544,15 +520,10 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0 },
-								Samples = 1800,
+								Samples = 300,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							}
 						},
-					},
-					// Perform zero calibration after warmup.
-					new TestComponent("Auto Zero")
-					{
-						Commands = new List<Test.Command> { Test.Command.Zero }
 					},
 					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
 					new TestComponent("Up and Down")
@@ -580,7 +551,7 @@ namespace Sensit.App.Calibration
 				}
 			},
 			// Same thing as the other 70% LEL test, but using 75% LEL analyte.
-			new TestSetting("G3: 70% LEL (using 75% LEL analyte)")
+			new TestSetting("G3: Linearity 70% LEL (using 75% LEL analyte) + Calibration")
 			{
 				References = new List<VariableType>
 				{
@@ -589,25 +560,6 @@ namespace Sensit.App.Calibration
 				},
 				Components = new List<TestComponent>
 				{
-					// Warm up for 10 min.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("10-min Warmup")
-					{
-						ControlledVariables = new List<TestControlledVariable>
-						{
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
-							},
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double> { 0 },
-								Samples = 600,
-								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
-						},
-					},
 					// Set gas to 50% LEL (2.5% V).
 					new TestComponent("Apply 50% LEL Methane")
 					{
@@ -633,8 +585,8 @@ namespace Sensit.App.Calibration
 					{
 						Commands = new List<Test.Command> { Test.Command.Span }
 					},
-					// Warm up for 30 min.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("30-min Warmup")
+					// Warm up for 5 min.  Measure gas every 1 second.  Don't wait for stability.
+					new TestComponent("5-min Warmup")
 					{
 						ControlledVariables = new List<TestControlledVariable>
 						{
@@ -647,15 +599,10 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0 },
-								Samples = 1800,
+								Samples = 300,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							}
 						},
-					},
-					// Perform zero calibration after warmup.
-					new TestComponent("Auto Zero")
-					{
-						Commands = new List<Test.Command> { Test.Command.Zero }
 					},
 					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
 					new TestComponent("Up and Down")
@@ -721,7 +668,7 @@ namespace Sensit.App.Calibration
 				},
 				Components = new List<TestComponent>
 				{
-					// Warm up for 1 hour.  Measure gas every 1 second.  Don't wait for stability.
+					// Warm up for 5 min.  Measure gas every 1 second.  Don't wait for stability.
 					new TestComponent("Warmup")
 					{
 						ControlledVariables = new List<TestControlledVariable>
@@ -735,15 +682,10 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0 },
-								Samples = 3600,
+								Samples = 300,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							}
 						},
-					},
-					// Perform zero calibration after warmup.
-					new TestComponent("Auto Zero")
-					{
-						Commands = new List<Test.Command> { Test.Command.Zero }
 					},
 					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
 					new TestComponent("Up and Down")
@@ -835,7 +777,7 @@ namespace Sensit.App.Calibration
 				},
 				Components = new List<TestComponent>
 				{
-					// Warm up for 1 hour.  Measure gas every 1 second.  Don't wait for stability.
+					// Warm up for 5 min.  Measure gas every 1 second.  Don't wait for stability.
 					new TestComponent("Warmup")
 					{
 						ControlledVariables = new List<TestControlledVariable>
@@ -849,15 +791,10 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0 },
-								Samples = 3600,
+								Samples = 300,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							}
 						},
-					},
-					// Perform zero calibration after warmup.
-					new TestComponent("Auto Zero")
-					{
-						Commands = new List<Test.Command> { Test.Command.Zero }
 					},
 					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
 					new TestComponent("Up and Down")
@@ -893,7 +830,7 @@ namespace Sensit.App.Calibration
 				},
 				Components = new List<TestComponent>
 				{
-					// Warm up for 1 hour.  Measure gas every 1 second.  Don't wait for stability.
+					// Warm up for 5 min.  Measure gas every 1 second.  Don't wait for stability.
 					new TestComponent("Warmup")
 					{
 						ControlledVariables = new List<TestControlledVariable>
@@ -907,15 +844,10 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0 },
-								Samples = 3600,
+								Samples = 300,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							}
 						},
-					},
-					// Perform zero calibration after warmup.
-					new TestComponent("Auto Zero")
-					{
-						Commands = new List<Test.Command> { Test.Command.Zero }
 					},
 					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
 					new TestComponent("Up and Down")
@@ -951,7 +883,7 @@ namespace Sensit.App.Calibration
 				},
 				Components = new List<TestComponent>
 				{
-					// Warm up for 1 hour.  Measure gas every 1 second.  Don't wait for stability.
+					// Warm up for 5 min.  Measure gas every 1 second.  Don't wait for stability.
 					new TestComponent("Warmup")
 					{
 						ControlledVariables = new List<TestControlledVariable>
@@ -965,15 +897,10 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0 },
-								Samples = 3600,
+								Samples = 300,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							}
 						},
-					},
-					// Perform zero calibration after warmup.
-					new TestComponent("Auto Zero")
-					{
-						Commands = new List<Test.Command> { Test.Command.Zero }
 					},
 					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
 					new TestComponent("Up and Down")
@@ -1011,7 +938,7 @@ namespace Sensit.App.Calibration
 				},
 				Components = new List<TestComponent>
 				{
-					// Warm up for 1 hour.  Measure gas every 1 second.  Don't wait for stability.
+					// Warm up for 5 min.  Measure gas every 1 second.  Don't wait for stability.
 					new TestComponent("Warmup")
 					{
 						ControlledVariables = new List<TestControlledVariable>
@@ -1025,15 +952,10 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0 },
-								Samples = 3600,
+								Samples = 300,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							}
 						},
-					},
-					// Perform zero calibration after warmup.
-					new TestComponent("Auto Zero")
-					{
-						Commands = new List<Test.Command> { Test.Command.Zero }
 					},
 					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
 					new TestComponent("Up and Down")
