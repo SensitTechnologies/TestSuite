@@ -98,6 +98,170 @@ namespace Sensit.App.Calibration
 		[Category("Test Settings"), Description("Settings describing tests that can be performed.")]
 		public List<TestSetting> Tests { get; set; } = new List<TestSetting>
 		{
+			new TestSetting("G3: Calibration")
+			{
+				References = new List<VariableType>
+				{
+					VariableType.MassFlow,
+					VariableType.GasConcentration
+				},
+				Components = new List<TestComponent>
+				{
+					// Set gas to 50% LEL (2.5% V) for 1 minute.
+					new TestComponent("Apply 50% LEL Methane")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 100.0 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
+					// Calibrate.
+					new TestComponent("Calibration")
+					{
+						Commands = new List<Test.Command> { Test.Command.Span }
+					},
+					// Monitor for a bit.
+					new TestComponent("Monitor")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 100 },
+								Samples = 15,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
+				}
+			},
+			// Test second curve on the G3 (up to 5000 ppm)
+			// Linearity: 1-cycle, 100% varying increments, warmup
+			new TestSetting("G3: Linearity (designed for 5000 ppm analyte)")
+			{
+				References = new List<VariableType>
+				{
+					VariableType.MassFlow,
+					VariableType.GasConcentration
+				},
+				Components = new List<TestComponent>
+				{
+					// Warm up for 5 min.  Measure gas every 1 second.  Don't wait for stability.
+					new TestComponent("Warmup")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0 },
+								Samples = 300,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
+					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
+					new TestComponent("Up and Down")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double>
+								{
+									0, 0.66666, 1.33333, 2, 2.66666, 3.33333, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72, 76, 80, 84, 88, 92, 96, 100,
+									100, 96, 92, 88, 84, 80, 76, 72, 68, 64, 60, 56, 52, 48, 44, 40, 36, 32, 28, 24, 20, 16, 12, 8, 4, 3.33333, 2.66666, 2, 1.33333, 0.66666, 0
+								},
+								Samples = 240,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
+				}
+			},
+			// Test third curve on the G3 (5000 ppm to 70% LEL/3.5%V)
+			// Linearity: 1-cycle, 93% varying increments, warmup
+			new TestSetting("G3: Linearity (designed for 70% LEL)")
+			{
+				References = new List<VariableType>
+				{
+					VariableType.MassFlow,
+					VariableType.GasConcentration
+				},
+				Components = new List<TestComponent>
+				{
+					// Warm up for 5 min.  Measure gas every 1 second.  Don't wait for stability.
+					new TestComponent("Warmup")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0 },
+								Samples = 300,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
+					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
+					new TestComponent("Up and Down")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double>
+								{
+									0, 3.57, 7.14, 10.71, 14.29, 17.86, 21.43, 25, 28.57, 42.86, 57.14, 71.43, 85.71, 100,
+									100, 85.71, 71.43, 57.14, 42.86, 28.57, 25, 21.43, 17.86, 14.29, 10.71, 7.14, 3.57, 0
+								},
+								Samples = 240,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
+				}
+			},
 			new TestSetting("Flow Rate Test")
 			{
 				References = new List<VariableType>
@@ -339,296 +503,6 @@ namespace Sensit.App.Calibration
 					}
 				}
 			},
-			// Calibrate the G3's 2611 (using 70% LEL analyte)
-			new TestSetting("G3: Calibration (70% LEL analyte)")
-			{
-				References = new List<VariableType>
-				{
-					VariableType.MassFlow,
-					VariableType.GasConcentration
-				},
-				Components = new List<TestComponent>
-				{
-					// Set gas to 50% LEL (2.5% V).
-					new TestComponent("Apply 50% LEL Methane")
-					{
-						ControlledVariables = new List<TestControlledVariable>
-						{
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
-							},
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.GasConcentration,
-								// 71.43% of 70% LEL is 50% LEL.
-								Setpoints = new List<double> { 71.43 },
-								Samples = 60,
-								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
-						},
-					},
-					// Calibrate.
-					new TestComponent("Calibration")
-					{
-						Commands = new List<Test.Command> { Test.Command.Span }
-					},
-					// Warm up for 5 min.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("Warmup")
-					{
-						ControlledVariables = new List<TestControlledVariable>
-						{
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
-							},
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double> { 0 },
-								Samples = 300,
-								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
-						},
-					},
-					// Monitor for a bit.
-					new TestComponent("1 minute at 50% LEL Methane")
-					{
-						ControlledVariables = new List<TestControlledVariable>
-						{
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
-							},
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.GasConcentration,
-								// 71.43% of 70% LEL is 50% LEL.
-								Setpoints = new List<double> { 71.43 },
-								Samples = 60,
-								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
-						},
-					},
-				}
-			},
-			// Test second curve on the G3 (up to 5000 ppm)
-			// Linearity: 1-cycle, 100% varying increments, warmup
-			new TestSetting("G3: Linearity 5000 ppm")
-			{
-				References = new List<VariableType>
-				{
-					VariableType.MassFlow,
-					VariableType.GasConcentration
-				},
-				Components = new List<TestComponent>
-				{
-					// Warm up for 5 min.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("Warmup")
-					{
-						ControlledVariables = new List<TestControlledVariable>
-						{
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
-							},
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double> { 0 },
-								Samples = 300,
-								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
-						},
-					},
-					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("Up and Down")
-					{
-						ControlledVariables = new List<TestControlledVariable>
-						{
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
-							},
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double>
-								{
-									0, 0.66666, 1.33333, 2, 2.66666, 3.33333, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72, 76, 80, 84, 88, 92, 96, 100,
-									100, 96, 92, 88, 84, 80, 76, 72, 68, 64, 60, 56, 52, 48, 44, 40, 36, 32, 28, 24, 20, 16, 12, 8, 4, 3.33333, 2.66666, 2, 1.33333, 0.66666, 0
-								},
-								Samples = 240,
-								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
-						},
-					},
-				}
-			},
-			// Test third curve on the G3 (5000 ppm to 70% LEL/3.5%V)
-			// Linearity: 1-cycle, 93% varying increments, warmup
-			new TestSetting("G3: Linearity 70% LEL + Calibration")
-			{
-				References = new List<VariableType>
-				{
-					VariableType.MassFlow,
-					VariableType.GasConcentration
-				},
-				Components = new List<TestComponent>
-				{
-					// Set gas to 50% LEL (2.5% V).
-					new TestComponent("Apply 50% LEL Methane")
-					{
-						ControlledVariables = new List<TestControlledVariable>
-						{
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
-							},
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.GasConcentration,
-								// 71.43% of 70% LEL is 2.5% LEL.
-								Setpoints = new List<double> { 71.43 },
-								Samples = 60,
-								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
-						},
-					},
-					// Calibrate.
-					new TestComponent("Calibration")
-					{
-						Commands = new List<Test.Command> { Test.Command.Span }
-					},
-					// Warm up for 5 min.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("5-min Warmup")
-					{
-						ControlledVariables = new List<TestControlledVariable>
-						{
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
-							},
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double> { 0 },
-								Samples = 300,
-								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
-						},
-					},
-					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("Up and Down")
-					{
-						ControlledVariables = new List<TestControlledVariable>
-						{
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
-							},
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double>
-								{
-									0, 3.57, 7.14, 10.71, 14.29, 17.86, 21.43, 25, 28.57, 42.86, 57.14, 71.43, 85.71, 100,
-									100, 85.71, 71.43, 57.14, 42.86, 28.57, 25, 21.43, 17.86, 14.29, 10.71, 7.14, 3.57, 0
-								},
-								Samples = 240,
-								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
-						},
-					},
-				}
-			},
-			// Same thing as the other 70% LEL test, but using 75% LEL analyte.
-			new TestSetting("G3: Linearity 70% LEL (using 75% LEL analyte) + Calibration")
-			{
-				References = new List<VariableType>
-				{
-					VariableType.MassFlow,
-					VariableType.GasConcentration
-				},
-				Components = new List<TestComponent>
-				{
-					// Set gas to 50% LEL (2.5% V).
-					new TestComponent("Apply 50% LEL Methane")
-					{
-						ControlledVariables = new List<TestControlledVariable>
-						{
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
-							},
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.GasConcentration,
-								// 66.66667% of 75% LEL is 50% LEL.
-								Setpoints = new List<double> { 66.66667 },
-								Samples = 60,
-								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
-						},
-					},
-					// Calibrate.
-					new TestComponent("Calibration")
-					{
-						Commands = new List<Test.Command> { Test.Command.Span }
-					},
-					// Warm up for 5 min.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("5-min Warmup")
-					{
-						ControlledVariables = new List<TestControlledVariable>
-						{
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
-							},
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double> { 0 },
-								Samples = 300,
-								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
-						},
-					},
-					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("Up and Down")
-					{
-						ControlledVariables = new List<TestControlledVariable>
-						{
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
-							},
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double>
-								{
-									0, 3.33333, 6.66667, 10, 13.33333, 16.66667, 20, 23.33333, 26.66667, 40, 53.33333, 66.66667, 80, 93.33333,
-									93.33333, 80, 66.66667, 53.33333, 40, 26.66667, 23.33333, 20, 16.66667, 13.33333, 10, 6.66667, 3.33333, 0
-								},
-								Samples = 240,
-								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
-						},
-					},
-				}
-			},
 			new TestSetting("Linearity: 1-cycle, 100% / 10")
 			{
 				References = new List<VariableType>
@@ -659,7 +533,7 @@ namespace Sensit.App.Calibration
 					},
 				}
 			},
-			new TestSetting("Linearity: 1-cycle, 100% / 10, warmup")
+			new TestSetting("Linearity: 1-cycle, 100% / 5")
 			{
 				References = new List<VariableType>
 				{
@@ -668,134 +542,6 @@ namespace Sensit.App.Calibration
 				},
 				Components = new List<TestComponent>
 				{
-					// Warm up for 5 min.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("Warmup")
-					{
-						ControlledVariables = new List<TestControlledVariable>
-						{
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
-							},
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double> { 0 },
-								Samples = 300,
-								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
-						},
-					},
-					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("Up and Down")
-					{
-						ControlledVariables = new List<TestControlledVariable>
-						{
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
-							},
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double> { 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0 },
-								Samples = 240,
-								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
-						},
-					},
-				}
-			},
-			new TestSetting("Linearity: 1-cycle, 50% / 5")
-			{
-				References = new List<VariableType>
-				{
-					VariableType.MassFlow,
-					VariableType.GasConcentration
-				},
-				Components = new List<TestComponent>
-				{
-					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("Up and Down")
-					{
-						ControlledVariables = new List<TestControlledVariable>
-						{
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
-							},
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double> { 0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 50, 45, 40, 35, 30, 25, 20, 15, 10, 5, 0 },
-								Samples = 240,
-								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
-						},
-					},
-				}
-			},
-			new TestSetting("Linearity: 1-cycle, 25% / 2.5")
-			{
-				References = new List<VariableType>
-				{
-					VariableType.MassFlow,
-					VariableType.GasConcentration
-				},
-				Components = new List<TestComponent>
-				{
-					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("Up and Down")
-					{
-						ControlledVariables = new List<TestControlledVariable>
-						{
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
-							},
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double> { 0.0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0, 17.5, 20.0, 22.5, 25.0, 25.0, 22.5, 20.0, 17.5, 15.0, 12.5, 10.0, 7.5, 5.0, 2.5, 0.0 },
-								Samples = 240,
-								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
-						},
-					},
-				}
-			},
-			new TestSetting("Linearity: 1-cycle, 100% / 5, warmup")
-			{
-				References = new List<VariableType>
-				{
-					VariableType.MassFlow,
-					VariableType.GasConcentration
-				},
-				Components = new List<TestComponent>
-				{
-					// Warm up for 5 min.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("Warmup")
-					{
-						ControlledVariables = new List<TestControlledVariable>
-						{
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
-							},
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double> { 0 },
-								Samples = 300,
-								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
-						},
-					},
 					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
 					new TestComponent("Up and Down")
 					{
@@ -821,7 +567,7 @@ namespace Sensit.App.Calibration
 					},
 				}
 			},
-			new TestSetting("Linearity: 1-cycle, 50% / 5, warmup")
+			new TestSetting("Linearity: 1-cycle, 100% / 2.5")
 			{
 				References = new List<VariableType>
 				{
@@ -830,25 +576,6 @@ namespace Sensit.App.Calibration
 				},
 				Components = new List<TestComponent>
 				{
-					// Warm up for 5 min.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("Warmup")
-					{
-						ControlledVariables = new List<TestControlledVariable>
-						{
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
-							},
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double> { 0 },
-								Samples = 300,
-								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
-						},
-					},
 					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
 					new TestComponent("Up and Down")
 					{
@@ -865,115 +592,9 @@ namespace Sensit.App.Calibration
 								Setpoints = new List<double>
 								{
 									0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0, 17.5, 20.0, 22.5, 25.0, 27.5, 30.0, 32.5, 35.0, 37.5, 40.0, 42.5, 45.0, 47.5, 50.0,
-									50.0, 47.5, 45.0, 42.5, 40.0, 37.5, 35.0, 32.5, 30.0, 27.5, 25.0, 22.5, 20.0, 17.5, 15.0, 12.5, 10.0, 7.5, 5.0, 2.5, 0
-								},
-								Samples = 240,
-								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
-						},
-					},
-				}
-			},
-			new TestSetting("Linearity: 1-cycle, 50% / 1, warmup")
-			{
-				References = new List<VariableType>
-				{
-					VariableType.MassFlow,
-					VariableType.GasConcentration
-				},
-				Components = new List<TestComponent>
-				{
-					// Warm up for 5 min.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("Warmup")
-					{
-						ControlledVariables = new List<TestControlledVariable>
-						{
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
-							},
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double> { 0 },
-								Samples = 300,
-								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
-						},
-					},
-					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("Up and Down")
-					{
-						ControlledVariables = new List<TestControlledVariable>
-						{
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
-							},
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double>
-								{
-									00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,
-									26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
-									50, 49, 48, 47, 46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25,
-									24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 09, 08, 07, 06, 05, 04, 03, 02, 01, 00
-								},
-								Samples = 240,
-								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
-						},
-					},
-				}
-			},
-			new TestSetting("Linearity: 1-cycle, 25% / 5, warmup")
-			{
-				References = new List<VariableType>
-				{
-					VariableType.MassFlow,
-					VariableType.GasConcentration
-				},
-				Components = new List<TestComponent>
-				{
-					// Warm up for 5 min.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("Warmup")
-					{
-						ControlledVariables = new List<TestControlledVariable>
-						{
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
-							},
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double> { 0 },
-								Samples = 300,
-								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
-						},
-					},
-					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("Up and Down")
-					{
-						ControlledVariables = new List<TestControlledVariable>
-						{
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
-							},
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double>
-								{
-									0.00, 1.25, 2.50, 3.75, 5.00, 6.25, 7.50, 8.75, 10.00, 11.25, 12.50, 13.75, 15.00, 16.25, 17.50, 18.75, 20.00, 21.25, 22.50, 23.75, 25.00,
-									25.00, 23.75, 22.50, 21.25, 20.00, 18.75, 17.50, 16.25, 15.00, 13.75, 12.50, 11.25, 10.00, 8.75, 7.50, 6.25, 5.00, 3.75, 2.50, 1.25, 0.00
+									52.5, 55.0, 57.5, 60.0, 62.5, 65.0, 67.5, 70.0, 72.5, 75.0, 77.5, 80.0, 82.5, 85.0, 87.5, 90.0, 92.5, 95.0, 97.5, 100.0,
+									100.0, 97.5, 95.0, 92.5, 90.0, 87.5, 85.0, 82.5, 80.0, 77.5, 75.0, 72.5, 70.0, 67.5, 65.0, 62.5, 60.0, 57.5, 55.0, 52.5,
+									50.0, 47.5, 45.0, 42.5, 40.0, 37.5, 35.0, 32.5, 30.0, 27.5, 25.0, 22.5, 20.0, 17.5, 15.0, 12.5, 10.0, 7.5, 5.0, 2.5, 0,
 								},
 								Samples = 240,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
@@ -1011,81 +632,6 @@ namespace Sensit.App.Calibration
 									0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0,
 									0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0,
 									0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0
-								},
-								Samples = 240,
-								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
-						},
-					},
-				}
-			},
-			new TestSetting("Linearity: 5-cycle, 50% / 5")
-			{
-				References = new List<VariableType>
-				{
-					VariableType.MassFlow,
-					VariableType.GasConcentration
-				},
-				Components = new List<TestComponent>
-				{
-					// Ramp up and down 5 times.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("Up and Down 5x")
-					{
-						ControlledVariables = new List<TestControlledVariable>
-						{
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
-							},
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.GasConcentration,
-								// Setpoints = new List<double> { 0.0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0, 17.5, 20.0, 22.5, 25.0, 25.0, 22.5, 20.0, 17.5, 15.0, 12.5, 10.0, 7.5, 5.0, 2.5, 0.0 },
-								Setpoints = new List<double>
-								{
-									0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 50, 45, 40, 35, 30, 25, 20, 15, 10, 5, 0,
-									0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 50, 45, 40, 35, 30, 25, 20, 15, 10, 5, 0,
-									0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 50, 45, 40, 35, 30, 25, 20, 15, 10, 5, 0,
-									0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 50, 45, 40, 35, 30, 25, 20, 15, 10, 5, 0,
-									0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 50, 45, 40, 35, 30, 25, 20, 15, 10, 5, 0
-								},
-								Samples = 240,
-								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
-						},
-					},
-				}
-			},
-			new TestSetting("Linearity: 5-cycle, 25% / 2.5")
-			{
-				References = new List<VariableType>
-				{
-					VariableType.MassFlow,
-					VariableType.GasConcentration
-				},
-				Components = new List<TestComponent>
-				{
-					// Ramp up and down 5 times.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("Up and Down 5x")
-					{
-						ControlledVariables = new List<TestControlledVariable>
-						{
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
-							},
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double>
-								{
-									0.0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0, 17.5, 20.0, 22.5, 25.0, 25.0, 22.5, 20.0, 17.5, 15.0, 12.5, 10.0, 7.5, 5.0, 2.5, 0.0,
-									0.0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0, 17.5, 20.0, 22.5, 25.0, 25.0, 22.5, 20.0, 17.5, 15.0, 12.5, 10.0, 7.5, 5.0, 2.5, 0.0,
-									0.0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0, 17.5, 20.0, 22.5, 25.0, 25.0, 22.5, 20.0, 17.5, 15.0, 12.5, 10.0, 7.5, 5.0, 2.5, 0.0,
-									0.0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0, 17.5, 20.0, 22.5, 25.0, 25.0, 22.5, 20.0, 17.5, 15.0, 12.5, 10.0, 7.5, 5.0, 2.5, 0.0,
-									0.0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0, 17.5, 20.0, 22.5, 25.0, 25.0, 22.5, 20.0, 17.5, 15.0, 12.5, 10.0, 7.5, 5.0, 2.5, 0.0
 								},
 								Samples = 240,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
@@ -1611,7 +1157,7 @@ namespace Sensit.App.Calibration
 					}
 				}
 			},
-			new TestSetting("Fast Linearity, 100%")
+			new TestSetting("Fast Linearity, 100% / 10")
 			{
 				References = new List<VariableType>
 				{
@@ -1636,72 +1182,6 @@ namespace Sensit.App.Calibration
 								Setpoints = new List<double>
 								{
 									0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0,
-								},
-								Samples = 10,
-								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
-						},
-					},
-				},
-			},
-			new TestSetting("Fast Linearity, 50%")
-			{
-				References = new List<VariableType>
-				{
-					VariableType.MassFlow,
-					VariableType.GasConcentration
-				},
-				Components = new List<TestComponent>
-				{
-					// Ramp up and down many times to test the mass flow controller.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("Up and Down")
-					{
-						ControlledVariables = new List<TestControlledVariable>
-						{
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
-							},
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double>
-								{
-									0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 50, 45, 40, 35, 30, 25, 20, 15, 10, 5, 0
-								},
-								Samples = 10,
-								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
-						},
-					},
-				},
-			},
-			new TestSetting("Fast Linearity, 25%")
-			{
-				References = new List<VariableType>
-				{
-					VariableType.MassFlow,
-					VariableType.GasConcentration
-				},
-				Components = new List<TestComponent>
-				{
-					// Ramp up and down many times to test the mass flow controller.  Measure gas every 1 second.  Don't wait for stability.
-					new TestComponent("Up and Down")
-					{
-						ControlledVariables = new List<TestControlledVariable>
-						{
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.MassFlow,
-								Setpoints = new List<double> { 300.0 }
-							},
-							new TestControlledVariable()
-							{
-								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double>
-								{
-									0.0, 2.5, 5.0, 7.5, 10.0, 12.5, 15.0, 17.5, 20.0, 22.5, 25.0, 25.0, 22.5, 20.0, 17.5, 15.0, 12.5, 10.0, 7.5, 5.0, 2.5, 0.0,
 								},
 								Samples = 10,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
