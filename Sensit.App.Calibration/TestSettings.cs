@@ -107,6 +107,25 @@ namespace Sensit.App.Calibration
 				},
 				Components = new List<TestComponent>
 				{
+					// Allow zero reading to settle for 5 min.
+					new TestComponent("Apply 0% V Methane")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								Samples = 300,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						}
+					},
 					// Set gas to 50% LEL (2.5% V) for 1 minute.
 					new TestComponent("Apply 50% LEL Methane")
 					{
