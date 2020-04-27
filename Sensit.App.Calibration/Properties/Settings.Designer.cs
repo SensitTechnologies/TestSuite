@@ -37,10 +37,10 @@ namespace Sensit.App.Calibration.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Range {
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public decimal Range {
             get {
-                return ((string)(this["Range"]));
+                return ((decimal)(this["Range"]));
             }
             set {
                 this["Range"] = value;

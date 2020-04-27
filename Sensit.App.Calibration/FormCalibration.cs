@@ -359,6 +359,9 @@ namespace Sensit.App.Calibration
 				}
 			}
 
+			// Select the most recently used range.
+			numericUpDownRange.Value = Properties.Settings.Default.Range;
+
 			// Populate the Test combobox based on the test settings.
 			comboBoxTest.Items.Clear();
 			TestSettings testSettings = Settings.Load<TestSettings>(Properties.Settings.Default.TestSettingsFile);
@@ -385,10 +388,16 @@ namespace Sensit.App.Calibration
 		{
 			try
 			{
-				// Ensure the user has selected a range and test.
+				// Ensure the user has selected a test.
 				if (comboBoxTest.SelectedItem == null)
 				{
 					throw new Exception("Please select test before starting test.");
+				}
+
+				// Ensure the range is valid.
+				if ((numericUpDownRange.Value > 100) || (numericUpDownRange.Value < 0))
+				{
+					throw new Exception("Please choose a range multiplier between 0 and 100.");
 				}
 
 				//
@@ -416,6 +425,7 @@ namespace Sensit.App.Calibration
 				// TODO:  Clear the DUT data on the Overview tab.
 
 				comboBoxModel.Enabled = false;
+				numericUpDownRange.Enabled = false;
 				comboBoxTest.Enabled = false;
 				checkBoxSelectAll.Enabled = false;
 				foreach (Control c in tableLayoutPanelDevicesUnderTest.Controls)
@@ -497,6 +507,7 @@ namespace Sensit.App.Calibration
 					UpdateRateOfChange = value => VariableRate = value,
 					UpdateIndependentVariableRange = value => ErrorRange = value,
 					UpdateRateRange = value => RateRange = value,
+					GasMixRange = numericUpDownRange.Value,
 				};
 
 				// Start the test.
@@ -592,6 +603,17 @@ namespace Sensit.App.Calibration
 
 			// Save settings.
 			Properties.Settings.Default.Save();
+		}
+
+		/// <summary>
+		/// When the "Range" is changed, save the new value.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void NumericUpDownRange_ValueChanged(object sender, EventArgs e)
+		{
+			// Remember the selected value.
+			Properties.Settings.Default.Range = numericUpDownRange.Value;
 		}
 
 		/// <summary>
@@ -944,6 +966,7 @@ namespace Sensit.App.Calibration
 		{
 			// Enable most of the controls.
 			comboBoxModel.Enabled = true;
+			numericUpDownRange.Enabled = true;
 			comboBoxTest.Enabled = true;
 			checkBoxSelectAll.Enabled = true;
 			foreach (Control c in tableLayoutPanelDevicesUnderTest.Controls)

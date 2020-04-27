@@ -49,8 +49,10 @@
 			this.tableLayoutPanelTest = new System.Windows.Forms.TableLayoutPanel();
 			this.groupBoxTestSettings = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanelTestSettings = new System.Windows.Forms.TableLayoutPanel();
+			this.labelRange = new System.Windows.Forms.Label();
 			this.labelTest = new System.Windows.Forms.Label();
 			this.comboBoxTest = new System.Windows.Forms.ComboBox();
+			this.numericUpDownRange = new System.Windows.Forms.NumericUpDown();
 			this.tableLayoutPanelTestSetupButtons = new System.Windows.Forms.TableLayoutPanel();
 			this.buttonStart = new System.Windows.Forms.Button();
 			this.buttonStop = new System.Windows.Forms.Button();
@@ -120,6 +122,7 @@
 			this.tableLayoutPanelTest.SuspendLayout();
 			this.groupBoxTestSettings.SuspendLayout();
 			this.tableLayoutPanelTestSettings.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownRange)).BeginInit();
 			this.tableLayoutPanelTestSetupButtons.SuspendLayout();
 			this.tabPageDut.SuspendLayout();
 			this.tableLayoutPanel2.SuspendLayout();
@@ -191,7 +194,7 @@
 			this.groupBoxTestSettings.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBoxTestSettings.Location = new System.Drawing.Point(3, 3);
 			this.groupBoxTestSettings.Name = "groupBoxTestSettings";
-			this.groupBoxTestSettings.Size = new System.Drawing.Size(514, 46);
+			this.groupBoxTestSettings.Size = new System.Drawing.Size(514, 81);
 			this.groupBoxTestSettings.TabIndex = 16;
 			this.groupBoxTestSettings.TabStop = false;
 			this.groupBoxTestSettings.Text = "Test Settings";
@@ -203,8 +206,10 @@
 			this.tableLayoutPanelTestSettings.ColumnCount = 2;
 			this.tableLayoutPanelTestSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanelTestSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelTestSettings.Controls.Add(this.labelRange, 0, 0);
 			this.tableLayoutPanelTestSettings.Controls.Add(this.labelTest, 0, 1);
 			this.tableLayoutPanelTestSettings.Controls.Add(this.comboBoxTest, 1, 1);
+			this.tableLayoutPanelTestSettings.Controls.Add(this.numericUpDownRange, 1, 0);
 			this.tableLayoutPanelTestSettings.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanelTestSettings.Location = new System.Drawing.Point(3, 16);
 			this.tableLayoutPanelTestSettings.Name = "tableLayoutPanelTestSettings";
@@ -212,15 +217,26 @@
 			this.tableLayoutPanelTestSettings.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelTestSettings.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelTestSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanelTestSettings.Size = new System.Drawing.Size(508, 27);
+			this.tableLayoutPanelTestSettings.Size = new System.Drawing.Size(508, 62);
 			this.tableLayoutPanelTestSettings.TabIndex = 6;
+			// 
+			// labelRange
+			// 
+			this.labelRange.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelRange.AutoSize = true;
+			this.labelRange.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelRange.Location = new System.Drawing.Point(3, 5);
+			this.labelRange.Name = "labelRange";
+			this.labelRange.Size = new System.Drawing.Size(57, 20);
+			this.labelRange.TabIndex = 19;
+			this.labelRange.Text = "Range";
 			// 
 			// labelTest
 			// 
 			this.labelTest.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelTest.AutoSize = true;
 			this.labelTest.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelTest.Location = new System.Drawing.Point(3, 3);
+			this.labelTest.Location = new System.Drawing.Point(3, 36);
 			this.labelTest.Name = "labelTest";
 			this.labelTest.Size = new System.Drawing.Size(40, 20);
 			this.labelTest.TabIndex = 20;
@@ -230,14 +246,26 @@
 			// 
 			this.comboBoxTest.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.comboBoxTest.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxTest.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.comboBoxTest.FormattingEnabled = true;
 			this.helpProvider1.SetHelpString(this.comboBoxTest, "Selects which test to run");
-			this.comboBoxTest.Location = new System.Drawing.Point(49, 3);
+			this.comboBoxTest.Location = new System.Drawing.Point(66, 33);
 			this.comboBoxTest.Name = "comboBoxTest";
 			this.helpProvider1.SetShowHelp(this.comboBoxTest, true);
-			this.comboBoxTest.Size = new System.Drawing.Size(456, 21);
+			this.comboBoxTest.Size = new System.Drawing.Size(439, 26);
 			this.comboBoxTest.TabIndex = 2;
 			this.comboBoxTest.SelectedIndexChanged += new System.EventHandler(this.ComboBoxTest_SelectedIndexChanged);
+			// 
+			// numericUpDownRange
+			// 
+			this.numericUpDownRange.AutoSize = true;
+			this.numericUpDownRange.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.numericUpDownRange.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.numericUpDownRange.Location = new System.Drawing.Point(66, 3);
+			this.numericUpDownRange.Name = "numericUpDownRange";
+			this.numericUpDownRange.Size = new System.Drawing.Size(439, 24);
+			this.numericUpDownRange.TabIndex = 21;
+			this.numericUpDownRange.ValueChanged += new System.EventHandler(this.NumericUpDownRange_ValueChanged);
 			// 
 			// tableLayoutPanelTestSetupButtons
 			// 
@@ -963,6 +991,7 @@
 			this.groupBoxTestSettings.PerformLayout();
 			this.tableLayoutPanelTestSettings.ResumeLayout(false);
 			this.tableLayoutPanelTestSettings.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownRange)).EndInit();
 			this.tableLayoutPanelTestSetupButtons.ResumeLayout(false);
 			this.tabPageDut.ResumeLayout(false);
 			this.tableLayoutPanel2.ResumeLayout(false);
@@ -1031,6 +1060,7 @@
 		private System.Windows.Forms.Button buttonStop;
 		private System.Windows.Forms.GroupBox groupBoxTestSettings;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelTestSettings;
+		private System.Windows.Forms.Label labelRange;
 		private System.Windows.Forms.Label labelTest;
 		private System.Windows.Forms.ComboBox comboBoxTest;
 		private System.Windows.Forms.TabPage tabPageStatus;
@@ -1069,6 +1099,7 @@
 		private System.Windows.Forms.ComboBox comboBoxModel;
 		private System.Windows.Forms.GroupBox groupBoxDevicesUnderTest;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelDevicesUnderTest;
+		private System.Windows.Forms.NumericUpDown numericUpDownRange;
 	}
 }
 

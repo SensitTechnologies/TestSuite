@@ -5,8 +5,8 @@
     <Setting Name="Model" Type="System.String" Scope="User">
       <Value Profile="(Default)">Simulator</Value>
     </Setting>
-    <Setting Name="Range" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="Range" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">100</Value>
     </Setting>
     <Setting Name="Test" Type="System.String" Scope="User">
       <Value Profile="(Default)">Linearity</Value>
