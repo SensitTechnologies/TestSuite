@@ -104,8 +104,6 @@ namespace Sensit.App.Calibration
 			}
 		}
 
-		public float ErrorValue { get; private set; }
-
 		/// <summary>
 		/// Controlled/independent variables for the current test component.
 		/// </summary>
@@ -113,6 +111,11 @@ namespace Sensit.App.Calibration
 		/// This will be accessed by the FormCalibration to display the variables values.
 		/// </remarks>
 		public List<TestControlledVariable> Variables { get; }
+
+		/// <summary>
+		/// Multiplier for setpoints.
+		/// </summary>
+		public decimal GasMixRange { get; set; }
 
 		#endregion
 
@@ -536,12 +539,19 @@ namespace Sensit.App.Calibration
 					// For each setpoint...
 					foreach (double sp in v?.Setpoints ?? Enumerable.Empty<double>())
 					{
+						double setpoint = sp;
+						// If gas mix, apply the multiplier.
+						if (v.VariableType == VariableType.GasConcentration)
+						{
+							setpoint *= Convert.ToDouble(GasMixRange / 100);
+						}
+
 						// Update the form.
-						UpdateIndependentVariableRange((sp - v.ErrorTolerance, sp + v.ErrorTolerance));
+						UpdateIndependentVariableRange((setpoint - v.ErrorTolerance, setpoint + v.ErrorTolerance));
 						UpdateRateRange((v.RateTolerance * -1.0, v.RateTolerance));
 
 						// Set the setpoint.
-						ProcessSetpoint(v, sp, v.Interval);
+						ProcessSetpoint(v, setpoint, v.Interval);
 
 						// For each sample...
 						for (int i = 1; i <= v.Samples; i++)
@@ -562,7 +572,7 @@ namespace Sensit.App.Calibration
 							}
 
 							// Record sample data.
-							ProcessSamples(sp);
+							ProcessSamples(setpoint);
 
 							// Wait to get desired reading frequency.
 							Thread.Sleep(v.Interval);
