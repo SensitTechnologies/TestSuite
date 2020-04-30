@@ -892,7 +892,7 @@ namespace Sensit.App.Calibration
 		/// <param name="e"></param>
 		private void EquipmentSettingsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			EditSettings<EquipmentSettings>(Properties.Settings.Default.SystemSettingsFile);
+			//EditSettings<EquipmentSettings>(Properties.Settings.Default.SystemSettingsFile);
 		}
 
 		/// <summary>
@@ -902,7 +902,7 @@ namespace Sensit.App.Calibration
 		/// <param name="e"></param>
 		private void DUTSettingsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			EditSettings<DutSettings>(Properties.Settings.Default.DutSettingsFile);
+			//EditSettings<DutSettings>(Properties.Settings.Default.DutSettingsFile);
 		}
 
 		/// <summary>
@@ -912,7 +912,7 @@ namespace Sensit.App.Calibration
 		/// <param name="e"></param>
 		private void TestSettingsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			EditSettings<TestSettings>(Properties.Settings.Default.TestSettingsFile);
+			//EditSettings<TestSettings>(Properties.Settings.Default.TestSettingsFile);
 		}
 
 		#endregion

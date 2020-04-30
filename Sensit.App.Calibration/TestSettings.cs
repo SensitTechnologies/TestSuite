@@ -8,6 +8,7 @@ namespace Sensit.App.Calibration
 	/// <summary>
 	/// Configuration for a variable being controlled during a test.
 	/// </summary>
+	[Serializable]
 	public class TestControlledVariable
 	{
 		[Category("Test Variable"), Description("Type of the variable.")]
@@ -38,6 +39,7 @@ namespace Sensit.App.Calibration
 	/// <summary>
 	/// Configuration for a component of a test.
 	/// </summary>
+	[Serializable]
 	public class TestComponent
 	{
 		#region Constructors
@@ -93,7 +95,7 @@ namespace Sensit.App.Calibration
 	}
 
 	[Serializable]
-	public class TestSettings : Attribute
+	public class TestSettings
 	{
 		[Category("Test Settings"), Description("Settings describing tests that can be performed.")]
 		public List<TestSetting> Tests { get; set; } = new List<TestSetting>

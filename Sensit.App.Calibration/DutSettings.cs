@@ -155,7 +155,7 @@ namespace Sensit.App.Calibration
 	}
 
 	[Serializable]
-	public class DutSettings : Attribute
+	public class DutSettings
 	{
 		[Category("DUT Settings"), Description("Settings for Model, Range.")]
 		public string Label { get; set; } = "DUT Settings";

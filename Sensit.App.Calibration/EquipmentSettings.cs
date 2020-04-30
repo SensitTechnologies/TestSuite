@@ -14,6 +14,7 @@ namespace Sensit.App.Calibration
 		public int BaudRate { get; set; }
 	}
 
+	[Serializable]
 	public class GasMixerSetting
 	{
 		[Category("Mass Flow Controllers"), Description("Serial port used by device.")]
@@ -35,6 +36,7 @@ namespace Sensit.App.Calibration
 		public Gas Diluent { get; set; }
 	}
 
+	[Serializable]
 	public class DataloggerSetting
 	{
 		[Description("Datalogger bank used to interface with DUTs.")]
@@ -42,7 +44,7 @@ namespace Sensit.App.Calibration
 	}
 
 	[Serializable]
-	public class EquipmentSettings : Attribute
+	public class EquipmentSettings
 	{
 		[Category("Control Devices"), Description("Settings for Gas Mixer, which is really two Mass Flow Controllers working together.")]
 		public GasMixerSetting GasMixer { get; set; } = new GasMixerSetting();
