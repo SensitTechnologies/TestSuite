@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO.Ports;
+using System.Text.RegularExpressions;
 using Sensit.TestSDK.Calculations;
 using Sensit.TestSDK.Communication;
 using Sensit.TestSDK.Exceptions;
@@ -21,6 +22,19 @@ namespace Sensit.TestSDK.Devices
 	public class GPDX303S : SerialDevice, IVoltageReference, ICurrentReference,
 		IVoltageController, ICurrentController
 	{
+		#region Constructor
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		public GPDX303S()
+		{
+			// Set a default baud rate.
+			_serialPort.BaudRate = 9600;
+		}
+
+		#endregion
+
 		#region Serial Device Methods
 
 		public new int BaudRate
@@ -166,12 +180,18 @@ namespace Sensit.TestSDK.Devices
 				// Read the response.
 				string message = _serialPort.ReadLine();
 
+				// Remove any newlines or tabs.
+				message = Regex.Replace(message, @"\t|\n|\r", "");
+
 				// Split the string using spaces to separate each word.
 				char[] separators = new char[] { ' ' };
 				string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
 
+				// Remove any non-digit characters.
+				string value = words[words.Length - 1].Trim('V', 'A');
+
 				// Convert the last word to a number.
-				result = Convert.ToSingle(words[words.Length - 1], CultureInfo.InvariantCulture);
+				result = Convert.ToSingle(value, CultureInfo.InvariantCulture);
 			}
 			catch (InvalidOperationException ex)
 			{
@@ -194,10 +214,10 @@ namespace Sensit.TestSDK.Devices
 			switch (type)
 			{
 				case VariableType.Current:
-					SendCommand(new GPDX303S_SCPI().VSET(1, Convert.ToSingle(setpoint)).Command());
+					SendCommand(new GPDX303S_SCPI().ISET(1, Convert.ToSingle(setpoint)).Command());
 					break;
 				case VariableType.Voltage:
-					SendCommand(new GPDX303S_SCPI().ISET(1, Convert.ToSingle(setpoint)).Command());
+					SendCommand(new GPDX303S_SCPI().VSET(1, Convert.ToSingle(setpoint)).Command());
 					break;
 				default:
 					throw new DeviceSettingNotSupportedException("Power supply does not support " + type.ToString() + " setpoints.");
@@ -229,11 +249,11 @@ namespace Sensit.TestSDK.Devices
 			{
 				case ControlMode.Ambient:
 					// Turn output off.
-					Output(false);
+					SendCommand(new GPDX303S_SCPI().OUT(false).Command());
 					break;
 				case ControlMode.Control:
 					// Turn output on.
-					Output(true);
+					SendCommand(new GPDX303S_SCPI().OUT(true).Command());
 					break;
 				case ControlMode.Measure:
 					throw new DeviceSettingNotSupportedException("Power supply does not support measure mode."
@@ -242,11 +262,6 @@ namespace Sensit.TestSDK.Devices
 					throw new DeviceSettingNotSupportedException("Cannot set power supply control mode:"
 						+ Environment.NewLine + "Unrecognized mode.");
 			}
-		}
-
-		private void Output(bool enable)
-		{
-			throw new NotImplementedException();
 		}
 
 		#endregion
