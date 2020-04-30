@@ -20,7 +20,7 @@ namespace Sensit.TestSDK.Devices
 	/// optional plug-in modules to create a compact data logger, full-featured data acquisition
 	/// system or low-cost switching unit.
 	/// </remarks>
-	public class Keysight_34972A : IDutInterfaceDevice
+	public class Keysight_34972A : IDatalogger
 	{
 		Ag3497x _v3497x;
 

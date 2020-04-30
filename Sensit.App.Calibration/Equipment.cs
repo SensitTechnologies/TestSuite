@@ -41,7 +41,7 @@ namespace Sensit.App.Calibration
 
 		public Dictionary<VariableType, IReferenceDevice> References { get; }
 
-		public IDutInterfaceDevice DutInterface => _datalogger;
+		public IDatalogger DutInterface => _datalogger;
 
 		#endregion
 

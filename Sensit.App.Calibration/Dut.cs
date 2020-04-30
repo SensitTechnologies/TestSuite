@@ -76,7 +76,7 @@ namespace Sensit.App.Calibration
 		/// <summary>
 		/// Datalogger (for analog sensor DUTs)
 		/// </summary>
-		public IDutInterfaceDevice DutInterface { get; set; }
+		public IDatalogger DutInterface { get; set; }
 
 		/// <summary>
 		/// Data collected during a test.

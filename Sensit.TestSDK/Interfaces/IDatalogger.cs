@@ -5,7 +5,7 @@ namespace Sensit.TestSDK.Interfaces
 	/// <summary>
 	/// Device that controls several devices under test.
 	/// </summary>
-	public interface IDutInterfaceDevice
+	public interface IDatalogger
 	{
 		///  <summary>
 		/// Readings from device.
