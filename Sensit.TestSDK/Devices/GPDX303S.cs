@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO.Ports;
 using Sensit.TestSDK.Calculations;
 using Sensit.TestSDK.Communication;
@@ -170,7 +171,7 @@ namespace Sensit.TestSDK.Devices
 				string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
 
 				// Convert the last word to a number.
-				result = Convert.ToSingle(words[words.Length - 1]);
+				result = Convert.ToSingle(words[words.Length - 1], CultureInfo.InvariantCulture);
 			}
 			catch (InvalidOperationException ex)
 			{
