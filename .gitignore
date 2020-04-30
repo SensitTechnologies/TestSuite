@@ -37,11 +37,11 @@
 /Sensit.App.MassFlow/*.pfx
 /Sensit.App.MassFlow/*.user
 
-/Sensit.App.WebSensors/bin
-/Sensit.App.WebSensors/obj
-/Sensit.App.WebSensors/publich
-/Sensit.App.WebSensors/*.pfx
-/Sensit.App.WebSensors/*.user
+/Sensit.App.PowerSupply/bin
+/Sensit.App.PowerSupply/obj
+/Sensit.App.PowerSupply/publish
+/Sensit.App.PowerSupply/*.pfx
+/Sensit.App.PowerSupply/*.user
 
 /Sensit.TestSDK/bin
 /Sensit.TestSDK/obj
