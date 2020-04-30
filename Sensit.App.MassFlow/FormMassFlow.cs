@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Deployment.Application;
+using System.Globalization;
 using System.IO.Ports;
 using System.Windows.Forms;
 using Sensit.TestSDK.Devices;
@@ -48,7 +49,7 @@ namespace Sensit.App.MassFlow
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+		private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Application.Exit();
 		}
@@ -58,7 +59,7 @@ namespace Sensit.App.MassFlow
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void radioButton_CheckedChanged(object sender, EventArgs e)
+		private void RadioButton_CheckedChanged(object sender, EventArgs e)
 		{
 			// Do stuff only if the radio button is checked.
 			// (Otherwise the actions will run twice.)
@@ -111,7 +112,7 @@ namespace Sensit.App.MassFlow
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void comboBoxSerialPort_SelectedIndexChanged(object sender, EventArgs e)
+		private void ComboBoxSerialPort_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			// Save the serial port selection in the application settings.
 			Properties.Settings.Default.Port = comboBoxSerialPort.Text;
@@ -122,7 +123,7 @@ namespace Sensit.App.MassFlow
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+		private void FormMassFlow_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			// Close the mass flow controller.
 			_massFlowController.Close();
@@ -137,7 +138,7 @@ namespace Sensit.App.MassFlow
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void buttonReadAll_Click(object sender, EventArgs e)
+		private void ButtonReadAll_Click(object sender, EventArgs e)
 		{
 			try
 			{
@@ -159,7 +160,7 @@ namespace Sensit.App.MassFlow
 			catch (Exception ex)
 			{
 				// If an error occurs, alert the user.
-				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 				toolStripStatusLabel1.Text = ex.Message;
 			}
 		}
@@ -169,7 +170,7 @@ namespace Sensit.App.MassFlow
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void buttonWriteGas_Click(object sender, EventArgs e)
+		private void ButtonWriteGas_Click(object sender, EventArgs e)
 		{
 			try
 			{
@@ -189,7 +190,7 @@ namespace Sensit.App.MassFlow
 			catch (Exception ex)
 			{
 				// If an error occurs, alert the user.
-				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 				toolStripStatusLabel1.Text = ex.Message;
 			}
 		}
@@ -199,7 +200,7 @@ namespace Sensit.App.MassFlow
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void buttonWrite_Click(object sender, EventArgs e)
+		private void ButtonWrite_Click(object sender, EventArgs e)
 		{
 			try
 			{

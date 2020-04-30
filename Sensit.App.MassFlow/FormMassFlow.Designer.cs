@@ -92,7 +92,7 @@
 			this.radioButtonClosed.TabStop = true;
 			this.radioButtonClosed.Text = "Closed";
 			this.radioButtonClosed.UseVisualStyleBackColor = true;
-			this.radioButtonClosed.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+			this.radioButtonClosed.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
 			// 
 			// radioButtonOpen
 			// 
@@ -103,7 +103,7 @@
 			this.radioButtonOpen.TabIndex = 1;
 			this.radioButtonOpen.Text = "Open";
 			this.radioButtonOpen.UseVisualStyleBackColor = true;
-			this.radioButtonOpen.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+			this.radioButtonOpen.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
 			// 
 			// comboBoxSerialPort
 			// 
@@ -112,7 +112,7 @@
 			this.comboBoxSerialPort.Name = "comboBoxSerialPort";
 			this.comboBoxSerialPort.Size = new System.Drawing.Size(121, 21);
 			this.comboBoxSerialPort.TabIndex = 0;
-			this.comboBoxSerialPort.SelectedIndexChanged += new System.EventHandler(this.comboBoxSerialPort_SelectedIndexChanged);
+			this.comboBoxSerialPort.SelectedIndexChanged += new System.EventHandler(this.ComboBoxSerialPort_SelectedIndexChanged);
 			// 
 			// menuStrip1
 			// 
@@ -137,7 +137,7 @@
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
 			this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
 			this.exitToolStripMenuItem.Text = "&Exit";
-			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+			this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
 			// 
 			// groupBoxMassFlow
 			// 
@@ -273,7 +273,7 @@
 			this.buttonReadAll.TabIndex = 2;
 			this.buttonReadAll.Text = "Read All";
 			this.buttonReadAll.UseVisualStyleBackColor = true;
-			this.buttonReadAll.Click += new System.EventHandler(this.buttonReadAll_Click);
+			this.buttonReadAll.Click += new System.EventHandler(this.ButtonReadAll_Click);
 			// 
 			// labelUnitPressure
 			// 
@@ -367,7 +367,7 @@
 			this.buttonWriteSP.TabIndex = 10;
 			this.buttonWriteSP.Text = "Write SP";
 			this.buttonWriteSP.UseVisualStyleBackColor = true;
-			this.buttonWriteSP.Click += new System.EventHandler(this.buttonWrite_Click);
+			this.buttonWriteSP.Click += new System.EventHandler(this.ButtonWrite_Click);
 			// 
 			// buttonWriteGas
 			// 
@@ -377,7 +377,7 @@
 			this.buttonWriteGas.TabIndex = 17;
 			this.buttonWriteGas.Text = "Write Gas";
 			this.buttonWriteGas.UseVisualStyleBackColor = true;
-			this.buttonWriteGas.Click += new System.EventHandler(this.buttonWriteGas_Click);
+			this.buttonWriteGas.Click += new System.EventHandler(this.ButtonWriteGas_Click);
 			// 
 			// statusStrip1
 			// 
@@ -407,7 +407,7 @@
 			this.MaximizeBox = false;
 			this.Name = "FormMassFlow";
 			this.Text = "Mass Flow Controller";
-			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMassFlow_FormClosed);
 			this.groupBoxSerialPort.ResumeLayout(false);
 			this.groupBoxSerialPort.PerformLayout();
 			this.menuStrip1.ResumeLayout(false);
