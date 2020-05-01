@@ -18,16 +18,10 @@ namespace Sensit.App.Calibration
 	public class GasMixerSetting
 	{
 		[Category("Mass Flow Controllers"), Description("Serial port used by device.")]
-		public SerialPortSetting AnalyteMFC { get; set; } = new SerialPortSetting()
-		{
-			SerialPort = "COM7",	// COM10
-		};
+		public SerialPortSetting AnalyteMFC { get; set; }
 
 		[Category("Mass Flow Controllers"), Description("Serial port used by device.")]
-		public SerialPortSetting DiluentMFC { get; set; } = new SerialPortSetting()
-		{
-			SerialPort = "COM6"	// COM11
-		};
+		public SerialPortSetting DiluentMFC { get; set; }
 
 		[Category("Gas"), Description("Analyte gas.")]
 		public Gas Analyte { get; set; }
@@ -47,10 +41,21 @@ namespace Sensit.App.Calibration
 	public class EquipmentSettings
 	{
 		[Category("Control Devices"), Description("Settings for Gas Mixer, which is really two Mass Flow Controllers working together.")]
-		public GasMixerSetting GasMixer { get; set; } = new GasMixerSetting();
+		public GasMixerSetting GasMixer { get; set; } = new GasMixerSetting()
+		{
+			AnalyteMFC = new SerialPortSetting() { SerialPort = "COM7" },
+			DiluentMFC = new SerialPortSetting() { SerialPort = "COM6" }
+		};
 
 		[Category("Control Devices"), Description("Settings for Mass Flow Controller.")]
 		public SerialPortSetting ColeParmerMFC { get; set; } = new SerialPortSetting();
+
+		[Category("Control Devices"), Description("Settings for Power Supply.")]
+		public SerialPortSetting PowerSupply { get; set; } = new SerialPortSetting()
+		{
+			SerialPort = "COM3",
+			BaudRate = 9600
+		};
 
 		[Category("DUT Interface Devices"), Description("Settings for datalogger.")]
 		public DataloggerSetting Datalogger { get; set; } = new DataloggerSetting();
