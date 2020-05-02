@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Sensit.TestSDK;
 
 namespace Sensit.TestSDK.Calculations
 {
@@ -62,7 +63,7 @@ namespace Sensit.TestSDK.Calculations
 			// Validate that c is not null.
 			if (c == null)
 			{
-				throw new ArgumentNullException(nameof(c), "No coefficients were passed to Polynomial method.");
+				throw new ArgumentNullException(nameof(c), Properties.Resources.Calculations_Polynomial_NoCoefficients);
 			}
 
 			// Start with the first coefficient.
