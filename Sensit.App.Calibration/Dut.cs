@@ -39,7 +39,7 @@ namespace Sensit.App.Calibration
 	/// of DUT, and then we pass the selected type to the user for each needed
 	/// interface.
 	/// </remarks>
-	public class Dut
+	public class Dut : IDisposable
 	{
 		#region Fields
 
@@ -47,8 +47,8 @@ namespace Sensit.App.Calibration
 		private readonly ModelSetting _settings;
 
 		// CSV writer
-		StreamWriter writer;
-		CsvWriter csv;
+		StreamWriter _writer;
+		CsvWriter _csv;
 
 		// generic manual device, used whenever the user selects "Manual" option for DUTs.
 		private Manual _manual;
@@ -200,8 +200,8 @@ namespace Sensit.App.Calibration
 				// Initialize CSV file writer.
 				string filename = SerialNumber + ".csv";
 				string fullPath = Path.Combine(Properties.Settings.Default.LogDirectory, filename);
-				writer = new StreamWriter(fullPath, true);
-				csv = new CsvWriter(writer);
+				_writer = new StreamWriter(fullPath, true);
+				_csv = new CsvWriter(_writer);
 			}
 		}
 
@@ -228,17 +228,6 @@ namespace Sensit.App.Calibration
 			}
 		}
 
-		public void Dispose()
-		{
-			// Dispose of the CSV writer if it is not null.
-			csv?.Dispose();
-			writer?.Dispose();
-
-			// Free the references.
-			csv = null;
-			writer = null;
-		}
-
 		public void TurnOff()
 		{
 			// If the DUT is a G3...
@@ -258,7 +247,7 @@ namespace Sensit.App.Calibration
 				};
 
 				// Save test results to csv file.
-				csv?.WriteRecords(new List<TestResults> { testResult });
+				_csv?.WriteRecords(new List<TestResults> { testResult });
 
 				// Save the result.
 				Results.Add(testResult);
@@ -287,7 +276,7 @@ namespace Sensit.App.Calibration
 				};
 
 				// Save test results to csv file.
-				csv?.WriteRecords(new List<TestResults> { testResult });
+				_csv?.WriteRecords(new List<TestResults> { testResult });
 
 				// Save the result.
 				Results.Add(testResult);
@@ -313,7 +302,7 @@ namespace Sensit.App.Calibration
 				};
 
 				// Save test results to csv file.
-				csv?.WriteRecords(new List<TestResults> { testResult });
+				_csv?.WriteRecords(new List<TestResults> { testResult });
 
 				// Save the result.
 				Results.Add(testResult);
@@ -368,11 +357,42 @@ namespace Sensit.App.Calibration
 				};
 
 				// Save test results to csv file.
-				csv?.WriteRecords(new List<TestResults> { testResult });
+				_csv?.WriteRecords(new List<TestResults> { testResult });
 
 				// Save the result.
 				Results.Add(testResult);
 			}
+		}
+
+		/// <summary>
+		/// Dispose of managed resources.
+		/// </summary>
+		/// <remarks>
+		/// See https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-dispose
+		/// </remarks>
+		/// <param name="disposing"></param>
+		protected virtual void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				// Dispose managed resources.
+				_csv?.Dispose();
+				_sensitG3?.Dispose();
+				_genericSerialDevice?.Dispose();
+				_writer?.Dispose();
+			}
+		}
+
+		/// <summary>
+		/// Dispose of managed resources.
+		/// </summary>
+		/// <remarks>
+		/// See https://docs.microsoft.com/en-us/visualstudio/code-quality/ca1001
+		/// </remarks>
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
 		}
 	}
 }

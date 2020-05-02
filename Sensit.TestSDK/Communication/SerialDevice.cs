@@ -1,8 +1,9 @@
-﻿using System.IO.Ports;
+﻿using System;
+using System.IO.Ports;
 
 namespace Sensit.TestSDK.Communication
 {
-	public abstract class SerialDevice
+	public abstract class SerialDevice : IDisposable
 	{
 		// port used to communicate with mass flow controller
 		// (protected means it's accessible within derived classes, but not outside them)
@@ -63,6 +64,34 @@ namespace Sensit.TestSDK.Communication
 			{
 				_serialPort.Close();
 			}
+		}
+
+		/// <summary>
+		/// Dispose of managed resources.
+		/// </summary>
+		/// <remarks>
+		/// See https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-dispose
+		/// </remarks>
+		/// <param name="disposing"></param>
+		protected virtual void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				// Dispose managed resources.
+				_serialPort?.Dispose();
+			}
+		}
+
+		/// <summary>
+		/// Dispose of managed resources.
+		/// </summary>
+		/// <remarks>
+		/// See https://docs.microsoft.com/en-us/visualstudio/code-quality/ca1001
+		/// </remarks>
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
 		}
 	}
 }

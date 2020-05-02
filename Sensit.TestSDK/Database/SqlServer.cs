@@ -12,7 +12,7 @@ namespace Sensit.TestSDK.Database
 	/// Inspired by: http://csharp.net-informations.com/data-providers/csharp-sqlcommand-executereader.htm
 	/// Inspired by: https://stackoverflow.com/questions/1202935/convert-rows-from-a-data-reader-into-typed-results
 	/// </remarks>
-	public class SqlServer
+	public class SqlServer : IDisposable
 	{
 		private SqlConnection _connection;
 
@@ -343,6 +343,34 @@ namespace Sensit.TestSDK.Database
 
 			cmd.Dispose();
 			return JsonConvert.SerializeObject(objs);
+		}
+
+		/// <summary>
+		/// Dispose of managed resources.
+		/// </summary>
+		/// <remarks>
+		/// See https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-dispose
+		/// </remarks>
+		/// <param name="disposing"></param>
+		protected virtual void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				// Dispose managed resources.
+				_connection?.Dispose();
+			}
+		}
+
+		/// <summary>
+		/// Dispose of managed resources.
+		/// </summary>
+		/// <remarks>
+		/// See https://docs.microsoft.com/en-us/visualstudio/code-quality/ca1001
+		/// </remarks>
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
 		}
 	}
 }
