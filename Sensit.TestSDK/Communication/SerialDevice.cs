@@ -5,26 +5,36 @@ namespace Sensit.TestSDK.Communication
 {
 	public abstract class SerialDevice : IDisposable
 	{
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <remarks>
+		/// Declaring an internal constructor means this class can only be extended
+		/// within the SDK.
+		/// https://stackoverflow.com/questions/61551474/why-are-internal-fields-preferable-to-protected-fields-in-an-abstract-class
+		/// </remarks>
+		internal SerialDevice() { }
+
 		// port used to communicate with mass flow controller
 		// (protected means it's accessible within derived classes, but not outside them)
-		protected SerialPort _serialPort = new SerialPort();
+		protected SerialPort SerialPort { get; } = new SerialPort();
 
 		public string PortName
 		{
-			get => _serialPort.PortName;
-			set => _serialPort.PortName = value;
+			get => SerialPort.PortName;
+			set => SerialPort.PortName = value;
 		}
 
 		public int BaudRate
 		{
-			get => _serialPort.BaudRate;
-			set =>_serialPort.BaudRate = value;
+			get => SerialPort.BaudRate;
+			set =>SerialPort.BaudRate = value;
 		}
 
 		public int DataBits
 		{
-			get => _serialPort.DataBits;
-			set => _serialPort.DataBits = value;
+			get => SerialPort.DataBits;
+			set => SerialPort.DataBits = value;
 		}
 
 		public Parity Parity { get; set; }
@@ -60,9 +70,9 @@ namespace Sensit.TestSDK.Communication
 		public void Close()
 		{
 			// If the serial port is open, close it.
-			if (_serialPort.IsOpen)
+			if (SerialPort.IsOpen)
 			{
-				_serialPort.Close();
+				SerialPort.Close();
 			}
 		}
 
@@ -78,7 +88,7 @@ namespace Sensit.TestSDK.Communication
 			if (disposing)
 			{
 				// Dispose managed resources.
-				_serialPort?.Dispose();
+				SerialPort?.Dispose();
 			}
 		}
 

@@ -216,7 +216,7 @@ namespace Sensit.TestSDK.Devices
 					throw new DeviceSettingNotSupportedException("The G2-GLT only supports 115200 and 230400 baud.");
 				}
 
-				_serialPort.BaudRate = value;
+				SerialPort.BaudRate = value;
 			}
 		}
 
@@ -229,7 +229,7 @@ namespace Sensit.TestSDK.Devices
 					throw new DeviceSettingNotSupportedException("The G2-GLT only supports 8 data bits.");
 				}
 
-				_serialPort.DataBits = value;
+				SerialPort.DataBits = value;
 			}
 		}
 
@@ -242,7 +242,7 @@ namespace Sensit.TestSDK.Devices
 					throw new DeviceSettingNotSupportedException("The G2-GLT does not support parity.");
 				}
 
-				_serialPort.Parity = value;
+				SerialPort.Parity = value;
 			}
 		}
 
@@ -255,7 +255,7 @@ namespace Sensit.TestSDK.Devices
 					throw new DeviceSettingNotSupportedException("The G2-GLT only supports one stop bit.");
 				}
 
-				_serialPort.StopBits = value;
+				SerialPort.StopBits = value;
 			}
 		}
 
@@ -278,17 +278,17 @@ namespace Sensit.TestSDK.Devices
 			try
 			{
 				// Set serial port settings.
-				_serialPort.PortName = portName;
-				_serialPort.BaudRate = baudRate;
-				_serialPort.DataBits = 8;
-				_serialPort.Parity = Parity.None;
-				_serialPort.StopBits = StopBits.One;
-				_serialPort.Handshake = Handshake.None;
-				_serialPort.ReadTimeout = 500;
-				_serialPort.WriteTimeout = 500;
+				SerialPort.PortName = portName;
+				SerialPort.BaudRate = baudRate;
+				SerialPort.DataBits = 8;
+				SerialPort.Parity = Parity.None;
+				SerialPort.StopBits = StopBits.One;
+				SerialPort.Handshake = Handshake.None;
+				SerialPort.ReadTimeout = 500;
+				SerialPort.WriteTimeout = 500;
 
 				// Open the serial port.
-				_serialPort.Open();
+				SerialPort.Open();
 
 				// Wait before attempting communication.
 				// Not sure why...but the GLT app did this.
@@ -326,7 +326,7 @@ namespace Sensit.TestSDK.Devices
 			{
 				// Send the command over the serial port.
 				Console.Write(command);
-				_serialPort.Write(command);
+				SerialPort.Write(command);
 
 				// Read the reply.
 				reply = ReadBlocking();
@@ -703,13 +703,13 @@ namespace Sensit.TestSDK.Devices
 			try
 			{
 				// Read from the serial port.
-				while (_serialPort.BytesToRead != 0)
+				while (SerialPort.BytesToRead != 0)
 				{
-					message += _serialPort.ReadExisting();
+					message += SerialPort.ReadExisting();
 				}
 
 				// Flush the port.
-				_serialPort.DiscardInBuffer();
+				SerialPort.DiscardInBuffer();
 			}
 			catch (InvalidOperationException ex)
 			{

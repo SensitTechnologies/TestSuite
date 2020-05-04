@@ -30,7 +30,7 @@ namespace Sensit.TestSDK.Devices
 		public GPDX303S()
 		{
 			// Set a default baud rate.
-			_serialPort.BaudRate = 9600;
+			SerialPort.BaudRate = 9600;
 		}
 
 		#endregion
@@ -39,7 +39,7 @@ namespace Sensit.TestSDK.Devices
 
 		public new int BaudRate
 		{
-			get => _serialPort.BaudRate;
+			get => SerialPort.BaudRate;
 			set
 			{
 				if ((value != 9600) &&
@@ -49,13 +49,13 @@ namespace Sensit.TestSDK.Devices
 					throw new DeviceSettingNotSupportedException("The GPD-X303S power supply does not support baud rate " + value.ToString() + ".");
 				}
 
-				_serialPort.BaudRate = value;
+				SerialPort.BaudRate = value;
 			}
 		}
 
 		public new int DataBits
 		{
-			get => _serialPort.DataBits;
+			get => SerialPort.DataBits;
 			set
 			{
 				if (value != 8)
@@ -67,25 +67,25 @@ namespace Sensit.TestSDK.Devices
 
 		public new Parity Parity
 		{
-			get => _serialPort.Parity;
+			get => SerialPort.Parity;
 			set
 			{
 				if (value != Parity.None)
 					throw new DeviceSettingNotSupportedException("The GPD-X303S power supply does not support parity.");
 
-				_serialPort.Parity = value;
+				SerialPort.Parity = value;
 			}
 		}
 
 		public new StopBits StopBits
 		{
-			get => _serialPort.StopBits;
+			get => SerialPort.StopBits;
 			set
 			{
 				if (value != StopBits.One)
 					throw new DeviceSettingNotSupportedException("The GPD-X303S power supply only supports one stop bit.");
 
-				_serialPort.StopBits = value;
+				SerialPort.StopBits = value;
 			}
 		}
 
@@ -106,17 +106,17 @@ namespace Sensit.TestSDK.Devices
 			try
 			{
 				// Set serial port settings.
-				_serialPort.PortName = portName;
+				SerialPort.PortName = portName;
 				BaudRate = baudRate;
-				_serialPort.DataBits = 8;
-				_serialPort.Parity = Parity.None;
-				_serialPort.StopBits = StopBits.One;
-				_serialPort.Handshake = Handshake.None;
-				_serialPort.ReadTimeout = 500;
-				_serialPort.WriteTimeout = 500;
+				SerialPort.DataBits = 8;
+				SerialPort.Parity = Parity.None;
+				SerialPort.StopBits = StopBits.One;
+				SerialPort.Handshake = Handshake.None;
+				SerialPort.ReadTimeout = 500;
+				SerialPort.WriteTimeout = 500;
 
 				// Open the serial port.
-				_serialPort.Open();
+				SerialPort.Open();
 			}
 			catch (SystemException ex)
 			{
@@ -155,7 +155,7 @@ namespace Sensit.TestSDK.Devices
 			try
 			{
 				// Write the command to the device.
-				_serialPort.WriteLine(command);
+				SerialPort.WriteLine(command);
 			}
 			catch (InvalidOperationException ex)
 			{
@@ -175,10 +175,10 @@ namespace Sensit.TestSDK.Devices
 			try
 			{
 				// Write the command to the device.
-				_serialPort.WriteLine(command);
+				SerialPort.WriteLine(command);
 
 				// Read the response.
-				string message = _serialPort.ReadLine();
+				string message = SerialPort.ReadLine();
 
 				// Remove any newlines or tabs.
 				message = Regex.Replace(message, @"\t|\n|\r", "");
