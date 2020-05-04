@@ -183,7 +183,6 @@
     <Compile Include="Calculations\Checksum.cs" />
     <Compile Include="Calculations\LeastSquares.cs" />
     <Compile Include="Calculations\UnitOfMeasure.cs" />
-    <Compile Include="Communication\ModbusDevice.cs" />
     <Compile Include="Communication\SCPIDevice.cs" />
     <Compile Include="Communication\SerialDevice.cs" />
     <Compile Include="Communication\VisaDevice.cs" />
