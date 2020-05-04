@@ -117,6 +117,11 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		public decimal GasMixRange { get; set; }
 
+		/// <summary>
+		/// True if test should repeat until manually stopped.
+		/// </summary>
+		public bool Repeat { get; set; }
+
 		#endregion
 
 		#region Thread Management
@@ -640,7 +645,7 @@ namespace Sensit.App.Calibration
 
 					// Perform test actions.
 					ProcessTest();
-				} while (false);
+				} while (Repeat && (_testThread.CancellationPending == false));
 			}
 			catch (Exception ex)
 			{

@@ -49,10 +49,14 @@
 			this.tableLayoutPanelTest = new System.Windows.Forms.TableLayoutPanel();
 			this.groupBoxTestSettings = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanelTestSettings = new System.Windows.Forms.TableLayoutPanel();
+			this.tableLayoutPanelRepeat = new System.Windows.Forms.TableLayoutPanel();
+			this.radioButtonRepeatYes = new System.Windows.Forms.RadioButton();
+			this.radioButtonRepeatNo = new System.Windows.Forms.RadioButton();
 			this.labelRange = new System.Windows.Forms.Label();
 			this.labelTest = new System.Windows.Forms.Label();
 			this.comboBoxTest = new System.Windows.Forms.ComboBox();
 			this.numericUpDownRange = new System.Windows.Forms.NumericUpDown();
+			this.labelRepeat = new System.Windows.Forms.Label();
 			this.tableLayoutPanelTestSetupButtons = new System.Windows.Forms.TableLayoutPanel();
 			this.buttonStart = new System.Windows.Forms.Button();
 			this.buttonStop = new System.Windows.Forms.Button();
@@ -122,6 +126,7 @@
 			this.tableLayoutPanelTest.SuspendLayout();
 			this.groupBoxTestSettings.SuspendLayout();
 			this.tableLayoutPanelTestSettings.SuspendLayout();
+			this.tableLayoutPanelRepeat.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownRange)).BeginInit();
 			this.tableLayoutPanelTestSetupButtons.SuspendLayout();
 			this.tabPageDut.SuspendLayout();
@@ -194,7 +199,7 @@
 			this.groupBoxTestSettings.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBoxTestSettings.Location = new System.Drawing.Point(3, 3);
 			this.groupBoxTestSettings.Name = "groupBoxTestSettings";
-			this.groupBoxTestSettings.Size = new System.Drawing.Size(514, 81);
+			this.groupBoxTestSettings.Size = new System.Drawing.Size(519, 110);
 			this.groupBoxTestSettings.TabIndex = 16;
 			this.groupBoxTestSettings.TabStop = false;
 			this.groupBoxTestSettings.Text = "Test Settings";
@@ -206,19 +211,62 @@
 			this.tableLayoutPanelTestSettings.ColumnCount = 2;
 			this.tableLayoutPanelTestSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanelTestSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelTestSettings.Controls.Add(this.tableLayoutPanelRepeat, 1, 2);
 			this.tableLayoutPanelTestSettings.Controls.Add(this.labelRange, 0, 0);
 			this.tableLayoutPanelTestSettings.Controls.Add(this.labelTest, 0, 1);
 			this.tableLayoutPanelTestSettings.Controls.Add(this.comboBoxTest, 1, 1);
 			this.tableLayoutPanelTestSettings.Controls.Add(this.numericUpDownRange, 1, 0);
+			this.tableLayoutPanelTestSettings.Controls.Add(this.labelRepeat, 0, 2);
 			this.tableLayoutPanelTestSettings.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanelTestSettings.Location = new System.Drawing.Point(3, 16);
 			this.tableLayoutPanelTestSettings.Name = "tableLayoutPanelTestSettings";
-			this.tableLayoutPanelTestSettings.RowCount = 2;
+			this.tableLayoutPanelTestSettings.RowCount = 3;
 			this.tableLayoutPanelTestSettings.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelTestSettings.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelTestSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanelTestSettings.Size = new System.Drawing.Size(508, 62);
+			this.tableLayoutPanelTestSettings.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelTestSettings.Size = new System.Drawing.Size(513, 91);
 			this.tableLayoutPanelTestSettings.TabIndex = 6;
+			// 
+			// tableLayoutPanelRepeat
+			// 
+			this.tableLayoutPanelRepeat.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.tableLayoutPanelRepeat.AutoSize = true;
+			this.tableLayoutPanelRepeat.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.tableLayoutPanelRepeat.ColumnCount = 2;
+			this.tableLayoutPanelRepeat.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelRepeat.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelRepeat.Controls.Add(this.radioButtonRepeatYes, 0, 0);
+			this.tableLayoutPanelRepeat.Controls.Add(this.radioButtonRepeatNo, 1, 0);
+			this.tableLayoutPanelRepeat.Location = new System.Drawing.Point(71, 65);
+			this.tableLayoutPanelRepeat.Name = "tableLayoutPanelRepeat";
+			this.tableLayoutPanelRepeat.RowCount = 1;
+			this.tableLayoutPanelRepeat.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanelRepeat.Size = new System.Drawing.Size(94, 23);
+			this.tableLayoutPanelRepeat.TabIndex = 23;
+			// 
+			// radioButtonRepeatYes
+			// 
+			this.radioButtonRepeatYes.AutoSize = true;
+			this.radioButtonRepeatYes.Location = new System.Drawing.Point(3, 3);
+			this.radioButtonRepeatYes.Name = "radioButtonRepeatYes";
+			this.radioButtonRepeatYes.Size = new System.Drawing.Size(43, 17);
+			this.radioButtonRepeatYes.TabIndex = 2;
+			this.radioButtonRepeatYes.TabStop = true;
+			this.radioButtonRepeatYes.Text = "Yes";
+			this.radioButtonRepeatYes.UseVisualStyleBackColor = true;
+			this.radioButtonRepeatYes.CheckedChanged += new System.EventHandler(this.RadioButtonRepeat_CheckedChanged);
+			// 
+			// radioButtonRepeatNo
+			// 
+			this.radioButtonRepeatNo.AutoSize = true;
+			this.radioButtonRepeatNo.Location = new System.Drawing.Point(52, 3);
+			this.radioButtonRepeatNo.Name = "radioButtonRepeatNo";
+			this.radioButtonRepeatNo.Size = new System.Drawing.Size(39, 17);
+			this.radioButtonRepeatNo.TabIndex = 3;
+			this.radioButtonRepeatNo.TabStop = true;
+			this.radioButtonRepeatNo.Text = "No";
+			this.radioButtonRepeatNo.UseVisualStyleBackColor = true;
+			this.radioButtonRepeatNo.CheckedChanged += new System.EventHandler(this.RadioButtonRepeat_CheckedChanged);
 			// 
 			// labelRange
 			// 
@@ -249,7 +297,7 @@
 			this.comboBoxTest.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.comboBoxTest.FormattingEnabled = true;
 			this.helpProvider1.SetHelpString(this.comboBoxTest, "Selects which test to run");
-			this.comboBoxTest.Location = new System.Drawing.Point(66, 33);
+			this.comboBoxTest.Location = new System.Drawing.Point(71, 33);
 			this.comboBoxTest.Name = "comboBoxTest";
 			this.helpProvider1.SetShowHelp(this.comboBoxTest, true);
 			this.comboBoxTest.Size = new System.Drawing.Size(439, 26);
@@ -261,11 +309,22 @@
 			this.numericUpDownRange.AutoSize = true;
 			this.numericUpDownRange.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.numericUpDownRange.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.numericUpDownRange.Location = new System.Drawing.Point(66, 3);
+			this.numericUpDownRange.Location = new System.Drawing.Point(71, 3);
 			this.numericUpDownRange.Name = "numericUpDownRange";
 			this.numericUpDownRange.Size = new System.Drawing.Size(439, 24);
 			this.numericUpDownRange.TabIndex = 21;
 			this.numericUpDownRange.ValueChanged += new System.EventHandler(this.NumericUpDownRange_ValueChanged);
+			// 
+			// labelRepeat
+			// 
+			this.labelRepeat.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelRepeat.AutoSize = true;
+			this.labelRepeat.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelRepeat.Location = new System.Drawing.Point(3, 66);
+			this.labelRepeat.Name = "labelRepeat";
+			this.labelRepeat.Size = new System.Drawing.Size(62, 20);
+			this.labelRepeat.TabIndex = 22;
+			this.labelRepeat.Text = "Repeat";
 			// 
 			// tableLayoutPanelTestSetupButtons
 			// 
@@ -278,7 +337,7 @@
 			this.tableLayoutPanelTestSetupButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanelTestSetupButtons.Controls.Add(this.buttonStart, 0, 0);
 			this.tableLayoutPanelTestSetupButtons.Controls.Add(this.buttonStop, 1, 0);
-			this.tableLayoutPanelTestSetupButtons.Location = new System.Drawing.Point(179, 245);
+			this.tableLayoutPanelTestSetupButtons.Location = new System.Drawing.Point(181, 245);
 			this.tableLayoutPanelTestSetupButtons.Name = "tableLayoutPanelTestSetupButtons";
 			this.tableLayoutPanelTestSetupButtons.RowCount = 1;
 			this.tableLayoutPanelTestSetupButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -991,6 +1050,8 @@
 			this.groupBoxTestSettings.PerformLayout();
 			this.tableLayoutPanelTestSettings.ResumeLayout(false);
 			this.tableLayoutPanelTestSettings.PerformLayout();
+			this.tableLayoutPanelRepeat.ResumeLayout(false);
+			this.tableLayoutPanelRepeat.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownRange)).EndInit();
 			this.tableLayoutPanelTestSetupButtons.ResumeLayout(false);
 			this.tabPageDut.ResumeLayout(false);
@@ -1100,6 +1161,10 @@
 		private System.Windows.Forms.GroupBox groupBoxDevicesUnderTest;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelDevicesUnderTest;
 		private System.Windows.Forms.NumericUpDown numericUpDownRange;
+		private System.Windows.Forms.Label labelRepeat;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelRepeat;
+		private System.Windows.Forms.RadioButton radioButtonRepeatYes;
+		private System.Windows.Forms.RadioButton radioButtonRepeatNo;
 	}
 }
 
