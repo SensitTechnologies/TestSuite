@@ -119,7 +119,7 @@ namespace Sensit.TestSDK.Devices
 			try
 			{
 				// "*@=@" sets the device into streaming mode.
-				_serialPort.WriteLine(Command.SetAddress + '@');
+				SerialPort.WriteLine(Command.SetAddress + '@');
 			}
 			catch (SystemException ex)
 			{
@@ -139,10 +139,10 @@ namespace Sensit.TestSDK.Devices
 			try
 			{
 				// "A$$12" selects propane gas for device A.
-				_serialPort.WriteLine(msg);
+				SerialPort.WriteLine(msg);
 
 				// Read the response from the serial port (until we get a \r character).
-				string message = _serialPort.ReadLine();
+				string message = SerialPort.ReadLine();
 
 				// Split the string using spaces to separate each word.
 				char[] separators = new char[] { ' ' };
@@ -190,10 +190,10 @@ namespace Sensit.TestSDK.Devices
 			try
 			{
 				// "*@=A" sets address = A (and puts device into polling mode).
-				_serialPort.WriteLine(Command.SetAddress + ADDRESS);
+				SerialPort.WriteLine(Command.SetAddress + ADDRESS);
 
 				// Read from the serial port (until we get a \r character).
-				string message = _serialPort.ReadLine();
+				string message = SerialPort.ReadLine();
 
 				// Split the string using spaces to separate each word.
 				char[] separators = new char[] { ' ' };
@@ -222,7 +222,7 @@ namespace Sensit.TestSDK.Devices
 
 		public new int BaudRate
 		{
-			get => _serialPort.BaudRate;
+			get => SerialPort.BaudRate;
 			set
 			{
 				if ((value != 2400) &&
@@ -234,13 +234,13 @@ namespace Sensit.TestSDK.Devices
 					throw new DeviceSettingNotSupportedException("The Cole Parmer MFC does not support baud rate " + value.ToString() + ".");
 				}
 
-				_serialPort.BaudRate = value;
+				SerialPort.BaudRate = value;
 			}
 		}
 
 		public new int DataBits
 		{
-			get => _serialPort.DataBits;
+			get => SerialPort.DataBits;
 			set
 			{
 				if (value != 8)
@@ -248,31 +248,31 @@ namespace Sensit.TestSDK.Devices
 					throw new DeviceSettingNotSupportedException("The Cole Parmer MFC only supports 8 data bits.");
 				}
 
-				_serialPort.DataBits = value;
+				SerialPort.DataBits = value;
 			}
 		}
 
 		public new Parity Parity
 		{
-			get => _serialPort.Parity;
+			get => SerialPort.Parity;
 			set
 			{
 				if (value != Parity.None)
 					throw new DeviceSettingNotSupportedException("The Cole Parmer MFC does not support parity.");
 
-				_serialPort.Parity = value;
+				SerialPort.Parity = value;
 			}
 		}
 
 		public new StopBits StopBits
 		{
-			get => _serialPort.StopBits;
+			get => SerialPort.StopBits;
 			set
 			{
 				if (value != StopBits.One)
 					throw new DeviceSettingNotSupportedException("The Cole Parmer MFC only supports one stop bit.");
 
-				_serialPort.StopBits = value;
+				SerialPort.StopBits = value;
 			}
 		}
 
@@ -295,20 +295,20 @@ namespace Sensit.TestSDK.Devices
 			try
 			{
 				// Set serial port settings.
-				_serialPort.PortName = portName;
-				_serialPort.BaudRate = baudRate;
-				_serialPort.DataBits = 8;
-				_serialPort.Parity = Parity.None;
-				_serialPort.StopBits = StopBits.One;
-				_serialPort.Handshake = Handshake.None;
-				_serialPort.ReadTimeout = 500;
-				_serialPort.WriteTimeout = 500;
+				SerialPort.PortName = portName;
+				SerialPort.BaudRate = baudRate;
+				SerialPort.DataBits = 8;
+				SerialPort.Parity = Parity.None;
+				SerialPort.StopBits = StopBits.One;
+				SerialPort.Handshake = Handshake.None;
+				SerialPort.ReadTimeout = 500;
+				SerialPort.WriteTimeout = 500;
 
 				// Messages are terminated with a carriage return.
-				_serialPort.NewLine = "\r";
+				SerialPort.NewLine = "\r";
 
 				// Open the serial port.
-				_serialPort.Open();
+				SerialPort.Open();
 
 				// Set polling mode (by assigning a device address).
 				WriteAddress();
@@ -345,10 +345,10 @@ namespace Sensit.TestSDK.Devices
 			try
 			{
 				// Read (when in polling mode) by sending the device address.
-				_serialPort.WriteLine(ADDRESS.ToString());
+				SerialPort.WriteLine(ADDRESS.ToString());
 
 				// Read from the serial port (until we get a \r character).
-				string message = _serialPort.ReadLine();
+				string message = SerialPort.ReadLine();
 
 				// Split the string using spaces to separate each word.
 				char[] separators = new char[] { ' ' };
@@ -411,10 +411,10 @@ namespace Sensit.TestSDK.Devices
 			try
 			{
 				// "AS4.54" = Set setpoint to 4.54 on device A.
-				_serialPort.WriteLine(ADDRESS + Command.SetSetpoint + setpoint.ToString());
+				SerialPort.WriteLine(ADDRESS + Command.SetSetpoint + setpoint.ToString());
 
 				// Read the response from the serial port (until we get a \r character).
-				string message = _serialPort.ReadLine();
+				string message = SerialPort.ReadLine();
 
 				// Split the string using spaces to separate each word.
 				char[] separators = new char[] { ' ' };
@@ -452,10 +452,10 @@ namespace Sensit.TestSDK.Devices
 			try
 			{
 				// Read (when in polling mode) by sending the device address.
-				_serialPort.WriteLine(ADDRESS.ToString());
+				SerialPort.WriteLine(ADDRESS.ToString());
 
 				// Read from the serial port (until we get a \r character).
-				string message = _serialPort.ReadLine();
+				string message = SerialPort.ReadLine();
 
 				// Split the string using spaces to separate each word.
 				char[] separators = new char[] { ' ' };

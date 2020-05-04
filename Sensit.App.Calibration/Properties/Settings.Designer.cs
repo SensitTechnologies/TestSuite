@@ -142,5 +142,17 @@ namespace Sensit.App.Calibration.Properties {
                 this["DutSerialNumbers"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Repeat {
+            get {
+                return ((bool)(this["Repeat"]));
+            }
+            set {
+                this["Repeat"] = value;
+            }
+        }
     }
 }

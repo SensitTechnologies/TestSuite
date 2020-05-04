@@ -373,6 +373,10 @@ namespace Sensit.App.Calibration
 			// Select the most recently used test, or the first if that's not available.
 			index = comboBoxTest.FindStringExact(Properties.Settings.Default.Test);
 			comboBoxTest.SelectedIndex = index == -1 ? 0 : index;
+
+			// Select the most recently used termination option.
+			radioButtonRepeatYes.Checked = Properties.Settings.Default.Repeat;
+			radioButtonRepeatNo.Checked = !Properties.Settings.Default.Repeat;
 		}
 
 		#endregion
@@ -428,6 +432,8 @@ namespace Sensit.App.Calibration
 				numericUpDownRange.Enabled = false;
 				comboBoxTest.Enabled = false;
 				checkBoxSelectAll.Enabled = false;
+				radioButtonRepeatNo.Enabled = false;
+				radioButtonRepeatYes.Enabled = false;
 				foreach (Control c in tableLayoutPanelDevicesUnderTest.Controls)
 				{
 					c.Enabled = false;
@@ -508,6 +514,7 @@ namespace Sensit.App.Calibration
 					UpdateIndependentVariableRange = value => ErrorRange = value,
 					UpdateRateRange = value => RateRange = value,
 					GasMixRange = numericUpDownRange.Value,
+					Repeat = Properties.Settings.Default.Repeat
 				};
 
 				// Start the test.
@@ -658,6 +665,29 @@ namespace Sensit.App.Calibration
 
 			// Return whether or not we're stopping the test.
 			return (result == DialogResult.OK);
+		}
+
+		/// <summary>
+		/// When the "Repeat" selection is changed, remember the selection.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void RadioButtonRepeat_CheckedChanged(object sender, EventArgs e)
+		{
+			// Do stuff only if the radio button is checked.
+			// (Otherwise the actions will run twice.)
+			if (((RadioButton)sender).Checked)
+			{
+				// If the "Open" radio button has been checked...
+				if (((RadioButton)sender) == radioButtonRepeatYes)
+				{
+					Properties.Settings.Default.Repeat = true;
+				}
+				else if (((RadioButton)sender) == radioButtonRepeatNo)
+				{
+					Properties.Settings.Default.Repeat = false;
+				}
+			}
 		}
 
 		#endregion
@@ -969,6 +999,8 @@ namespace Sensit.App.Calibration
 			numericUpDownRange.Enabled = true;
 			comboBoxTest.Enabled = true;
 			checkBoxSelectAll.Enabled = true;
+			radioButtonRepeatNo.Enabled = true;
+			radioButtonRepeatYes.Enabled = true;
 			foreach (Control c in tableLayoutPanelDevicesUnderTest.Controls)
 			{
 				c.Enabled = true;

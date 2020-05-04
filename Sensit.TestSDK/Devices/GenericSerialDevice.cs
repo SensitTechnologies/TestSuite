@@ -36,18 +36,18 @@ namespace Sensit.TestSDK.Devices
 			try
 			{
 				// Write to the device.
-				_serialPort.WriteLine(Command);
+				SerialPort.WriteLine(Command);
 
 				// Read from the serial port.
 				Thread.Sleep(200);
 				string message = string.Empty;
-				while (_serialPort.BytesToRead != 0)
+				while (SerialPort.BytesToRead != 0)
 				{
-					message += _serialPort.ReadExisting();
+					message += SerialPort.ReadExisting();
 				}
 
 				// Flush the port.
-				_serialPort.DiscardInBuffer();
+				SerialPort.DiscardInBuffer();
 
 				// Save the whole string as a message to be logged.
 				// Replace any newlines or tabs with spaces to avoid weird log files.
@@ -79,20 +79,20 @@ namespace Sensit.TestSDK.Devices
 			try
 			{
 				// Set serial port settings.
-				_serialPort.PortName = portName;
-				_serialPort.BaudRate = baudRate;
-				_serialPort.DataBits = DataBits;
-				_serialPort.Parity = Parity;
-				_serialPort.StopBits = StopBits;
+				SerialPort.PortName = portName;
+				SerialPort.BaudRate = baudRate;
+				SerialPort.DataBits = DataBits;
+				SerialPort.Parity = Parity;
+				SerialPort.StopBits = StopBits;
 
 				// Handshaking is not supported at this time.
-				_serialPort.Handshake = Handshake.None;
+				SerialPort.Handshake = Handshake.None;
 
 				// Messages are terminated with a line feed and carriage return.
-				_serialPort.NewLine = "\r\n";
+				SerialPort.NewLine = "\r\n";
 
 				// Open the serial port.
-				_serialPort.Open();
+				SerialPort.Open();
 			}
 			catch (SystemException ex)
 			{

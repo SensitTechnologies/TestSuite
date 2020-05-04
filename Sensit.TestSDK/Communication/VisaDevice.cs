@@ -22,6 +22,16 @@ namespace Sensit.TestSDK.Communication
 	/// </summary>
 	public abstract class VisaDevice
 	{
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <remarks>
+		/// Declaring an internal constructor means this class can only be extended
+		/// within the SDK.
+		/// https://stackoverflow.com/questions/61551474/why-are-internal-fields-preferable-to-protected-fields-in-an-abstract-class
+		/// </remarks>
+		internal VisaDevice() { }
+
 		// IVI VISA object used to communicate with the device
 		private IMessageBasedFormattedIO _instrument;
 

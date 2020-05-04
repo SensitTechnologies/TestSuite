@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Sensit.TestSDK.Devices;
 using Sensit.TestSDK.Interfaces;
 
@@ -12,7 +13,7 @@ namespace Sensit.App.Calibration
 	/// selections, we choose which device(s) to use and pass to the user for
 	/// each needed interface.
 	/// </remarks>
-	public class Equipment
+	public class Equipment : IDisposable
 	{
 		// holds settings for the equipment
 		private readonly EquipmentSettings _settings;
@@ -120,6 +121,35 @@ namespace Sensit.App.Calibration
 			_mfcAnalyte?.Close();
 			_mfcDiluent?.Close();
 			_datalogger?.Close();
+		}
+
+		/// <summary>
+		/// Dispose of managed resources.
+		/// </summary>
+		/// <remarks>
+		/// See https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-dispose
+		/// </remarks>
+		/// <param name="disposing"></param>
+		protected virtual void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				// Dispose managed resources.
+				_mfcAnalyte?.Dispose();
+				_mfcDiluent?.Dispose();
+			}
+		}
+
+		/// <summary>
+		/// Dispose of managed resources.
+		/// </summary>
+		/// <remarks>
+		/// See https://docs.microsoft.com/en-us/visualstudio/code-quality/ca1001
+		/// </remarks>
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
 		}
 	}
 }

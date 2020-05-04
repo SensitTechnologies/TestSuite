@@ -1,4 +1,6 @@
-﻿namespace Sensit.TestSDK.Calculations
+﻿using Sensit.TestSDK;
+
+namespace Sensit.TestSDK.Calculations
 {
 	public static class Checksum
 	{
@@ -59,6 +61,12 @@
 		/// <returns></returns>
 		public static ushort Calculate(byte[] data)
 		{
+			// Validate data before using.
+			if (data == null)
+			{
+				throw new System.ArgumentNullException(nameof(data), Properties.Resources.Checksum_Calculate);
+			}
+
 			ushort crc = 0xFFFF;
 
 			foreach (byte datum in data)

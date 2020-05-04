@@ -10,7 +10,7 @@ using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.App.Calibration
 {
-	public class Test
+	public class Test : IDisposable
 	{
 		#region Enumerations
 
@@ -116,6 +116,11 @@ namespace Sensit.App.Calibration
 		/// Multiplier for setpoints.
 		/// </summary>
 		public decimal GasMixRange { get; set; }
+
+		/// <summary>
+		/// True if test should repeat until manually stopped.
+		/// </summary>
+		public bool Repeat { get; set; }
 
 		#endregion
 
@@ -640,7 +645,7 @@ namespace Sensit.App.Calibration
 
 					// Perform test actions.
 					ProcessTest();
-				} while (false);
+				} while (Repeat && (_testThread.CancellationPending == false));
 			}
 			catch (Exception ex)
 			{
@@ -691,6 +696,35 @@ namespace Sensit.App.Calibration
 
 			// If the operation was cancelled by the user, set the cancel property.
 			if (_testThread.CancellationPending) { e.Cancel = true; }
+		}
+
+		/// <summary>
+		/// Dispose of managed resources.
+		/// </summary>
+		/// <remarks>
+		/// See https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-dispose
+		/// </remarks>
+		/// <param name="disposing"></param>
+		protected virtual void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				// Dispose managed resources.
+				_equipment?.Dispose();
+				_testThread?.Dispose();
+			}
+		}
+
+		/// <summary>
+		/// Dispose of managed resources.
+		/// </summary>
+		/// <remarks>
+		/// See https://docs.microsoft.com/en-us/visualstudio/code-quality/ca1001
+		/// </remarks>
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
 		}
 	}
 }

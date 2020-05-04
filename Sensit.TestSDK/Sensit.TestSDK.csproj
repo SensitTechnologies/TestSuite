@@ -183,7 +183,6 @@
     <Compile Include="Calculations\Checksum.cs" />
     <Compile Include="Calculations\LeastSquares.cs" />
     <Compile Include="Calculations\UnitOfMeasure.cs" />
-    <Compile Include="Communication\ModbusDevice.cs" />
     <Compile Include="Communication\SCPIDevice.cs" />
     <Compile Include="Communication\SerialDevice.cs" />
     <Compile Include="Communication\VisaDevice.cs" />
@@ -242,6 +241,11 @@
     <Compile Include="Interfaces\IReferenceDevice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Office\Excel\Excel.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Settings\Serializer.cs" />
     <Compile Include="Settings\Settings.cs" />
     <Compile Include="Utility\LineSplitter.cs" />
@@ -305,6 +309,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormTestCase.resx">
       <DependentUpon>FormTestCase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
