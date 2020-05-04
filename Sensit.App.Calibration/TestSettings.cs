@@ -100,6 +100,48 @@ namespace Sensit.App.Calibration
 		[Category("Test Settings"), Description("Settings describing tests that can be performed.")]
 		public List<TestSetting> Tests { get; set; } = new List<TestSetting>
 		{
+			new TestSetting("G3 Memory Test")
+			{
+				References = new List<VariableType>
+				{
+					VariableType.Voltage
+				},
+				Components = new List<TestComponent>
+				{
+					new TestComponent("Power ON and wait 60 seconds")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.Voltage,
+								Setpoints = new List<double> { 3.1 },
+								Interval = new TimeSpan(0, 0, 60)
+							}
+						},
+					},
+					new TestComponent("Read G3 configuration")
+					{
+						// Command not yet implemented.
+					},
+					new TestComponent("Turn off G3 and wait 15 seconds")
+					{
+						Commands = new List<Test.Command> { Test.Command.TurnOff }
+					},
+					new TestComponent("Power OFF and wait 60 seconds")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.Voltage,
+								Setpoints = new List<double> { 0.0 },
+								Interval = new TimeSpan(0, 0, 60)
+							}
+						},
+					},
+				}
+			},
 			new TestSetting("G3: Calibration")
 			{
 				References = new List<VariableType>
@@ -171,6 +213,10 @@ namespace Sensit.App.Calibration
 							}
 						},
 					},
+					new TestComponent("Turn off DUT")
+					{
+						Commands = new List<Test.Command> { Test.Command.TurnOff }
+					},
 				}
 			},
 			// Test second curve on the G3 (up to 5000 ppm)
@@ -226,6 +272,10 @@ namespace Sensit.App.Calibration
 							}
 						},
 					},
+					new TestComponent("Turn off DUT")
+					{
+						Commands = new List<Test.Command> { Test.Command.TurnOff }
+					},
 				}
 			},
 			// Test third curve on the G3 (5000 ppm to 70% LEL/3.5%V)
@@ -280,6 +330,10 @@ namespace Sensit.App.Calibration
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							}
 						},
+					},
+					new TestComponent("Turn off DUT")
+					{
+						Commands = new List<Test.Command> { Test.Command.TurnOff }
 					},
 				}
 			},

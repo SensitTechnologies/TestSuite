@@ -210,9 +210,6 @@ namespace Sensit.App.Calibration
 			if ((Status == DutStatus.Testing) ||
 				(Status == DutStatus.Fail))
 			{
-				// Turn DUT off.  Should I keep this here?
-				TurnOff();
-
 				// Set status to "Done."
 				Status = DutStatus.Done;
 
