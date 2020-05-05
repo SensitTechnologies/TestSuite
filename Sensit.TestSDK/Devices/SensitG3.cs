@@ -40,7 +40,7 @@ namespace Sensit.TestSDK.Devices
 			try
 			{
 				// Send command to turn the instrument off.
-				SerialPort.WriteLine(message);
+				Port.WriteLine(message);
 			}
 			catch (InvalidOperationException ex)
 			{
@@ -67,13 +67,13 @@ namespace Sensit.TestSDK.Devices
 			// Read from the serial port.
 			Thread.Sleep(200);
 			string message = string.Empty;
-			while (SerialPort.BytesToRead != 0)
+			while (Port.BytesToRead != 0)
 			{
-				message += SerialPort.ReadExisting();
+				message += Port.ReadExisting();
 			}
 
 			// Flush the port.
-			SerialPort.DiscardInBuffer();
+			Port.DiscardInBuffer();
 
 			// Save the whole string as a message to be logged.
 			// Replace any newlines or tabs with spaces to avoid weird log files.
@@ -88,13 +88,13 @@ namespace Sensit.TestSDK.Devices
 			// Read from the serial port.
 			Thread.Sleep(200);
 			string message = string.Empty;
-			while (SerialPort.BytesToRead != 0)
+			while (Port.BytesToRead != 0)
 			{
-				message += SerialPort.ReadExisting();
+				message += Port.ReadExisting();
 			}
 
 			// Flush the port.
-			SerialPort.DiscardInBuffer();
+			Port.DiscardInBuffer();
 
 			// Save the whole string as a message to be logged.
 			// Replace any newlines or tabs with spaces to avoid weird log files.
@@ -111,22 +111,22 @@ namespace Sensit.TestSDK.Devices
 				// Read from the serial port.
 				Thread.Sleep(200);
 				string message = string.Empty;
-				while (SerialPort.BytesToRead != 0)
+				while (Port.BytesToRead != 0)
 				{
-					message += SerialPort.ReadExisting();
+					message += Port.ReadExisting();
 				}
 
 				// Wait 45 seconds.
 				Thread.Sleep(45000);
 
 				// Read from the serial port.
-				while (SerialPort.BytesToRead != 0)
+				while (Port.BytesToRead != 0)
 				{
-					message += SerialPort.ReadExisting();
+					message += Port.ReadExisting();
 				}
 
 				// Flush the port.
-				SerialPort.DiscardInBuffer();
+				Port.DiscardInBuffer();
 
 				// Save the whole string as a message to be logged.
 				// Replace any newlines or tabs with spaces to avoid weird log files.
@@ -157,23 +157,23 @@ namespace Sensit.TestSDK.Devices
 				{
 					case Gas.Methane:
 						// Read from the appropriate sensor.
-						SerialPort.WriteLine("5dd");
+						Port.WriteLine("5dd");
 						break;
 					case Gas.Oxygen:
 						// Read from the appropriate sensor.
-						SerialPort.WriteLine("1dd");
+						Port.WriteLine("1dd");
 						break;
 					case Gas.CarbonMonoxide:
 						// Read from the appropriate sensor.
-						SerialPort.WriteLine("2dd");
+						Port.WriteLine("2dd");
 						break;
 					case Gas.HydrogenSulfide:
 						// Read from the appropriate sensor.
-						SerialPort.WriteLine("3dd");
+						Port.WriteLine("3dd");
 						break;
 					case Gas.HydrogenCyanide:
 						// Read from the appropriate sensor.
-						SerialPort.WriteLine("4dd");
+						Port.WriteLine("4dd");
 						break;
 					default:
 						throw new DeviceSettingNotSupportedException("Gas selection " + GasSelection.ToString() + " is not supported.");
@@ -182,13 +182,13 @@ namespace Sensit.TestSDK.Devices
 				// Read from the serial port.
 				Thread.Sleep(200);
 				string message = string.Empty;
-				while (SerialPort.BytesToRead != 0)
+				while (Port.BytesToRead != 0)
 				{
-					message += SerialPort.ReadExisting();
+					message += Port.ReadExisting();
 				}
 
 				// Flush the port.
-				SerialPort.DiscardInBuffer();
+				Port.DiscardInBuffer();
 
 				// Save the whole string as a message to be logged.
 				// Replace any newlines or tabs with spaces to avoid weird log files.
@@ -224,7 +224,7 @@ namespace Sensit.TestSDK.Devices
 					throw new DeviceSettingNotSupportedException("The G3 only supports 115200 baud.");
 				}
 
-				SerialPort.BaudRate = value;
+				Port.BaudRate = value;
 			}
 		}
 
@@ -237,7 +237,7 @@ namespace Sensit.TestSDK.Devices
 					throw new DeviceSettingNotSupportedException("The G3 only supports 8 data bits.");
 				}
 
-				SerialPort.DataBits = value;
+				Port.DataBits = value;
 			}
 		}
 
@@ -250,7 +250,7 @@ namespace Sensit.TestSDK.Devices
 					throw new DeviceSettingNotSupportedException("The G3 does not support parity.");
 				}
 
-				SerialPort.Parity = value;
+				Port.Parity = value;
 			}
 		}
 
@@ -263,7 +263,7 @@ namespace Sensit.TestSDK.Devices
 					throw new DeviceSettingNotSupportedException("The G3 only supports one stop bit.");
 				}
 
-				SerialPort.StopBits = value;
+				Port.StopBits = value;
 			}
 		}
 
@@ -286,20 +286,20 @@ namespace Sensit.TestSDK.Devices
 			try
 			{
 				// Set serial port settings.
-				SerialPort.PortName = portName;
-				SerialPort.BaudRate = baudRate;
-				SerialPort.DataBits = 8;
-				SerialPort.Parity = Parity.None;
-				SerialPort.StopBits = StopBits.One;
-				SerialPort.Handshake = Handshake.None;
-				SerialPort.ReadTimeout = 500;
-				SerialPort.WriteTimeout = 500;
+				Port.PortName = portName;
+				Port.BaudRate = baudRate;
+				Port.DataBits = 8;
+				Port.Parity = Parity.None;
+				Port.StopBits = StopBits.One;
+				Port.Handshake = Handshake.None;
+				Port.ReadTimeout = 500;
+				Port.WriteTimeout = 500;
 
 				// Messages are terminated with a line feed and carriage return.
-				SerialPort.NewLine = "\n\r";
+				Port.NewLine = "\n\r";
 
 				// Open the serial port.
-				SerialPort.Open();
+				Port.Open();
 			}
 			catch (SystemException ex)
 			{

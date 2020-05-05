@@ -17,24 +17,24 @@ namespace Sensit.TestSDK.Communication
 
 		// port used to communicate with mass flow controller
 		// (protected means it's accessible within derived classes, but not outside them)
-		protected SerialPort SerialPort { get; } = new SerialPort();
+		protected SerialPort Port { get; } = new SerialPort();
 
 		public string PortName
 		{
-			get => SerialPort.PortName;
-			set => SerialPort.PortName = value;
+			get => Port.PortName;
+			set => Port.PortName = value;
 		}
 
 		public int BaudRate
 		{
-			get => SerialPort.BaudRate;
-			set =>SerialPort.BaudRate = value;
+			get => Port.BaudRate;
+			set =>Port.BaudRate = value;
 		}
 
 		public int DataBits
 		{
-			get => SerialPort.DataBits;
-			set => SerialPort.DataBits = value;
+			get => Port.DataBits;
+			set => Port.DataBits = value;
 		}
 
 		public Parity Parity { get; set; }
@@ -70,9 +70,9 @@ namespace Sensit.TestSDK.Communication
 		public void Close()
 		{
 			// If the serial port is open, close it.
-			if (SerialPort.IsOpen)
+			if (Port.IsOpen)
 			{
-				SerialPort.Close();
+				Port.Close();
 			}
 		}
 
@@ -88,7 +88,7 @@ namespace Sensit.TestSDK.Communication
 			if (disposing)
 			{
 				// Dispose managed resources.
-				SerialPort?.Dispose();
+				Port?.Dispose();
 			}
 		}
 
