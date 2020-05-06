@@ -22,6 +22,27 @@ namespace Sensit.TestSDK.Devices
 	public class GPDX303S : SerialDevice, IVoltageReference, ICurrentReference,
 		IVoltageController, ICurrentController
 	{
+		private int _channel = 1;
+
+		// TODO:  Verify channel is a number from 1 - 4.
+		public int Channel
+		{
+			get
+			{
+				return _channel;
+			}
+			set
+			{
+				// Verify valid value.
+				if ((value < 1) || (value > 4))
+				{
+					throw new DeviceSettingNotSupportedException("Channel must be a number between 1 and 4, inclusive.");
+				}
+
+				_channel = value;
+			}
+		}
+
 		#region Constructor
 
 		/// <summary>
@@ -142,10 +163,10 @@ namespace Sensit.TestSDK.Devices
 		public void Read()
 		{
 			// Fetch the voltage reading.
-			Readings[VariableType.Voltage] = SendQuery(new GPDX303S_SCPI().VOUT(1).Query());
+			Readings[VariableType.Voltage] = SendQuery(new GPDX303S_SCPI().VOUT(_channel).Query());
 
 			// Fetch the current reading.
-			Readings[VariableType.Current] = SendQuery(new GPDX303S_SCPI().IOUT(1).Query());
+			Readings[VariableType.Current] = SendQuery(new GPDX303S_SCPI().IOUT(_channel).Query());
 		}
 
 		#endregion
@@ -214,10 +235,10 @@ namespace Sensit.TestSDK.Devices
 			switch (type)
 			{
 				case VariableType.Current:
-					SendCommand(new GPDX303S_SCPI().ISET(1, Convert.ToSingle(setpoint)).Command());
+					SendCommand(new GPDX303S_SCPI().ISET(_channel, Convert.ToSingle(setpoint)).Command());
 					break;
 				case VariableType.Voltage:
-					SendCommand(new GPDX303S_SCPI().VSET(1, Convert.ToSingle(setpoint)).Command());
+					SendCommand(new GPDX303S_SCPI().VSET(_channel, Convert.ToSingle(setpoint)).Command());
 					break;
 				default:
 					throw new DeviceSettingNotSupportedException("Power supply does not support " + type.ToString() + " setpoints.");
@@ -230,11 +251,11 @@ namespace Sensit.TestSDK.Devices
 			switch (type)
 			{
 				case VariableType.Current:
-					result = SendQuery(new GPDX303S_SCPI().ISET(1).Query());
+					result = SendQuery(new GPDX303S_SCPI().ISET(_channel).Query());
 					break;
 				case VariableType.Voltage:
 					// Fetch the voltage reading.
-					result = SendQuery(new GPDX303S_SCPI().VSET(1).Query());
+					result = SendQuery(new GPDX303S_SCPI().VSET(_channel).Query());
 					break;
 				default:
 					throw new DeviceSettingNotSupportedException("Power supply does not support " + type.ToString() + ".");

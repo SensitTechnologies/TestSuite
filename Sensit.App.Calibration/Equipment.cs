@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Sensit.TestSDK.Devices;
 using Sensit.TestSDK.Interfaces;
 
@@ -35,7 +36,7 @@ namespace Sensit.App.Calibration
 		// power supply
 		private GPDX303S _powerSupply;
 
-		// whether or not to configure equipment to interface with one or more DUTs.
+		// whether or not to configure devices to interface with one or more DUTs.
 		private bool _useDatalogger;
 		private bool _usePowerSupply;
 
@@ -65,6 +66,7 @@ namespace Sensit.App.Calibration
 			_gasMixer = new GasMixingDevice(_mfcDiluent, _mfcDiluent, _mfcAnalyte, _mfcAnalyte);
 			_datalogger = new Keysight_34972A();
 			_manual = new Manual();
+			_powerSupply = new GPDX303S();
 
 			Controllers = new Dictionary<VariableType, IControlDevice>
 			{
@@ -77,7 +79,9 @@ namespace Sensit.App.Calibration
 			References = new Dictionary<VariableType, IReferenceDevice>
 			{
 				{ VariableType.GasConcentration, _gasMixer },
-				{ VariableType.MassFlow, _gasMixer }
+				{ VariableType.MassFlow, _gasMixer },
+				{ VariableType.Current, _powerSupply },
+				{ VariableType.Voltage, _powerSupply }
 			};
 		}
 
@@ -86,10 +90,11 @@ namespace Sensit.App.Calibration
 		/// <summary>
 		/// Initializes all equipment.
 		/// </summary>
-		public void Open(bool useDatalogger)
+		public void Open(bool useDatalogger = false, bool usePowerSupply = false)
 		{
-			// Remember whether we're using the datalogger or not.
+			// Remember what equipment to use.
 			_useDatalogger = useDatalogger;
+			_usePowerSupply = usePowerSupply;
 
 			// Configure the mass flow controllers.
 			_mfcAnalyte?.Open(_settings.GasMixer.AnalyteMFC.SerialPort);
@@ -105,6 +110,7 @@ namespace Sensit.App.Calibration
 			// Configure the power supply.
 			if ((_usePowerSupply == true) && (_powerSupply != null))
 			{
+				_powerSupply.Channel = 1;
 				_powerSupply.Open(_settings.PowerSupply.SerialPort, _settings.PowerSupply.BaudRate);
 			}
 		}
