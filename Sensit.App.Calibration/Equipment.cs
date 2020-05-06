@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Sensit.TestSDK.Devices;
 using Sensit.TestSDK.Interfaces;
 
@@ -33,8 +32,12 @@ namespace Sensit.App.Calibration
 		// datalogger (for analog sensor DUTs)
 		private Keysight_34972A _datalogger;
 
-		// whether or not to configure a datalogger to interface with one or more DUTs.
+		// power supply
+		private GPDX303S _powerSupply;
+
+		// whether or not to configure equipment to interface with one or more DUTs.
 		private bool _useDatalogger;
+		private bool _usePowerSupply;
 
 		#region Properties
 
@@ -66,7 +69,9 @@ namespace Sensit.App.Calibration
 			Controllers = new Dictionary<VariableType, IControlDevice>
 			{
 				{ VariableType.GasConcentration, _gasMixer },
-				{ VariableType.MassFlow, _gasMixer }
+				{ VariableType.MassFlow, _gasMixer },
+				{ VariableType.Current, _powerSupply },
+				{ VariableType.Voltage, _powerSupply }
 			};
 
 			References = new Dictionary<VariableType, IReferenceDevice>
@@ -96,6 +101,12 @@ namespace Sensit.App.Calibration
 				_datalogger.Bank = _settings.Datalogger.Bank;
 				_datalogger.Open();
 			}
+
+			// Configure the power supply.
+			if ((_usePowerSupply == true) && (_powerSupply != null))
+			{
+				_powerSupply.Open(_settings.PowerSupply.SerialPort, _settings.PowerSupply.BaudRate);
+			}
 		}
 
 		/// <summary>
@@ -121,6 +132,7 @@ namespace Sensit.App.Calibration
 			_mfcAnalyte?.Close();
 			_mfcDiluent?.Close();
 			_datalogger?.Close();
+			_powerSupply?.Close();
 		}
 
 		/// <summary>
@@ -137,6 +149,7 @@ namespace Sensit.App.Calibration
 				// Dispose managed resources.
 				_mfcAnalyte?.Dispose();
 				_mfcDiluent?.Dispose();
+				_powerSupply?.Dispose();
 			}
 		}
 
