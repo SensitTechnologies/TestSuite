@@ -216,7 +216,7 @@ namespace Sensit.TestSDK.Devices
 					throw new DeviceSettingNotSupportedException("The G2-GLT only supports 115200 and 230400 baud.");
 				}
 
-				SerialPort.BaudRate = value;
+				Port.BaudRate = value;
 			}
 		}
 
@@ -229,7 +229,7 @@ namespace Sensit.TestSDK.Devices
 					throw new DeviceSettingNotSupportedException("The G2-GLT only supports 8 data bits.");
 				}
 
-				SerialPort.DataBits = value;
+				Port.DataBits = value;
 			}
 		}
 
@@ -242,7 +242,7 @@ namespace Sensit.TestSDK.Devices
 					throw new DeviceSettingNotSupportedException("The G2-GLT does not support parity.");
 				}
 
-				SerialPort.Parity = value;
+				Port.Parity = value;
 			}
 		}
 
@@ -255,7 +255,7 @@ namespace Sensit.TestSDK.Devices
 					throw new DeviceSettingNotSupportedException("The G2-GLT only supports one stop bit.");
 				}
 
-				SerialPort.StopBits = value;
+				Port.StopBits = value;
 			}
 		}
 
@@ -278,17 +278,17 @@ namespace Sensit.TestSDK.Devices
 			try
 			{
 				// Set serial port settings.
-				SerialPort.PortName = portName;
-				SerialPort.BaudRate = baudRate;
-				SerialPort.DataBits = 8;
-				SerialPort.Parity = Parity.None;
-				SerialPort.StopBits = StopBits.One;
-				SerialPort.Handshake = Handshake.None;
-				SerialPort.ReadTimeout = 500;
-				SerialPort.WriteTimeout = 500;
+				Port.PortName = portName;
+				Port.BaudRate = baudRate;
+				Port.DataBits = 8;
+				Port.Parity = Parity.None;
+				Port.StopBits = StopBits.One;
+				Port.Handshake = Handshake.None;
+				Port.ReadTimeout = 500;
+				Port.WriteTimeout = 500;
 
 				// Open the serial port.
-				SerialPort.Open();
+				Port.Open();
 
 				// Wait before attempting communication.
 				// Not sure why...but the GLT app did this.
@@ -326,7 +326,7 @@ namespace Sensit.TestSDK.Devices
 			{
 				// Send the command over the serial port.
 				Console.Write(command);
-				SerialPort.Write(command);
+				Port.Write(command);
 
 				// Read the reply.
 				reply = ReadBlocking();
@@ -703,13 +703,13 @@ namespace Sensit.TestSDK.Devices
 			try
 			{
 				// Read from the serial port.
-				while (SerialPort.BytesToRead != 0)
+				while (Port.BytesToRead != 0)
 				{
-					message += SerialPort.ReadExisting();
+					message += Port.ReadExisting();
 				}
 
 				// Flush the port.
-				SerialPort.DiscardInBuffer();
+				Port.DiscardInBuffer();
 			}
 			catch (InvalidOperationException ex)
 			{

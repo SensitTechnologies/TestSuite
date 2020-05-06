@@ -47,7 +47,7 @@ namespace Sensit.TestSDK.Devices
 			lineSplitter.LineReceived += MessageReceived;
 
 			// Subscribe to serial port's data received event.
-			SerialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
+			Port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
 		}
 
 		#endregion
@@ -63,9 +63,9 @@ namespace Sensit.TestSDK.Devices
 		/// <param name="e"></param>
 		void DataReceived(object sender, SerialDataReceivedEventArgs e)
 		{
-			int dataLength = SerialPort.BytesToRead;
+			int dataLength = Port.BytesToRead;
 			byte[] data = new byte[dataLength];
-			int nbrDataRead = SerialPort.Read(data, 0, dataLength);
+			int nbrDataRead = Port.Read(data, 0, dataLength);
 			if (nbrDataRead != 0)
 			{
 				lineSplitter.OnIncomingBinaryBlock(data);
@@ -100,20 +100,20 @@ namespace Sensit.TestSDK.Devices
 			try
 			{
 				// Set serial port settings.
-				SerialPort.PortName = portName;
-				SerialPort.BaudRate = baudRate;
-				SerialPort.DataBits = DataBits;
-				SerialPort.Parity = Parity;
-				SerialPort.StopBits = StopBits;
+				Port.PortName = portName;
+				Port.BaudRate = baudRate;
+				Port.DataBits = DataBits;
+				Port.Parity = Parity;
+				Port.StopBits = StopBits;
 
 				// Handshaking is not supported at this time.
-				SerialPort.Handshake = Handshake.None;
+				Port.Handshake = Handshake.None;
 
 				// Messages are terminated with a line feed and carriage return.
-				SerialPort.NewLine = "\r\n";
+				Port.NewLine = "\r\n";
 
 				// Open the serial port.
-				SerialPort.Open();
+				Port.Open();
 			}
 			catch (SystemException ex)
 			{
