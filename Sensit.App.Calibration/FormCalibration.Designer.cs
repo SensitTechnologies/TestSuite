@@ -28,22 +28,22 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine1 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine2 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine3 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine4 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine5 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 5D);
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine6 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine7 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine8 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine9 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine10 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint2 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 5D);
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine11 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine12 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine13 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine14 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine15 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint3 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 5D);
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine16 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine17 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine18 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine19 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine20 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
+			System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint4 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 5D);
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPageTest = new System.Windows.Forms.TabPage();
 			this.tableLayoutPanelTest = new System.Windows.Forms.TableLayoutPanel();
@@ -67,6 +67,12 @@
 			this.comboBoxModel = new System.Windows.Forms.ComboBox();
 			this.groupBoxDevicesUnderTest = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanelDevicesUnderTest = new System.Windows.Forms.TableLayoutPanel();
+			this.tabPageEquipment = new System.Windows.Forms.TabPage();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.tableLayoutPanelEquipment = new System.Windows.Forms.TableLayoutPanel();
+			this.label3 = new System.Windows.Forms.Label();
+			this.comboBox2 = new System.Windows.Forms.ComboBox();
+			this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
 			this.tabPageStatus = new System.Windows.Forms.TabPage();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -109,7 +115,6 @@
 			this.abortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.reconnectDUTsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.equipmentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.numberOfDUTsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.logDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -133,6 +138,9 @@
 			this.tableLayoutPanel2.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.groupBoxDevicesUnderTest.SuspendLayout();
+			this.tabPageEquipment.SuspendLayout();
+			this.groupBox1.SuspendLayout();
+			this.tableLayoutPanelEquipment.SuspendLayout();
 			this.tabPageStatus.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
@@ -154,6 +162,7 @@
 			// 
 			this.tabControl1.Controls.Add(this.tabPageTest);
 			this.tabControl1.Controls.Add(this.tabPageDut);
+			this.tabControl1.Controls.Add(this.tabPageEquipment);
 			this.tabControl1.Controls.Add(this.tabPageStatus);
 			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabControl1.Location = new System.Drawing.Point(0, 24);
@@ -466,6 +475,87 @@
 			this.tableLayoutPanelDevicesUnderTest.Size = new System.Drawing.Size(508, 219);
 			this.tableLayoutPanelDevicesUnderTest.TabIndex = 0;
 			// 
+			// tabPageEquipment
+			// 
+			this.tabPageEquipment.Controls.Add(this.groupBox1);
+			this.tabPageEquipment.Location = new System.Drawing.Point(4, 22);
+			this.tabPageEquipment.Name = "tabPageEquipment";
+			this.tabPageEquipment.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageEquipment.Size = new System.Drawing.Size(526, 283);
+			this.tabPageEquipment.TabIndex = 6;
+			this.tabPageEquipment.Text = "Equipment";
+			this.tabPageEquipment.UseVisualStyleBackColor = true;
+			// 
+			// groupBox1
+			// 
+			this.groupBox1.AutoSize = true;
+			this.groupBox1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.groupBox1.Controls.Add(this.tableLayoutPanelEquipment);
+			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBox1.Location = new System.Drawing.Point(3, 3);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(520, 277);
+			this.groupBox1.TabIndex = 17;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Equipment Settings";
+			// 
+			// tableLayoutPanelEquipment
+			// 
+			this.tableLayoutPanelEquipment.AutoSize = true;
+			this.tableLayoutPanelEquipment.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.tableLayoutPanelEquipment.ColumnCount = 2;
+			this.tableLayoutPanelEquipment.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelEquipment.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelEquipment.Controls.Add(this.comboBox2, 1, 0);
+			this.tableLayoutPanelEquipment.Controls.Add(this.tableLayoutPanel5, 1, 3);
+			this.tableLayoutPanelEquipment.Controls.Add(this.label3, 0, 0);
+			this.tableLayoutPanelEquipment.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableLayoutPanelEquipment.Location = new System.Drawing.Point(3, 16);
+			this.tableLayoutPanelEquipment.Name = "tableLayoutPanelEquipment";
+			this.tableLayoutPanelEquipment.RowCount = 4;
+			this.tableLayoutPanelEquipment.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelEquipment.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelEquipment.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelEquipment.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanelEquipment.Size = new System.Drawing.Size(514, 258);
+			this.tableLayoutPanelEquipment.TabIndex = 6;
+			// 
+			// label3
+			// 
+			this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.label3.AutoSize = true;
+			this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label3.Location = new System.Drawing.Point(3, 7);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(42, 13);
+			this.label3.TabIndex = 22;
+			this.label3.Text = "Repeat";
+			// 
+			// comboBox2
+			// 
+			this.comboBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBox2.FormattingEnabled = true;
+			this.comboBox2.Location = new System.Drawing.Point(51, 3);
+			this.comboBox2.Name = "comboBox2";
+			this.comboBox2.Size = new System.Drawing.Size(460, 21);
+			this.comboBox2.TabIndex = 24;
+			// 
+			// tableLayoutPanel5
+			// 
+			this.tableLayoutPanel5.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.tableLayoutPanel5.AutoSize = true;
+			this.tableLayoutPanel5.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.tableLayoutPanel5.ColumnCount = 2;
+			this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanel5.Location = new System.Drawing.Point(51, 142);
+			this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+			this.tableLayoutPanel5.RowCount = 1;
+			this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel5.Size = new System.Drawing.Size(0, 0);
+			this.tableLayoutPanel5.TabIndex = 23;
+			// 
 			// tabPageStatus
 			// 
 			this.tabPageStatus.Controls.Add(this.splitContainer1);
@@ -681,44 +771,44 @@
 			// chartError
 			// 
 			this.chartError.Anchor = System.Windows.Forms.AnchorStyles.None;
-			chartArea1.AxisX.LabelAutoFitMinFontSize = 10;
-			chartArea1.AxisX.LabelStyle.Enabled = false;
-			chartArea1.AxisX.MajorGrid.Enabled = false;
-			chartArea1.AxisX.MajorTickMark.Enabled = false;
-			chartArea1.AxisY.IsLabelAutoFit = false;
-			chartArea1.AxisY.LabelAutoFitStyle = ((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.StaggeredLabels | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.WordWrap)));
-			chartArea1.AxisY.LabelStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			chartArea1.AxisY.Maximum = 10D;
-			chartArea1.AxisY.Minimum = 0D;
-			stripLine1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-			stripLine1.StripWidth = 3D;
-			stripLine2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-			stripLine2.IntervalOffset = 2D;
-			stripLine2.StripWidth = 2D;
-			stripLine3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-			stripLine3.IntervalOffset = 4D;
-			stripLine3.StripWidth = 2D;
-			stripLine4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-			stripLine4.IntervalOffset = 6D;
-			stripLine4.StripWidth = 2D;
-			stripLine5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-			stripLine5.IntervalOffset = 8D;
-			stripLine5.StripWidth = 2D;
-			chartArea1.AxisY.StripLines.Add(stripLine1);
-			chartArea1.AxisY.StripLines.Add(stripLine2);
-			chartArea1.AxisY.StripLines.Add(stripLine3);
-			chartArea1.AxisY.StripLines.Add(stripLine4);
-			chartArea1.AxisY.StripLines.Add(stripLine5);
-			chartArea1.Name = "ChartArea1";
-			this.chartError.ChartAreas.Add(chartArea1);
+			chartArea3.AxisX.LabelAutoFitMinFontSize = 10;
+			chartArea3.AxisX.LabelStyle.Enabled = false;
+			chartArea3.AxisX.MajorGrid.Enabled = false;
+			chartArea3.AxisX.MajorTickMark.Enabled = false;
+			chartArea3.AxisY.IsLabelAutoFit = false;
+			chartArea3.AxisY.LabelAutoFitStyle = ((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.StaggeredLabels | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.WordWrap)));
+			chartArea3.AxisY.LabelStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			chartArea3.AxisY.Maximum = 10D;
+			chartArea3.AxisY.Minimum = 0D;
+			stripLine11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+			stripLine11.StripWidth = 3D;
+			stripLine12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+			stripLine12.IntervalOffset = 2D;
+			stripLine12.StripWidth = 2D;
+			stripLine13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+			stripLine13.IntervalOffset = 4D;
+			stripLine13.StripWidth = 2D;
+			stripLine14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+			stripLine14.IntervalOffset = 6D;
+			stripLine14.StripWidth = 2D;
+			stripLine15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+			stripLine15.IntervalOffset = 8D;
+			stripLine15.StripWidth = 2D;
+			chartArea3.AxisY.StripLines.Add(stripLine11);
+			chartArea3.AxisY.StripLines.Add(stripLine12);
+			chartArea3.AxisY.StripLines.Add(stripLine13);
+			chartArea3.AxisY.StripLines.Add(stripLine14);
+			chartArea3.AxisY.StripLines.Add(stripLine15);
+			chartArea3.Name = "ChartArea1";
+			this.chartError.ChartAreas.Add(chartArea3);
 			this.chartError.Location = new System.Drawing.Point(41, 49);
 			this.chartError.Name = "chartError";
-			series1.ChartArea = "ChartArea1";
-			series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-			series1.MarkerSize = 10;
-			series1.Name = "Series1";
-			series1.Points.Add(dataPoint1);
-			this.chartError.Series.Add(series1);
+			series3.ChartArea = "ChartArea1";
+			series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+			series3.MarkerSize = 10;
+			series3.Name = "Series1";
+			series3.Points.Add(dataPoint3);
+			this.chartError.Series.Add(series3);
 			this.chartError.Size = new System.Drawing.Size(40, 200);
 			this.chartError.TabIndex = 2;
 			this.chartError.Text = "Error";
@@ -746,45 +836,45 @@
 			// chartRate
 			// 
 			this.chartRate.Anchor = System.Windows.Forms.AnchorStyles.None;
-			chartArea2.AxisX.IsLabelAutoFit = false;
-			chartArea2.AxisX.LabelStyle.Enabled = false;
-			chartArea2.AxisX.MajorGrid.Enabled = false;
-			chartArea2.AxisX.MajorTickMark.Enabled = false;
-			chartArea2.AxisY.IsLabelAutoFit = false;
-			chartArea2.AxisY.LabelAutoFitMaxFontSize = 12;
-			chartArea2.AxisY.LabelAutoFitMinFontSize = 12;
-			chartArea2.AxisY.LabelStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			chartArea2.AxisY.Maximum = 10D;
-			chartArea2.AxisY.Minimum = 0D;
-			stripLine6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-			stripLine6.StripWidth = 3D;
-			stripLine7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-			stripLine7.IntervalOffset = 2D;
-			stripLine7.StripWidth = 2D;
-			stripLine8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-			stripLine8.IntervalOffset = 4D;
-			stripLine8.StripWidth = 2D;
-			stripLine9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-			stripLine9.IntervalOffset = 6D;
-			stripLine9.StripWidth = 2D;
-			stripLine10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-			stripLine10.IntervalOffset = 8D;
-			stripLine10.StripWidth = 2D;
-			chartArea2.AxisY.StripLines.Add(stripLine6);
-			chartArea2.AxisY.StripLines.Add(stripLine7);
-			chartArea2.AxisY.StripLines.Add(stripLine8);
-			chartArea2.AxisY.StripLines.Add(stripLine9);
-			chartArea2.AxisY.StripLines.Add(stripLine10);
-			chartArea2.Name = "ChartArea1";
-			this.chartRate.ChartAreas.Add(chartArea2);
+			chartArea4.AxisX.IsLabelAutoFit = false;
+			chartArea4.AxisX.LabelStyle.Enabled = false;
+			chartArea4.AxisX.MajorGrid.Enabled = false;
+			chartArea4.AxisX.MajorTickMark.Enabled = false;
+			chartArea4.AxisY.IsLabelAutoFit = false;
+			chartArea4.AxisY.LabelAutoFitMaxFontSize = 12;
+			chartArea4.AxisY.LabelAutoFitMinFontSize = 12;
+			chartArea4.AxisY.LabelStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			chartArea4.AxisY.Maximum = 10D;
+			chartArea4.AxisY.Minimum = 0D;
+			stripLine16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+			stripLine16.StripWidth = 3D;
+			stripLine17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+			stripLine17.IntervalOffset = 2D;
+			stripLine17.StripWidth = 2D;
+			stripLine18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+			stripLine18.IntervalOffset = 4D;
+			stripLine18.StripWidth = 2D;
+			stripLine19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+			stripLine19.IntervalOffset = 6D;
+			stripLine19.StripWidth = 2D;
+			stripLine20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+			stripLine20.IntervalOffset = 8D;
+			stripLine20.StripWidth = 2D;
+			chartArea4.AxisY.StripLines.Add(stripLine16);
+			chartArea4.AxisY.StripLines.Add(stripLine17);
+			chartArea4.AxisY.StripLines.Add(stripLine18);
+			chartArea4.AxisY.StripLines.Add(stripLine19);
+			chartArea4.AxisY.StripLines.Add(stripLine20);
+			chartArea4.Name = "ChartArea1";
+			this.chartRate.ChartAreas.Add(chartArea4);
 			this.chartRate.Location = new System.Drawing.Point(163, 49);
 			this.chartRate.Name = "chartRate";
-			series2.ChartArea = "ChartArea1";
-			series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-			series2.MarkerSize = 10;
-			series2.Name = "Series1";
-			series2.Points.Add(dataPoint2);
-			this.chartRate.Series.Add(series2);
+			series4.ChartArea = "ChartArea1";
+			series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+			series4.MarkerSize = 10;
+			series4.Name = "Series1";
+			series4.Points.Add(dataPoint4);
+			this.chartRate.Series.Add(series4);
 			this.chartRate.Size = new System.Drawing.Size(40, 200);
 			this.chartRate.TabIndex = 20;
 			this.chartRate.Text = "Error";
@@ -817,7 +907,6 @@
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.testToolStripMenuItem,
-            this.equipmentToolStripMenuItem,
             this.toolsToolStripMenuItem,
             this.helpToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -952,12 +1041,6 @@
 			this.reconnectDUTsToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
 			this.reconnectDUTsToolStripMenuItem.Text = "&Find DUTs";
 			// 
-			// equipmentToolStripMenuItem
-			// 
-			this.equipmentToolStripMenuItem.Name = "equipmentToolStripMenuItem";
-			this.equipmentToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
-			this.equipmentToolStripMenuItem.Text = "&Equipment";
-			// 
 			// toolsToolStripMenuItem
 			// 
 			this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1060,6 +1143,12 @@
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();
 			this.groupBoxDevicesUnderTest.ResumeLayout(false);
+			this.tabPageEquipment.ResumeLayout(false);
+			this.tabPageEquipment.PerformLayout();
+			this.groupBox1.ResumeLayout(false);
+			this.groupBox1.PerformLayout();
+			this.tableLayoutPanelEquipment.ResumeLayout(false);
+			this.tableLayoutPanelEquipment.PerformLayout();
 			this.tabPageStatus.ResumeLayout(false);
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
@@ -1148,7 +1237,6 @@
 		private System.Windows.Forms.ToolStripMenuItem dUTSettingsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem logDirectoryToolStripMenuItem;
 		private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-		private System.Windows.Forms.ToolStripMenuItem equipmentToolStripMenuItem;
 		private System.Windows.Forms.DataVisualization.Charting.Chart chartError;
 		private System.Windows.Forms.DataVisualization.Charting.Chart chartRate;
 		private System.Windows.Forms.Label labelValueNum;
@@ -1165,6 +1253,12 @@
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelRepeat;
 		private System.Windows.Forms.RadioButton radioButtonRepeatYes;
 		private System.Windows.Forms.RadioButton radioButtonRepeatNo;
+		private System.Windows.Forms.TabPage tabPageEquipment;
+		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelEquipment;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.ComboBox comboBox2;
 	}
 }
 

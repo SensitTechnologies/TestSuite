@@ -304,8 +304,8 @@ namespace Sensit.App.Calibration
 				Text += " " + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
 			}
 
-			InitEquipmentMenu(typeof(IControlDevice));
-			InitEquipmentMenu(typeof(IReferenceDevice));
+			//InitEquipmentMenu(typeof(IControlDevice));
+			//InitEquipmentMenu(typeof(IReferenceDevice));
 
 			// Set the number of DUTs.
 			NumDuts = Properties.Settings.Default.NumDuts;
@@ -813,13 +813,16 @@ namespace Sensit.App.Calibration
 
 		private void InitEquipmentMenu(Type type)
 		{
-			// Populate the equipment menu.
+			// Stop the GUI from looking weird while we update it.
+			tableLayoutPanelDevicesUnderTest.SuspendLayout();
+
+			// Populate the equipment tab.
 			List<Type> controlTypes = Utilities.FindInterfaces(type);
 			foreach (Type t in controlTypes)
 			{
 				// Add the class of device.
 				ToolStripDropDownItem equipmentType = new ToolStripMenuItem(t.GetDescription());
-				equipmentToolStripMenuItem.DropDownItems.Add(equipmentType);
+				//tableLayoutPanelEquipment.DropDownItems.Add(equipmentType);
 
 				// Find the applicable devices.
 				List<Type> deviceTypes = Utilities.FindClasses(t);
@@ -828,6 +831,9 @@ namespace Sensit.App.Calibration
 					equipmentType.DropDownItems.Add(d.GetDescription(), null, MenuEquipment_Click);
 				}
 			}
+
+			// Make the GUI act normally again.
+			tableLayoutPanelDevicesUnderTest.ResumeLayout();
 		}
 
 		private void MenuEquipment_Click(object sender, EventArgs e)
