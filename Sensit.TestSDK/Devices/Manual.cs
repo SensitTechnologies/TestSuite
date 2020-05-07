@@ -14,11 +14,12 @@ namespace Sensit.TestSDK.Devices
 	/// Useful for testing software and test equipment, or as a DUT to make manual
 	/// data entries.
 	/// </remarks>
-	public class Manual : IGasConcentrationReference, IMassFlowReference,
+	public class Manual : IGasMixReference, IMassFlowReference,
 		IVolumeFlowReference, IVelocityReference, IPressureReference,
-		ITemperatureReference, IGasMixController, IMassFlowController,
+		ITemperatureReference, ICurrentReference, IVoltageReference,
+		IGasMixController, IMassFlowController,
 		IVolumeFlowController, IVelocityController, IPressureController,
-		ITemperatureController
+		ITemperatureController, ICurrentController, IVoltageController
 	{
 		#region Reference Device Properties
 
@@ -45,11 +46,17 @@ namespace Sensit.TestSDK.Devices
 
 		public UnitOfMeasure.Temperature TemperatureUnit { get; set; }
 
+		public UnitOfMeasure.Current CurrentUnit { get; set; }
+
+		public UnitOfMeasure.Voltage VoltageUnit { get; set; }
+
 		#endregion
 
 		#region Control Device Properties
 
 		public double AnalyteBottleConcentration { get; set; }
+
+		public int Channel { get; set; }
 
 		#endregion
 

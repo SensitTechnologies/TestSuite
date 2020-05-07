@@ -99,7 +99,7 @@ namespace Sensit.TestSDK.Interfaces
 	/// Device that measures gas concentration.
 	/// </summary>
 	[Description("Gas Concentration Reference")]
-	public interface IGasConcentrationReference : IReferenceDevice
+	public interface IGasMixReference : IReferenceDevice
 	{
 		UnitOfMeasure.Concentration ConcentrationUnit { get; set; }
 

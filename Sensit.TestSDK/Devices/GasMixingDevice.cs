@@ -9,7 +9,7 @@ namespace Sensit.TestSDK.Devices
 	/// <summary>
 	/// Use two Mass Flow Controllers to mix two gasses.
 	/// </summary>
-	public class GasMixingDevice : IGasConcentrationReference, IGasMixController, IMassFlowReference
+	public class GasMixingDevice : IGasMixReference, IGasMixController, IMassFlowReference
 	{
 		#region Fields
 

@@ -10,7 +10,7 @@ using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.TestSDK.Devices
 {
-	public class SensitG2GLT : SerialDevice, IGasConcentrationReference
+	public class SensitG2GLT : SerialDevice, IGasMixReference
 	{
 		const int NUM_RETRIES = 20;
 

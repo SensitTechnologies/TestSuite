@@ -17,7 +17,7 @@ namespace Sensit.TestSDK.Devices
 	/// The serial interface here is just a debug console that is not present
 	/// in production firmware.
 	/// </remarks>
-	public class SensitG3 : SerialDevice, IGasConcentrationReference, IMessageReference
+	public class SensitG3 : SerialDevice, IGasMixReference, IMessageReference
 	{
 		#region Message Device Methods
 
