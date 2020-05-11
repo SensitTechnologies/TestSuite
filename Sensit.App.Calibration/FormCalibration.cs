@@ -28,6 +28,8 @@ namespace Sensit.App.Calibration
 		private const int DUT_COLUMN_CONFIG1 = 3;
 		private const int DUT_COLUMN_CONFIG2 = 4;
 		private const int DUT_COLUMN_STATUS = 5;
+		private const int EQUIPMENT_COLUMN_LABEL = 0;
+		private const int EQUIPMENT_COLUMN_SELECTION = 1;
 
 		#endregion
 
@@ -304,8 +306,9 @@ namespace Sensit.App.Calibration
 				Text += " " + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
 			}
 
-			//InitEquipmentMenu(typeof(IControlDevice));
-			//InitEquipmentMenu(typeof(IReferenceDevice));
+			// Initialize the Equipment tab.
+			InitEquipment(typeof(IControlDevice));
+			InitEquipment(typeof(IReferenceDevice));
 
 			// Set the number of DUTs.
 			NumDuts = Properties.Settings.Default.NumDuts;
@@ -809,31 +812,57 @@ namespace Sensit.App.Calibration
 
 		#endregion
 
-		#region Equipment Menu
+		#region Equipment
 
-		private void InitEquipmentMenu(Type type)
+		/// <summary>
+		/// Populate the equipment tab with selections for each type of peripheral.
+		/// </summary>
+		/// <param name="type"></param>
+		private void InitEquipment(Type type)
 		{
 			// Stop the GUI from looking weird while we update it.
-			tableLayoutPanelDevicesUnderTest.SuspendLayout();
+//			tableLayoutPanelEquipment.SuspendLayout();
 
-			// Populate the equipment tab.
+			// Make a list of the types of control devices (should be one per interface).
 			List<Type> controlTypes = Utilities.FindInterfaces(type);
+
+			// For each type of control device...
 			foreach (Type t in controlTypes)
 			{
-				// Add the class of device.
-				ToolStripDropDownItem equipmentType = new ToolStripMenuItem(t.GetDescription());
-				//tableLayoutPanelEquipment.DropDownItems.Add(equipmentType);
+				// Add a row, and make it autosize.
+				// Note that we start with one already.
+				tableLayoutPanelEquipment.RowCount++;
+				tableLayoutPanelDevicesUnderTest.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+
+				// Add a label.
+				Label label = new Label
+				{
+					Anchor = AnchorStyles.Left | AnchorStyles.Top,
+					AutoSize = true,
+					Dock = DockStyle.None,
+					Text = t.GetDescription()
+				};
+				tableLayoutPanelEquipment.Controls.Add(label, EQUIPMENT_COLUMN_LABEL, tableLayoutPanelEquipment.RowCount);
+
+				// Add a comboBox for all the choices for that device type.
+				ComboBox comboBox = new ComboBox
+				{
+					Anchor = AnchorStyles.Left | AnchorStyles.Top,
+					Dock = DockStyle.None,
+					DropDownStyle = ComboBoxStyle.DropDownList
+				};
+				tableLayoutPanelEquipment.Controls.Add(comboBox, EQUIPMENT_COLUMN_SELECTION, tableLayoutPanelEquipment.RowCount);
 
 				// Find the applicable devices.
 				List<Type> deviceTypes = Utilities.FindClasses(t);
 				foreach (Type d in deviceTypes)
 				{
-					equipmentType.DropDownItems.Add(d.GetDescription(), null, MenuEquipment_Click);
+					comboBox.Items.Add(d.GetDescription());
 				}
 			}
 
 			// Make the GUI act normally again.
-			tableLayoutPanelDevicesUnderTest.ResumeLayout();
+//			tableLayoutPanelEquipment.ResumeLayout();
 		}
 
 		private void MenuEquipment_Click(object sender, EventArgs e)

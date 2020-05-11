@@ -70,9 +70,6 @@
 			this.tabPageEquipment = new System.Windows.Forms.TabPage();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanelEquipment = new System.Windows.Forms.TableLayoutPanel();
-			this.label3 = new System.Windows.Forms.Label();
-			this.comboBox2 = new System.Windows.Forms.ComboBox();
-			this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
 			this.tabPageStatus = new System.Windows.Forms.TabPage();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -140,7 +137,6 @@
 			this.groupBoxDevicesUnderTest.SuspendLayout();
 			this.tabPageEquipment.SuspendLayout();
 			this.groupBox1.SuspendLayout();
-			this.tableLayoutPanelEquipment.SuspendLayout();
 			this.tabPageStatus.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
@@ -501,60 +497,20 @@
 			// 
 			// tableLayoutPanelEquipment
 			// 
+			this.tableLayoutPanelEquipment.AutoScroll = true;
 			this.tableLayoutPanelEquipment.AutoSize = true;
 			this.tableLayoutPanelEquipment.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.tableLayoutPanelEquipment.ColumnCount = 2;
 			this.tableLayoutPanelEquipment.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanelEquipment.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanelEquipment.Controls.Add(this.comboBox2, 1, 0);
-			this.tableLayoutPanelEquipment.Controls.Add(this.tableLayoutPanel5, 1, 3);
-			this.tableLayoutPanelEquipment.Controls.Add(this.label3, 0, 0);
 			this.tableLayoutPanelEquipment.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanelEquipment.Location = new System.Drawing.Point(3, 16);
 			this.tableLayoutPanelEquipment.Name = "tableLayoutPanelEquipment";
-			this.tableLayoutPanelEquipment.RowCount = 4;
+			this.tableLayoutPanelEquipment.RowCount = 1;
 			this.tableLayoutPanelEquipment.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelEquipment.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelEquipment.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelEquipment.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanelEquipment.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 258F));
 			this.tableLayoutPanelEquipment.Size = new System.Drawing.Size(514, 258);
 			this.tableLayoutPanelEquipment.TabIndex = 6;
-			// 
-			// label3
-			// 
-			this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.label3.AutoSize = true;
-			this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label3.Location = new System.Drawing.Point(3, 7);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(42, 13);
-			this.label3.TabIndex = 22;
-			this.label3.Text = "Repeat";
-			// 
-			// comboBox2
-			// 
-			this.comboBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBox2.FormattingEnabled = true;
-			this.comboBox2.Location = new System.Drawing.Point(51, 3);
-			this.comboBox2.Name = "comboBox2";
-			this.comboBox2.Size = new System.Drawing.Size(460, 21);
-			this.comboBox2.TabIndex = 24;
-			// 
-			// tableLayoutPanel5
-			// 
-			this.tableLayoutPanel5.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.tableLayoutPanel5.AutoSize = true;
-			this.tableLayoutPanel5.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutPanel5.ColumnCount = 2;
-			this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel5.Location = new System.Drawing.Point(51, 142);
-			this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-			this.tableLayoutPanel5.RowCount = 1;
-			this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel5.Size = new System.Drawing.Size(0, 0);
-			this.tableLayoutPanel5.TabIndex = 23;
 			// 
 			// tabPageStatus
 			// 
@@ -1147,8 +1103,6 @@
 			this.tabPageEquipment.PerformLayout();
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
-			this.tableLayoutPanelEquipment.ResumeLayout(false);
-			this.tableLayoutPanelEquipment.PerformLayout();
 			this.tabPageStatus.ResumeLayout(false);
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
@@ -1256,9 +1210,6 @@
 		private System.Windows.Forms.TabPage tabPageEquipment;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelEquipment;
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
-		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.ComboBox comboBox2;
 	}
 }
 
