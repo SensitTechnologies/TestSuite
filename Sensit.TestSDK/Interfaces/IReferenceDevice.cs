@@ -202,6 +202,7 @@ namespace Sensit.TestSDK.Interfaces
 	/// Intended to be a convenient way to support any UART-based device without
 	/// requiring modifications to this software.
 	/// </remarks>
+	[Description("Message Reference")]
 	public interface IMessageReference : IReferenceDevice
 	{
 		string Message { get; }
