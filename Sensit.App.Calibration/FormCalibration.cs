@@ -865,21 +865,6 @@ namespace Sensit.App.Calibration
 //			tableLayoutPanelEquipment.ResumeLayout();
 		}
 
-		private void MenuEquipment_Click(object sender, EventArgs e)
-		{
-			// Find the parent menu item, then children items.
-			Control parent = ((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl;
-
-			if (((ToolStripMenuItem)sender).Checked)
-			{
-				((ToolStripMenuItem)sender).Checked = false;
-			}
-			else
-			{
-				((ToolStripMenuItem)sender).Checked = true;
-			}
-		}
-
 		#endregion
 
 		#region Settings Menu
