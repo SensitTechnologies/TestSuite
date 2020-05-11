@@ -51,7 +51,7 @@ namespace Sensit.TestSDK.Interfaces
 	/// <summary>
 	/// Device that controls gas concentration (and mass flow).
 	/// </summary>
-	[Description("Gas Mixer")]
+	[Description("Gas Mix Controller")]
 	public interface IGasMixController : IMassFlowController
 	{
 	}
