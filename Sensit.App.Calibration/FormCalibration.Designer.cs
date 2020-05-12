@@ -506,9 +506,9 @@
 			this.tableLayoutPanelEquipment.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanelEquipment.Location = new System.Drawing.Point(3, 16);
 			this.tableLayoutPanelEquipment.Name = "tableLayoutPanelEquipment";
-			this.tableLayoutPanelEquipment.RowCount = 1;
+			this.tableLayoutPanelEquipment.RowCount = 2;
 			this.tableLayoutPanelEquipment.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelEquipment.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 258F));
+			this.tableLayoutPanelEquipment.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanelEquipment.Size = new System.Drawing.Size(514, 258);
 			this.tableLayoutPanelEquipment.TabIndex = 6;
 			// 

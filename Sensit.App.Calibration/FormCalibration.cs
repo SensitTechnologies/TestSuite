@@ -308,7 +308,6 @@ namespace Sensit.App.Calibration
 
 			// Initialize the Equipment tab.
 			InitEquipment(typeof(IControlDevice));
-			InitEquipment(typeof(IReferenceDevice));
 
 			// Set the number of DUTs.
 			NumDuts = Properties.Settings.Default.NumDuts;
@@ -821,7 +820,7 @@ namespace Sensit.App.Calibration
 		private void InitEquipment(Type type)
 		{
 			// Stop the GUI from looking weird while we update it.
-//			tableLayoutPanelEquipment.SuspendLayout();
+			tableLayoutPanelEquipment.SuspendLayout();
 
 			// Make a list of the types of control devices (should be one per interface).
 			List<Type> controlTypes = Utilities.FindInterfaces(type);
@@ -853,7 +852,7 @@ namespace Sensit.App.Calibration
 				};
 				tableLayoutPanelEquipment.Controls.Add(comboBox, EQUIPMENT_COLUMN_SELECTION, tableLayoutPanelEquipment.RowCount);
 
-				// Find the applicable devices.
+				// Add applicable devices.
 				List<Type> deviceTypes = Utilities.FindClasses(t);
 				foreach (Type d in deviceTypes)
 				{
@@ -862,7 +861,7 @@ namespace Sensit.App.Calibration
 			}
 
 			// Make the GUI act normally again.
-//			tableLayoutPanelEquipment.ResumeLayout();
+			tableLayoutPanelEquipment.ResumeLayout();
 		}
 
 		#endregion
