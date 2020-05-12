@@ -6,6 +6,7 @@ using Sensit.TestSDK.Devices;
 using System.ComponentModel;
 using Sensit.TestSDK.Interfaces;
 using System.Threading;
+using System.Globalization;
 
 namespace Sensit.App.Calibration
 {
@@ -201,7 +202,7 @@ namespace Sensit.App.Calibration
 				string filename = SerialNumber + ".csv";
 				string fullPath = Path.Combine(Properties.Settings.Default.LogDirectory, filename);
 				_writer = new StreamWriter(fullPath, true);
-				_csv = new CsvWriter(_writer);
+				_csv = new CsvWriter(_writer, CultureInfo.CurrentCulture);
 			}
 		}
 
