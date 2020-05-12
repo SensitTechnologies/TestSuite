@@ -3,19 +3,16 @@
   <Profiles />
   <Settings>
     <Setting Name="Model" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Simulator</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Range" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">100</Value>
     </Setting>
     <Setting Name="Test" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Linearity</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="NumDuts" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">8</Value>
-    </Setting>
-    <Setting Name="DutSelections" Type="System.Collections.Specialized.StringCollection" Scope="User">
-      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="SystemSettingsFile" Type="System.String" Scope="Application">
       <Value Profile="(Default)">System Settings</Value>
@@ -29,14 +26,32 @@
     <Setting Name="LogDirectory" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="ModelSelections" Type="System.Collections.Specialized.StringCollection" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="DutSerialNumbers" Type="System.Collections.Specialized.StringCollection" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="Repeat" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="DutSelections" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DutDescriptions" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DutModels" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DutConfigs1" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="EquipmentSelection" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="EquipmentModels" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="EquipmentConfigs" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DutConfigs2" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

@@ -25,7 +25,7 @@ namespace Sensit.App.Calibration.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Simulator")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string Model {
             get {
                 return ((string)(this["Model"]));
@@ -49,7 +49,7 @@ namespace Sensit.App.Calibration.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Linearity")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string Test {
             get {
                 return ((string)(this["Test"]));
@@ -68,17 +68,6 @@ namespace Sensit.App.Calibration.Properties {
             }
             set {
                 this["NumDuts"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection DutSelections {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["DutSelections"]));
-            }
-            set {
-                this["DutSelections"] = value;
             }
         }
         
@@ -123,28 +112,6 @@ namespace Sensit.App.Calibration.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection ModelSelections {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["ModelSelections"]));
-            }
-            set {
-                this["ModelSelections"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection DutSerialNumbers {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["DutSerialNumbers"]));
-            }
-            set {
-                this["DutSerialNumbers"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool Repeat {
             get {
@@ -152,6 +119,95 @@ namespace Sensit.App.Calibration.Properties {
             }
             set {
                 this["Repeat"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection DutSelections {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["DutSelections"]));
+            }
+            set {
+                this["DutSelections"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection DutDescriptions {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["DutDescriptions"]));
+            }
+            set {
+                this["DutDescriptions"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection DutModels {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["DutModels"]));
+            }
+            set {
+                this["DutModels"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection DutConfigs1 {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["DutConfigs1"]));
+            }
+            set {
+                this["DutConfigs1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection EquipmentSelection {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["EquipmentSelection"]));
+            }
+            set {
+                this["EquipmentSelection"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection EquipmentModels {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["EquipmentModels"]));
+            }
+            set {
+                this["EquipmentModels"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection EquipmentConfigs {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["EquipmentConfigs"]));
+            }
+            set {
+                this["EquipmentConfigs"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DutConfigs2 {
+            get {
+                return ((string)(this["DutConfigs2"]));
+            }
+            set {
+                this["DutConfigs2"] = value;
             }
         }
     }

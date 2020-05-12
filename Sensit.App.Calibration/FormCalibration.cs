@@ -28,8 +28,10 @@ namespace Sensit.App.Calibration
 		private const int DUT_COLUMN_CONFIG1 = 3;
 		private const int DUT_COLUMN_CONFIG2 = 4;
 		private const int DUT_COLUMN_STATUS = 5;
+		private const int EQUIPMENT_COLUMN_CHECKBOX = 0;
 		private const int EQUIPMENT_COLUMN_LABEL = 0;
-		private const int EQUIPMENT_COLUMN_SELECTION = 1;
+		private const int EQUIPMENT_COLUMN_MODEL = 1;
+		private const int EQUIPMENT_COLUMN_CONFIG = 3;
 
 		#endregion
 
@@ -339,9 +341,9 @@ namespace Sensit.App.Calibration
 
 			// Select the individual Models.
 			// This must be done after selecting the "Set all models" comboBox, or it will override the individual settings.
-			if (Properties.Settings.Default.ModelSelections != null)
+			if (Properties.Settings.Default.DutModels != null)
 			{
-				List<string> list = Properties.Settings.Default.ModelSelections.Cast<string>().ToList();
+				List<string> list = Properties.Settings.Default.DutModels.Cast<string>().ToList();
 				for (int i = 0; i < NumDuts; i++)
 				{
 					ComboBox comboBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_MODEL, i) as ComboBox;
@@ -350,10 +352,10 @@ namespace Sensit.App.Calibration
 				}
 			}
 
-			// Set the DUT Serial Numbers based on saved settings.
-			if (Properties.Settings.Default.DutSerialNumbers != null)
+			// Set the DUT description based on saved settings.
+			if (Properties.Settings.Default.DutDescriptions != null)
 			{
-				List<string> list = Properties.Settings.Default.DutSerialNumbers.Cast<string>().ToList();
+				List<string> list = Properties.Settings.Default.DutDescriptions.Cast<string>().ToList();
 				for (int i = 0; i < NumDuts; i++)
 				{
 					TextBox textBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_SERIALNUM, i) as TextBox;
@@ -577,37 +579,37 @@ namespace Sensit.App.Calibration
 			}
 
 			// Initialize or clear Model selections.
-			if (Properties.Settings.Default.ModelSelections == null)
+			if (Properties.Settings.Default.DutModels == null)
 			{
-				Properties.Settings.Default.ModelSelections = new System.Collections.Specialized.StringCollection();
+				Properties.Settings.Default.DutModels = new System.Collections.Specialized.StringCollection();
 			}
 			else
 			{
-				Properties.Settings.Default.ModelSelections.Clear();
+				Properties.Settings.Default.DutModels.Clear();
 			}
 
 			// Remember Model selections.
 			for (int i = 0; i < NumDuts; i++)
 			{
 				ComboBox comboBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_MODEL, i) as ComboBox;
-				Properties.Settings.Default.ModelSelections.Add(comboBox.SelectedItem.ToString());
+				Properties.Settings.Default.DutModels.Add(comboBox.SelectedItem.ToString());
 			}
 
-			// Initialize or clear DUT Serial Numbers.
-			if (Properties.Settings.Default.DutSerialNumbers == null)
+			// Initialize or clear DUT description.
+			if (Properties.Settings.Default.DutDescriptions == null)
 			{
-				Properties.Settings.Default.DutSerialNumbers = new System.Collections.Specialized.StringCollection();
+				Properties.Settings.Default.DutDescriptions = new System.Collections.Specialized.StringCollection();
 			}
 			else
 			{
-				Properties.Settings.Default.DutSerialNumbers.Clear();
+				Properties.Settings.Default.DutDescriptions.Clear();
 			}
 
-			// Remember DUT Serial Numbers.
+			// Remember DUT description.
 			for (int i = 0; i < NumDuts; i++)
 			{
 				TextBox textBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_SERIALNUM, i) as TextBox;
-				Properties.Settings.Default.DutSerialNumbers.Add(textBox.Text);
+				Properties.Settings.Default.DutDescriptions.Add(textBox.Text);
 			}
 
 			// Save settings.
@@ -850,7 +852,7 @@ namespace Sensit.App.Calibration
 					Dock = DockStyle.None,
 					DropDownStyle = ComboBoxStyle.DropDownList
 				};
-				tableLayoutPanelEquipment.Controls.Add(comboBox, EQUIPMENT_COLUMN_SELECTION, tableLayoutPanelEquipment.RowCount);
+				tableLayoutPanelEquipment.Controls.Add(comboBox, EQUIPMENT_COLUMN_MODEL, tableLayoutPanelEquipment.RowCount);
 
 				// Add applicable devices.
 				List<Type> deviceTypes = Utilities.FindClasses(t);
