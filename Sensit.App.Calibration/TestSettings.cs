@@ -221,7 +221,65 @@ namespace Sensit.App.Calibration
 			},
 			// Test second curve on the G3 (up to 5000 ppm)
 			// Linearity: 1-cycle, 100% varying increments, warmup
-			new TestSetting("G3: Linearity (designed for 5000 ppm analyte)")
+			new TestSetting("G3: (designed for 5000 ppm analyte, gas saver)")
+			{
+				References = new List<VariableType>
+				{
+					VariableType.MassFlow,
+					VariableType.GasConcentration
+				},
+				Components = new List<TestComponent>
+				{
+					// Warm up for 5 min.  Measure gas every 1 second.  Don't wait for stability.
+					new TestComponent("Warmup")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0 },
+								Samples = 300,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
+					// Ramp up and down.  Measure gas every 1 second.  Don't wait for stability.
+					new TestComponent("Up and Down")
+					{
+						ControlledVariables = new List<TestControlledVariable>
+						{
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 300.0 }
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double>
+								{
+									0.0, 0.4, 0.8, 1.2, 1.6, 2.0, 4.0, 6.0, 8.0, 10, 15, 20, 30, 40, 50, 60,
+									60, 50, 40, 30, 20, 15, 10, 8.0, 6.0, 2.0, 1.6, 1.2, 0.8, 0.4, 0.0
+								},
+								DwellTime = new TimeSpan(0, 0, 30),
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							}
+						},
+					},
+					new TestComponent("Turn off DUT")
+					{
+						Commands = new List<Test.Command> { Test.Command.TurnOff }
+					},
+				}
+			},
+			new TestSetting("G3: (designed for 5000 ppm analyte)")
 			{
 				References = new List<VariableType>
 				{
