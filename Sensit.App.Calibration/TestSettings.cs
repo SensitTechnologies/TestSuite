@@ -120,13 +120,13 @@ namespace Sensit.App.Calibration
 							}
 						},
 					},
-					new TestComponent("Read G3 configuration")
+					new TestComponent("Read G3 configuration, then turn off and wait 15 seconds")
 					{
-						// Command not yet implemented.
-					},
-					new TestComponent("Turn off G3 and wait 15 seconds")
-					{
-						Commands = new List<Test.Command> { Test.Command.TurnOff }
+						Commands = new List<Test.Command>
+						{
+							Test.Command.Default,
+							Test.Command.TurnOff
+						}
 					},
 					new TestComponent("Power OFF and wait 60 seconds")
 					{
