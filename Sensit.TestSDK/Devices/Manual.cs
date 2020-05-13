@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using Sensit.TestSDK.Calculations;
 using Sensit.TestSDK.Forms;
 using Sensit.TestSDK.Interfaces;
+using Sensit.TestSDK.Utilities;
 
 namespace Sensit.TestSDK.Devices
 {
@@ -21,6 +22,11 @@ namespace Sensit.TestSDK.Devices
 		IVolumeFlowController, IVelocityController, IPressureController,
 		ITemperatureController, ICurrentController, IVoltageController
 	{
+		/// <summary>
+		/// Used to determine what type of variables this controller will store.
+		/// </summary>
+		private VariableType _type;
+
 		#region Reference Device Properties
 
 		public Dictionary<VariableType, double> Readings { get; private set; }
@@ -57,6 +63,7 @@ namespace Sensit.TestSDK.Devices
 		public double AnalyteBottleConcentration { get; set; }
 
 		public int Channel { get; set; }
+		public bool Enabled { get; set; }
 
 		#endregion
 
@@ -68,16 +75,15 @@ namespace Sensit.TestSDK.Devices
 		public void Read()
 		{
 			// Prompt user to enter a value.
-			double value = 0;
-			DialogResult result = InputDialog.Numeric("Enter concentration", ref value, 0.0, 100.0);
+			double value = 0.0;
+			DialogResult result = InputDialog.Numeric("Enter " + _type.GetDescription() + ".", ref value, 0.0, 100.0);
 
 			// If user cancels, throw an error.
 			if (result != DialogResult.OK)
 				throw new Exception("Could not read from DUT.");
 
 			// Store the result.
-			// TODO:  How to choose which variable to store?
-			Readings[VariableType.GasConcentration] = value;
+			Readings[_type] = value;
 		}
 
 		#endregion
@@ -91,6 +97,9 @@ namespace Sensit.TestSDK.Devices
 
 		public void WriteSetpoint(VariableType type, double setpoint)
 		{
+			// A hack to determine what kind of device this class represents.
+			_type = type;
+
 			Readings[type] = setpoint;
 		}
 

@@ -57,6 +57,7 @@ namespace Sensit.TestSDK.Devices
 		/// Analyte gas.
 		/// </summary>
 		public Gas GasSelection { get; set; } = Gas.Air;
+		public bool Enabled { get; set; }
 
 		#endregion
 

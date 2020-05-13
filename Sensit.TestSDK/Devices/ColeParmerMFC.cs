@@ -339,6 +339,7 @@ namespace Sensit.TestSDK.Devices
 		public UnitOfMeasure.Temperature TemperatureUnit { get; set; } = UnitOfMeasure.Temperature.Celsius;
 
 		public UnitOfMeasure.Pressure PressureUnit { get; set; } = UnitOfMeasure.Pressure.PSI;
+		public bool Enabled { get; set; }
 
 		public void Read()
 		{
