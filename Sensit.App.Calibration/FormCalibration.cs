@@ -429,9 +429,6 @@ namespace Sensit.App.Calibration
 				// Disable most of the user controls.
 				//
 
-				// TODO:  Delete DUT tabs (if they exist) and any data on them.
-				// TODO:  Clear the DUT data on the Overview tab.
-
 				comboBoxModel.Enabled = false;
 				numericUpDownRange.Enabled = false;
 				comboBoxTest.Enabled = false;
@@ -454,6 +451,10 @@ namespace Sensit.App.Calibration
 				// Initialize the number of DUTs to configure the datalogger for.
 				// TODO:  Move this somewhere more intuitive.
 				_equipment.DutInterface.Channels.AddRange(new bool[NumDuts]);
+
+				// TODO:  Fetch all equipment controls, not just power supply.
+				CheckBox checkBoxPowerSupply = tableLayoutPanelEquipment.GetControlFromPosition(DUT_COLUMN_CHECKBOX, 0) as CheckBox;
+				_equipment.UsePowerSupply = checkBoxPowerSupply.Checked;
 
 				// Create objects for each DUT.
 				_duts.Clear();

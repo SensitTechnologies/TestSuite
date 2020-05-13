@@ -38,9 +38,13 @@ namespace Sensit.App.Calibration
 
 		// whether or not to configure devices to interface with one or more DUTs.
 		private bool _useDatalogger;
-		private bool _usePowerSupply;
 
 		#region Properties
+
+		/// <summary>
+		/// Whether or not to control a power supply.
+		/// </summary>
+		public bool UsePowerSupply { get; set; } = false;
 
 		public Dictionary<VariableType, IControlDevice> Controllers { get; }
 
@@ -90,11 +94,10 @@ namespace Sensit.App.Calibration
 		/// <summary>
 		/// Initializes all equipment.
 		/// </summary>
-		public void Open(bool useDatalogger = false, bool usePowerSupply = false)
+		public void Open(bool useDatalogger = false)
 		{
 			// Remember what equipment to use.
 			_useDatalogger = useDatalogger;
-			_usePowerSupply = usePowerSupply;
 
 			// Configure the mass flow controllers.
 			_mfcAnalyte?.Open(_settings.GasMixer.AnalyteMFC.SerialPort);
@@ -108,7 +111,7 @@ namespace Sensit.App.Calibration
 			}
 
 			// Configure the power supply.
-			if ((_usePowerSupply == true) && (_powerSupply != null))
+			if (UsePowerSupply && (_powerSupply != null))
 			{
 				_powerSupply.Channel = 1;
 				_powerSupply.Open(_settings.PowerSupply.SerialPort, _settings.PowerSupply.BaudRate);
