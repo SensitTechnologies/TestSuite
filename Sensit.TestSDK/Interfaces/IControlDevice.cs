@@ -7,9 +7,8 @@ namespace Sensit.TestSDK.Interfaces
 	/// </summary>
 	public enum ControlMode
 	{
-		Ambient,	// vent to external environment if possible
-		Control,	// actively controlling the test environment
-		Measure		// passively measuring the test environment
+		Active,		// actively controlling the test environment
+		Passive		// passively measuring the test environment
 	}
 
 	/// <summary>

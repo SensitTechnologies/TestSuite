@@ -240,7 +240,7 @@ namespace Sensit.App.Calibration
 			// Stop the equipment to reduce change of damage.
 			foreach (KeyValuePair<VariableType, IControlDevice> c in _equipment.Controllers)
 			{
-				c.Value.SetControlMode(ControlMode.Measure);
+				c.Value.SetControlMode(ControlMode.Passive);
 			}
 
 			// Pause the elapsed time timer.
@@ -258,7 +258,7 @@ namespace Sensit.App.Calibration
 				foreach (KeyValuePair<VariableType, IControlDevice> c in _equipment.Controllers)
 				{
 					// Resume control mode.
-					c.Value.SetControlMode(ControlMode.Control);
+					c.Value.SetControlMode(ControlMode.Active);
 				}
 			}
 			// If requested, cancel the test.
@@ -288,7 +288,7 @@ namespace Sensit.App.Calibration
 			{
 				try
 				{
-					c.Value.SetControlMode(ControlMode.Measure);
+					c.Value.SetControlMode(ControlMode.Passive);
 				}
 				catch (DeviceException ex)
 				{
@@ -539,7 +539,7 @@ namespace Sensit.App.Calibration
 				foreach (TestControlledVariable v in c?.ControlledVariables ?? Enumerable.Empty<TestControlledVariable>())
 				{
 					// Set active control mode.
-					_equipment.Controllers[v.VariableType].SetControlMode(ControlMode.Control);
+					_equipment.Controllers[v.VariableType].SetControlMode(ControlMode.Active);
 
 					// For each setpoint...
 					foreach (double sp in v?.Setpoints ?? Enumerable.Empty<double>())
@@ -670,7 +670,7 @@ namespace Sensit.App.Calibration
 				// Stop all controllers.
 				foreach (KeyValuePair<VariableType, IControlDevice> c in _equipment.Controllers)
 				{
-					c.Value.SetControlMode(ControlMode.Ambient);
+					c.Value.SetControlMode(ControlMode.Passive);
 				}
 
 				// Close test equipment.

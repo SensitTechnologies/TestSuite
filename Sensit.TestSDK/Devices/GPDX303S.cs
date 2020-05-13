@@ -268,17 +268,14 @@ namespace Sensit.TestSDK.Devices
 		{
 			switch (mode)
 			{
-				case ControlMode.Ambient:
+				case ControlMode.Passive:
 					// Turn output off.
 					SendCommand(new GPDX303S_SCPI().OUT(false).Command());
 					break;
-				case ControlMode.Control:
+				case ControlMode.Active:
 					// Turn output on.
 					SendCommand(new GPDX303S_SCPI().OUT(true).Command());
 					break;
-				case ControlMode.Measure:
-					throw new DeviceSettingNotSupportedException("Power supply does not support measure mode."
-						+ Environment.NewLine + "Do you need a multimeter instead?");
 				default:
 					throw new DeviceSettingNotSupportedException("Cannot set power supply control mode:"
 						+ Environment.NewLine + "Unrecognized mode.");

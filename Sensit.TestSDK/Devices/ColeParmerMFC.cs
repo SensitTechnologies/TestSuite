@@ -489,12 +489,11 @@ namespace Sensit.TestSDK.Devices
 		{
 			switch (mode)
 			{
-				case ControlMode.Ambient:
-				case ControlMode.Measure:
-					// Ambient and measure modes are the same and require simply setting a setpoint of zero.
+				case ControlMode.Passive:
+					// There's not really a measure mode; just set a setpoint of zero.
 					WriteMassFlowSetpoint(VariableType.MassFlow, 0.0);
 					break;
-				case ControlMode.Control:
+				case ControlMode.Active:
 					// In control mode, just update the setpoint.
 					WriteMassFlowSetpoint(VariableType.MassFlow, _massFlowSetpoint);
 					break;
