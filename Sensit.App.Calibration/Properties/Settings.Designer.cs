@@ -168,12 +168,12 @@ namespace Sensit.App.Calibration.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection EquipmentSelection {
+        public global::System.Collections.Specialized.StringCollection EquipmentSelections {
             get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["EquipmentSelection"]));
+                return ((global::System.Collections.Specialized.StringCollection)(this["EquipmentSelections"]));
             }
             set {
-                this["EquipmentSelection"] = value;
+                this["EquipmentSelections"] = value;
             }
         }
         

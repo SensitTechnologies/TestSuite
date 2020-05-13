@@ -41,7 +41,7 @@
     <Setting Name="DutConfigs1" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="EquipmentSelection" Type="System.Collections.Specialized.StringCollection" Scope="User">
+    <Setting Name="EquipmentSelections" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="EquipmentModels" Type="System.Collections.Specialized.StringCollection" Scope="User">

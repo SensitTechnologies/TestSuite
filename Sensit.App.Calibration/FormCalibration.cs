@@ -29,8 +29,8 @@ namespace Sensit.App.Calibration
 		private const int DUT_COLUMN_CONFIG2 = 4;
 		private const int DUT_COLUMN_STATUS = 5;
 		private const int EQUIPMENT_COLUMN_CHECKBOX = 0;
-		private const int EQUIPMENT_COLUMN_LABEL = 0;
-		private const int EQUIPMENT_COLUMN_MODEL = 1;
+		private const int EQUIPMENT_COLUMN_LABEL = 1;
+		private const int EQUIPMENT_COLUMN_MODEL = 2;
 		private const int EQUIPMENT_COLUMN_CONFIG = 3;
 
 		#endregion
@@ -270,7 +270,7 @@ namespace Sensit.App.Calibration
 		/// <param name="chart">which chart to update (either chartError or chartRate)</param>
 		/// <param name="max">high value of green area</param>
 		/// <param name="min">low value of green area</param>
-		private void StatusChartUpdate(System.Windows.Forms.DataVisualization.Charting.Chart chart, double min, double max)
+		private static void StatusChartUpdate(System.Windows.Forms.DataVisualization.Charting.Chart chart, double min, double max)
 		{
 			// Update the chart's Y-axis.  Total distance shown on chart is 5 times the difference between max and min.
 			chart.ChartAreas[0].AxisY.Maximum = max + 2 * (max - min);
@@ -578,7 +578,24 @@ namespace Sensit.App.Calibration
 				Properties.Settings.Default.DutSelections.Add(checkBox.Checked ? "true" : "false");
 			}
 
-			// Initialize or clear Model selections.
+			// Initialize or clear Equipment selections.
+			if (Properties.Settings.Default.EquipmentSelections == null)
+			{
+				Properties.Settings.Default.EquipmentSelections = new System.Collections.Specialized.StringCollection();
+			}
+			else
+			{
+				Properties.Settings.Default.EquipmentSelections.Clear();
+			}
+
+			// Remember equipment selections.
+			for (int i = 0; i < tableLayoutPanelEquipment.RowCount; i++)
+			{
+				CheckBox checkBox = tableLayoutPanelEquipment.GetControlFromPosition(EQUIPMENT_COLUMN_CHECKBOX, i) as CheckBox;
+				Properties.Settings.Default.EquipmentSelections.Add(checkBox.Checked ? "true" : "false");
+			}
+
+			// Initialize or clear DUT type selections.
 			if (Properties.Settings.Default.DutModels == null)
 			{
 				Properties.Settings.Default.DutModels = new System.Collections.Specialized.StringCollection();
@@ -588,11 +605,28 @@ namespace Sensit.App.Calibration
 				Properties.Settings.Default.DutModels.Clear();
 			}
 
-			// Remember Model selections.
+			// Remember DUT type selections.
 			for (int i = 0; i < NumDuts; i++)
 			{
 				ComboBox comboBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_MODEL, i) as ComboBox;
-				Properties.Settings.Default.DutModels.Add(comboBox.SelectedItem.ToString());
+				Properties.Settings.Default.DutModels.Add(comboBox.SelectedIndex.ToString());
+			}
+
+			// Initialize or clear Equipment type selections.
+			if (Properties.Settings.Default.EquipmentModels == null)
+			{
+				Properties.Settings.Default.EquipmentModels = new System.Collections.Specialized.StringCollection();
+			}
+			else
+			{
+				Properties.Settings.Default.EquipmentModels.Clear();
+			}
+
+			// Remember Equipment type selections.
+			for (int i = 0; i < tableLayoutPanelEquipment.RowCount; i++)
+			{
+				ComboBox comboBox = tableLayoutPanelEquipment.GetControlFromPosition(EQUIPMENT_COLUMN_MODEL, i) as ComboBox;
+				Properties.Settings.Default.EquipmentModels.Add(comboBox.SelectedIndex.ToString());
 			}
 
 			// Initialize or clear DUT description.
@@ -635,7 +669,7 @@ namespace Sensit.App.Calibration
 		private void ComboBoxTest_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			// Remember the selected value.
-			Properties.Settings.Default.Test = comboBoxTest.SelectedItem.ToString();
+			Properties.Settings.Default.Test = comboBoxTest.SelectedIndex.ToString();
 		}
 
 		/// <summary>
@@ -706,13 +740,13 @@ namespace Sensit.App.Calibration
 		private void ComboBoxModel_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			// Remember the selected value.
-			Properties.Settings.Default.Model = comboBoxModel.SelectedItem.ToString();
+			Properties.Settings.Default.Model = comboBoxModel.SelectedIndex.ToString();
 
 			// Update the individual selections for all DUTs.
 			for (int i = 0; i < NumDuts; i++)
 			{
 				ComboBox comboBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_MODEL, i) as ComboBox;
-				int j = comboBox.FindStringExact(comboBoxModel.SelectedItem.ToString());
+				int j = comboBox.FindStringExact(comboBoxModel.SelectedIndex.ToString());
 				comboBox.SelectedIndex = j == -1 ? 0 : j;
 			}
 		}
@@ -824,16 +858,61 @@ namespace Sensit.App.Calibration
 			// Stop the GUI from looking weird while we update it.
 			tableLayoutPanelEquipment.SuspendLayout();
 
+			// Remove all DUT controls.
+			for (int i = 0; i < tableLayoutPanelEquipment.ColumnCount; i++)
+			{
+				for (int j = 0; j < tableLayoutPanelEquipment.RowCount; j++)
+				{
+					Control control = tableLayoutPanelEquipment.GetControlFromPosition(i, j);
+					tableLayoutPanelEquipment.Controls.Remove(control);
+				}
+			}
+
 			// Make a list of the types of control devices (should be one per interface).
 			List<Type> controlTypes = Utilities.FindInterfaces(type);
 
+			// Set how many rows there should be.
+			tableLayoutPanelEquipment.RowCount = controlTypes.Count;
+
+			// Recall the most recently used equipment from settings.
+			bool[] selections = null;
+			if (Properties.Settings.Default.EquipmentSelections != null)
+			{
+				List<string> list = Properties.Settings.Default.EquipmentSelections.Cast<string>().ToList();
+				selections = list.Select(x => x == "true").ToArray();
+			}
+
+			// Recall model selections from settings.
+			List<string> models = null;
+			if (Properties.Settings.Default.EquipmentModels != null)
+			{
+				models = Properties.Settings.Default.EquipmentModels.Cast<string>().ToList();
+			}
+
+			// Recall config from settings.
+			List<string> configs = null;
+			if (Properties.Settings.Default.EquipmentConfigs != null)
+			{
+				configs = Properties.Settings.Default.EquipmentModels.Cast<string>().ToList();
+			}
+
 			// For each type of control device...
+			int k = 0;
 			foreach (Type t in controlTypes)
 			{
-				// Add a row, and make it autosize.
-				// Note that we start with one already.
-				tableLayoutPanelEquipment.RowCount++;
-				tableLayoutPanelDevicesUnderTest.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+				// Add a checkbox for selecting the equipment.
+				CheckBox checkBox = new CheckBox
+				{
+					AutoSize = true,
+					Anchor = AnchorStyles.Left | AnchorStyles.Top,
+					Dock = DockStyle.None,
+				};
+				tableLayoutPanelEquipment.Controls.Add(checkBox, EQUIPMENT_COLUMN_CHECKBOX, k);
+
+				if (selections != null)
+				{
+					checkBox.Checked = selections[k];
+				}
 
 				// Add a label.
 				Label label = new Label
@@ -843,7 +922,7 @@ namespace Sensit.App.Calibration
 					Dock = DockStyle.None,
 					Text = t.GetDescription()
 				};
-				tableLayoutPanelEquipment.Controls.Add(label, EQUIPMENT_COLUMN_LABEL, tableLayoutPanelEquipment.RowCount);
+				tableLayoutPanelEquipment.Controls.Add(label, EQUIPMENT_COLUMN_LABEL, k);
 
 				// Add a comboBox for all the choices for that device type.
 				ComboBox comboBox = new ComboBox
@@ -852,7 +931,7 @@ namespace Sensit.App.Calibration
 					Dock = DockStyle.None,
 					DropDownStyle = ComboBoxStyle.DropDownList
 				};
-				tableLayoutPanelEquipment.Controls.Add(comboBox, EQUIPMENT_COLUMN_MODEL, tableLayoutPanelEquipment.RowCount);
+				tableLayoutPanelEquipment.Controls.Add(comboBox, EQUIPMENT_COLUMN_MODEL, k);
 
 				// Add applicable devices.
 				List<Type> deviceTypes = Utilities.FindClasses(t);
@@ -860,6 +939,29 @@ namespace Sensit.App.Calibration
 				{
 					comboBox.Items.Add(d.GetDescription());
 				}
+
+				// Select the most recently used device.
+				if (models != null)
+				{
+					comboBox.SelectedIndex = Convert.ToInt32(models[k]);
+				}
+
+				// Add a combo box for configuration.
+				ComboBox comboBoxConfig = new ComboBox
+				{
+					Anchor = AnchorStyles.Left | AnchorStyles.Top,
+					Dock = DockStyle.None,
+					DropDownStyle = ComboBoxStyle.DropDownList
+				};
+				tableLayoutPanelEquipment.Controls.Add(comboBoxConfig, EQUIPMENT_COLUMN_CONFIG, k);
+
+				if (configs != null)
+				{
+					comboBox.SelectedIndex = Convert.ToInt32(configs[k]);
+				}
+
+				// Remember what row we're on.
+				k++;
 			}
 
 			// Make the GUI act normally again.
