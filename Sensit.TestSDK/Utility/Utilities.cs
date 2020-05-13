@@ -21,7 +21,7 @@ namespace Sensit.TestSDK.Utilities
 		/// <returns></returns>
 		public static string GetDescription(this Enum value)
 		{
-			Type type = value.GetType();
+			Type type = value?.GetType();
 
 			string description = null;
 			string name = Enum.GetName(type, value);
@@ -58,7 +58,7 @@ namespace Sensit.TestSDK.Utilities
 
 			if (description == null)
 			{
-				return type.Name;
+				return type?.Name;
 			}
 			else
 			{
@@ -77,7 +77,7 @@ namespace Sensit.TestSDK.Utilities
 
 			if (category == null)
 			{
-				return type.Name;
+				return type?.Name;
 			}
 			else
 			{
