@@ -79,8 +79,6 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		public IDatalogger DutInterface { get; set; }
 
-		// TODO:  Add property to interface with power supply.
-
 		/// <summary>
 		/// Data collected during a test.
 		/// </summary>
