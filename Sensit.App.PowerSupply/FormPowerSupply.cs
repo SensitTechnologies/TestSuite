@@ -149,7 +149,7 @@ namespace Sensit.App.PowerSupply
 						toolStripStatusLabel1.Text = "Enabling outputs...";
 
 						// Enable power supply output.
-						_powerSupply.SetControlMode(ControlMode.Control);
+						_powerSupply.SetControlMode(ControlMode.Active);
 
 						// Update the user interface.
 						toolStripStatusLabel1.Text = "Output ON.";
@@ -160,7 +160,7 @@ namespace Sensit.App.PowerSupply
 						toolStripStatusLabel1.Text = "Disabling outputs...";
 
 						// Disable power supply output.
-						_powerSupply.SetControlMode(ControlMode.Ambient);
+						_powerSupply.SetControlMode(ControlMode.Passive);
 
 						// Update user interface.
 						toolStripStatusLabel1.Text = "Output OFF.";
