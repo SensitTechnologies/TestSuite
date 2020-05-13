@@ -6,7 +6,7 @@ namespace Sensit.TestSDK.Interfaces
 {
 	public enum VariableType
 	{
-		[Description("Gas Mix")]
+		[Description("Gas Concentration")]
 		GasConcentration,
 		[Description("Mass Flow")]
 		MassFlow,
