@@ -157,7 +157,7 @@ namespace Sensit.TestSDK.Devices
 				{
 					case Gas.Methane:
 						// Read from the appropriate sensor.
-						Port.WriteLine("5dd");
+						Port.WriteLine("TCd");
 						break;
 					case Gas.Oxygen:
 						// Read from the appropriate sensor.
