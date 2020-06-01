@@ -408,11 +408,9 @@ namespace Sensit.App.Calibration
 			Stopwatch stopwatch = Stopwatch.StartNew();
 			Stopwatch timeoutWatch = Stopwatch.StartNew();
 
-			double previous = setpoint;
-
 			// Take readings until they are within tolerance for the required settling time.
 			double error;
-			double rate;
+			double rate = 0.0;
 			do
 			{
 				// Abort if requested.
@@ -453,12 +451,18 @@ namespace Sensit.App.Calibration
 				// Update the error in the independent variable.
 				UpdateIndependentVariable?.Invoke(reading);
 
-				// Calculate rate of change.
-				rate = (reading - previous) / (interval.TotalSeconds);
-				previous = reading;
+				// If we know the previous reading...
+				if (_previous != null)
+				{
+					// Calculate rate of change.
+					rate = (reading - (double)_previous) / interval.TotalSeconds;
 
-				// Update the rate of change of the independent variable.
-				UpdateRateOfChange?.Invoke(rate);
+					// Update the rate of change of the independent variable.
+					UpdateRateOfChange?.Invoke(rate);
+				}
+
+				// Save the previous reading.
+				_previous = reading;
 
 				// If tolerance has been exceeded, reset the stability time.
 				if (Math.Abs(error) > variable.ErrorTolerance)
