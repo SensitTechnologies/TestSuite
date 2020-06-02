@@ -151,12 +151,6 @@ namespace Sensit.App.Calibration
 				}
 				else
 				{
-					// Constrain the value to fit on the trackbar.
-					if (value > ErrorRange.max)
-						value = ErrorRange.max;
-					else if (value < ErrorRange.min)
-						value = ErrorRange.min;
-
 					// Set the value.
 					chartError.Series[0].Points.Clear();
 					chartError.Series[0].Points.AddXY(0, value);
@@ -179,12 +173,6 @@ namespace Sensit.App.Calibration
 				}
 				else
 				{
-					// Constrain the value to fit on the trackbar.
-					if (value > RateRange.max)
-						value = RateRange.max;
-					else if (value < RateRange.min)
-						value = RateRange.min;
-
 					// Set the value.
 					chartRate.Series[0].Points.Clear();
 					chartRate.Series[0].Points.AddXY(0, value);
