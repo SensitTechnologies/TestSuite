@@ -72,7 +72,7 @@
 			this.tableLayoutPanelEquipment = new System.Windows.Forms.TableLayoutPanel();
 			this.tabPageStatus = new System.Windows.Forms.TabPage();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.groupBoxControlledVariables = new System.Windows.Forms.GroupBox();
 			this.flowLayoutPanelControlledVariables = new System.Windows.Forms.FlowLayoutPanel();
 			this.groupBoxVariable1 = new System.Windows.Forms.GroupBox();
 			this.labelVar1Unit2 = new System.Windows.Forms.Label();
@@ -84,7 +84,7 @@
 			this.labelVar2Unit1 = new System.Windows.Forms.Label();
 			this.textBoxVariable2Value = new System.Windows.Forms.TextBox();
 			this.textBoxVariable2Setpoint = new System.Windows.Forms.TextBox();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.groupBoxIndependentVariable = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanelIndependentVariables = new System.Windows.Forms.TableLayoutPanel();
 			this.labelValue = new System.Windows.Forms.Label();
 			this.labelRate = new System.Windows.Forms.Label();
@@ -142,11 +142,11 @@
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
-			this.groupBox3.SuspendLayout();
+			this.groupBoxControlledVariables.SuspendLayout();
 			this.flowLayoutPanelControlledVariables.SuspendLayout();
 			this.groupBoxVariable1.SuspendLayout();
 			this.groupBoxVariable2.SuspendLayout();
-			this.groupBox2.SuspendLayout();
+			this.groupBoxIndependentVariable.SuspendLayout();
 			this.tableLayoutPanelIndependentVariables.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chartError)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.chartRate)).BeginInit();
@@ -532,25 +532,25 @@
 			// 
 			// splitContainer1.Panel1
 			// 
-			this.splitContainer1.Panel1.Controls.Add(this.groupBox3);
+			this.splitContainer1.Panel1.Controls.Add(this.groupBoxControlledVariables);
 			// 
 			// splitContainer1.Panel2
 			// 
-			this.splitContainer1.Panel2.Controls.Add(this.groupBox2);
+			this.splitContainer1.Panel2.Controls.Add(this.groupBoxIndependentVariable);
 			this.splitContainer1.Size = new System.Drawing.Size(520, 277);
 			this.splitContainer1.SplitterDistance = 265;
 			this.splitContainer1.TabIndex = 0;
 			// 
-			// groupBox3
+			// groupBoxControlledVariables
 			// 
-			this.groupBox3.Controls.Add(this.flowLayoutPanelControlledVariables);
-			this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBox3.Location = new System.Drawing.Point(0, 0);
-			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(265, 277);
-			this.groupBox3.TabIndex = 0;
-			this.groupBox3.TabStop = false;
-			this.groupBox3.Text = "Controlled Variables";
+			this.groupBoxControlledVariables.Controls.Add(this.flowLayoutPanelControlledVariables);
+			this.groupBoxControlledVariables.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBoxControlledVariables.Location = new System.Drawing.Point(0, 0);
+			this.groupBoxControlledVariables.Name = "groupBoxControlledVariables";
+			this.groupBoxControlledVariables.Size = new System.Drawing.Size(265, 277);
+			this.groupBoxControlledVariables.TabIndex = 0;
+			this.groupBoxControlledVariables.TabStop = false;
+			this.groupBoxControlledVariables.Text = "Controlled Variables";
 			// 
 			// flowLayoutPanelControlledVariables
 			// 
@@ -671,16 +671,16 @@
 			this.textBoxVariable2Setpoint.TabIndex = 0;
 			this.textBoxVariable2Setpoint.Text = "0.000";
 			// 
-			// groupBox2
+			// groupBoxIndependentVariable
 			// 
-			this.groupBox2.Controls.Add(this.tableLayoutPanelIndependentVariables);
-			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBox2.Location = new System.Drawing.Point(0, 0);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(251, 277);
-			this.groupBox2.TabIndex = 0;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Independent Variable";
+			this.groupBoxIndependentVariable.Controls.Add(this.tableLayoutPanelIndependentVariables);
+			this.groupBoxIndependentVariable.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBoxIndependentVariable.Location = new System.Drawing.Point(0, 0);
+			this.groupBoxIndependentVariable.Name = "groupBoxIndependentVariable";
+			this.groupBoxIndependentVariable.Size = new System.Drawing.Size(251, 277);
+			this.groupBoxIndependentVariable.TabIndex = 0;
+			this.groupBoxIndependentVariable.TabStop = false;
+			this.groupBoxIndependentVariable.Text = "Independent Variable";
 			// 
 			// tableLayoutPanelIndependentVariables
 			// 
@@ -1110,14 +1110,14 @@
 			this.splitContainer1.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
-			this.groupBox3.ResumeLayout(false);
+			this.groupBoxControlledVariables.ResumeLayout(false);
 			this.flowLayoutPanelControlledVariables.ResumeLayout(false);
 			this.flowLayoutPanelControlledVariables.PerformLayout();
 			this.groupBoxVariable1.ResumeLayout(false);
 			this.groupBoxVariable1.PerformLayout();
 			this.groupBoxVariable2.ResumeLayout(false);
 			this.groupBoxVariable2.PerformLayout();
-			this.groupBox2.ResumeLayout(false);
+			this.groupBoxIndependentVariable.ResumeLayout(false);
 			this.tableLayoutPanelIndependentVariables.ResumeLayout(false);
 			this.tableLayoutPanelIndependentVariables.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chartError)).EndInit();
@@ -1171,8 +1171,8 @@
 		private System.Windows.Forms.ComboBox comboBoxTest;
 		private System.Windows.Forms.TabPage tabPageStatus;
 		private System.Windows.Forms.SplitContainer splitContainer1;
-		private System.Windows.Forms.GroupBox groupBox2;
-		private System.Windows.Forms.GroupBox groupBox3;
+		private System.Windows.Forms.GroupBox groupBoxIndependentVariable;
+		private System.Windows.Forms.GroupBox groupBoxControlledVariables;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelIndependentVariables;
 		private System.Windows.Forms.Label labelValue;
 		private System.Windows.Forms.Label labelRate;

@@ -138,6 +138,26 @@ namespace Sensit.App.Calibration
 		}
 
 		/// <summary>
+		/// Name of the test's independent variable.
+		/// </summary>
+		public string VariableType
+		{
+			set
+			{
+				// If called from a different thread than the form, invoke the method on the form's thread.
+				if (groupBoxIndependentVariable.InvokeRequired)
+				{
+					groupBoxIndependentVariable.Invoke(new MethodInvoker(delegate { VariableType = value; }));
+				}
+				else
+				{
+					groupBoxIndependentVariable.Text = value;
+
+				}
+			}
+		}
+
+		/// <summary>
 		/// Difference between desired and actual value of the test's independent variable.
 		/// </summary>
 		public double VariableValue
@@ -194,7 +214,7 @@ namespace Sensit.App.Calibration
 			// Fetch the max value from the chart.
 			// The max value is the lower boundry of the yellow strip line.
 			// The min value is the lower boundry of the green strip line.
-			private get => (chartError.ChartAreas[0].AxisY.StripLines[2].IntervalOffset,
+			get => (chartError.ChartAreas[0].AxisY.StripLines[2].IntervalOffset,
 							chartError.ChartAreas[0].AxisY.StripLines[3].IntervalOffset);
 			set
 			{
@@ -227,7 +247,7 @@ namespace Sensit.App.Calibration
 			// Fetch the max value from the chart.
 			// The max value is the lower boundry of the yellow strip line.
 			// The min value is the lower boundry of the green strip line.
-			private get => (chartRate.ChartAreas[0].AxisY.StripLines[2].IntervalOffset,
+			get => (chartRate.ChartAreas[0].AxisY.StripLines[2].IntervalOffset,
 							chartRate.ChartAreas[0].AxisY.StripLines[3].IntervalOffset);
 			set
 			{
@@ -503,6 +523,7 @@ namespace Sensit.App.Calibration
 					UpdateProgress = TestUpdate,
 					// https://syncor.blogspot.com/2010/11/passing-getter-and-setter-of-c-property.html
 					UpdateIndependentVariable = value => VariableValue = value,
+					UpdateIndependentVariableName = value => VariableType = value,
 					UpdateRateOfChange = value => VariableRate = value,
 					UpdateIndependentVariableRange = value => ErrorRange = value,
 					UpdateRateRange = value => RateRange = value,

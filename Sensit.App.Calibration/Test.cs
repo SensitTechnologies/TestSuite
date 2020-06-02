@@ -61,6 +61,8 @@ namespace Sensit.App.Calibration
 		// Report test progress.
 		public Action<int, string> UpdateProgress { get; set; }
 
+		public Action<string> UpdateIndependentVariableName { get; set; }
+
 		// Report the value of the independent variable.
 		public Action<double> UpdateIndependentVariable { get; set; }
 
@@ -318,6 +320,11 @@ namespace Sensit.App.Calibration
 				// Read the reference reading.
 				double reading = _equipment.References[v.VariableType].Readings[v.VariableType];
 
+				// Update the form.
+				UpdateIndependentVariableRange((setpoint - v.ErrorTolerance, setpoint + v.ErrorTolerance));
+				UpdateRateRange((v.RateTolerance * -1.0, v.RateTolerance));
+				UpdateIndependentVariableName(v.VariableType.ToString());
+
 				// TODO:  Update the error and rate of change for the independent variable only.
 				if (v.VariableType == VariableType.GasConcentration)
 				{
@@ -398,6 +405,11 @@ namespace Sensit.App.Calibration
 
 		private void ProcessSetpoint(TestControlledVariable variable, double setpoint, TimeSpan interval)
 		{
+			// Update the form.
+			UpdateIndependentVariableRange((setpoint - variable.ErrorTolerance, setpoint + variable.ErrorTolerance));
+			UpdateRateRange((variable.RateTolerance * -1.0, variable.RateTolerance));
+			UpdateIndependentVariableName(variable.VariableType.ToString());
+
 			// Update GUI.
 			_testThread.ReportProgress(PercentProgress, "Setting setpoint...");
 
@@ -464,18 +476,17 @@ namespace Sensit.App.Calibration
 				// Save the previous reading.
 				_previous = reading;
 
+				// Update the GUI.
+				string message = "Waiting for stability...";
+
 				// If tolerance has been exceeded, reset the stability time.
 				if (Math.Abs(error) > variable.ErrorTolerance)
 				{
 					stopwatch.Restart();
 				}
-
-				// Update GUI (include dwell time if applicable).
-				string message = "Waiting for stability...";
-				if (variable.DwellTime > new TimeSpan(0, 0, 0) &&
-					(Math.Abs(error) < variable.ErrorTolerance) &&
-					(Math.Abs(rate) < variable.RateTolerance))
+				else if (variable.DwellTime > new TimeSpan(0, 0, 0))
 				{
+					// Update GUI (include dwell time if applicable).
 					message += "dwell time left:  " + (variable.DwellTime - stopwatch.Elapsed).ToString(@"hh\:mm\:ss");
 
 					// Reset the timeout stopwatch.
@@ -486,8 +497,7 @@ namespace Sensit.App.Calibration
 				// Wait to get desired reading frequency.
 				Thread.Sleep(interval);
 			} while ((stopwatch.Elapsed <= variable.DwellTime) ||
-					(Math.Abs(error) > variable.ErrorTolerance) ||
-					(Math.Abs(rate) > variable.RateTolerance));
+					(Math.Abs(error) > variable.ErrorTolerance));
 		}
 
 		private void ProcessSamples(double setpoint)
@@ -554,10 +564,6 @@ namespace Sensit.App.Calibration
 						{
 							setpoint *= Convert.ToDouble(GasMixRange / 100);
 						}
-
-						// Update the form.
-						UpdateIndependentVariableRange((setpoint - v.ErrorTolerance, setpoint + v.ErrorTolerance));
-						UpdateRateRange((v.RateTolerance * -1.0, v.RateTolerance));
 
 						// Set the setpoint.
 						ProcessSetpoint(v, setpoint, v.Interval);
