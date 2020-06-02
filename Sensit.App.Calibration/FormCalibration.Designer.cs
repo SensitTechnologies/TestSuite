@@ -28,22 +28,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine1 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine2 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine3 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine4 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine5 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 5D);
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine6 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine7 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine8 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine9 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.StripLine stripLine10 = new System.Windows.Forms.DataVisualization.Charting.StripLine();
-			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint2 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 5D);
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPageTest = new System.Windows.Forms.TabPage();
 			this.tableLayoutPanelTest = new System.Windows.Forms.TableLayoutPanel();
@@ -71,27 +55,6 @@
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanelEquipment = new System.Windows.Forms.TableLayoutPanel();
 			this.tabPageStatus = new System.Windows.Forms.TabPage();
-			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-			this.groupBoxControlledVariables = new System.Windows.Forms.GroupBox();
-			this.flowLayoutPanelControlledVariables = new System.Windows.Forms.FlowLayoutPanel();
-			this.groupBoxVariable1 = new System.Windows.Forms.GroupBox();
-			this.labelVar1Unit2 = new System.Windows.Forms.Label();
-			this.labelVar1Unit1 = new System.Windows.Forms.Label();
-			this.textBoxVariable1Value = new System.Windows.Forms.TextBox();
-			this.textBoxVariable1Setpoint = new System.Windows.Forms.TextBox();
-			this.groupBoxVariable2 = new System.Windows.Forms.GroupBox();
-			this.labelVar2Unit2 = new System.Windows.Forms.Label();
-			this.labelVar2Unit1 = new System.Windows.Forms.Label();
-			this.textBoxVariable2Value = new System.Windows.Forms.TextBox();
-			this.textBoxVariable2Setpoint = new System.Windows.Forms.TextBox();
-			this.groupBoxIndependentVariable = new System.Windows.Forms.GroupBox();
-			this.tableLayoutPanelIndependentVariables = new System.Windows.Forms.TableLayoutPanel();
-			this.labelValue = new System.Windows.Forms.Label();
-			this.labelRate = new System.Windows.Forms.Label();
-			this.chartError = new System.Windows.Forms.DataVisualization.Charting.Chart();
-			this.labelValueNum = new System.Windows.Forms.Label();
-			this.labelRateNum = new System.Windows.Forms.Label();
-			this.chartRate = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -123,6 +86,18 @@
 			this.supportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpProvider1 = new System.Windows.Forms.HelpProvider();
 			this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+			this.groupBoxVariables = new System.Windows.Forms.GroupBox();
+			this.flowLayoutPanelControlledVariables = new System.Windows.Forms.FlowLayoutPanel();
+			this.groupBoxMassFlow = new System.Windows.Forms.GroupBox();
+			this.labelVar1Unit2 = new System.Windows.Forms.Label();
+			this.labelVar1Unit1 = new System.Windows.Forms.Label();
+			this.textBoxMassFlowValue = new System.Windows.Forms.TextBox();
+			this.textBoxMassFlowSetpoint = new System.Windows.Forms.TextBox();
+			this.groupBoxGasMix = new System.Windows.Forms.GroupBox();
+			this.labelVar2Unit2 = new System.Windows.Forms.Label();
+			this.labelVar2Unit1 = new System.Windows.Forms.Label();
+			this.textBoxGasMixValue = new System.Windows.Forms.TextBox();
+			this.textBoxGasMixSetpoint = new System.Windows.Forms.TextBox();
 			this.tabControl1.SuspendLayout();
 			this.tabPageTest.SuspendLayout();
 			this.tableLayoutPanelTest.SuspendLayout();
@@ -138,20 +113,12 @@
 			this.tabPageEquipment.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.tabPageStatus.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-			this.splitContainer1.Panel1.SuspendLayout();
-			this.splitContainer1.Panel2.SuspendLayout();
-			this.splitContainer1.SuspendLayout();
-			this.groupBoxControlledVariables.SuspendLayout();
-			this.flowLayoutPanelControlledVariables.SuspendLayout();
-			this.groupBoxVariable1.SuspendLayout();
-			this.groupBoxVariable2.SuspendLayout();
-			this.groupBoxIndependentVariable.SuspendLayout();
-			this.tableLayoutPanelIndependentVariables.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.chartError)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.chartRate)).BeginInit();
 			this.statusStrip1.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
+			this.groupBoxVariables.SuspendLayout();
+			this.flowLayoutPanelControlledVariables.SuspendLayout();
+			this.groupBoxMassFlow.SuspendLayout();
+			this.groupBoxGasMix.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabControl1
@@ -515,7 +482,7 @@
 			// 
 			// tabPageStatus
 			// 
-			this.tabPageStatus.Controls.Add(this.splitContainer1);
+			this.tabPageStatus.Controls.Add(this.groupBoxVariables);
 			this.tabPageStatus.Location = new System.Drawing.Point(4, 22);
 			this.tabPageStatus.Name = "tabPageStatus";
 			this.tabPageStatus.Padding = new System.Windows.Forms.Padding(3);
@@ -523,319 +490,6 @@
 			this.tabPageStatus.TabIndex = 4;
 			this.tabPageStatus.Text = "Status";
 			this.tabPageStatus.UseVisualStyleBackColor = true;
-			// 
-			// splitContainer1
-			// 
-			this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer1.Location = new System.Drawing.Point(3, 3);
-			this.splitContainer1.Name = "splitContainer1";
-			// 
-			// splitContainer1.Panel1
-			// 
-			this.splitContainer1.Panel1.Controls.Add(this.groupBoxControlledVariables);
-			// 
-			// splitContainer1.Panel2
-			// 
-			this.splitContainer1.Panel2.Controls.Add(this.groupBoxIndependentVariable);
-			this.splitContainer1.Size = new System.Drawing.Size(520, 277);
-			this.splitContainer1.SplitterDistance = 265;
-			this.splitContainer1.TabIndex = 0;
-			// 
-			// groupBoxControlledVariables
-			// 
-			this.groupBoxControlledVariables.Controls.Add(this.flowLayoutPanelControlledVariables);
-			this.groupBoxControlledVariables.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBoxControlledVariables.Location = new System.Drawing.Point(0, 0);
-			this.groupBoxControlledVariables.Name = "groupBoxControlledVariables";
-			this.groupBoxControlledVariables.Size = new System.Drawing.Size(265, 277);
-			this.groupBoxControlledVariables.TabIndex = 0;
-			this.groupBoxControlledVariables.TabStop = false;
-			this.groupBoxControlledVariables.Text = "Controlled Variables";
-			// 
-			// flowLayoutPanelControlledVariables
-			// 
-			this.flowLayoutPanelControlledVariables.AutoScroll = true;
-			this.flowLayoutPanelControlledVariables.Controls.Add(this.groupBoxVariable1);
-			this.flowLayoutPanelControlledVariables.Controls.Add(this.groupBoxVariable2);
-			this.flowLayoutPanelControlledVariables.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.flowLayoutPanelControlledVariables.Location = new System.Drawing.Point(3, 16);
-			this.flowLayoutPanelControlledVariables.Name = "flowLayoutPanelControlledVariables";
-			this.flowLayoutPanelControlledVariables.Size = new System.Drawing.Size(259, 258);
-			this.flowLayoutPanelControlledVariables.TabIndex = 0;
-			// 
-			// groupBoxVariable1
-			// 
-			this.groupBoxVariable1.AutoSize = true;
-			this.groupBoxVariable1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.groupBoxVariable1.Controls.Add(this.labelVar1Unit2);
-			this.groupBoxVariable1.Controls.Add(this.labelVar1Unit1);
-			this.groupBoxVariable1.Controls.Add(this.textBoxVariable1Value);
-			this.groupBoxVariable1.Controls.Add(this.textBoxVariable1Setpoint);
-			this.groupBoxVariable1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.groupBoxVariable1.Location = new System.Drawing.Point(3, 3);
-			this.groupBoxVariable1.Name = "groupBoxVariable1";
-			this.groupBoxVariable1.Size = new System.Drawing.Size(123, 102);
-			this.groupBoxVariable1.TabIndex = 0;
-			this.groupBoxVariable1.TabStop = false;
-			this.groupBoxVariable1.Text = "Variable1";
-			// 
-			// labelVar1Unit2
-			// 
-			this.labelVar1Unit2.AutoSize = true;
-			this.labelVar1Unit2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelVar1Unit2.Location = new System.Drawing.Point(82, 54);
-			this.labelVar1Unit2.Name = "labelVar1Unit2";
-			this.labelVar1Unit2.Size = new System.Drawing.Size(35, 20);
-			this.labelVar1Unit2.TabIndex = 5;
-			this.labelVar1Unit2.Text = "unit";
-			// 
-			// labelVar1Unit1
-			// 
-			this.labelVar1Unit1.AutoSize = true;
-			this.labelVar1Unit1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelVar1Unit1.Location = new System.Drawing.Point(82, 22);
-			this.labelVar1Unit1.Name = "labelVar1Unit1";
-			this.labelVar1Unit1.Size = new System.Drawing.Size(35, 20);
-			this.labelVar1Unit1.TabIndex = 4;
-			this.labelVar1Unit1.Text = "unit";
-			// 
-			// textBoxVariable1Value
-			// 
-			this.textBoxVariable1Value.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.textBoxVariable1Value.Location = new System.Drawing.Point(6, 51);
-			this.textBoxVariable1Value.Name = "textBoxVariable1Value";
-			this.textBoxVariable1Value.Size = new System.Drawing.Size(70, 26);
-			this.textBoxVariable1Value.TabIndex = 1;
-			this.textBoxVariable1Value.Text = "0.000";
-			// 
-			// textBoxVariable1Setpoint
-			// 
-			this.textBoxVariable1Setpoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.textBoxVariable1Setpoint.Location = new System.Drawing.Point(6, 19);
-			this.textBoxVariable1Setpoint.Name = "textBoxVariable1Setpoint";
-			this.textBoxVariable1Setpoint.Size = new System.Drawing.Size(70, 26);
-			this.textBoxVariable1Setpoint.TabIndex = 0;
-			this.textBoxVariable1Setpoint.Text = "0.000";
-			// 
-			// groupBoxVariable2
-			// 
-			this.groupBoxVariable2.AutoSize = true;
-			this.groupBoxVariable2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.groupBoxVariable2.Controls.Add(this.labelVar2Unit2);
-			this.groupBoxVariable2.Controls.Add(this.labelVar2Unit1);
-			this.groupBoxVariable2.Controls.Add(this.textBoxVariable2Value);
-			this.groupBoxVariable2.Controls.Add(this.textBoxVariable2Setpoint);
-			this.groupBoxVariable2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.groupBoxVariable2.Location = new System.Drawing.Point(132, 3);
-			this.groupBoxVariable2.Name = "groupBoxVariable2";
-			this.groupBoxVariable2.Size = new System.Drawing.Size(123, 102);
-			this.groupBoxVariable2.TabIndex = 1;
-			this.groupBoxVariable2.TabStop = false;
-			this.groupBoxVariable2.Text = "Variable2";
-			// 
-			// labelVar2Unit2
-			// 
-			this.labelVar2Unit2.AutoSize = true;
-			this.labelVar2Unit2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelVar2Unit2.Location = new System.Drawing.Point(82, 54);
-			this.labelVar2Unit2.Name = "labelVar2Unit2";
-			this.labelVar2Unit2.Size = new System.Drawing.Size(35, 20);
-			this.labelVar2Unit2.TabIndex = 5;
-			this.labelVar2Unit2.Text = "unit";
-			// 
-			// labelVar2Unit1
-			// 
-			this.labelVar2Unit1.AutoSize = true;
-			this.labelVar2Unit1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelVar2Unit1.Location = new System.Drawing.Point(82, 22);
-			this.labelVar2Unit1.Name = "labelVar2Unit1";
-			this.labelVar2Unit1.Size = new System.Drawing.Size(35, 20);
-			this.labelVar2Unit1.TabIndex = 4;
-			this.labelVar2Unit1.Text = "unit";
-			// 
-			// textBoxVariable2Value
-			// 
-			this.textBoxVariable2Value.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.textBoxVariable2Value.Location = new System.Drawing.Point(6, 51);
-			this.textBoxVariable2Value.Name = "textBoxVariable2Value";
-			this.textBoxVariable2Value.Size = new System.Drawing.Size(70, 26);
-			this.textBoxVariable2Value.TabIndex = 1;
-			this.textBoxVariable2Value.Text = "0.000";
-			// 
-			// textBoxVariable2Setpoint
-			// 
-			this.textBoxVariable2Setpoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.textBoxVariable2Setpoint.Location = new System.Drawing.Point(6, 19);
-			this.textBoxVariable2Setpoint.Name = "textBoxVariable2Setpoint";
-			this.textBoxVariable2Setpoint.Size = new System.Drawing.Size(70, 26);
-			this.textBoxVariable2Setpoint.TabIndex = 0;
-			this.textBoxVariable2Setpoint.Text = "0.000";
-			// 
-			// groupBoxIndependentVariable
-			// 
-			this.groupBoxIndependentVariable.Controls.Add(this.tableLayoutPanelIndependentVariables);
-			this.groupBoxIndependentVariable.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBoxIndependentVariable.Location = new System.Drawing.Point(0, 0);
-			this.groupBoxIndependentVariable.Name = "groupBoxIndependentVariable";
-			this.groupBoxIndependentVariable.Size = new System.Drawing.Size(251, 277);
-			this.groupBoxIndependentVariable.TabIndex = 0;
-			this.groupBoxIndependentVariable.TabStop = false;
-			this.groupBoxIndependentVariable.Text = "Independent Variable";
-			// 
-			// tableLayoutPanelIndependentVariables
-			// 
-			this.tableLayoutPanelIndependentVariables.ColumnCount = 2;
-			this.tableLayoutPanelIndependentVariables.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanelIndependentVariables.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanelIndependentVariables.Controls.Add(this.labelValue, 0, 0);
-			this.tableLayoutPanelIndependentVariables.Controls.Add(this.labelRate, 1, 0);
-			this.tableLayoutPanelIndependentVariables.Controls.Add(this.chartError, 0, 2);
-			this.tableLayoutPanelIndependentVariables.Controls.Add(this.labelValueNum, 0, 1);
-			this.tableLayoutPanelIndependentVariables.Controls.Add(this.labelRateNum, 1, 1);
-			this.tableLayoutPanelIndependentVariables.Controls.Add(this.chartRate, 1, 2);
-			this.tableLayoutPanelIndependentVariables.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanelIndependentVariables.Location = new System.Drawing.Point(3, 16);
-			this.tableLayoutPanelIndependentVariables.Name = "tableLayoutPanelIndependentVariables";
-			this.tableLayoutPanelIndependentVariables.RowCount = 3;
-			this.tableLayoutPanelIndependentVariables.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanelIndependentVariables.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanelIndependentVariables.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanelIndependentVariables.Size = new System.Drawing.Size(245, 258);
-			this.tableLayoutPanelIndependentVariables.TabIndex = 1;
-			// 
-			// labelValue
-			// 
-			this.labelValue.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.labelValue.AutoSize = true;
-			this.labelValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelValue.Location = new System.Drawing.Point(36, 0);
-			this.labelValue.Name = "labelValue";
-			this.labelValue.Size = new System.Drawing.Size(50, 20);
-			this.labelValue.TabIndex = 18;
-			this.labelValue.Text = "Value";
-			// 
-			// labelRate
-			// 
-			this.labelRate.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.labelRate.AutoSize = true;
-			this.labelRate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelRate.Location = new System.Drawing.Point(161, 0);
-			this.labelRate.Name = "labelRate";
-			this.labelRate.Size = new System.Drawing.Size(44, 20);
-			this.labelRate.TabIndex = 19;
-			this.labelRate.Text = "Rate";
-			// 
-			// chartError
-			// 
-			this.chartError.Anchor = System.Windows.Forms.AnchorStyles.None;
-			chartArea1.AxisX.LabelAutoFitMinFontSize = 10;
-			chartArea1.AxisX.LabelStyle.Enabled = false;
-			chartArea1.AxisX.MajorGrid.Enabled = false;
-			chartArea1.AxisX.MajorTickMark.Enabled = false;
-			chartArea1.AxisY.IsLabelAutoFit = false;
-			chartArea1.AxisY.LabelAutoFitStyle = ((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.StaggeredLabels | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.WordWrap)));
-			chartArea1.AxisY.LabelStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			chartArea1.AxisY.Maximum = 300D;
-			chartArea1.AxisY.Minimum = -300D;
-			stripLine1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-			stripLine1.IntervalOffset = 180D;
-			stripLine1.StripWidth = 120D;
-			stripLine2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-			stripLine2.IntervalOffset = 60D;
-			stripLine2.StripWidth = 120D;
-			stripLine3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-			stripLine3.IntervalOffset = -60D;
-			stripLine3.StripWidth = 120D;
-			stripLine4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-			stripLine4.IntervalOffset = -180D;
-			stripLine4.StripWidth = 120D;
-			stripLine5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-			stripLine5.IntervalOffset = -300D;
-			stripLine5.StripWidth = 120D;
-			chartArea1.AxisY.StripLines.Add(stripLine1);
-			chartArea1.AxisY.StripLines.Add(stripLine2);
-			chartArea1.AxisY.StripLines.Add(stripLine3);
-			chartArea1.AxisY.StripLines.Add(stripLine4);
-			chartArea1.AxisY.StripLines.Add(stripLine5);
-			chartArea1.Name = "ChartArea1";
-			this.chartError.ChartAreas.Add(chartArea1);
-			this.chartError.Location = new System.Drawing.Point(21, 49);
-			this.chartError.Name = "chartError";
-			series1.ChartArea = "ChartArea1";
-			series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-			series1.MarkerSize = 10;
-			series1.Name = "Series1";
-			series1.Points.Add(dataPoint1);
-			this.chartError.Series.Add(series1);
-			this.chartError.Size = new System.Drawing.Size(80, 200);
-			this.chartError.TabIndex = 2;
-			this.chartError.Text = "Error";
-			// 
-			// labelValueNum
-			// 
-			this.labelValueNum.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.labelValueNum.AutoSize = true;
-			this.labelValueNum.Location = new System.Drawing.Point(47, 23);
-			this.labelValueNum.Name = "labelValueNum";
-			this.labelValueNum.Size = new System.Drawing.Size(28, 13);
-			this.labelValueNum.TabIndex = 21;
-			this.labelValueNum.Text = "0.00";
-			// 
-			// labelRateNum
-			// 
-			this.labelRateNum.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.labelRateNum.AutoSize = true;
-			this.labelRateNum.Location = new System.Drawing.Point(169, 23);
-			this.labelRateNum.Name = "labelRateNum";
-			this.labelRateNum.Size = new System.Drawing.Size(28, 13);
-			this.labelRateNum.TabIndex = 22;
-			this.labelRateNum.Text = "0.00";
-			// 
-			// chartRate
-			// 
-			this.chartRate.Anchor = System.Windows.Forms.AnchorStyles.None;
-			chartArea2.AxisX.IsLabelAutoFit = false;
-			chartArea2.AxisX.LabelStyle.Enabled = false;
-			chartArea2.AxisX.MajorGrid.Enabled = false;
-			chartArea2.AxisX.MajorTickMark.Enabled = false;
-			chartArea2.AxisY.IsLabelAutoFit = false;
-			chartArea2.AxisY.LabelAutoFitMaxFontSize = 12;
-			chartArea2.AxisY.LabelAutoFitMinFontSize = 12;
-			chartArea2.AxisY.LabelStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			chartArea2.AxisY.Maximum = 10D;
-			chartArea2.AxisY.Minimum = 0D;
-			stripLine6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-			stripLine6.StripWidth = 3D;
-			stripLine7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-			stripLine7.IntervalOffset = 2D;
-			stripLine7.StripWidth = 2D;
-			stripLine8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-			stripLine8.IntervalOffset = 4D;
-			stripLine8.StripWidth = 2D;
-			stripLine9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-			stripLine9.IntervalOffset = 6D;
-			stripLine9.StripWidth = 2D;
-			stripLine10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-			stripLine10.IntervalOffset = 8D;
-			stripLine10.StripWidth = 2D;
-			chartArea2.AxisY.StripLines.Add(stripLine6);
-			chartArea2.AxisY.StripLines.Add(stripLine7);
-			chartArea2.AxisY.StripLines.Add(stripLine8);
-			chartArea2.AxisY.StripLines.Add(stripLine9);
-			chartArea2.AxisY.StripLines.Add(stripLine10);
-			chartArea2.Name = "ChartArea1";
-			this.chartRate.ChartAreas.Add(chartArea2);
-			this.chartRate.Location = new System.Drawing.Point(143, 49);
-			this.chartRate.Name = "chartRate";
-			series2.ChartArea = "ChartArea1";
-			series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-			series2.MarkerSize = 10;
-			series2.Name = "Series1";
-			series2.Points.Add(dataPoint2);
-			this.chartRate.Series.Add(series2);
-			this.chartRate.Size = new System.Drawing.Size(80, 200);
-			this.chartRate.TabIndex = 20;
-			this.chartRate.Text = "Error";
 			// 
 			// statusStrip1
 			// 
@@ -1069,6 +723,140 @@
 			this.supportToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
 			this.supportToolStripMenuItem.Text = "How Do I";
 			// 
+			// groupBoxVariables
+			// 
+			this.groupBoxVariables.Controls.Add(this.flowLayoutPanelControlledVariables);
+			this.groupBoxVariables.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBoxVariables.Location = new System.Drawing.Point(3, 3);
+			this.groupBoxVariables.Name = "groupBoxVariables";
+			this.groupBoxVariables.Size = new System.Drawing.Size(520, 277);
+			this.groupBoxVariables.TabIndex = 1;
+			this.groupBoxVariables.TabStop = false;
+			this.groupBoxVariables.Text = "Measured/Controlled Variables";
+			// 
+			// flowLayoutPanelControlledVariables
+			// 
+			this.flowLayoutPanelControlledVariables.AutoScroll = true;
+			this.flowLayoutPanelControlledVariables.Controls.Add(this.groupBoxMassFlow);
+			this.flowLayoutPanelControlledVariables.Controls.Add(this.groupBoxGasMix);
+			this.flowLayoutPanelControlledVariables.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.flowLayoutPanelControlledVariables.Location = new System.Drawing.Point(3, 16);
+			this.flowLayoutPanelControlledVariables.Name = "flowLayoutPanelControlledVariables";
+			this.flowLayoutPanelControlledVariables.Size = new System.Drawing.Size(514, 258);
+			this.flowLayoutPanelControlledVariables.TabIndex = 0;
+			// 
+			// groupBoxMassFlow
+			// 
+			this.groupBoxMassFlow.AutoSize = true;
+			this.groupBoxMassFlow.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.groupBoxMassFlow.Controls.Add(this.labelVar1Unit2);
+			this.groupBoxMassFlow.Controls.Add(this.labelVar1Unit1);
+			this.groupBoxMassFlow.Controls.Add(this.textBoxMassFlowValue);
+			this.groupBoxMassFlow.Controls.Add(this.textBoxMassFlowSetpoint);
+			this.groupBoxMassFlow.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.groupBoxMassFlow.Location = new System.Drawing.Point(3, 3);
+			this.groupBoxMassFlow.Name = "groupBoxMassFlow";
+			this.groupBoxMassFlow.Size = new System.Drawing.Size(123, 102);
+			this.groupBoxMassFlow.TabIndex = 0;
+			this.groupBoxMassFlow.TabStop = false;
+			this.groupBoxMassFlow.Text = "Mass Flow";
+			// 
+			// labelVar1Unit2
+			// 
+			this.labelVar1Unit2.AutoSize = true;
+			this.labelVar1Unit2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelVar1Unit2.Location = new System.Drawing.Point(82, 54);
+			this.labelVar1Unit2.Name = "labelVar1Unit2";
+			this.labelVar1Unit2.Size = new System.Drawing.Size(35, 20);
+			this.labelVar1Unit2.TabIndex = 5;
+			this.labelVar1Unit2.Text = "unit";
+			// 
+			// labelVar1Unit1
+			// 
+			this.labelVar1Unit1.AutoSize = true;
+			this.labelVar1Unit1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelVar1Unit1.Location = new System.Drawing.Point(82, 22);
+			this.labelVar1Unit1.Name = "labelVar1Unit1";
+			this.labelVar1Unit1.Size = new System.Drawing.Size(35, 20);
+			this.labelVar1Unit1.TabIndex = 4;
+			this.labelVar1Unit1.Text = "unit";
+			// 
+			// textBoxMassFlowValue
+			// 
+			this.textBoxMassFlowValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxMassFlowValue.Location = new System.Drawing.Point(6, 51);
+			this.textBoxMassFlowValue.Name = "textBoxMassFlowValue";
+			this.textBoxMassFlowValue.ReadOnly = true;
+			this.textBoxMassFlowValue.Size = new System.Drawing.Size(70, 26);
+			this.textBoxMassFlowValue.TabIndex = 1;
+			this.textBoxMassFlowValue.Text = "0.000";
+			// 
+			// textBoxMassFlowSetpoint
+			// 
+			this.textBoxMassFlowSetpoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxMassFlowSetpoint.Location = new System.Drawing.Point(6, 19);
+			this.textBoxMassFlowSetpoint.Name = "textBoxMassFlowSetpoint";
+			this.textBoxMassFlowSetpoint.ReadOnly = true;
+			this.textBoxMassFlowSetpoint.Size = new System.Drawing.Size(70, 26);
+			this.textBoxMassFlowSetpoint.TabIndex = 0;
+			this.textBoxMassFlowSetpoint.Text = "0.000";
+			// 
+			// groupBoxGasMix
+			// 
+			this.groupBoxGasMix.AutoSize = true;
+			this.groupBoxGasMix.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.groupBoxGasMix.Controls.Add(this.labelVar2Unit2);
+			this.groupBoxGasMix.Controls.Add(this.labelVar2Unit1);
+			this.groupBoxGasMix.Controls.Add(this.textBoxGasMixValue);
+			this.groupBoxGasMix.Controls.Add(this.textBoxGasMixSetpoint);
+			this.groupBoxGasMix.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.groupBoxGasMix.Location = new System.Drawing.Point(132, 3);
+			this.groupBoxGasMix.Name = "groupBoxGasMix";
+			this.groupBoxGasMix.Size = new System.Drawing.Size(123, 102);
+			this.groupBoxGasMix.TabIndex = 1;
+			this.groupBoxGasMix.TabStop = false;
+			this.groupBoxGasMix.Text = "Gas Mix";
+			// 
+			// labelVar2Unit2
+			// 
+			this.labelVar2Unit2.AutoSize = true;
+			this.labelVar2Unit2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelVar2Unit2.Location = new System.Drawing.Point(82, 54);
+			this.labelVar2Unit2.Name = "labelVar2Unit2";
+			this.labelVar2Unit2.Size = new System.Drawing.Size(35, 20);
+			this.labelVar2Unit2.TabIndex = 5;
+			this.labelVar2Unit2.Text = "unit";
+			// 
+			// labelVar2Unit1
+			// 
+			this.labelVar2Unit1.AutoSize = true;
+			this.labelVar2Unit1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelVar2Unit1.Location = new System.Drawing.Point(82, 22);
+			this.labelVar2Unit1.Name = "labelVar2Unit1";
+			this.labelVar2Unit1.Size = new System.Drawing.Size(35, 20);
+			this.labelVar2Unit1.TabIndex = 4;
+			this.labelVar2Unit1.Text = "unit";
+			// 
+			// textBoxGasMixValue
+			// 
+			this.textBoxGasMixValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxGasMixValue.Location = new System.Drawing.Point(6, 51);
+			this.textBoxGasMixValue.Name = "textBoxGasMixValue";
+			this.textBoxGasMixValue.ReadOnly = true;
+			this.textBoxGasMixValue.Size = new System.Drawing.Size(70, 26);
+			this.textBoxGasMixValue.TabIndex = 1;
+			this.textBoxGasMixValue.Text = "0.000";
+			// 
+			// textBoxGasMixSetpoint
+			// 
+			this.textBoxGasMixSetpoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxGasMixSetpoint.Location = new System.Drawing.Point(6, 19);
+			this.textBoxGasMixSetpoint.Name = "textBoxGasMixSetpoint";
+			this.textBoxGasMixSetpoint.ReadOnly = true;
+			this.textBoxGasMixSetpoint.Size = new System.Drawing.Size(70, 26);
+			this.textBoxGasMixSetpoint.TabIndex = 0;
+			this.textBoxGasMixSetpoint.Text = "0.000";
+			// 
 			// FormCalibration
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1106,26 +894,17 @@
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.tabPageStatus.ResumeLayout(false);
-			this.splitContainer1.Panel1.ResumeLayout(false);
-			this.splitContainer1.Panel2.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-			this.splitContainer1.ResumeLayout(false);
-			this.groupBoxControlledVariables.ResumeLayout(false);
-			this.flowLayoutPanelControlledVariables.ResumeLayout(false);
-			this.flowLayoutPanelControlledVariables.PerformLayout();
-			this.groupBoxVariable1.ResumeLayout(false);
-			this.groupBoxVariable1.PerformLayout();
-			this.groupBoxVariable2.ResumeLayout(false);
-			this.groupBoxVariable2.PerformLayout();
-			this.groupBoxIndependentVariable.ResumeLayout(false);
-			this.tableLayoutPanelIndependentVariables.ResumeLayout(false);
-			this.tableLayoutPanelIndependentVariables.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.chartError)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.chartRate)).EndInit();
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
+			this.groupBoxVariables.ResumeLayout(false);
+			this.flowLayoutPanelControlledVariables.ResumeLayout(false);
+			this.flowLayoutPanelControlledVariables.PerformLayout();
+			this.groupBoxMassFlow.ResumeLayout(false);
+			this.groupBoxMassFlow.PerformLayout();
+			this.groupBoxGasMix.ResumeLayout(false);
+			this.groupBoxGasMix.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -1170,33 +949,12 @@
 		private System.Windows.Forms.Label labelTest;
 		private System.Windows.Forms.ComboBox comboBoxTest;
 		private System.Windows.Forms.TabPage tabPageStatus;
-		private System.Windows.Forms.SplitContainer splitContainer1;
-		private System.Windows.Forms.GroupBox groupBoxIndependentVariable;
-		private System.Windows.Forms.GroupBox groupBoxControlledVariables;
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelIndependentVariables;
-		private System.Windows.Forms.Label labelValue;
-		private System.Windows.Forms.Label labelRate;
-		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelControlledVariables;
-		private System.Windows.Forms.GroupBox groupBoxVariable1;
-		private System.Windows.Forms.TextBox textBoxVariable1Value;
-		private System.Windows.Forms.TextBox textBoxVariable1Setpoint;
-		private System.Windows.Forms.Label labelVar1Unit1;
-		private System.Windows.Forms.Label labelVar1Unit2;
-		private System.Windows.Forms.GroupBox groupBoxVariable2;
-		private System.Windows.Forms.Label labelVar2Unit2;
-		private System.Windows.Forms.Label labelVar2Unit1;
-		private System.Windows.Forms.TextBox textBoxVariable2Value;
-		private System.Windows.Forms.TextBox textBoxVariable2Setpoint;
 		private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
 		private System.Windows.Forms.ToolStripMenuItem numberOfDUTsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem pauseToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem dUTSettingsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem logDirectoryToolStripMenuItem;
 		private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-		private System.Windows.Forms.DataVisualization.Charting.Chart chartError;
-		private System.Windows.Forms.DataVisualization.Charting.Chart chartRate;
-		private System.Windows.Forms.Label labelValueNum;
-		private System.Windows.Forms.Label labelRateNum;
 		private System.Windows.Forms.TabPage tabPageDut;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
@@ -1212,6 +970,18 @@
 		private System.Windows.Forms.TabPage tabPageEquipment;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelEquipment;
+		private System.Windows.Forms.GroupBox groupBoxVariables;
+		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelControlledVariables;
+		private System.Windows.Forms.GroupBox groupBoxMassFlow;
+		private System.Windows.Forms.Label labelVar1Unit2;
+		private System.Windows.Forms.Label labelVar1Unit1;
+		private System.Windows.Forms.TextBox textBoxMassFlowValue;
+		private System.Windows.Forms.TextBox textBoxMassFlowSetpoint;
+		private System.Windows.Forms.GroupBox groupBoxGasMix;
+		private System.Windows.Forms.Label labelVar2Unit2;
+		private System.Windows.Forms.Label labelVar2Unit1;
+		private System.Windows.Forms.TextBox textBoxGasMixValue;
+		private System.Windows.Forms.TextBox textBoxGasMixSetpoint;
 	}
 }
 

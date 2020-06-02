@@ -138,141 +138,6 @@ namespace Sensit.App.Calibration
 		}
 
 		/// <summary>
-		/// Name of the test's independent variable.
-		/// </summary>
-		public string VariableType
-		{
-			set
-			{
-				// If called from a different thread than the form, invoke the method on the form's thread.
-				if (groupBoxIndependentVariable.InvokeRequired)
-				{
-					groupBoxIndependentVariable.Invoke(new MethodInvoker(delegate { VariableType = value; }));
-				}
-				else
-				{
-					groupBoxIndependentVariable.Text = value;
-
-				}
-			}
-		}
-
-		/// <summary>
-		/// Difference between desired and actual value of the test's independent variable.
-		/// </summary>
-		public double VariableValue
-		{
-			set
-			{
-				// If called from a different thread than the form, invoke the method on the form's thread.
-				if (chartError.InvokeRequired)
-				{
-					chartError.Invoke(new MethodInvoker(delegate { VariableValue = value; }));
-				}
-				else
-				{
-					// Set the value.
-					chartError.Series[0].Points.Clear();
-					chartError.Series[0].Points.AddXY(0, value);
-					labelValueNum.Text = value.ToString("0.0");
-				}
-			}
-		}
-
-		/// <summary>
-		/// Rate of change of the test's independent variable.
-		/// </summary>
-		public double VariableRate
-		{
-			set
-			{
-				// If called from a different thread than the form, invoke the method on the form's thread.
-				if (chartRate.InvokeRequired)
-				{
-					chartRate.Invoke(new MethodInvoker(delegate { VariableRate = value; }));
-				}
-				else
-				{
-					// Set the value.
-					chartRate.Series[0].Points.Clear();
-					chartRate.Series[0].Points.AddXY(0, value);
-					labelRateNum.Text = value.ToString("0.0");
-				}
-			}
-		}
-
-		/// <summary>
-		/// Maximum desired error value of the test's independent variable.
-		/// </summary>jSensors`1
-		/// 
-		/// <remarks>
-		/// This property is a tuple so min and max are updated at the same time.
-		/// This helps prevent weird states if only one is updated.
-		/// </remarks>
-		public (double min, double max) ErrorRange
-		{
-			// Fetch the max value from the chart.
-			// The max value is the lower boundry of the yellow strip line.
-			// The min value is the lower boundry of the green strip line.
-			get => (chartError.ChartAreas[0].AxisY.StripLines[2].IntervalOffset,
-							chartError.ChartAreas[0].AxisY.StripLines[3].IntervalOffset);
-			set
-			{
-				// If called from a different thread than the form, invoke the method on the form's thread.
-				if (chartError.InvokeRequired)
-				{
-					chartError.Invoke(new MethodInvoker(delegate { ErrorRange = value; }));
-				}
-				else
-				{
-					// Check for invalid values.
-					if (value.min >= value.max)
-					{
-						throw new ArgumentOutOfRangeException("ErrorRange requires that Min ("
-							+ value.min.ToString("0.00") + ") must be less than Max ("
-							+ value.max.ToString("0.00") + ".");
-					}
-
-					// Update the chart.
-					StatusChartUpdate(chartError, value.min, value.max);
-				}
-			}
-		}
-
-		/// <summary>
-		/// Maximum allowed rate of change of the test's independent variable.
-		/// </summary>
-		public (double min, double max) RateRange
-		{
-			// Fetch the max value from the chart.
-			// The max value is the lower boundry of the yellow strip line.
-			// The min value is the lower boundry of the green strip line.
-			get => (chartRate.ChartAreas[0].AxisY.StripLines[2].IntervalOffset,
-							chartRate.ChartAreas[0].AxisY.StripLines[3].IntervalOffset);
-			set
-			{
-				// If called from a different thread than the form, invoke the method on the form's thread.
-				if (chartRate.InvokeRequired)
-				{
-					chartRate.Invoke(new MethodInvoker(delegate { RateRange = value; }));
-				}
-				else
-				{
-					// Check for invalid values.
-					if (value.min >= value.max)
-					{
-						throw new ArgumentOutOfRangeException("RateRange requires that Min ("
-							+ value.min.ToString("0.00") + ") must be less than Max ("
-							+ value.max.ToString("0.00") + ".");
-					}
-
-					// Update the chart.
-					StatusChartUpdate(chartRate, value.min, value.max);
-				}
-			}
-		}
-
-		/// <summary>
 		/// Helper method to configure the Error and Rate charts.
 		/// </summary>
 		/// <param name="chart">which chart to update (either chartError or chartRate)</param>
@@ -522,11 +387,6 @@ namespace Sensit.App.Calibration
 					Finished = TestFinished,
 					UpdateProgress = TestUpdate,
 					// https://syncor.blogspot.com/2010/11/passing-getter-and-setter-of-c-property.html
-					UpdateIndependentVariable = value => VariableValue = value,
-					UpdateIndependentVariableName = value => VariableType = value,
-					UpdateRateOfChange = value => VariableRate = value,
-					UpdateIndependentVariableRange = value => ErrorRange = value,
-					UpdateRateRange = value => RateRange = value,
 					GasMixRange = numericUpDownRange.Value,
 					Repeat = Properties.Settings.Default.Repeat
 				};
@@ -1120,6 +980,12 @@ namespace Sensit.App.Calibration
 
 			// Update the status message.
 			toolStripStatusLabel1.Text = message;
+
+			// TODO:  Update variables; right now it throws exception because keys don't exist.
+			//textBoxMassFlowSetpoint.Text = _test.Variables[].Setpoint.ToString();
+			//textBoxMassFlowValue.Text = _test.Variables[VariableType.MassFlow].Value.ToString();
+			//textBoxGasMixSetpoint.Text = _test.Variables[VariableType.GasConcentration].Setpoint.ToString();
+			//textBoxGasMixValue.Text = _test.Variables[VariableType.GasConcentration].Setpoint.ToString();
 		}
 
 		/// <summary>

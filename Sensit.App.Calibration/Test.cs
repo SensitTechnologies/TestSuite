@@ -52,7 +52,6 @@ namespace Sensit.App.Calibration
 		private bool _pause = false;			// whether test is paused
 		private int _samplesTotal;				// helps calculate percent complete
 		private int _samplesComplete = 0;       // helps calculate percent complete
-		private double? _previous = null;		// used to calculate rate of change in StabilityCheck
 
 		#endregion
 
@@ -60,23 +59,6 @@ namespace Sensit.App.Calibration
 
 		// Report test progress.
 		public Action<int, string> UpdateProgress { get; set; }
-
-		public Action<string> UpdateIndependentVariableName { get; set; }
-
-		// Report the value of the independent variable.
-		public Action<double> UpdateIndependentVariable { get; set; }
-
-		// Report the rate of change of the independent variable.
-		public Action<double> UpdateRateOfChange { get; set; }
-
-		// Report the independent variable's maximum and minimum allowed value.
-		public Action<(double min, double max)> UpdateIndependentVariableRange { get; set; }
-
-		// Report the independent variable's maximum and minimum allowed rate of change.
-		public Action<(double min, double max)> UpdateRateRange { get; set; }
-
-		// Report the controlled variables and their values.
-		public Action<Dictionary<VariableType, double>> UpdateVariables { get; set; }
 
 		// Report test results.
 		public Action Finished { get; set; }
@@ -110,9 +92,9 @@ namespace Sensit.App.Calibration
 		/// Controlled/independent variables for the current test component.
 		/// </summary>
 		/// <remarks>
-		/// This will be accessed by the FormCalibration to display the variables values.
+		/// This will be accessed by the FormCalibration to display the variables values and setpoints.
 		/// </remarks>
-		public List<TestControlledVariable> Variables { get; }
+		public Dictionary<VariableType, (decimal Value, decimal Setpoint)> Variables { get; private set; } = new Dictionary<VariableType, (decimal Value, decimal Setpoint)>();
 
 		/// <summary>
 		/// Multiplier for setpoints.
@@ -320,30 +302,8 @@ namespace Sensit.App.Calibration
 				// Read the reference reading.
 				double reading = _equipment.References[v.VariableType].Readings[v.VariableType];
 
-				// Update the form.
-				UpdateIndependentVariableRange((setpoint - v.ErrorTolerance, setpoint + v.ErrorTolerance));
-				UpdateRateRange((v.RateTolerance * -1.0, v.RateTolerance));
-				UpdateIndependentVariableName(v.VariableType.ToString());
-
-				// TODO:  Update the error and rate of change for the independent variable only.
-				if (v.VariableType == VariableType.GasConcentration)
-				{
-					// Update the error in the independent variable.
-					UpdateIndependentVariable?.Invoke(reading);
-
-					// If we know the previous reading...
-					if (_previous != null)
-					{
-						// Calculate rate of change.
-						double rate = (reading - (double)_previous) / v.Interval.TotalSeconds;
-
-						// Update the rate of change of the independent variable.
-						UpdateRateOfChange?.Invoke(rate);
-					}
-
-					// Save the previous reading.
-					_previous = reading;
-				}
+				// Update the GUI.
+				Variables[v.VariableType] = (Convert.ToDecimal(reading), Convert.ToDecimal(setpoint));
 
 				// If the reading is out of tolerance...
 				if (Math.Abs(setpoint - reading) > v.ErrorTolerance)
@@ -405,11 +365,6 @@ namespace Sensit.App.Calibration
 
 		private void ProcessSetpoint(TestControlledVariable variable, double setpoint, TimeSpan interval)
 		{
-			// Update the form.
-			UpdateIndependentVariableRange((setpoint - variable.ErrorTolerance, setpoint + variable.ErrorTolerance));
-			UpdateRateRange((variable.RateTolerance * -1.0, variable.RateTolerance));
-			UpdateIndependentVariableName(variable.VariableType.ToString());
-
 			// Update GUI.
 			_testThread.ReportProgress(PercentProgress, "Setting setpoint...");
 
@@ -422,7 +377,6 @@ namespace Sensit.App.Calibration
 
 			// Take readings until they are within tolerance for the required settling time.
 			double error;
-			double rate = 0.0;
 			do
 			{
 				// Abort if requested.
@@ -460,23 +414,8 @@ namespace Sensit.App.Calibration
 				// Calculate error.
 				error = reading - setpoint;
 
-				// Update the error in the independent variable.
-				UpdateIndependentVariable?.Invoke(reading);
-
-				// If we know the previous reading...
-				if (_previous != null)
-				{
-					// Calculate rate of change.
-					rate = (reading - (double)_previous) / interval.TotalSeconds;
-
-					// Update the rate of change of the independent variable.
-					UpdateRateOfChange?.Invoke(rate);
-				}
-
-				// Save the previous reading.
-				_previous = reading;
-
 				// Update the GUI.
+				Variables[variable.VariableType] = (Convert.ToDecimal(reading), Convert.ToDecimal(setpoint));
 				string message = "Waiting for stability...";
 
 				// If tolerance has been exceeded, reset the stability time.
