@@ -19,10 +19,6 @@ namespace Sensit.TestSDK.Devices
 		private IMassFlowReference _analyteReference;
 		private IMassFlowReference _dilutentReference;
 
-		// gas concentration of analyte
-		// (default to 100.0% volume so mass flow setpoint can be set between 0% - 100% initially)
-		private double _analyteBottleConcentration = 100.0;
-
 		// total mass flow (of both mass flow controllers combined)
 		private double _massFlowSetpoint = 0;
 
@@ -105,7 +101,7 @@ namespace Sensit.TestSDK.Devices
 			}
 			else
 			{
-				Readings[VariableType.GasConcentration] = _analyteReference.Readings[VariableType.MassFlow] / _massFlowSetpoint * _analyteBottleConcentration;
+				Readings[VariableType.GasConcentration] = _analyteReference.Readings[VariableType.MassFlow] / Readings[VariableType.MassFlow];
 			}
 		}
 
@@ -124,10 +120,9 @@ namespace Sensit.TestSDK.Devices
 			else if (type == VariableType.GasConcentration)
 			{
 				// Check for valid value.
-				if ((setpoint < 0.0) || (setpoint > _analyteBottleConcentration))
+				if ((setpoint < 0.0) || (setpoint > 100.0))
 				{
-					throw new DeviceOutOfRangeException("Gas Mix Setpoint must be between 0.0% and analyte bottle concentration, inclusive."
-						+ Environment.NewLine + "Analyte Bottle Concentration is:  " + _analyteBottleConcentration
+					throw new DeviceOutOfRangeException("Gas Mix Setpoint must be between 0.0% and 100.0%, inclusive."
 						+ Environment.NewLine + "Attempted Gas Mix Setpoint was:  " + setpoint);
 				}
 
@@ -139,7 +134,7 @@ namespace Sensit.TestSDK.Devices
 			}
 
 			// For analyte:  mass Flow = desired flow rate / original concentration.
-			_analyteController.WriteSetpoint(VariableType.MassFlow, _massFlowSetpoint * (_gasMixSetpoint / _analyteBottleConcentration));
+			_analyteController.WriteSetpoint(VariableType.MassFlow, _massFlowSetpoint * (_gasMixSetpoint / 100));
 
 			// For diluent:  mass flow = desired flow - gas under test flow.
 			_dilutentController.WriteSetpoint(VariableType.MassFlow, _massFlowSetpoint - _analyteController.ReadSetpoint(VariableType.MassFlow));
