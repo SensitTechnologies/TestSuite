@@ -101,7 +101,7 @@ namespace Sensit.TestSDK.Devices
 			}
 			else
 			{
-				Readings[VariableType.GasConcentration] = _analyteReference.Readings[VariableType.MassFlow] / Readings[VariableType.MassFlow];
+				Readings[VariableType.GasConcentration] = _analyteReference.Readings[VariableType.MassFlow] / Readings[VariableType.MassFlow] * 100;
 			}
 		}
 
