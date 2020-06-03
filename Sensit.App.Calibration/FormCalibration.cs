@@ -968,8 +968,8 @@ namespace Sensit.App.Calibration
 			if (_test.Variables.ContainsKey(variableType))
 			{
 				groupBox.Visible = true;
-				setpoint.Text = _test.Variables[variableType].Setpoint.ToString();
-				value.Text = _test.Variables[variableType].Value.ToString();
+				setpoint.Text = _test.Variables[variableType].Setpoint.ToString("G4");
+				value.Text = _test.Variables[variableType].Value.ToString("G4");
 			}
 			else
 			{
