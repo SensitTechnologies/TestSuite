@@ -55,6 +55,18 @@
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanelEquipment = new System.Windows.Forms.TableLayoutPanel();
 			this.tabPageStatus = new System.Windows.Forms.TabPage();
+			this.groupBoxVariables = new System.Windows.Forms.GroupBox();
+			this.flowLayoutPanelControlledVariables = new System.Windows.Forms.FlowLayoutPanel();
+			this.groupBoxMassFlow = new System.Windows.Forms.GroupBox();
+			this.labelVar1Unit2 = new System.Windows.Forms.Label();
+			this.labelVar1Unit1 = new System.Windows.Forms.Label();
+			this.textBoxMassFlowValue = new System.Windows.Forms.TextBox();
+			this.textBoxMassFlowSetpoint = new System.Windows.Forms.TextBox();
+			this.groupBoxGasMix = new System.Windows.Forms.GroupBox();
+			this.labelVar2Unit2 = new System.Windows.Forms.Label();
+			this.labelVar2Unit1 = new System.Windows.Forms.Label();
+			this.textBoxGasMixValue = new System.Windows.Forms.TextBox();
+			this.textBoxGasMixSetpoint = new System.Windows.Forms.TextBox();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -86,18 +98,36 @@
 			this.supportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpProvider1 = new System.Windows.Forms.HelpProvider();
 			this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-			this.groupBoxVariables = new System.Windows.Forms.GroupBox();
-			this.flowLayoutPanelControlledVariables = new System.Windows.Forms.FlowLayoutPanel();
-			this.groupBoxMassFlow = new System.Windows.Forms.GroupBox();
-			this.labelVar1Unit2 = new System.Windows.Forms.Label();
-			this.labelVar1Unit1 = new System.Windows.Forms.Label();
-			this.textBoxMassFlowValue = new System.Windows.Forms.TextBox();
-			this.textBoxMassFlowSetpoint = new System.Windows.Forms.TextBox();
-			this.groupBoxGasMix = new System.Windows.Forms.GroupBox();
-			this.labelVar2Unit2 = new System.Windows.Forms.Label();
-			this.labelVar2Unit1 = new System.Windows.Forms.Label();
-			this.textBoxGasMixValue = new System.Windows.Forms.TextBox();
-			this.textBoxGasMixSetpoint = new System.Windows.Forms.TextBox();
+			this.groupBoxVolumeFlow = new System.Windows.Forms.GroupBox();
+			this.label1 = new System.Windows.Forms.Label();
+			this.label2 = new System.Windows.Forms.Label();
+			this.textBoxVolumeFlowValue = new System.Windows.Forms.TextBox();
+			this.textBoxVolumeFlowSetpoint = new System.Windows.Forms.TextBox();
+			this.groupBoxVelocity = new System.Windows.Forms.GroupBox();
+			this.label3 = new System.Windows.Forms.Label();
+			this.label4 = new System.Windows.Forms.Label();
+			this.textBoxVelocityValue = new System.Windows.Forms.TextBox();
+			this.textBoxVelocitySetpoint = new System.Windows.Forms.TextBox();
+			this.groupBoxPressure = new System.Windows.Forms.GroupBox();
+			this.label5 = new System.Windows.Forms.Label();
+			this.label6 = new System.Windows.Forms.Label();
+			this.textBoxPressureValue = new System.Windows.Forms.TextBox();
+			this.textBoxPressureSetpoint = new System.Windows.Forms.TextBox();
+			this.groupBoxTemperature = new System.Windows.Forms.GroupBox();
+			this.label7 = new System.Windows.Forms.Label();
+			this.label8 = new System.Windows.Forms.Label();
+			this.textBoxTempValue = new System.Windows.Forms.TextBox();
+			this.textBoxTempSetpoint = new System.Windows.Forms.TextBox();
+			this.groupBoxCurrent = new System.Windows.Forms.GroupBox();
+			this.label9 = new System.Windows.Forms.Label();
+			this.label10 = new System.Windows.Forms.Label();
+			this.textBoxCurrentValue = new System.Windows.Forms.TextBox();
+			this.textBoxCurrentSetpoint = new System.Windows.Forms.TextBox();
+			this.groupBoxVoltage = new System.Windows.Forms.GroupBox();
+			this.label11 = new System.Windows.Forms.Label();
+			this.label12 = new System.Windows.Forms.Label();
+			this.textBoxVoltageValue = new System.Windows.Forms.TextBox();
+			this.textBoxVoltageSetpoint = new System.Windows.Forms.TextBox();
 			this.tabControl1.SuspendLayout();
 			this.tabPageTest.SuspendLayout();
 			this.tableLayoutPanelTest.SuspendLayout();
@@ -113,12 +143,18 @@
 			this.tabPageEquipment.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.tabPageStatus.SuspendLayout();
-			this.statusStrip1.SuspendLayout();
-			this.menuStrip1.SuspendLayout();
 			this.groupBoxVariables.SuspendLayout();
 			this.flowLayoutPanelControlledVariables.SuspendLayout();
 			this.groupBoxMassFlow.SuspendLayout();
 			this.groupBoxGasMix.SuspendLayout();
+			this.statusStrip1.SuspendLayout();
+			this.menuStrip1.SuspendLayout();
+			this.groupBoxVolumeFlow.SuspendLayout();
+			this.groupBoxVelocity.SuspendLayout();
+			this.groupBoxPressure.SuspendLayout();
+			this.groupBoxTemperature.SuspendLayout();
+			this.groupBoxCurrent.SuspendLayout();
+			this.groupBoxVoltage.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabControl1
@@ -131,7 +167,7 @@
 			this.tabControl1.Location = new System.Drawing.Point(0, 24);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(534, 309);
+			this.tabControl1.Size = new System.Drawing.Size(559, 311);
 			this.tabControl1.TabIndex = 0;
 			// 
 			// tabPageTest
@@ -486,19 +522,159 @@
 			this.tabPageStatus.Location = new System.Drawing.Point(4, 22);
 			this.tabPageStatus.Name = "tabPageStatus";
 			this.tabPageStatus.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageStatus.Size = new System.Drawing.Size(526, 283);
+			this.tabPageStatus.Size = new System.Drawing.Size(551, 285);
 			this.tabPageStatus.TabIndex = 4;
 			this.tabPageStatus.Text = "Status";
 			this.tabPageStatus.UseVisualStyleBackColor = true;
+			// 
+			// groupBoxVariables
+			// 
+			this.groupBoxVariables.Controls.Add(this.flowLayoutPanelControlledVariables);
+			this.groupBoxVariables.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBoxVariables.Location = new System.Drawing.Point(3, 3);
+			this.groupBoxVariables.Name = "groupBoxVariables";
+			this.groupBoxVariables.Size = new System.Drawing.Size(545, 279);
+			this.groupBoxVariables.TabIndex = 1;
+			this.groupBoxVariables.TabStop = false;
+			this.groupBoxVariables.Text = "Measured/Controlled Variables";
+			// 
+			// flowLayoutPanelControlledVariables
+			// 
+			this.flowLayoutPanelControlledVariables.AutoScroll = true;
+			this.flowLayoutPanelControlledVariables.Controls.Add(this.groupBoxGasMix);
+			this.flowLayoutPanelControlledVariables.Controls.Add(this.groupBoxMassFlow);
+			this.flowLayoutPanelControlledVariables.Controls.Add(this.groupBoxVolumeFlow);
+			this.flowLayoutPanelControlledVariables.Controls.Add(this.groupBoxVelocity);
+			this.flowLayoutPanelControlledVariables.Controls.Add(this.groupBoxPressure);
+			this.flowLayoutPanelControlledVariables.Controls.Add(this.groupBoxTemperature);
+			this.flowLayoutPanelControlledVariables.Controls.Add(this.groupBoxCurrent);
+			this.flowLayoutPanelControlledVariables.Controls.Add(this.groupBoxVoltage);
+			this.flowLayoutPanelControlledVariables.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.flowLayoutPanelControlledVariables.Location = new System.Drawing.Point(3, 16);
+			this.flowLayoutPanelControlledVariables.Name = "flowLayoutPanelControlledVariables";
+			this.flowLayoutPanelControlledVariables.Size = new System.Drawing.Size(539, 260);
+			this.flowLayoutPanelControlledVariables.TabIndex = 0;
+			// 
+			// groupBoxMassFlow
+			// 
+			this.groupBoxMassFlow.AutoSize = true;
+			this.groupBoxMassFlow.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.groupBoxMassFlow.Controls.Add(this.labelVar1Unit2);
+			this.groupBoxMassFlow.Controls.Add(this.labelVar1Unit1);
+			this.groupBoxMassFlow.Controls.Add(this.textBoxMassFlowValue);
+			this.groupBoxMassFlow.Controls.Add(this.textBoxMassFlowSetpoint);
+			this.groupBoxMassFlow.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.groupBoxMassFlow.Location = new System.Drawing.Point(120, 3);
+			this.groupBoxMassFlow.Name = "groupBoxMassFlow";
+			this.groupBoxMassFlow.Size = new System.Drawing.Size(134, 102);
+			this.groupBoxMassFlow.TabIndex = 0;
+			this.groupBoxMassFlow.TabStop = false;
+			this.groupBoxMassFlow.Text = "Mass Flow";
+			// 
+			// labelVar1Unit2
+			// 
+			this.labelVar1Unit2.AutoSize = true;
+			this.labelVar1Unit2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelVar1Unit2.Location = new System.Drawing.Point(82, 54);
+			this.labelVar1Unit2.Name = "labelVar1Unit2";
+			this.labelVar1Unit2.Size = new System.Drawing.Size(46, 20);
+			this.labelVar1Unit2.TabIndex = 5;
+			this.labelVar1Unit2.Text = "sccm";
+			// 
+			// labelVar1Unit1
+			// 
+			this.labelVar1Unit1.AutoSize = true;
+			this.labelVar1Unit1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelVar1Unit1.Location = new System.Drawing.Point(82, 22);
+			this.labelVar1Unit1.Name = "labelVar1Unit1";
+			this.labelVar1Unit1.Size = new System.Drawing.Size(46, 20);
+			this.labelVar1Unit1.TabIndex = 4;
+			this.labelVar1Unit1.Text = "sccm";
+			// 
+			// textBoxMassFlowValue
+			// 
+			this.textBoxMassFlowValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxMassFlowValue.Location = new System.Drawing.Point(6, 51);
+			this.textBoxMassFlowValue.Name = "textBoxMassFlowValue";
+			this.textBoxMassFlowValue.ReadOnly = true;
+			this.textBoxMassFlowValue.Size = new System.Drawing.Size(70, 26);
+			this.textBoxMassFlowValue.TabIndex = 1;
+			this.textBoxMassFlowValue.Text = "0.000";
+			// 
+			// textBoxMassFlowSetpoint
+			// 
+			this.textBoxMassFlowSetpoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxMassFlowSetpoint.Location = new System.Drawing.Point(6, 19);
+			this.textBoxMassFlowSetpoint.Name = "textBoxMassFlowSetpoint";
+			this.textBoxMassFlowSetpoint.ReadOnly = true;
+			this.textBoxMassFlowSetpoint.Size = new System.Drawing.Size(70, 26);
+			this.textBoxMassFlowSetpoint.TabIndex = 0;
+			this.textBoxMassFlowSetpoint.Text = "0.000";
+			// 
+			// groupBoxGasMix
+			// 
+			this.groupBoxGasMix.AutoSize = true;
+			this.groupBoxGasMix.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.groupBoxGasMix.Controls.Add(this.labelVar2Unit2);
+			this.groupBoxGasMix.Controls.Add(this.labelVar2Unit1);
+			this.groupBoxGasMix.Controls.Add(this.textBoxGasMixValue);
+			this.groupBoxGasMix.Controls.Add(this.textBoxGasMixSetpoint);
+			this.groupBoxGasMix.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.groupBoxGasMix.Location = new System.Drawing.Point(3, 3);
+			this.groupBoxGasMix.Name = "groupBoxGasMix";
+			this.groupBoxGasMix.Size = new System.Drawing.Size(111, 102);
+			this.groupBoxGasMix.TabIndex = 1;
+			this.groupBoxGasMix.TabStop = false;
+			this.groupBoxGasMix.Text = "Gas Mix";
+			// 
+			// labelVar2Unit2
+			// 
+			this.labelVar2Unit2.AutoSize = true;
+			this.labelVar2Unit2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelVar2Unit2.Location = new System.Drawing.Point(82, 54);
+			this.labelVar2Unit2.Name = "labelVar2Unit2";
+			this.labelVar2Unit2.Size = new System.Drawing.Size(23, 20);
+			this.labelVar2Unit2.TabIndex = 5;
+			this.labelVar2Unit2.Text = "%";
+			// 
+			// labelVar2Unit1
+			// 
+			this.labelVar2Unit1.AutoSize = true;
+			this.labelVar2Unit1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelVar2Unit1.Location = new System.Drawing.Point(82, 22);
+			this.labelVar2Unit1.Name = "labelVar2Unit1";
+			this.labelVar2Unit1.Size = new System.Drawing.Size(23, 20);
+			this.labelVar2Unit1.TabIndex = 4;
+			this.labelVar2Unit1.Text = "%";
+			// 
+			// textBoxGasMixValue
+			// 
+			this.textBoxGasMixValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxGasMixValue.Location = new System.Drawing.Point(6, 51);
+			this.textBoxGasMixValue.Name = "textBoxGasMixValue";
+			this.textBoxGasMixValue.ReadOnly = true;
+			this.textBoxGasMixValue.Size = new System.Drawing.Size(70, 26);
+			this.textBoxGasMixValue.TabIndex = 1;
+			this.textBoxGasMixValue.Text = "0.000";
+			// 
+			// textBoxGasMixSetpoint
+			// 
+			this.textBoxGasMixSetpoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxGasMixSetpoint.Location = new System.Drawing.Point(6, 19);
+			this.textBoxGasMixSetpoint.Name = "textBoxGasMixSetpoint";
+			this.textBoxGasMixSetpoint.ReadOnly = true;
+			this.textBoxGasMixSetpoint.Size = new System.Drawing.Size(70, 26);
+			this.textBoxGasMixSetpoint.TabIndex = 0;
+			this.textBoxGasMixSetpoint.Text = "0.000";
 			// 
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar1,
             this.toolStripStatusLabel1});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 333);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 335);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(534, 26);
+			this.statusStrip1.Size = new System.Drawing.Size(559, 26);
 			this.statusStrip1.TabIndex = 1;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
@@ -523,7 +699,7 @@
             this.helpToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(534, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(559, 24);
 			this.menuStrip1.TabIndex = 2;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -723,152 +899,353 @@
 			this.supportToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
 			this.supportToolStripMenuItem.Text = "How Do I";
 			// 
-			// groupBoxVariables
+			// groupBoxVolumeFlow
 			// 
-			this.groupBoxVariables.Controls.Add(this.flowLayoutPanelControlledVariables);
-			this.groupBoxVariables.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBoxVariables.Location = new System.Drawing.Point(3, 3);
-			this.groupBoxVariables.Name = "groupBoxVariables";
-			this.groupBoxVariables.Size = new System.Drawing.Size(520, 277);
-			this.groupBoxVariables.TabIndex = 1;
-			this.groupBoxVariables.TabStop = false;
-			this.groupBoxVariables.Text = "Measured/Controlled Variables";
+			this.groupBoxVolumeFlow.AutoSize = true;
+			this.groupBoxVolumeFlow.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.groupBoxVolumeFlow.Controls.Add(this.label1);
+			this.groupBoxVolumeFlow.Controls.Add(this.label2);
+			this.groupBoxVolumeFlow.Controls.Add(this.textBoxVolumeFlowValue);
+			this.groupBoxVolumeFlow.Controls.Add(this.textBoxVolumeFlowSetpoint);
+			this.groupBoxVolumeFlow.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.groupBoxVolumeFlow.Location = new System.Drawing.Point(260, 3);
+			this.groupBoxVolumeFlow.Name = "groupBoxVolumeFlow";
+			this.groupBoxVolumeFlow.Size = new System.Drawing.Size(126, 102);
+			this.groupBoxVolumeFlow.TabIndex = 6;
+			this.groupBoxVolumeFlow.TabStop = false;
+			this.groupBoxVolumeFlow.Text = "Volume Flow";
 			// 
-			// flowLayoutPanelControlledVariables
+			// label1
 			// 
-			this.flowLayoutPanelControlledVariables.AutoScroll = true;
-			this.flowLayoutPanelControlledVariables.Controls.Add(this.groupBoxMassFlow);
-			this.flowLayoutPanelControlledVariables.Controls.Add(this.groupBoxGasMix);
-			this.flowLayoutPanelControlledVariables.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.flowLayoutPanelControlledVariables.Location = new System.Drawing.Point(3, 16);
-			this.flowLayoutPanelControlledVariables.Name = "flowLayoutPanelControlledVariables";
-			this.flowLayoutPanelControlledVariables.Size = new System.Drawing.Size(514, 258);
-			this.flowLayoutPanelControlledVariables.TabIndex = 0;
+			this.label1.AutoSize = true;
+			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label1.Location = new System.Drawing.Point(82, 54);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(38, 20);
+			this.label1.TabIndex = 5;
+			this.label1.Text = "ccm";
 			// 
-			// groupBoxMassFlow
+			// label2
 			// 
-			this.groupBoxMassFlow.AutoSize = true;
-			this.groupBoxMassFlow.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.groupBoxMassFlow.Controls.Add(this.labelVar1Unit2);
-			this.groupBoxMassFlow.Controls.Add(this.labelVar1Unit1);
-			this.groupBoxMassFlow.Controls.Add(this.textBoxMassFlowValue);
-			this.groupBoxMassFlow.Controls.Add(this.textBoxMassFlowSetpoint);
-			this.groupBoxMassFlow.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.groupBoxMassFlow.Location = new System.Drawing.Point(3, 3);
-			this.groupBoxMassFlow.Name = "groupBoxMassFlow";
-			this.groupBoxMassFlow.Size = new System.Drawing.Size(123, 102);
-			this.groupBoxMassFlow.TabIndex = 0;
-			this.groupBoxMassFlow.TabStop = false;
-			this.groupBoxMassFlow.Text = "Mass Flow";
+			this.label2.AutoSize = true;
+			this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label2.Location = new System.Drawing.Point(82, 22);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(38, 20);
+			this.label2.TabIndex = 4;
+			this.label2.Text = "ccm";
 			// 
-			// labelVar1Unit2
+			// textBoxVolumeFlowValue
 			// 
-			this.labelVar1Unit2.AutoSize = true;
-			this.labelVar1Unit2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelVar1Unit2.Location = new System.Drawing.Point(82, 54);
-			this.labelVar1Unit2.Name = "labelVar1Unit2";
-			this.labelVar1Unit2.Size = new System.Drawing.Size(35, 20);
-			this.labelVar1Unit2.TabIndex = 5;
-			this.labelVar1Unit2.Text = "unit";
+			this.textBoxVolumeFlowValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxVolumeFlowValue.Location = new System.Drawing.Point(6, 51);
+			this.textBoxVolumeFlowValue.Name = "textBoxVolumeFlowValue";
+			this.textBoxVolumeFlowValue.ReadOnly = true;
+			this.textBoxVolumeFlowValue.Size = new System.Drawing.Size(70, 26);
+			this.textBoxVolumeFlowValue.TabIndex = 1;
+			this.textBoxVolumeFlowValue.Text = "0.000";
 			// 
-			// labelVar1Unit1
+			// textBoxVolumeFlowSetpoint
 			// 
-			this.labelVar1Unit1.AutoSize = true;
-			this.labelVar1Unit1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelVar1Unit1.Location = new System.Drawing.Point(82, 22);
-			this.labelVar1Unit1.Name = "labelVar1Unit1";
-			this.labelVar1Unit1.Size = new System.Drawing.Size(35, 20);
-			this.labelVar1Unit1.TabIndex = 4;
-			this.labelVar1Unit1.Text = "unit";
+			this.textBoxVolumeFlowSetpoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxVolumeFlowSetpoint.Location = new System.Drawing.Point(6, 19);
+			this.textBoxVolumeFlowSetpoint.Name = "textBoxVolumeFlowSetpoint";
+			this.textBoxVolumeFlowSetpoint.ReadOnly = true;
+			this.textBoxVolumeFlowSetpoint.Size = new System.Drawing.Size(70, 26);
+			this.textBoxVolumeFlowSetpoint.TabIndex = 0;
+			this.textBoxVolumeFlowSetpoint.Text = "0.000";
 			// 
-			// textBoxMassFlowValue
+			// groupBoxVelocity
 			// 
-			this.textBoxMassFlowValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.textBoxMassFlowValue.Location = new System.Drawing.Point(6, 51);
-			this.textBoxMassFlowValue.Name = "textBoxMassFlowValue";
-			this.textBoxMassFlowValue.ReadOnly = true;
-			this.textBoxMassFlowValue.Size = new System.Drawing.Size(70, 26);
-			this.textBoxMassFlowValue.TabIndex = 1;
-			this.textBoxMassFlowValue.Text = "0.000";
+			this.groupBoxVelocity.AutoSize = true;
+			this.groupBoxVelocity.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.groupBoxVelocity.Controls.Add(this.label3);
+			this.groupBoxVelocity.Controls.Add(this.label4);
+			this.groupBoxVelocity.Controls.Add(this.textBoxVelocityValue);
+			this.groupBoxVelocity.Controls.Add(this.textBoxVelocitySetpoint);
+			this.groupBoxVelocity.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.groupBoxVelocity.Location = new System.Drawing.Point(392, 3);
+			this.groupBoxVelocity.Name = "groupBoxVelocity";
+			this.groupBoxVelocity.Size = new System.Drawing.Size(122, 102);
+			this.groupBoxVelocity.TabIndex = 7;
+			this.groupBoxVelocity.TabStop = false;
+			this.groupBoxVelocity.Text = "Velocity";
 			// 
-			// textBoxMassFlowSetpoint
+			// label3
 			// 
-			this.textBoxMassFlowSetpoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.textBoxMassFlowSetpoint.Location = new System.Drawing.Point(6, 19);
-			this.textBoxMassFlowSetpoint.Name = "textBoxMassFlowSetpoint";
-			this.textBoxMassFlowSetpoint.ReadOnly = true;
-			this.textBoxMassFlowSetpoint.Size = new System.Drawing.Size(70, 26);
-			this.textBoxMassFlowSetpoint.TabIndex = 0;
-			this.textBoxMassFlowSetpoint.Text = "0.000";
+			this.label3.AutoSize = true;
+			this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label3.Location = new System.Drawing.Point(82, 54);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(34, 20);
+			this.label3.TabIndex = 5;
+			this.label3.Text = "m/s";
 			// 
-			// groupBoxGasMix
+			// label4
 			// 
-			this.groupBoxGasMix.AutoSize = true;
-			this.groupBoxGasMix.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.groupBoxGasMix.Controls.Add(this.labelVar2Unit2);
-			this.groupBoxGasMix.Controls.Add(this.labelVar2Unit1);
-			this.groupBoxGasMix.Controls.Add(this.textBoxGasMixValue);
-			this.groupBoxGasMix.Controls.Add(this.textBoxGasMixSetpoint);
-			this.groupBoxGasMix.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.groupBoxGasMix.Location = new System.Drawing.Point(132, 3);
-			this.groupBoxGasMix.Name = "groupBoxGasMix";
-			this.groupBoxGasMix.Size = new System.Drawing.Size(123, 102);
-			this.groupBoxGasMix.TabIndex = 1;
-			this.groupBoxGasMix.TabStop = false;
-			this.groupBoxGasMix.Text = "Gas Mix";
+			this.label4.AutoSize = true;
+			this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label4.Location = new System.Drawing.Point(82, 22);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(34, 20);
+			this.label4.TabIndex = 4;
+			this.label4.Text = "m/s";
 			// 
-			// labelVar2Unit2
+			// textBoxVelocityValue
 			// 
-			this.labelVar2Unit2.AutoSize = true;
-			this.labelVar2Unit2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelVar2Unit2.Location = new System.Drawing.Point(82, 54);
-			this.labelVar2Unit2.Name = "labelVar2Unit2";
-			this.labelVar2Unit2.Size = new System.Drawing.Size(35, 20);
-			this.labelVar2Unit2.TabIndex = 5;
-			this.labelVar2Unit2.Text = "unit";
+			this.textBoxVelocityValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxVelocityValue.Location = new System.Drawing.Point(6, 51);
+			this.textBoxVelocityValue.Name = "textBoxVelocityValue";
+			this.textBoxVelocityValue.ReadOnly = true;
+			this.textBoxVelocityValue.Size = new System.Drawing.Size(70, 26);
+			this.textBoxVelocityValue.TabIndex = 1;
+			this.textBoxVelocityValue.Text = "0.000";
 			// 
-			// labelVar2Unit1
+			// textBoxVelocitySetpoint
 			// 
-			this.labelVar2Unit1.AutoSize = true;
-			this.labelVar2Unit1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelVar2Unit1.Location = new System.Drawing.Point(82, 22);
-			this.labelVar2Unit1.Name = "labelVar2Unit1";
-			this.labelVar2Unit1.Size = new System.Drawing.Size(35, 20);
-			this.labelVar2Unit1.TabIndex = 4;
-			this.labelVar2Unit1.Text = "unit";
+			this.textBoxVelocitySetpoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxVelocitySetpoint.Location = new System.Drawing.Point(6, 19);
+			this.textBoxVelocitySetpoint.Name = "textBoxVelocitySetpoint";
+			this.textBoxVelocitySetpoint.ReadOnly = true;
+			this.textBoxVelocitySetpoint.Size = new System.Drawing.Size(70, 26);
+			this.textBoxVelocitySetpoint.TabIndex = 0;
+			this.textBoxVelocitySetpoint.Text = "0.000";
 			// 
-			// textBoxGasMixValue
+			// groupBoxPressure
 			// 
-			this.textBoxGasMixValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.textBoxGasMixValue.Location = new System.Drawing.Point(6, 51);
-			this.textBoxGasMixValue.Name = "textBoxGasMixValue";
-			this.textBoxGasMixValue.ReadOnly = true;
-			this.textBoxGasMixValue.Size = new System.Drawing.Size(70, 26);
-			this.textBoxGasMixValue.TabIndex = 1;
-			this.textBoxGasMixValue.Text = "0.000";
+			this.groupBoxPressure.AutoSize = true;
+			this.groupBoxPressure.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.groupBoxPressure.Controls.Add(this.label5);
+			this.groupBoxPressure.Controls.Add(this.label6);
+			this.groupBoxPressure.Controls.Add(this.textBoxPressureValue);
+			this.groupBoxPressure.Controls.Add(this.textBoxPressureSetpoint);
+			this.groupBoxPressure.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.groupBoxPressure.Location = new System.Drawing.Point(3, 111);
+			this.groupBoxPressure.Name = "groupBoxPressure";
+			this.groupBoxPressure.Size = new System.Drawing.Size(124, 102);
+			this.groupBoxPressure.TabIndex = 8;
+			this.groupBoxPressure.TabStop = false;
+			this.groupBoxPressure.Text = "Pressure";
 			// 
-			// textBoxGasMixSetpoint
+			// label5
 			// 
-			this.textBoxGasMixSetpoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.textBoxGasMixSetpoint.Location = new System.Drawing.Point(6, 19);
-			this.textBoxGasMixSetpoint.Name = "textBoxGasMixSetpoint";
-			this.textBoxGasMixSetpoint.ReadOnly = true;
-			this.textBoxGasMixSetpoint.Size = new System.Drawing.Size(70, 26);
-			this.textBoxGasMixSetpoint.TabIndex = 0;
-			this.textBoxGasMixSetpoint.Text = "0.000";
+			this.label5.AutoSize = true;
+			this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label5.Location = new System.Drawing.Point(82, 54);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(36, 20);
+			this.label5.TabIndex = 5;
+			this.label5.Text = "kPa";
+			// 
+			// label6
+			// 
+			this.label6.AutoSize = true;
+			this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label6.Location = new System.Drawing.Point(82, 22);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(36, 20);
+			this.label6.TabIndex = 4;
+			this.label6.Text = "kPa";
+			// 
+			// textBoxPressureValue
+			// 
+			this.textBoxPressureValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxPressureValue.Location = new System.Drawing.Point(6, 51);
+			this.textBoxPressureValue.Name = "textBoxPressureValue";
+			this.textBoxPressureValue.ReadOnly = true;
+			this.textBoxPressureValue.Size = new System.Drawing.Size(70, 26);
+			this.textBoxPressureValue.TabIndex = 1;
+			this.textBoxPressureValue.Text = "0.000";
+			// 
+			// textBoxPressureSetpoint
+			// 
+			this.textBoxPressureSetpoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxPressureSetpoint.Location = new System.Drawing.Point(6, 19);
+			this.textBoxPressureSetpoint.Name = "textBoxPressureSetpoint";
+			this.textBoxPressureSetpoint.ReadOnly = true;
+			this.textBoxPressureSetpoint.Size = new System.Drawing.Size(70, 26);
+			this.textBoxPressureSetpoint.TabIndex = 0;
+			this.textBoxPressureSetpoint.Text = "0.000";
+			// 
+			// groupBoxTemperature
+			// 
+			this.groupBoxTemperature.AutoSize = true;
+			this.groupBoxTemperature.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.groupBoxTemperature.Controls.Add(this.label7);
+			this.groupBoxTemperature.Controls.Add(this.label8);
+			this.groupBoxTemperature.Controls.Add(this.textBoxTempValue);
+			this.groupBoxTemperature.Controls.Add(this.textBoxTempSetpoint);
+			this.groupBoxTemperature.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.groupBoxTemperature.Location = new System.Drawing.Point(133, 111);
+			this.groupBoxTemperature.Name = "groupBoxTemperature";
+			this.groupBoxTemperature.Size = new System.Drawing.Size(113, 102);
+			this.groupBoxTemperature.TabIndex = 9;
+			this.groupBoxTemperature.TabStop = false;
+			this.groupBoxTemperature.Text = "Temp";
+			// 
+			// label7
+			// 
+			this.label7.AutoSize = true;
+			this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label7.Location = new System.Drawing.Point(82, 54);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(25, 20);
+			this.label7.TabIndex = 5;
+			this.label7.Text = "°C";
+			// 
+			// label8
+			// 
+			this.label8.AutoSize = true;
+			this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label8.Location = new System.Drawing.Point(82, 22);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(25, 20);
+			this.label8.TabIndex = 4;
+			this.label8.Text = "°C";
+			// 
+			// textBoxTempValue
+			// 
+			this.textBoxTempValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxTempValue.Location = new System.Drawing.Point(6, 51);
+			this.textBoxTempValue.Name = "textBoxTempValue";
+			this.textBoxTempValue.ReadOnly = true;
+			this.textBoxTempValue.Size = new System.Drawing.Size(70, 26);
+			this.textBoxTempValue.TabIndex = 1;
+			this.textBoxTempValue.Text = "0.000";
+			// 
+			// textBoxTempSetpoint
+			// 
+			this.textBoxTempSetpoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxTempSetpoint.Location = new System.Drawing.Point(6, 19);
+			this.textBoxTempSetpoint.Name = "textBoxTempSetpoint";
+			this.textBoxTempSetpoint.ReadOnly = true;
+			this.textBoxTempSetpoint.Size = new System.Drawing.Size(70, 26);
+			this.textBoxTempSetpoint.TabIndex = 0;
+			this.textBoxTempSetpoint.Text = "0.000";
+			// 
+			// groupBoxCurrent
+			// 
+			this.groupBoxCurrent.AutoSize = true;
+			this.groupBoxCurrent.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.groupBoxCurrent.Controls.Add(this.label9);
+			this.groupBoxCurrent.Controls.Add(this.label10);
+			this.groupBoxCurrent.Controls.Add(this.textBoxCurrentValue);
+			this.groupBoxCurrent.Controls.Add(this.textBoxCurrentSetpoint);
+			this.groupBoxCurrent.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.groupBoxCurrent.Location = new System.Drawing.Point(252, 111);
+			this.groupBoxCurrent.Name = "groupBoxCurrent";
+			this.groupBoxCurrent.Size = new System.Drawing.Size(121, 102);
+			this.groupBoxCurrent.TabIndex = 10;
+			this.groupBoxCurrent.TabStop = false;
+			this.groupBoxCurrent.Text = "Current";
+			// 
+			// label9
+			// 
+			this.label9.AutoSize = true;
+			this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label9.Location = new System.Drawing.Point(82, 54);
+			this.label9.Name = "label9";
+			this.label9.Size = new System.Drawing.Size(33, 20);
+			this.label9.TabIndex = 5;
+			this.label9.Text = "mA";
+			// 
+			// label10
+			// 
+			this.label10.AutoSize = true;
+			this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label10.Location = new System.Drawing.Point(82, 22);
+			this.label10.Name = "label10";
+			this.label10.Size = new System.Drawing.Size(33, 20);
+			this.label10.TabIndex = 4;
+			this.label10.Text = "mA";
+			// 
+			// textBoxCurrentValue
+			// 
+			this.textBoxCurrentValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxCurrentValue.Location = new System.Drawing.Point(6, 51);
+			this.textBoxCurrentValue.Name = "textBoxCurrentValue";
+			this.textBoxCurrentValue.ReadOnly = true;
+			this.textBoxCurrentValue.Size = new System.Drawing.Size(70, 26);
+			this.textBoxCurrentValue.TabIndex = 1;
+			this.textBoxCurrentValue.Text = "0.000";
+			// 
+			// textBoxCurrentSetpoint
+			// 
+			this.textBoxCurrentSetpoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxCurrentSetpoint.Location = new System.Drawing.Point(6, 19);
+			this.textBoxCurrentSetpoint.Name = "textBoxCurrentSetpoint";
+			this.textBoxCurrentSetpoint.ReadOnly = true;
+			this.textBoxCurrentSetpoint.Size = new System.Drawing.Size(70, 26);
+			this.textBoxCurrentSetpoint.TabIndex = 0;
+			this.textBoxCurrentSetpoint.Text = "0.000";
+			// 
+			// groupBoxVoltage
+			// 
+			this.groupBoxVoltage.AutoSize = true;
+			this.groupBoxVoltage.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.groupBoxVoltage.Controls.Add(this.label11);
+			this.groupBoxVoltage.Controls.Add(this.label12);
+			this.groupBoxVoltage.Controls.Add(this.textBoxVoltageValue);
+			this.groupBoxVoltage.Controls.Add(this.textBoxVoltageSetpoint);
+			this.groupBoxVoltage.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.groupBoxVoltage.Location = new System.Drawing.Point(379, 111);
+			this.groupBoxVoltage.Name = "groupBoxVoltage";
+			this.groupBoxVoltage.Size = new System.Drawing.Size(108, 102);
+			this.groupBoxVoltage.TabIndex = 11;
+			this.groupBoxVoltage.TabStop = false;
+			this.groupBoxVoltage.Text = "Voltage";
+			// 
+			// label11
+			// 
+			this.label11.AutoSize = true;
+			this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label11.Location = new System.Drawing.Point(82, 54);
+			this.label11.Name = "label11";
+			this.label11.Size = new System.Drawing.Size(20, 20);
+			this.label11.TabIndex = 5;
+			this.label11.Text = "V";
+			// 
+			// label12
+			// 
+			this.label12.AutoSize = true;
+			this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label12.Location = new System.Drawing.Point(82, 22);
+			this.label12.Name = "label12";
+			this.label12.Size = new System.Drawing.Size(20, 20);
+			this.label12.TabIndex = 4;
+			this.label12.Text = "V";
+			// 
+			// textBoxVoltageValue
+			// 
+			this.textBoxVoltageValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxVoltageValue.Location = new System.Drawing.Point(6, 51);
+			this.textBoxVoltageValue.Name = "textBoxVoltageValue";
+			this.textBoxVoltageValue.ReadOnly = true;
+			this.textBoxVoltageValue.Size = new System.Drawing.Size(70, 26);
+			this.textBoxVoltageValue.TabIndex = 1;
+			this.textBoxVoltageValue.Text = "0.000";
+			// 
+			// textBoxVoltageSetpoint
+			// 
+			this.textBoxVoltageSetpoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.textBoxVoltageSetpoint.Location = new System.Drawing.Point(6, 19);
+			this.textBoxVoltageSetpoint.Name = "textBoxVoltageSetpoint";
+			this.textBoxVoltageSetpoint.ReadOnly = true;
+			this.textBoxVoltageSetpoint.Size = new System.Drawing.Size(70, 26);
+			this.textBoxVoltageSetpoint.TabIndex = 0;
+			this.textBoxVoltageSetpoint.Text = "0.000";
 			// 
 			// FormCalibration
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoSize = true;
-			this.ClientSize = new System.Drawing.Size(534, 359);
+			this.ClientSize = new System.Drawing.Size(559, 361);
 			this.Controls.Add(this.tabControl1);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.menuStrip1);
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "FormCalibration";
-			this.Text = "Calibration App";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormCalibration_FormClosing);
 			this.tabControl1.ResumeLayout(false);
 			this.tabPageTest.ResumeLayout(false);
@@ -894,10 +1271,6 @@
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.tabPageStatus.ResumeLayout(false);
-			this.statusStrip1.ResumeLayout(false);
-			this.statusStrip1.PerformLayout();
-			this.menuStrip1.ResumeLayout(false);
-			this.menuStrip1.PerformLayout();
 			this.groupBoxVariables.ResumeLayout(false);
 			this.flowLayoutPanelControlledVariables.ResumeLayout(false);
 			this.flowLayoutPanelControlledVariables.PerformLayout();
@@ -905,6 +1278,22 @@
 			this.groupBoxMassFlow.PerformLayout();
 			this.groupBoxGasMix.ResumeLayout(false);
 			this.groupBoxGasMix.PerformLayout();
+			this.statusStrip1.ResumeLayout(false);
+			this.statusStrip1.PerformLayout();
+			this.menuStrip1.ResumeLayout(false);
+			this.menuStrip1.PerformLayout();
+			this.groupBoxVolumeFlow.ResumeLayout(false);
+			this.groupBoxVolumeFlow.PerformLayout();
+			this.groupBoxVelocity.ResumeLayout(false);
+			this.groupBoxVelocity.PerformLayout();
+			this.groupBoxPressure.ResumeLayout(false);
+			this.groupBoxPressure.PerformLayout();
+			this.groupBoxTemperature.ResumeLayout(false);
+			this.groupBoxTemperature.PerformLayout();
+			this.groupBoxCurrent.ResumeLayout(false);
+			this.groupBoxCurrent.PerformLayout();
+			this.groupBoxVoltage.ResumeLayout(false);
+			this.groupBoxVoltage.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -982,6 +1371,36 @@
 		private System.Windows.Forms.Label labelVar2Unit1;
 		private System.Windows.Forms.TextBox textBoxGasMixValue;
 		private System.Windows.Forms.TextBox textBoxGasMixSetpoint;
+		private System.Windows.Forms.GroupBox groupBoxVolumeFlow;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.TextBox textBoxVolumeFlowValue;
+		private System.Windows.Forms.TextBox textBoxVolumeFlowSetpoint;
+		private System.Windows.Forms.GroupBox groupBoxVelocity;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.TextBox textBoxVelocityValue;
+		private System.Windows.Forms.TextBox textBoxVelocitySetpoint;
+		private System.Windows.Forms.GroupBox groupBoxPressure;
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.TextBox textBoxPressureValue;
+		private System.Windows.Forms.TextBox textBoxPressureSetpoint;
+		private System.Windows.Forms.GroupBox groupBoxTemperature;
+		private System.Windows.Forms.Label label7;
+		private System.Windows.Forms.Label label8;
+		private System.Windows.Forms.TextBox textBoxTempValue;
+		private System.Windows.Forms.TextBox textBoxTempSetpoint;
+		private System.Windows.Forms.GroupBox groupBoxCurrent;
+		private System.Windows.Forms.Label label9;
+		private System.Windows.Forms.Label label10;
+		private System.Windows.Forms.TextBox textBoxCurrentValue;
+		private System.Windows.Forms.TextBox textBoxCurrentSetpoint;
+		private System.Windows.Forms.GroupBox groupBoxVoltage;
+		private System.Windows.Forms.Label label11;
+		private System.Windows.Forms.Label label12;
+		private System.Windows.Forms.TextBox textBoxVoltageValue;
+		private System.Windows.Forms.TextBox textBoxVoltageSetpoint;
 	}
 }
 

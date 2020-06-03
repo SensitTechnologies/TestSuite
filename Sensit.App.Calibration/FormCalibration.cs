@@ -137,35 +137,6 @@ namespace Sensit.App.Calibration
 			}
 		}
 
-		/// <summary>
-		/// Helper method to configure the Error and Rate charts.
-		/// </summary>
-		/// <param name="chart">which chart to update (either chartError or chartRate)</param>
-		/// <param name="max">high value of green area</param>
-		/// <param name="min">low value of green area</param>
-		private static void StatusChartUpdate(System.Windows.Forms.DataVisualization.Charting.Chart chart, double min, double max)
-		{
-			// Update the chart's Y-axis.  Total distance shown on chart is 5 times the difference between max and min.
-			chart.ChartAreas[0].AxisY.Maximum = max + 2 * (max - min);
-			chart.ChartAreas[0].AxisY.Minimum = min - 2 * (max - min);
-
-			// Update the strip lines (the colored areas on the chart).
-			// The interval offset property sets the lower bound of the strip line on the axis.
-			chart.ChartAreas[0].AxisY.StripLines[4].IntervalOffset = max + 1 * (max - min);
-			chart.ChartAreas[0].AxisY.StripLines[3].IntervalOffset = max;
-			chart.ChartAreas[0].AxisY.StripLines[2].IntervalOffset = min;
-			chart.ChartAreas[0].AxisY.StripLines[1].IntervalOffset = min - 1 * (max - min);
-			chart.ChartAreas[0].AxisY.StripLines[0].IntervalOffset = min - 2 * (max - min);
-
-			// Set the width of the strip lines.
-			// Each strip line has width equal to the difference between max and min.
-			chart.ChartAreas[0].AxisY.StripLines[4].StripWidth = max - min;
-			chart.ChartAreas[0].AxisY.StripLines[3].StripWidth = max - min;
-			chart.ChartAreas[0].AxisY.StripLines[2].StripWidth = max - min;
-			chart.ChartAreas[0].AxisY.StripLines[1].StripWidth = max - min;
-			chart.ChartAreas[0].AxisY.StripLines[0].StripWidth = max - min;
-		}
-
 		#endregion
 
 		#region Constructor
@@ -981,11 +952,29 @@ namespace Sensit.App.Calibration
 			// Update the status message.
 			toolStripStatusLabel1.Text = message;
 
-			// TODO:  Update variables; right now it throws exception because keys don't exist.
-			//textBoxMassFlowSetpoint.Text = _test.Variables[].Setpoint.ToString();
-			//textBoxMassFlowValue.Text = _test.Variables[VariableType.MassFlow].Value.ToString();
-			//textBoxGasMixSetpoint.Text = _test.Variables[VariableType.GasConcentration].Setpoint.ToString();
-			//textBoxGasMixValue.Text = _test.Variables[VariableType.GasConcentration].Setpoint.ToString();
+			// Update variables in "Status" tab.
+			UpdateVariable(groupBoxGasMix, textBoxGasMixSetpoint, textBoxGasMixValue, VariableType.GasConcentration);
+			UpdateVariable(groupBoxMassFlow, textBoxMassFlowSetpoint, textBoxMassFlowValue, VariableType.MassFlow);
+			UpdateVariable(groupBoxVolumeFlow, textBoxVolumeFlowSetpoint, textBoxVolumeFlowValue, VariableType.VolumeFlow);
+			UpdateVariable(groupBoxVelocity, textBoxVelocitySetpoint, textBoxVelocityValue, VariableType.Velocity);
+			UpdateVariable(groupBoxPressure, textBoxPressureSetpoint, textBoxPressureValue, VariableType.Pressure);
+			UpdateVariable(groupBoxTemperature, textBoxTempSetpoint, textBoxTempValue, VariableType.Temperature);
+			UpdateVariable(groupBoxCurrent, textBoxCurrentSetpoint, textBoxCurrentValue, VariableType.Current);
+			UpdateVariable(groupBoxVoltage, textBoxVoltageSetpoint, textBoxVoltageValue, VariableType.Voltage);
+		}
+
+		private void UpdateVariable(GroupBox groupBox, TextBox setpoint, TextBox value, VariableType variableType)
+		{
+			if (_test.Variables.ContainsKey(variableType))
+			{
+				groupBox.Visible = true;
+				setpoint.Text = _test.Variables[variableType].Setpoint.ToString();
+				value.Text = _test.Variables[variableType].Value.ToString();
+			}
+			else
+			{
+				groupBox.Visible = false;
+			}
 		}
 
 		/// <summary>
