@@ -308,6 +308,7 @@ namespace Sensit.App.Calibration
 				// If the reading is out of tolerance...
 				if (Math.Abs(setpoint - reading) > v.ErrorTolerance)
 				{
+					// TODO:  Control all variables, not just one.
 					// Attempt to achieve the setpoint again.
 					ProcessSetpoint(v, setpoint, v.Interval);
 				}
@@ -368,6 +369,12 @@ namespace Sensit.App.Calibration
 			// Update GUI.
 			_testThread.ReportProgress(PercentProgress, "Setting setpoint...");
 
+			// If gas mix, apply the multiplier.
+			if (variable.VariableType == VariableType.GasConcentration)
+			{
+				setpoint *= Convert.ToDouble(GasMixRange / 100);
+			}
+
 			// Set setpoint.
 			_equipment.Controllers[variable.VariableType].WriteSetpoint(variable.VariableType, setpoint);
 
@@ -416,17 +423,18 @@ namespace Sensit.App.Calibration
 
 				// Update the GUI.
 				Variables[variable.VariableType] = (Convert.ToDecimal(reading), Convert.ToDecimal(setpoint));
-				string message = "Waiting for stability...";
+				string message = string.Empty;
 
 				// If tolerance has been exceeded, reset the stability time.
 				if (Math.Abs(error) > variable.ErrorTolerance)
 				{
+					message = "Waiting for stability...";
 					stopwatch.Restart();
 				}
 				else if (variable.DwellTime > new TimeSpan(0, 0, 0))
 				{
 					// Update GUI (include dwell time if applicable).
-					message += "dwell time left:  " + (variable.DwellTime - stopwatch.Elapsed).ToString(@"hh\:mm\:ss");
+					message = "Dwell time left:  " + (variable.DwellTime - stopwatch.Elapsed).ToString(@"hh\:mm\:ss");
 
 					// Reset the timeout stopwatch.
 					timeoutWatch.Restart();
@@ -497,15 +505,8 @@ namespace Sensit.App.Calibration
 					// For each setpoint...
 					foreach (double sp in v?.Setpoints ?? Enumerable.Empty<double>())
 					{
-						double setpoint = sp;
-						// If gas mix, apply the multiplier.
-						if (v.VariableType == VariableType.GasConcentration)
-						{
-							setpoint *= Convert.ToDouble(GasMixRange / 100);
-						}
-
 						// Set the setpoint.
-						ProcessSetpoint(v, setpoint, v.Interval);
+						ProcessSetpoint(v, sp, v.Interval);
 
 						// For each sample...
 						for (int i = 1; i <= v.Samples; i++)
@@ -526,7 +527,7 @@ namespace Sensit.App.Calibration
 							}
 
 							// Record sample data.
-							ProcessSamples(setpoint);
+							ProcessSamples(sp);
 
 							// Wait to get desired reading frequency.
 							Thread.Sleep(v.Interval);
