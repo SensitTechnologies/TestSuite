@@ -15,7 +15,7 @@ namespace Sensit.App.Calibration
 		public VariableType VariableType { get; set; }
 
 		[Category("Test Variable"), Description("Error tolerance around setpoints [% full scale].  If exceeded, Stability Time will reset.")]
-		public double ErrorTolerance { get; set; } = 2.0;
+		public double ErrorTolerance { get; set; } = 5.0;
 
 		[Category("Test Variable"), Description("Tolerated rate of change of setpoints [% full scale / s].  If exceeded, Stability Time will reset.")]
 		public double RateTolerance { get; set; } = 0.5;
