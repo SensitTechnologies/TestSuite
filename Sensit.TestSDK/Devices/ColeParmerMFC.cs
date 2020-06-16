@@ -343,44 +343,47 @@ namespace Sensit.TestSDK.Devices
 
 		public void Read()
 		{
-			try
+			if (Enabled)
 			{
-				// Read (when in polling mode) by sending the device address.
-				Port.WriteLine(ADDRESS.ToString());
-
-				// Read from the serial port (until we get a \r character).
-				string message = Port.ReadLine();
-
-				// Split the string using spaces to separate each word.
-				char[] separators = new char[] { ' ' };
-				string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-
-				// Check the address.
-				if (string.Compare(words[0], ADDRESS.ToString()) != 0)
+				try
 				{
-					throw new DeviceCommunicationException("Could not read from mass flow controller."
-					+ Environment.NewLine + "Incorrect device ID");
+					// Read (when in polling mode) by sending the device address.
+					Port.WriteLine(ADDRESS.ToString());
+
+					// Read from the serial port (until we get a \r character).
+					string message = Port.ReadLine();
+
+					// Split the string using spaces to separate each word.
+					char[] separators = new char[] { ' ' };
+					string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+
+					// Check the address.
+					if (string.Compare(words[0], ADDRESS.ToString()) != 0)
+					{
+						throw new DeviceCommunicationException("Could not read from mass flow controller."
+						+ Environment.NewLine + "Incorrect device ID");
+					}
+
+					// Figure out which is which and update class properties.
+					Readings[VariableType.Pressure] = Convert.ToSingle(words[1]);
+					Readings[VariableType.Temperature] = Convert.ToSingle(words[2]);
+					Readings[VariableType.VolumeFlow] = Convert.ToSingle(words[3]);
+					Readings[VariableType.MassFlow] = Convert.ToSingle(words[4]);
+
+					// Probably don't update the control properties.
+					//Setpoint = Convert.ToSingle(words[5]);
+					//GasSelection = words[6];
 				}
-
-				// Figure out which is which and update class properties.
-				Readings[VariableType.Pressure] = Convert.ToSingle(words[1]);
-				Readings[VariableType.Temperature] = Convert.ToSingle(words[2]);
-				Readings[VariableType.VolumeFlow] = Convert.ToSingle(words[3]);
-				Readings[VariableType.MassFlow] = Convert.ToSingle(words[4]);
-
-				// Probably don't update the control properties.
-				//Setpoint = Convert.ToSingle(words[5]);
-				//GasSelection = words[6];
-			}
-			catch (InvalidOperationException ex)
-			{
-				throw new DevicePortException("Could not read from mass flow controller."
-					+ Environment.NewLine + ex.Message);
-			}
-			catch (TimeoutException ex)
-			{
-				throw new DeviceCommunicationException("No response from mass flow controller."
-					+ Environment.NewLine + ex.Message);
+				catch (InvalidOperationException ex)
+				{
+					throw new DevicePortException("Could not read from mass flow controller."
+						+ Environment.NewLine + ex.Message);
+				}
+				catch (TimeoutException ex)
+				{
+					throw new DeviceCommunicationException("No response from mass flow controller."
+						+ Environment.NewLine + ex.Message);
+				}
 			}
 		}
 
@@ -390,56 +393,62 @@ namespace Sensit.TestSDK.Devices
 
 		public void WriteSetpoint(VariableType type, double setpoint)
 		{
-			if (type != VariableType.MassFlow)
+			if (Enabled)
 			{
-				throw new DeviceSettingNotSupportedException("Cole Parmer MFC does not support requested setpoint.");
+				if (type != VariableType.MassFlow)
+				{
+					throw new DeviceSettingNotSupportedException("Cole Parmer MFC does not support requested setpoint.");
+				}
+
+				// Check for valid setpoint values.
+				if (setpoint < 0.0)
+				{
+					throw new DeviceOutOfRangeException("Mass Flow Controller setpoint must be greater than or equal to 0."
+						+ Environment.NewLine + "Attempted setpoint was:  " + setpoint);
+				}
+
+				_massFlowSetpoint = setpoint;
+
+				WriteMassFlowSetpoint(type, _massFlowSetpoint);
 			}
-
-			// Check for valid setpoint values.
-			if (setpoint < 0.0)
-			{
-				throw new DeviceOutOfRangeException("Mass Flow Controller setpoint must be greater than or equal to 0."
-					+ Environment.NewLine + "Attempted setpoint was:  " + setpoint);
-			}
-
-			_massFlowSetpoint = setpoint;
-
-			WriteMassFlowSetpoint(type, _massFlowSetpoint);
 		}
 
 		private void WriteMassFlowSetpoint(VariableType type, double setpoint)
 		{
-			try
+			if (Enabled)
 			{
-				// "AS4.54" = Set setpoint to 4.54 on device A.
-				Port.WriteLine(ADDRESS + Command.SetSetpoint + setpoint.ToString());
-
-				// Read the response from the serial port (until we get a \r character).
-				string message = Port.ReadLine();
-
-				// Split the string using spaces to separate each word.
-				char[] separators = new char[] { ' ' };
-				string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-				float returnedValue = Convert.ToSingle(words[5]);
-
-				// Check the setpoint.
-				// Had trouble with this statment.  Neither Double.Epsilon or double.Equals work.
-				// So I ensure the difference is less than 1.
-				if (Math.Abs(returnedValue - setpoint) > 1.0)
+				try
 				{
-					throw new DeviceCommunicationException("Could not write setpoint (" + setpoint.ToString() + ") to mass flow controller."
-						+ Environment.NewLine + "Value read from instrument (" + returnedValue.ToString() + ") was incorrect.");
+					// "AS4.54" = Set setpoint to 4.54 on device A.
+					Port.WriteLine(ADDRESS + Command.SetSetpoint + setpoint.ToString());
+
+					// Read the response from the serial port (until we get a \r character).
+					string message = Port.ReadLine();
+
+					// Split the string using spaces to separate each word.
+					char[] separators = new char[] { ' ' };
+					string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+					float returnedValue = Convert.ToSingle(words[5]);
+
+					// Check the setpoint.
+					// Had trouble with this statment.  Neither Double.Epsilon or double.Equals work.
+					// So I ensure the difference is less than 1.
+					if (Math.Abs(returnedValue - setpoint) > 1.0)
+					{
+						throw new DeviceCommunicationException("Could not write setpoint (" + setpoint.ToString() + ") to mass flow controller."
+							+ Environment.NewLine + "Value read from instrument (" + returnedValue.ToString() + ") was incorrect.");
+					}
 				}
-			}
-			catch (InvalidOperationException ex)
-			{
-				throw new DevicePortException("Could not write setpoint to mass flow controller."
-					+ Environment.NewLine + ex.Message);
-			}
-			catch (TimeoutException ex)
-			{
-				throw new DeviceCommunicationException("No response from mass flow controller."
-					+ Environment.NewLine + ex.Message);
+				catch (InvalidOperationException ex)
+				{
+					throw new DevicePortException("Could not write setpoint to mass flow controller."
+						+ Environment.NewLine + ex.Message);
+				}
+				catch (TimeoutException ex)
+				{
+					throw new DeviceCommunicationException("No response from mass flow controller."
+						+ Environment.NewLine + ex.Message);
+				}
 			}
 		}
 
@@ -450,57 +459,67 @@ namespace Sensit.TestSDK.Devices
 
 		private double ReadMassFlowSetpoint(VariableType type)
 		{
-			try
+			if (Enabled)
 			{
-				// Read (when in polling mode) by sending the device address.
-				Port.WriteLine(ADDRESS.ToString());
+				try
+				{
+					// Read (when in polling mode) by sending the device address.
+					Port.WriteLine(ADDRESS.ToString());
 
-				// Read from the serial port (until we get a \r character).
-				string message = Port.ReadLine();
+					// Read from the serial port (until we get a \r character).
+					string message = Port.ReadLine();
 
-				// Split the string using spaces to separate each word.
-				char[] separators = new char[] { ' ' };
-				string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+					// Split the string using spaces to separate each word.
+					char[] separators = new char[] { ' ' };
+					string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
 
-				// Convert the setpoint to a number and set the property.
-				double setpoint = Convert.ToSingle(words[5]);
+					// Convert the setpoint to a number and set the property.
+					double setpoint = Convert.ToSingle(words[5]);
 
-				// Return the setpoint in case the user wants it.
-				return setpoint;
+					// Return the setpoint in case the user wants it.
+					return setpoint;
+				}
+				catch (InvalidOperationException ex)
+				{
+					throw new DevicePortException("Could not read setpoint from mass flow controller."
+						+ Environment.NewLine + ex.Message);
+				}
+				catch (TimeoutException ex)
+				{
+					throw new DeviceCommunicationException("No response from mass flow controller."
+						+ Environment.NewLine + ex.Message);
+				}
+				catch (FormatException ex)
+				{
+					throw new DeviceCommunicationException("Could not read setpoint from mass flow controller."
+						+ Environment.NewLine + "Incorrect response."
+						+ Environment.NewLine + ex.Message);
+				}
 			}
-			catch (InvalidOperationException ex)
+			else
 			{
-				throw new DevicePortException("Could not read setpoint from mass flow controller."
-					+ Environment.NewLine + ex.Message);
-			}
-			catch (TimeoutException ex)
-			{
-				throw new DeviceCommunicationException("No response from mass flow controller."
-					+ Environment.NewLine + ex.Message);
-			}
-			catch (FormatException ex)
-			{
-				throw new DeviceCommunicationException("Could not read setpoint from mass flow controller."
-					+ Environment.NewLine + "Incorrect response."
-					+ Environment.NewLine + ex.Message);
+				return 0.0;
 			}
 		}
 
 		public void SetControlMode(ControlMode mode)
 		{
-			switch (mode)
+			if (Enabled)
 			{
-				case ControlMode.Passive:
-					// There's not really a measure mode; just set a setpoint of zero.
-					WriteMassFlowSetpoint(VariableType.MassFlow, 0.0);
-					break;
-				case ControlMode.Active:
-					// In control mode, just update the setpoint.
-					WriteMassFlowSetpoint(VariableType.MassFlow, _massFlowSetpoint);
-					break;
-				default:
-					throw new DeviceSettingNotSupportedException("Cannot set mass flow controller control mode:"
-						+ Environment.NewLine + "Unrecognized mode.");
+				switch (mode)
+				{
+					case ControlMode.Passive:
+						// There's not really a measure mode; just set a setpoint of zero.
+						WriteMassFlowSetpoint(VariableType.MassFlow, 0.0);
+						break;
+					case ControlMode.Active:
+						// In control mode, just update the setpoint.
+						WriteMassFlowSetpoint(VariableType.MassFlow, _massFlowSetpoint);
+						break;
+					default:
+						throw new DeviceSettingNotSupportedException("Cannot set mass flow controller control mode:"
+							+ Environment.NewLine + "Unrecognized mode.");
+				}
 			}
 		}
 
