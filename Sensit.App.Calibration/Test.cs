@@ -79,7 +79,7 @@ namespace Sensit.App.Calibration
 				// Check for overflow or underflow.
 				if ((percent < 0) || (percent > 100))
 				{
-					throw new TestException("Percent progress is out of range; please contact Engineering."
+					throw new TestException("Percent progress is out of range."
 						+ Environment.NewLine + "Steps Complete:  " + _samplesComplete.ToString()
 						+ Environment.NewLine + "Steps Total:  " + _samplesTotal.ToString());
 				}
@@ -593,9 +593,16 @@ namespace Sensit.App.Calibration
 						_equipment.DutInterface.Configure();
 					}
 
-					// Perform test actions.
-					ProcessTest();
-				} while (Repeat && (_testThread.CancellationPending == false));
+					// Repeat test if requested.
+					while (Repeat && (_testThread.CancellationPending == false))
+					{
+						// Initialize number of samples taken.
+						_samplesComplete = 0;
+
+						// Perform test actions.
+						ProcessTest();
+					}
+				} while (false);
 			}
 			catch (Exception ex)
 			{
