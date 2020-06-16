@@ -297,8 +297,14 @@ namespace Sensit.App.Calibration
 				_equipment.DutInterface.Channels.AddRange(new bool[NumDuts]);
 
 				// TODO:  Fetch all equipment controls, not just power supply.
-				CheckBox checkBoxPowerSupply = tableLayoutPanelEquipment.GetControlFromPosition(DUT_COLUMN_CHECKBOX, 0) as CheckBox;
-				_equipment.UsePowerSupply = checkBoxPowerSupply.Checked;
+				CheckBox checkBoxGasMixer = tableLayoutPanelEquipment.GetControlFromPosition(DUT_COLUMN_CHECKBOX, 0) as CheckBox;
+				_equipment.UseGasMixer = checkBoxGasMixer.Checked;
+
+				CheckBox checkBoxMassFlow = tableLayoutPanelEquipment.GetControlFromPosition(DUT_COLUMN_CHECKBOX, 1) as CheckBox;
+				_equipment.UseMassFlow = checkBoxMassFlow.Checked;
+
+				CheckBox checkBoxVoltage = tableLayoutPanelEquipment.GetControlFromPosition(DUT_COLUMN_CHECKBOX, 1) as CheckBox;
+				_equipment.UsePowerSupply = checkBoxVoltage.Checked;
 
 				// Create objects for each DUT.
 				_duts.Clear();

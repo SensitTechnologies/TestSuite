@@ -46,6 +46,10 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		public bool UsePowerSupply { get; set; } = false;
 
+		public bool UseMassFlow { get; set; } = false;
+
+		public bool UseGasMixer { get; set; } = false;
+
 		public Dictionary<VariableType, IControlDevice> Controllers { get; }
 
 		public Dictionary<VariableType, IReferenceDevice> References { get; }
@@ -100,8 +104,11 @@ namespace Sensit.App.Calibration
 			_useDatalogger = useDatalogger;
 
 			// Configure the mass flow controllers.
-			_mfcAnalyte?.Open(_settings.GasMixer.AnalyteMFC.SerialPort);
-			_mfcDiluent?.Open(_settings.GasMixer.DiluentMFC.SerialPort);
+			if ((UseGasMixer) && (_mfcAnalyte != null) && (_mfcDiluent != null))
+			{
+				_mfcAnalyte?.Open(_settings.GasMixer.AnalyteMFC.SerialPort);
+				_mfcDiluent?.Open(_settings.GasMixer.DiluentMFC.SerialPort);
+			}
 
 			// Configure the datalogger.
 			if ((_useDatalogger == true) && (_datalogger != null))
@@ -123,7 +130,10 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		public void Read()
 		{
-			_gasMixer?.Read();
+			if (UseGasMixer)
+			{
+				_gasMixer?.Read();
+			}
 
 			if (_useDatalogger == true)
 			{
