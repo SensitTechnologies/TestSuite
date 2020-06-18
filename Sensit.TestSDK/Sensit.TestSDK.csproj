@@ -239,7 +239,6 @@
     <Compile Include="Interfaces\IControlDevice.cs" />
     <Compile Include="Interfaces\IDatalogger.cs" />
     <Compile Include="Interfaces\IReferenceDevice.cs" />
-    <Compile Include="Logger\Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Office\Excel\Excel.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
