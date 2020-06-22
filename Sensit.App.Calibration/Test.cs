@@ -594,14 +594,14 @@ namespace Sensit.App.Calibration
 					}
 
 					// Repeat test if requested.
-					while (Repeat && (_testThread.CancellationPending == false))
+					do
 					{
 						// Initialize number of samples taken.
 						_samplesComplete = 0;
 
 						// Perform test actions.
 						ProcessTest();
-					}
+					} while (Repeat && (_testThread.CancellationPending == false));
 				} while (false);
 			}
 			catch (Exception ex)
