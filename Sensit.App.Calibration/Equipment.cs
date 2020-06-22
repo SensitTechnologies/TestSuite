@@ -106,7 +106,9 @@ namespace Sensit.App.Calibration
 			// Configure the mass flow controllers.
 			if ((UseGasMixer) && (_mfcAnalyte != null) && (_mfcDiluent != null))
 			{
+				_mfcAnalyte.Enabled = true;
 				_mfcAnalyte?.Open(_settings.GasMixer.AnalyteMFC.SerialPort);
+				_mfcDiluent.Enabled = true;
 				_mfcDiluent?.Open(_settings.GasMixer.DiluentMFC.SerialPort);
 			}
 
@@ -120,6 +122,7 @@ namespace Sensit.App.Calibration
 			// Configure the power supply.
 			if (UsePowerSupply && (_powerSupply != null))
 			{
+				_powerSupply.Enabled = true;
 				_powerSupply.Channel = 1;
 				_powerSupply.Open(_settings.PowerSupply.SerialPort, _settings.PowerSupply.BaudRate);
 			}
