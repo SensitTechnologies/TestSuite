@@ -267,7 +267,7 @@ namespace Sensit.App.Calibration
 									0.0, 2.0, 2.5, 4.0, 6.0, 8.0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100,
 									100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 8.0, 6.0, 4.0, 2.5, 2.0, 0.0
 								},
-								DwellTime = new TimeSpan(0, 0, 30),
+								DwellTime = new TimeSpan(0, 0, 10),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							}
