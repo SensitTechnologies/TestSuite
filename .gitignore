@@ -7,6 +7,12 @@
 /Sensit.App.Calibration/*.pfx
 /Sensit.App.Calibration/*.user
 
+/Sensit.App.Datalogger/bin
+/Sensit.App.Datalogger/obj
+/Sensit.App.Datalogger/publish
+/Sensit.App.Datalogger/*.pfx
+/Sensit.App.Datalogger/*.user
+
 /Sensit.App.G2GLT/bin
 /Sensit.App.G2GLT/obj
 /Sensit.App.G2GLT/publich

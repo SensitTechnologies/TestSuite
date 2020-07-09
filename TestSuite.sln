@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.G3", "Sensit.App
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.PowerSupply", "Sensit.App.PowerSupply\Sensit.App.PowerSupply.csproj", "{596CE27B-6503-49DB-A93A-7105C908BFBF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.Log", "Sensit.App.Datalogger\Sensit.App.Log.csproj", "{394790AA-641A-4EA4-A198-567E0B9AA8FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +76,12 @@ Global
 		{596CE27B-6503-49DB-A93A-7105C908BFBF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{596CE27B-6503-49DB-A93A-7105C908BFBF}.Remote Debug|Any CPU.ActiveCfg = Remote Debug|Any CPU
 		{596CE27B-6503-49DB-A93A-7105C908BFBF}.Remote Debug|Any CPU.Build.0 = Remote Debug|Any CPU
+		{394790AA-641A-4EA4-A198-567E0B9AA8FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{394790AA-641A-4EA4-A198-567E0B9AA8FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{394790AA-641A-4EA4-A198-567E0B9AA8FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{394790AA-641A-4EA4-A198-567E0B9AA8FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{394790AA-641A-4EA4-A198-567E0B9AA8FF}.Remote Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{394790AA-641A-4EA4-A198-567E0B9AA8FF}.Remote Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
