@@ -211,6 +211,7 @@
     <Compile Include="Email\Email.cs" />
     <Compile Include="Exceptions\DeviceExceptions.cs" />
     <Compile Include="Exceptions\TestExceptions.cs" />
+    <Compile Include="Files\CSV.cs" />
     <Compile Include="Forms\FormAbout.cs">
       <SubType>Form</SubType>
     </Compile>
