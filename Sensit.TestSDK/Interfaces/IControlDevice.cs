@@ -22,11 +22,6 @@ namespace Sensit.TestSDK.Interfaces
 	public interface IControlDevice
 	{
 		/// <summary>
-		/// Whether or not the device is present/available/used in the system.
-		/// </summary>
-		bool Enabled { get; set; }
-
-		/// <summary>
 		/// Change the device's control mode.
 		/// </summary>
 		/// <param name="mode"></param>

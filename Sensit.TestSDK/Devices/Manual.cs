@@ -63,7 +63,6 @@ namespace Sensit.TestSDK.Devices
 		public double AnalyteBottleConcentration { get; set; }
 
 		public int Channel { get; set; }
-		public bool Enabled { get; set; }
 
 		#endregion
 
