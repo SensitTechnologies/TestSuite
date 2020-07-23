@@ -100,47 +100,52 @@ namespace Sensit.App.Calibration
 		[Category("Test Settings"), Description("Settings describing tests that can be performed.")]
 		public List<TestSetting> Tests { get; set; } = new List<TestSetting>
 		{
-			new TestSetting("G3 Memory Test")
+			new TestSetting("Melby:  0% <-> 100% analyte")
 			{
 				References = new List<VariableType>
 				{
-					VariableType.Voltage
+					VariableType.MassFlow,
+					VariableType.GasConcentration
 				},
 				Components = new List<TestComponent>
 				{
-					new TestComponent("Power ON and wait 60 seconds")
+					new TestComponent("Apply 0%V analyte")
 					{
 						ControlledVariables = new List<TestControlledVariable>
 						{
 							new TestControlledVariable()
 							{
-								VariableType = VariableType.Voltage,
-								Setpoints = new List<double> { 3.1 },
-								Interval = new TimeSpan(0, 0, 60)
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 400.0 },
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								Samples = 300,
+								Interval = new TimeSpan(0, 0, 0, 1)
 							}
-						},
-					},
-					new TestComponent("Read G3 configuration, then turn off and wait 15 seconds")
-					{
-						Commands = new List<Test.Command>
-						{
-							Test.Command.Default,
-							Test.Command.TurnOff
 						}
 					},
-					new TestComponent("Power OFF and wait 60 seconds")
+					new TestComponent("Apply 100% analyte")
 					{
 						ControlledVariables = new List<TestControlledVariable>
 						{
 							new TestControlledVariable()
 							{
-								VariableType = VariableType.Voltage,
-								Setpoints = new List<double> { 0.0 },
-								Interval = new TimeSpan(0, 0, 60)
+								VariableType = VariableType.MassFlow,
+								Setpoints = new List<double> { 400.0 },
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 100.0 },
+								Samples = 300,
+								Interval = new TimeSpan(0, 0, 0, 1)
 							}
-						},
-					},
-				}
+						}
+					}
+				},
 			},
 			new TestSetting("G3: Calibration")
 			{
