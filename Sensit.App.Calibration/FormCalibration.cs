@@ -303,7 +303,7 @@ namespace Sensit.App.Calibration
 				CheckBox checkBoxMassFlow = tableLayoutPanelEquipment.GetControlFromPosition(DUT_COLUMN_CHECKBOX, 1) as CheckBox;
 				_equipment.UseMassFlow = checkBoxMassFlow.Checked;
 
-				CheckBox checkBoxVoltage = tableLayoutPanelEquipment.GetControlFromPosition(DUT_COLUMN_CHECKBOX, 1) as CheckBox;
+				CheckBox checkBoxVoltage = tableLayoutPanelEquipment.GetControlFromPosition(DUT_COLUMN_CHECKBOX, 7) as CheckBox;
 				_equipment.UsePowerSupply = checkBoxVoltage.Checked;
 
 				// Create objects for each DUT.
