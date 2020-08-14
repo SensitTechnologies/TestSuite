@@ -80,16 +80,16 @@ namespace Sensit.App.Calibration
 			{
 				{ VariableType.GasConcentration, _gasMixer },
 				{ VariableType.MassFlow, _gasMixer },
-				{ VariableType.Current, _powerSupply },
-				{ VariableType.Voltage, _powerSupply }
+				//{ VariableType.Current, _powerSupply },
+				//{ VariableType.Voltage, _powerSupply }
 			};
 
 			References = new Dictionary<VariableType, IReferenceDevice>
 			{
 				{ VariableType.GasConcentration, _gasMixer },
 				{ VariableType.MassFlow, _gasMixer },
-				{ VariableType.Current, _powerSupply },
-				{ VariableType.Voltage, _powerSupply }
+				//{ VariableType.Current, _powerSupply },
+				//{ VariableType.Voltage, _powerSupply }
 			};
 		}
 
