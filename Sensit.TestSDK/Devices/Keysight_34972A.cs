@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using Agilent.CommandExpert.ScpiNet.Ag3497x_1_13;
+//using Agilent.CommandExpert.ScpiNet.Ag3497x_1_13;
 using Sensit.TestSDK.Communication;
 using Sensit.TestSDK.Exceptions;
 using Sensit.TestSDK.Interfaces;
@@ -22,7 +22,7 @@ namespace Sensit.TestSDK.Devices
 	/// </remarks>
 	public class Keysight_34972A : IDatalogger
 	{
-		Ag3497x _v3497x;
+//		Ag3497x _v3497x;
 
 		public Dictionary<uint, double> Readings { get; private set; } = new Dictionary<uint, double>();
 
@@ -77,7 +77,7 @@ namespace Sensit.TestSDK.Devices
 		{
 			try
 			{
-				// Open the device.
+/*				// Open the device.
 				_v3497x = new Ag3497x(resourceName);
 
 				// Confirm identity.
@@ -93,7 +93,7 @@ namespace Sensit.TestSDK.Devices
 
 				// Introduce yourself.
 				_v3497x.SCPI.DISPlay.TEXT.Command("SENSIT");
-
+*/
 			}
 			catch (Exception ex)
 			{
@@ -126,7 +126,7 @@ namespace Sensit.TestSDK.Devices
 					}
 				}
 				string config = sb.ToString();
-
+/*
 				// Configure channels for DC voltage.
 				_v3497x.SCPI.CONFigure.VOLTage.DC.Command("AUTO", "DEF", "(" + config + ")");
 
@@ -142,6 +142,7 @@ namespace Sensit.TestSDK.Devices
 
 				// Sets channels to be included in scan list.
 				_v3497x.SCPI.ROUTe.SCAN.Command(config);
+*/
 			}
 			catch (Exception ex)
 			{
@@ -177,7 +178,7 @@ namespace Sensit.TestSDK.Devices
 		{
 			try
 			{
-				// Changes from idle to wait-for-trigger state.
+/*				// Changes from idle to wait-for-trigger state.
 				// May want to move to "Open". Unsure if state is changed back to idle upon scan completion.
 				_v3497x.SCPI.INITiate.Command();
 
@@ -199,6 +200,7 @@ namespace Sensit.TestSDK.Devices
 					double value = double.Parse(dataSeparated[i], NumberStyles.Any, CultureInfo.InvariantCulture);
 					Readings.Add(key, value);
 				}
+*/
 			}
 			catch (Exception ex)
 			{
@@ -209,6 +211,7 @@ namespace Sensit.TestSDK.Devices
 
 		public void Close()
 		{
+/*
 			// Clear any text on the display.
 			_v3497x?.SCPI.DISPlay.TEXT.CLEar.Command();
 
@@ -219,6 +222,7 @@ namespace Sensit.TestSDK.Devices
 			((IDisposable)_v3497x)?.Dispose();
 
 			_v3497x = null;
+*/
 		}
 	}
 }
