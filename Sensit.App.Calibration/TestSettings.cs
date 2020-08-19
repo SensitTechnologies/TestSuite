@@ -267,15 +267,388 @@ namespace Sensit.App.Calibration
 							new TestControlledVariable()
 							{
 								VariableType = VariableType.GasConcentration,
-								Setpoints = new List<double>
-								{
-									0.0, 2.0, 2.5, 4.0, 6.0, 8.0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100,
-									100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 8.0, 6.0, 4.0, 2.5, 2.0, 0.0
-								},
+								Setpoints = new List<double> { 0.0 },
 								DwellTime = new TimeSpan(0, 0, 10),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
-							}
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 2.5 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 4.0 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 6.0 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 8.0 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 10 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 20 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 30 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 40 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 50 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 60 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 70 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 80 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 90 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 100 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 90 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 80 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 70 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 60 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 50 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 40 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 30 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 20 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 10 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 8.0 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 6.0 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 4.0 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 2.5 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 2.0 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								Samples = 60,
+								Interval = new TimeSpan(0, 0, 0, 0, 500)
+							},
+							new TestControlledVariable()
+							{
+								VariableType = VariableType.GasConcentration,
+								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
+							},
 						},
 					},
 					new TestComponent("Turn off DUT")
