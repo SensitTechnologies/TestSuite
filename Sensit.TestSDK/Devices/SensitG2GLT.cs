@@ -362,7 +362,7 @@ namespace Sensit.TestSDK.Devices
 			return reply;
 		}
 
-		private bool ValidateChecksum(string message)
+		private static bool ValidateChecksum(string message)
 		{
 			// Convert the message to a byte array.
 			byte[] messageBytes = Encoding.ASCII.GetBytes(message);
