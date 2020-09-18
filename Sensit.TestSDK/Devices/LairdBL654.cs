@@ -78,12 +78,6 @@ namespace Sensit.TestSDK.Devices
 			Delimiter = (byte)'\n',
 		};
 
-		// When serial data is received, pass it to the line splitter.
-		private void ScanDataReceived(object sender, SerialDataReceivedEventArgs e)
-		{
-			_lineSplitter.OnIncomingBinaryBlock(Encoding.ASCII.GetBytes(Port.ReadExisting()));
-		}
-
 		#endregion
 
 		#region Properties
@@ -128,13 +122,31 @@ namespace Sensit.TestSDK.Devices
 			StopBits = stopBits;
 		}
 
+		/// <summary>
+		/// Find available Bluetooth devices.
+		/// </summary>
+		/// <remarks>
+		/// Uses a local function that can be subscribed to and unsubscribed from.
+		/// See https://stackoverflow.com/questions/2051357/adding-and-removing-anonymous-event-handler/30763657
+		/// for how to add and remove anonymous event handlers.
+		/// I did this because otherwise the handler may still receive full lines after this method returns.
+		/// If that happens, it will cause an invalid operation exception.
+		/// </remarks>
+		/// <param name="seconds"></param>
+		/// <returns></returns>
 		public List<BluetoothDevice> Scan(int seconds)
 		{
 			// list of Bluetooth devices found
 			List<BluetoothDevice> results = new List<BluetoothDevice>();
 
-			// When full lines are received, save them.
-			_lineSplitter.LineReceived += bytes =>
+			// Local function:  When serial data is received, pass it to the line splitter.
+			void ScanDataReceived(object sender, SerialDataReceivedEventArgs e)
+			{
+				_lineSplitter.OnIncomingBinaryBlock(Encoding.ASCII.GetBytes(Port.ReadExisting()));
+			}
+
+			// Local function:  Save full lines that are received.
+			void SaveFullLines(byte[] bytes)
 			{
 				// Convert the bytes into a string
 				string line = Encoding.ASCII.GetString(bytes);
@@ -156,10 +168,13 @@ namespace Sensit.TestSDK.Devices
 
 					results.Add(device);
 				}
-			};
+			}
 
+			// Subscribe to event handlers.
 			// When serial data is received, call the line scanner.
+			// When full lines are received, save them.
 			Port.DataReceived += ScanDataReceived;
+			_lineSplitter.LineReceived += bytes => SaveFullLines(bytes);
 
 			// Start scanning.
 			Port.WriteLine("scan");
@@ -174,6 +189,11 @@ namespace Sensit.TestSDK.Devices
 
 			// Stop scanning.
 			Port.WriteLine("stop");
+
+			// Unsubscribe from event handlers.
+			// This prevents our return value from being edited after this method returns.
+			Port.DataReceived -= ScanDataReceived;
+			_lineSplitter.LineReceived -= SaveFullLines;
 
 			// Remove duplicate results.
 			results = results.Distinct().ToList();
