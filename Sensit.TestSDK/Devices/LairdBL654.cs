@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO.Ports;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using Sensit.TestSDK.Communication;
@@ -10,52 +9,6 @@ using Sensit.TestSDK.Utilities;
 
 namespace Sensit.TestSDK.Devices
 {
-	/// <summary>
-	/// Structure representing a Bluetooth device, containing info needed to connect to it.
-	/// </summary>
-	public struct BluetoothDevice : IEquatable<BluetoothDevice>
-	{
-		public string MacAddress { get; set; }
-
-		public string Name { get; set; }
-
-		public override bool Equals(object obj)
-		{
-			return obj is BluetoothDevice && Equals((BluetoothDevice)obj);
-		}
-
-		public bool Equals(BluetoothDevice other)
-		{
-			return MacAddress == other.MacAddress;
-		}
-
-		public static bool operator ==(BluetoothDevice left, BluetoothDevice right)
-		{
-			return left.Equals(right);
-		}
-
-		public static bool operator !=(BluetoothDevice left, BluetoothDevice right)
-		{
-			return !(left == right);
-		}
-
-		/// <summary>
-		/// Generate a hash code (in case we ever put Bluetooth devices in a hash table).
-		/// </summary>
-		/// <remarks>
-		/// Visual Studio suggested this be implemented.  See here:
-		/// https://stackoverflow.com/questions/7425142/what-is-hashcode-used-for-is-it-unique/35217051
-		/// </remarks>
-		/// <returns></returns>
-		public override int GetHashCode()
-		{
-			int hashCode = 257514462;
-			hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(MacAddress);
-			hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Name);
-			return hashCode;
-		}
-	}
-
 	/// <summary>
 	/// Driver for Laird BL654 USB with smartBasic Bluetooth Dongle.
 	/// </summary>
@@ -126,18 +79,20 @@ namespace Sensit.TestSDK.Devices
 		/// Find available Bluetooth devices.
 		/// </summary>
 		/// <remarks>
-		/// Uses a local function that can be subscribed to and unsubscribed from.
+		/// Note that this is a blocking method.
+		/// 
+		/// Uses local functions that can be subscribed to and unsubscribed from.
 		/// See https://stackoverflow.com/questions/2051357/adding-and-removing-anonymous-event-handler/30763657
 		/// for how to add and remove anonymous event handlers.
 		/// I did this because otherwise the handler may still receive full lines after this method returns.
 		/// If that happens, it will cause an invalid operation exception.
 		/// </remarks>
-		/// <param name="seconds"></param>
-		/// <returns></returns>
-		public List<BluetoothDevice> Scan(int seconds)
+		/// <param name="seconds">number of seconds to scan before stopping</param>
+		/// <returns>a dictionary of detected devices; Key = mac address; Value = device name (if one exists)</returns>
+		public Dictionary<string, string> Scan(int seconds)
 		{
 			// list of Bluetooth devices found
-			List<BluetoothDevice> results = new List<BluetoothDevice>();
+			Dictionary<string, string> bluetoothDevices = new Dictionary<string, string>();
 
 			// Local function:  When serial data is received, pass it to the line splitter.
 			void ScanDataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -160,13 +115,12 @@ namespace Sensit.TestSDK.Devices
 					// Parse the MAC address from signal strength.
 					string[] mac = words[1].Split(new char[] { ' ' });
 
-					BluetoothDevice device = new BluetoothDevice()
+					// If the device has not already been detected...
+					if (!bluetoothDevices.ContainsKey(mac[1]))
 					{
-						MacAddress = mac[1],
-						Name = words[2]
-					};
-
-					results.Add(device);
+						// Add to dictionary.  Key = mac address; Value = device name (if one exists).
+						bluetoothDevices.Add(key: mac[1], value: words[2]);
+					}
 				}
 			}
 
@@ -195,10 +149,17 @@ namespace Sensit.TestSDK.Devices
 			Port.DataReceived -= ScanDataReceived;
 			_lineSplitter.LineReceived -= SaveFullLines;
 
-			// Remove duplicate results.
-			results = results.Distinct().ToList();
+			return bluetoothDevices;
+		}
 
-			return results;
+		public void Connect(string macAddress)
+		{
+			// Tell the Laird module to connect to device with specified mac address.
+			Port.WriteLine("connect" + macAddress);
+
+			// TODO:  Check for confirmation that connection is successful.
+			// Pause for results to be received.
+			Thread.Sleep(1000);
 		}
 
 		public string Write(string command)
