@@ -186,6 +186,7 @@
     <Compile Include="Devices\GasMixingDevice.cs" />
     <Compile Include="Devices\GPDX303S.cs" />
     <Compile Include="Devices\GPDX303S_SCPI.cs" />
+    <Compile Include="Devices\LairdBL654.cs" />
     <Compile Include="Devices\Manual.cs" />
     <Compile Include="Devices\SensitG2GLT.cs" />
     <Compile Include="Devices\SensitG3.cs" />
@@ -246,6 +247,7 @@
     </Compile>
     <Compile Include="Settings\Serializer.cs" />
     <Compile Include="Settings\Settings.cs" />
+    <Compile Include="Utility\AutoDisposer.cs" />
     <Compile Include="Utility\LineSplitter.cs" />
     <Compile Include="Utility\Utilities.cs" />
   </ItemGroup>

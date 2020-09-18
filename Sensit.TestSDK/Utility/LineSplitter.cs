@@ -11,7 +11,6 @@ namespace Sensit.TestSDK.Utilities
 	/// </remarks>
 	public class LineSplitter
 	{
-
 		public event Action<byte[]> LineReceived;
 
 		public byte Delimiter = (byte)'\n';
