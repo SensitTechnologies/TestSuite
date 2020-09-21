@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Permissions;
 
 namespace Sensit.TestSDK.Utilities
 {
@@ -15,7 +16,12 @@ namespace Sensit.TestSDK.Utilities
 
 		public byte Delimiter = (byte)'\n';
 
-		private byte[] leftover;
+		private byte[] _leftover;
+
+		public void Clear()
+		{
+			_leftover = null;
+		}
 
 		public void OnIncomingBinaryBlock(byte[] buffer)
 		{
@@ -25,13 +31,13 @@ namespace Sensit.TestSDK.Utilities
 				int newlineIndex = Array.IndexOf(buffer, Delimiter, offset);
 				if (newlineIndex < offset)
 				{
-					leftover = ConcatArray(leftover, buffer, offset, buffer.Length - offset);
+					_leftover = ConcatArray(_leftover, buffer, offset, buffer.Length - offset);
 					return;
 				}
 
 				++newlineIndex;
-				byte[] full_line = ConcatArray(leftover, buffer, offset, newlineIndex - offset);
-				leftover = null;
+				byte[] full_line = ConcatArray(_leftover, buffer, offset, newlineIndex - offset);
+				_leftover = null;
 				offset = newlineIndex;
 
 				// Raise an event for further processing.

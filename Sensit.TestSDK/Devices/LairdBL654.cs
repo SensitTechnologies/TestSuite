@@ -39,6 +39,16 @@ namespace Sensit.TestSDK.Devices
 
 		#endregion
 
+		#region Helper Methods
+
+		// When serial data is received, pass it to the line splitter.
+		private void DataReceived(object sender, SerialDataReceivedEventArgs e)
+		{
+			_lineSplitter.OnIncomingBinaryBlock(Encoding.ASCII.GetBytes(Port.ReadExisting()));
+		}
+
+		#endregion
+
 		public override void Open(string portName, int baudRate = 115200)
 		{
 			try
@@ -89,19 +99,13 @@ namespace Sensit.TestSDK.Devices
 		/// </remarks>
 		/// <param name="seconds">number of seconds to scan before stopping</param>
 		/// <returns>a dictionary of detected devices; Key = mac address; Value = device name (if one exists)</returns>
-		public Dictionary<string, string> Scan(int seconds)
+		public SortedDictionary<string, string> Scan(int seconds)
 		{
 			// list of Bluetooth devices found
-			Dictionary<string, string> bluetoothDevices = new Dictionary<string, string>();
-
-			// Local function:  When serial data is received, pass it to the line splitter.
-			void ScanDataReceived(object sender, SerialDataReceivedEventArgs e)
-			{
-				_lineSplitter.OnIncomingBinaryBlock(Encoding.ASCII.GetBytes(Port.ReadExisting()));
-			}
+			SortedDictionary<string, string> bluetoothDevices = new SortedDictionary<string, string>();
 
 			// Local function:  Save full lines that are received.
-			void SaveFullLines(byte[] bytes)
+			void LineReceived(byte[] bytes)
 			{
 				// Convert the bytes into a string
 				string line = Encoding.ASCII.GetString(bytes);
@@ -124,11 +128,15 @@ namespace Sensit.TestSDK.Devices
 				}
 			}
 
+			// Clear anything from previous communication.
+			Port.DiscardInBuffer();
+			_lineSplitter.Clear();
+
 			// Subscribe to event handlers.
 			// When serial data is received, call the line scanner.
 			// When full lines are received, save them.
-			Port.DataReceived += ScanDataReceived;
-			_lineSplitter.LineReceived += bytes => SaveFullLines(bytes);
+			Port.DataReceived += DataReceived;
+			_lineSplitter.LineReceived += bytes => LineReceived(bytes);
 
 			// Start scanning.
 			Port.WriteLine("scan");
@@ -146,23 +154,124 @@ namespace Sensit.TestSDK.Devices
 
 			// Unsubscribe from event handlers.
 			// This prevents our return value from being edited after this method returns.
-			Port.DataReceived -= ScanDataReceived;
-			_lineSplitter.LineReceived -= SaveFullLines;
+			Port.DataReceived -= DataReceived;
+			_lineSplitter.LineReceived -= LineReceived;
 
 			return bluetoothDevices;
+		}
+
+		private List<string> WriteThenRead(string command, int seconds)
+		{
+			// list of responses from Laird device
+			List<string> responses = new List<string>();
+
+			// Local function:  Save responses from the Laird Bluetooth module.
+			void LineReceived(byte[] bytes)
+			{
+				// Convert the bytes into a string
+				responses.Add(Encoding.ASCII.GetString(bytes));
+			}
+
+			// Clear anything from previous communication.
+			Port.DiscardInBuffer();
+			_lineSplitter.Clear();
+
+			// Subscribe to event handlers.
+			// When serial data is received, call the line scanner.
+			// When full lines are received, save them.
+			Port.DataReceived += DataReceived;
+			_lineSplitter.LineReceived += bytes => LineReceived(bytes);
+
+			// Write the command to the Laird device.
+			Port.Write(command);
+
+			// Pause for results to be received.
+			while (seconds > 0)
+			{
+				Thread.Sleep(1000);
+
+				seconds--;
+			}
+
+			// Unsubscribe from event handlers.
+			// This prevents our return value from being edited after this method returns.
+			Port.DataReceived -= DataReceived;
+			_lineSplitter.LineReceived -= LineReceived;
+
+			return responses;
 		}
 
 		public void Connect(string macAddress)
 		{
 			// Tell the Laird module to connect to device with specified mac address.
-			Port.WriteLine("connect" + macAddress);
+			List<string> responses = WriteThenRead("connect " + macAddress + "\r\n", 3);
 
-			// TODO:  Check for confirmation that connection is successful.
-			// Pause for results to be received.
-			Thread.Sleep(1000);
+			// Responses should be "Connected!" "Ready to transmit/receive!" "" "OK"
+			if ((responses.Count < 4) ||
+				(!responses[0].Equals("Connected!\n")) ||
+				(!responses[1].Equals("Ready to transmit/receive!\n")) ||
+				(!responses[2].Equals("\n")) ||
+				(!responses[3].Equals("OK\n")))
+			{
+				string response = string.Empty;
+				foreach (string s in responses)
+				{
+					response += s;
+				}
+				throw new DeviceCommandFailedException(
+					"BL654 failed to connect." + Environment.NewLine +
+					"Response was:" + Environment.NewLine + Environment.NewLine +
+					response
+					);
+			}
 		}
 
-		public string Write(string command)
+		public void Disconnect()
+		{
+			// Exit passthrough mode.
+			WriteThenRead("^", 1);
+			WriteThenRead("^", 1);
+			List<string> responses = WriteThenRead("^", 1);
+
+			// Responses should be "OK" ">".
+			if ((responses.Count < 2) ||
+				(!responses[2].Equals("OK\r\n")))
+			{
+				string response = string.Empty;
+				foreach (string s in responses)
+				{
+					response += s;
+				}
+				throw new DeviceCommandFailedException(
+					"BL654 failed to escape passthrough mode." + Environment.NewLine +
+					"Response was:" + Environment.NewLine + Environment.NewLine +
+					response
+					);
+			}
+
+			// Disconnect from the paired device.
+			responses = WriteThenRead("disconnect\r\n", 1);
+
+			// Responses should be "OK" "Disconnected!".
+			if ((responses.Count < 2) ||
+				(!responses[1].Equals("OK\n")) ||
+				(!responses[2].Equals("Disconnected!\n")) ||
+				(!responses[4].Equals("OK\r\n")))
+			{
+				string response = string.Empty;
+				foreach (string s in responses)
+				{
+					response += s;
+				}
+				throw new DeviceCommandFailedException(
+					"BL654 failed to connect." + Environment.NewLine +
+					"Response was:" + Environment.NewLine + Environment.NewLine +
+					response
+					);
+			}
+		}
+
+		public string Write(byte[] command, int numBytes)
 		{
 			// return value
 			string response = string.Empty;
@@ -170,14 +279,14 @@ namespace Sensit.TestSDK.Devices
 			try
 			{
 				// Write to the serial port.
-				Port.WriteLine(command);
+				Port.Write(command, 0, numBytes);
 
 				// Read from the serial port.
-				Thread.Sleep(200);
-				string message = string.Empty;
-				while (Port.BytesToRead != 0)
+				Thread.Sleep(2000);
+				byte[] message;
+				if (Port.BytesToRead != 0)
 				{
-					message += Port.ReadExisting();
+					message = Encoding.ASCII.GetBytes(Port.ReadExisting());
 				}
 
 				// Flush the port.
