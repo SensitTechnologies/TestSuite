@@ -97,9 +97,9 @@ namespace Sensit.TestSDK.Devices
 		/// I did this because otherwise the handler may still receive full lines after this method returns.
 		/// If that happens, it will cause an invalid operation exception.
 		/// </remarks>
-		/// <param name="seconds">number of seconds to scan before stopping</param>
+		/// <param name="delay">number of milliseconds to scan before stopping</param>
 		/// <returns>a dictionary of detected devices; Key = mac address; Value = device name (if one exists)</returns>
-		public SortedDictionary<string, string> Scan(int seconds)
+		public SortedDictionary<string, string> Scan(int delay)
 		{
 			// list of Bluetooth devices found
 			SortedDictionary<string, string> bluetoothDevices = new SortedDictionary<string, string>();
@@ -142,12 +142,7 @@ namespace Sensit.TestSDK.Devices
 			Port.WriteLine("scan");
 
 			// Pause for results to be received.
-			while (seconds > 0)
-			{
-				Thread.Sleep(1000);
-
-				seconds--;
-			}
+			Thread.Sleep(delay);
 
 			// Stop scanning.
 			Port.WriteLine("stop");
@@ -160,7 +155,7 @@ namespace Sensit.TestSDK.Devices
 			return bluetoothDevices;
 		}
 
-		private List<string> WriteThenRead(string command, int seconds)
+		private List<string> WriteThenRead(string command, int delay)
 		{
 			// list of responses from Laird device
 			List<string> responses = new List<string>();
@@ -186,12 +181,7 @@ namespace Sensit.TestSDK.Devices
 			Port.Write(command);
 
 			// Pause for results to be received.
-			while (seconds > 0)
-			{
-				Thread.Sleep(1000);
-
-				seconds--;
-			}
+			Thread.Sleep(delay);
 
 			// Unsubscribe from event handlers.
 			// This prevents our return value from being edited after this method returns.
@@ -201,10 +191,14 @@ namespace Sensit.TestSDK.Devices
 			return responses;
 		}
 
+		/// <summary>
+		/// Connect to Bluetooth device (and enter "passthrough" mode).
+		/// </summary>
+		/// <param name="macAddress"></param>
 		public void Connect(string macAddress)
 		{
 			// Tell the Laird module to connect to device with specified mac address.
-			List<string> responses = WriteThenRead("connect " + macAddress + "\r\n", 3);
+			List<string> responses = WriteThenRead("connect " + macAddress + "\r\n", 3000);
 
 			// Responses should be "Connected!" "Ready to transmit/receive!" "" "OK"
 			if ((responses.Count < 4) ||
@@ -218,20 +212,19 @@ namespace Sensit.TestSDK.Devices
 				{
 					response += s;
 				}
-				throw new DeviceCommandFailedException(
-					"BL654 failed to connect." + Environment.NewLine +
-					"Response was:" + Environment.NewLine + Environment.NewLine +
-					response
-					);
+				throw new DeviceCommandFailedException("BL654 failed to connect.");
 			}
 		}
 
+		/// <summary>
+		/// Exit "passthrough" mode, then disconnect from the Bluetooth device.
+		/// </summary>
 		public void Disconnect()
 		{
 			// Exit passthrough mode.
-			WriteThenRead("^", 1);
-			WriteThenRead("^", 1);
-			List<string> responses = WriteThenRead("^", 1);
+			WriteThenRead("^", 1000);
+			WriteThenRead("^", 1000);
+			List<string> responses = WriteThenRead("^", 1000);
 
 			// Responses should be "OK" ">".
 			if ((responses.Count < 2) ||
@@ -242,15 +235,11 @@ namespace Sensit.TestSDK.Devices
 				{
 					response += s;
 				}
-				throw new DeviceCommandFailedException(
-					"BL654 failed to escape passthrough mode." + Environment.NewLine +
-					"Response was:" + Environment.NewLine + Environment.NewLine +
-					response
-					);
+				throw new DeviceCommandFailedException("BL654 failed to exit passthrough mode.");
 			}
 
 			// Disconnect from the paired device.
-			responses = WriteThenRead("disconnect\r\n", 1);
+			responses = WriteThenRead("disconnect\r\n", 1000);
 
 			// Responses should be "OK" "Disconnected!".
 			if ((responses.Count < 2) ||
@@ -263,30 +252,30 @@ namespace Sensit.TestSDK.Devices
 				{
 					response += s;
 				}
-				throw new DeviceCommandFailedException(
-					"BL654 failed to connect." + Environment.NewLine +
-					"Response was:" + Environment.NewLine + Environment.NewLine +
-					response
-					);
+				throw new DeviceCommandFailedException("BL654 failed to disconnect.");
 			}
 		}
 
-		public string Write(byte[] command, int numBytes)
+		public string Write(byte[] command)
 		{
 			// return value
 			string response = string.Empty;
 
 			try
 			{
+				if (command == null)
+				{
+					throw new DeviceOutOfRangeException("Command must contain at least one byte.");
+				}
+
 				// Write to the serial port.
-				Port.Write(command, 0, numBytes);
+				Port.Write(command, 0, command.Length);
 
 				// Read from the serial port.
-				Thread.Sleep(2000);
-				byte[] message;
+				Thread.Sleep(500);
 				if (Port.BytesToRead != 0)
 				{
-					message = Encoding.ASCII.GetBytes(Port.ReadExisting());
+					response = Port.ReadExisting();
 				}
 
 				// Flush the port.
@@ -294,17 +283,17 @@ namespace Sensit.TestSDK.Devices
 			}
 			catch (InvalidOperationException ex)
 			{
-				throw new DevicePortException("Could not read from G3."
+				throw new DevicePortException("Could not read from serial port."
 					+ Environment.NewLine + ex.Message);
 			}
 			catch (TimeoutException ex)
 			{
-				throw new DeviceCommunicationException("No response from G3."
+				throw new DeviceCommunicationException("No response from serial port."
 					+ Environment.NewLine + ex.Message);
 			}
 			catch (Exception ex) when (ex is FormatException || ex is IndexOutOfRangeException)
 			{
-				throw new DeviceCommunicationException("Invalid response from G3."
+				throw new DeviceCommunicationException("Invalid response from device."
 					+ Environment.NewLine + ex.Message);
 			}
 
