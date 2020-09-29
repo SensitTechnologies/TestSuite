@@ -268,7 +268,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0.0 },
-								DwellTime = new TimeSpan(0, 0, 10),
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -276,6 +276,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 2.5 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -289,6 +290,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 4.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -302,6 +304,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 6.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -315,6 +318,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 8.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -328,6 +332,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 10 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -341,6 +346,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 20 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -354,6 +360,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 30 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -367,6 +374,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 40 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -380,6 +388,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 50 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -393,6 +402,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 60 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -406,6 +416,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 70 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -419,6 +430,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 80 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -432,6 +444,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 90 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -445,6 +458,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 100 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -458,6 +472,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 90 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -471,6 +486,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 80 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -484,6 +500,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 70 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -497,6 +514,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 60 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -510,6 +528,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 50 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -523,6 +542,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 40 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -536,6 +556,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 30 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -549,6 +570,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 20 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -562,6 +584,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 10 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -575,6 +598,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 8.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -588,6 +612,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 6.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -601,6 +626,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 4.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -614,6 +640,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 2.5 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -627,6 +654,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 2.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
@@ -640,6 +668,7 @@ namespace Sensit.App.Calibration
 							{
 								VariableType = VariableType.GasConcentration,
 								Setpoints = new List<double> { 0.0 },
+								DwellTime = new TimeSpan(0, 1, 0),
 								Samples = 60,
 								Interval = new TimeSpan(0, 0, 0, 0, 500)
 							},
