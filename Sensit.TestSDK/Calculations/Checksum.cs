@@ -1,11 +1,14 @@
-﻿using Sensit.TestSDK;
+﻿using System;
 
 namespace Sensit.TestSDK.Calculations
 {
+	/// <summary>
+	/// Perform cyclic redundancy checks.
+	/// </summary>
 	public static class Checksum
 	{
 		/// <summary>
-		/// table used for the CRC calculation
+		/// table used for the CRC-16 calculation
 		/// </summary>
 		/// <remarks>
 		/// One application that can generate this table:
@@ -58,13 +61,13 @@ namespace Sensit.TestSDK.Calculations
 		/// Calculate a 16-bit CRC value.
 		/// </summary>
 		/// <param name="data">array of bytes to calculate a CRC of</param>
-		/// <returns></returns>
-		public static ushort Calculate(byte[] data)
+		/// <returns>checksum</returns>
+		public static ushort Crc16(byte[] data)
 		{
 			// Validate data before using.
 			if (data == null)
 			{
-				throw new System.ArgumentNullException(nameof(data), Properties.Resources.Checksum_Calculate);
+				throw new ArgumentNullException(nameof(data), Properties.Resources.Checksum_Calculate);
 			}
 
 			ushort crc = 0xFFFF;
@@ -74,6 +77,45 @@ namespace Sensit.TestSDK.Calculations
 				crc = (ushort)((crc >> 8) ^ crcTable[(crc ^ datum) & 0xFF]);
 			}
 
+			return crc;
+		}
+
+		/// <summary>
+		/// Calculates the Ethernet CRC32 (aka crc32/mpeg2) of a byte stream.
+		/// </summary>
+		/// <remarks>
+		/// Ported from this example in C:
+		/// https://stackoverflow.com/questions/54339800/how-to-modify-crc-32-to-crc-32-mpeg-2
+		/// </remarks>
+		/// <param name="data">array of bytes to calculate a CRC of</param>
+		/// <returns>checksum</returns>
+		public static uint Crc32Mpeg2(byte[] data)
+		{
+			// Validate data before using.
+			if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data), Properties.Resources.Checksum_Calculate);
+			}
+
+			uint msb;
+
+			uint crc = 0xFFFFFFFF;
+
+			foreach (byte b in data)
+			{
+				// xor next byte to upper bits of crc
+				crc ^= ((uint)b) << 24;
+
+				// For each bit in the byte...
+				for (int j = 0; j < 8; j++)
+				{
+					msb = crc >> 31;
+					crc <<= 1;
+					crc ^= (0 - msb) & 0x04C11DB7;
+				}
+			}
+
+			// don't complement crc on output
 			return crc;
 		}
 	}
