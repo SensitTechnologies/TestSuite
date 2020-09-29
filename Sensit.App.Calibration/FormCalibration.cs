@@ -6,6 +6,7 @@ using System.Globalization;
 using System.IO.Ports;
 using System.Linq;
 using System.Windows.Forms;
+using Sensit.TestSDK.Exceptions;
 using Sensit.TestSDK.Forms;
 using Sensit.TestSDK.Interfaces;
 using Sensit.TestSDK.Settings;
@@ -210,6 +211,9 @@ namespace Sensit.App.Calibration
 			// Select the most recently used range.
 			numericUpDownRange.Value = Properties.Settings.Default.Range;
 
+			// Select the most recently used flow rate.
+			numericUpDownFlowRate.Value = Properties.Settings.Default.FlowRate;
+
 			// Populate the Test combobox based on the test settings.
 			comboBoxTest.Items.Clear();
 			TestSettings testSettings = Settings.Load<TestSettings>(Properties.Settings.Default.TestSettingsFile);
@@ -252,6 +256,12 @@ namespace Sensit.App.Calibration
 					throw new Exception("Please choose a range multiplier between 0 and 100.");
 				}
 
+				// Ensure the flow rate is valid.
+				if ((numericUpDownFlowRate.Value > 500) || (numericUpDownFlowRate.Value < 0))
+				{
+					throw new Exception("Please choose a flow rate between 0 and 500 sccm.");
+				}
+
 				//
 				// Reload the settings files in case they changed since the app was started.
 				//
@@ -275,6 +285,7 @@ namespace Sensit.App.Calibration
 
 				comboBoxModel.Enabled = false;
 				numericUpDownRange.Enabled = false;
+				numericUpDownFlowRate.Enabled = false;
 				comboBoxTest.Enabled = false;
 				checkBoxSelectAll.Enabled = false;
 				radioButtonRepeatNo.Enabled = false;
@@ -359,12 +370,13 @@ namespace Sensit.App.Calibration
 				}
 
 				// Create test object and link its actions to actions on this form.
+				// https://syncor.blogspot.com/2010/11/passing-getter-and-setter-of-c-property.html
 				_test = new Test(testSetting, _equipment, _duts)
 				{
 					Finished = TestFinished,
 					UpdateProgress = TestUpdate,
-					// https://syncor.blogspot.com/2010/11/passing-getter-and-setter-of-c-property.html
 					GasMixRange = numericUpDownRange.Value,
+					GasFlowRate = numericUpDownFlowRate.Value,
 					Repeat = Properties.Settings.Default.Repeat
 				};
 
@@ -506,6 +518,17 @@ namespace Sensit.App.Calibration
 		{
 			// Remember the selected value.
 			Properties.Settings.Default.Range = numericUpDownRange.Value;
+		}
+
+		/// <summary>
+		/// When the "Flow Rate" is changed, save the new value.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void NumericUpDownFlowRate_ValueChanged(object sender, EventArgs e)
+		{
+			// Remember the selected value.
+			Properties.Settings.Default.FlowRate = numericUpDownFlowRate.Value;
 		}
 
 		/// <summary>
@@ -991,6 +1014,7 @@ namespace Sensit.App.Calibration
 			// Enable most of the controls.
 			comboBoxModel.Enabled = true;
 			numericUpDownRange.Enabled = true;
+			numericUpDownFlowRate.Enabled = true;
 			comboBoxTest.Enabled = true;
 			checkBoxSelectAll.Enabled = true;
 			radioButtonRepeatNo.Enabled = true;

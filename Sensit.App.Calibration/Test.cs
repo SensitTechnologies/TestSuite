@@ -23,7 +23,7 @@ namespace Sensit.App.Calibration
 		public enum Command
 		{
 			TurnOff,	// Remove power from DUT.
-			TurnOn,		// Apply power to DUT.			  
+			TurnOn,		// Apply power to DUT.
 			Default,	// Set factory default settings.
 			Range,		// Set range settings.
 			Zero,		// Perform zero-calibration.
@@ -36,22 +36,22 @@ namespace Sensit.App.Calibration
 		public enum ToleranceType
 		{
 			Absolute,			// Quantity of range.
-			PercentFullScale,   // Percent of positive range.
-			PercentReading      // Percent of reading.
+			PercentFullScale,	// Percent of positive range.
+			PercentReading		// Percent of reading.
 		}
 
 		#endregion
 
 		#region Fields
 
-		private BackgroundWorker _testThread;   // task that will handle test operations
+		private BackgroundWorker _testThread;	// task that will handle test operations
 		private TestSetting _settings;			// settings for test
 		private Equipment _equipment;			// test equipment object
-		private readonly List<Dut> _duts;       // devices under test
+		private readonly List<Dut> _duts;		// devices under test
 		private Stopwatch _elapsedTimeStopwatch;// keeper of test's elapsed time
 		private bool _pause = false;			// whether test is paused
 		private int _samplesTotal;				// helps calculate percent complete
-		private int _samplesComplete = 0;       // helps calculate percent complete
+		private int _samplesComplete = 0;		// helps calculate percent complete
 
 		#endregion
 
@@ -100,6 +100,11 @@ namespace Sensit.App.Calibration
 		/// Multiplier for setpoints.
 		/// </summary>
 		public decimal GasMixRange { get; set; }
+
+		/// <summary>
+		/// Default flow rate.
+		/// </summary>
+		public decimal GasFlowRate { get; set; }
 
 		/// <summary>
 		/// True if test should repeat until manually stopped.
@@ -373,6 +378,12 @@ namespace Sensit.App.Calibration
 			if (variable.VariableType == VariableType.GasConcentration)
 			{
 				setpoint *= Convert.ToDouble(GasMixRange / 100);
+			}
+
+			// If flow rate, apply the setpoint.
+			if ((variable.VariableType == VariableType.MassFlow) && (GasFlowRate != 0))
+			{
+				setpoint = Convert.ToDouble(GasFlowRate);
 			}
 
 			// Set setpoint.
