@@ -25,7 +25,7 @@ namespace Sensit.TestSDK.Settings
 		public static T Load<T>(string filename)
 		{
 			// Form the path to the file.
-			string filepath = GetSettingsFilePath(filename);
+			string filepath = GetFilePath(filename);
 
 			// Start with a null settings class.
 			T settings = default;
@@ -56,7 +56,7 @@ namespace Sensit.TestSDK.Settings
 		public static void Save<T>(T settings, string filename)
 		{
 			// Form the path to the file.
-			string filepath = GetSettingsFilePath(filename);
+			string filepath = GetFilePath(filename);
 
 			// Save the settings as an XML file.
 			Serializer.SerializeXML(settings, filepath);
@@ -69,7 +69,7 @@ namespace Sensit.TestSDK.Settings
 		/// </summary>
 		/// <param name="settingsName">name of the file (not including the extension)</param>
 		/// <returns>full file path</returns>
-		private static string GetSettingsFilePath(string fileName)
+		public static string GetFilePath(string fileName)
 		{
 			return Path.Combine(Directory, fileName.Replace(' ', '_') + ".xml");
 		}

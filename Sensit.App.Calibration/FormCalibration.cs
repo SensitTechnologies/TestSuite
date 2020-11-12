@@ -934,6 +934,13 @@ namespace Sensit.App.Calibration
 		/// <param name="e"></param>
 		private void TestSettingsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			// Find the file path.
+			string filepath = Settings.GetFilePath(Properties.Settings.Default.TestSettingsFile);
+
+			// Show it to the user.
+			MessageBox.Show("This filepath has been copied to the clipboard:"
+				+ Environment.NewLine + Environment.NewLine + filepath, "Edit this file:");
+			Clipboard.SetText(filepath);
 			//EditSettings<TestSettings>(Properties.Settings.Default.TestSettingsFile);
 		}
 

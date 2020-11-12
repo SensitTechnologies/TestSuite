@@ -176,8 +176,405 @@
         <VariableType>GasConcentration</VariableType>
       </References>
     </TestSetting>
+	  <TestSetting>
+		  <Label>G3: Poly 0</Label>
+		  <Components>
+			  <TestComponent>
+				  <Label>Warmup</Label>
+				  <ControlledVariables>
+					  <TestControlledVariable>
+						  <VariableType>MassFlow</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>300</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>0</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>0</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>300</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+				  </ControlledVariables>
+			  </TestComponent>
+			  <TestComponent>
+				  <Label>Up and Down</Label>
+				  <ControlledVariables>
+					  <TestControlledVariable>
+						  <VariableType>MassFlow</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>300</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>0</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>0</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>180</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>1</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>180</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>0</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>0</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>2</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>180</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>0</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>0</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>3</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>180</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>0</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>0</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>4</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>180</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>0</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>0</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>5</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>180</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>0</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>0</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>6</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>180</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>0</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>0</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>7</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>180</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>0</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>0</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>8</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>180</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>0</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>0</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>9</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>180</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>0</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>0</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>10</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>180</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>0</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>0</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>15</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>180</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>0</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>0</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>20</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>180</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>0</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>0</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>25</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>180</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>0</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>0</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+					  <TestControlledVariable>
+						  <VariableType>GasConcentration</VariableType>
+						  <ErrorTolerance>5</ErrorTolerance>
+						  <RateTolerance>0.5</RateTolerance>
+						  <Setpoints>
+							  <double>30</double>
+						  </Setpoints>
+						  <DwellTime />
+						  <Timeout />
+						  <Samples>180</Samples>
+						  <Interval />
+					  </TestControlledVariable>
+				  </ControlledVariables>
+			  </TestComponent>
+			  <TestComponent>
+				  <Label>Turn off DUT</Label>
+				  <Commands>
+					  <Command>TurnOff</Command>
+				  </Commands>
+			  </TestComponent>
+		  </Components>
+		  <References>
+			  <VariableType>MassFlow</VariableType>
+			  <VariableType>GasConcentration</VariableType>
+		  </References>
+	  </TestSetting>
     <TestSetting>
-      <Label>G3: gas saver, purge between each step)</Label>
+      <Label>G3: gas saver, purge between each step</Label>
       <Components>
         <TestComponent>
           <Label>Warmup</Label>
