@@ -6,7 +6,6 @@ using System.Globalization;
 using System.IO.Ports;
 using System.Linq;
 using System.Windows.Forms;
-using Sensit.TestSDK.Exceptions;
 using Sensit.TestSDK.Forms;
 using Sensit.TestSDK.Interfaces;
 using Sensit.TestSDK.Settings;
