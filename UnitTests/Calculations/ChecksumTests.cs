@@ -14,7 +14,7 @@ namespace UnitTests.Calculations
 			byte[] data = new byte[] { 0x11, 0x03, 0x06, 0xAE, 0x41, 0x56, 0x52, 0x43, 0x40 };
 
 			// Act.
-			ushort crc = Checksum.Calculate(data);
+			ushort crc = Checksum.Crc16(data);
 
 			// Assert.
 			Assert.AreEqual(0xAD49, crc);
