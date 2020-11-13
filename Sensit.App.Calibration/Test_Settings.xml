@@ -14,10 +14,10 @@
               <Setpoints>
                 <double>400</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -26,10 +26,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>300</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -43,10 +43,10 @@
               <Setpoints>
                 <double>400</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -55,10 +55,10 @@
               <Setpoints>
                 <double>100</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>300</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -81,10 +81,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -93,10 +93,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>300</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -110,10 +110,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -122,10 +122,10 @@
               <Setpoints>
                 <double>100</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>60</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -145,10 +145,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -157,10 +157,10 @@
               <Setpoints>
                 <double>100</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>15</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -176,403 +176,415 @@
         <VariableType>GasConcentration</VariableType>
       </References>
     </TestSetting>
-	  <TestSetting>
-		  <Label>G3: Poly 0</Label>
-		  <Components>
-			  <TestComponent>
-				  <Label>Warmup</Label>
-				  <ControlledVariables>
-					  <TestControlledVariable>
-						  <VariableType>MassFlow</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>300</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>0</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>0</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>300</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-				  </ControlledVariables>
-			  </TestComponent>
-			  <TestComponent>
-				  <Label>Up and Down</Label>
-				  <ControlledVariables>
-					  <TestControlledVariable>
-						  <VariableType>MassFlow</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>300</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>0</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>0</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>180</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>1</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>180</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>0</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>0</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>2</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>180</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>0</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>0</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>3</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>180</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>0</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>0</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>4</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>180</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>0</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>0</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>5</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>180</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>0</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>0</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>6</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>180</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>0</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>0</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>7</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>180</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>0</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>0</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>8</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>180</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>0</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>0</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>9</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>180</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>0</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>0</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>10</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>180</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>0</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>0</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>15</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>180</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>0</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>0</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>20</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>180</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>0</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>0</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>25</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>180</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>0</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>0</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-					  <TestControlledVariable>
-						  <VariableType>GasConcentration</VariableType>
-						  <ErrorTolerance>5</ErrorTolerance>
-						  <RateTolerance>0.5</RateTolerance>
-						  <Setpoints>
-							  <double>30</double>
-						  </Setpoints>
-						  <DwellTime />
-						  <Timeout />
-						  <Samples>180</Samples>
-						  <Interval />
-					  </TestControlledVariable>
-				  </ControlledVariables>
-			  </TestComponent>
-			  <TestComponent>
-				  <Label>Turn off DUT</Label>
-				  <Commands>
-					  <Command>TurnOff</Command>
-				  </Commands>
-			  </TestComponent>
-		  </Components>
-		  <References>
-			  <VariableType>MassFlow</VariableType>
-			  <VariableType>GasConcentration</VariableType>
-		  </References>
-	  </TestSetting>
+    <TestSetting>
+      <Label>G3: Poly 0</Label>
+      <Components>
+        <TestComponent>
+          <Label>Warmup</Label>
+          <ControlledVariables>
+            <TestControlledVariable>
+              <VariableType>MassFlow</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>300</double>
+              </Setpoints>
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>0</Samples>
+              <Interval>PT1S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>0</double>
+              </Setpoints>
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>300</Samples>
+              <Interval>PT0.5S</Interval>
+            </TestControlledVariable>
+          </ControlledVariables>
+        </TestComponent>
+        <TestComponent>
+          <Label>Ramp up</Label>
+          <ControlledVariables>
+            <TestControlledVariable>
+              <VariableType>MassFlow</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>300</double>
+              </Setpoints>
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>0</Samples>
+              <Interval>PT1S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>0</double>
+              </Setpoints>
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>180</Samples>
+              <Interval>PT0.5S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>1</double>
+              </Setpoints>
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>180</Samples>
+              <Interval>PT0.5S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>0</double>
+              </Setpoints>
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>0</Samples>
+              <Interval>PT1S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>2</double>
+              </Setpoints>
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>180</Samples>
+              <Interval>PT0.5S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>0</double>
+              </Setpoints>
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>0</Samples>
+              <Interval>PT1S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>3</double>
+              </Setpoints>
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>180</Samples>
+              <Interval>PT0.5S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>0</double>
+              </Setpoints>
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>0</Samples>
+              <Interval>PT1S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>4</double>
+              </Setpoints>
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>180</Samples>
+              <Interval>PT0.5S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>0</double>
+              </Setpoints>
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>0</Samples>
+              <Interval>PT1S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>5</double>
+              </Setpoints>
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>180</Samples>
+              <Interval>PT0.5S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>0</double>
+              </Setpoints>
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>0</Samples>
+              <Interval>PT1S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>6</double>
+              </Setpoints>
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>180</Samples>
+              <Interval>PT0.5S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>0</double>
+              </Setpoints>
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>0</Samples>
+              <Interval>PT1S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>7</double>
+              </Setpoints>
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>180</Samples>
+              <Interval>PT0.5S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>0</double>
+              </Setpoints>
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>0</Samples>
+              <Interval>PT1S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>8</double>
+              </Setpoints>
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>180</Samples>
+              <Interval>PT0.5S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>0</double>
+              </Setpoints>
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>0</Samples>
+              <Interval>PT1S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>9</double>
+              </Setpoints>
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>180</Samples>
+              <Interval>PT0.5S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>0</double>
+              </Setpoints>
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>0</Samples>
+              <Interval>PT1S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>10</double>
+              </Setpoints>
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>180</Samples>
+              <Interval>PT0.5S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>0</double>
+              </Setpoints>
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>0</Samples>
+              <Interval>PT1S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>15</double>
+              </Setpoints>
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>180</Samples>
+              <Interval>PT0.5S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>0</double>
+              </Setpoints>
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>0</Samples>
+              <Interval>PT1S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>20</double>
+              </Setpoints>
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>180</Samples>
+              <Interval>PT0.5S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>0</double>
+              </Setpoints>
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>0</Samples>
+              <Interval>PT1S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>25</double>
+              </Setpoints>
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>180</Samples>
+              <Interval>PT0.5S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>0</double>
+              </Setpoints>
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>0</Samples>
+              <Interval>PT1S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>30</double>
+              </Setpoints>
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>180</Samples>
+              <Interval>PT0.5S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>0</double>
+              </Setpoints>
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>0</Samples>
+              <Interval>PT1S</Interval>
+            </TestControlledVariable>
+          </ControlledVariables>
+        </TestComponent>
+        <TestComponent>
+          <Label>Turn off DUT</Label>
+          <Commands>
+            <Command>TurnOff</Command>
+          </Commands>
+        </TestComponent>
+      </Components>
+      <References>
+        <VariableType>MassFlow</VariableType>
+        <VariableType>GasConcentration</VariableType>
+      </References>
+    </TestSetting>
     <TestSetting>
       <Label>G3: gas saver, purge between each step</Label>
       <Components>
@@ -586,10 +598,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -598,10 +610,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>300</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -615,10 +627,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -627,10 +639,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -639,10 +651,10 @@
               <Setpoints>
                 <double>2.5</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -651,10 +663,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -663,10 +675,10 @@
               <Setpoints>
                 <double>4</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -675,10 +687,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -687,10 +699,10 @@
               <Setpoints>
                 <double>6</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -699,10 +711,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -711,10 +723,10 @@
               <Setpoints>
                 <double>8</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -723,10 +735,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -735,10 +747,10 @@
               <Setpoints>
                 <double>10</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -747,10 +759,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -759,10 +771,10 @@
               <Setpoints>
                 <double>20</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -771,10 +783,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -783,10 +795,10 @@
               <Setpoints>
                 <double>30</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -795,10 +807,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -807,10 +819,10 @@
               <Setpoints>
                 <double>40</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -819,10 +831,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -831,10 +843,10 @@
               <Setpoints>
                 <double>50</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -843,10 +855,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -855,10 +867,10 @@
               <Setpoints>
                 <double>60</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -867,10 +879,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -879,10 +891,10 @@
               <Setpoints>
                 <double>70</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -891,10 +903,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -903,10 +915,10 @@
               <Setpoints>
                 <double>80</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -915,10 +927,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -927,10 +939,10 @@
               <Setpoints>
                 <double>90</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -939,10 +951,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -951,10 +963,10 @@
               <Setpoints>
                 <double>100</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -963,10 +975,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -975,10 +987,10 @@
               <Setpoints>
                 <double>90</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -987,10 +999,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -999,10 +1011,10 @@
               <Setpoints>
                 <double>80</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1011,10 +1023,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1023,10 +1035,10 @@
               <Setpoints>
                 <double>70</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1035,10 +1047,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1047,10 +1059,10 @@
               <Setpoints>
                 <double>60</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1059,10 +1071,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1071,10 +1083,10 @@
               <Setpoints>
                 <double>50</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1083,10 +1095,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1095,10 +1107,10 @@
               <Setpoints>
                 <double>40</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1107,10 +1119,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1119,10 +1131,10 @@
               <Setpoints>
                 <double>30</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1131,10 +1143,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1143,10 +1155,10 @@
               <Setpoints>
                 <double>20</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1155,10 +1167,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1167,10 +1179,10 @@
               <Setpoints>
                 <double>10</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1179,10 +1191,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1191,10 +1203,10 @@
               <Setpoints>
                 <double>8</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1203,10 +1215,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1215,10 +1227,10 @@
               <Setpoints>
                 <double>6</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1227,10 +1239,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1239,10 +1251,10 @@
               <Setpoints>
                 <double>4</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1251,10 +1263,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1263,10 +1275,10 @@
               <Setpoints>
                 <double>2.5</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1275,10 +1287,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1287,10 +1299,10 @@
               <Setpoints>
                 <double>2</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1299,10 +1311,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1311,10 +1323,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1323,10 +1335,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -1355,10 +1367,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1367,10 +1379,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>300</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -1384,10 +1396,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1396,10 +1408,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1408,10 +1420,10 @@
               <Setpoints>
                 <double>2</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1420,10 +1432,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1432,10 +1444,10 @@
               <Setpoints>
                 <double>4</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1444,10 +1456,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1456,10 +1468,10 @@
               <Setpoints>
                 <double>6</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1468,10 +1480,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1480,10 +1492,10 @@
               <Setpoints>
                 <double>8</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1492,10 +1504,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1504,10 +1516,10 @@
               <Setpoints>
                 <double>10</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1516,10 +1528,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1528,10 +1540,10 @@
               <Setpoints>
                 <double>12</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1540,10 +1552,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1552,10 +1564,10 @@
               <Setpoints>
                 <double>14</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1564,10 +1576,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1576,10 +1588,10 @@
               <Setpoints>
                 <double>16</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1588,10 +1600,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1600,10 +1612,10 @@
               <Setpoints>
                 <double>18</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1612,10 +1624,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1624,10 +1636,10 @@
               <Setpoints>
                 <double>20</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1636,10 +1648,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1648,10 +1660,10 @@
               <Setpoints>
                 <double>22</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1660,10 +1672,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1672,10 +1684,10 @@
               <Setpoints>
                 <double>24</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1684,10 +1696,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1696,10 +1708,10 @@
               <Setpoints>
                 <double>26</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1708,10 +1720,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1720,10 +1732,10 @@
               <Setpoints>
                 <double>28</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1732,10 +1744,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1744,10 +1756,10 @@
               <Setpoints>
                 <double>30</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1756,10 +1768,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1768,10 +1780,10 @@
               <Setpoints>
                 <double>32</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1780,10 +1792,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1792,10 +1804,10 @@
               <Setpoints>
                 <double>34</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1804,10 +1816,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1816,10 +1828,10 @@
               <Setpoints>
                 <double>36</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1828,10 +1840,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1840,10 +1852,10 @@
               <Setpoints>
                 <double>38</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1852,10 +1864,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1864,10 +1876,10 @@
               <Setpoints>
                 <double>40</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1876,10 +1888,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1888,10 +1900,10 @@
               <Setpoints>
                 <double>42</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1900,10 +1912,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1912,10 +1924,10 @@
               <Setpoints>
                 <double>44</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1924,10 +1936,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1936,10 +1948,10 @@
               <Setpoints>
                 <double>46</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1948,10 +1960,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1960,10 +1972,10 @@
               <Setpoints>
                 <double>48</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1972,10 +1984,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1984,10 +1996,10 @@
               <Setpoints>
                 <double>50</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -1996,10 +2008,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2008,10 +2020,10 @@
               <Setpoints>
                 <double>52</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2020,10 +2032,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2032,10 +2044,10 @@
               <Setpoints>
                 <double>54</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2044,10 +2056,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2056,10 +2068,10 @@
               <Setpoints>
                 <double>56</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2068,10 +2080,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2080,10 +2092,10 @@
               <Setpoints>
                 <double>58</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2092,10 +2104,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2104,10 +2116,10 @@
               <Setpoints>
                 <double>60</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2116,10 +2128,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2128,10 +2140,10 @@
               <Setpoints>
                 <double>62</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2140,10 +2152,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2152,10 +2164,10 @@
               <Setpoints>
                 <double>64</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2164,10 +2176,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2176,10 +2188,10 @@
               <Setpoints>
                 <double>66</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2188,10 +2200,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2200,10 +2212,10 @@
               <Setpoints>
                 <double>68</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2212,10 +2224,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2224,10 +2236,10 @@
               <Setpoints>
                 <double>70</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2236,10 +2248,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2248,10 +2260,10 @@
               <Setpoints>
                 <double>72</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2260,10 +2272,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2272,10 +2284,10 @@
               <Setpoints>
                 <double>74</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2284,10 +2296,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2296,10 +2308,10 @@
               <Setpoints>
                 <double>76</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2308,10 +2320,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2320,10 +2332,10 @@
               <Setpoints>
                 <double>78</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2332,10 +2344,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2344,10 +2356,10 @@
               <Setpoints>
                 <double>80</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2356,10 +2368,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2368,10 +2380,10 @@
               <Setpoints>
                 <double>82</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2380,10 +2392,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2392,10 +2404,10 @@
               <Setpoints>
                 <double>84</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2404,10 +2416,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2416,10 +2428,10 @@
               <Setpoints>
                 <double>86</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2428,10 +2440,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2440,10 +2452,10 @@
               <Setpoints>
                 <double>88</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2452,10 +2464,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2464,10 +2476,10 @@
               <Setpoints>
                 <double>90</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2476,10 +2488,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2488,10 +2500,10 @@
               <Setpoints>
                 <double>92</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2500,10 +2512,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2512,10 +2524,10 @@
               <Setpoints>
                 <double>94</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2524,10 +2536,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2536,10 +2548,10 @@
               <Setpoints>
                 <double>96</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2548,10 +2560,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2560,10 +2572,10 @@
               <Setpoints>
                 <double>98</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2572,10 +2584,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2584,10 +2596,10 @@
               <Setpoints>
                 <double>100</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -2616,10 +2628,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2628,10 +2640,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>300</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -2645,10 +2657,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2718,10 +2730,10 @@
                 <double>0.66666</double>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>240</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -2750,10 +2762,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2762,10 +2774,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>300</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -2779,10 +2791,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2818,10 +2830,10 @@
                 <double>3.57</double>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>240</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -2850,10 +2862,10 @@
               <Setpoints>
                 <double>500</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2862,10 +2874,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT4M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -2879,10 +2891,10 @@
               <Setpoints>
                 <double>100</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>MassFlow</VariableType>
@@ -2891,10 +2903,10 @@
               <Setpoints>
                 <double>100</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>240</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -2908,10 +2920,10 @@
               <Setpoints>
                 <double>500</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2920,10 +2932,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT4M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -2937,10 +2949,10 @@
               <Setpoints>
                 <double>100</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>MassFlow</VariableType>
@@ -2949,10 +2961,10 @@
               <Setpoints>
                 <double>200</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>240</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -2966,10 +2978,10 @@
               <Setpoints>
                 <double>500</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -2978,10 +2990,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT4M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -2995,10 +3007,10 @@
               <Setpoints>
                 <double>100</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>MassFlow</VariableType>
@@ -3007,10 +3019,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>240</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -3024,10 +3036,10 @@
               <Setpoints>
                 <double>500</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -3036,10 +3048,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT4M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -3053,10 +3065,10 @@
               <Setpoints>
                 <double>100</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>MassFlow</VariableType>
@@ -3065,10 +3077,10 @@
               <Setpoints>
                 <double>400</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>240</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -3082,10 +3094,10 @@
               <Setpoints>
                 <double>500</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -3094,10 +3106,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT4M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -3111,10 +3123,10 @@
               <Setpoints>
                 <double>100</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>MassFlow</VariableType>
@@ -3123,10 +3135,10 @@
               <Setpoints>
                 <double>500</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>240</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -3152,10 +3164,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -3164,10 +3176,10 @@
               <Setpoints>
                 <double>25</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT5M</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -3184,10 +3196,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -3196,10 +3208,10 @@
               <Setpoints>
                 <double>25</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>1800</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -3222,10 +3234,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -3255,10 +3267,10 @@
                 <double>10</double>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>240</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -3281,10 +3293,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -3334,10 +3346,10 @@
                 <double>5</double>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>240</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -3360,10 +3372,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -3453,10 +3465,10 @@
                 <double>2.5</double>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>240</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -3479,10 +3491,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -3600,10 +3612,10 @@
                 <double>10</double>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>240</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -3626,10 +3638,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -3638,10 +3650,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>3600</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -3655,10 +3667,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -3667,10 +3679,10 @@
               <Setpoints>
                 <double>25</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>350</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -3684,10 +3696,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -3696,10 +3708,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>350</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -3713,10 +3725,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -3725,10 +3737,10 @@
               <Setpoints>
                 <double>25</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>350</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -3742,10 +3754,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -3754,10 +3766,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>350</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -3771,10 +3783,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -3783,10 +3795,10 @@
               <Setpoints>
                 <double>25</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>350</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -3800,10 +3812,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -3812,10 +3824,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>350</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -3829,10 +3841,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -3841,10 +3853,10 @@
               <Setpoints>
                 <double>25</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>350</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -3858,10 +3870,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -3870,10 +3882,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>350</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -3887,10 +3899,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -3899,10 +3911,10 @@
               <Setpoints>
                 <double>25</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>350</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -3916,10 +3928,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -3928,10 +3940,10 @@
               <Setpoints>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>350</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -3954,10 +3966,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -3966,10 +3978,10 @@
               <Setpoints>
                 <double>21</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>600</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -3983,10 +3995,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -3995,10 +4007,10 @@
               <Setpoints>
                 <double>25</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -4012,10 +4024,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -4024,10 +4036,10 @@
               <Setpoints>
                 <double>21</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>420</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -4041,10 +4053,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -4053,10 +4065,10 @@
               <Setpoints>
                 <double>25</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -4070,10 +4082,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -4082,10 +4094,10 @@
               <Setpoints>
                 <double>21</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>420</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -4099,10 +4111,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -4111,10 +4123,10 @@
               <Setpoints>
                 <double>25</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -4128,10 +4140,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -4140,10 +4152,10 @@
               <Setpoints>
                 <double>21</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>420</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -4157,10 +4169,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -4169,10 +4181,10 @@
               <Setpoints>
                 <double>25</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -4186,10 +4198,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -4198,10 +4210,10 @@
               <Setpoints>
                 <double>21</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>420</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -4215,10 +4227,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -4227,10 +4239,10 @@
               <Setpoints>
                 <double>25</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -4244,10 +4256,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -4256,10 +4268,10 @@
               <Setpoints>
                 <double>21</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>420</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -4273,10 +4285,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -4285,10 +4297,10 @@
               <Setpoints>
                 <double>25</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -4302,10 +4314,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -4314,10 +4326,10 @@
               <Setpoints>
                 <double>21</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>420</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -4331,10 +4343,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -4343,10 +4355,10 @@
               <Setpoints>
                 <double>25</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>180</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -4360,10 +4372,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -4372,10 +4384,10 @@
               <Setpoints>
                 <double>21</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>420</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
@@ -4398,10 +4410,10 @@
               <Setpoints>
                 <double>300</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>0</Samples>
-              <Interval />
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
             <TestControlledVariable>
               <VariableType>GasConcentration</VariableType>
@@ -4431,10 +4443,10 @@
                 <double>10</double>
                 <double>0</double>
               </Setpoints>
-              <DwellTime />
-              <Timeout />
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
               <Samples>10</Samples>
-              <Interval />
+              <Interval>PT0.5S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
