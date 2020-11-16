@@ -71,6 +71,10 @@ namespace Sensit.TestSDK.Settings
 		/// <returns>full file path</returns>
 		public static string GetFilePath(string fileName)
 		{
+			// Remove the file extension if one exists.
+			// But preserve path name if it exists.
+			fileName = Path.ChangeExtension(fileName, null);
+
 			return Path.Combine(Directory, fileName.Replace(' ', '_') + ".xml");
 		}
 
