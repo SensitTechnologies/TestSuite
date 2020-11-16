@@ -1104,5 +1104,38 @@ namespace Sensit.App.Calibration
 		}
 
 		#endregion
+
+		/// <summary>
+		/// Generate an XML file with the default settings.
+		/// </summary>
+		/// <remarks>
+		/// This file can be substituted in the installation (or in the source repository).
+		/// </remarks>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void GenerateFileToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			// Allow the user to select a filename.
+			SaveFileDialog saveFileDialog = new SaveFileDialog();
+			saveFileDialog.Filter = "XML-File|*.xml";
+			saveFileDialog.Title = "Save a default settings file";
+			saveFileDialog.ShowDialog();
+
+			// If a valid filename has been selected...
+			if (!string.IsNullOrEmpty(saveFileDialog.FileName))
+			{
+				// Create a new test settings class.
+				TestSettings tests = new TestSettings();
+
+				// Populate the list with default tests.
+				tests.Initialize();
+
+				// Save to XML file.
+				Settings.Save(tests, saveFileDialog.FileName);
+			}
+
+			// Clean up.
+			saveFileDialog.Dispose();
+		}
 	}
 }

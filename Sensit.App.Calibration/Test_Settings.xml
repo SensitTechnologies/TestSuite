@@ -177,7 +177,7 @@
       </References>
     </TestSetting>
     <TestSetting>
-      <Label>G3: Poly 0</Label>
+      <Label>G3: Multipoly</Label>
       <Components>
         <TestComponent>
           <Label>Warmup</Label>
@@ -553,6 +553,150 @@
               <RateTolerance>0.5</RateTolerance>
               <Setpoints>
                 <double>30</double>
+              </Setpoints>
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>180</Samples>
+              <Interval>PT0.5S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>0</double>
+              </Setpoints>
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>0</Samples>
+              <Interval>PT1S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>35</double>
+              </Setpoints>
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>180</Samples>
+              <Interval>PT0.5S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>0</double>
+              </Setpoints>
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>0</Samples>
+              <Interval>PT1S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>40</double>
+              </Setpoints>
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>180</Samples>
+              <Interval>PT0.5S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>0</double>
+              </Setpoints>
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>0</Samples>
+              <Interval>PT1S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>45</double>
+              </Setpoints>
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>180</Samples>
+              <Interval>PT0.5S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>0</double>
+              </Setpoints>
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>0</Samples>
+              <Interval>PT1S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>50</double>
+              </Setpoints>
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>180</Samples>
+              <Interval>PT0.5S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>0</double>
+              </Setpoints>
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>0</Samples>
+              <Interval>PT1S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>55</double>
+              </Setpoints>
+              <DwellTime>PT15S</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>180</Samples>
+              <Interval>PT0.5S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>0</double>
+              </Setpoints>
+              <DwellTime>PT1M</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>0</Samples>
+              <Interval>PT1S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>60</double>
               </Setpoints>
               <DwellTime>PT15S</DwellTime>
               <Timeout>PT30S</Timeout>
