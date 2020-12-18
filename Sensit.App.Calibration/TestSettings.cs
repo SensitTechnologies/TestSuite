@@ -134,7 +134,7 @@ namespace Sensit.App.Calibration
 		{
 			Tests = new List<TestSetting>
 			{
-				new TestSetting("Melby:  0% <-> 100% analyte")
+				new TestSetting("5min 0% <-> 5min 100%")
 				{
 					References = new List<VariableType>
 					{
@@ -143,7 +143,7 @@ namespace Sensit.App.Calibration
 					},
 					Components = new List<TestComponent>
 					{
-						new TestComponent("Apply 0%V analyte")
+						new TestComponent("Apply 0%V analyte, 5 min")
 						{
 							ControlledVariables = new List<TestControlledVariable>
 							{
@@ -161,7 +161,7 @@ namespace Sensit.App.Calibration
 								}
 							}
 						},
-						new TestComponent("Apply 100% analyte")
+						new TestComponent("Apply 100% analyte, 5 min")
 						{
 							ControlledVariables = new List<TestControlledVariable>
 							{
@@ -181,7 +181,7 @@ namespace Sensit.App.Calibration
 						}
 					},
 				},
-				new TestSetting("G3: Calibration")
+				new TestSetting("G3: Line Gas Age")
 				{
 					References = new List<VariableType>
 					{
@@ -190,26 +190,57 @@ namespace Sensit.App.Calibration
 					},
 					Components = new List<TestComponent>
 					{
-						// Allow zero reading to settle for 5 min.
-						new TestComponent("Apply 0% V Methane")
+						new TestComponent("Apply 100% analyte, 1 min")
 						{
 							ControlledVariables = new List<TestControlledVariable>
 							{
 								new TestControlledVariable()
 								{
 									VariableType = VariableType.MassFlow,
-									Setpoints = new List<double> { 300.0 }
+									Setpoints = new List<double> { 400.0 },
+								},
+								new TestControlledVariable()
+								{
+									VariableType = VariableType.GasConcentration,
+									Setpoints = new List<double> { 100.0 },
+									Samples = 60,
+									Interval = new TimeSpan(0, 0, 0, 1)
+								}
+							}
+						},
+						new TestComponent("Apply 0%V analyte, 5 min")
+						{
+							ControlledVariables = new List<TestControlledVariable>
+							{
+								new TestControlledVariable()
+								{
+									VariableType = VariableType.MassFlow,
+									Setpoints = new List<double> { 400.0 },
 								},
 								new TestControlledVariable()
 								{
 									VariableType = VariableType.GasConcentration,
 									Setpoints = new List<double> { 0.0 },
 									Samples = 300,
-									Interval = new TimeSpan(0, 0, 0, 0, 500)
+									Interval = new TimeSpan(0, 0, 0, 1)
 								}
 							}
 						},
-						// Set gas to 50% LEL (2.5% V) for 1 minute.
+						new TestComponent("Turn off DUT")
+						{
+							Commands = new List<Test.Command> { Test.Command.TurnOff }
+						},
+					},
+				},
+				new TestSetting("G3: Spot Check")
+				{
+					References = new List<VariableType>
+					{
+						VariableType.MassFlow,
+						VariableType.GasConcentration
+					},
+					Components = new List<TestComponent>
+					{
 						new TestComponent("Apply 50% LEL Methane")
 						{
 							ControlledVariables = new List<TestControlledVariable>
@@ -222,32 +253,8 @@ namespace Sensit.App.Calibration
 								new TestControlledVariable()
 								{
 									VariableType = VariableType.GasConcentration,
-									Setpoints = new List<double> { 100.0 },
-									Samples = 60,
-									Interval = new TimeSpan(0, 0, 0, 0, 500)
-								}
-							},
-						},
-						// Calibrate.
-						new TestComponent("Calibration")
-						{
-							Commands = new List<Test.Command> { Test.Command.Span }
-						},
-						// Monitor for a bit.
-						new TestComponent("Monitor")
-						{
-							ControlledVariables = new List<TestControlledVariable>
-							{
-								new TestControlledVariable()
-								{
-									VariableType = VariableType.MassFlow,
-									Setpoints = new List<double> { 300.0 }
-								},
-								new TestControlledVariable()
-								{
-									VariableType = VariableType.GasConcentration,
-									Setpoints = new List<double> { 100 },
-									Samples = 15,
+									Setpoints = new List<double> { 6.25, 12.5, 31.33, 62.5, 100.0 },
+									Samples = 240,
 									Interval = new TimeSpan(0, 0, 0, 0, 500)
 								}
 							},

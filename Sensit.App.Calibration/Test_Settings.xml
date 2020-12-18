@@ -2,10 +2,10 @@
 <TestSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Tests>
     <TestSetting>
-      <Label>Melby:  0% &lt;-&gt; 100% analyte</Label>
+      <Label>5min 0% &lt;-&gt; 5min 100%</Label>
       <Components>
         <TestComponent>
-          <Label>Apply 0%V analyte</Label>
+          <Label>Apply 0%V analyte, 5 min</Label>
           <ControlledVariables>
             <TestControlledVariable>
               <VariableType>MassFlow</VariableType>
@@ -34,7 +34,7 @@
           </ControlledVariables>
         </TestComponent>
         <TestComponent>
-          <Label>Apply 100% analyte</Label>
+          <Label>Apply 100% analyte, 5 min</Label>
           <ControlledVariables>
             <TestControlledVariable>
               <VariableType>MassFlow</VariableType>
@@ -69,17 +69,46 @@
       </References>
     </TestSetting>
     <TestSetting>
-      <Label>G3: Calibration</Label>
+      <Label>G3: Line Gas Age</Label>
       <Components>
         <TestComponent>
-          <Label>Apply 0% V Methane</Label>
+          <Label>Apply 100% analyte, 1 min</Label>
           <ControlledVariables>
             <TestControlledVariable>
               <VariableType>MassFlow</VariableType>
               <ErrorTolerance>5</ErrorTolerance>
               <RateTolerance>0.5</RateTolerance>
               <Setpoints>
-                <double>300</double>
+                <double>400</double>
+              </Setpoints>
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>0</Samples>
+              <Interval>PT1S</Interval>
+            </TestControlledVariable>
+            <TestControlledVariable>
+              <VariableType>GasConcentration</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>100</double>
+              </Setpoints>
+              <DwellTime>PT0S</DwellTime>
+              <Timeout>PT30S</Timeout>
+              <Samples>60</Samples>
+              <Interval>PT1S</Interval>
+            </TestControlledVariable>
+          </ControlledVariables>
+        </TestComponent>
+        <TestComponent>
+          <Label>Apply 0%V analyte, 5 min</Label>
+          <ControlledVariables>
+            <TestControlledVariable>
+              <VariableType>MassFlow</VariableType>
+              <ErrorTolerance>5</ErrorTolerance>
+              <RateTolerance>0.5</RateTolerance>
+              <Setpoints>
+                <double>400</double>
               </Setpoints>
               <DwellTime>PT0S</DwellTime>
               <Timeout>PT30S</Timeout>
@@ -96,10 +125,25 @@
               <DwellTime>PT0S</DwellTime>
               <Timeout>PT30S</Timeout>
               <Samples>300</Samples>
-              <Interval>PT0.5S</Interval>
+              <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
+        <TestComponent>
+          <Label>Turn off DUT</Label>
+          <Commands>
+            <Command>TurnOff</Command>
+          </Commands>
+        </TestComponent>
+      </Components>
+      <References>
+        <VariableType>MassFlow</VariableType>
+        <VariableType>GasConcentration</VariableType>
+      </References>
+    </TestSetting>
+    <TestSetting>
+      <Label>G3: Spot Check</Label>
+      <Components>
         <TestComponent>
           <Label>Apply 50% LEL Methane</Label>
           <ControlledVariables>
@@ -120,46 +164,15 @@
               <ErrorTolerance>5</ErrorTolerance>
               <RateTolerance>0.5</RateTolerance>
               <Setpoints>
+                <double>6.25</double>
+                <double>12.5</double>
+                <double>31.33</double>
+                <double>62.5</double>
                 <double>100</double>
               </Setpoints>
               <DwellTime>PT0S</DwellTime>
               <Timeout>PT30S</Timeout>
-              <Samples>60</Samples>
-              <Interval>PT0.5S</Interval>
-            </TestControlledVariable>
-          </ControlledVariables>
-        </TestComponent>
-        <TestComponent>
-          <Label>Calibration</Label>
-          <Commands>
-            <Command>Span</Command>
-          </Commands>
-        </TestComponent>
-        <TestComponent>
-          <Label>Monitor</Label>
-          <ControlledVariables>
-            <TestControlledVariable>
-              <VariableType>MassFlow</VariableType>
-              <ErrorTolerance>5</ErrorTolerance>
-              <RateTolerance>0.5</RateTolerance>
-              <Setpoints>
-                <double>300</double>
-              </Setpoints>
-              <DwellTime>PT0S</DwellTime>
-              <Timeout>PT30S</Timeout>
-              <Samples>0</Samples>
-              <Interval>PT1S</Interval>
-            </TestControlledVariable>
-            <TestControlledVariable>
-              <VariableType>GasConcentration</VariableType>
-              <ErrorTolerance>5</ErrorTolerance>
-              <RateTolerance>0.5</RateTolerance>
-              <Setpoints>
-                <double>100</double>
-              </Setpoints>
-              <DwellTime>PT0S</DwellTime>
-              <Timeout>PT30S</Timeout>
-              <Samples>15</Samples>
+              <Samples>240</Samples>
               <Interval>PT0.5S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
