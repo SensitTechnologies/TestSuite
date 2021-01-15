@@ -178,7 +178,11 @@ namespace Sensit.App.Calibration
 									Interval = new TimeSpan(0, 0, 0, 1)
 								}
 							}
-						}
+						},
+						new TestComponent("Turn off DUT")
+						{
+							Commands = new List<Test.Command> { Test.Command.TurnOff }
+						},
 					},
 				},
 				new TestSetting("G3: Line Gas Age")
@@ -2935,6 +2939,10 @@ namespace Sensit.App.Calibration
 								}
 							},
 						},
+						new TestComponent("Turn off DUT")
+						{
+							Commands = new List<Test.Command> { Test.Command.TurnOff }
+						},
 					}
 				},
 				new TestSetting("Warm-Up Stability")
@@ -2984,7 +2992,11 @@ namespace Sensit.App.Calibration
 									Interval = new TimeSpan(0, 0, 1)
 								}
 							},
-						}
+						},
+						new TestComponent("Turn off DUT")
+						{
+							Commands = new List<Test.Command> { Test.Command.TurnOff }
+						},
 					}
 				},
 				new TestSetting("Linearity: 1-cycle, 100% / 10")
@@ -3014,6 +3026,10 @@ namespace Sensit.App.Calibration
 									Interval = new TimeSpan(0, 0, 0, 0, 500)
 								}
 							},
+						},
+						new TestComponent("Turn off DUT")
+						{
+							Commands = new List<Test.Command> { Test.Command.TurnOff }
 						},
 					}
 				},
@@ -3048,6 +3064,10 @@ namespace Sensit.App.Calibration
 									Interval = new TimeSpan(0, 0, 0, 0, 500)
 								}
 							},
+						},
+						new TestComponent("Turn off DUT")
+						{
+							Commands = new List<Test.Command> { Test.Command.TurnOff }
 						},
 					}
 				},
@@ -3085,6 +3105,10 @@ namespace Sensit.App.Calibration
 								}
 							},
 						},
+						new TestComponent("Turn off DUT")
+						{
+							Commands = new List<Test.Command> { Test.Command.TurnOff }
+						},
 					}
 				},
 				new TestSetting("Linearity: 5-cycle, 100% / 10")
@@ -3121,6 +3145,10 @@ namespace Sensit.App.Calibration
 									Interval = new TimeSpan(0, 0, 0, 0, 500)
 								}
 							},
+						},
+						new TestComponent("Turn off DUT")
+						{
+							Commands = new List<Test.Command> { Test.Command.TurnOff }
 						},
 					}
 				},
@@ -3341,7 +3369,11 @@ namespace Sensit.App.Calibration
 									Interval = new TimeSpan(0, 0, 1)
 								}
 							},
-						}
+						},
+						new TestComponent("Turn off DUT")
+						{
+							Commands = new List<Test.Command> { Test.Command.TurnOff }
+						},
 					}
 				},
 				//new TestSetting("Sustained Hysteresis"),
@@ -3638,7 +3670,11 @@ namespace Sensit.App.Calibration
 									Interval = new TimeSpan(0, 0, 1)
 								}
 							},
-						}
+						},
+						new TestComponent("Turn off DUT")
+						{
+							Commands = new List<Test.Command> { Test.Command.TurnOff }
+						},
 					}
 				},
 				new TestSetting("Fast Linearity, 100% / 10")
@@ -3671,6 +3707,10 @@ namespace Sensit.App.Calibration
 									Interval = new TimeSpan(0, 0, 0, 0, 500)
 								}
 							},
+						},
+						new TestComponent("Turn off DUT")
+						{
+							Commands = new List<Test.Command> { Test.Command.TurnOff }
 						},
 					},
 				},
