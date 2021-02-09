@@ -27,7 +27,8 @@ namespace Sensit.App.Calibration
 		private const int DUT_COLUMN_MODEL = 2;
 		private const int DUT_COLUMN_CONFIG1 = 3;
 		private const int DUT_COLUMN_CONFIG2 = 4;
-		private const int DUT_COLUMN_STATUS = 5;
+		private const int DUT_COLUMN_CONFIG3 = 5;
+		private const int DUT_COLUMN_STATUS = 6;
 		private const int EQUIPMENT_COLUMN_CHECKBOX = 0;
 		private const int EQUIPMENT_COLUMN_LABEL = 1;
 		private const int EQUIPMENT_COLUMN_MODEL = 2;
@@ -359,10 +360,16 @@ namespace Sensit.App.Calibration
 					if (modelSetting.Label == "Serial Device")
 					{
 						// Fetch the serial prompt.
-						TextBox textBoxSerialPrompt = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CONFIG2, (int)i) as TextBox;
+						TextBox textBoxSerialPrompt = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CONFIG3, (int)i) as TextBox;
 
 						// Assign the prompt to the DUT.
 						dut.CommPrompt = textBoxSerialPrompt.Text;
+
+						// Fetch the baud rate.
+						ComboBox comboBoxBaudRate = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CONFIG2, (int)i) as ComboBox;
+
+						// Assign baud rate to the DUT.
+						dut.CommBaudRate = Convert.ToInt32(comboBoxBaudRate.Text);
 					}
 
 					_duts.Add(dut);
@@ -652,8 +659,9 @@ namespace Sensit.App.Calibration
 			// Remove any configuration controls previously added.
 			tableLayoutPanelDevicesUnderTest.Controls.Remove(tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CONFIG1, position.Row));
 			tableLayoutPanelDevicesUnderTest.Controls.Remove(tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CONFIG2, position.Row));
+			tableLayoutPanelDevicesUnderTest.Controls.Remove(tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CONFIG3, position.Row));
 
-			// If the DUT is a G3...
+			// If the DUT is a G3 or serial device...
 			if ((((ComboBox)sender).SelectedItem.ToString().CompareTo("Sensit G3") == 0) ||
 				(((ComboBox)sender).SelectedItem.ToString().CompareTo("Serial Device") == 0))
 			{
@@ -676,6 +684,26 @@ namespace Sensit.App.Calibration
 
 			if (((ComboBox)sender).SelectedItem.ToString().CompareTo("Serial Device") == 0)
 			{
+				// Create a combobox for baud rate.
+				ComboBox comboBox = new ComboBox
+				{
+					Name = "comboBoxBaudRate" + position.Row.ToString(),
+					Anchor = AnchorStyles.Left | AnchorStyles.Top,
+					Dock = DockStyle.None,
+					DropDownStyle = ComboBoxStyle.DropDownList
+				};
+
+				// Populate it with available baud rates.
+				foreach (int b in Dut.SupportedBaudRates)
+				{
+					comboBox.Items.Add(b);
+				}
+
+				// Select default baud rate of 9600.
+				comboBox.SelectedIndex = comboBox.FindStringExact("9600");
+
+				tableLayoutPanelDevicesUnderTest.Controls.Add(comboBox, DUT_COLUMN_CONFIG2, position.Row);
+
 				// Create a text box for prompt to send to device.
 				TextBox textBox = new TextBox
 				{
@@ -683,7 +711,7 @@ namespace Sensit.App.Calibration
 					Anchor = AnchorStyles.Left | AnchorStyles.Top,
 					Dock = DockStyle.None,
 				};
-				tableLayoutPanelDevicesUnderTest.Controls.Add(textBox, DUT_COLUMN_CONFIG2, position.Row);
+				tableLayoutPanelDevicesUnderTest.Controls.Add(textBox, DUT_COLUMN_CONFIG3, position.Row);
 			}
 		}
 

@@ -127,6 +127,23 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		public string CommPrompt { get; set; }
 
+		/// <summary>
+		/// Baud rate for serial port (e.g. 9600)
+		/// </summary>
+		public int CommBaudRate { get; set; } = 9600;
+
+		/// <summary>
+		/// List of standard baud rates
+		/// </summary>
+		/// <remarks>
+		/// This system may support other baud rates not listed, or may not support some of these baud rates.
+		/// This list only provides a list of baud rates to populate options.
+		/// </remarks>
+		public static List<int> SupportedBaudRates { get; } = new List<int>
+		{
+			300, 600, 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200, 230400, 460800, 921600
+		};
+
 		#endregion
 
 		#region Constructor
@@ -182,13 +199,12 @@ namespace Sensit.App.Calibration
 				}
 
 				// Connect to serial ports.
-				// TODO:  Make baud rate some sort of option.
 				_sensitG3?.Open(CommPort);
 
 				if (_genericSerialDevice != null)
 				{
 					_genericSerialDevice.WriteSerialProperties();
-					_genericSerialDevice.Open(CommPort, 9600);
+					_genericSerialDevice.Open(CommPort, CommBaudRate);
 					_genericSerialDevice.Command = CommPrompt;
 				}
 

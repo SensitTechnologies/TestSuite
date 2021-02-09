@@ -498,7 +498,8 @@
 			// 
 			this.tableLayoutPanelDevicesUnderTest.AutoScroll = true;
 			this.tableLayoutPanelDevicesUnderTest.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutPanelDevicesUnderTest.ColumnCount = 6;
+			this.tableLayoutPanelDevicesUnderTest.ColumnCount = 7;
+			this.tableLayoutPanelDevicesUnderTest.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanelDevicesUnderTest.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanelDevicesUnderTest.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanelDevicesUnderTest.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -1219,28 +1220,28 @@
 			// numberOfDUTsToolStripMenuItem
 			// 
 			this.numberOfDUTsToolStripMenuItem.Name = "numberOfDUTsToolStripMenuItem";
-			this.numberOfDUTsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.numberOfDUTsToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
 			this.numberOfDUTsToolStripMenuItem.Text = "&Number of DUTs";
 			this.numberOfDUTsToolStripMenuItem.Click += new System.EventHandler(this.NumberOfDUTsToolStripMenuItem_Click);
 			// 
 			// logDirectoryToolStripMenuItem
 			// 
 			this.logDirectoryToolStripMenuItem.Name = "logDirectoryToolStripMenuItem";
-			this.logDirectoryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.logDirectoryToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
 			this.logDirectoryToolStripMenuItem.Text = "&Log Directory";
 			this.logDirectoryToolStripMenuItem.Click += new System.EventHandler(this.LogDirectoryToolStripMenuItem_Click);
 			// 
 			// optionsToolStripMenuItem
 			// 
 			this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
 			this.optionsToolStripMenuItem.Text = "&Equipment Settings";
 			this.optionsToolStripMenuItem.Click += new System.EventHandler(this.EquipmentSettingsToolStripMenuItem_Click);
 			// 
 			// dUTSettingsToolStripMenuItem
 			// 
 			this.dUTSettingsToolStripMenuItem.Name = "dUTSettingsToolStripMenuItem";
-			this.dUTSettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.dUTSettingsToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
 			this.dUTSettingsToolStripMenuItem.Text = "&DUT Settings";
 			this.dUTSettingsToolStripMenuItem.Click += new System.EventHandler(this.DUTSettingsToolStripMenuItem_Click);
 			// 
@@ -1249,14 +1250,14 @@
 			this.terminalToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.initFileToolStripMenuItem});
 			this.terminalToolStripMenuItem.Name = "terminalToolStripMenuItem";
-			this.terminalToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.terminalToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
 			this.terminalToolStripMenuItem.Text = "&Test Settings";
 			this.terminalToolStripMenuItem.Click += new System.EventHandler(this.TestSettingsToolStripMenuItem_Click);
 			// 
 			// initFileToolStripMenuItem
 			// 
 			this.initFileToolStripMenuItem.Name = "initFileToolStripMenuItem";
-			this.initFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.initFileToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
 			this.initFileToolStripMenuItem.Text = "&Generate File";
 			this.initFileToolStripMenuItem.Click += new System.EventHandler(this.GenerateFileToolStripMenuItem_Click);
 			// 
