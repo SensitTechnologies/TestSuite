@@ -23,7 +23,7 @@ namespace Sensit.TestSDK.Devices
 
 		public UnitOfMeasure.Concentration ConcentrationUnit { get; set; } = UnitOfMeasure.Concentration.PartsPerMillion;
 
-		public Gas GasSelection { get; set; } = Gas.CarbonMonoxide;
+		public Gas GasSelection { get; set; } = Gas.Methane;
 
 		public Dictionary<VariableType, double> Readings { get; private set; } = new Dictionary<VariableType, double>
 		{
@@ -35,7 +35,7 @@ namespace Sensit.TestSDK.Devices
 		/// </summary>
 		public string Message { get; private set; }
 
-		private void WriteToG3(string message)
+		private string WriteToG3(string message)
 		{
 			try
 			{
@@ -57,20 +57,22 @@ namespace Sensit.TestSDK.Devices
 				throw new DeviceCommunicationException("Invalid response from G3."
 					+ Environment.NewLine + ex.Message);
 			}
+
+			// Read from the serial port.
+			Thread.Sleep(200);
+			string response = string.Empty;
+			while (Port.BytesToRead != 0)
+			{
+				response += Port.ReadExisting();
+			}
+
+			return response;
 		}
 
 		public void TurnOff()
 		{
 			// Send command to turn the instrument off.
-			WriteToG3("666");
-
-			// Read from the serial port.
-			Thread.Sleep(200);
-			string message = string.Empty;
-			while (Port.BytesToRead != 0)
-			{
-				message += Port.ReadExisting();
-			}
+			string message = WriteToG3("666");
 
 			// Flush the port.
 			Port.DiscardInBuffer();
@@ -83,15 +85,7 @@ namespace Sensit.TestSDK.Devices
 		public void Zero()
 		{
 			// Send command to perform auto-zero.
-			WriteToG3("5zz");
-
-			// Read from the serial port.
-			Thread.Sleep(200);
-			string message = string.Empty;
-			while (Port.BytesToRead != 0)
-			{
-				message += Port.ReadExisting();
-			}
+			string message = WriteToG3("5zz");
 
 			// Flush the port.
 			Port.DiscardInBuffer();
@@ -106,15 +100,7 @@ namespace Sensit.TestSDK.Devices
 			try
 			{
 				// Send command to perform calibration.
-				WriteToG3("520");
-
-				// Read from the serial port.
-				Thread.Sleep(200);
-				string message = string.Empty;
-				while (Port.BytesToRead != 0)
-				{
-					message += Port.ReadExisting();
-				}
+				string message = WriteToG3("520");
 
 				// Wait 45 seconds.
 				Thread.Sleep(45000);
@@ -153,39 +139,39 @@ namespace Sensit.TestSDK.Devices
 		{
 			try
 			{
+				string message;
+
 				switch (GasSelection)
 				{
 					case Gas.Methane:
 						// Read from the appropriate sensor.
-						Port.WriteLine("5dd");
+						message = WriteToG3("5dd");
 						break;
 					case Gas.Oxygen:
 						// Read from the appropriate sensor.
-						Port.WriteLine("1dd");
+						message = WriteToG3("1dd");
 						break;
 					case Gas.CarbonMonoxide:
 						// Read from the appropriate sensor.
-						Port.WriteLine("2dd");
+						message = WriteToG3("2dd");
 						break;
 					case Gas.HydrogenSulfide:
 						// Read from the appropriate sensor.
-						Port.WriteLine("3dd");
+						message = WriteToG3("3dd");
 						break;
 					case Gas.HydrogenCyanide:
 						// Read from the appropriate sensor.
-						Port.WriteLine("4dd");
+						message = WriteToG3("4dd");
 						break;
 					default:
 						throw new DeviceSettingNotSupportedException("Gas selection " + GasSelection.ToString() + " is not supported.");
 				}
 
-				// Read from the serial port.
-				Thread.Sleep(200);
-				string message = string.Empty;
-				while (Port.BytesToRead != 0)
-				{
-					message += Port.ReadExisting();
-				}
+				// Flush the port.
+				Port.DiscardInBuffer();
+
+				// Read TC sensor too.
+				message += WriteToG3("TCd");
 
 				// Flush the port.
 				Port.DiscardInBuffer();
