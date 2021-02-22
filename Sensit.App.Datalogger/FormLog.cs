@@ -4,6 +4,7 @@ using System.IO.Ports;
 using System.Threading;
 using System.Timers;
 using System.Windows.Forms;
+using Sensit.TestSDK.Devices;
 using Sensit.TestSDK.Files;
 
 namespace Sensit.App.Datalogger
@@ -31,6 +32,9 @@ namespace Sensit.App.Datalogger
 		// This is a thread synchronizeation event handler; it makes us wait until the
 		// timer finishes its current task before closing the resources it's using.
 		EventWaitHandle _loggingLock = new EventWaitHandle(false, EventResetMode.AutoReset);
+
+		// generic serial device (send a message, get a response)
+		private GenericSerialDevice _genericSerialDevice = new GenericSerialDevice();
 
 		/// <summary>
 		/// Constructor
@@ -105,70 +109,6 @@ namespace Sensit.App.Datalogger
 		}
 
 		/// <summary>
-		/// Before exiting, confirm the user's wishes and safely end testing.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void FormLog_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			// Stop the logging operation.
-			StopLogging();
-
-			// Save settings.
-			Properties.Settings.Default.Save();
-		}
-
-		/// <summary>
-		/// When the "Start" button is clicked, attempt to start logging.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ButtonStart_Click(object sender, EventArgs e)
-		{
-			// If logging is 2 "stopped"...
-			if (_logging == 2)
-			{
-				try
-				{
-					// TODO:  Open the DUT serial port if necessary.
-
-					// Set up the CSV file writer filestream.
-					_writer = new CsvWriter(Properties.Settings.Default.Filename, true);
-
-					// Start the timer.
-					_timer.Enabled = true;
-
-					// Set logging state to 0 "idle".
-					_logging = 0;
-
-					// Update GUI.
-					toolStripStatusLabel1.Text = "Logging data...";
-					buttonStart.Enabled = false;
-					buttonStop.Enabled = true;
-				}
-				// If an error occurs...
-				catch (Exception ex)
-				{
-					// Notify the user.
-					MessageBox.Show(ex.Message, "ERROR");
-
-					// Undo whatever was started.
-					StopLogging();
-				}
-			}
-		}
-
-		/// <summary>
-		/// When the "Stop" button is clicked, attempt to stop logging.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ButtonStop_Click(object sender, EventArgs e)
-		{
-			StopLogging();
-		}
-
-		/// <summary>
 		/// When the selected serial port is changed, save the new value.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -218,37 +158,28 @@ namespace Sensit.App.Datalogger
 
 			try
 			{
-				// TODO:  Fetch a value from the DUT.
-				string sample = "Sample #" + _samples.ToString();
-				int status = 0;
-				// status = _dut.GetSample(out sample);
+				// Fetch a value from the DUT.
+				_genericSerialDevice.Read();
+				string sample = _genericSerialDevice.Message;
 
-				// If we can't talk to the DUT, notify the user (but leave the timer on).
-				if (status == 1)
+				// Log a timestamp and the sample value to a CSV file.
+				List<string> row = new List<string>();
+				row.Add(e.SignalTime.ToString());
+				row.Add(sample);
+				_writer.WriteRow(row);
+
+				// Use a method invoker to interact with the Form's thread.
+				// It must be asynchronous (BeginInvoke, not Invoke) or else the two
+				// threads might get stuck waiting for each other).
+				BeginInvoke(new Action(() =>
 				{
-					MessageBox.Show("Communication timeout.  No sample to log :(", "ERROR");
-				}
-				else
-				{
-					// Log a timestamp and the sample value to a CSV file.
-					List<string> row = new List<string>();
-					row.Add(e.SignalTime.ToString());
-					row.Add(sample);
-					_writer.WriteRow(row);
+					// Display the sample value to the user.
+					textBoxResponse.Text = sample;
 
-					// Use a method invoker to interact with the Form's thread.
-					// It must be asynchronous (BeginInvoke, not Invoke) or else the two
-					// threads might get stuck waiting for each other).
-					BeginInvoke(new Action(() =>
-					{
-						// Display the sample value to the user.
-						textBoxResponse.Text = sample;
-
-						// Update the status message.
-						_samples++;
-						toolStripStatusLabel1.Text = "Logged " + _samples + " samples.";
-					}));
-				}
+					// Update the status message.
+					_samples++;
+					toolStripStatusLabel1.Text = "Logged " + _samples + " samples.";
+				}));
 
 				// Start the timer again.
 				_timer.Enabled = true;
@@ -267,6 +198,50 @@ namespace Sensit.App.Datalogger
 			// Set timer to "Idle" state and broadcast that we've finished executing.
 			_logging = 0;
 			_loggingLock.Set();
+		}
+
+		/// <summary>
+		/// When the "Start" button is clicked, attempt to start logging.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ButtonStart_Click(object sender, EventArgs e)
+		{
+			// If logging is 2 "stopped"...
+			if (_logging == 2)
+			{
+				try
+				{
+					// Open the DUT serial port.
+					// TODO:  Allow user to select baud rate.
+					_genericSerialDevice.WriteSerialProperties();
+					_genericSerialDevice.Open(comboBoxSerialPort.Text, 57600);
+					_genericSerialDevice.Command = textBoxCommand.Text;
+
+					// Set up the CSV file writer filestream.
+					_writer = new CsvWriter(Properties.Settings.Default.Filename, true);
+
+					// Start the timer.
+					_timer.Enabled = true;
+
+					// Set logging state to 0 "idle".
+					_logging = 0;
+
+					// Update GUI.
+					toolStripStatusLabel1.Text = "Logging data...";
+					buttonStart.Enabled = false;
+					buttonStop.Enabled = true;
+				}
+				// If an error occurs...
+				catch (Exception ex)
+				{
+					// Notify the user.
+					MessageBox.Show(ex.Message, "ERROR");
+
+					// Undo whatever was started.
+					StopLogging();
+				}
+			}
 		}
 
 		/// <summary>
@@ -295,7 +270,8 @@ namespace Sensit.App.Datalogger
 					// Close the filestream if necessary.
 					_writer?.Close();
 
-					// TODO:  Close the DUT serial port.
+					// Close the DUT serial port.
+					_genericSerialDevice?.Close();
 
 					// Update GUI.
 					buttonStart.Enabled = true;
@@ -307,6 +283,30 @@ namespace Sensit.App.Datalogger
 					MessageBox.Show(ex.Message, "ERROR");
 				}
 			}
+		}
+
+		/// <summary>
+		/// When the "Stop" button is clicked, attempt to stop logging.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ButtonStop_Click(object sender, EventArgs e)
+		{
+			StopLogging();
+		}
+
+		/// <summary>
+		/// Before exiting, confirm the user's wishes and safely end testing.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void FormLog_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			// Stop the logging operation.
+			StopLogging();
+
+			// Save settings.
+			Properties.Settings.Default.Save();
 		}
 	}
 }
