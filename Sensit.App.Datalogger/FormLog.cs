@@ -52,6 +52,9 @@ namespace Sensit.App.Datalogger
 			// Select the most recently used serial port.
 			comboBoxSerialPort.Text = Properties.Settings.Default.Port;
 
+			// Set the most recently used command.
+			textBoxCommand.Text = Properties.Settings.Default.Command;
+
 			// Instantiate the timer and set the most recent interval.
 			_timer = new System.Timers.Timer(Properties.Settings.Default.Interval);
 
@@ -62,6 +65,11 @@ namespace Sensit.App.Datalogger
 			_timer.AutoReset = false;
 		}
 
+		/// <summary>
+		/// When the File --> Exit menu item is clicked, exit the program.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			// Exit the program.
@@ -100,7 +108,7 @@ namespace Sensit.App.Datalogger
 		}
 
 		/// <summary>
-		/// Before exiting, check the user's wishes and safely end testing.
+		/// Before exiting, confirm the user's wishes and safely end testing.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -113,36 +121,94 @@ namespace Sensit.App.Datalogger
 			Properties.Settings.Default.Save();
 		}
 
+		/// <summary>
+		/// When the "Start" button is clicked, attempt to start logging.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void ButtonStart_Click(object sender, EventArgs e)
 		{
-			// Toggle the logging process (by enabling/disabling the timer which does the logging).
-			if (_logging != 2)
+			// If logging is 2 "stopped"...
+			if (_logging == 2)
 			{
-				StopLogging();
-			}
-			else
-			{
-				StartLogging();
+				try
+				{
+					// TODO:  Open the DUT serial port if necessary.
+
+					// Set up the CSV file writer filestream.
+					_writer = new CsvWriter(Properties.Settings.Default.Filename, true);
+
+					// Start the timer.
+					_timer.Enabled = true;
+
+					// Set logging state to 0 "idle".
+					_logging = 0;
+
+					// Update GUI.
+					toolStripStatusLabel1.Text = "Logging data...";
+					buttonStart.Enabled = false;
+					buttonStop.Enabled = true;
+				}
+				// If an error occurs...
+				catch (Exception ex)
+				{
+					// Notify the user.
+					MessageBox.Show(ex.Message, "ERROR");
+
+					// Undo whatever was started.
+					StopLogging();
+				}
 			}
 		}
 
+		/// <summary>
+		/// When the "Stop" button is clicked, attempt to stop logging.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void ButtonStop_Click(object sender, EventArgs e)
 		{
-			// TODO:  Split up the start and stop buttons.
+			StopLogging();
 		}
 
+		/// <summary>
+		/// When the selected serial port is changed, save the new value.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void ComboBoxSerialPort_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			// Save the serial port number to the application settings file.
 			Properties.Settings.Default.Port = comboBoxSerialPort.Text;
 		}
 
+		/// <summary>
+		/// When the selected logging interval is changed, save the new value.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void NumericUpDownInterval_ValueChanged(object sender, EventArgs e)
 		{
 			// Set the timer's interval property (which controls how often samples are taken).
 			_timer.Interval = decimal.ToDouble(numericUpDownInterval.Value);
 		}
 
+		/// <summary>
+		/// When the command is changed, save the new value.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void TextBoxCommand_TextChanged(object sender, EventArgs e)
+		{
+			// Save the command to the application settings file.
+			Properties.Settings.Default.Command = textBoxCommand.Text;
+		}
+
+		/// <summary>
+		/// When the timer ticks, log a datum.
+		/// </summary>
+		/// <param name="source"></param>
+		/// <param name="e"></param>
 		private void OnTimedEvent(object source, ElapsedEventArgs e)
 		{
 			// If logging = 0 "idle", set logging = 1 "running"
@@ -156,7 +222,7 @@ namespace Sensit.App.Datalogger
 			try
 			{
 				// TODO:  Fetch a value from the DUT.
-				string sample = string.Empty;
+				string sample = "Sample #" + _samples.ToString();
 				int status = 0;
 				// status = _dut.GetSample(out sample);
 
@@ -167,21 +233,24 @@ namespace Sensit.App.Datalogger
 				}
 				else
 				{
-					// Display the sample value to the user.
-					// Use a method invoker because it needs to happen in the Form's thread.
-					// It must be asynchronous (BeginInvoke, not Invoke) or else the two
-					// threads might get stuck waiting for each other).
-					BeginInvoke(new Action(() => textBoxResponse.Text = sample));
-
 					// Log a timestamp and the sample value to a CSV file.
 					List<string> row = new List<string>();
 					row.Add(e.SignalTime.ToString());
 					row.Add(sample);
 					_writer.WriteRow(row);
 
-					// Update the status message.
-					_samples++;
-					toolStripStatusLabel1.Text = "Logged " + _samples + " samples.";
+					// Use a method invoker to interact with the Form's thread.
+					// It must be asynchronous (BeginInvoke, not Invoke) or else the two
+					// threads might get stuck waiting for each other).
+					BeginInvoke(new Action(() =>
+					{
+						// Display the sample value to the user.
+						textBoxResponse.Text = sample;
+
+						// Update the status message.
+						_samples++;
+						toolStripStatusLabel1.Text = "Logged " + _samples + " samples.";
+					}));
 				}
 
 				// Start the timer again.
@@ -203,6 +272,9 @@ namespace Sensit.App.Datalogger
 			_loggingLock.Set();
 		}
 
+		/// <summary>
+		/// Attempt to stop logging.
+		/// </summary>
 		private void StopLogging()
 		{
 			// Don't do anything if logging is already in "stopped" state.
@@ -229,40 +301,14 @@ namespace Sensit.App.Datalogger
 					// TODO:  Close the DUT serial port.
 
 					// Update GUI.
+					buttonStart.Enabled = true;
+					buttonStop.Enabled = false;
 					toolStripStatusLabel1.Text = "Ready...";
 				}
 				catch (Exception ex)
 				{
 					MessageBox.Show(ex.Message, "ERROR");
 				}
-			}
-		}
-
-		private void StartLogging()
-		{
-			try
-			{
-				// Update GUI.
-				toolStripStatusLabel1.Text = "Logging data...";
-
-				// TODO:  Open the DUT serial port if necessary.
-
-				// Set up the CSV file writer filestream.
-				_writer = new CsvWriter(Properties.Settings.Default.Filename, true);
-
-				// Start the timer.
-				_timer.Enabled = true;
-
-				// Set logging state to 0 "idle".
-			}
-			// If an error occurs...
-			catch (Exception ex)
-			{
-				// Notify the user.
-				MessageBox.Show(ex.Message, "ERROR");
-
-				// Undo whatever was started.
-				StopLogging();
 			}
 		}
 	}

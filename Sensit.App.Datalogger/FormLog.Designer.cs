@@ -242,6 +242,7 @@
 			this.textBoxCommand.Name = "textBoxCommand";
 			this.textBoxCommand.Size = new System.Drawing.Size(269, 20);
 			this.textBoxCommand.TabIndex = 10;
+			this.textBoxCommand.TextChanged += new System.EventHandler(this.TextBoxCommand_TextChanged);
 			// 
 			// groupBox4
 			// 

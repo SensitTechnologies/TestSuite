@@ -6,9 +6,12 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Interval" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">1000</Value>
     </Setting>
     <Setting Name="Port" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Command" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>
