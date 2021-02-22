@@ -303,10 +303,6 @@ namespace Sensit.App.Calibration
 				// Create object for the equipment.
 				_equipment = new Equipment(equipmentSettings);
 
-				// Initialize the number of DUTs to configure the datalogger for.
-				// TODO:  Move this somewhere more intuitive.
-				_equipment.DutInterface.Channels.AddRange(new bool[NumDuts]);
-
 				// TODO:  Fetch all equipment controls, not just power supply.
 				CheckBox checkBoxGasMixer = tableLayoutPanelEquipment.GetControlFromPosition(DUT_COLUMN_CHECKBOX, 0) as CheckBox;
 				_equipment.UseGasMixer = checkBoxGasMixer.Checked;
@@ -337,7 +333,6 @@ namespace Sensit.App.Calibration
 					{
 						SetSerialNumber = SetDutSerialNumber,
 						SetStatus = SetDutStatus,
-						DutInterface = _equipment.DutInterface,
 						Index = i + 1,
 						Selected = checkBox.Checked,
 						Status = DutStatus.Init,

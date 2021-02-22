@@ -75,11 +75,6 @@ namespace Sensit.App.Calibration
 		#region Properties
 
 		/// <summary>
-		/// Datalogger (for analog sensor DUTs)
-		/// </summary>
-		public IDatalogger DutInterface { get; set; }
-
-		/// <summary>
 		/// Data collected during a test.
 		/// </summary>
 		/// <remarks>
@@ -160,11 +155,6 @@ namespace Sensit.App.Calibration
 			// Only the one chosen by the user will end up being used.
 			switch (settings?.Label)
 			{
-				// Analog sensors use the DUT Interface device from the
-				// Equipment class, so we need do nothing here.
-				case "Datalogger":
-					break;
-
 				// Create a Sensit G3 console device.
 				case "Sensit G3":
 					_sensitG3 = new SensitG3();
@@ -191,13 +181,6 @@ namespace Sensit.App.Calibration
 			// If the DUT has been enabled by the user...
 			if (Selected)
 			{
-				// If the DUT uses a datalogger...
-				if ((_settings?.Label == "Datalogger") && (DutInterface != null))
-				{
-					// Configure DUT Interface device.
-					DutInterface.Channels[(int)Index - 1] = Selected;
-				}
-
 				// Connect to serial ports.
 				_sensitG3?.Open(CommPort);
 
@@ -332,13 +315,8 @@ namespace Sensit.App.Calibration
 				double reading = 0.0;
 				string message = string.Empty;
 
-				// If the DUT uses a datalogger...
-				if ((_settings?.Label == "Datalogger") && (DutInterface != null))
-				{
-					reading = DutInterface.Readings[Index];
-				}
 				// If the DUT is a G3...
-				else if (_sensitG3 != null)
+				if (_sensitG3 != null)
 				{
 					_sensitG3.Read();
 

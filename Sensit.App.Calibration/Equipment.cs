@@ -30,14 +30,8 @@ namespace Sensit.App.Calibration
 		// both mass flow controllers combined for mixing gas
 		private GasMixingDevice _gasMixer;
 
-		// datalogger (for analog sensor DUTs)
-		private Keysight_34972A _datalogger;
-
 		// power supply
 		private GPDX303S _powerSupply;
-
-		// whether or not to configure devices to interface with one or more DUTs.
-		private bool _useDatalogger;
 
 		#region Properties
 
@@ -53,8 +47,6 @@ namespace Sensit.App.Calibration
 		public Dictionary<VariableType, IControlDevice> Controllers { get; }
 
 		public Dictionary<VariableType, IReferenceDevice> References { get; }
-
-		public IDatalogger DutInterface => _datalogger;
 
 		#endregion
 
@@ -72,7 +64,6 @@ namespace Sensit.App.Calibration
 			_mfcAnalyte = new ColeParmerMFC();
 			_mfcDiluent = new ColeParmerMFC();
 			_gasMixer = new GasMixingDevice(_mfcDiluent, _mfcDiluent, _mfcAnalyte, _mfcAnalyte);
-			_datalogger = new Keysight_34972A();
 			_manual = new Manual();
 			_powerSupply = new GPDX303S();
 
@@ -98,23 +89,13 @@ namespace Sensit.App.Calibration
 		/// <summary>
 		/// Initializes all equipment.
 		/// </summary>
-		public void Open(bool useDatalogger = false)
+		public void Open()
 		{
-			// Remember what equipment to use.
-			_useDatalogger = useDatalogger;
-
 			// Configure the mass flow controllers.
 			if ((UseGasMixer) && (_mfcAnalyte != null) && (_mfcDiluent != null))
 			{
 				_mfcAnalyte?.Open(_settings.GasMixer.AnalyteMFC.SerialPort);
 				_mfcDiluent?.Open(_settings.GasMixer.DiluentMFC.SerialPort);
-			}
-
-			// Configure the datalogger.
-			if ((_useDatalogger == true) && (_datalogger != null))
-			{
-				_datalogger.Bank = _settings.Datalogger.Bank;
-				_datalogger.Open();
 			}
 
 			// Configure the power supply.
@@ -135,11 +116,6 @@ namespace Sensit.App.Calibration
 				_gasMixer?.Read();
 			}
 
-			if (_useDatalogger == true)
-			{
-				_datalogger?.Read();
-			}
-
 			// TODO:  Update GUI with new values.
 		}
 
@@ -150,7 +126,6 @@ namespace Sensit.App.Calibration
 		{
 			_mfcAnalyte?.Close();
 			_mfcDiluent?.Close();
-			_datalogger?.Close();
 			_powerSupply?.Close();
 		}
 

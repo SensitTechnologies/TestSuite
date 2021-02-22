@@ -31,13 +31,6 @@ namespace Sensit.App.Calibration
 	}
 
 	[Serializable]
-	public class DataloggerSetting
-	{
-		[Description("Datalogger bank used to interface with DUTs.")]
-		public int Bank { get; set; } = 3;
-	}
-
-	[Serializable]
 	public class EquipmentSettings
 	{
 		[Category("Control Devices"), Description("Settings for Gas Mixer, which is really two Mass Flow Controllers working together.")]
@@ -56,9 +49,6 @@ namespace Sensit.App.Calibration
 			SerialPort = "COM3",
 			BaudRate = 9600
 		};
-
-		[Category("DUT Interface Devices"), Description("Settings for datalogger.")]
-		public DataloggerSetting Datalogger { get; set; } = new DataloggerSetting();
 
 		[Category("Reference Devices"), Description("Settings for Sensit G3 Console.")]
 		public SerialPortSetting G3Setting { get; set; } = new SerialPortSetting()
