@@ -35,11 +35,9 @@ namespace Sensit.App.GasConcentration
 				_mfcDiluent, _mfcDiluent, _mfcAnalyte, _mfcAnalyte);
 
 			// Find all available serial ports.
-			foreach (string s in SerialPort.GetPortNames())
-			{
-				comboBoxAnalytePort.Items.Add(s);
-				comboBoxDiluentPort.Items.Add(s);
-			}
+			string[] portNames = SerialPort.GetPortNames();
+			comboBoxAnalytePort.Items.AddRange(portNames);
+			comboBoxDiluentPort.Items.AddRange(portNames);
 
 			// Select the most recently used port.
 			// The most recently used port is fetched from application settings.

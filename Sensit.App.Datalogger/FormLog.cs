@@ -44,10 +44,7 @@ namespace Sensit.App.Datalogger
 			textBoxFilename.Text = Properties.Settings.Default.Filename;
 
 			// Find all available serial ports.
-			foreach (string s in SerialPort.GetPortNames())
-			{
-				comboBoxSerialPort.Items.Add(s);
-			}
+			comboBoxSerialPort.Items.AddRange(SerialPort.GetPortNames());
 
 			// Select the most recently used serial port.
 			comboBoxSerialPort.Text = Properties.Settings.Default.Port;

@@ -671,10 +671,7 @@ namespace Sensit.App.Calibration
 				tableLayoutPanelDevicesUnderTest.Controls.Add(comboBox, DUT_COLUMN_CONFIG1, position.Row);
 
 				// Add all available serial ports as options in the text box.
-				foreach (string s in SerialPort.GetPortNames())
-				{
-					comboBox.Items.Add(s);
-				}
+				comboBox.Items.AddRange(SerialPort.GetPortNames());
 			}
 
 			if (((ComboBox)sender).SelectedItem.ToString().CompareTo("Serial Device") == 0)

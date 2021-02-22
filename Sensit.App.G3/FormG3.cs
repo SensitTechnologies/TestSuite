@@ -26,10 +26,7 @@ namespace Sensit.App.G3
 			}
 
 			// Find all available serial ports.
-			foreach (string s in SerialPort.GetPortNames())
-			{
-				comboBoxSerialPort.Items.Add(s);
-			}
+			comboBoxSerialPort.Items.AddRange(SerialPort.GetPortNames());
 
 			// Select the most recently used port.
 			// The most recently used port is fetched from applications settings.
