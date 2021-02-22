@@ -6,6 +6,7 @@ using System.Globalization;
 using System.IO.Ports;
 using System.Linq;
 using System.Windows.Forms;
+using Sensit.TestSDK.Communication;
 using Sensit.TestSDK.Forms;
 using Sensit.TestSDK.Interfaces;
 using Sensit.TestSDK.Settings;
@@ -686,7 +687,7 @@ namespace Sensit.App.Calibration
 				};
 
 				// Populate it with available baud rates.
-				foreach (int b in Dut.SupportedBaudRates)
+				foreach (int b in SerialDevice.SupportedBaudRates)
 				{
 					comboBox.Items.Add(b);
 				}

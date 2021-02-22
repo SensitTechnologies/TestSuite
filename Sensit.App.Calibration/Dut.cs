@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using CsvHelper;
-using Sensit.TestSDK.Devices;
 using System.ComponentModel;
-using Sensit.TestSDK.Interfaces;
-using System.Threading;
 using System.Globalization;
+using System.IO;
+using System.Threading;
+using CsvHelper;	// TODO:  replace with Sensit.TestSDK.Files
+using Sensit.TestSDK.Devices;
+using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.App.Calibration
 {
@@ -126,18 +126,6 @@ namespace Sensit.App.Calibration
 		/// Baud rate for serial port (e.g. 9600)
 		/// </summary>
 		public int CommBaudRate { get; set; } = 9600;
-
-		/// <summary>
-		/// List of standard baud rates
-		/// </summary>
-		/// <remarks>
-		/// This system may support other baud rates not listed, or may not support some of these baud rates.
-		/// This list only provides a list of baud rates to populate options.
-		/// </remarks>
-		public static List<int> SupportedBaudRates { get; } = new List<int>
-		{
-			300, 600, 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200, 230400, 460800, 921600
-		};
 
 		#endregion
 

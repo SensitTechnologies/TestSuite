@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO.Ports;
 
 namespace Sensit.TestSDK.Communication
@@ -18,6 +19,18 @@ namespace Sensit.TestSDK.Communication
 		// port used to communicate with mass flow controller
 		// (protected means it's accessible within derived classes, but not outside them)
 		protected SerialPort Port { get; } = new SerialPort();
+
+		/// <summary>
+		/// List of standard baud rates
+		/// </summary>
+		/// <remarks>
+		/// This system may support other baud rates not listed, or may not support some of these baud rates.
+		/// This list only provides a list of baud rates to populate options.
+		/// </remarks>
+		public static List<int> SupportedBaudRates { get; } = new List<int>
+		{
+			300, 600, 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200, 230400, 460800, 921600
+		};
 
 		public string PortName
 		{
