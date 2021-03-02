@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO.Ports;
+using Sensit.TestSDK.Exceptions;
 
 namespace Sensit.TestSDK.Communication
 {
@@ -21,16 +22,9 @@ namespace Sensit.TestSDK.Communication
 		protected SerialPort Port { get; } = new SerialPort();
 
 		/// <summary>
-		/// List of standard baud rates
+		/// List of supported baud rates
 		/// </summary>
-		/// <remarks>
-		/// This system may support other baud rates not listed, or may not support some of these baud rates.
-		/// This list only provides a list of baud rates to populate options.
-		/// </remarks>
-		public static List<int> SupportedBaudRates { get; } = new List<int>
-		{
-			300, 600, 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200, 230400, 460800, 921600
-		};
+		public static List<int> SupportedBaudRates { get; }
 
 		public string PortName
 		{
@@ -38,53 +32,108 @@ namespace Sensit.TestSDK.Communication
 			set => Port.PortName = value;
 		}
 
+		// TODO:  Create lists and properties for other serial settings (data bits, parity, stop bits, handshaking).
+
+		/// <summary>
+		/// Baud rate used by the device.
+		/// </summary>
 		public int BaudRate
 		{
-			get => Port.BaudRate;
-			set =>Port.BaudRate = value;
+			get
+			{
+				if (SupportedBaudRates.Contains(Port.BaudRate) == false)
+				{
+					Port.BaudRate = SupportedBaudRates[0];
+				}
+				return Port.BaudRate;
+			}
+			set
+			{
+				if (SupportedBaudRates.Contains(value))
+				{
+					Port.BaudRate = value;
+				}
+				else throw new DeviceSettingNotSupportedException(GetType().Name + " does not support baud rate " + value + ".");
+			}
 		}
 
-		public int DataBits
+		public string Newline
 		{
-			get => Port.DataBits;
-			set => Port.DataBits = value;
+			get => Port.NewLine;
+			set => Port.NewLine = value;
 		}
-
-		public Parity Parity { get; set; }
-
-		public StopBits StopBits { get; set; }
 
 		/// <summary>
 		/// Initialize the serial interface.
 		/// </summary>
-		public void Open()
+		public virtual void Open()
 		{
-			Open(PortName, BaudRate);
+			try
+			{
+				// Open the serial port.
+				Port.Open();
+			}
+			catch (SystemException ex)
+			{
+				throw new DevicePortException("Could not open " + GetType().Name + "'s serial port."
+					+ Environment.NewLine + ex.Message);
+			}
 		}
 
 		/// <summary>
 		/// Initialize the serial interface.
 		/// </summary>
-		/// <param name="portName">name of port (i.e. "COM3")</param>
-		/// <param name="baudRate">baud rate (i.e. "9600")</param>
-		public abstract void Open(string portName, int baudRate);
+		/// <param name="portName">name of port (e.g. "COM3")</param>
+		public void Open(string portName)
+		{
+			PortName = portName;
+
+			Open();
+		}
 
 		/// <summary>
-		/// Set serial port properties.
+		/// Initialize the serial interface.
 		/// </summary>
+		/// <param name="portName">name of port (e.g. "COM3")</param>
+		/// <param name="baudRate">baud rate (e.g. "9600")</param>
+		public void Open(string portName, int baudRate)
+		{
+			// Set serial port settings.
+			PortName = portName;
+			BaudRate = baudRate;
+
+			Open();
+		}
+
+		/// <summary>
+		/// Initialize the serial interface.
+		/// </summary>
+		/// <param name="portName">name of port (e.g. "COM3")</param>
+		/// <param name="baudRate">baud rate (e.g. "9600")</param>
 		/// <param name="dataBits">number of data bits</param>
-		/// <param name="parity">parity setting</param>
+		/// <param name="parity">parity</param>
 		/// <param name="stopBits">number of stop bits</param>
-		public abstract void WriteSerialProperties(int dataBits = 8, Parity parity = Parity.None, StopBits stopBits = StopBits.One);
+		public void Open(string portName, int baudRate, int dataBits, Parity parity, StopBits stopBits)
+		{
+			// Set serial port settings.
+			PortName = portName;
+			BaudRate = baudRate;
+			Port.DataBits = dataBits;
+			Port.Parity = parity;
+			Port.StopBits = stopBits;
+
+			Open();
+		}
 
 		/// <summary>
 		/// Close the serial port (if it's open).
 		/// </summary>
 		public void Close()
 		{
-			// If the serial port is open, close it.
+			// If the serial port is open...
 			if (Port.IsOpen)
 			{
+				// Close the port.
 				Port.Close();
 			}
 		}

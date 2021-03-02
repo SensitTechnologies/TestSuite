@@ -174,7 +174,6 @@ namespace Sensit.App.Calibration
 
 				if (_genericSerialDevice != null)
 				{
-					_genericSerialDevice.WriteSerialProperties();
 					_genericSerialDevice.Open(CommPort, CommBaudRate);
 					_genericSerialDevice.Command = CommPrompt;
 				}

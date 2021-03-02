@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO.Ports;
 using System.Text;
-using System.Threading;
 using Sensit.TestSDK.Calculations;
 using Sensit.TestSDK.Communication;
 using Sensit.TestSDK.Exceptions;
@@ -10,6 +8,7 @@ using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.TestSDK.Devices
 {
+	// (115200 and 230400 baud are supported)
 	public class SensitG2GLT : SerialDevice, IGasMixReference
 	{
 		const int NUM_RETRIES = 20;
@@ -201,114 +200,6 @@ namespace Sensit.TestSDK.Devices
 
 			// TODO:  Parse the reading and add it to the response queue.
 
-		}
-
-		#endregion
-
-		#region Serial Device Methods
-
-		public new int BaudRate
-		{
-			set
-			{
-				if ((value != 115200) && (value != 230400))
-				{
-					throw new DeviceSettingNotSupportedException("The G2-GLT only supports 115200 and 230400 baud.");
-				}
-
-				Port.BaudRate = value;
-			}
-		}
-
-		public new int DataBits
-		{
-			set
-			{
-				if (value != 8)
-				{
-					throw new DeviceSettingNotSupportedException("The G2-GLT only supports 8 data bits.");
-				}
-
-				Port.DataBits = value;
-			}
-		}
-
-		public new Parity Parity
-		{
-			set
-			{
-				if (value != Parity.None)
-				{
-					throw new DeviceSettingNotSupportedException("The G2-GLT does not support parity.");
-				}
-
-				Port.Parity = value;
-			}
-		}
-
-		public new StopBits StopBits
-		{
-			set
-			{
-				if (value != StopBits.One)
-				{
-					throw new DeviceSettingNotSupportedException("The G2-GLT only supports one stop bit.");
-				}
-
-				Port.StopBits = value;
-			}
-		}
-
-		public override void WriteSerialProperties(int dataBits = 8, Parity parity = Parity.None, StopBits stopBits = StopBits.One)
-		{
-			// This device only supports its default settings,
-			// so there is nothing to do here except update the properties.
-			DataBits = dataBits;
-			Parity = parity;
-			StopBits = stopBits;
-		}
-
-		/// <summary>
-		/// Open the serial port with the correct settings.
-		/// </summary>
-		/// <param name="portName">serial port name (i.e. "COM3")</param>
-		/// <param name="baudRate">baud rate (115200 and 230400 are supported)</param>
-		public override void Open(string portName, int baudRate = 115200)
-		{
-			try
-			{
-				// Set serial port settings.
-				Port.PortName = portName;
-				Port.BaudRate = baudRate;
-				Port.DataBits = 8;
-				Port.Parity = Parity.None;
-				Port.StopBits = StopBits.One;
-				Port.Handshake = Handshake.None;
-				Port.ReadTimeout = 500;
-				Port.WriteTimeout = 500;
-
-				// Open the serial port.
-				Port.Open();
-
-				// Wait before attempting communication.
-				// Not sure why...but the GLT app did this.
-				Thread.Sleep(2000);
-
-				// Stop display buffer stream.
-				TrySendingCommand(CreateMessage(CMDS.STOP_STREAMING));
-
-				// Get instrument info.
-				TrySendingCommand(CreateMessage(CMDS.GET_INSTRUMENT_INFO));
-
-				// Request Monitoring Mode.
-				TrySendingCommand(CreateMessage(CMDS.MONITORING_MODE));
-
-			}
-			catch (SystemException ex)
-			{
-				throw new DevicePortException("Could not open G2-GLT serial port."
-					+ Environment.NewLine + ex.Message);
-			}
 		}
 
 		#endregion

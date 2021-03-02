@@ -22,13 +22,13 @@ namespace Sensit.TestSDK.Devices
 	public class GPDX303S : SerialDevice, IVoltageReference, ICurrentReference,
 		IVoltageController, ICurrentController
 	{
-		private int _channel = 1;
+		private int channel = 1;
 
 		public int Channel
 		{
 			get
 			{
-				return _channel;
+				return channel;
 			}
 			set
 			{
@@ -38,114 +38,14 @@ namespace Sensit.TestSDK.Devices
 					throw new DeviceSettingNotSupportedException("Channel must be a number between 1 and 4, inclusive.");
 				}
 
-				_channel = value;
+				channel = value;
 			}
-		}
-
-		#region Constructor
-
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		public GPDX303S()
-		{
-			// Set a default baud rate.
-			Port.BaudRate = 9600;
-		}
-
-		#endregion
-
-		#region Serial Device Methods
-
-		public new int BaudRate
-		{
-			get => Port.BaudRate;
-			set
-			{
-				if ((value != 9600) &&
-					(value != 57600) &&
-					(value != 115200))
-				{
-					throw new DeviceSettingNotSupportedException("The GPD-X303S power supply does not support baud rate " + value.ToString() + ".");
-				}
-
-				Port.BaudRate = value;
-			}
-		}
-
-		public new int DataBits
-		{
-			get => Port.DataBits;
-			set
-			{
-				if (value != 8)
-				{
-					throw new DeviceSettingNotSupportedException("The GPD-X303S power supply only supports 8 data bits.");
-				}
-			}
-		}
-
-		public new Parity Parity
-		{
-			get => Port.Parity;
-			set
-			{
-				if (value != Parity.None)
-					throw new DeviceSettingNotSupportedException("The GPD-X303S power supply does not support parity.");
-
-				Port.Parity = value;
-			}
-		}
-
-		public new StopBits StopBits
-		{
-			get => Port.StopBits;
-			set
-			{
-				if (value != StopBits.One)
-					throw new DeviceSettingNotSupportedException("The GPD-X303S power supply only supports one stop bit.");
-
-				Port.StopBits = value;
-			}
-		}
-
-		public override void WriteSerialProperties(int dataBits = 8, Parity parity = Parity.None, StopBits stopBits = StopBits.One)
-		{
-			DataBits = dataBits;
-			Parity = parity;
-			StopBits = stopBits;
 		}
 
 		/// <summary>
-		/// Open the serial port with the correct settings.
+		/// Baud rates supported by the mass flow controller.
 		/// </summary>
-		/// <param name="portName">serial port name (e.g. "COM3")</param>
-		/// <param name="baudRate">baud rate</param>
-		public override void Open(string portName, int baudRate)
-		{
-			try
-			{
-				// Set serial port settings.
-				Port.PortName = portName;
-				BaudRate = baudRate;
-				Port.DataBits = 8;
-				Port.Parity = Parity.None;
-				Port.StopBits = StopBits.One;
-				Port.Handshake = Handshake.None;
-				Port.ReadTimeout = 500;
-				Port.WriteTimeout = 500;
-
-				// Open the serial port.
-				Port.Open();
-			}
-			catch (SystemException ex)
-			{
-				throw new DevicePortException("Could not open power supply's serial port."
-					+ Environment.NewLine + ex.Message);
-			}
-		}
-
-		#endregion
+		public new static List<int> SupportedBaudRates { get; } = new List<int> { 9600, 57600, 115200 };
 
 		#region Reference Device Methods
 
@@ -162,10 +62,10 @@ namespace Sensit.TestSDK.Devices
 		public void Read()
 		{
 			// Fetch the voltage reading.
-			Readings[VariableType.Voltage] = SendQuery(new GPDX303S_SCPI().VOUT(_channel).Query());
+			Readings[VariableType.Voltage] = SendQuery(new GPDX303S_SCPI().VOUT(channel).Query());
 
 			// Fetch the current reading.
-			Readings[VariableType.Current] = SendQuery(new GPDX303S_SCPI().IOUT(_channel).Query());
+			Readings[VariableType.Current] = SendQuery(new GPDX303S_SCPI().IOUT(channel).Query());
 		}
 
 		#endregion
@@ -234,10 +134,10 @@ namespace Sensit.TestSDK.Devices
 			switch (type)
 			{
 				case VariableType.Current:
-					SendCommand(new GPDX303S_SCPI().ISET(_channel, Convert.ToSingle(setpoint)).Command());
+					SendCommand(new GPDX303S_SCPI().ISET(channel, Convert.ToSingle(setpoint)).Command());
 					break;
 				case VariableType.Voltage:
-					SendCommand(new GPDX303S_SCPI().VSET(_channel, Convert.ToSingle(setpoint)).Command());
+					SendCommand(new GPDX303S_SCPI().VSET(channel, Convert.ToSingle(setpoint)).Command());
 					break;
 				default:
 					throw new DeviceSettingNotSupportedException("Power supply does not support " + type.ToString() + " setpoints.");
@@ -246,16 +146,15 @@ namespace Sensit.TestSDK.Devices
 
 		public double ReadSetpoint(VariableType type)
 		{
-			double result = 0;
-
+			double result;
 			switch (type)
 			{
 				case VariableType.Current:
-					result = SendQuery(new GPDX303S_SCPI().ISET(_channel).Query());
+					result = SendQuery(new GPDX303S_SCPI().ISET(channel).Query());
 					break;
 				case VariableType.Voltage:
 					// Fetch the voltage reading.
-					result = SendQuery(new GPDX303S_SCPI().VSET(_channel).Query());
+					result = SendQuery(new GPDX303S_SCPI().VSET(channel).Query());
 					break;
 				default:
 					throw new DeviceSettingNotSupportedException("Power supply does not support " + type.ToString() + ".");

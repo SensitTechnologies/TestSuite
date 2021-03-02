@@ -92,45 +92,5 @@ namespace Sensit.TestSDK.Devices
 		}
 
 		#endregion
-
-		#region Serial Device Methods
-
-		public override void Open(string portName, int baudRate)
-		{
-			try
-			{
-				// Set serial port settings.
-				Port.PortName = portName;
-				Port.BaudRate = baudRate;
-				Port.DataBits = DataBits;
-				Port.Parity = Parity;
-				Port.StopBits = StopBits;
-
-				// Handshaking is not supported at this time.
-				Port.Handshake = Handshake.None;
-
-				// Messages are terminated with a line feed and carriage return.
-				Port.NewLine = "\r\n";
-
-				// Open the serial port.
-				Port.Open();
-			}
-			catch (SystemException ex)
-			{
-				throw new DevicePortException("Could not open streaming device's serial port."
-					+ Environment.NewLine + ex.Message);
-			}
-		}
-
-		public override void WriteSerialProperties(int dataBits = 8, Parity parity = Parity.None, StopBits stopBits = StopBits.One)
-		{
-			// Since this is a generic device, all settings are supported.
-			// So there is nothing to do here except update the properties.
-			DataBits = dataBits;
-			Parity = parity;
-			StopBits = stopBits;
-		}
-
-		#endregion
 	}
 }

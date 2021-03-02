@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO.Ports;
 using System.Text.RegularExpressions;
 using System.Threading;
 using Sensit.TestSDK.Communication;
@@ -20,6 +19,11 @@ namespace Sensit.TestSDK.Devices
 	public class GenericSerialDevice : SerialDevice, IMessageReference
 	{
 		public string Command { get; set; } = string.Empty;
+
+		/// <summary>
+		/// List of supported baud rates
+		/// </summary>
+		public new static List<int> SupportedBaudRates { get; } = new List<int> { 300, 600, 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200, 230400, 460800, 921600 };
 
 		#region Message Device Methods
 
@@ -68,46 +72,6 @@ namespace Sensit.TestSDK.Devices
 				throw new DeviceCommunicationException("Invalid response from Generic Serial Device."
 					+ Environment.NewLine + ex.Message);
 			}
-		}
-
-		#endregion
-
-		#region Serial Device Methods
-
-		public override void Open(string portName, int baudRate)
-		{
-			try
-			{
-				// Set serial port settings.
-				Port.PortName = portName;
-				Port.BaudRate = baudRate;
-				Port.DataBits = DataBits;
-				Port.Parity = Parity;
-				Port.StopBits = StopBits;
-
-				// Handshaking is not supported at this time.
-				Port.Handshake = Handshake.None;
-
-				// Messages are terminated with a line feed and carriage return.
-				Port.NewLine = "\r\n";
-
-				// Open the serial port.
-				Port.Open();
-			}
-			catch (SystemException ex)
-			{
-				throw new DevicePortException("Could not open streaming device's serial port."
-					+ Environment.NewLine + ex.Message);
-			}
-		}
-
-		public override void WriteSerialProperties(int dataBits = 8, Parity parity = Parity.None, StopBits stopBits = StopBits.One)
-		{
-			// Since this is a generic device, all settings are supported.
-			// So there is nothing to do here except update the properties.
-			DataBits = dataBits;
-			Parity = parity;
-			StopBits = stopBits;
 		}
 
 		#endregion

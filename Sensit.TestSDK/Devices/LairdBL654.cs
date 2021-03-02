@@ -49,13 +49,12 @@ namespace Sensit.TestSDK.Devices
 
 		#endregion
 
-		public override void Open(string portName, int baudRate = 115200)
+		public override void Open()
 		{
 			try
 			{
 				// Set serial port settings.
-				Port.PortName = portName;
-				Port.BaudRate = baudRate;
+				Port.BaudRate = 115200;
 				Port.DataBits = 8;
 				Port.Parity = Parity.None;
 				Port.StopBits = StopBits.One;
@@ -74,15 +73,6 @@ namespace Sensit.TestSDK.Devices
 				throw new DevicePortException("Could not open serial port."
 					+ Environment.NewLine + ex.Message);
 			}
-		}
-
-		public override void WriteSerialProperties(int dataBits = 8, Parity parity = Parity.None, StopBits stopBits = StopBits.One)
-		{
-			// This device only supports its default settings,
-			// so there is nothing to do here except update the properties.
-			DataBits = dataBits;
-			Parity = parity;
-			StopBits = stopBits;
 		}
 
 		/// <summary>

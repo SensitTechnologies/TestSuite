@@ -46,6 +46,11 @@ namespace Sensit.TestSDK.Devices
 		IMassFlowReference, IVolumeFlowReference, ITemperatureReference, IPressureReference
 	{
 		/// <summary>
+		/// Baud rates supported by the mass flow controller.
+		/// </summary>
+		public new static List<int> SupportedBaudRates { get; } = new List<int> { 9600, 19200 };
+
+		/// <summary>
 		/// Commands sent to the device
 		/// </summary>
 		private static class Command
@@ -220,87 +225,27 @@ namespace Sensit.TestSDK.Devices
 
 		#region Serial Device Methods
 
-		public new int BaudRate
-		{
-			get => Port.BaudRate;
-			set
-			{
-				if ((value != 2400) &&
-					(value != 9600) &&
-					(value != 19200) &&
-					(value != 38400) &&
-					(value != 57600))
-				{
-					throw new DeviceSettingNotSupportedException("The Cole Parmer MFC does not support baud rate " + value.ToString() + ".");
-				}
-
-				Port.BaudRate = value;
-			}
-		}
-
-		public new int DataBits
-		{
-			get => Port.DataBits;
-			set
-			{
-				if (value != 8)
-				{
-					throw new DeviceSettingNotSupportedException("The Cole Parmer MFC only supports 8 data bits.");
-				}
-
-				Port.DataBits = value;
-			}
-		}
-
-		public new Parity Parity
-		{
-			get => Port.Parity;
-			set
-			{
-				if (value != Parity.None)
-					throw new DeviceSettingNotSupportedException("The Cole Parmer MFC does not support parity.");
-
-				Port.Parity = value;
-			}
-		}
-
-		public new StopBits StopBits
-		{
-			get => Port.StopBits;
-			set
-			{
-				if (value != StopBits.One)
-					throw new DeviceSettingNotSupportedException("The Cole Parmer MFC only supports one stop bit.");
-
-				Port.StopBits = value;
-			}
-		}
-
-		public override void WriteSerialProperties(int dataBits = 8, Parity parity = Parity.None, StopBits stopBits = StopBits.One)
-		{
-			// This mass flow controller only supports its default settings,
-			// so there is nothing to do here except update the properties.
-			DataBits = dataBits;
-			Parity = parity;
-			StopBits = stopBits;
-		}
-
 		/// <summary>
 		/// Open the serial port with the correct settings; set default address (and polling mode).
 		/// </summary>
-		/// <param name="portName">com port name (i.e. "COM3")</param>
-		/// <param name="baudRate">baud rate (9600 and 19200 are supported)</param>
-		public override void Open(string portName, int baudRate = 19200)
+		public override void Open()
 		{
 			try
 			{
-				// Set serial port settings.
-				Port.PortName = portName;
-				Port.BaudRate = baudRate;
+				Port.BaudRate = 19200;
+
+				// Only 8 data bits are supported.
 				Port.DataBits = 8;
+
+				// Parity is not supported.
 				Port.Parity = Parity.None;
+
+				// Only one stop bit is supported.
 				Port.StopBits = StopBits.One;
+
+				// Handshaking is not supported.
 				Port.Handshake = Handshake.None;
+
 				Port.ReadTimeout = 500;
 				Port.WriteTimeout = 500;
 
@@ -315,7 +260,7 @@ namespace Sensit.TestSDK.Devices
 			}
 			catch (SystemException ex)
 			{
-				throw new DevicePortException("Could not open mass flow controller's serial port."
+				throw new DevicePortException("Could not open " + GetType().Name + "'s serial port."
 					+ Environment.NewLine + ex.Message);
 			}
 		}

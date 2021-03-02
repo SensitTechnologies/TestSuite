@@ -214,7 +214,6 @@ namespace Sensit.App.Datalogger
 				{
 					// Open the DUT serial port.
 					// TODO:  Allow user to select baud rate.
-					_genericSerialDevice.WriteSerialProperties();
 					_genericSerialDevice.Open(comboBoxSerialPort.Text, 57600);
 					_genericSerialDevice.Command = textBoxCommand.Text;
 

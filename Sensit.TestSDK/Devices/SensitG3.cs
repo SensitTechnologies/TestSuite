@@ -14,8 +14,7 @@ namespace Sensit.TestSDK.Devices
 	/// Interface with the Sensit G3 prototypes for reading gas concentration.
 	/// </summary>
 	/// <remarks>
-	/// The serial interface here is just a debug console that is not present
-	/// in production firmware.
+	/// The serial interface here is a debug console not present in production firmware.
 	/// </remarks>
 	public class SensitG3 : SerialDevice, IGasMixReference, IMessageReference
 	{
@@ -39,7 +38,7 @@ namespace Sensit.TestSDK.Devices
 		{
 			try
 			{
-				// Send command to turn the instrument off.
+				// Send command to instrument.
 				Port.WriteLine(message);
 			}
 			catch (InvalidOperationException ex)
@@ -199,81 +198,15 @@ namespace Sensit.TestSDK.Devices
 
 		#endregion
 
-		#region Serial Device Methods
-
-		public new int BaudRate
-		{
-			set
-			{
-				if ((value != 115200))
-				{
-					throw new DeviceSettingNotSupportedException("The G3 only supports 115200 baud.");
-				}
-
-				Port.BaudRate = value;
-			}
-		}
-
-		public new int DataBits
-		{
-			set
-			{
-				if (value != 8)
-				{
-					throw new DeviceSettingNotSupportedException("The G3 only supports 8 data bits.");
-				}
-
-				Port.DataBits = value;
-			}
-		}
-
-		public new Parity Parity
-		{
-			set
-			{
-				if (value != Parity.None)
-				{
-					throw new DeviceSettingNotSupportedException("The G3 does not support parity.");
-				}
-
-				Port.Parity = value;
-			}
-		}
-
-		public new StopBits StopBits
-		{
-			set
-			{
-				if (value != StopBits.One)
-				{
-					throw new DeviceSettingNotSupportedException("The G3 only supports one stop bit.");
-				}
-
-				Port.StopBits = value;
-			}
-		}
-
-		public override void WriteSerialProperties(int dataBits = 8, Parity parity = Parity.None, StopBits stopBits = StopBits.One)
-		{
-			// This device only supports its default settings,
-			// so there is nothing to do here except update the properties.
-			DataBits = dataBits;
-			Parity = parity;
-			StopBits = stopBits;
-		}
-
 		/// <summary>
 		/// Open the serial port with the correct settings.
 		/// </summary>
-		/// <param name="portName">com port name (i.e. "COM3")</param>
-		/// <param name="baudRate">baud rate (only 115200 is supported)</param>
-		public override void Open(string portName, int baudRate = 115200)
+		public override void Open()
 		{
 			try
 			{
 				// Set serial port settings.
-				Port.PortName = portName;
-				Port.BaudRate = baudRate;
+				Port.BaudRate = 115200;
 				Port.DataBits = 8;
 				Port.Parity = Parity.None;
 				Port.StopBits = StopBits.One;
@@ -293,7 +226,5 @@ namespace Sensit.TestSDK.Devices
 					+ Environment.NewLine + ex.Message);
 			}
 		}
-
-		#endregion
 	}
 }
