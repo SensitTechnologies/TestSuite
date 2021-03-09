@@ -687,10 +687,14 @@ namespace Sensit.App.Calibration
 				};
 
 				// Populate it with available baud rates.
-				foreach (int b in GenericSerialDevice.SupportedBaudRates)
+				// Create a generic serial device.
+				// TODO:  Find a way not to create this dummy object.
+				GenericSerialDevice dut = new GenericSerialDevice();
+				foreach (int b in dut.SupportedBaudRates)
 				{
 					comboBox.Items.Add(b);
 				}
+				dut.Dispose();
 
 				// Select default baud rate of 9600.
 				comboBox.SelectedIndex = comboBox.FindStringExact("9600");

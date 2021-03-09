@@ -18,6 +18,8 @@ namespace Sensit.TestSDK.Devices
 	/// </remarks>
 	public class SensitG3 : SerialDevice, IGasMixReference, IMessageReference
 	{
+		public override List<int> SupportedBaudRates { get; } = new List<int> { 115200 };
+
 		#region Message Device Methods
 
 		public UnitOfMeasure.Concentration ConcentrationUnit { get; set; } = UnitOfMeasure.Concentration.PartsPerMillion;

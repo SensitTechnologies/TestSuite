@@ -8,9 +8,11 @@ using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.TestSDK.Devices
 {
-	// (115200 and 230400 baud are supported)
 	public class SensitG2GLT : SerialDevice, IGasMixReference
 	{
+		// 115200 and 230400 baud are supported.
+		public override List<int> SupportedBaudRates { get; } = new List<int> { 115200, 230400 };
+
 		const int NUM_RETRIES = 20;
 
 		#region Enumerations

@@ -24,7 +24,7 @@ namespace Sensit.TestSDK.Communication
 		/// <summary>
 		/// List of supported baud rates
 		/// </summary>
-		public static List<int> SupportedBaudRates { get; }
+		public abstract List<int> SupportedBaudRates { get; }
 
 		public string PortName
 		{

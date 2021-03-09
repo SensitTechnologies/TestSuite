@@ -48,7 +48,7 @@ namespace Sensit.TestSDK.Devices
 		/// <summary>
 		/// Baud rates supported by the mass flow controller.
 		/// </summary>
-		public new static List<int> SupportedBaudRates { get; } = new List<int> { 9600, 19200 };
+		public override List<int> SupportedBaudRates { get; } = new List<int> { 9600, 19200 };
 
 		/// <summary>
 		/// Commands sent to the device

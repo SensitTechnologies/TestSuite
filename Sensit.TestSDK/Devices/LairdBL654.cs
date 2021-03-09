@@ -37,6 +37,8 @@ namespace Sensit.TestSDK.Devices
 
 		public bool IsOpen => Port.IsOpen;
 
+		public override List<int> SupportedBaudRates { get; } = new List<int> { 115200 };
+
 		#endregion
 
 		#region Helper Methods

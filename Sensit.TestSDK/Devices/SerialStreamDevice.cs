@@ -20,6 +20,8 @@ namespace Sensit.TestSDK.Devices
 	/// </remarks>
 	public class SerialStreamDevice : SerialDevice, IMessageReference
 	{
+		public override List<int> SupportedBaudRates { get; } = new List<int> { 300, 600, 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200, 230400, 460800, 921600 };
+
 		#region Reference Device Properties
 
 		public Dictionary<VariableType, double> Readings { get; private set; }
