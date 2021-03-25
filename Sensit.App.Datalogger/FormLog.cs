@@ -53,6 +53,15 @@ namespace Sensit.App.Datalogger
 			// Select the most recently used serial port.
 			comboBoxSerialPort.Text = Properties.Settings.Default.Port;
 
+			// Find all available baud rates.
+			foreach (int b in _genericSerialDevice.SupportedBaudRates)
+			{
+				comboBoxBaudRate.Items.Add(b);
+			}
+
+			// Select the most recently used baud rate.
+			comboBoxBaudRate.Text = Properties.Settings.Default.BaudRate.ToString();
+
 			// Set the most recently used command.
 			textBoxCommand.Text = Properties.Settings.Default.Command;
 
@@ -120,6 +129,28 @@ namespace Sensit.App.Datalogger
 		}
 
 		/// <summary>
+		/// When the selected baud rate is changed, save the new value.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ComboBoxBaudRate_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			try
+			{
+				// Save the new baud rate to the application settings file.
+				Properties.Settings.Default.BaudRate = Convert.ToInt32(comboBoxBaudRate.Text);
+			}
+			catch (FormatException ex)
+			{
+				MessageBox.Show(ex.Message, "ERROR");
+			}
+			catch (OverflowException ex)
+			{
+				MessageBox.Show(ex.Message, "ERROR");
+			}
+		}
+
+		/// <summary>
 		/// When the selected logging interval is changed, save the new value.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -137,8 +168,16 @@ namespace Sensit.App.Datalogger
 		/// <param name="e"></param>
 		private void TextBoxCommand_TextChanged(object sender, EventArgs e)
 		{
-			// Save the command to the application settings file.
-			Properties.Settings.Default.Command = textBoxCommand.Text;
+			// If the user has selected a valid baud rate...
+			if (int.TryParse(comboBoxBaudRate.Text, out int baudrate))
+			{
+				// Save the command to the application settings file.
+				Properties.Settings.Default.BaudRate = baudrate;
+			}
+			else
+			{
+				MessageBox.Show("Please select a valid baud rate.", "ERROR");
+			}
 		}
 
 		/// <summary>
@@ -212,9 +251,11 @@ namespace Sensit.App.Datalogger
 			{
 				try
 				{
+					// Parse the selected baud rate.
+					int baudrate = Convert.ToInt32(comboBoxBaudRate.Text);
+
 					// Open the DUT serial port.
-					// TODO:  Allow user to select baud rate.
-					_genericSerialDevice.Open(comboBoxSerialPort.Text, 57600);
+					_genericSerialDevice.Open(comboBoxSerialPort.Text, baudrate);
 					_genericSerialDevice.Command = textBoxCommand.Text;
 
 					// Set up the CSV file writer filestream.

@@ -39,8 +39,6 @@
 			this.buttonBrowse = new System.Windows.Forms.Button();
 			this.groupBoxSerialPort = new System.Windows.Forms.GroupBox();
 			this.comboBoxSerialPort = new System.Windows.Forms.ComboBox();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.numericUpDownInterval = new System.Windows.Forms.NumericUpDown();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.textBoxResponse = new System.Windows.Forms.TextBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -50,18 +48,23 @@
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			this.buttonStop = new System.Windows.Forms.Button();
 			this.buttonStart = new System.Windows.Forms.Button();
+			this.numericUpDownInterval = new System.Windows.Forms.NumericUpDown();
+			this.groupBoxInterval = new System.Windows.Forms.GroupBox();
+			this.groupBoxBaudRate = new System.Windows.Forms.GroupBox();
+			this.comboBoxBaudRate = new System.Windows.Forms.ComboBox();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.groupBoxMassFlow.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.groupBoxSerialPort.SuspendLayout();
-			this.groupBox1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDownInterval)).BeginInit();
 			this.groupBox3.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.tableLayoutPanel3.SuspendLayout();
 			this.tableLayoutPanel2.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownInterval)).BeginInit();
+			this.groupBoxInterval.SuspendLayout();
+			this.groupBoxBaudRate.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -70,7 +73,7 @@
             this.fileToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(288, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(444, 24);
 			this.menuStrip1.TabIndex = 0;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -95,7 +98,7 @@
             this.toolStripStatusLabel1});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 341);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(288, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(444, 22);
 			this.statusStrip1.TabIndex = 1;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
@@ -113,7 +116,7 @@
 			this.groupBoxMassFlow.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBoxMassFlow.Location = new System.Drawing.Point(0, 24);
 			this.groupBoxMassFlow.Name = "groupBoxMassFlow";
-			this.groupBoxMassFlow.Size = new System.Drawing.Size(288, 67);
+			this.groupBoxMassFlow.Size = new System.Drawing.Size(444, 67);
 			this.groupBoxMassFlow.TabIndex = 7;
 			this.groupBoxMassFlow.TabStop = false;
 			this.groupBoxMassFlow.Text = "Filename";
@@ -132,7 +135,7 @@
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 1;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(275, 29);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(424, 29);
 			this.tableLayoutPanel1.TabIndex = 1;
 			// 
 			// textBoxFilename
@@ -140,13 +143,13 @@
 			this.textBoxFilename.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.textBoxFilename.Location = new System.Drawing.Point(3, 4);
 			this.textBoxFilename.Name = "textBoxFilename";
-			this.textBoxFilename.Size = new System.Drawing.Size(188, 20);
+			this.textBoxFilename.Size = new System.Drawing.Size(337, 20);
 			this.textBoxFilename.TabIndex = 9;
 			// 
 			// buttonBrowse
 			// 
 			this.buttonBrowse.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.buttonBrowse.Location = new System.Drawing.Point(197, 3);
+			this.buttonBrowse.Location = new System.Drawing.Point(346, 3);
 			this.buttonBrowse.Name = "buttonBrowse";
 			this.buttonBrowse.Size = new System.Drawing.Size(75, 23);
 			this.buttonBrowse.TabIndex = 2;
@@ -175,36 +178,6 @@
 			this.comboBoxSerialPort.TabIndex = 0;
 			this.comboBoxSerialPort.SelectedIndexChanged += new System.EventHandler(this.ComboBoxSerialPort_SelectedIndexChanged);
 			// 
-			// groupBox1
-			// 
-			this.groupBox1.AutoSize = true;
-			this.groupBox1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.groupBox1.Controls.Add(this.numericUpDownInterval);
-			this.groupBox1.Location = new System.Drawing.Point(146, 97);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(143, 60);
-			this.groupBox1.TabIndex = 10;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Sample Interval (ms)";
-			// 
-			// numericUpDownInterval
-			// 
-			this.numericUpDownInterval.Location = new System.Drawing.Point(14, 21);
-			this.numericUpDownInterval.Maximum = new decimal(new int[] {
-            36000000,
-            0,
-            0,
-            0});
-			this.numericUpDownInterval.Name = "numericUpDownInterval";
-			this.numericUpDownInterval.Size = new System.Drawing.Size(123, 20);
-			this.numericUpDownInterval.TabIndex = 1;
-			this.numericUpDownInterval.Value = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-			this.numericUpDownInterval.ValueChanged += new System.EventHandler(this.NumericUpDownInterval_ValueChanged);
-			// 
 			// groupBox3
 			// 
 			this.groupBox3.AutoSize = true;
@@ -212,7 +185,7 @@
 			this.groupBox3.Controls.Add(this.textBoxResponse);
 			this.groupBox3.Location = new System.Drawing.Point(0, 227);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(286, 58);
+			this.groupBox3.Size = new System.Drawing.Size(435, 58);
 			this.groupBox3.TabIndex = 11;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Response";
@@ -221,7 +194,7 @@
 			// 
 			this.textBoxResponse.Location = new System.Drawing.Point(11, 19);
 			this.textBoxResponse.Name = "textBoxResponse";
-			this.textBoxResponse.Size = new System.Drawing.Size(269, 20);
+			this.textBoxResponse.Size = new System.Drawing.Size(418, 20);
 			this.textBoxResponse.TabIndex = 10;
 			// 
 			// groupBox2
@@ -231,7 +204,7 @@
 			this.groupBox2.Controls.Add(this.textBoxCommand);
 			this.groupBox2.Location = new System.Drawing.Point(0, 163);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(286, 58);
+			this.groupBox2.Size = new System.Drawing.Size(435, 58);
 			this.groupBox2.TabIndex = 12;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Command";
@@ -240,7 +213,7 @@
 			// 
 			this.textBoxCommand.Location = new System.Drawing.Point(11, 19);
 			this.textBoxCommand.Name = "textBoxCommand";
-			this.textBoxCommand.Size = new System.Drawing.Size(269, 20);
+			this.textBoxCommand.Size = new System.Drawing.Size(418, 20);
 			this.textBoxCommand.TabIndex = 10;
 			this.textBoxCommand.TextChanged += new System.EventHandler(this.TextBoxCommand_TextChanged);
 			// 
@@ -252,7 +225,7 @@
 			this.groupBox4.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.groupBox4.Location = new System.Drawing.Point(0, 287);
 			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(288, 54);
+			this.groupBox4.Size = new System.Drawing.Size(444, 54);
 			this.groupBox4.TabIndex = 13;
 			this.groupBox4.TabStop = false;
 			// 
@@ -268,7 +241,7 @@
 			this.tableLayoutPanel3.Name = "tableLayoutPanel3";
 			this.tableLayoutPanel3.RowCount = 1;
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel3.Size = new System.Drawing.Size(282, 35);
+			this.tableLayoutPanel3.Size = new System.Drawing.Size(438, 35);
 			this.tableLayoutPanel3.TabIndex = 1;
 			// 
 			// tableLayoutPanel2
@@ -281,7 +254,7 @@
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.tableLayoutPanel2.Controls.Add(this.buttonStop, 1, 0);
 			this.tableLayoutPanel2.Controls.Add(this.buttonStart, 0, 0);
-			this.tableLayoutPanel2.Location = new System.Drawing.Point(60, 3);
+			this.tableLayoutPanel2.Location = new System.Drawing.Point(138, 3);
 			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
 			this.tableLayoutPanel2.RowCount = 1;
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -308,15 +281,72 @@
 			this.buttonStart.UseVisualStyleBackColor = true;
 			this.buttonStart.Click += new System.EventHandler(this.ButtonStart_Click);
 			// 
+			// numericUpDownInterval
+			// 
+			this.numericUpDownInterval.Increment = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+			this.numericUpDownInterval.Location = new System.Drawing.Point(14, 21);
+			this.numericUpDownInterval.Maximum = new decimal(new int[] {
+            36000000,
+            0,
+            0,
+            0});
+			this.numericUpDownInterval.Name = "numericUpDownInterval";
+			this.numericUpDownInterval.Size = new System.Drawing.Size(123, 20);
+			this.numericUpDownInterval.TabIndex = 1;
+			this.numericUpDownInterval.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+			this.numericUpDownInterval.ValueChanged += new System.EventHandler(this.NumericUpDownInterval_ValueChanged);
+			// 
+			// groupBoxInterval
+			// 
+			this.groupBoxInterval.AutoSize = true;
+			this.groupBoxInterval.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.groupBoxInterval.Controls.Add(this.numericUpDownInterval);
+			this.groupBoxInterval.Location = new System.Drawing.Point(292, 97);
+			this.groupBoxInterval.Name = "groupBoxInterval";
+			this.groupBoxInterval.Size = new System.Drawing.Size(143, 60);
+			this.groupBoxInterval.TabIndex = 10;
+			this.groupBoxInterval.TabStop = false;
+			this.groupBoxInterval.Text = "Sample Interval (ms)";
+			// 
+			// groupBoxBaudRate
+			// 
+			this.groupBoxBaudRate.AutoSize = true;
+			this.groupBoxBaudRate.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.groupBoxBaudRate.Controls.Add(this.comboBoxBaudRate);
+			this.groupBoxBaudRate.Location = new System.Drawing.Point(146, 97);
+			this.groupBoxBaudRate.Name = "groupBoxBaudRate";
+			this.groupBoxBaudRate.Size = new System.Drawing.Size(140, 60);
+			this.groupBoxBaudRate.TabIndex = 9;
+			this.groupBoxBaudRate.TabStop = false;
+			this.groupBoxBaudRate.Text = "Baud Rate";
+			// 
+			// comboBoxBaudRate
+			// 
+			this.comboBoxBaudRate.FormattingEnabled = true;
+			this.comboBoxBaudRate.Location = new System.Drawing.Point(13, 20);
+			this.comboBoxBaudRate.Name = "comboBoxBaudRate";
+			this.comboBoxBaudRate.Size = new System.Drawing.Size(121, 21);
+			this.comboBoxBaudRate.TabIndex = 0;
+			this.comboBoxBaudRate.SelectedIndexChanged += new System.EventHandler(this.ComboBoxBaudRate_SelectedIndexChanged);
+			// 
 			// FormLog
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(288, 363);
+			this.ClientSize = new System.Drawing.Size(444, 363);
+			this.Controls.Add(this.groupBoxBaudRate);
 			this.Controls.Add(this.groupBox4);
+			this.Controls.Add(this.groupBoxInterval);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox3);
-			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.groupBoxSerialPort);
 			this.Controls.Add(this.groupBoxMassFlow);
 			this.Controls.Add(this.statusStrip1);
@@ -334,8 +364,6 @@
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();
 			this.groupBoxSerialPort.ResumeLayout(false);
-			this.groupBox1.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDownInterval)).EndInit();
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
@@ -345,6 +373,9 @@
 			this.tableLayoutPanel3.ResumeLayout(false);
 			this.tableLayoutPanel3.PerformLayout();
 			this.tableLayoutPanel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownInterval)).EndInit();
+			this.groupBoxInterval.ResumeLayout(false);
+			this.groupBoxBaudRate.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -363,7 +394,6 @@
 		private System.Windows.Forms.Button buttonBrowse;
 		private System.Windows.Forms.GroupBox groupBoxSerialPort;
 		private System.Windows.Forms.ComboBox comboBoxSerialPort;
-		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.TextBox textBoxResponse;
 		private System.Windows.Forms.GroupBox groupBox2;
@@ -374,6 +404,9 @@
 		private System.Windows.Forms.Button buttonStop;
 		private System.Windows.Forms.Button buttonStart;
 		private System.Windows.Forms.NumericUpDown numericUpDownInterval;
+		private System.Windows.Forms.GroupBox groupBoxInterval;
+		private System.Windows.Forms.GroupBox groupBoxBaudRate;
+		private System.Windows.Forms.ComboBox comboBoxBaudRate;
 	}
 }
 
