@@ -185,7 +185,7 @@ namespace Sensit.App.Calibration
 						},
 					},
 				},
-				new TestSetting("5min 0, 0, 0.6, 1.3, 2, 2.6, 3.3, 4, 8, 12...100")
+				new TestSetting("0, 20, 40, 60, 80, 100")
 				{
 					References = new List<VariableType>
 					{
@@ -194,25 +194,6 @@ namespace Sensit.App.Calibration
 					},
 					Components = new List<TestComponent>
 					{
-						// Warm up for 5 min.  Measure gas every 1 second.  Don't wait for stability.
-						new TestComponent("Warmup")
-						{
-							ControlledVariables = new List<TestControlledVariable>
-							{
-								new TestControlledVariable()
-								{
-									VariableType = VariableType.MassFlow,
-									Setpoints = new List<double> { 300.0 }
-								},
-								new TestControlledVariable()
-								{
-									VariableType = VariableType.GasConcentration,
-									Setpoints = new List<double> { 0 },
-									Samples = 300,
-									Interval = new TimeSpan(0, 0, 0, 0, 500)
-								}
-							},
-						},
 						// Ramp up.  Measure gas every 1 second.  Don't wait for stability.
 						new TestComponent("Ramp up")
 						{
@@ -226,13 +207,73 @@ namespace Sensit.App.Calibration
 								new TestControlledVariable()
 								{
 									VariableType = VariableType.GasConcentration,
-									Setpoints = new List<double>
-									{
-										0, 0.66666, 1.33333, 2, 2.66666, 3.33333, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72, 76, 80, 84, 88, 92, 96, 100,
-									},
-									Samples = 240,
+									Setpoints = new List<double> { 0.0 },
+									Samples = 300,
 									Interval = new TimeSpan(0, 0, 0, 0, 500)
-								}
+								},
+								new TestControlledVariable()
+                                {
+									VariableType = VariableType.GasConcentration,
+									Setpoints = new List<double> { 20 },
+									Samples = 300,
+									Interval = new TimeSpan(0, 0, 0, 0, 500)
+                                },
+								new TestControlledVariable()
+								{
+									VariableType = VariableType.GasConcentration,
+									Setpoints = new List<double> { 0.0 },
+									Samples = 300,
+									Interval = new TimeSpan(0, 0, 0, 0, 500)
+								},
+								new TestControlledVariable()
+								{
+									VariableType = VariableType.GasConcentration,
+									Setpoints = new List<double> { 40 },
+									Samples = 300,
+									Interval = new TimeSpan(0, 0, 0, 0, 500)
+								},
+								new TestControlledVariable()
+								{
+									VariableType = VariableType.GasConcentration,
+									Setpoints = new List<double> { 0.0 },
+									Samples = 300,
+									Interval = new TimeSpan(0, 0, 0, 0, 500)
+								},
+								new TestControlledVariable()
+								{
+									VariableType = VariableType.GasConcentration,
+									Setpoints = new List<double> { 60 },
+									Samples = 300,
+									Interval = new TimeSpan(0, 0, 0, 0, 500)
+								},
+								new TestControlledVariable()
+								{
+									VariableType = VariableType.GasConcentration,
+									Setpoints = new List<double> { 0.0 },
+									Samples = 300,
+									Interval = new TimeSpan(0, 0, 0, 0, 500)
+								},
+								new TestControlledVariable()
+								{
+									VariableType = VariableType.GasConcentration,
+									Setpoints = new List<double> { 80 },
+									Samples = 300,
+									Interval = new TimeSpan(0, 0, 0, 0, 500)
+								},
+								new TestControlledVariable()
+								{
+									VariableType = VariableType.GasConcentration,
+									Setpoints = new List<double> { 0.0 },
+									Samples = 300,
+									Interval = new TimeSpan(0, 0, 0, 0, 500)
+								},
+								new TestControlledVariable()
+								{
+									VariableType = VariableType.GasConcentration,
+									Setpoints = new List<double> { 100 },
+									Samples = 300,
+									Interval = new TimeSpan(0, 0, 0, 0, 500)
+								},
 							},
 						},
 						new TestComponent("Turn off DUT")
