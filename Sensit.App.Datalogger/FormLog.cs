@@ -168,16 +168,8 @@ namespace Sensit.App.Datalogger
 		/// <param name="e"></param>
 		private void TextBoxCommand_TextChanged(object sender, EventArgs e)
 		{
-			// If the user has selected a valid baud rate...
-			if (int.TryParse(comboBoxBaudRate.Text, out int baudrate))
-			{
-				// Save the command to the application settings file.
-				Properties.Settings.Default.BaudRate = baudrate;
-			}
-			else
-			{
-				MessageBox.Show("Please select a valid baud rate.", "ERROR");
-			}
+			// Save the new command to the application settings file.
+			Properties.Settings.Default.Command = textBoxCommand.Text;
 		}
 
 		/// <summary>
@@ -197,6 +189,9 @@ namespace Sensit.App.Datalogger
 
 			try
 			{
+				// Insert newline characters as requested.
+				_genericSerialDevice.Command = textBoxCommand.Text.Replace("\\n", "\n").Replace("\\r", "\r").Replace("\\t", "\t");
+
 				// Fetch a value from the DUT.
 				_genericSerialDevice.Read();
 				string sample = _genericSerialDevice.Message;
@@ -256,7 +251,6 @@ namespace Sensit.App.Datalogger
 
 					// Open the DUT serial port.
 					_genericSerialDevice.Open(comboBoxSerialPort.Text, baudrate);
-					_genericSerialDevice.Command = textBoxCommand.Text;
 
 					// Set up the CSV file writer filestream.
 					_writer = new CsvWriter(Properties.Settings.Default.Filename, true);
