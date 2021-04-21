@@ -57,12 +57,6 @@ namespace Sensit.TestSDK.Communication
 			}
 		}
 
-		public string Newline
-		{
-			get => Port.NewLine;
-			set => Port.NewLine = value;
-		}
-
 		/// <summary>
 		/// Initialize the serial interface.
 		/// </summary>

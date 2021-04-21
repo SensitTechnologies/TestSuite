@@ -40,7 +40,7 @@ namespace Sensit.TestSDK.Devices
 			try
 			{
 				// Write to the device.
-				Port.WriteLine(Command);
+				Port.Write(Command);
 
 				// Read from the serial port.
 				Thread.Sleep(200);
