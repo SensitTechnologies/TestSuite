@@ -342,8 +342,7 @@ namespace Sensit.App.Calibration
 					};
 
 					// If the DUT has an associated serial port...
-					if ((modelSetting.Label == "Sensit G3") || 
-						(modelSetting.Label == "Serial Device"))
+					if (modelSetting.Label == "Serial Device")
 					{
 						// Fetch the associated serial port.
 						ComboBox comboBoxConfig = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CONFIG1, (int)i) as ComboBox;
@@ -657,9 +656,8 @@ namespace Sensit.App.Calibration
 			tableLayoutPanelDevicesUnderTest.Controls.Remove(tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CONFIG2, position.Row));
 			tableLayoutPanelDevicesUnderTest.Controls.Remove(tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CONFIG3, position.Row));
 
-			// If the DUT is a G3 or serial device...
-			if ((((ComboBox)sender).SelectedItem.ToString().CompareTo("Sensit G3") == 0) ||
-				(((ComboBox)sender).SelectedItem.ToString().CompareTo("Serial Device") == 0))
+			// If the DUT is a serial device...
+			if (((ComboBox)sender).SelectedItem.ToString().CompareTo("Serial Device") == 0)
 			{
 				// Create a combobox for a serial port.
 				ComboBox comboBox = new ComboBox

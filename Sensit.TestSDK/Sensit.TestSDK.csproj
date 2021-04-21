@@ -189,7 +189,6 @@
     <Compile Include="Devices\LairdBL654.cs" />
     <Compile Include="Devices\Manual.cs" />
     <Compile Include="Devices\SensitG2GLT.cs" />
-    <Compile Include="Devices\SensitG3.cs" />
     <Compile Include="Controls\UserCustomStep.cs">
       <SubType>UserControl</SubType>
     </Compile>

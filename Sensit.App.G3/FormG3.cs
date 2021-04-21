@@ -12,7 +12,7 @@ namespace Sensit.App.G3
 	public partial class FormG3 : Form
 	{
 		// Sensit G3 Debugger Console
-		private SensitG3 _sensitG3 = new SensitG3();
+		private GenericSerialDevice _sensitG3 = new GenericSerialDevice();
 
 		public FormG3()
 		{
@@ -126,9 +126,6 @@ namespace Sensit.App.G3
 		{
 			try
 			{
-				// Select the desired gas.
-				_sensitG3.GasSelection = Gas.Methane;
-
 				// Fetch sensor data from instrument.
 				_sensitG3.Read();
 
@@ -145,9 +142,6 @@ namespace Sensit.App.G3
 		{
 			try
 			{
-				// Select the desired gas.
-				_sensitG3.GasSelection = Gas.Oxygen;
-
 				// Fetch sensor data from instrument.
 				_sensitG3.Read();
 
@@ -164,9 +158,6 @@ namespace Sensit.App.G3
 		{
 			try
 			{
-				// Select the desired gas.
-				_sensitG3.GasSelection = Gas.CarbonMonoxide;
-
 				// Fetch sensor data from instrument.
 				_sensitG3.Read();
 
@@ -183,9 +174,6 @@ namespace Sensit.App.G3
 		{
 			try
 			{
-				// Select the desired gas.
-				_sensitG3.GasSelection = Gas.HydrogenSulfide;
-
 				// Fetch sensor data from instrument.
 				_sensitG3.Read();
 
@@ -202,9 +190,6 @@ namespace Sensit.App.G3
 		{
 			try
 			{
-				// Select the desired gas.
-				_sensitG3.GasSelection = Gas.HydrogenCyanide;
-
 				// Fetch sensor data from instrument.
 				_sensitG3.Read();
 
@@ -221,7 +206,8 @@ namespace Sensit.App.G3
 		{
 			try
 			{
-				_sensitG3.TurnOff();
+				_sensitG3.Command = "666\n\r";
+				_sensitG3.Read();
 			}
 			catch (DeviceException ex)
 			{

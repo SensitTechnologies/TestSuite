@@ -49,12 +49,5 @@ namespace Sensit.App.Calibration
 			SerialPort = "COM3",
 			BaudRate = 9600
 		};
-
-		[Category("Reference Devices"), Description("Settings for Sensit G3 Console.")]
-		public SerialPortSetting G3Setting { get; set; } = new SerialPortSetting()
-		{
-			SerialPort = "COM9",
-			BaudRate = 115200
-		};
 	}
 }
