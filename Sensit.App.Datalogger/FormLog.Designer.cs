@@ -194,6 +194,7 @@
 			// 
 			this.textBoxResponse.Location = new System.Drawing.Point(11, 19);
 			this.textBoxResponse.Name = "textBoxResponse";
+			this.textBoxResponse.ReadOnly = true;
 			this.textBoxResponse.Size = new System.Drawing.Size(418, 20);
 			this.textBoxResponse.TabIndex = 10;
 			// 
@@ -263,6 +264,7 @@
 			// 
 			// buttonStop
 			// 
+			this.buttonStop.Enabled = false;
 			this.buttonStop.Location = new System.Drawing.Point(84, 3);
 			this.buttonStop.Name = "buttonStop";
 			this.buttonStop.Size = new System.Drawing.Size(75, 23);
