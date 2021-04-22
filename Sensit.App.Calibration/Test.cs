@@ -47,7 +47,7 @@ namespace Sensit.App.Calibration
 		private BackgroundWorker _testThread;	// task that will handle test operations
 		private TestSetting _settings;			// settings for test
 		private Equipment _equipment;			// test equipment object
-		private readonly List<Dut> _duts;		// devices under test
+		private readonly Dut _dut;				// device under test
 		private Stopwatch _elapsedTimeStopwatch;// keeper of test's elapsed time
 		private bool _pause = false;			// whether test is paused
 		private int _samplesTotal;				// helps calculate percent complete
@@ -120,12 +120,12 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		/// <param name="equipment">equipment used by the test</param>
 		/// <param name="duts">devices being tested</param>
-		public Test(TestSetting settings, Equipment equipment, List<Dut> duts)
+		public Test(TestSetting settings, Equipment equipment, Dut dut)
 		{
 			// Save the reference to the equipment and DUTs objects.
 			_settings = settings;
 			_equipment = equipment;
-			_duts = duts;
+			_dut = dut;
 
 			// Set up the background worker.
 			_testThread = new BackgroundWorker
@@ -281,11 +281,7 @@ namespace Sensit.App.Calibration
 				}
 				catch (DeviceException ex)
 				{
-					// Log failures.
-					foreach (Dut d in _duts)
-					{
-						d.StatusMessage = ex.Message;
-					}
+					// TODO:  Log failures.
 				}
 			}
 
@@ -336,11 +332,9 @@ namespace Sensit.App.Calibration
 			_pause = false;
 		}
 
-		private void ProcessCommand(Command? command)
+		private static void ProcessCommand(Command? command)
 		{
 			// Apply the command to each DUT.
-			foreach (Dut dut in _duts)
-			{
 				switch (command)
 				{
 					case Command.TurnOff:
@@ -358,9 +352,6 @@ namespace Sensit.App.Calibration
 					default:
 						break;
 				}
-
-				if (_testThread.CancellationPending) { break; }
-			}
 		}
 
 		private void ProcessSetpoint(TestControlledVariable variable, double setpoint, TimeSpan interval)
@@ -466,14 +457,7 @@ namespace Sensit.App.Calibration
 			}
 
 			// Record the data applicable to each DUT.
-			foreach (Dut dut in _duts)
-			{
-				// TODO:  The DUT doesn't really care about the reference reading.
-				// Take it out and log it elsewhere (maybe a few lines above?).
-				dut.Read(_elapsedTimeStopwatch.Elapsed, setpoint, referenceReadings[VariableType.GasConcentration]);
-
-				if (_testThread.CancellationPending) { break; }
-			}
+			_dut.Read(_elapsedTimeStopwatch.Elapsed, setpoint, referenceReadings[VariableType.GasConcentration]);
 		}
 
 		/// <summary>
@@ -577,12 +561,7 @@ namespace Sensit.App.Calibration
 				{
 					// Initialize test equipment.
 					_testThread.ReportProgress(0, "Configuring test equipment...");
-					foreach (Dut dut in _duts)
-					{
-						if (_testThread.CancellationPending) { break; }
-
-						dut.Open();
-					}
+					_dut.Open();
 					_equipment.Open();
 
 					// Repeat test if requested.
@@ -610,12 +589,6 @@ namespace Sensit.App.Calibration
 
 			try
 			{
-				// Close DUTs.
-				foreach (Dut dut in _duts)
-				{
-					dut.Close();
-				}
-
 				// Stop all controllers.
 				foreach (KeyValuePair<VariableType, IControlDevice> c in _equipment.Controllers)
 				{
@@ -633,10 +606,7 @@ namespace Sensit.App.Calibration
 			finally
 			{
 				// Dispose of any used DUT resources.
-				foreach (Dut dut in _duts)
-				{
-					dut.Dispose();
-				}
+				_dut.Dispose();
 			}
 
 			// Update the GUI.

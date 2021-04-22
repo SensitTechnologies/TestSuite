@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Deployment.Application;
 using System.Drawing;
-using System.Globalization;
 using System.IO.Ports;
 using System.Linq;
 using System.Windows.Forms;
@@ -23,13 +22,6 @@ namespace Sensit.App.Calibration
 
 		// These constants specify the order that controls appear in the 
 		// columns of tableLayoutPanelDevicesUnderTest.
-		private const int DUT_COLUMN_CHECKBOX = 0;
-		private const int DUT_COLUMN_SERIALNUM = 1;
-		private const int DUT_COLUMN_MODEL = 2;
-		private const int DUT_COLUMN_CONFIG1 = 3;
-		private const int DUT_COLUMN_CONFIG2 = 4;
-		private const int DUT_COLUMN_CONFIG3 = 5;
-		private const int DUT_COLUMN_STATUS = 6;
 		private const int EQUIPMENT_COLUMN_CHECKBOX = 0;
 		private const int EQUIPMENT_COLUMN_LABEL = 1;
 		private const int EQUIPMENT_COLUMN_MODEL = 2;
@@ -45,99 +37,11 @@ namespace Sensit.App.Calibration
 		// Object to represent test equipment.
 		private Equipment _equipment;
 
-		// Object to represent devices under test.
-		private List<Dut> _duts = new List<Dut>();
-
 		// Object to represent tests.
 		private Test _test;
 
-		#endregion
-
-		#region Properties
-
-		/// <summary>
-		/// Number of DUTs displayed on the form
-		/// </summary>
-		public int NumDuts
-		{
-			get => Properties.Settings.Default.NumDuts;
-			set
-			{
-				Properties.Settings.Default.NumDuts = value;
-
-				// Stop the GUI from looking weird while we update it.
-				tableLayoutPanelDevicesUnderTest.SuspendLayout();
-
-				// Remove all DUT controls.
-				for (int i = 0; i < tableLayoutPanelDevicesUnderTest.ColumnCount; i++)
-				{
-					for (int j = 0; j < tableLayoutPanelDevicesUnderTest.RowCount; j++)
-					{
-						Control control = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(i, j);
-						tableLayoutPanelDevicesUnderTest.Controls.Remove(control);
-					}
-				}
-
-				// Set how many rows there should be.
-				tableLayoutPanelDevicesUnderTest.RowCount = value;
-
-				// Create new DUT controls.
-				for (int i = 1; i <= value; i++)
-				{
-					CheckBox checkBox = new CheckBox
-					{
-						Name = "checkBoxSelected" + i.ToString(CultureInfo.InvariantCulture),
-						AutoSize = true,
-						Anchor = AnchorStyles.Left | AnchorStyles.Top,
-						Dock = DockStyle.None
-					};
-					tableLayoutPanelDevicesUnderTest.Controls.Add(checkBox, DUT_COLUMN_CHECKBOX, i - 1);
-
-					TextBox textBoxSerialNumber = new TextBox
-					{
-						Name = "textBoxSerialNumber" + i.ToString(CultureInfo.InvariantCulture),
-						Anchor = AnchorStyles.Left | AnchorStyles.Top,
-						Dock = DockStyle.None,
-						Text = "DUT" + i.ToString()
-					};
-					tableLayoutPanelDevicesUnderTest.Controls.Add(textBoxSerialNumber, DUT_COLUMN_SERIALNUM, i - 1);
-
-					ComboBox comboBox = new ComboBox
-					{
-						Name = "comboBoxType" + i.ToString(CultureInfo.InvariantCulture),
-						Anchor = AnchorStyles.Left | AnchorStyles.Top,
-						Dock = DockStyle.None,
-						DropDownStyle = ComboBoxStyle.DropDownList
-					};
-					tableLayoutPanelDevicesUnderTest.Controls.Add(comboBox, DUT_COLUMN_MODEL, i - 1);
-
-					// Add an event handler to run when the comboBox's value is changed.
-					comboBox.SelectedIndexChanged += new EventHandler(ComboBoxType_SelectedIndexChanged);
-
-					// Populate the Model combobox based on DUT settings.
-					comboBox.Items.Clear();
-					DutSettings dutSettings = Settings.Load<DutSettings>(Properties.Settings.Default.DutSettingsFile);
-					foreach (ModelSetting model in dutSettings.ModelSettings ?? new List<ModelSetting>())
-					{
-						comboBox.Items.Add(model.Label);
-					}
-					// Select whatever model has been selected by the combo box at the bottom of the form.
-					comboBox.SelectedIndex = comboBoxModel.SelectedIndex;
-
-					Label labelStatus = new Label
-					{
-						Name = "labelStatus" + i.ToString(CultureInfo.InvariantCulture),
-						AutoSize = true,
-						Anchor = AnchorStyles.Left | AnchorStyles.Top,
-						Dock = DockStyle.None
-					};
-					tableLayoutPanelDevicesUnderTest.Controls.Add(labelStatus, DUT_COLUMN_STATUS, i - 1);
-				}
-
-				// Make the GUI act normally again.
-				tableLayoutPanelDevicesUnderTest.ResumeLayout();
-			}
-		}
+		// Object to represent test results (formerly a device under test).
+		private Dut _dut;
 
 		#endregion
 
@@ -157,58 +61,6 @@ namespace Sensit.App.Calibration
 			// Initialize the Equipment tab.
 			InitEquipment(typeof(IControlDevice));
 
-			// Set the number of DUTs.
-			NumDuts = Properties.Settings.Default.NumDuts;
-
-			// Select the most recently used DUTs.
-			if (Properties.Settings.Default.DutSelections != null)
-			{
-				List<string> list = Properties.Settings.Default.DutSelections.Cast<string>().ToList();
-				bool[] selections = list.Select(x => x == "true").ToArray();
-				for (int i = 0; i < NumDuts; i++)
-				{
-					CheckBox checkBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CHECKBOX, i) as CheckBox;
-					checkBox.Checked = selections[i];
-				}
-			}
-
-			// Populate the Model combobox (at the bottom of the form, which updates all the individual controls) based on DUT settings.
-			comboBoxModel.Items.Clear();
-			DutSettings dutSettings = Settings.Load<DutSettings>(Properties.Settings.Default.DutSettingsFile);
-			foreach (ModelSetting model in dutSettings.ModelSettings ?? new List<ModelSetting>())
-			{
-				comboBoxModel.Items.Add(model.Label);
-			}
-
-			// Select the most recently used model, or the first if that's not available.
-			// This has to be done before setting the individual model selections, or it will override them.
-			int index = comboBoxModel.FindStringExact(Properties.Settings.Default.Model);
-			comboBoxModel.SelectedIndex = index == -1 ? 0 : index;
-
-			// Select the individual Models.
-			// This must be done after selecting the "Set all models" comboBox, or it will override the individual settings.
-			if (Properties.Settings.Default.DutModels != null)
-			{
-				List<string> list = Properties.Settings.Default.DutModels.Cast<string>().ToList();
-				for (int i = 0; i < NumDuts; i++)
-				{
-					ComboBox comboBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_MODEL, i) as ComboBox;
-					int j = comboBox.FindStringExact(list[i]);
-					comboBox.SelectedIndex = j == -1 ? 0 : j;
-				}
-			}
-
-			// Set the DUT description based on saved settings.
-			if (Properties.Settings.Default.DutDescriptions != null)
-			{
-				List<string> list = Properties.Settings.Default.DutDescriptions.Cast<string>().ToList();
-				for (int i = 0; i < NumDuts; i++)
-				{
-					TextBox textBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_SERIALNUM, i) as TextBox;
-					textBox.Text = list[i];
-				}
-			}
-
 			// Select the most recently used range.
 			numericUpDownRange.Value = Properties.Settings.Default.Range;
 
@@ -224,7 +76,7 @@ namespace Sensit.App.Calibration
 			}
 
 			// Select the most recently used test, or the first if that's not available.
-			index = comboBoxTest.FindStringExact(Properties.Settings.Default.Test);
+			int index = comboBoxTest.FindStringExact(Properties.Settings.Default.Test);
 			comboBoxTest.SelectedIndex = index == -1 ? 0 : index;
 
 			// Select the most recently used termination option.
@@ -284,17 +136,11 @@ namespace Sensit.App.Calibration
 				// Disable most of the user controls.
 				//
 
-				comboBoxModel.Enabled = false;
 				numericUpDownRange.Enabled = false;
 				numericUpDownFlowRate.Enabled = false;
 				comboBoxTest.Enabled = false;
-				checkBoxSelectAll.Enabled = false;
 				radioButtonRepeatNo.Enabled = false;
 				radioButtonRepeatYes.Enabled = false;
-				foreach (Control c in tableLayoutPanelDevicesUnderTest.Controls)
-				{
-					c.Enabled = false;
-				}
 				buttonStop.Enabled = true;
 				buttonStart.Enabled = false;
 				startToolStripMenuItem.Enabled = false;
@@ -305,74 +151,23 @@ namespace Sensit.App.Calibration
 				_equipment = new Equipment(equipmentSettings);
 
 				// TODO:  Fetch all equipment controls, not just power supply.
-				CheckBox checkBoxGasMixer = tableLayoutPanelEquipment.GetControlFromPosition(DUT_COLUMN_CHECKBOX, 0) as CheckBox;
+				CheckBox checkBoxGasMixer = tableLayoutPanelEquipment.GetControlFromPosition(EQUIPMENT_COLUMN_CHECKBOX, 0) as CheckBox;
 				_equipment.UseGasMixer = checkBoxGasMixer.Checked;
 
-				CheckBox checkBoxMassFlow = tableLayoutPanelEquipment.GetControlFromPosition(DUT_COLUMN_CHECKBOX, 1) as CheckBox;
+				CheckBox checkBoxMassFlow = tableLayoutPanelEquipment.GetControlFromPosition(EQUIPMENT_COLUMN_CHECKBOX, 1) as CheckBox;
 				_equipment.UseMassFlow = checkBoxMassFlow.Checked;
 
-				CheckBox checkBoxVoltage = tableLayoutPanelEquipment.GetControlFromPosition(DUT_COLUMN_CHECKBOX, 7) as CheckBox;
+				CheckBox checkBoxVoltage = tableLayoutPanelEquipment.GetControlFromPosition(EQUIPMENT_COLUMN_CHECKBOX, 7) as CheckBox;
 				_equipment.UsePowerSupply = checkBoxVoltage.Checked;
 
-				// Create objects for each DUT.
-				_duts.Clear();
-				for (uint i = 0; i < NumDuts; i++)
+				_dut = new Dut()
 				{
-					// Fetch user settings for DUT.
-					CheckBox checkBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CHECKBOX, (int)i) as CheckBox;
-					TextBox textBoxSerial = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_SERIALNUM, (int)i) as TextBox;
-					ComboBox comboBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_MODEL, (int)i) as ComboBox;
-
-					DutSettings dutSettings = Settings.Load<DutSettings>(Properties.Settings.Default.DutSettingsFile);
-					ModelSetting modelSetting = dutSettings.ModelSettings.Find(j => j.Label == comboBox.Text);
-					if (modelSetting == null)
-					{
-						throw new Exception("Model settings not found. Please contact Engineering.");
-					}
-
-					Dut dut = new Dut(modelSetting)
-					{
-						SetSerialNumber = SetDutSerialNumber,
-						SetStatus = SetDutStatus,
-						Index = i + 1,
-						Selected = checkBox.Checked,
-						Status = DutStatus.Init,
-						SerialNumber = textBoxSerial.Text,
-						StatusMessage = string.Empty
-					};
-
-					// If the DUT has an associated serial port...
-					if (modelSetting.Label == "Serial Device")
-					{
-						// Fetch the associated serial port.
-						ComboBox comboBoxConfig = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CONFIG1, (int)i) as ComboBox;
-
-						// Assign the serial port to the DUT.
-						dut.CommPort = comboBoxConfig.Text;
-					}
-
-					// If the DUT has an associated serial prompt...
-					if (modelSetting.Label == "Serial Device")
-					{
-						// Fetch the serial prompt.
-						TextBox textBoxSerialPrompt = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CONFIG3, (int)i) as TextBox;
-
-						// Assign the prompt to the DUT.
-						dut.CommPrompt = textBoxSerialPrompt.Text;
-
-						// Fetch the baud rate.
-						ComboBox comboBoxBaudRate = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CONFIG2, (int)i) as ComboBox;
-
-						// Assign baud rate to the DUT.
-						dut.CommBaudRate = Convert.ToInt32(comboBoxBaudRate.Text);
-					}
-
-					_duts.Add(dut);
-				}
+					Filename = textBoxFilename.Text
+				};
 
 				// Create test object and link its actions to actions on this form.
 				// https://syncor.blogspot.com/2010/11/passing-getter-and-setter-of-c-property.html
-				_test = new Test(testSetting, _equipment, _duts)
+				_test = new Test(testSetting, _equipment, _dut)
 				{
 					Finished = TestFinished,
 					UpdateProgress = TestUpdate,
@@ -431,13 +226,6 @@ namespace Sensit.App.Calibration
 				Properties.Settings.Default.DutSelections.Clear();
 			}
 
-			// Remember DUT selections.
-			for (int i = 0; i < NumDuts; i++)
-			{
-				CheckBox checkBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CHECKBOX, i) as CheckBox;
-				Properties.Settings.Default.DutSelections.Add(checkBox.Checked ? "true" : "false");
-			}
-
 			// Initialize or clear Equipment selections.
 			if (Properties.Settings.Default.EquipmentSelections == null)
 			{
@@ -463,13 +251,6 @@ namespace Sensit.App.Calibration
 			else
 			{
 				Properties.Settings.Default.DutModels.Clear();
-			}
-
-			// Remember DUT type selections.
-			for (int i = 0; i < NumDuts; i++)
-			{
-				ComboBox comboBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_MODEL, i) as ComboBox;
-				Properties.Settings.Default.DutModels.Add(comboBox.SelectedIndex.ToString());
 			}
 
 			// Initialize or clear Equipment type selections.
@@ -499,12 +280,7 @@ namespace Sensit.App.Calibration
 				Properties.Settings.Default.DutDescriptions.Clear();
 			}
 
-			// Remember DUT description.
-			for (int i = 0; i < NumDuts; i++)
-			{
-				TextBox textBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_SERIALNUM, i) as TextBox;
-				Properties.Settings.Default.DutDescriptions.Add(textBox.Text);
-			}
+			// TODO:  Remember logfile name.
 
 			// Save settings.
 			Properties.Settings.Default.Save();
@@ -596,117 +372,6 @@ namespace Sensit.App.Calibration
 				{
 					Properties.Settings.Default.Repeat = false;
 				}
-			}
-		}
-
-		#endregion
-
-		#region DUT
-
-		/// <summary>
-		/// When the "Model" selection is changed, update the model of each individual DUT.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ComboBoxModel_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			// Remember the selected value.
-			Properties.Settings.Default.Model = comboBoxModel.SelectedIndex.ToString();
-
-			// Update the individual selections for all DUTs.
-			for (int i = 0; i < NumDuts; i++)
-			{
-				ComboBox comboBox = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_MODEL, i) as ComboBox;
-				int j = comboBox.FindStringExact(comboBoxModel.SelectedIndex.ToString());
-				comboBox.SelectedIndex = j == -1 ? 0 : j;
-			}
-		}
-
-		/// <summary>
-		/// When "Select/deselect all" checkbox is clicked, select/deselect all DUTs.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void CheckBoxSelectAll_CheckedChanged(object sender, EventArgs e)
-		{
-			// Look through each control.
-			foreach (Control c in tableLayoutPanelDevicesUnderTest.Controls)
-			{
-				// If it's a checkbox...
-				if (c is CheckBox cb)
-				{
-					// Make its state match the select all checkbox.
-					cb.Checked = ((CheckBox)sender).Checked;
-				}
-			}
-		}
-
-		/// <summary>
-		/// When a DUT's type is changed, show relevant settings.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ComboBoxType_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			// Find the control's position.
-			TableLayoutPanelCellPosition position = tableLayoutPanelDevicesUnderTest.GetPositionFromControl(((ComboBox)sender));
-
-			// Remove any configuration controls previously added.
-			tableLayoutPanelDevicesUnderTest.Controls.Remove(tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CONFIG1, position.Row));
-			tableLayoutPanelDevicesUnderTest.Controls.Remove(tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CONFIG2, position.Row));
-			tableLayoutPanelDevicesUnderTest.Controls.Remove(tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_CONFIG3, position.Row));
-
-			// If the DUT is a serial device...
-			if (((ComboBox)sender).SelectedItem.ToString().CompareTo("Serial Device") == 0)
-			{
-				// Create a combobox for a serial port.
-				ComboBox comboBox = new ComboBox
-				{
-					Name = "comboBoxSerialPort" + position.Row.ToString(),
-					Anchor = AnchorStyles.Left | AnchorStyles.Top,
-					Dock = DockStyle.None,
-					DropDownStyle = ComboBoxStyle.DropDownList
-				};
-				tableLayoutPanelDevicesUnderTest.Controls.Add(comboBox, DUT_COLUMN_CONFIG1, position.Row);
-
-				// Add all available serial ports as options in the text box.
-				comboBox.Items.AddRange(SerialPort.GetPortNames());
-			}
-
-			if (((ComboBox)sender).SelectedItem.ToString().CompareTo("Serial Device") == 0)
-			{
-				// Create a combobox for baud rate.
-				ComboBox comboBox = new ComboBox
-				{
-					Name = "comboBoxBaudRate" + position.Row.ToString(),
-					Anchor = AnchorStyles.Left | AnchorStyles.Top,
-					Dock = DockStyle.None,
-					DropDownStyle = ComboBoxStyle.DropDownList
-				};
-
-				// Populate it with available baud rates.
-				// Create a generic serial device.
-				// TODO:  Find a way not to create this dummy object.
-				GenericSerialDevice dut = new GenericSerialDevice();
-				foreach (int b in dut.SupportedBaudRates)
-				{
-					comboBox.Items.Add(b);
-				}
-				dut.Dispose();
-
-				// Select default baud rate of 9600.
-				comboBox.SelectedIndex = comboBox.FindStringExact("9600");
-
-				tableLayoutPanelDevicesUnderTest.Controls.Add(comboBox, DUT_COLUMN_CONFIG2, position.Row);
-
-				// Create a text box for prompt to send to device.
-				TextBox textBox = new TextBox
-				{
-					Name = "textBoxSerialPrompt" + position.Row.ToString(),
-					Anchor = AnchorStyles.Left | AnchorStyles.Top,
-					Dock = DockStyle.None,
-				};
-				tableLayoutPanelDevicesUnderTest.Controls.Add(textBox, DUT_COLUMN_CONFIG3, position.Row);
 			}
 		}
 
@@ -865,25 +530,6 @@ namespace Sensit.App.Calibration
 		#region Settings Menu
 
 		/// <summary>
-		/// When Edit --> Number of DUTs is selected, prompt the user to select the number of DUTS.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void NumberOfDUTsToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			// Prompt user to enter desired number of DUTs (current value as default).
-			int numDuts = NumDuts;
-			DialogResult result = InputDialog.Numeric("Number of DUTs", ref numDuts, 1, 24);
-
-			// If the user clicks "OK"...
-			if (result == DialogResult.OK)
-			{
-				// Update the property (which will also update the form).
-				NumDuts = numDuts;
-			}
-		}
-
-		/// <summary>
 		/// When Settings --> Log Directory is selected, prompt the user to
 		/// select the directory where test results are stored.
 		/// </summary>
@@ -938,16 +584,6 @@ namespace Sensit.App.Calibration
 		private void EquipmentSettingsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			//EditSettings<EquipmentSettings>(Properties.Settings.Default.SystemSettingsFile);
-		}
-
-		/// <summary>
-		/// When Tools --> DUT Settings menu is clicked, open an object browser for the settings.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void DUTSettingsToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			//EditSettings<DutSettings>(Properties.Settings.Default.DutSettingsFile);
 		}
 
 		/// <summary>
@@ -1041,17 +677,11 @@ namespace Sensit.App.Calibration
 		public void TestFinished()
 		{
 			// Enable most of the controls.
-			comboBoxModel.Enabled = true;
 			numericUpDownRange.Enabled = true;
 			numericUpDownFlowRate.Enabled = true;
 			comboBoxTest.Enabled = true;
-			checkBoxSelectAll.Enabled = true;
 			radioButtonRepeatNo.Enabled = true;
 			radioButtonRepeatYes.Enabled = true;
-			foreach (Control c in tableLayoutPanelDevicesUnderTest.Controls)
-			{
-				c.Enabled = true;
-			}
 
 			// Enable the "Start" button and disable the "Stop" button.
 			buttonStart.Enabled = true;
@@ -1071,59 +701,6 @@ namespace Sensit.App.Calibration
 
 			// Update the status message.
 			toolStripStatusLabel1.Text = "Ready...";
-		}
-
-		public void SetDutStatus(uint dut, DutStatus status)
-		{
-			// Find the applicable DUT status textbox.
-			// Remember that table layout panel has 0-based index, while DUTs have 1-based index.
-			Label labelStatus = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_STATUS, (int)dut - 1) as Label;
-
-			// If called from a different thread than the form, invoke the method on the form's thread.
-			// https://stackoverflow.com/questions/142003/cross-thread-operation-not-valid-control-accessed-from-a-thread-other-than-the
-			if (labelStatus.InvokeRequired)
-			{
-				labelStatus.Invoke(new MethodInvoker(delegate { SetDutStatus(dut, status); }));
-			}
-			else
-			{
-				// Set the status text, and use bold text.
-				labelStatus.Text = status.GetDescription();
-				labelStatus.Font = new Font(labelStatus.Font, FontStyle.Bold);
-
-				// Apply formatting.
-				switch (status)
-				{
-					case DutStatus.Done:
-						labelStatus.ForeColor = Color.Green;
-						break;
-					case DutStatus.Testing:
-						labelStatus.ForeColor = Color.Blue;
-						break;
-					case DutStatus.Fail:
-					case DutStatus.NotFound:
-					case DutStatus.PortError:
-						labelStatus.ForeColor = Color.Red;
-						break;
-				}
-			}
-		}
-
-		public void SetDutSerialNumber(uint dut, string serialNumber)
-		{
-			// Find the applicable DUT serial number textbox.
-			TextBox textBoxSerialNumber = tableLayoutPanelDevicesUnderTest.GetControlFromPosition(DUT_COLUMN_SERIALNUM, (int)dut - 1) as TextBox;
-
-			// If called from a different thread than the form, invoke the method on the form's thread.
-			if (textBoxSerialNumber.InvokeRequired)
-			{
-				textBoxSerialNumber.Invoke(new MethodInvoker(delegate { SetDutSerialNumber(dut, serialNumber); }));
-			}
-			else
-			{
-				// Set the text.
-				textBoxSerialNumber.Text = serialNumber;
-			}
 		}
 
 		#endregion
