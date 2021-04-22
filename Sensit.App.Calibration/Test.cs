@@ -37,11 +37,11 @@ namespace Sensit.App.Calibration
 		private BackgroundWorker _testThread;	// task that will handle test operations
 		private TestSetting _settings;			// settings for test
 		private Equipment _equipment;			// test equipment object
-		private readonly Log _log;				// device under test
+		private Log _log;						// keeper of test results
 		private Stopwatch _elapsedTimeStopwatch;// keeper of test's elapsed time
 		private bool _pause = false;			// whether test is paused
 		private int _samplesTotal;				// helps calculate percent complete
-		private int _samplesComplete = 0;		// helps calculate percent complete
+		private int _samplesComplete = 0;       // helps calculate percent complete
 
 		#endregion
 
@@ -109,13 +109,14 @@ namespace Sensit.App.Calibration
 		/// Constructor
 		/// </summary>
 		/// <param name="equipment">equipment used by the test</param>
-		/// <param name="log">logfile manager object</param>
-		public Test(TestSetting settings, Equipment equipment, Log log)
+		public Test(TestSetting settings, Equipment equipment, string filename)
 		{
 			// Save the reference to the equipment and log file manager objects.
 			_settings = settings;
 			_equipment = equipment;
-			_log = log;
+
+			// Set up the log file.
+			_log = new Log(filename);
 
 			// Set up the background worker.
 			_testThread = new BackgroundWorker
@@ -447,7 +448,7 @@ namespace Sensit.App.Calibration
 			}
 
 			// Record test data.
-			_log.Read(_elapsedTimeStopwatch.Elapsed, setpoint, referenceReadings[VariableType.GasConcentration]);
+			_log.Write(_elapsedTimeStopwatch.Elapsed, setpoint, referenceReadings[VariableType.GasConcentration]);
 		}
 
 		/// <summary>
