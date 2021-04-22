@@ -11,8 +11,6 @@ namespace Sensit.App.Calibration
 		public TimeSpan? ElapsedTime { get; set; }
 		public double? Setpoint { get; set; }
 		public double? Reference { get; set; }
-		public double? SensorValue { get; set; }
-		public string SensorMessage { get; set; } = string.Empty;
 	}
 
 	/// <summary>
