@@ -3,6 +3,7 @@ using System.Deployment.Application;
 using System.IO.Ports;
 using System.Windows.Forms;
 using Sensit.TestSDK.Devices;
+using Sensit.TestSDK.Exceptions;
 using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.App.GasConcentration
@@ -13,7 +14,6 @@ namespace Sensit.App.GasConcentration
 		// You need two to mix gasses and control gas concentration.
 		private ColeParmerMFC _mfcAnalyte = new ColeParmerMFC();
 		private ColeParmerMFC _mfcDiluent = new ColeParmerMFC();
-		private GasMixingDevice _gasMixer;
 
 		/// <summary>
 		/// Runs when the application starts.
@@ -28,11 +28,6 @@ namespace Sensit.App.GasConcentration
 			{
 				Text += " " + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
 			}
-
-			// This has to be created in the constructor, because it references
-			// non-static objects.
-			_gasMixer = new GasMixingDevice(
-				_mfcDiluent, _mfcDiluent, _mfcAnalyte, _mfcAnalyte);
 
 			// Find all available serial ports.
 			string[] portNames = SerialPort.GetPortNames();
@@ -228,11 +223,26 @@ namespace Sensit.App.GasConcentration
 			try
 			{
 				// Fetch new values from the mass flow controllers.
-				_gasMixer.Read();
+				_mfcAnalyte.Read();
+				_mfcDiluent.Read();
+
+				// Calculate total mass flow.
+				double massFlow = _mfcDiluent.Readings[VariableType.MassFlow] + _mfcAnalyte.Readings[VariableType.MassFlow];
+
+				// Calculate analyte concentration.
+				double analyteConcentration;
+				if (massFlow.Equals(0.0))
+				{
+					analyteConcentration = 0.0;
+				}
+				else
+				{
+					analyteConcentration = _mfcAnalyte.Readings[VariableType.MassFlow] / massFlow * 100;
+				}
 
 				// Update the form.
-				textBoxGasConcentration.Text = _gasMixer.Readings[VariableType.GasConcentration].ToString();
-				textBoxMassFlow.Text = _gasMixer.Readings[VariableType.MassFlow].ToString();
+				textBoxGasConcentration.Text = analyteConcentration.ToString();
+				textBoxMassFlow.Text = massFlow.ToString();
 
 				// Alert the user.
 				toolStripStatusLabel1.Text = "Success.";
@@ -253,9 +263,24 @@ namespace Sensit.App.GasConcentration
 				double analyteConcentration = Convert.ToDouble(textBoxGasConcentration.Text);
 				double massFlowSetpoint = Convert.ToDouble(textBoxMassFlow.Text);
 
-				// Write to mass flow controllers.
-				_gasMixer.WriteSetpoint(VariableType.GasConcentration, analyteConcentration);
-				_gasMixer.WriteSetpoint(VariableType.MassFlow, massFlowSetpoint);
+				// Check for valid mass flow.
+				if (massFlowSetpoint < 0.0)
+				{
+					throw new DeviceOutOfRangeException("Total Flow Setpoint must be greater than or equal to 0.0.");
+				}
+
+				// Check for valid gas concentration.
+				if ((analyteConcentration < 0.0) || (analyteConcentration > 100.0))
+				{
+					throw new DeviceOutOfRangeException("Gas Mix Setpoint must be between 0.0% and 100.0%, inclusive."
+						+ Environment.NewLine + "Attempted Gas Mix Setpoint was:  " + massFlowSetpoint);
+				}
+
+				// For analyte:  mass Flow = desired flow rate / original concentration.
+				_mfcAnalyte.WriteSetpoint(VariableType.MassFlow, massFlowSetpoint * (analyteConcentration / 100));
+
+				// For diluent:  mass flow = desired flow - gas under test flow.
+				_mfcDiluent.WriteSetpoint(VariableType.MassFlow, massFlowSetpoint - _mfcAnalyte.ReadSetpoint(VariableType.MassFlow));
 
 				// Alert the user.
 				toolStripStatusLabel1.Text = "Success.";

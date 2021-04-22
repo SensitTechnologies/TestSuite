@@ -183,7 +183,6 @@
     <Compile Include="Communication\SCPIDevice.cs" />
     <Compile Include="Communication\SerialDevice.cs" />
     <Compile Include="Communication\VisaDevice.cs" />
-    <Compile Include="Devices\GasMixingDevice.cs" />
     <Compile Include="Devices\GPDX303S.cs" />
     <Compile Include="Devices\GPDX303S_SCPI.cs" />
     <Compile Include="Devices\LairdBL654.cs" />

@@ -15,10 +15,10 @@ namespace Sensit.TestSDK.Devices
 	/// Useful for testing software and test equipment, or as a DUT to make manual
 	/// data entries.
 	/// </remarks>
-	public class Manual : IGasMixReference, IMassFlowReference,
+	public class Manual : IMassFlowReference,
 		IVolumeFlowReference, IVelocityReference, IPressureReference,
 		ITemperatureReference, ICurrentReference, IVoltageReference,
-		IGasMixController, IMassFlowController,
+		IMassFlowController,
 		IVolumeFlowController, IVelocityController, IPressureController,
 		ITemperatureController, ICurrentController, IVoltageController
 	{

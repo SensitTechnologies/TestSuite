@@ -96,25 +96,6 @@ namespace Sensit.TestSDK.Interfaces
 	}
 
 	/// <summary>
-	/// Device that measures gas concentration.
-	/// </summary>
-	[Description("Gas Concentration Reference")]
-	public interface IGasMixReference : IReferenceDevice
-	{
-		UnitOfMeasure.Concentration ConcentrationUnit { get; set; }
-
-		/// <summary>
-		/// Gas the device is calibrated for.
-		/// </summary>
-		/// <remarks>
-		/// Often gas-sensing devices will have sensors which respond to
-		/// multiple types of gas, and are calibrated for a specific gas.
-		/// This property holds the gas for which the device is calibrated.
-		/// </remarks>
-		Gas GasSelection { get; set; }
-	}
-
-	/// <summary>
 	/// Device that measures gas mass flow.
 	/// </summary>
 	/// <remarks>
