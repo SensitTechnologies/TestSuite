@@ -12,7 +12,7 @@ namespace Sensit.App.Calibration.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.7.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -20,18 +20,6 @@ namespace Sensit.App.Calibration.Properties {
         public static Settings Default {
             get {
                 return defaultInstance;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Model {
-            get {
-                return ((string)(this["Model"]));
-            }
-            set {
-                this["Model"] = value;
             }
         }
         
@@ -59,33 +47,12 @@ namespace Sensit.App.Calibration.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("8")]
-        public int NumDuts {
-            get {
-                return ((int)(this["NumDuts"]));
-            }
-            set {
-                this["NumDuts"] = value;
-            }
-        }
-        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("System Settings")]
         public string SystemSettingsFile {
             get {
                 return ((string)(this["SystemSettingsFile"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("DUT Settings")]
-        public string DutSettingsFile {
-            get {
-                return ((string)(this["DutSettingsFile"]));
             }
         }
         
@@ -124,50 +91,6 @@ namespace Sensit.App.Calibration.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection DutSelections {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["DutSelections"]));
-            }
-            set {
-                this["DutSelections"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection DutDescriptions {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["DutDescriptions"]));
-            }
-            set {
-                this["DutDescriptions"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection DutModels {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["DutModels"]));
-            }
-            set {
-                this["DutModels"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection DutConfigs1 {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["DutConfigs1"]));
-            }
-            set {
-                this["DutConfigs1"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public global::System.Collections.Specialized.StringCollection EquipmentSelections {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["EquipmentSelections"]));
@@ -201,18 +124,6 @@ namespace Sensit.App.Calibration.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string DutConfigs2 {
-            get {
-                return ((string)(this["DutConfigs2"]));
-            }
-            set {
-                this["DutConfigs2"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("300")]
         public decimal FlowRate {
             get {
@@ -220,6 +131,18 @@ namespace Sensit.App.Calibration.Properties {
             }
             set {
                 this["FlowRate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Results")]
+        public string LogfileName {
+            get {
+                return ((string)(this["LogfileName"]));
+            }
+            set {
+                this["LogfileName"] = value;
             }
         }
     }

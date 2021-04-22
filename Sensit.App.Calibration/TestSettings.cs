@@ -50,11 +50,11 @@ namespace Sensit.App.Calibration
 			set { Timeout = string.IsNullOrEmpty(value) ? TimeSpan.Zero : XmlConvert.ToTimeSpan(value); }
 		}
 
-		[Category("Test Component"), Description("Number of samples taken from DUT at each setpoint.")]
+		[Category("Test Component"), Description("Number of samples taken at each setpoint.")]
 		public int Samples { get; set; } = 0;
 
 		// TimeSpans aren't serializable, so ignore.
-		[Category("Test Component"), Description("Time to wait between taking samples from DUT/variables."), XmlIgnore]
+		[Category("Test Component"), Description("Time to wait between taking samples."), XmlIgnore]
 		public TimeSpan Interval { get; set; } = new TimeSpan(0, 0, 1);
 
 		// XmlSerializer does not support TimeSpan, so use this property for serialization instead.
@@ -88,7 +88,7 @@ namespace Sensit.App.Calibration
 		[Category("Test Component"), Description("Name for this part of the test.")]
 		public string Label { get; set; } = "";
 
-		[Category("Test Component"), Description("Actions to perform on the DUT during this test component.")]
+		[Category("Test Component"), Description("Actions to perform during this test component.")]
 		public List<Test.Command> Commands { get; set; }
 
 		[Category("Test Component"), Description("Controlled variables for this part of the test.")]
@@ -96,7 +96,7 @@ namespace Sensit.App.Calibration
 	}
 
 	/// <summary>
-	/// Tests that may be performed on a DUT
+	/// Tests that may be performed
 	/// </summary>
 	[Serializable]
 	public class TestSetting
@@ -178,10 +178,6 @@ namespace Sensit.App.Calibration
 									Interval = new TimeSpan(0, 0, 0, 1)
 								}
 							}
-						},
-						new TestComponent("Turn off DUT")
-						{
-							Commands = new List<Test.Command> { Test.Command.TurnOff }
 						},
 					},
 				},
@@ -276,10 +272,6 @@ namespace Sensit.App.Calibration
 								},
 							},
 						},
-						new TestComponent("Turn off DUT")
-						{
-							Commands = new List<Test.Command> { Test.Command.TurnOff }
-						},
 					}
 				},
 				// Test third curve on the G3 (5000 ppm to 70% LEL/3.5%V)
@@ -334,10 +326,6 @@ namespace Sensit.App.Calibration
 									Interval = new TimeSpan(0, 0, 0, 0, 500)
 								}
 							},
-						},
-						new TestComponent("Turn off DUT")
-						{
-							Commands = new List<Test.Command> { Test.Command.TurnOff }
 						},
 					}
 				},
@@ -530,10 +518,6 @@ namespace Sensit.App.Calibration
 								}
 							},
 						},
-						new TestComponent("Turn off DUT")
-						{
-							Commands = new List<Test.Command> { Test.Command.TurnOff }
-						},
 					}
 				},
 				new TestSetting("Warm-Up Stability")
@@ -584,10 +568,6 @@ namespace Sensit.App.Calibration
 								}
 							},
 						},
-						new TestComponent("Turn off DUT")
-						{
-							Commands = new List<Test.Command> { Test.Command.TurnOff }
-						},
 					}
 				},
 				new TestSetting("Linearity: 1-cycle, 100% / 10")
@@ -617,10 +597,6 @@ namespace Sensit.App.Calibration
 									Interval = new TimeSpan(0, 0, 0, 0, 500)
 								}
 							},
-						},
-						new TestComponent("Turn off DUT")
-						{
-							Commands = new List<Test.Command> { Test.Command.TurnOff }
 						},
 					}
 				},
@@ -655,10 +631,6 @@ namespace Sensit.App.Calibration
 									Interval = new TimeSpan(0, 0, 0, 0, 500)
 								}
 							},
-						},
-						new TestComponent("Turn off DUT")
-						{
-							Commands = new List<Test.Command> { Test.Command.TurnOff }
 						},
 					}
 				},
@@ -696,10 +668,6 @@ namespace Sensit.App.Calibration
 								}
 							},
 						},
-						new TestComponent("Turn off DUT")
-						{
-							Commands = new List<Test.Command> { Test.Command.TurnOff }
-						},
 					}
 				},
 				new TestSetting("Linearity: 5-cycle, 100% / 10")
@@ -736,10 +704,6 @@ namespace Sensit.App.Calibration
 									Interval = new TimeSpan(0, 0, 0, 0, 500)
 								}
 							},
-						},
-						new TestComponent("Turn off DUT")
-						{
-							Commands = new List<Test.Command> { Test.Command.TurnOff }
 						},
 					}
 				},
@@ -960,10 +924,6 @@ namespace Sensit.App.Calibration
 									Interval = new TimeSpan(0, 0, 1)
 								}
 							},
-						},
-						new TestComponent("Turn off DUT")
-						{
-							Commands = new List<Test.Command> { Test.Command.TurnOff }
 						},
 					}
 				},
@@ -1262,10 +1222,6 @@ namespace Sensit.App.Calibration
 								}
 							},
 						},
-						new TestComponent("Turn off DUT")
-						{
-							Commands = new List<Test.Command> { Test.Command.TurnOff }
-						},
 					}
 				},
 				new TestSetting("Fast Linearity, 100% / 10")
@@ -1298,10 +1254,6 @@ namespace Sensit.App.Calibration
 									Interval = new TimeSpan(0, 0, 0, 0, 500)
 								}
 							},
-						},
-						new TestComponent("Turn off DUT")
-						{
-							Commands = new List<Test.Command> { Test.Command.TurnOff }
 						},
 					},
 				},

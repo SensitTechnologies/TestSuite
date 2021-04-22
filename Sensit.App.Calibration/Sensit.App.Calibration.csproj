@@ -116,14 +116,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dut.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="FormCalibration.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormCalibration.Designer.cs">
       <DependentUpon>FormCalibration.cs</DependentUpon>
     </Compile>
-    <Compile Include="DutSettings.cs" />
     <Compile Include="TestSettings.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

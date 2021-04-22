@@ -62,12 +62,6 @@
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
-        <TestComponent>
-          <Label>Turn off DUT</Label>
-          <Commands>
-            <Command>TurnOff</Command>
-          </Commands>
-        </TestComponent>
       </Components>
       <References>
         <VariableType>MassFlow</VariableType>
@@ -214,12 +208,6 @@
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
-        <TestComponent>
-          <Label>Turn off DUT</Label>
-          <Commands>
-            <Command>TurnOff</Command>
-          </Commands>
-        </TestComponent>
       </Components>
       <References>
         <VariableType>MassFlow</VariableType>
@@ -313,12 +301,6 @@
               <Interval>PT0.5S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
-        </TestComponent>
-        <TestComponent>
-          <Label>Turn off DUT</Label>
-          <Commands>
-            <Command>TurnOff</Command>
-          </Commands>
         </TestComponent>
       </Components>
       <References>
@@ -619,12 +601,6 @@
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
-        <TestComponent>
-          <Label>Turn off DUT</Label>
-          <Commands>
-            <Command>TurnOff</Command>
-          </Commands>
-        </TestComponent>
       </Components>
       <References>
         <VariableType>MassFlow</VariableType>
@@ -698,12 +674,6 @@
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
-        <TestComponent>
-          <Label>Turn off DUT</Label>
-          <Commands>
-            <Command>TurnOff</Command>
-          </Commands>
-        </TestComponent>
       </Components>
       <References>
         <VariableType>MassFlow</VariableType>
@@ -762,12 +732,6 @@
               <Interval>PT0.5S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
-        </TestComponent>
-        <TestComponent>
-          <Label>Turn off DUT</Label>
-          <Commands>
-            <Command>TurnOff</Command>
-          </Commands>
         </TestComponent>
       </Components>
       <References>
@@ -847,12 +811,6 @@
               <Interval>PT0.5S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
-        </TestComponent>
-        <TestComponent>
-          <Label>Turn off DUT</Label>
-          <Commands>
-            <Command>TurnOff</Command>
-          </Commands>
         </TestComponent>
       </Components>
       <References>
@@ -972,12 +930,6 @@
               <Interval>PT0.5S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
-        </TestComponent>
-        <TestComponent>
-          <Label>Turn off DUT</Label>
-          <Commands>
-            <Command>TurnOff</Command>
-          </Commands>
         </TestComponent>
       </Components>
       <References>
@@ -1125,12 +1077,6 @@
               <Interval>PT0.5S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
-        </TestComponent>
-        <TestComponent>
-          <Label>Turn off DUT</Label>
-          <Commands>
-            <Command>TurnOff</Command>
-          </Commands>
         </TestComponent>
       </Components>
       <References>
@@ -1459,12 +1405,6 @@
               <Interval>PT1S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
-        </TestComponent>
-        <TestComponent>
-          <Label>Turn off DUT</Label>
-          <Commands>
-            <Command>TurnOff</Command>
-          </Commands>
         </TestComponent>
       </Components>
       <References>
@@ -1910,12 +1850,6 @@
             </TestControlledVariable>
           </ControlledVariables>
         </TestComponent>
-        <TestComponent>
-          <Label>Turn off DUT</Label>
-          <Commands>
-            <Command>TurnOff</Command>
-          </Commands>
-        </TestComponent>
       </Components>
       <References>
         <VariableType>MassFlow</VariableType>
@@ -1974,12 +1908,6 @@
               <Interval>PT0.5S</Interval>
             </TestControlledVariable>
           </ControlledVariables>
-        </TestComponent>
-        <TestComponent>
-          <Label>Turn off DUT</Label>
-          <Commands>
-            <Command>TurnOff</Command>
-          </Commands>
         </TestComponent>
       </Components>
       <References>

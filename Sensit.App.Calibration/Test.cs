@@ -18,26 +18,16 @@ namespace Sensit.App.Calibration
 		/// Non-measurement related commands that can be executed during a test.
 		/// </summary>
 		/// <remarks>
-		/// These actions can activate a relay, send info to the DUTs, etc.
+		/// These actions can activate a relay, etc.
 		/// </remarks>
 		public enum Command
 		{
-			TurnOff,	// Remove power from DUT.
-			TurnOn,		// Apply power to DUT.
+			TurnOff,	// Remove power from test equipment.
+			TurnOn,		// Apply power to test equipment.
 			Default,	// Set factory default settings.
 			Range,		// Set range settings.
 			Zero,		// Perform zero-calibration.
 			Span,		// Perform span-calibration.
-		}
-
-		/// <summary>
-		/// Types of tolerances for DUT ranges
-		/// </summary>
-		public enum ToleranceType
-		{
-			Absolute,			// Quantity of range.
-			PercentFullScale,	// Percent of positive range.
-			PercentReading		// Percent of reading.
 		}
 
 		#endregion
@@ -47,7 +37,7 @@ namespace Sensit.App.Calibration
 		private BackgroundWorker _testThread;	// task that will handle test operations
 		private TestSetting _settings;			// settings for test
 		private Equipment _equipment;			// test equipment object
-		private readonly Dut _dut;				// device under test
+		private readonly Log _log;				// device under test
 		private Stopwatch _elapsedTimeStopwatch;// keeper of test's elapsed time
 		private bool _pause = false;			// whether test is paused
 		private int _samplesTotal;				// helps calculate percent complete
@@ -119,13 +109,13 @@ namespace Sensit.App.Calibration
 		/// Constructor
 		/// </summary>
 		/// <param name="equipment">equipment used by the test</param>
-		/// <param name="duts">devices being tested</param>
-		public Test(TestSetting settings, Equipment equipment, Dut dut)
+		/// <param name="log">logfile manager object</param>
+		public Test(TestSetting settings, Equipment equipment, Log log)
 		{
-			// Save the reference to the equipment and DUTs objects.
+			// Save the reference to the equipment and log file manager objects.
 			_settings = settings;
 			_equipment = equipment;
-			_dut = dut;
+			_log = log;
 
 			// Set up the background worker.
 			_testThread = new BackgroundWorker
@@ -334,24 +324,24 @@ namespace Sensit.App.Calibration
 
 		private static void ProcessCommand(Command? command)
 		{
-			// Apply the command to each DUT.
-				switch (command)
-				{
-					case Command.TurnOff:
-						break;
-					case Command.TurnOn:
-						break;
-					case Command.Default:
-						break;
-					case Command.Range:
-						break;
-					case Command.Span:
-						break;
-					case Command.Zero:
-						break;
-					default:
-						break;
-				}
+			// Perform a command.
+			switch (command)
+			{
+				case Command.TurnOff:
+					break;
+				case Command.TurnOn:
+					break;
+				case Command.Default:
+					break;
+				case Command.Range:
+					break;
+				case Command.Span:
+					break;
+				case Command.Zero:
+					break;
+				default:
+					break;
+			}
 		}
 
 		private void ProcessSetpoint(TestControlledVariable variable, double setpoint, TimeSpan interval)
@@ -456,8 +446,8 @@ namespace Sensit.App.Calibration
 				referenceReadings.Add(reference, value);
 			}
 
-			// Record the data applicable to each DUT.
-			_dut.Read(_elapsedTimeStopwatch.Elapsed, setpoint, referenceReadings[VariableType.GasConcentration]);
+			// Record test data.
+			_log.Read(_elapsedTimeStopwatch.Elapsed, setpoint, referenceReadings[VariableType.GasConcentration]);
 		}
 
 		/// <summary>
@@ -476,10 +466,10 @@ namespace Sensit.App.Calibration
 			// For each component...
 			foreach (TestComponent c in _settings?.Components ?? Enumerable.Empty<TestComponent>())
 			{
-				// For each DUT command...
+				// For each command...
 				foreach (Command command in c?.Commands ?? Enumerable.Empty<Command>())
 				{
-					// Perform DUT command.
+					// Perform the command.
 					ProcessCommand(command);
 
 					if (_testThread.CancellationPending) { break; }
@@ -503,7 +493,7 @@ namespace Sensit.App.Calibration
 							// Update GUI.
 							_testThread.ReportProgress(PercentProgress, "Taking sample " + i.ToString() + " of " + v.Samples + ".");
 
-							// Fetch readings from references and DUTs.
+							// Fetch readings from references.
 							_equipment.Read();
 
 							// Check stability of all controlled variables.
@@ -540,7 +530,7 @@ namespace Sensit.App.Calibration
 		/// This runs during a test.
 		/// </summary>
 		/// <remarks>
-		/// This method handles all the testing of the DUTs.  Every time the
+		/// This method handles all the testing.  Every time the
 		/// user presses "Start" this is what runs.  If you're trying to figure
 		/// out what this application does, this is a good place to start.
 		/// 
@@ -561,7 +551,7 @@ namespace Sensit.App.Calibration
 				{
 					// Initialize test equipment.
 					_testThread.ReportProgress(0, "Configuring test equipment...");
-					_dut.Open();
+					_log.Open();
 					_equipment.Open();
 
 					// Repeat test if requested.
@@ -605,8 +595,8 @@ namespace Sensit.App.Calibration
 			}
 			finally
 			{
-				// Dispose of any used DUT resources.
-				_dut.Dispose();
+				// Dispose of any used log resources.
+				_log.Dispose();
 			}
 
 			// Update the GUI.

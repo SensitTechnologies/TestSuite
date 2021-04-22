@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using CsvHelper;	// TODO:  replace with Sensit.TestSDK.Files
@@ -17,14 +16,9 @@ namespace Sensit.App.Calibration
 	}
 
 	/// <summary>
-	/// Manage devices under test.
+	/// Manage log file.
 	/// </summary>
-	/// <remarks>
-	/// Similarly to the Equipment class, we have the ability to create any type
-	/// of DUT, and then we pass the selected type to the user for each needed
-	/// interface.
-	/// </remarks>
-	public class Dut : IDisposable
+	public class Log : IDisposable
 	{
 		#region Fields
 
@@ -45,7 +39,7 @@ namespace Sensit.App.Calibration
 		public List<TestResults> Results { get; } = new List<TestResults>();
 
 		/// <summary>
-		/// DUT's unique identification number
+		/// File name for test information.
 		/// </summary>
 		public string Filename { get; set; }
 

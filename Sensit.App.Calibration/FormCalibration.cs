@@ -41,7 +41,7 @@ namespace Sensit.App.Calibration
 		private Test _test;
 
 		// Object to represent test results (formerly a device under test).
-		private Dut _dut;
+		private Log _log;
 
 		#endregion
 
@@ -89,7 +89,7 @@ namespace Sensit.App.Calibration
 		#region Test
 
 		/// <summary>
-		/// When "Start" button is clicked, fetch settings, create equipment/test/DUTs, start test.
+		/// When "Start" button is clicked, fetch settings, create equipment/test, start test.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -160,14 +160,14 @@ namespace Sensit.App.Calibration
 				CheckBox checkBoxVoltage = tableLayoutPanelEquipment.GetControlFromPosition(EQUIPMENT_COLUMN_CHECKBOX, 7) as CheckBox;
 				_equipment.UsePowerSupply = checkBoxVoltage.Checked;
 
-				_dut = new Dut()
+				_log = new Log()
 				{
 					Filename = textBoxFilename.Text
 				};
 
 				// Create test object and link its actions to actions on this form.
 				// https://syncor.blogspot.com/2010/11/passing-getter-and-setter-of-c-property.html
-				_test = new Test(testSetting, _equipment, _dut)
+				_test = new Test(testSetting, _equipment, _log)
 				{
 					Finished = TestFinished,
 					UpdateProgress = TestUpdate,
@@ -216,16 +216,6 @@ namespace Sensit.App.Calibration
 				}
 			}
 
-			// Initialize or clear DUT selections.
-			if (Properties.Settings.Default.DutSelections == null)
-			{
-				Properties.Settings.Default.DutSelections = new System.Collections.Specialized.StringCollection();
-			}
-			else
-			{
-				Properties.Settings.Default.DutSelections.Clear();
-			}
-
 			// Initialize or clear Equipment selections.
 			if (Properties.Settings.Default.EquipmentSelections == null)
 			{
@@ -241,16 +231,6 @@ namespace Sensit.App.Calibration
 			{
 				CheckBox checkBox = tableLayoutPanelEquipment.GetControlFromPosition(EQUIPMENT_COLUMN_CHECKBOX, i) as CheckBox;
 				Properties.Settings.Default.EquipmentSelections.Add(checkBox.Checked ? "true" : "false");
-			}
-
-			// Initialize or clear DUT type selections.
-			if (Properties.Settings.Default.DutModels == null)
-			{
-				Properties.Settings.Default.DutModels = new System.Collections.Specialized.StringCollection();
-			}
-			else
-			{
-				Properties.Settings.Default.DutModels.Clear();
 			}
 
 			// Initialize or clear Equipment type selections.
@@ -270,17 +250,8 @@ namespace Sensit.App.Calibration
 				Properties.Settings.Default.EquipmentModels.Add(comboBox.SelectedIndex.ToString());
 			}
 
-			// Initialize or clear DUT description.
-			if (Properties.Settings.Default.DutDescriptions == null)
-			{
-				Properties.Settings.Default.DutDescriptions = new System.Collections.Specialized.StringCollection();
-			}
-			else
-			{
-				Properties.Settings.Default.DutDescriptions.Clear();
-			}
-
-			// TODO:  Remember logfile name.
+			// Remember logfile name.
+			Properties.Settings.Default.LogfileName = textBoxFilename.Text;
 
 			// Save settings.
 			Properties.Settings.Default.Save();
@@ -415,7 +386,7 @@ namespace Sensit.App.Calibration
 			// Stop the GUI from looking weird while we update it.
 			tableLayoutPanelEquipment.SuspendLayout();
 
-			// Remove all DUT controls.
+			// Remove all equipment controls.
 			for (int i = 0; i < tableLayoutPanelEquipment.ColumnCount; i++)
 			{
 				for (int j = 0; j < tableLayoutPanelEquipment.RowCount; j++)
