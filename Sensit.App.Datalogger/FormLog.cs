@@ -44,6 +44,12 @@ namespace Sensit.App.Datalogger
 			// Initialize the form.
 			InitializeComponent();
 
+			// Add version string to title bar.
+			if (ApplicationDeployment.IsNetworkDeployed)
+			{
+				Text += " " + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
+			}
+
 			// Recall the most recently used log file.
 			textBoxFilename.Text = Properties.Settings.Default.Filename;
 
