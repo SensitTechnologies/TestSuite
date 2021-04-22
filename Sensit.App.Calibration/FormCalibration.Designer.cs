@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.tabControl1 = new System.Windows.Forms.TabControl();
+			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabPageTest = new System.Windows.Forms.TabPage();
 			this.tableLayoutPanelTest = new System.Windows.Forms.TableLayoutPanel();
 			this.groupBoxTestSettings = new System.Windows.Forms.GroupBox();
@@ -125,7 +125,7 @@
 			this.supportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpProvider1 = new System.Windows.Forms.HelpProvider();
 			this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-			this.tabControl1.SuspendLayout();
+			this.tabControl.SuspendLayout();
 			this.tabPageTest.SuspendLayout();
 			this.tableLayoutPanelTest.SuspendLayout();
 			this.groupBoxTestSettings.SuspendLayout();
@@ -154,26 +154,26 @@
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// tabControl1
+			// tabControl
 			// 
-			this.tabControl1.Controls.Add(this.tabPageTest);
-			this.tabControl1.Controls.Add(this.tabPageLog);
-			this.tabControl1.Controls.Add(this.tabPageEquipment);
-			this.tabControl1.Controls.Add(this.tabPageStatus);
-			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabControl1.Location = new System.Drawing.Point(0, 24);
-			this.tabControl1.Name = "tabControl1";
-			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(559, 308);
-			this.tabControl1.TabIndex = 0;
+			this.tabControl.Controls.Add(this.tabPageTest);
+			this.tabControl.Controls.Add(this.tabPageLog);
+			this.tabControl.Controls.Add(this.tabPageEquipment);
+			this.tabControl.Controls.Add(this.tabPageStatus);
+			this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabControl.Location = new System.Drawing.Point(0, 24);
+			this.tabControl.Name = "tabControl";
+			this.tabControl.SelectedIndex = 0;
+			this.tabControl.Size = new System.Drawing.Size(584, 308);
+			this.tabControl.TabIndex = 0;
 			// 
 			// tabPageTest
 			// 
 			this.tabPageTest.Controls.Add(this.tableLayoutPanelTest);
 			this.tabPageTest.Location = new System.Drawing.Point(4, 22);
 			this.tabPageTest.Name = "tabPageTest";
-			this.tabPageTest.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-			this.tabPageTest.Size = new System.Drawing.Size(551, 282);
+			this.tabPageTest.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageTest.Size = new System.Drawing.Size(576, 282);
 			this.tabPageTest.TabIndex = 2;
 			this.tabPageTest.Text = "Test";
 			this.tabPageTest.UseVisualStyleBackColor = true;
@@ -193,7 +193,7 @@
 			this.tableLayoutPanelTest.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelTest.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanelTest.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelTest.Size = new System.Drawing.Size(545, 276);
+			this.tableLayoutPanelTest.Size = new System.Drawing.Size(570, 276);
 			this.tableLayoutPanelTest.TabIndex = 17;
 			// 
 			// groupBoxTestSettings
@@ -204,7 +204,7 @@
 			this.groupBoxTestSettings.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBoxTestSettings.Location = new System.Drawing.Point(3, 3);
 			this.groupBoxTestSettings.Name = "groupBoxTestSettings";
-			this.groupBoxTestSettings.Size = new System.Drawing.Size(562, 140);
+			this.groupBoxTestSettings.Size = new System.Drawing.Size(564, 140);
 			this.groupBoxTestSettings.TabIndex = 16;
 			this.groupBoxTestSettings.TabStop = false;
 			this.groupBoxTestSettings.Text = "Test Settings";
@@ -232,7 +232,7 @@
 			this.tableLayoutPanelTestSettings.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelTestSettings.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelTestSettings.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelTestSettings.Size = new System.Drawing.Size(556, 121);
+			this.tableLayoutPanelTestSettings.Size = new System.Drawing.Size(558, 121);
 			this.tableLayoutPanelTestSettings.TabIndex = 6;
 			// 
 			// numericUpDownFlowRate
@@ -252,7 +252,7 @@
             0,
             0});
 			this.numericUpDownFlowRate.Name = "numericUpDownFlowRate";
-			this.numericUpDownFlowRate.Size = new System.Drawing.Size(463, 24);
+			this.numericUpDownFlowRate.Size = new System.Drawing.Size(465, 24);
 			this.numericUpDownFlowRate.TabIndex = 25;
 			this.numericUpDownFlowRate.ValueChanged += new System.EventHandler(this.NumericUpDownFlowRate_ValueChanged);
 			// 
@@ -307,7 +307,7 @@
 			this.comboBoxTest.Location = new System.Drawing.Point(90, 3);
 			this.comboBoxTest.Name = "comboBoxTest";
 			this.helpProvider1.SetShowHelp(this.comboBoxTest, true);
-			this.comboBoxTest.Size = new System.Drawing.Size(463, 26);
+			this.comboBoxTest.Size = new System.Drawing.Size(465, 26);
 			this.comboBoxTest.TabIndex = 2;
 			this.comboBoxTest.SelectedIndexChanged += new System.EventHandler(this.ComboBoxTest_SelectedIndexChanged);
 			// 
@@ -329,7 +329,7 @@
 			this.numericUpDownRange.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.numericUpDownRange.Location = new System.Drawing.Point(90, 35);
 			this.numericUpDownRange.Name = "numericUpDownRange";
-			this.numericUpDownRange.Size = new System.Drawing.Size(463, 24);
+			this.numericUpDownRange.Size = new System.Drawing.Size(465, 24);
 			this.numericUpDownRange.TabIndex = 21;
 			this.numericUpDownRange.ValueChanged += new System.EventHandler(this.NumericUpDownRange_ValueChanged);
 			// 
@@ -377,7 +377,7 @@
 			this.tableLayoutPanelTestSetupButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanelTestSetupButtons.Controls.Add(this.buttonStart, 0, 0);
 			this.tableLayoutPanelTestSetupButtons.Controls.Add(this.buttonStop, 1, 0);
-			this.tableLayoutPanelTestSetupButtons.Location = new System.Drawing.Point(203, 244);
+			this.tableLayoutPanelTestSetupButtons.Location = new System.Drawing.Point(204, 244);
 			this.tableLayoutPanelTestSetupButtons.Name = "tableLayoutPanelTestSetupButtons";
 			this.tableLayoutPanelTestSetupButtons.RowCount = 1;
 			this.tableLayoutPanelTestSetupButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -413,10 +413,10 @@
 			// 
 			this.tabPageLog.Controls.Add(this.groupBoxLogSettings);
 			this.tabPageLog.Location = new System.Drawing.Point(4, 22);
-			this.tabPageLog.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.tabPageLog.Margin = new System.Windows.Forms.Padding(2);
 			this.tabPageLog.Name = "tabPageLog";
-			this.tabPageLog.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-			this.tabPageLog.Size = new System.Drawing.Size(551, 284);
+			this.tabPageLog.Padding = new System.Windows.Forms.Padding(2);
+			this.tabPageLog.Size = new System.Drawing.Size(551, 282);
 			this.tabPageLog.TabIndex = 7;
 			this.tabPageLog.Text = "Log";
 			this.tabPageLog.UseVisualStyleBackColor = true;
@@ -429,7 +429,7 @@
 			this.groupBoxLogSettings.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBoxLogSettings.Location = new System.Drawing.Point(2, 2);
 			this.groupBoxLogSettings.Name = "groupBoxLogSettings";
-			this.groupBoxLogSettings.Size = new System.Drawing.Size(547, 280);
+			this.groupBoxLogSettings.Size = new System.Drawing.Size(547, 278);
 			this.groupBoxLogSettings.TabIndex = 17;
 			this.groupBoxLogSettings.TabStop = false;
 			this.groupBoxLogSettings.Text = "Log Settings";
@@ -451,7 +451,7 @@
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(541, 261);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(541, 259);
 			this.tableLayoutPanel1.TabIndex = 6;
 			// 
 			// labelFilename
@@ -470,7 +470,7 @@
 			this.textBoxFilename.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.textBoxFilename.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.textBoxFilename.Location = new System.Drawing.Point(82, 2);
-			this.textBoxFilename.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.textBoxFilename.Margin = new System.Windows.Forms.Padding(2);
 			this.textBoxFilename.Name = "textBoxFilename";
 			this.textBoxFilename.Size = new System.Drawing.Size(477, 24);
 			this.textBoxFilename.TabIndex = 26;
@@ -480,7 +480,7 @@
 			this.tabPageEquipment.Controls.Add(this.groupBox1);
 			this.tabPageEquipment.Location = new System.Drawing.Point(4, 22);
 			this.tabPageEquipment.Name = "tabPageEquipment";
-			this.tabPageEquipment.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+			this.tabPageEquipment.Padding = new System.Windows.Forms.Padding(3);
 			this.tabPageEquipment.Size = new System.Drawing.Size(551, 282);
 			this.tabPageEquipment.TabIndex = 6;
 			this.tabPageEquipment.Text = "Equipment";
@@ -522,8 +522,8 @@
 			this.tabPageStatus.Controls.Add(this.groupBoxVariables);
 			this.tabPageStatus.Location = new System.Drawing.Point(4, 22);
 			this.tabPageStatus.Name = "tabPageStatus";
-			this.tabPageStatus.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-			this.tabPageStatus.Size = new System.Drawing.Size(551, 284);
+			this.tabPageStatus.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageStatus.Size = new System.Drawing.Size(551, 282);
 			this.tabPageStatus.TabIndex = 4;
 			this.tabPageStatus.Text = "Status";
 			this.tabPageStatus.UseVisualStyleBackColor = true;
@@ -534,7 +534,7 @@
 			this.groupBoxVariables.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBoxVariables.Location = new System.Drawing.Point(3, 3);
 			this.groupBoxVariables.Name = "groupBoxVariables";
-			this.groupBoxVariables.Size = new System.Drawing.Size(545, 278);
+			this.groupBoxVariables.Size = new System.Drawing.Size(545, 276);
 			this.groupBoxVariables.TabIndex = 1;
 			this.groupBoxVariables.TabStop = false;
 			this.groupBoxVariables.Text = "Measured/Controlled Variables";
@@ -553,7 +553,7 @@
 			this.flowLayoutPanelControlledVariables.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.flowLayoutPanelControlledVariables.Location = new System.Drawing.Point(3, 16);
 			this.flowLayoutPanelControlledVariables.Name = "flowLayoutPanelControlledVariables";
-			this.flowLayoutPanelControlledVariables.Size = new System.Drawing.Size(539, 259);
+			this.flowLayoutPanelControlledVariables.Size = new System.Drawing.Size(539, 257);
 			this.flowLayoutPanelControlledVariables.TabIndex = 0;
 			// 
 			// groupBoxGasMix
@@ -1012,7 +1012,7 @@
             this.toolStripStatusLabel1});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 332);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(559, 29);
+			this.statusStrip1.Size = new System.Drawing.Size(584, 29);
 			this.statusStrip1.TabIndex = 1;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
@@ -1039,7 +1039,7 @@
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-			this.menuStrip1.Size = new System.Drawing.Size(559, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(584, 24);
 			this.menuStrip1.TabIndex = 2;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -1063,58 +1063,58 @@
 			// 
 			this.newToolStripMenuItem.Enabled = false;
 			this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-			this.newToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.newToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
 			this.newToolStripMenuItem.Text = "&New Test";
 			// 
 			// openToolStripMenuItem
 			// 
 			this.openToolStripMenuItem.Enabled = false;
 			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-			this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.openToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
 			this.openToolStripMenuItem.Text = "&Open Test";
 			// 
 			// closeToolStripMenuItem
 			// 
 			this.closeToolStripMenuItem.Enabled = false;
 			this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-			this.closeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.closeToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
 			this.closeToolStripMenuItem.Text = "&Close Test";
 			// 
 			// saveToolStripMenuItem
 			// 
 			this.saveToolStripMenuItem.Enabled = false;
 			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-			this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.saveToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
 			this.saveToolStripMenuItem.Text = "&Save Test";
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(129, 6);
 			// 
 			// printSetupToolStripMenuItem
 			// 
 			this.printSetupToolStripMenuItem.Enabled = false;
 			this.printSetupToolStripMenuItem.Name = "printSetupToolStripMenuItem";
-			this.printSetupToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.printSetupToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
 			this.printSetupToolStripMenuItem.Text = "&Print Setup";
 			// 
 			// printToolStripMenuItem
 			// 
 			this.printToolStripMenuItem.Enabled = false;
 			this.printToolStripMenuItem.Name = "printToolStripMenuItem";
-			this.printToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.printToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
 			this.printToolStripMenuItem.Text = "&Print";
 			// 
 			// toolStripSeparator3
 			// 
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
+			this.toolStripSeparator3.Size = new System.Drawing.Size(129, 6);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
 			this.exitToolStripMenuItem.Text = "&Exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
 			// 
@@ -1223,15 +1223,15 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoSize = true;
-			this.ClientSize = new System.Drawing.Size(559, 361);
-			this.Controls.Add(this.tabControl1);
+			this.ClientSize = new System.Drawing.Size(584, 361);
+			this.Controls.Add(this.tabControl);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.menuStrip1);
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "FormCalibration";
 			this.Text = "Automated Test System";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormCalibration_FormClosing);
-			this.tabControl1.ResumeLayout(false);
+			this.tabControl.ResumeLayout(false);
 			this.tabPageTest.ResumeLayout(false);
 			this.tabPageTest.PerformLayout();
 			this.tableLayoutPanelTest.ResumeLayout(false);
@@ -1286,7 +1286,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.TabControl tabControl1;
+		private System.Windows.Forms.TabControl tabControl;
 		private System.Windows.Forms.StatusStrip statusStrip1;
 		private System.Windows.Forms.TabPage tabPageTest;
 		private System.Windows.Forms.MenuStrip menuStrip1;

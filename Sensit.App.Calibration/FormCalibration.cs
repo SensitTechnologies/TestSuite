@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Deployment.Application;
-using System.Drawing;
-using System.IO.Ports;
 using System.Linq;
 using System.Windows.Forms;
-using Sensit.TestSDK.Devices;
 using Sensit.TestSDK.Forms;
 using Sensit.TestSDK.Interfaces;
 using Sensit.TestSDK.Settings;
@@ -39,9 +36,6 @@ namespace Sensit.App.Calibration
 
 		// Object to represent tests.
 		private Test _test;
-
-		// Object to represent test results (formerly a device under test).
-		private Log _log;
 
 		#endregion
 
@@ -160,14 +154,9 @@ namespace Sensit.App.Calibration
 				CheckBox checkBoxVoltage = tableLayoutPanelEquipment.GetControlFromPosition(EQUIPMENT_COLUMN_CHECKBOX, 7) as CheckBox;
 				_equipment.UsePowerSupply = checkBoxVoltage.Checked;
 
-				_log = new Log()
-				{
-					Filename = textBoxFilename.Text
-				};
-
 				// Create test object and link its actions to actions on this form.
 				// https://syncor.blogspot.com/2010/11/passing-getter-and-setter-of-c-property.html
-				_test = new Test(testSetting, _equipment, _log)
+				_test = new Test(testSetting, _equipment, textBoxFilename.Text)
 				{
 					Finished = TestFinished,
 					UpdateProgress = TestUpdate,
