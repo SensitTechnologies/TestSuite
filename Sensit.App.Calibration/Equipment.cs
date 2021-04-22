@@ -27,9 +27,6 @@ namespace Sensit.App.Calibration
 		// mass flow controller for diluent gas (needed for gas mixing)
 		private ColeParmerMFC _mfcDiluent;
 
-		// both mass flow controllers combined for mixing gas
-		private GasMixingDevice _gasMixer;
-
 		// power supply
 		private GPDX303S _powerSupply;
 
@@ -63,25 +60,8 @@ namespace Sensit.App.Calibration
 			// Only the ones chosen by the user will end up being used.
 			_mfcAnalyte = new ColeParmerMFC();
 			_mfcDiluent = new ColeParmerMFC();
-			_gasMixer = new GasMixingDevice(_mfcDiluent, _mfcDiluent, _mfcAnalyte, _mfcAnalyte);
 			_manual = new Manual();
 			_powerSupply = new GPDX303S();
-
-			Controllers = new Dictionary<VariableType, IControlDevice>
-			{
-				{ VariableType.GasConcentration, _gasMixer },
-				{ VariableType.MassFlow, _gasMixer },
-				//{ VariableType.Current, _powerSupply },
-				//{ VariableType.Voltage, _powerSupply }
-			};
-
-			References = new Dictionary<VariableType, IReferenceDevice>
-			{
-				{ VariableType.GasConcentration, _gasMixer },
-				{ VariableType.MassFlow, _gasMixer },
-				//{ VariableType.Current, _powerSupply },
-				//{ VariableType.Voltage, _powerSupply }
-			};
 		}
 
 		#endregion
@@ -113,7 +93,8 @@ namespace Sensit.App.Calibration
 		{
 			if (UseGasMixer)
 			{
-				_gasMixer?.Read();
+				_mfcAnalyte?.Read();
+				_mfcDiluent?.Read();
 			}
 
 			// TODO:  Update GUI with new values.
