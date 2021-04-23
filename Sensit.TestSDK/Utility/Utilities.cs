@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace Sensit.TestSDK.Utilities
 {
@@ -119,5 +120,87 @@ namespace Sensit.TestSDK.Utilities
 
 			return types.ToList();
 		}
+
+		#region Table Layout Panel Helper Methods
+
+		/// <summary>
+		/// Remove all controls from a table layout panel.
+		/// </summary>
+		/// <param name="panel">table layout panel to act upon</param>
+		public static void TableLayoutPanelClear(TableLayoutPanel panel)
+		{
+			// Check for null argument.
+			if (panel is null)
+			{
+				throw new ArgumentNullException(nameof(panel));
+			}
+
+			// Stop the GUI from looking weird while we update it.
+			panel.SuspendLayout();
+
+			// For each column in the panel...
+			for (int i = 0; i < panel.ColumnCount; i++)
+			{
+				// Remove all controls except for those in the header row.
+				for (int j = 1; j < panel.RowCount; j++)
+				{
+					Control control = panel.GetControlFromPosition(i, j);
+					panel.Controls.Remove(control);
+				}
+			}
+
+			// Make the GUI act normally again.
+			panel.ResumeLayout();
+		}
+
+		/// <summary>
+		/// Remove a row from a table layout panel.
+		/// </summary>
+		/// <remarks>
+		/// source:  https://stackoverflow.com/questions/6202144/is-there-a-way-to-remove-all-controls-from-a-row-in-tablelayoutpanel/6202242
+		/// </remarks>
+		/// <param name="panel">table layout panel to act upon</param>
+		/// <param name="rowIndex">index of the row to remove</param>
+		public static void TableLayoutPanelRemoveRow(this TableLayoutPanel panel, int rowIndex)
+		{
+			// Check for null argument.
+			if (panel is null)
+			{
+				throw new ArgumentNullException(nameof(panel));
+			}
+
+			// Stop the GUI from looking weird while we update it.
+			panel.SuspendLayout();
+
+			// Remove the row's row style.
+			panel.RowStyles.RemoveAt(rowIndex);
+
+			// For each column in the panel...
+			for (int columnIndex = 0; columnIndex < panel.ColumnCount; columnIndex++)
+			{
+				// Remove the control in that position.
+				var control = panel.GetControlFromPosition(columnIndex, rowIndex);
+				panel.Controls.Remove(control);
+			}
+
+			// For each row after the one being removed...
+			for (int i = rowIndex + 1; i < panel.RowCount; i++)
+			{
+				// Move each control up a row.
+				for (int columnIndex = 0; columnIndex < panel.ColumnCount; columnIndex++)
+				{
+					var control = panel.GetControlFromPosition(columnIndex, i);
+					panel.SetRow(control, i - 1);
+				}
+			}
+
+			// Delete the last row in the panel.
+			panel.RowCount--;
+
+			// Make the GUI act normally again.
+			panel.ResumeLayout();
+		}
+
+		#endregion
 	}
 }
