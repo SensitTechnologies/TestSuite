@@ -16,7 +16,7 @@ namespace Sensit.App.Calibration
 	public class Equipment : IDisposable
 	{
 		// holds settings for the equipment
-		private readonly EquipmentSettings _settings;
+		private readonly DeviceSettings _settings;
 
 		// generic manual device, used whenever the user selects "Manual" option for equipment.
 		private Manual _manual;
@@ -72,8 +72,8 @@ namespace Sensit.App.Calibration
 			// Configure the mass flow controllers.
 			if ((UseGasMixer) && (_mfcAnalyte != null) && (_mfcDiluent != null))
 			{
-				_mfcAnalyte?.Open(_settings.GasMixer.AnalyteMFC.SerialPort);
-				_mfcDiluent?.Open(_settings.GasMixer.DiluentMFC.SerialPort);
+				_mfcAnalyte?.Open(_settings.ColeParmerMFC.SerialPort);
+				_mfcDiluent?.Open(_settings.ColeParmerMFC.SerialPort);
 			}
 
 			// Configure the power supply.
