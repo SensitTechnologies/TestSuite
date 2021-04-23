@@ -553,5 +553,10 @@ namespace Sensit.App.Calibration
 		{
 
 		}
+
+		private void CheckBoxEventSelectAll_CheckedChanged(object sender, EventArgs e)
+		{
+
+		}
 	}
 }

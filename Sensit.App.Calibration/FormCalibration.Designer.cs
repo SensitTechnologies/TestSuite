@@ -510,6 +510,7 @@
 			this.checkBoxEventSelectAll.TabIndex = 0;
 			this.checkBoxEventSelectAll.Text = "Select All";
 			this.checkBoxEventSelectAll.UseVisualStyleBackColor = true;
+			this.checkBoxEventSelectAll.CheckedChanged += new System.EventHandler(this.CheckBoxEventSelectAll_CheckedChanged);
 			// 
 			// buttonEventDelete
 			// 
@@ -517,9 +518,9 @@
 			this.buttonEventDelete.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.buttonEventDelete.Location = new System.Drawing.Point(304, 3);
 			this.buttonEventDelete.Name = "buttonEventDelete";
-			this.buttonEventDelete.Size = new System.Drawing.Size(135, 23);
+			this.buttonEventDelete.Size = new System.Drawing.Size(129, 23);
 			this.buttonEventDelete.TabIndex = 1;
-			this.buttonEventDelete.Text = "Delete Selected Devices";
+			this.buttonEventDelete.Text = "Delete Selected Events";
 			this.buttonEventDelete.UseVisualStyleBackColor = true;
 			this.buttonEventDelete.Click += new System.EventHandler(this.ButtonEventDelete_Click);
 			// 
@@ -561,7 +562,7 @@
 			this.buttonEventAdd.Name = "buttonEventAdd";
 			this.buttonEventAdd.Size = new System.Drawing.Size(75, 23);
 			this.buttonEventAdd.TabIndex = 2;
-			this.buttonEventAdd.Text = "Add Device";
+			this.buttonEventAdd.Text = "Add Event";
 			this.buttonEventAdd.UseVisualStyleBackColor = true;
 			this.buttonEventAdd.Click += new System.EventHandler(this.ButtonEventAdd_Click);
 			// 
@@ -1282,14 +1283,14 @@
 			// supportToolStripMenuItem
 			// 
 			this.supportToolStripMenuItem.Name = "supportToolStripMenuItem";
-			this.supportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.supportToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
 			this.supportToolStripMenuItem.Text = "&Wiki";
 			this.supportToolStripMenuItem.Click += new System.EventHandler(this.SupportToolStripMenuItem_Click);
 			// 
 			// aboutToolStripMenuItem
 			// 
 			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
 			this.aboutToolStripMenuItem.Text = "&About";
 			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
 			// 
