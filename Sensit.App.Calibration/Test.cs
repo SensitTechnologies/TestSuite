@@ -109,10 +109,10 @@ namespace Sensit.App.Calibration
 		/// Constructor
 		/// </summary>
 		/// <param name="equipment">equipment used by the test</param>
-		public Test(TestSetting settings, Equipment equipment, string filename)
+		public Test(TestSettings settings, Equipment equipment, string filename)
 		{
 			// Save the reference to the equipment and log file manager objects.
-			_settings = settings;
+			_settings = settings.Tests[0];
 			_equipment = equipment;
 
 			// Set up the log file.
@@ -131,7 +131,7 @@ namespace Sensit.App.Calibration
 			// Calculate how many samples we'll take in the selected test.
 			// This allows us to calculate the test's percent progress.
 			_samplesTotal = 0;
-			foreach (TestComponent c in settings.Components)
+			foreach (TestComponent c in _settings.Components)
 			{
 				foreach (TestControlledVariable v in c?.ControlledVariables ?? Enumerable.Empty<TestControlledVariable>())
 				{

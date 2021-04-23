@@ -59,26 +59,5 @@ namespace Sensit.App.Calibration.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-        ///&lt;TestSettings xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
-        ///  &lt;Tests&gt;
-        ///    &lt;TestSetting&gt;
-        ///      &lt;Label&gt;Melby:  0% &amp;lt;-&amp;gt; 100% analyte&lt;/Label&gt;
-        ///      &lt;Components&gt;
-        ///        &lt;TestComponent&gt;
-        ///          &lt;Label&gt;Apply 0%V analyte&lt;/Label&gt;
-        ///          &lt;ControlledVariables&gt;
-        ///            &lt;TestControlledVariable&gt;
-        ///              &lt;VariableType&gt;MassFlow&lt;/VariableType&gt;
-        ///              &lt;ErrorTolerance&gt;5&lt;/ErrorTolerance&gt;
-        ///         [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string Test_Settings {
-            get {
-                return ResourceManager.GetString("Test_Settings", resourceCulture);
-            }
-        }
     }
 }

@@ -25,18 +25,6 @@ namespace Sensit.App.Calibration.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public decimal Range {
-            get {
-                return ((decimal)(this["Range"]));
-            }
-            set {
-                this["Range"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string Test {
             get {
@@ -44,36 +32,6 @@ namespace Sensit.App.Calibration.Properties {
             }
             set {
                 this["Test"] = value;
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("System Settings")]
-        public string SystemSettingsFile {
-            get {
-                return ((string)(this["SystemSettingsFile"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Test Settings")]
-        public string TestSettingsFile {
-            get {
-                return ((string)(this["TestSettingsFile"]));
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LogDirectory {
-            get {
-                return ((string)(this["LogDirectory"]));
-            }
-            set {
-                this["LogDirectory"] = value;
             }
         }
         
@@ -91,58 +49,13 @@ namespace Sensit.App.Calibration.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection EquipmentSelections {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Logfile {
             get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["EquipmentSelections"]));
+                return ((string)(this["Logfile"]));
             }
             set {
-                this["EquipmentSelections"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection EquipmentModels {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["EquipmentModels"]));
-            }
-            set {
-                this["EquipmentModels"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection EquipmentConfigs {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["EquipmentConfigs"]));
-            }
-            set {
-                this["EquipmentConfigs"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("300")]
-        public decimal FlowRate {
-            get {
-                return ((decimal)(this["FlowRate"]));
-            }
-            set {
-                this["FlowRate"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Results")]
-        public string LogfileName {
-            get {
-                return ((string)(this["LogfileName"]));
-            }
-            set {
-                this["LogfileName"] = value;
+                this["Logfile"] = value;
             }
         }
     }

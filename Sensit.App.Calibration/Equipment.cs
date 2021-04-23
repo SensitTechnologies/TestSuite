@@ -52,10 +52,8 @@ namespace Sensit.App.Calibration
 		/// <summary>
 		/// Constructor; creates equipment objects.
 		/// </summary>
-		public Equipment(EquipmentSettings settings)
+		public Equipment()
 		{
-			_settings = settings;
-
 			// Create test equipment objects.
 			// Only the ones chosen by the user will end up being used.
 			_mfcAnalyte = new ColeParmerMFC();
