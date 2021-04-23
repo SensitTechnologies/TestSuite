@@ -7,6 +7,46 @@ using System.Xml;
 
 namespace Sensit.App.Calibration
 {
+	[Serializable]
+	public class SerialPortSetting
+	{
+		[Category("Serial Port"), Description("Serial port used by device.")]
+		public string SerialPort { get; set; }
+
+		[Category("Serial Port"), Description("Baud rate used by device.")]
+		public int BaudRate { get; set; }
+	}
+
+	[Serializable]
+	public class GasMixerSetting
+	{
+		[Category("Mass Flow Controllers"), Description("Serial port used by device.")]
+		public SerialPortSetting AnalyteMFC { get; set; }
+
+		[Category("Mass Flow Controllers"), Description("Serial port used by device.")]
+		public SerialPortSetting DiluentMFC { get; set; }
+
+		[Category("Gas"), Description("Analyte gas.")]
+		public Gas Analyte { get; set; }
+
+		[Category("Gas"), Description("Diluent gas.")]
+		public Gas Diluent { get; set; }
+	}
+
+	[Serializable]
+	public class DeviceSettings
+	{
+		[Category("Devices"), Description("Settings for Mass Flow Controller.")]
+		public SerialPortSetting ColeParmerMFC { get; set; } = new SerialPortSetting();
+
+		[Category("Devices"), Description("Settings for Power Supply.")]
+		public SerialPortSetting PowerSupply { get; set; } = new SerialPortSetting()
+		{
+			SerialPort = "COM3",
+			BaudRate = 9600
+		};
+	}
+
 	/// <summary>
 	/// Configuration for a variable being controlled during a test.
 	/// </summary>
