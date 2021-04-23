@@ -32,12 +32,8 @@ namespace Sensit.App.Calibration
 		/// <param name="filename"></param>
 		public void Open()
 		{
-			// Initialize CSV file writer.
-			string file = _filename + ".csv";
-			string fullPath = Path.Combine(Properties.Settings.Default.LogDirectory, file);
-
 			// Set up the CSV file writer filestream.
-			_writer = new CsvWriter(fullPath, true);
+			_writer = new CsvWriter(_filename, true);
 		}
 
 		/// <summary>
