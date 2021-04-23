@@ -42,8 +42,8 @@ namespace Sensit.TestSDK.Devices
 	/// serial interfaces, but some menu differences and major electronics differences.
 	/// 
 	/// </remarks>
-	public class ColeParmerMFC : SerialDevice, IMassFlowController,
-		IMassFlowReference, IVolumeFlowReference, ITemperatureReference, IPressureReference
+	public class ColeParmerMFC : SerialDevice, IControlDevice,
+		IMassFlowDevice, IVolumeFlowDevice, ITemperatureDevice, IPressureDevice
 	{
 		/// <summary>
 		/// Baud rates supported by the mass flow controller.

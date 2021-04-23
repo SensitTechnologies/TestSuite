@@ -102,7 +102,7 @@ namespace Sensit.TestSDK.Interfaces
 	/// May wish to split into two interfaces (mass and volumetric flow) in the future.
 	/// </remarks>
 	[Description("Gas Mass Flow Reference")]
-	public interface IMassFlowReference : IReferenceDevice
+	public interface IMassFlowDevice : IReferenceDevice
 	{
 		UnitOfMeasure.Flow FlowUnit { get; set; }
 
@@ -116,7 +116,7 @@ namespace Sensit.TestSDK.Interfaces
 	/// Device that measures gas volumetric flow.
 	/// </summary>
 	[Description("Gas Volume Flow Reference")]
-	public interface IVolumeFlowReference : IReferenceDevice
+	public interface IVolumeFlowDevice : IReferenceDevice
 	{
 		UnitOfMeasure.Flow FlowUnit { get; set; }
 	}
@@ -125,7 +125,7 @@ namespace Sensit.TestSDK.Interfaces
 	/// Device that measures gas velocity.
 	/// </summary>
 	[Description("Velocity Reference")]
-	public interface IVelocityReference : IReferenceDevice
+	public interface IVelocityDevice : IReferenceDevice
 	{
 		UnitOfMeasure.Velocity VelocityUnit { get; set; }
 	}
@@ -134,7 +134,7 @@ namespace Sensit.TestSDK.Interfaces
 	/// Device that measures pressure.
 	/// </summary>
 	[Description("Pressure Reference")]
-	public interface IPressureReference : IReferenceDevice
+	public interface IPressureDevice : IReferenceDevice
 	{
 		UnitOfMeasure.Pressure PressureUnit { get; set; }
 	}
@@ -143,7 +143,7 @@ namespace Sensit.TestSDK.Interfaces
 	/// Device that measures temperature.
 	/// </summary>
 	[Description("Temperature Reference")]
-	public interface ITemperatureReference : IReferenceDevice
+	public interface ITemperatureDevice : IReferenceDevice
 	{
 		UnitOfMeasure.Temperature TemperatureUnit { get; set; }
 	}
@@ -152,7 +152,7 @@ namespace Sensit.TestSDK.Interfaces
 	/// Device that measures electrical current.
 	/// </summary>
 	[Description("Current Reference")]
-	public interface ICurrentReference : IReferenceDevice
+	public interface ICurrentDevice : IReferenceDevice
 	{
 		UnitOfMeasure.Current CurrentUnit { get; set; }
 
@@ -166,7 +166,7 @@ namespace Sensit.TestSDK.Interfaces
 	/// Device that measures electrical voltage.
 	/// </summary>
 	[Description("Voltage Reference")]
-	public interface IVoltageReference : IReferenceDevice
+	public interface IVoltageDevice : IReferenceDevice
 	{
 		UnitOfMeasure.Voltage VoltageUnit { get; set; }
 
@@ -184,7 +184,7 @@ namespace Sensit.TestSDK.Interfaces
 	/// requiring modifications to this software.
 	/// </remarks>
 	[Description("Message Reference")]
-	public interface IMessageReference : IReferenceDevice
+	public interface IMessageDevice : IReferenceDevice
 	{
 		string Message { get; }
 	}

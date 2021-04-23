@@ -15,12 +15,9 @@ namespace Sensit.TestSDK.Devices
 	/// Useful for testing software and test equipment, or as a DUT to make manual
 	/// data entries.
 	/// </remarks>
-	public class Manual : IMassFlowReference,
-		IVolumeFlowReference, IVelocityReference, IPressureReference,
-		ITemperatureReference, ICurrentReference, IVoltageReference,
-		IMassFlowController,
-		IVolumeFlowController, IVelocityController, IPressureController,
-		ITemperatureController, ICurrentController, IVoltageController
+	public class Manual : IMassFlowDevice, IVolumeFlowDevice, IVelocityDevice, IPressureDevice,
+		ITemperatureDevice, ICurrentDevice, IVoltageDevice,
+		IControlDevice
 	{
 		/// <summary>
 		/// Used to determine what type of variables this controller will store.

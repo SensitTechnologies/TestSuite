@@ -14,10 +14,6 @@ namespace Sensit.TestSDK.Interfaces
 	/// <summary>
 	/// Device that controls one or more independent variables in a test.
 	/// </summary>
-	/// <remarks>
-	/// Don't implement this interface directly.
-	/// Devices should implement one of the more specific interfaces below.
-	/// </remarks>
 	[Description("Control Device")]
 	public interface IControlDevice
 	{
@@ -45,61 +41,5 @@ namespace Sensit.TestSDK.Interfaces
 		/// <param name="type"></param>
 		/// <returns></returns>
 		double ReadSetpoint(VariableType type);
-	}
-
-	/// <summary>
-	/// Device that controls gas mass flow.
-	/// </summary>
-	[Description("Mass Flow Controller")]
-	public interface IMassFlowController : IControlDevice
-	{
-	}
-
-	/// <summary>
-	/// Device that controls gas volume flow.
-	/// </summary>
-	[Description("Volume Flow Controller")]
-	public interface IVolumeFlowController : IControlDevice
-	{
-	}
-
-	/// <summary>
-	/// Device that controls gas velocity (i.e. a wind tunnel).
-	/// </summary>
-	[Description("Velocity Controller")]
-	public interface IVelocityController : IControlDevice
-	{
-	}
-
-	/// <summary>
-	/// Device that controls pressure.
-	/// </summary>
-	[Description("Pressure Controller")]
-	public interface IPressureController : IControlDevice
-	{
-	}
-
-	/// <summary>
-	/// Device that controls temperature.
-	/// </summary>
-	[Description("Temperature Controller")]
-	public interface ITemperatureController : IControlDevice
-	{
-	}
-
-	/// <summary>
-	/// Device that controls electrical current.
-	/// </summary>
-	[Description("Current Controller")]
-	public interface ICurrentController : IControlDevice
-	{
-	}
-
-	/// <summary>
-	/// Device that controls electrical voltage.
-	/// </summary>
-	[Description("Voltage Controller")]
-	public interface IVoltageController : IControlDevice
-	{
 	}
 }

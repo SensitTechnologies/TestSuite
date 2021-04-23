@@ -19,8 +19,8 @@ namespace Sensit.TestSDK.Devices
 	/// This is a four-channel programmable linear DC power supply.
 	/// It communicates using a serial port and SCPI commands.
 	/// </remarks>
-	public class GPDX303S : SerialDevice, IVoltageReference, ICurrentReference,
-		IVoltageController, ICurrentController
+	public class GPDX303S : SerialDevice, IVoltageDevice, ICurrentDevice,
+		IControlDevice
 	{
 		private int channel = 1;
 
