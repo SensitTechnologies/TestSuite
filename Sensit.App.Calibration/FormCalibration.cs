@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Deployment.Application;
 using System.Diagnostics;
+using System.IO.Ports;
 using System.Linq;
 using System.Windows.Forms;
 using Sensit.TestSDK.Forms;
@@ -59,6 +60,15 @@ namespace Sensit.App.Calibration
 			{
 				Text += " " + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
 			}
+
+			// Make a list of the types of control devices (should be one per interface).
+			List<Type> controlTypes = Utilities.FindClasses(typeof(IControlDevice));
+
+			foreach (Type t in controlTypes)
+			{
+				comboBoxDeviceType.Items.Add(t.GetDescription());
+			}
+			comboBoxDeviceType.SelectedIndex = 0;
 
 			// Load settings from most recently used test settings file.
 			TestSettings testSettings = Settings.Load<TestSettings>(Properties.Settings.Default.Test);
@@ -269,129 +279,6 @@ namespace Sensit.App.Calibration
 
 		#endregion
 
-		#region Equipment
-
-		/// <summary>
-		/// Populate the equipment tab with selections for each type of peripheral.
-		/// </summary>
-		/// <param name="type"></param>
-		private void AddDevice(Type type)
-		{
-			//// Stop the GUI from looking weird while we update it.
-			//tableLayoutPanelDevices.SuspendLayout();
-
-			//// Remove all equipment controls.
-			//for (int i = 0; i < tableLayoutPanelEquipment.ColumnCount; i++)
-			//{
-			//	for (int j = 0; j < tableLayoutPanelEquipment.RowCount; j++)
-			//	{
-			//		Control control = tableLayoutPanelEquipment.GetControlFromPosition(i, j);
-			//		tableLayoutPanelEquipment.Controls.Remove(control);
-			//	}
-			//}
-
-			//// Make a list of the types of control devices (should be one per interface).
-			//List<Type> controlTypes = Utilities.FindInterfaces(type);
-
-			//// Set how many rows there should be.
-			//tableLayoutPanelEquipment.RowCount = controlTypes.Count;
-
-			//// Recall the most recently used equipment from settings.
-			//bool[] selections = null;
-			//if (Properties.Settings.Default.EquipmentSelections != null)
-			//{
-			//	List<string> list = Properties.Settings.Default.EquipmentSelections.Cast<string>().ToList();
-			//	selections = list.Select(x => x == "true").ToArray();
-			//}
-
-			//// Recall model selections from settings.
-			//List<string> models = null;
-			//if (Properties.Settings.Default.EquipmentModels != null)
-			//{
-			//	models = Properties.Settings.Default.EquipmentModels.Cast<string>().ToList();
-			//}
-
-			//// Recall config from settings.
-			//List<string> configs = null;
-			//if (Properties.Settings.Default.EquipmentConfigs != null)
-			//{
-			//	configs = Properties.Settings.Default.EquipmentModels.Cast<string>().ToList();
-			//}
-
-			//// For each type of control device...
-			//int k = 0;
-			//foreach (Type t in controlTypes)
-			//{
-			//	// Add a checkbox for selecting the equipment.
-			//	CheckBox checkBox = new CheckBox
-			//	{
-			//		AutoSize = true,
-			//		Anchor = AnchorStyles.Left | AnchorStyles.Top,
-			//		Dock = DockStyle.None,
-			//	};
-			//	tableLayoutPanelEquipment.Controls.Add(checkBox, EQUIPMENT_COLUMN_CHECKBOX, k);
-
-			//	if (selections != null)
-			//	{
-			//		checkBox.Checked = selections[k];
-			//	}
-
-			//	// Add a label.
-			//	Label label = new Label
-			//	{
-			//		Anchor = AnchorStyles.Left | AnchorStyles.Top,
-			//		AutoSize = true,
-			//		Dock = DockStyle.None,
-			//		Text = t.GetDescription()
-			//	};
-			//	tableLayoutPanelEquipment.Controls.Add(label, EQUIPMENT_COLUMN_LABEL, k);
-
-			//	// Add a comboBox for all the choices for that device type.
-			//	ComboBox comboBox = new ComboBox
-			//	{
-			//		Anchor = AnchorStyles.Left | AnchorStyles.Top,
-			//		Dock = DockStyle.None,
-			//		DropDownStyle = ComboBoxStyle.DropDownList
-			//	};
-			//	tableLayoutPanelEquipment.Controls.Add(comboBox, EQUIPMENT_COLUMN_MODEL, k);
-
-			//	// Add applicable devices.
-			//	List<Type> deviceTypes = Utilities.FindClasses(t);
-			//	foreach (Type d in deviceTypes)
-			//	{
-			//		comboBox.Items.Add(d.GetDescription());
-			//	}
-
-			//	// Select the most recently used device.
-			//	if (models != null)
-			//	{
-			//		comboBox.SelectedIndex = Convert.ToInt32(models[k]);
-			//	}
-
-			//	// Add a combo box for configuration.
-			//	ComboBox comboBoxConfig = new ComboBox
-			//	{
-			//		Anchor = AnchorStyles.Left | AnchorStyles.Top,
-			//		Dock = DockStyle.None,
-			//		DropDownStyle = ComboBoxStyle.DropDownList
-			//	};
-			//	tableLayoutPanelEquipment.Controls.Add(comboBoxConfig, EQUIPMENT_COLUMN_CONFIG, k);
-
-			//	if (configs != null)
-			//	{
-			//		comboBox.SelectedIndex = Convert.ToInt32(configs[k]);
-			//	}
-
-			//	// Remember what row we're on.
-			//	k++;
-			//}
-
-			//// Make the GUI act normally again.
-			//tableLayoutPanelDevices.ResumeLayout();
-		}
-
-		#endregion
-
 		#region Help Menu
 
 		/// <summary>
@@ -497,7 +384,11 @@ namespace Sensit.App.Calibration
 
 		private void NewToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			// Remove all devices.
+			Utilities.TableLayoutPanelClear(tableLayoutPanelDevices);
 
+			// Remove all events.
+			Utilities.TableLayoutPanelClear(tableLayoutPanelEvents);
 		}
 
 		private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -526,17 +417,69 @@ namespace Sensit.App.Calibration
 
 		private void ButtonDeviceAdd_Click(object sender, EventArgs e)
 		{
+			// Stop the GUI from looking weird while we update it.
+			tableLayoutPanelDevices.SuspendLayout();
 
-		}
+			// Add a new row to the table layout panel.
+			tableLayoutPanelDevices.RowCount++;
+			tableLayoutPanelDevices.RowStyles.Add(new RowStyle(SizeType.AutoSize));
 
-		private void ButtonDeviceDelete_Click(object sender, EventArgs e)
-		{
+			// Add a checkbox with the device's name.
+			CheckBox checkBox = new CheckBox
+			{
+				AutoSize = true,
+				Anchor = AnchorStyles.Left | AnchorStyles.Top,
+				Dock = DockStyle.None,
+				Text = textBoxDeviceName.Text,
+			};
+			tableLayoutPanelDevices.Controls.Add(checkBox, COLUMN_DEVICES_NAME, tableLayoutPanelDevices.RowCount - 1);
 
+			// Add the device type.
+			Label label = new Label
+			{
+				Anchor = AnchorStyles.Left | AnchorStyles.Top,
+				AutoSize = true,
+				Dock = DockStyle.None,
+				Text = comboBoxDeviceType.Text,
+			};
+			tableLayoutPanelDevices.Controls.Add(label, COLUMN_DEVICES_TYPE, tableLayoutPanelDevices.RowCount - 1);
+
+			// Add a comboBox for serial port.
+			ComboBox comboBox = new ComboBox
+			{
+				Anchor = AnchorStyles.Left | AnchorStyles.Top,
+				Dock = DockStyle.None,
+				DropDownStyle = ComboBoxStyle.DropDownList
+			};
+			comboBox.Items.AddRange(SerialPort.GetPortNames());
+			tableLayoutPanelDevices.Controls.Add(comboBox, COLUMN_DEVICES_PORT, tableLayoutPanelDevices.RowCount - 1);
+
+			// TODO:  Select the device's serial port.
+
+			// Make the GUI act normally again.
+			tableLayoutPanelDevices.ResumeLayout();
 		}
 
 		private void CheckBoxDeviceSelectAll_CheckedChanged(object sender, EventArgs e)
 		{
+			foreach (CheckBox c in tableLayoutPanelDevices.Controls.OfType<CheckBox>())
+			{
+				c.Checked = ((CheckBox)sender).Checked;
+			}
+		}
 
+		private void ButtonDeviceDelete_Click(object sender, EventArgs e)
+		{
+			// Hunt backwards for checked boxes or you'll miss the last one selected.
+			for (int row = tableLayoutPanelDevices.RowCount - 1; row >= 0; row--)
+			{
+				Control c = tableLayoutPanelDevices.GetControlFromPosition(0, row);
+				if ((c is CheckBox box) && (box.Checked))
+				{
+					// Remove the controls in the row.
+					Utilities.TableLayoutPanelRemoveRow(tableLayoutPanelDevices, row);
+				}
+			}
 		}
 
 		private void ButtonEventAdd_Click(object sender, EventArgs e)

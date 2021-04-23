@@ -248,9 +248,8 @@
 			this.tableLayoutPanelDevices.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanelDevices.Location = new System.Drawing.Point(3, 3);
 			this.tableLayoutPanelDevices.Name = "tableLayoutPanelDevices";
-			this.tableLayoutPanelDevices.RowCount = 2;
+			this.tableLayoutPanelDevices.RowCount = 1;
 			this.tableLayoutPanelDevices.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelDevices.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanelDevices.Size = new System.Drawing.Size(452, 134);
 			this.tableLayoutPanelDevices.TabIndex = 6;
 			// 
@@ -357,6 +356,7 @@
 			// comboBoxDeviceType
 			// 
 			this.comboBoxDeviceType.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.comboBoxDeviceType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxDeviceType.Location = new System.Drawing.Point(153, 3);
 			this.comboBoxDeviceType.Name = "comboBoxDeviceType";
 			this.comboBoxDeviceType.Size = new System.Drawing.Size(144, 21);
@@ -431,9 +431,8 @@
 			this.tableLayoutPanelEvents.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanelEvents.Location = new System.Drawing.Point(3, 3);
 			this.tableLayoutPanelEvents.Name = "tableLayoutPanelEvents";
-			this.tableLayoutPanelEvents.RowCount = 2;
+			this.tableLayoutPanelEvents.RowCount = 1;
 			this.tableLayoutPanelEvents.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelEvents.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanelEvents.Size = new System.Drawing.Size(452, 134);
 			this.tableLayoutPanelEvents.TabIndex = 6;
 			// 
@@ -549,6 +548,7 @@
 			// 
 			// comboBoxEventDevice
 			// 
+			this.comboBoxEventDevice.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxEventDevice.FormattingEnabled = true;
 			this.comboBoxEventDevice.Location = new System.Drawing.Point(3, 3);
 			this.comboBoxEventDevice.Name = "comboBoxEventDevice";
@@ -575,6 +575,7 @@
 			// 
 			// comboBoxEventVariable
 			// 
+			this.comboBoxEventVariable.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxEventVariable.FormattingEnabled = true;
 			this.comboBoxEventVariable.Location = new System.Drawing.Point(93, 3);
 			this.comboBoxEventVariable.Name = "comboBoxEventVariable";
