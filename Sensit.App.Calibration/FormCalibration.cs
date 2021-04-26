@@ -37,14 +37,14 @@ namespace Sensit.App.Calibration
 		// allow the form to wait for tests to cancel/complete before closing application
 		private bool _closeAfterTest = false;
 
-		// Object to represent test equipment.
+		// test equipment
 		private Equipment _equipment;
 
-		// Object to represent tests.
+		// tests
 		private Test _test;
 
-		// Test settings
-		TestSettings _testSettings;
+		// test settings
+		TestSetting _testSettings;
 
 		#endregion
 
@@ -61,18 +61,20 @@ namespace Sensit.App.Calibration
 				Text += " " + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
 			}
 
-			// Make a list of the types of control devices (should be one per interface).
-			List<Type> controlTypes = Utilities.FindClasses(typeof(IControlDevice));
-
-			foreach (Type t in controlTypes)
+			// List the control devices in the form, and select the first one.
+			List<Type> deviceTypes = Utilities.FindClasses(typeof(IControlDevice));
+			foreach (Type deviceType in deviceTypes)
 			{
-				comboBoxDeviceType.Items.Add(t.GetDescription());
+				comboBoxDeviceType.Items.Add(deviceType.GetDescription());
 			}
 			comboBoxDeviceType.SelectedIndex = 0;
 
-			// Load settings from most recently used test settings file.
-			TestSettings testSettings = Settings.Load<TestSettings>(Properties.Settings.Default.Test);
-			// TODO:  Load settings from the file.
+			// List the variable types in the form, and select the first one.
+			foreach (VariableType v in (VariableType[])Enum.GetValues(typeof(VariableType)))
+			{
+				comboBoxEventVariable.Items.Add(v.GetDescription());
+			}
+			comboBoxEventVariable.SelectedIndex = 0;
 
 			// Select the most recently used termination option.
 			radioButtonRepeatYes.Checked = Properties.Settings.Default.Repeat;
@@ -126,7 +128,7 @@ namespace Sensit.App.Calibration
 				// Create object for the equipment.
 				_equipment = new Equipment();
 
-				// TODO:  Add each piece of equipment used in the test.
+				// TODO:  Add devices to settings file.
 				// foreach (row in tableLayoutPanelDevices)
 				{
 					CheckBox checkBoxDeviceName = tableLayoutPanelDevices.GetControlFromPosition(COLUMN_DEVICES_NAME, 1) as CheckBox;
@@ -203,8 +205,7 @@ namespace Sensit.App.Calibration
 				result = MessageBox.Show("Abort the test?", "Abort", MessageBoxButtons.OKCancel);
 			}
 
-			// If we're quitting, cancel a test.
-			// Don't update GUI; the "TestFinished" method will do that.
+			// If we're quitting, cancel a test (don't update GUI; the "TestFinished" method will do that).
 			if (result == DialogResult.OK)
 			{
 				try
@@ -253,6 +254,71 @@ namespace Sensit.App.Calibration
 		#endregion
 
 		#region File Menu
+
+		private void SupportToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				ProcessStartInfo processStartInfo = new ProcessStartInfo("https://github.com/SensitTechnologies/TestSuite/wiki");
+				Process.Start(processStartInfo);
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message + Environment.NewLine +
+					"I was trying to navigate to: https://github.com/SensitTechnologies/TestSuite/wiki.", "ERROR");
+			}
+		}
+
+		private void NewToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			// Remove all devices.
+			Utilities.TableLayoutPanelClear(tableLayoutPanelDevices);
+
+			// Remove all events.
+			Utilities.TableLayoutPanelClear(tableLayoutPanelEvents);
+		}
+
+		private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			// Allow the user to select a filename.
+			OpenFileDialog fileDialog = new OpenFileDialog();
+			fileDialog.Filter = "XML-File|*.xml";
+			fileDialog.Title = "Open test settings file";
+			fileDialog.ShowDialog();
+
+			// If a valid filename has been selected...
+			if (!string.IsNullOrEmpty(fileDialog.FileName))
+			{
+				// TODO:  Load settings from file.
+
+				// Save to XML file.
+				Settings.Save(_testSettings, fileDialog.FileName);
+			}
+
+			// Clean up.
+			fileDialog.Dispose();
+		}
+
+		private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			// Allow the user to select a filename.
+			SaveFileDialog fileDialog = new SaveFileDialog();
+			fileDialog.Filter = "XML-File|*.xml";
+			fileDialog.Title = "Save test settings file";
+			fileDialog.ShowDialog();
+
+			// If a valid filename has been selected...
+			if (!string.IsNullOrEmpty(fileDialog.FileName))
+			{
+				// TODO:  Save settings to file.
+
+				// Save to XML file.
+				Settings.Save(_testSettings, fileDialog.FileName);
+			}
+
+			// Clean up.
+			fileDialog.Dispose();
+		}
 
 		/// <summary>
 		/// When File --> Exit menu item is clicked, close the application.
@@ -321,7 +387,6 @@ namespace Sensit.App.Calibration
 			toolStripStatusLabel1.Text = message;
 
 			// Update variables in "Status" tab.
-			UpdateVariable(groupBoxGasMix, textBoxGasMixSetpoint, textBoxGasMixValue, VariableType.GasConcentration);
 			UpdateVariable(groupBoxMassFlow, textBoxMassFlowSetpoint, textBoxMassFlowValue, VariableType.MassFlow);
 			UpdateVariable(groupBoxVolumeFlow, textBoxVolumeFlowSetpoint, textBoxVolumeFlowValue, VariableType.VolumeFlow);
 			UpdateVariable(groupBoxVelocity, textBoxVelocitySetpoint, textBoxVelocityValue, VariableType.Velocity);
@@ -368,53 +433,6 @@ namespace Sensit.App.Calibration
 
 		#endregion
 
-		private void SupportToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			try
-			{
-				ProcessStartInfo processStartInfo = new ProcessStartInfo("https://github.com/SensitTechnologies/TestSuite/wiki");
-				Process.Start(processStartInfo);
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show(ex.Message + Environment.NewLine +
-					"I was trying to navigate to: https://github.com/SensitTechnologies/TestSuite/wiki.", "ERROR");
-			}
-		}
-
-		private void NewToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			// Remove all devices.
-			Utilities.TableLayoutPanelClear(tableLayoutPanelDevices);
-
-			// Remove all events.
-			Utilities.TableLayoutPanelClear(tableLayoutPanelEvents);
-		}
-
-		private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-
-		}
-
-		private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			// Allow the user to select a filename.
-			SaveFileDialog saveFileDialog = new SaveFileDialog();
-			saveFileDialog.Filter = "XML-File|*.xml";
-			saveFileDialog.Title = "Save a default settings file";
-			saveFileDialog.ShowDialog();
-
-			// If a valid filename has been selected...
-			if (!string.IsNullOrEmpty(saveFileDialog.FileName))
-			{
-				// Save to XML file.
-				Settings.Save(_testSettings, saveFileDialog.FileName);
-			}
-
-			// Clean up.
-			saveFileDialog.Dispose();
-		}
-
 		private void ButtonDeviceAdd_Click(object sender, EventArgs e)
 		{
 			// Stop the GUI from looking weird while we update it.
@@ -425,24 +443,22 @@ namespace Sensit.App.Calibration
 			tableLayoutPanelDevices.RowStyles.Add(new RowStyle(SizeType.AutoSize));
 
 			// Add a checkbox with the device's name.
-			CheckBox checkBox = new CheckBox
+			tableLayoutPanelDevices.Controls.Add(new CheckBox
 			{
 				AutoSize = true,
 				Anchor = AnchorStyles.Left | AnchorStyles.Top,
 				Dock = DockStyle.None,
 				Text = textBoxDeviceName.Text,
-			};
-			tableLayoutPanelDevices.Controls.Add(checkBox, COLUMN_DEVICES_NAME, tableLayoutPanelDevices.RowCount - 1);
+			}, COLUMN_DEVICES_NAME, tableLayoutPanelDevices.RowCount - 1);
 
 			// Add the device type.
-			Label label = new Label
+			tableLayoutPanelDevices.Controls.Add(new Label
 			{
 				Anchor = AnchorStyles.Left | AnchorStyles.Top,
 				AutoSize = true,
 				Dock = DockStyle.None,
 				Text = comboBoxDeviceType.Text,
-			};
-			tableLayoutPanelDevices.Controls.Add(label, COLUMN_DEVICES_TYPE, tableLayoutPanelDevices.RowCount - 1);
+			}, COLUMN_DEVICES_TYPE, tableLayoutPanelDevices.RowCount - 1);
 
 			// Add a comboBox for serial port.
 			ComboBox comboBox = new ComboBox
@@ -454,10 +470,69 @@ namespace Sensit.App.Calibration
 			comboBox.Items.AddRange(SerialPort.GetPortNames());
 			tableLayoutPanelDevices.Controls.Add(comboBox, COLUMN_DEVICES_PORT, tableLayoutPanelDevices.RowCount - 1);
 
-			// TODO:  Select the device's serial port.
-
 			// Make the GUI act normally again.
 			tableLayoutPanelDevices.ResumeLayout();
+
+			// Add the device to the list of available devices on the "Events" tab.
+			comboBoxEventDevice.Items.Add(textBoxDeviceName.Text);
+		}
+
+		private void ButtonEventAdd_Click(object sender, EventArgs e)
+		{
+			// Stop the GUI from looking weird while we update it.
+			tableLayoutPanelEvents.SuspendLayout();
+
+			// Add a new row to the table layout panel.
+			tableLayoutPanelEvents.RowCount++;
+			tableLayoutPanelEvents.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+
+			// Add a checkbox with the event's name.
+			tableLayoutPanelEvents.Controls.Add(new CheckBox
+			{
+				AutoSize = true,
+				Anchor = AnchorStyles.Left | AnchorStyles.Top,
+				Dock = DockStyle.None,
+				Text = comboBoxEventDevice.Text,
+			}, COLUMN_EVENTS_DEVICE, tableLayoutPanelEvents.RowCount - 1);
+
+			// Add the variable.
+			tableLayoutPanelEvents.Controls.Add(new Label
+			{
+				Anchor = AnchorStyles.Left | AnchorStyles.Top,
+				AutoSize = true,
+				Dock = DockStyle.None,
+				Text = comboBoxEventVariable.Text,
+			}, COLUMN_EVENTS_VARIABLE, tableLayoutPanelEvents.RowCount - 1);
+
+			// Add the variable's value.
+			tableLayoutPanelEvents.Controls.Add(new Label
+			{
+				Anchor = AnchorStyles.Left | AnchorStyles.Top,
+				AutoSize = true,
+				Dock = DockStyle.None,
+				Text = numericUpDownEventValue.Text
+			}, COLUMN_EVENTS_VALUE, tableLayoutPanelEvents.RowCount - 1);
+
+			// Add the duration.
+			tableLayoutPanelEvents.Controls.Add(new Label
+			{
+				Anchor = AnchorStyles.Left | AnchorStyles.Top,
+				AutoSize = true,
+				Dock = DockStyle.None,
+				Text = numericUpDownEventDuration.Text
+			}, COLUMN_EVENTS_DURATION, tableLayoutPanelEvents.RowCount - 1);
+
+			// Add the status.
+			tableLayoutPanelEvents.Controls.Add(new Label
+			{
+				Anchor = AnchorStyles.Left | AnchorStyles.Top,
+				AutoSize = true,
+				Dock = DockStyle.None,
+				Text = "Queued"
+			}, COLUMN_EVENTS_STATUS, tableLayoutPanelEvents.RowCount - 1);
+
+			// Make the GUI act normally again.
+			tableLayoutPanelEvents.ResumeLayout();
 		}
 
 		private void CheckBoxDeviceSelectAll_CheckedChanged(object sender, EventArgs e)
@@ -468,9 +543,17 @@ namespace Sensit.App.Calibration
 			}
 		}
 
+		private void CheckBoxEventSelectAll_CheckedChanged(object sender, EventArgs e)
+		{
+			foreach (CheckBox c in tableLayoutPanelEvents.Controls.OfType<CheckBox>())
+			{
+				c.Checked = ((CheckBox)sender).Checked;
+			}
+		}
+
 		private void ButtonDeviceDelete_Click(object sender, EventArgs e)
 		{
-			// Hunt backwards for checked boxes or you'll miss the last one selected.
+			// Hunt backwards for checked boxes or we'll miss the last one selected.
 			for (int row = tableLayoutPanelDevices.RowCount - 1; row >= 0; row--)
 			{
 				Control c = tableLayoutPanelDevices.GetControlFromPosition(0, row);
@@ -478,28 +561,57 @@ namespace Sensit.App.Calibration
 				{
 					// Remove the controls in the row.
 					Utilities.TableLayoutPanelRemoveRow(tableLayoutPanelDevices, row);
+
+					// Remove the option from the "Events" tab.
+					comboBoxEventDevice.Items.Remove(c.Text);
 				}
 			}
-		}
 
-		private void ButtonEventAdd_Click(object sender, EventArgs e)
-		{
-
+			// Uncheck the checkbox.
+			checkBoxDeviceSelectAll.Checked = false;
 		}
 
 		private void ButtonEventDelete_Click(object sender, EventArgs e)
 		{
+			// Hunt backwards for checked items or we'll miss the last one selected.
+			for (int row = tableLayoutPanelEvents.RowCount - 1; row >= 0; row--)
+			{
+				Control c = tableLayoutPanelEvents.GetControlFromPosition(0, row);
+				if ((c is CheckBox box) && (box.Checked))
+				{
+					// Remove the controls in the row.
+					Utilities.TableLayoutPanelRemoveRow(tableLayoutPanelEvents, row);
+				}
+			}
 
+			// Uncheck the checkbox.
+			checkBoxEventSelectAll.Checked = false;
 		}
 
 		private void ButtonLogBrowse_Click(object sender, EventArgs e)
 		{
+			// Create a file browser.
+			OpenFileDialog openFileDialog = new OpenFileDialog()
+			{
+				InitialDirectory = textBoxLogFilename.Text,
+				Title = "Browse Log Files",
+				CheckFileExists = false,
+				CheckPathExists = true,
+				DefaultExt = "csv",
+				Filter = "txt files (*.txt)|*.txt|csv files (*.csv)|*.csv|All files (*.*)|*.*",
+				FilterIndex = 2,
+			};
 
-		}
+			// Show the dialog box to the user.
+			// If the user selects a file...
+			if (openFileDialog.ShowDialog() == DialogResult.OK)
+			{
+				// Use that file.
+				textBoxLogFilename.Text = openFileDialog.FileName;
 
-		private void CheckBoxEventSelectAll_CheckedChanged(object sender, EventArgs e)
-		{
-
+				// Remember it for next time.
+				Properties.Settings.Default.Logfile = openFileDialog.FileName;
+			}
 		}
 	}
 }

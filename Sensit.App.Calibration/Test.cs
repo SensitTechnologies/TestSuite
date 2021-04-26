@@ -87,16 +87,6 @@ namespace Sensit.App.Calibration
 		public Dictionary<VariableType, (decimal Value, decimal Setpoint)> Variables { get; private set; } = new Dictionary<VariableType, (decimal Value, decimal Setpoint)>();
 
 		/// <summary>
-		/// Multiplier for setpoints.
-		/// </summary>
-		public decimal GasMixRange { get; set; }
-
-		/// <summary>
-		/// Default flow rate.
-		/// </summary>
-		public decimal GasFlowRate { get; set; }
-
-		/// <summary>
 		/// True if test should repeat until manually stopped.
 		/// </summary>
 		public bool Repeat { get; set; }
@@ -109,10 +99,10 @@ namespace Sensit.App.Calibration
 		/// Constructor
 		/// </summary>
 		/// <param name="equipment">equipment used by the test</param>
-		public Test(TestSettings settings, Equipment equipment, string filename)
+		public Test(TestSetting settings, Equipment equipment, string filename)
 		{
 			// Save the reference to the equipment and log file manager objects.
-			_settings = settings.Tests[0];
+			_settings = settings;
 			_equipment = equipment;
 
 			// Set up the log file.
@@ -244,15 +234,13 @@ namespace Sensit.App.Calibration
 			// If requested, cancel the test.
 			else
 			{
-				// TODO:  Log the abort action.
-
 				// Abort the test.
 				_testThread.CancelAsync();
 			}
 		}
 
 		/// <summary>
-		/// If some uncorrectable error occurs, stop the equipment and alert the user.
+		/// If some uncorrectable error occurs, stop the device and alert the user.
 		/// </summary>
 		/// <remarks>
 		/// Because this is called when an uncorrectable error occurs, we can't allow
@@ -270,9 +258,9 @@ namespace Sensit.App.Calibration
 				{
 					c.Value.SetControlMode(ControlMode.Passive);
 				}
-				catch (DeviceException ex)
+				catch (DeviceException)
 				{
-					// TODO:  Log failures.
+					// TODO:  If a device doesn't respond, log an error.
 				}
 			}
 
@@ -349,18 +337,6 @@ namespace Sensit.App.Calibration
 		{
 			// Update GUI.
 			_testThread.ReportProgress(PercentProgress, "Setting setpoint...");
-
-			// If gas mix, apply the multiplier.
-			if (variable.VariableType == VariableType.GasConcentration)
-			{
-				setpoint *= Convert.ToDouble(GasMixRange / 100);
-			}
-
-			// If flow rate, apply the setpoint.
-			if ((variable.VariableType == VariableType.MassFlow) && (GasFlowRate != 0))
-			{
-				setpoint = Convert.ToDouble(GasFlowRate);
-			}
 
 			// Set setpoint.
 			_equipment.Controllers[variable.VariableType].WriteSetpoint(variable.VariableType, setpoint);
@@ -448,7 +424,7 @@ namespace Sensit.App.Calibration
 			}
 
 			// Record test data.
-			_log.Write(_elapsedTimeStopwatch.Elapsed, setpoint, referenceReadings[VariableType.GasConcentration]);
+			_log.Write(_elapsedTimeStopwatch.Elapsed, setpoint, referenceReadings[VariableType.MassFlow]);
 		}
 
 		/// <summary>
