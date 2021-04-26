@@ -94,8 +94,6 @@ namespace Sensit.App.Calibration
 				_mfcAnalyte?.Read();
 				_mfcDiluent?.Read();
 			}
-
-			// TODO:  Update GUI with new values.
 		}
 
 		/// <summary>
