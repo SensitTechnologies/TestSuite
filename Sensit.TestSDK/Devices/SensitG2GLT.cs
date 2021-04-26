@@ -171,10 +171,7 @@ namespace Sensit.TestSDK.Devices
 
 		public Gas GasSelection { get; set; }
 
-		public Dictionary<VariableType, double> Readings { get; private set; } = new Dictionary<VariableType, double>
-		{
-			{ VariableType.GasConcentration, 0.0 }
-		};
+		public Dictionary<VariableType, double> Readings { get; private set; } = new Dictionary<VariableType, double>();
 
 		public void Read()
 		{

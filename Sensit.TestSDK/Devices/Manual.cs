@@ -29,7 +29,6 @@ namespace Sensit.TestSDK.Devices
 		public Dictionary<VariableType, double> Readings { get; private set; }
 			= new Dictionary<VariableType, double>
 			{
-				{ VariableType.GasConcentration, 0.0 },
 				{ VariableType.MassFlow, 0.0 },
 				{ VariableType.Pressure, 0.0 },
 				{ VariableType.Temperature, 0.0 },
