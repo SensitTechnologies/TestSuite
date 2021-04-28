@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Sensit.TestSDK.Devices;
+using Sensit.TestSDK.Communication;
 using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.App.Calibration
@@ -15,72 +15,23 @@ namespace Sensit.App.Calibration
 	/// </remarks>
 	public class Equipment : IDisposable
 	{
-		// holds settings for the equipment
-		private readonly DeviceSettings _settings;
-
-		// generic manual device, used whenever the user selects "Manual" option for equipment.
-		private Manual _manual;
-
-		// mass flow controller for analyte gas
-		private ColeParmerMFC _mfcAnalyte;
-
-		// mass flow controller for diluent gas (needed for gas mixing)
-		private ColeParmerMFC _mfcDiluent;
-
-		// power supply
-		private GPDX303S _powerSupply;
-
-		#region Properties
-
-		/// <summary>
-		/// Whether or not to control a power supply.
-		/// </summary>
-		public bool UsePowerSupply { get; set; } = false;
-
-		public bool UseMassFlow { get; set; } = false;
-
-		public bool UseGasMixer { get; set; } = false;
-
-		public Dictionary<VariableType, IControlDevice> Controllers { get; }
-
-		public Dictionary<VariableType, IReferenceDevice> References { get; }
-
-		#endregion
-
-		#region Constructor
-
-		/// <summary>
-		/// Constructor; creates equipment objects.
-		/// </summary>
-		public Equipment()
-		{
-			// Create test equipment objects.
-			// Only the ones chosen by the user will end up being used.
-			_mfcAnalyte = new ColeParmerMFC();
-			_mfcDiluent = new ColeParmerMFC();
-			_manual = new Manual();
-			_powerSupply = new GPDX303S();
-		}
-
-		#endregion
+		public Dictionary<string, IDevice> Devices { get; }
 
 		/// <summary>
 		/// Initializes all equipment.
 		/// </summary>
 		public void Open()
 		{
-			// Configure the mass flow controllers.
-			if ((UseGasMixer) && (_mfcAnalyte != null) && (_mfcDiluent != null))
+			foreach (IDevice d in Devices.Values)
 			{
-				_mfcAnalyte?.Open(_settings.ColeParmerMFC.SerialPort);
-				_mfcDiluent?.Open(_settings.ColeParmerMFC.SerialPort);
-			}
-
-			// Configure the power supply.
-			if (UsePowerSupply && (_powerSupply != null))
-			{
-				_powerSupply.Channel = 1;
-				_powerSupply.Open(_settings.PowerSupply.SerialPort, _settings.PowerSupply.BaudRate);
+				if (d is SerialDevice s)
+				{
+					s.Open();
+				}
+				else if (d is VisaDevice v)
+				{
+					v.Open();
+				}
 			}
 		}
 
@@ -89,21 +40,39 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		public void Read()
 		{
-			if (UseGasMixer)
+			foreach (IDevice d in Devices.Values)
 			{
-				_mfcAnalyte?.Read();
-				_mfcDiluent?.Read();
+				d.Read();
 			}
 		}
 
 		/// <summary>
-		/// Close all equipment.
+		/// Write setpoints to all devices.
+		/// </summary>
+		public void Write()
+		{
+			foreach (IDevice d in Devices.Values)
+			{
+				d.Write();
+			}
+		}
+
+		/// <summary>
+		/// Close all serial devices among the devices.
 		/// </summary>
 		public void Close()
 		{
-			_mfcAnalyte?.Close();
-			_mfcDiluent?.Close();
-			_powerSupply?.Close();
+			foreach (IDevice d in Devices.Values)
+			{
+				if (d is SerialDevice s)
+				{
+					s.Close();
+				}
+				else if (d is VisaDevice v)
+				{
+					v.Close();
+				}
+			}
 		}
 
 		/// <summary>
@@ -118,9 +87,13 @@ namespace Sensit.App.Calibration
 			if (disposing)
 			{
 				// Dispose managed resources.
-				_mfcAnalyte?.Dispose();
-				_mfcDiluent?.Dispose();
-				_powerSupply?.Dispose();
+				foreach (IDevice device in Devices.Values)
+				{
+					if (device is IDisposable d)
+					{
+						d.Dispose();
+					}
+				}
 			}
 		}
 
