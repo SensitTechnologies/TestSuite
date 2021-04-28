@@ -74,18 +74,43 @@ namespace Sensit.TestSDK.Interfaces
 	}
 
 	/// <summary>
-	/// Device that measures one or more dependent variables in a test.
+	/// What the device should try to do.
+	/// </summary>
+	public enum ControlMode
+	{
+		Active,     // actively controlling the test environment
+		Passive     // passively measuring the test environment
+	}
+
+	/// <summary>
+	/// Device that measures and/or controls one or more dependent variables in a test.
 	/// </summary>
 	/// <remarks>
 	/// Don't implement this interface directly.
 	/// Devices should implement one of the more specific interfaces below.
 	/// </remarks>
-	[Description("Reference Device")]
-	public interface IReferenceDevice
+	public interface IDevice
 	{
-		// TODO:  Try removing this.
-		// Instead put individual readings as doubles (not dictionary) for each reference type.
+		/// <summary>
+		/// Supported readings and their values.
+		/// </summary>
 		Dictionary<VariableType, double> Readings { get; }
+
+		/// <summary>
+		/// Supported setpoints and their values.
+		/// </summary>
+		Dictionary<VariableType, double> Setpoints { get; }
+
+		/// <summary>
+		/// Change the device's control mode.
+		/// </summary>
+		/// <param name="mode"></param>
+		void SetControlMode(ControlMode mode);
+
+		/// <summary>
+		/// Write setpoint(s) to the device.
+		/// </summary>
+		void Write();
 
 		/// <summary>
 		/// Fetch new values from the device.
@@ -99,8 +124,8 @@ namespace Sensit.TestSDK.Interfaces
 	/// <remarks>
 	/// May wish to split into two interfaces (mass and volumetric flow) in the future.
 	/// </remarks>
-	[Description("Gas Mass Flow Reference")]
-	public interface IMassFlowDevice : IReferenceDevice
+	[Description("Gas Mass Flow Device")]
+	public interface IMassFlowDevice : IDevice
 	{
 		UnitOfMeasure.Flow FlowUnit { get; set; }
 
@@ -113,8 +138,8 @@ namespace Sensit.TestSDK.Interfaces
 	/// <summary>
 	/// Device that measures gas volumetric flow.
 	/// </summary>
-	[Description("Gas Volume Flow Reference")]
-	public interface IVolumeFlowDevice : IReferenceDevice
+	[Description("Gas Volume Flow Device")]
+	public interface IVolumeFlowDevice : IDevice
 	{
 		UnitOfMeasure.Flow FlowUnit { get; set; }
 	}
@@ -122,8 +147,8 @@ namespace Sensit.TestSDK.Interfaces
 	/// <summary>
 	/// Device that measures gas velocity.
 	/// </summary>
-	[Description("Velocity Reference")]
-	public interface IVelocityDevice : IReferenceDevice
+	[Description("Velocity Device")]
+	public interface IVelocityDevice : IDevice
 	{
 		UnitOfMeasure.Velocity VelocityUnit { get; set; }
 	}
@@ -131,8 +156,8 @@ namespace Sensit.TestSDK.Interfaces
 	/// <summary>
 	/// Device that measures pressure.
 	/// </summary>
-	[Description("Pressure Reference")]
-	public interface IPressureDevice : IReferenceDevice
+	[Description("Pressure Device")]
+	public interface IPressureDevice : IDevice
 	{
 		UnitOfMeasure.Pressure PressureUnit { get; set; }
 	}
@@ -140,8 +165,8 @@ namespace Sensit.TestSDK.Interfaces
 	/// <summary>
 	/// Device that measures temperature.
 	/// </summary>
-	[Description("Temperature Reference")]
-	public interface ITemperatureDevice : IReferenceDevice
+	[Description("Temperature Device")]
+	public interface ITemperatureDevice : IDevice
 	{
 		UnitOfMeasure.Temperature TemperatureUnit { get; set; }
 	}
@@ -149,8 +174,8 @@ namespace Sensit.TestSDK.Interfaces
 	/// <summary>
 	/// Device that measures electrical current.
 	/// </summary>
-	[Description("Current Reference")]
-	public interface ICurrentDevice : IReferenceDevice
+	[Description("Current Device")]
+	public interface ICurrentDevice : IDevice
 	{
 		UnitOfMeasure.Current CurrentUnit { get; set; }
 
@@ -163,8 +188,8 @@ namespace Sensit.TestSDK.Interfaces
 	/// <summary>
 	/// Device that measures electrical voltage.
 	/// </summary>
-	[Description("Voltage Reference")]
-	public interface IVoltageDevice : IReferenceDevice
+	[Description("Voltage Device")]
+	public interface IVoltageDevice : IDevice
 	{
 		UnitOfMeasure.Voltage VoltageUnit { get; set; }
 
@@ -181,8 +206,8 @@ namespace Sensit.TestSDK.Interfaces
 	/// Intended to be a convenient way to support any UART-based device without
 	/// requiring modifications to this software.
 	/// </remarks>
-	[Description("Message Reference")]
-	public interface IMessageDevice : IReferenceDevice
+	[Description("Message Device")]
+	public interface IMessageDevice : IDevice
 	{
 		string Message { get; }
 	}
