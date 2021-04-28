@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO.Ports;
 using System.Text;
 using Sensit.TestSDK.Communication;
-using Sensit.TestSDK.Exceptions;
 using Sensit.TestSDK.Interfaces;
 using Sensit.TestSDK.Utilities;
 
@@ -22,11 +21,9 @@ namespace Sensit.TestSDK.Devices
 	{
 		public override List<int> SupportedBaudRates { get; } = new List<int> { 300, 600, 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200, 230400, 460800, 921600 };
 
-		#region Reference Device Properties
-
 		public Dictionary<VariableType, double> Readings { get; private set; }
 
-		#endregion
+		public Dictionary<VariableType, double> Setpoints { get; }
 
 		/// <summary>
 		/// This will parse lines received from the serial port using the newline delimiter.
@@ -41,8 +38,6 @@ namespace Sensit.TestSDK.Devices
 		/// </summary>
 		public string Message { get; private set; }
 
-		#region Constructor
-
 		SerialStreamDevice()
 		{
 			// Subscribe to the message parser's message received event.
@@ -51,8 +46,6 @@ namespace Sensit.TestSDK.Devices
 			// Subscribe to serial port's data received event.
 			Port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
 		}
-
-		#endregion
 
 		/// <summary>
 		/// Called when any data bytes are received over the serial port.
@@ -86,13 +79,19 @@ namespace Sensit.TestSDK.Devices
 			// TODO:  Add converted message to Readings.
 		}
 
-		#region Reference Device Methods
-
 		public void Read()
 		{
 			// Nothing to do here; the serial port handles receiving data on its own.
 		}
 
-		#endregion
+		public void SetControlMode(ControlMode mode)
+		{
+			// Nothing to do here.
+		}
+
+		public void Write()
+		{
+			// Nothing to do here.
+		}
 	}
 }

@@ -25,10 +25,11 @@ namespace Sensit.TestSDK.Devices
 		/// </summary>
 		public override List<int> SupportedBaudRates { get; } = new List<int> { 300, 600, 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200, 230400, 460800, 921600 };
 
-		#region Message Device Methods
-
-		// Unused.
+		// This device type has no supported readings.
 		public Dictionary<VariableType, double> Readings { get; private set; } = new Dictionary<VariableType, double> { };
+
+		// This device type has no supported setpoints.
+		public Dictionary<VariableType, double> Setpoints { get; } = new Dictionary<VariableType, double> { };
 
 		/// <summary>
 		/// Most recent message from the device.
@@ -74,6 +75,14 @@ namespace Sensit.TestSDK.Devices
 			}
 		}
 
-		#endregion
+		public void SetControlMode(ControlMode mode)
+		{
+			// Nothing to do here.
+		}
+
+		public void Write()
+		{
+			// Nothing to do here.
+		}
 	}
 }

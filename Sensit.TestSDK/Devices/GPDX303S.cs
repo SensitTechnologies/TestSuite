@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO.Ports;
 using System.Text.RegularExpressions;
 using Sensit.TestSDK.Calculations;
 using Sensit.TestSDK.Communication;
@@ -19,8 +18,7 @@ namespace Sensit.TestSDK.Devices
 	/// This is a four-channel programmable linear DC power supply.
 	/// It communicates using a serial port and SCPI commands.
 	/// </remarks>
-	public class GPDX303S : SerialDevice, IVoltageDevice, ICurrentDevice,
-		IControlDevice
+	public class GPDX303S : SerialDevice, IVoltageDevice, ICurrentDevice
 	{
 		private int channel = 1;
 
@@ -47,9 +45,13 @@ namespace Sensit.TestSDK.Devices
 		/// </summary>
 		public override List<int> SupportedBaudRates { get; } = new List<int> { 9600, 57600, 115200 };
 
-		#region Reference Device Methods
-
 		public Dictionary<VariableType, double> Readings { get; } = new Dictionary<VariableType, double>
+		{
+			{ VariableType.Current, 0.0 },
+			{ VariableType.Voltage, 0.0 },
+		};
+
+		public Dictionary<VariableType, double> Setpoints { get; } = new Dictionary<VariableType, double>
 		{
 			{ VariableType.Current, 0.0 },
 			{ VariableType.Voltage, 0.0 },
@@ -68,7 +70,49 @@ namespace Sensit.TestSDK.Devices
 			Readings[VariableType.Current] = SendQuery(new GPDX303S_SCPI().IOUT(channel).Query());
 		}
 
-		#endregion
+		public void Write()
+		{
+			SendCommand(new GPDX303S_SCPI().ISET(channel, Convert.ToSingle(Setpoints[VariableType.Current])).Command());
+
+			SendCommand(new GPDX303S_SCPI().VSET(channel, Convert.ToSingle(Setpoints[VariableType.Voltage])).Command());
+		}
+
+		public void SetControlMode(ControlMode mode)
+		{
+			switch (mode)
+			{
+				case ControlMode.Passive:
+					// Turn output off.
+					SendCommand(new GPDX303S_SCPI().OUT(false).Command());
+					break;
+				case ControlMode.Active:
+					// Turn output on.
+					SendCommand(new GPDX303S_SCPI().OUT(true).Command());
+					break;
+				default:
+					throw new DeviceSettingNotSupportedException("Cannot set power supply control mode:"
+						+ Environment.NewLine + "Unrecognized mode.");
+			}
+		}
+
+		private double ReadSetpoint(VariableType type)
+		{
+			double result;
+			switch (type)
+			{
+				case VariableType.Current:
+					result = SendQuery(new GPDX303S_SCPI().ISET(channel).Query());
+					break;
+				case VariableType.Voltage:
+					// Fetch the voltage reading.
+					result = SendQuery(new GPDX303S_SCPI().VSET(channel).Query());
+					break;
+				default:
+					throw new DeviceSettingNotSupportedException("Power supply does not support " + type.ToString() + ".");
+			}
+
+			return result;
+		}
 
 		private void SendCommand(string command)
 		{
@@ -126,61 +170,5 @@ namespace Sensit.TestSDK.Devices
 
 			return result;
 		}
-
-		#region Control Device Methods
-
-		public void WriteSetpoint(VariableType type, double setpoint)
-		{
-			switch (type)
-			{
-				case VariableType.Current:
-					SendCommand(new GPDX303S_SCPI().ISET(channel, Convert.ToSingle(setpoint)).Command());
-					break;
-				case VariableType.Voltage:
-					SendCommand(new GPDX303S_SCPI().VSET(channel, Convert.ToSingle(setpoint)).Command());
-					break;
-				default:
-					throw new DeviceSettingNotSupportedException("Power supply does not support " + type.ToString() + " setpoints.");
-			}
-		}
-
-		public double ReadSetpoint(VariableType type)
-		{
-			double result;
-			switch (type)
-			{
-				case VariableType.Current:
-					result = SendQuery(new GPDX303S_SCPI().ISET(channel).Query());
-					break;
-				case VariableType.Voltage:
-					// Fetch the voltage reading.
-					result = SendQuery(new GPDX303S_SCPI().VSET(channel).Query());
-					break;
-				default:
-					throw new DeviceSettingNotSupportedException("Power supply does not support " + type.ToString() + ".");
-			}
-
-			return result;
-		}
-
-		public void SetControlMode(ControlMode mode)
-		{
-			switch (mode)
-			{
-				case ControlMode.Passive:
-					// Turn output off.
-					SendCommand(new GPDX303S_SCPI().OUT(false).Command());
-					break;
-				case ControlMode.Active:
-					// Turn output on.
-					SendCommand(new GPDX303S_SCPI().OUT(true).Command());
-					break;
-				default:
-					throw new DeviceSettingNotSupportedException("Cannot set power supply control mode:"
-						+ Environment.NewLine + "Unrecognized mode.");
-			}
-		}
-
-		#endregion
 	}
 }

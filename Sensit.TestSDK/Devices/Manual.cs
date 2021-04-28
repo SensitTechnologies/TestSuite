@@ -16,25 +16,30 @@ namespace Sensit.TestSDK.Devices
 	/// data entries.
 	/// </remarks>
 	public class Manual : IMassFlowDevice, IVolumeFlowDevice, IVelocityDevice, IPressureDevice,
-		ITemperatureDevice, ICurrentDevice, IVoltageDevice,
-		IControlDevice
+		ITemperatureDevice, ICurrentDevice, IVoltageDevice
 	{
 		/// <summary>
 		/// Used to determine what type of variables this controller will store.
 		/// </summary>
 		private VariableType _type;
 
-		#region Reference Device Properties
+		public Dictionary<VariableType, double> Readings { get; private set; } = new Dictionary<VariableType, double>
+		{
+			{ VariableType.MassFlow, 0.0 },
+			{ VariableType.Pressure, 0.0 },
+			{ VariableType.Temperature, 0.0 },
+			{ VariableType.Velocity, 0.0 },
+			{ VariableType.VolumeFlow, 0.0 }
+		};
 
-		public Dictionary<VariableType, double> Readings { get; private set; }
-			= new Dictionary<VariableType, double>
-			{
-				{ VariableType.MassFlow, 0.0 },
-				{ VariableType.Pressure, 0.0 },
-				{ VariableType.Temperature, 0.0 },
-				{ VariableType.Velocity, 0.0 },
-				{ VariableType.VolumeFlow, 0.0 }
-			};
+		public Dictionary<VariableType, double> Setpoints { get; } = new Dictionary<VariableType, double>
+		{
+			{ VariableType.MassFlow, 0.0 },
+			{ VariableType.Pressure, 0.0 },
+			{ VariableType.Temperature, 0.0 },
+			{ VariableType.Velocity, 0.0 },
+			{ VariableType.VolumeFlow, 0.0 }
+		};
 
 		public UnitOfMeasure.Flow FlowUnit { get; set; }
 
@@ -52,20 +57,10 @@ namespace Sensit.TestSDK.Devices
 
 		public UnitOfMeasure.Voltage VoltageUnit { get; set; }
 
-		#endregion
-
-		#region Control Device Properties
-
-		public double AnalyteBottleConcentration { get; set; }
-
 		public int Channel { get; set; }
-
-		#endregion
 
 		// Since there's nothing to communicate with, none of the methods
 		// have anything to do unless they get/set a property.
-
-		#region Reference Device Methods
 
 		public void Read()
 		{
@@ -81,28 +76,14 @@ namespace Sensit.TestSDK.Devices
 			Readings[_type] = value;
 		}
 
-		#endregion
-
-		#region Control Device Methods
-
 		public void SetControlMode(ControlMode mode)
 		{
 			// Nothing to do here.
 		}
 
-		public void WriteSetpoint(VariableType type, double setpoint)
+		public void Write()
 		{
-			// A hack to determine what kind of device this class represents.
-			_type = type;
-
-			Readings[type] = setpoint;
+			// Nothing to do here.
 		}
-
-		public double ReadSetpoint(VariableType type)
-		{
-			return Readings[type];
-		}
-
-		#endregion
 	}
 }
