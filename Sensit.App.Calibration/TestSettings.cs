@@ -8,62 +8,33 @@ using System.Xml;
 namespace Sensit.App.Calibration
 {
 	[Serializable]
-	public class SerialPortSetting
+	public class DeviceSetting
 	{
-		[Category("Serial Port"), Description("Serial port used by device.")]
+		public string Name { get; set; }
+
+		public string Type { get; set; }
+
+		[DisplayName("Serial Port")]
 		public string SerialPort { get; set; }
-
-		[Category("Serial Port"), Description("Baud rate used by device.")]
-		public int BaudRate { get; set; }
 	}
 
 	[Serializable]
-	public class GasMixerSetting
+	public class EventSetting
 	{
-		[Category("Mass Flow Controllers"), Description("Serial port used by device.")]
-		public SerialPortSetting AnalyteMFC { get; set; }
+		public string DeviceName { get; set; }
 
-		[Category("Mass Flow Controllers"), Description("Serial port used by device.")]
-		public SerialPortSetting DiluentMFC { get; set; }
+		public VariableType Variable { get; set; }
 
-		[Category("Gas"), Description("Analyte gas.")]
-		public Gas Analyte { get; set; }
+		public double Value { get; set; }
 
-		[Category("Gas"), Description("Diluent gas.")]
-		public Gas Diluent { get; set; }
-	}
+		// Duration of the event (in seconds).
+		public uint Duration { get; set; }
 
-	[Serializable]
-	public class DeviceSettings
-	{
-		[Category("Devices"), Description("Settings for Mass Flow Controller.")]
-		public SerialPortSetting ColeParmerMFC { get; set; } = new SerialPortSetting();
-
-		[Category("Devices"), Description("Settings for Power Supply.")]
-		public SerialPortSetting PowerSupply { get; set; } = new SerialPortSetting()
-		{
-			SerialPort = "COM3",
-			BaudRate = 9600
-		};
-	}
-
-	/// <summary>
-	/// Configuration for a variable being controlled during a test.
-	/// </summary>
-	[Serializable]
-	public class TestControlledVariable
-	{
-		[Category("Test Variable"), Description("Type of the variable.")]
-		public VariableType VariableType { get; set; }
-
-		[Category("Test Variable"), Description("Error tolerance around setpoints [% full scale].  If exceeded, Stability Time will reset.")]
+		[Description("Error tolerance around setpoints [% full scale].  If exceeded, Stability Time will reset.")]
 		public double ErrorTolerance { get; set; } = 5.0;
 
-		[Category("Test Variable"), Description("Tolerated rate of change of setpoints [% full scale / s].  If exceeded, Stability Time will reset.")]
+		[Description("Tolerated rate of change of setpoints [% full scale / s].  If exceeded, Stability Time will reset.")]
 		public double RateTolerance { get; set; } = 0.5;
-
-		[Category("Test Variable"), Description("Setpoints [% full scale].")]
-		public List<double> Setpoints { get; set; }
 
 		// TimeSpans aren't serializable, see this for workaround:
 		// https://stackoverflow.com/questions/637933/how-to-serialize-a-timespan-to-xml
@@ -79,7 +50,7 @@ namespace Sensit.App.Calibration
 		}
 
 		// TimeSpans aren't serializable, so ignore.
-		[Category("Test Variable"), Description("Timeout before aborting control."), XmlIgnore]
+		[Description("Timeout before aborting control."), XmlIgnore]
 		public TimeSpan Timeout { get; set; } = new TimeSpan(0, 0, 30);
 
 		// XmlSerializer does not support TimeSpan, so use this property for serialization instead.
@@ -90,11 +61,8 @@ namespace Sensit.App.Calibration
 			set { Timeout = string.IsNullOrEmpty(value) ? TimeSpan.Zero : XmlConvert.ToTimeSpan(value); }
 		}
 
-		[Category("Test Component"), Description("Number of samples taken at each setpoint.")]
-		public int Samples { get; set; } = 0;
-
 		// TimeSpans aren't serializable, so ignore.
-		[Category("Test Component"), Description("Time to wait between taking samples."), XmlIgnore]
+		[Description("Time to wait between taking samples."), XmlIgnore]
 		public TimeSpan Interval { get; set; } = new TimeSpan(0, 0, 1);
 
 		// XmlSerializer does not support TimeSpan, so use this property for serialization instead.
@@ -107,60 +75,23 @@ namespace Sensit.App.Calibration
 	}
 
 	/// <summary>
+	/// Test configuration
+	/// </summary>
+	[Serializable]
+	public class TestSetting
+	{
+		public List<DeviceSetting> Devices { get; }
+
+		public List<EventSetting> Events { get; }
+	}
+
+	/// <summary>
 	/// Configuration for a component of a test.
 	/// </summary>
 	[Serializable]
 	public class TestComponent
 	{
-		#region Constructors
-
-		// Default constructor.
-		public TestComponent() { }
-
-		// Initializer with label.
-		public TestComponent(string label)
-		{
-			Label = label;
-		}
-
-		#endregion
-
-		[Category("Test Component"), Description("Name for this part of the test.")]
-		public string Label { get; set; } = "";
-
 		[Category("Test Component"), Description("Actions to perform during this test component.")]
 		public List<Test.Command> Commands { get; set; }
-
-		[Category("Test Component"), Description("Controlled variables for this part of the test.")]
-		public List<TestControlledVariable> ControlledVariables { get; set; }
-	}
-
-	/// <summary>
-	/// Tests that may be performed
-	/// </summary>
-	[Serializable]
-	public class TestSetting
-	{
-		#region Constructors
-
-		// Default constructor.
-		public TestSetting() { }
-
-		// Initializer with label.
-		public TestSetting(string label)
-		{
-			Label = label;
-		}
-
-		#endregion
-
-		[Category("Test Settings"), Description("Name of the test (as it will appear to the operator).")]
-		public string Label { get; set; } = "";
-
-		[Category("Test Settings"), Description("Actions performed during the test.")]
-		public List<TestComponent> Components { get; set; }
-
-		[Category("Test Settings"), Description("Variables measured (with reference devices) during the test.")]
-		public List<VariableType> References { get; set; }
 	}
 }
