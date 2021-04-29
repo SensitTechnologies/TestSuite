@@ -92,7 +92,7 @@ namespace Sensit.App.PowerSupply
 				catch (Exception ex)
 				{
 					// Alert the user.
-					MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
+					MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 
 					// Undo the user action.
 					radioButtonClosed.Checked = true;
@@ -167,7 +167,7 @@ namespace Sensit.App.PowerSupply
 				catch (Exception ex)
 				{
 					// Alert the user.
-					MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
+					MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 
 					// Undo the user action.
 					radioButtonClosed.Checked = true;
@@ -216,8 +216,9 @@ namespace Sensit.App.PowerSupply
 				toolStripStatusLabel1.Text = "Writing to power supply...";
 
 				// Send data to power supply.
-				_powerSupply.WriteSetpoint(VariableType.Current, Convert.ToDouble(numericUpDownCurrent.Value));
-				_powerSupply.WriteSetpoint(VariableType.Voltage, Convert.ToDouble(numericUpDownVoltage.Value));
+				_powerSupply.Setpoints[VariableType.Current] = Convert.ToDouble(numericUpDownCurrent.Value);
+				_powerSupply.Setpoints[VariableType.Voltage] = Convert.ToDouble(numericUpDownVoltage.Value);
+				_powerSupply.Write();
 
 				// Alert the user.
 				toolStripStatusLabel1.Text = "Success.";

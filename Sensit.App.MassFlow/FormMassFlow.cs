@@ -96,7 +96,7 @@ namespace Sensit.App.MassFlow
 				catch (Exception ex)
 				{
 					// Alert the user.
-					MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
+					MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 
 					// Undo the user action.
 					radioButtonClosed.Checked = true;
@@ -146,11 +146,11 @@ namespace Sensit.App.MassFlow
 				_massFlowController.Read();
 
 				// Update the form.
-				textBoxPressure.Text = _massFlowController.Readings[VariableType.Pressure].ToString();
-				textBoxTemperature.Text = _massFlowController.Readings[VariableType.Temperature].ToString();
-				textBoxVolumetricFlow.Text = _massFlowController.Readings[VariableType.VolumeFlow].ToString();
-				textBoxMassFlow.Text = _massFlowController.Readings[VariableType.MassFlow].ToString();
-				textBoxSetpoint.Text = _massFlowController.ReadSetpoint(VariableType.MassFlow).ToString();
+				textBoxPressure.Text = _massFlowController.Readings[VariableType.Pressure].ToString(CultureInfo.CurrentCulture);
+				textBoxTemperature.Text = _massFlowController.Readings[VariableType.Temperature].ToString(CultureInfo.CurrentCulture);
+				textBoxVolumetricFlow.Text = _massFlowController.Readings[VariableType.VolumeFlow].ToString(CultureInfo.CurrentCulture);
+				textBoxMassFlow.Text = _massFlowController.Readings[VariableType.MassFlow].ToString(CultureInfo.CurrentCulture);
+				textBoxSetpoint.Text = _massFlowController.Setpoints[VariableType.MassFlow].ToString(CultureInfo.CurrentCulture);
 				comboBoxGas.Text = _massFlowController.GasSelection.ToString();
 				toolStripStatusLabel1.Text = "Success.";
 			}
@@ -205,7 +205,8 @@ namespace Sensit.App.MassFlow
 				float setpoint = Convert.ToSingle(textBoxSetpoint.Text);
 
 				// Write setpoint to the mass flow controller.
-				_massFlowController.WriteSetpoint(VariableType.MassFlow, setpoint);
+				_massFlowController.Setpoints[VariableType.MassFlow] = setpoint;
+				_massFlowController.Write();
 
 				// Alert the user.
 				toolStripStatusLabel1.Text = "Success.";
@@ -214,13 +215,14 @@ namespace Sensit.App.MassFlow
 			{
 				// If the user didn't enter a valid number, prompt the user.
 				MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine +
-					"Did you type a valid setpoint?", ex.GetType().Name.ToString());
+					"Did you type a valid setpoint?",
+					ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 				toolStripStatusLabel1.Text = ex.Message;
 			}
 			catch (Exception ex)
 			{
 				// If an error occurs, alert the user.
-				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 				toolStripStatusLabel1.Text = ex.Message;
 			}
 		}

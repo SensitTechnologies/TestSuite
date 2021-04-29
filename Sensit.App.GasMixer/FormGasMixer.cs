@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Deployment.Application;
+using System.Globalization;
 using System.IO.Ports;
 using System.Windows.Forms;
 using Sensit.TestSDK.Devices;
@@ -119,7 +120,7 @@ namespace Sensit.App.GasConcentration
 				catch (Exception ex)
 				{
 					// Alert the user.
-					MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
+					MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 
 					// Undo the user action.
 					radioButtonClosed.Checked = true;
@@ -213,7 +214,7 @@ namespace Sensit.App.GasConcentration
 			catch (Exception ex)
 			{
 				// If an error occurs, alert the user.
-				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 				toolStripStatusLabel1.Text = ex.GetType().ToString();
 			}
 		}
@@ -250,7 +251,7 @@ namespace Sensit.App.GasConcentration
 			catch (Exception ex)
 			{
 				// If an error occurs, alert the user.
-				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 				toolStripStatusLabel1.Text = ex.GetType().ToString();
 			}
 		}
@@ -277,10 +278,12 @@ namespace Sensit.App.GasConcentration
 				}
 
 				// For analyte:  mass Flow = desired flow rate / original concentration.
-				_mfcAnalyte.WriteSetpoint(VariableType.MassFlow, massFlowSetpoint * (analyteConcentration / 100));
+				_mfcAnalyte.Setpoints[VariableType.MassFlow] = massFlowSetpoint * (analyteConcentration / 100);
+				_mfcAnalyte.Write();
 
 				// For diluent:  mass flow = desired flow - gas under test flow.
-				_mfcDiluent.WriteSetpoint(VariableType.MassFlow, massFlowSetpoint - _mfcAnalyte.ReadSetpoint(VariableType.MassFlow));
+				_mfcDiluent.Setpoints[VariableType.MassFlow] = massFlowSetpoint - _mfcAnalyte.Setpoints[VariableType.MassFlow];
+				_mfcDiluent.Write();
 
 				// Alert the user.
 				toolStripStatusLabel1.Text = "Success.";
@@ -289,14 +292,14 @@ namespace Sensit.App.GasConcentration
 			{
 				// If the user didn't enter a valid number, prompt the user.
 				MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine +
-					"Did you type a valid setpoint?", ex.GetType().Name.ToString());
-				toolStripStatusLabel1.Text = ex.GetType().ToString();
+					"Did you type a valid setpoint?", ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
+				toolStripStatusLabel1.Text = ex.GetType().Name.ToString(CultureInfo.CurrentCulture);
 			}
 			catch (Exception ex)
 			{
 				// If an error occurs, alert the user.
-				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
-				toolStripStatusLabel1.Text = ex.GetType().ToString();
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
+				toolStripStatusLabel1.Text = ex.GetType().Name.ToString(CultureInfo.CurrentCulture);
 			}
 		}
 	}

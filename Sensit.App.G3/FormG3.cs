@@ -130,7 +130,7 @@ namespace Sensit.App.G3
 				_sensitG3.Read();
 
 				// Fetch the readings.
-				textBoxMethane.Text = _sensitG3.Readings[VariableType.GasConcentration].ToString(CultureInfo.CurrentCulture);
+				textBoxMethane.Text = _sensitG3.Message;
 			}
 			catch (DeviceException ex)
 			{
@@ -146,7 +146,7 @@ namespace Sensit.App.G3
 				_sensitG3.Read();
 
 				// Fetch the readings.
-				textBoxOxygen.Text = _sensitG3.Readings[VariableType.GasConcentration].ToString(CultureInfo.CurrentCulture);
+				textBoxOxygen.Text = _sensitG3.Message;
 			}
 			catch (DeviceException ex)
 			{
@@ -162,7 +162,7 @@ namespace Sensit.App.G3
 				_sensitG3.Read();
 
 				// Fetch the readings.
-				textBoxCarbonMonoxide.Text = _sensitG3.Readings[VariableType.GasConcentration].ToString(CultureInfo.CurrentCulture);
+				textBoxCarbonMonoxide.Text = _sensitG3.Message;
 			}
 			catch (DeviceException ex)
 			{
@@ -178,7 +178,7 @@ namespace Sensit.App.G3
 				_sensitG3.Read();
 
 				// Fetch the readings.
-				textBoxHydrogenSulfide.Text = _sensitG3.Readings[VariableType.GasConcentration].ToString(CultureInfo.CurrentCulture);
+				textBoxHydrogenSulfide.Text = _sensitG3.Message;
 			}
 			catch (DeviceException ex)
 			{
@@ -194,7 +194,7 @@ namespace Sensit.App.G3
 				_sensitG3.Read();
 
 				// Fetch the readings.
-				textBoxHydrogenCyanide.Text = _sensitG3.Readings[VariableType.GasConcentration].ToString(CultureInfo.CurrentCulture);
+				textBoxHydrogenCyanide.Text = _sensitG3.Message;
 			}
 			catch (DeviceException ex)
 			{
@@ -211,7 +211,7 @@ namespace Sensit.App.G3
 			}
 			catch (DeviceException ex)
 			{
-				MessageBox.Show(ex.Message, ex.GetType().Name.ToString());
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 			}
 		}
 	}
