@@ -253,6 +253,9 @@ namespace Sensit.App.Calibration
 
 			// Remove all events.
 			Utilities.TableLayoutPanelClear(tableLayoutPanelEvents);
+
+			// Remove all device choices from the "Events" tab.
+			comboBoxEventDevice.Items.Clear();
 		}
 
 		private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -542,7 +545,7 @@ namespace Sensit.App.Calibration
 			tableLayoutPanelDevices.ResumeLayout();
 
 			// Add the device to the list of available devices on the "Events" tab.
-			comboBoxEventDevice.Items.Add(textBoxDeviceName.Text);
+			comboBoxEventDevice.Items.Add(name);
 		}
 
 		private void ButtonEventAdd_Click(object sender, EventArgs e)
