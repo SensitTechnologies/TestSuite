@@ -94,6 +94,12 @@ namespace Sensit.App.Calibration
 			_writer.WriteRow(row);
 		}
 
+		public void WriteMessage(string message)
+		{
+			List<string> row = new List<string>() { message };
+			_writer.WriteRow(row);
+		}
+
 		/// <summary>
 		/// Close the log file.
 		/// </summary>
