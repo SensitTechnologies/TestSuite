@@ -183,7 +183,7 @@
 			this.tabControl.Margin = new System.Windows.Forms.Padding(4);
 			this.tabControl.Name = "tabControl";
 			this.tabControl.SelectedIndex = 0;
-			this.tabControl.Size = new System.Drawing.Size(637, 321);
+			this.tabControl.Size = new System.Drawing.Size(574, 330);
 			this.tabControl.TabIndex = 0;
 			// 
 			// tabPageDevices
@@ -193,7 +193,7 @@
 			this.tabPageDevices.Margin = new System.Windows.Forms.Padding(4);
 			this.tabPageDevices.Name = "tabPageDevices";
 			this.tabPageDevices.Padding = new System.Windows.Forms.Padding(4);
-			this.tabPageDevices.Size = new System.Drawing.Size(629, 292);
+			this.tabPageDevices.Size = new System.Drawing.Size(566, 301);
 			this.tabPageDevices.TabIndex = 6;
 			this.tabPageDevices.Text = "Devices";
 			this.tabPageDevices.UseVisualStyleBackColor = true;
@@ -208,7 +208,7 @@
 			this.groupBoxDevices.Margin = new System.Windows.Forms.Padding(4);
 			this.groupBoxDevices.Name = "groupBoxDevices";
 			this.groupBoxDevices.Padding = new System.Windows.Forms.Padding(4);
-			this.groupBoxDevices.Size = new System.Drawing.Size(621, 284);
+			this.groupBoxDevices.Size = new System.Drawing.Size(558, 293);
 			this.groupBoxDevices.TabIndex = 18;
 			this.groupBoxDevices.TabStop = false;
 			this.groupBoxDevices.Text = "What equipment does the test use?";
@@ -229,7 +229,7 @@
 			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-			this.tableLayoutPanel4.Size = new System.Drawing.Size(613, 261);
+			this.tableLayoutPanel4.Size = new System.Drawing.Size(550, 270);
 			this.tableLayoutPanel4.TabIndex = 19;
 			// 
 			// tableLayoutPanelDevices
@@ -250,36 +250,39 @@
 			this.tableLayoutPanelDevices.Name = "tableLayoutPanelDevices";
 			this.tableLayoutPanelDevices.RowCount = 1;
 			this.tableLayoutPanelDevices.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelDevices.Size = new System.Drawing.Size(605, 166);
+			this.tableLayoutPanelDevices.Size = new System.Drawing.Size(542, 175);
 			this.tableLayoutPanelDevices.TabIndex = 6;
 			// 
 			// labelDeviceName
 			// 
 			this.labelDeviceName.AutoSize = true;
+			this.labelDeviceName.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelDeviceName.Location = new System.Drawing.Point(4, 0);
 			this.labelDeviceName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelDeviceName.Name = "labelDeviceName";
-			this.labelDeviceName.Size = new System.Drawing.Size(45, 17);
+			this.labelDeviceName.Size = new System.Drawing.Size(49, 17);
 			this.labelDeviceName.TabIndex = 1;
 			this.labelDeviceName.Text = "Name";
 			// 
 			// labelDeviceType
 			// 
 			this.labelDeviceType.AutoSize = true;
-			this.labelDeviceType.Location = new System.Drawing.Point(205, 0);
+			this.labelDeviceType.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelDeviceType.Location = new System.Drawing.Point(184, 0);
 			this.labelDeviceType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelDeviceType.Name = "labelDeviceType";
-			this.labelDeviceType.Size = new System.Drawing.Size(40, 17);
+			this.labelDeviceType.Size = new System.Drawing.Size(44, 17);
 			this.labelDeviceType.TabIndex = 2;
 			this.labelDeviceType.Text = "Type";
 			// 
 			// labelDeviceSerialPort
 			// 
 			this.labelDeviceSerialPort.AutoSize = true;
-			this.labelDeviceSerialPort.Location = new System.Drawing.Point(406, 0);
+			this.labelDeviceSerialPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelDeviceSerialPort.Location = new System.Drawing.Point(364, 0);
 			this.labelDeviceSerialPort.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelDeviceSerialPort.Name = "labelDeviceSerialPort";
-			this.labelDeviceSerialPort.Size = new System.Drawing.Size(74, 17);
+			this.labelDeviceSerialPort.Size = new System.Drawing.Size(85, 17);
 			this.labelDeviceSerialPort.TabIndex = 3;
 			this.labelDeviceSerialPort.Text = "Serial Port";
 			// 
@@ -293,13 +296,13 @@
 			this.tableLayoutPanel6.Controls.Add(this.checkBoxDeviceSelectAll, 0, 0);
 			this.tableLayoutPanel6.Controls.Add(this.buttonDeviceDelete, 1, 0);
 			this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel6.Location = new System.Drawing.Point(4, 222);
+			this.tableLayoutPanel6.Location = new System.Drawing.Point(4, 231);
 			this.tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(4);
 			this.tableLayoutPanel6.Name = "tableLayoutPanel6";
 			this.tableLayoutPanel6.RowCount = 1;
 			this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-			this.tableLayoutPanel6.Size = new System.Drawing.Size(605, 35);
+			this.tableLayoutPanel6.Size = new System.Drawing.Size(542, 35);
 			this.tableLayoutPanel6.TabIndex = 19;
 			// 
 			// checkBoxDeviceSelectAll
@@ -319,7 +322,7 @@
 			// 
 			this.buttonDeviceDelete.AutoSize = true;
 			this.buttonDeviceDelete.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.buttonDeviceDelete.Location = new System.Drawing.Point(407, 4);
+			this.buttonDeviceDelete.Location = new System.Drawing.Point(365, 4);
 			this.buttonDeviceDelete.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonDeviceDelete.Name = "buttonDeviceDelete";
 			this.buttonDeviceDelete.Size = new System.Drawing.Size(172, 27);
@@ -340,19 +343,19 @@
 			this.tableLayoutPanel11.Controls.Add(this.comboBoxDeviceType, 1, 0);
 			this.tableLayoutPanel11.Controls.Add(this.textBoxDeviceName, 0, 0);
 			this.tableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel11.Location = new System.Drawing.Point(4, 178);
+			this.tableLayoutPanel11.Location = new System.Drawing.Point(4, 187);
 			this.tableLayoutPanel11.Margin = new System.Windows.Forms.Padding(4);
 			this.tableLayoutPanel11.Name = "tableLayoutPanel11";
 			this.tableLayoutPanel11.RowCount = 1;
 			this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-			this.tableLayoutPanel11.Size = new System.Drawing.Size(605, 36);
+			this.tableLayoutPanel11.Size = new System.Drawing.Size(542, 36);
 			this.tableLayoutPanel11.TabIndex = 20;
 			// 
 			// buttonDeviceAdd
 			// 
 			this.buttonDeviceAdd.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.buttonDeviceAdd.Location = new System.Drawing.Point(406, 4);
+			this.buttonDeviceAdd.Location = new System.Drawing.Point(364, 4);
 			this.buttonDeviceAdd.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonDeviceAdd.Name = "buttonDeviceAdd";
 			this.buttonDeviceAdd.Size = new System.Drawing.Size(100, 28);
@@ -365,10 +368,10 @@
 			// 
 			this.comboBoxDeviceType.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.comboBoxDeviceType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBoxDeviceType.Location = new System.Drawing.Point(205, 4);
+			this.comboBoxDeviceType.Location = new System.Drawing.Point(184, 4);
 			this.comboBoxDeviceType.Margin = new System.Windows.Forms.Padding(4);
 			this.comboBoxDeviceType.Name = "comboBoxDeviceType";
-			this.comboBoxDeviceType.Size = new System.Drawing.Size(193, 24);
+			this.comboBoxDeviceType.Size = new System.Drawing.Size(172, 24);
 			this.comboBoxDeviceType.TabIndex = 0;
 			// 
 			// textBoxDeviceName
@@ -377,7 +380,7 @@
 			this.textBoxDeviceName.Location = new System.Drawing.Point(4, 4);
 			this.textBoxDeviceName.Margin = new System.Windows.Forms.Padding(4);
 			this.textBoxDeviceName.Name = "textBoxDeviceName";
-			this.textBoxDeviceName.Size = new System.Drawing.Size(193, 22);
+			this.textBoxDeviceName.Size = new System.Drawing.Size(172, 22);
 			this.textBoxDeviceName.TabIndex = 3;
 			// 
 			// tabPageEvents
@@ -454,50 +457,55 @@
 			// labelEventDevice
 			// 
 			this.labelEventDevice.AutoSize = true;
+			this.labelEventDevice.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelEventDevice.Location = new System.Drawing.Point(4, 0);
 			this.labelEventDevice.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelEventDevice.Name = "labelEventDevice";
-			this.labelEventDevice.Size = new System.Drawing.Size(51, 17);
+			this.labelEventDevice.Size = new System.Drawing.Size(57, 17);
 			this.labelEventDevice.TabIndex = 1;
 			this.labelEventDevice.Text = "Device";
 			// 
 			// labelEventVariable
 			// 
 			this.labelEventVariable.AutoSize = true;
+			this.labelEventVariable.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelEventVariable.Location = new System.Drawing.Point(125, 0);
 			this.labelEventVariable.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelEventVariable.Name = "labelEventVariable";
-			this.labelEventVariable.Size = new System.Drawing.Size(60, 17);
+			this.labelEventVariable.Size = new System.Drawing.Size(68, 17);
 			this.labelEventVariable.TabIndex = 2;
 			this.labelEventVariable.Text = "Variable";
 			// 
 			// labelEventValue
 			// 
 			this.labelEventValue.AutoSize = true;
+			this.labelEventValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelEventValue.Location = new System.Drawing.Point(246, 0);
 			this.labelEventValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelEventValue.Name = "labelEventValue";
-			this.labelEventValue.Size = new System.Drawing.Size(44, 17);
+			this.labelEventValue.Size = new System.Drawing.Size(49, 17);
 			this.labelEventValue.TabIndex = 3;
 			this.labelEventValue.Text = "Value";
 			// 
 			// labelEventDuration
 			// 
 			this.labelEventDuration.AutoSize = true;
+			this.labelEventDuration.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelEventDuration.Location = new System.Drawing.Point(367, 0);
 			this.labelEventDuration.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelEventDuration.Name = "labelEventDuration";
-			this.labelEventDuration.Size = new System.Drawing.Size(81, 17);
+			this.labelEventDuration.Size = new System.Drawing.Size(93, 17);
 			this.labelEventDuration.TabIndex = 4;
 			this.labelEventDuration.Text = "Duration [s]";
 			// 
 			// labelEventStatus
 			// 
 			this.labelEventStatus.AutoSize = true;
+			this.labelEventStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelEventStatus.Location = new System.Drawing.Point(488, 0);
 			this.labelEventStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelEventStatus.Name = "labelEventStatus";
-			this.labelEventStatus.Size = new System.Drawing.Size(48, 17);
+			this.labelEventStatus.Size = new System.Drawing.Size(54, 17);
 			this.labelEventStatus.TabIndex = 5;
 			this.labelEventStatus.Text = "Status";
 			// 
@@ -1202,10 +1210,10 @@
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar1,
             this.toolStripStatusLabel1});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 410);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 419);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-			this.statusStrip1.Size = new System.Drawing.Size(645, 34);
+			this.statusStrip1.Size = new System.Drawing.Size(582, 34);
 			this.statusStrip1.TabIndex = 1;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
@@ -1231,7 +1239,7 @@
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-			this.menuStrip1.Size = new System.Drawing.Size(645, 28);
+			this.menuStrip1.Size = new System.Drawing.Size(582, 28);
 			this.menuStrip1.TabIndex = 2;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -1382,7 +1390,7 @@
 			this.tableLayoutPanelTest.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanelTest.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelTest.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-			this.tableLayoutPanelTest.Size = new System.Drawing.Size(645, 382);
+			this.tableLayoutPanelTest.Size = new System.Drawing.Size(582, 391);
 			this.tableLayoutPanelTest.TabIndex = 18;
 			// 
 			// tableLayoutPanelTestSetupButtons
@@ -1395,12 +1403,12 @@
 			this.tableLayoutPanelTestSetupButtons.Controls.Add(this.tableLayoutPanel3, 0, 0);
 			this.tableLayoutPanelTestSetupButtons.Controls.Add(this.tableLayoutPanel2, 1, 0);
 			this.tableLayoutPanelTestSetupButtons.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanelTestSetupButtons.Location = new System.Drawing.Point(4, 333);
+			this.tableLayoutPanelTestSetupButtons.Location = new System.Drawing.Point(4, 342);
 			this.tableLayoutPanelTestSetupButtons.Margin = new System.Windows.Forms.Padding(4);
 			this.tableLayoutPanelTestSetupButtons.Name = "tableLayoutPanelTestSetupButtons";
 			this.tableLayoutPanelTestSetupButtons.RowCount = 1;
 			this.tableLayoutPanelTestSetupButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanelTestSetupButtons.Size = new System.Drawing.Size(637, 45);
+			this.tableLayoutPanelTestSetupButtons.Size = new System.Drawing.Size(574, 45);
 			this.tableLayoutPanelTestSetupButtons.TabIndex = 13;
 			// 
 			// tableLayoutPanel3
@@ -1413,7 +1421,7 @@
 			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel3.Controls.Add(this.labelRepeat, 0, 0);
 			this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanelRepeat, 1, 0);
-			this.tableLayoutPanel3.Location = new System.Drawing.Point(56, 4);
+			this.tableLayoutPanel3.Location = new System.Drawing.Point(40, 4);
 			this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(4);
 			this.tableLayoutPanel3.Name = "tableLayoutPanel3";
 			this.tableLayoutPanel3.RowCount = 1;
@@ -1488,7 +1496,7 @@
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 27F));
 			this.tableLayoutPanel2.Controls.Add(this.buttonStart, 0, 0);
 			this.tableLayoutPanel2.Controls.Add(this.buttonStop, 1, 0);
-			this.tableLayoutPanel2.Location = new System.Drawing.Point(369, 4);
+			this.tableLayoutPanel2.Location = new System.Drawing.Point(322, 4);
 			this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
 			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
 			this.tableLayoutPanel2.RowCount = 1;
@@ -1501,7 +1509,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoSize = true;
-			this.ClientSize = new System.Drawing.Size(645, 444);
+			this.ClientSize = new System.Drawing.Size(582, 453);
 			this.Controls.Add(this.tableLayoutPanelTest);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.menuStrip1);
