@@ -243,6 +243,11 @@ namespace Sensit.App.Calibration
 
 		private void NewToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			ClearTestSettings();
+		}
+
+		private void ClearTestSettings()
+		{
 			// Remove all devices.
 			Utilities.TableLayoutPanelClear(tableLayoutPanelDevices);
 
@@ -252,6 +257,9 @@ namespace Sensit.App.Calibration
 
 		private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			// Clear test settings.
+			ClearTestSettings();
+
 			// Allow the user to select a filename.
 			OpenFileDialog fileDialog = new OpenFileDialog();
 			fileDialog.Filter = "XML-File|*.xml";
@@ -261,10 +269,20 @@ namespace Sensit.App.Calibration
 			// If a valid filename has been selected...
 			if (!string.IsNullOrEmpty(fileDialog.FileName))
 			{
-				// TODO:  Load settings from file.
+				// Load settings from file.
+				TestSetting testSetting = Settings.Load<TestSetting>(fileDialog.FileName);
 
-				// Save to XML file.
-				Settings.Save(_testSettings, fileDialog.FileName);
+				// Add each device to the form.
+				foreach (DeviceSetting d in testSetting.Devices)
+				{
+					AddDevice(d.Name, d.Type, d.SerialPort);
+				}
+
+				// Add each event to the form.
+				foreach (EventSetting es in testSetting.Events)
+				{
+					AddEvent(es.DeviceName, es.Variable.ToString(), es.Value.ToString(), es.Duration.ToString());
+				}
 			}
 
 			// Clean up.
@@ -478,6 +496,11 @@ namespace Sensit.App.Calibration
 
 		private void ButtonDeviceAdd_Click(object sender, EventArgs e)
 		{
+			AddDevice(textBoxDeviceName.Text, comboBoxDeviceType.Text, "");
+		}
+
+		private void AddDevice(string name, string type, string port)
+		{
 			// Stop the GUI from looking weird while we update it.
 			tableLayoutPanelDevices.SuspendLayout();
 
@@ -491,7 +514,7 @@ namespace Sensit.App.Calibration
 				AutoSize = true,
 				Anchor = AnchorStyles.Left | AnchorStyles.Top,
 				Dock = DockStyle.None,
-				Text = textBoxDeviceName.Text,
+				Text = name,
 			}, COLUMN_DEVICES_NAME, tableLayoutPanelDevices.RowCount - 1);
 
 			// Add the device type.
@@ -500,7 +523,7 @@ namespace Sensit.App.Calibration
 				Anchor = AnchorStyles.Left | AnchorStyles.Top,
 				AutoSize = true,
 				Dock = DockStyle.None,
-				Text = comboBoxDeviceType.Text,
+				Text = type,
 			}, COLUMN_DEVICES_TYPE, tableLayoutPanelDevices.RowCount - 1);
 
 			// Add a comboBox for serial port.
@@ -513,6 +536,8 @@ namespace Sensit.App.Calibration
 			comboBox.Items.AddRange(SerialPort.GetPortNames());
 			tableLayoutPanelDevices.Controls.Add(comboBox, COLUMN_DEVICES_PORT, tableLayoutPanelDevices.RowCount - 1);
 
+			// TODO:  Select previously used device serial port.
+
 			// Make the GUI act normally again.
 			tableLayoutPanelDevices.ResumeLayout();
 
@@ -521,6 +546,11 @@ namespace Sensit.App.Calibration
 		}
 
 		private void ButtonEventAdd_Click(object sender, EventArgs e)
+		{
+			AddEvent(comboBoxEventDevice.Text, comboBoxEventVariable.Text, numericUpDownEventValue.Text, numericUpDownEventDuration.Text);
+		}
+
+		private void AddEvent(string device, string variable, string value, string duration)
 		{
 			// Stop the GUI from looking weird while we update it.
 			tableLayoutPanelEvents.SuspendLayout();
@@ -535,7 +565,7 @@ namespace Sensit.App.Calibration
 				AutoSize = true,
 				Anchor = AnchorStyles.Left | AnchorStyles.Top,
 				Dock = DockStyle.None,
-				Text = comboBoxEventDevice.Text,
+				Text = device,
 			}, COLUMN_EVENTS_DEVICE, tableLayoutPanelEvents.RowCount - 1);
 
 			// Add the variable.
@@ -544,7 +574,7 @@ namespace Sensit.App.Calibration
 				Anchor = AnchorStyles.Left | AnchorStyles.Top,
 				AutoSize = true,
 				Dock = DockStyle.None,
-				Text = comboBoxEventVariable.Text,
+				Text = variable,
 			}, COLUMN_EVENTS_VARIABLE, tableLayoutPanelEvents.RowCount - 1);
 
 			// Add the variable's value.
@@ -553,7 +583,7 @@ namespace Sensit.App.Calibration
 				Anchor = AnchorStyles.Left | AnchorStyles.Top,
 				AutoSize = true,
 				Dock = DockStyle.None,
-				Text = numericUpDownEventValue.Text
+				Text = value
 			}, COLUMN_EVENTS_VALUE, tableLayoutPanelEvents.RowCount - 1);
 
 			// Add the duration.
@@ -562,7 +592,7 @@ namespace Sensit.App.Calibration
 				Anchor = AnchorStyles.Left | AnchorStyles.Top,
 				AutoSize = true,
 				Dock = DockStyle.None,
-				Text = numericUpDownEventDuration.Text
+				Text = duration
 			}, COLUMN_EVENTS_DURATION, tableLayoutPanelEvents.RowCount - 1);
 
 			// Add the status.
