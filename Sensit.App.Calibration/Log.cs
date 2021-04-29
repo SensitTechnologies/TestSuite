@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using Sensit.TestSDK.Files;
 using Sensit.TestSDK.Interfaces;
@@ -50,15 +51,15 @@ namespace Sensit.App.Calibration
 			foreach (KeyValuePair<string, IDevice> device in _equipment.Devices)
 			{
 				// Add column headers for each setpoint.
-				foreach (KeyValuePair<VariableType, double> setpoint in device.Value.Setpoints)
+				foreach (VariableType setpoint in device.Value.Setpoints.Keys)
 				{
-					row.Add(device.Key + " " + setpoint.Key);
+					row.Add(device.Key + " " + setpoint);
 				}
 
 				// Add column headers for each reading.
-				foreach (KeyValuePair<VariableType, double> reading in device.Value.Readings)
+				foreach (VariableType reading in device.Value.Readings.Keys)
 				{
-					row.Add(device.Key + " " + reading.Key);
+					row.Add(device.Key + " " + reading);
 				}
 			}
 		}
@@ -76,18 +77,18 @@ namespace Sensit.App.Calibration
 			List<string> row = new List<string>();
 			row.Add(elapsedTime.ToString());
 
-			foreach (KeyValuePair<string, IDevice> device in _equipment.Devices)
+			foreach (IDevice device in _equipment.Devices.Values)
 			{
 				// Add column headers for each setpoint.
-				foreach (KeyValuePair<VariableType, double> setpoint in device.Value.Setpoints)
+				foreach (double setpoint in device.Setpoints.Values)
 				{
-					row.Add(setpoint.Value.ToString());
+					row.Add(setpoint.ToString(CultureInfo.CurrentCulture));
 				}
 
 				// Add column headers for each reading.
-				foreach (KeyValuePair<VariableType, double> reading in device.Value.Readings)
+				foreach (double reading in device.Readings.Values)
 				{
-					row.Add(reading.Value.ToString());
+					row.Add(reading.ToString(CultureInfo.CurrentCulture));
 				}
 			}
 
