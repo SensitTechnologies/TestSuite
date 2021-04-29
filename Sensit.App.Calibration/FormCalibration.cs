@@ -6,6 +6,7 @@ using System.Globalization;
 using System.IO.Ports;
 using System.Linq;
 using System.Windows.Forms;
+using Sensit.TestSDK.Exceptions;
 using Sensit.TestSDK.Forms;
 using Sensit.TestSDK.Interfaces;
 using Sensit.TestSDK.Settings;
@@ -40,9 +41,6 @@ namespace Sensit.App.Calibration
 
 		// tests
 		private Test _test;
-
-		// test settings
-		TestSetting _testSettings;
 
 		#endregion
 
@@ -123,9 +121,12 @@ namespace Sensit.App.Calibration
 				// Disable most of the user controls.
 				SetControlEnable(true);
 
+				// Create a new test settings object and populate it with the user's choices.
+				TestSetting testSetting = CreateTestSettings();
+
 				// Create test object and link its actions to actions on this form.
 				// https://syncor.blogspot.com/2010/11/passing-getter-and-setter-of-c-property.html
-				_test = new Test(_testSettings, textBoxLogFilename.Text)
+				_test = new Test(testSetting, textBoxLogFilename.Text)
 				{
 					Finished = TestFinished,
 					UpdateProgress = TestUpdate,
@@ -305,42 +306,8 @@ namespace Sensit.App.Calibration
 			{
 				try
 				{
-					// Create a new test settings object.
-					TestSetting testSetting = new TestSetting();
-
-					// Add each device to the settings object.
-					for (int row = 1; row < tableLayoutPanelDevices.RowCount; row++)
-					{
-						CheckBox checkBoxDeviceName = tableLayoutPanelDevices.GetControlFromPosition(COLUMN_DEVICES_NAME, row) as CheckBox;
-						Label labelDeviceType = tableLayoutPanelDevices.GetControlFromPosition(COLUMN_DEVICES_TYPE, row) as Label;
-						ComboBox comboBoxDevicePort = tableLayoutPanelDevices.GetControlFromPosition(COLUMN_DEVICES_PORT, row) as ComboBox;
-
-						testSetting.Devices.Add(new DeviceSetting
-						{
-							Name = checkBoxDeviceName.Text,
-							Type = labelDeviceType.Text,
-							SerialPort = comboBoxDevicePort.Text
-						});
-					}
-
-					// Add each event to the settings object.
-					for (int row = 1; row < tableLayoutPanelEvents.RowCount; row++)
-					{
-						CheckBox checkBoxEventDevice = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_DEVICE, row) as CheckBox;
-						Label labelEventVariable = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_VARIABLE, row) as Label;
-						Label labelEventValue = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_VALUE, row) as Label;
-						Label labelEventDuration = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_DURATION, row) as Label;
-
-						Enum.TryParse(labelEventVariable.Text, out VariableType variableType);
-
-						testSetting.Events.Add(new EventSetting
-						{
-							DeviceName = checkBoxEventDevice.Text,
-							Variable = variableType,
-							Value = Convert.ToDouble(labelEventValue.Text),
-							Duration = Convert.ToUInt32(labelEventDuration.Text)
-						});
-					}
+					// Create a new test settings object and populate it with the user's choices.
+					TestSetting testSetting = CreateTestSettings();
 
 					// Save to XML file.
 					Settings.Save(testSetting, fileDialog.FileName);
@@ -367,6 +334,56 @@ namespace Sensit.App.Calibration
 
 			// Clean up.
 			fileDialog.Dispose();
+		}
+
+		private TestSetting CreateTestSettings()
+		{
+			// Create a new test settings object.
+			TestSetting testSetting = new TestSetting();
+
+			// Add each device to the settings object.
+			for (int row = 1; row < tableLayoutPanelDevices.RowCount; row++)
+			{
+				CheckBox checkBoxDeviceName = tableLayoutPanelDevices.GetControlFromPosition(COLUMN_DEVICES_NAME, row) as CheckBox;
+				Label labelDeviceType = tableLayoutPanelDevices.GetControlFromPosition(COLUMN_DEVICES_TYPE, row) as Label;
+				ComboBox comboBoxDevicePort = tableLayoutPanelDevices.GetControlFromPosition(COLUMN_DEVICES_PORT, row) as ComboBox;
+
+				testSetting.Devices.Add(new DeviceSetting
+				{
+					Name = checkBoxDeviceName.Text,
+					Type = labelDeviceType.Text,
+					SerialPort = comboBoxDevicePort.Text
+				});
+			}
+
+			// Add each event to the settings object.
+			for (int row = 1; row < tableLayoutPanelEvents.RowCount; row++)
+			{
+				CheckBox checkBoxEventDevice = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_DEVICE, row) as CheckBox;
+				Label labelEventVariable = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_VARIABLE, row) as Label;
+				Label labelEventValue = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_VALUE, row) as Label;
+				Label labelEventDuration = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_DURATION, row) as Label;
+
+				// TODO: Check for a valid device name.
+
+				// Convert the variable to the appropriate enumeration.
+				if (Enum.TryParse(labelEventVariable.Text, out VariableType variableType) == false)
+				{
+					throw new TestException("Unrecognized variable type in event " + row.ToString(CultureInfo.CurrentCulture));
+				}
+
+				// TODO:  Check for valid
+
+				testSetting.Events.Add(new EventSetting
+				{
+					DeviceName = checkBoxEventDevice.Text,
+					Variable = variableType,
+					Value = Convert.ToDouble(labelEventValue.Text, CultureInfo.InvariantCulture),
+					Duration = Convert.ToUInt32(labelEventDuration.Text, CultureInfo.InvariantCulture)
+				});
+			}
+
+			return testSetting;
 		}
 
 		/// <summary>
@@ -630,8 +647,6 @@ namespace Sensit.App.Calibration
 
 		private void ButtonDeviceDelete_Click(object sender, EventArgs e)
 		{
-			// TODO:  Handle case where deleting device and there are events using that device.
-
 			// Hunt backwards for checked boxes or we'll miss the last one selected.
 			for (int row = tableLayoutPanelDevices.RowCount - 1; row >= 0; row--)
 			{

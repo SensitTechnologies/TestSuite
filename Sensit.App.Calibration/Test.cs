@@ -34,14 +34,29 @@ namespace Sensit.App.Calibration
 
 		#region Fields
 
-		private BackgroundWorker _testThread;	// task that will handle test operations
-		private TestSetting _settings;			// settings for test
-		private Equipment _equipment;			// test equipment object
-		private Log _log;						// keeper of test results
-		private Stopwatch _elapsedTimeStopwatch;// keeper of test's elapsed time
-		private bool _pause = false;			// whether test is paused
-		private uint _samplesTotal;				// helps calculate percent complete
-		private uint _samplesComplete = 0;       // helps calculate percent complete
+		// task that will handle test operations
+		private readonly BackgroundWorker _testThread;
+
+		// settings for test
+		private readonly TestSetting _settings;
+
+		// test equipment object
+		private readonly Equipment _equipment;
+
+		// keeper of test results
+		private readonly Log _log;
+
+		// keeper of test's elapsed time
+		private Stopwatch _elapsedTimeStopwatch;
+
+		// whether test is paused
+		private bool _pause = false;
+
+		// helps calculate percent complete
+		private uint _samplesTotal;
+
+		// helps calculate percent complete
+		private uint _samplesComplete = 0;
 
 		#endregion
 
@@ -70,8 +85,8 @@ namespace Sensit.App.Calibration
 				if ((percent < 0) || (percent > 100))
 				{
 					throw new TestException("Percent progress is out of range."
-						+ Environment.NewLine + "Steps Complete:  " + _samplesComplete.ToString()
-						+ Environment.NewLine + "Steps Total:  " + _samplesTotal.ToString());
+						+ Environment.NewLine + "Steps Complete:  " + _samplesComplete.ToString(CultureInfo.CurrentCulture)
+						+ Environment.NewLine + "Steps Total:  " + _samplesTotal.ToString(CultureInfo.CurrentCulture));
 				}
 
 				return percent;
@@ -102,7 +117,7 @@ namespace Sensit.App.Calibration
 		public Test(TestSetting settings, string filename)
 		{
 			// Save the reference to the equipment and log file manager objects.
-			_settings = settings;
+			_settings = settings ?? throw new ArgumentNullException(nameof(settings));
 			_equipment = new Equipment();
 			_log = new Log(filename, _equipment);
 
@@ -392,7 +407,7 @@ namespace Sensit.App.Calibration
 				else if (dwellTime > new TimeSpan(0, 0, 0))
 				{
 					// Update GUI (include dwell time if applicable).
-					message = "Dwell time left:  " + (dwellTime - stopwatch.Elapsed).ToString(@"hh\:mm\:ss");
+					message = "Dwell time left:  " + (dwellTime - stopwatch.Elapsed).ToString(@"hh\:mm\:ss", CultureInfo.CurrentCulture);
 
 					// Reset the timeout stopwatch.
 					timeoutWatch.Restart();
@@ -437,7 +452,7 @@ namespace Sensit.App.Calibration
 				for (int i = 1; i <= e.Duration; i++)
 				{
 					// Update GUI.
-					_testThread.ReportProgress(PercentProgress, "Taking sample " + i.ToString() + " of " + e.Duration + ".");
+					_testThread.ReportProgress(PercentProgress, "Taking sample " + i.ToString(CultureInfo.CurrentCulture) + " of " + e.Duration + ".");
 
 					// Fetch readings from references.
 					_equipment.Read();
@@ -561,6 +576,7 @@ namespace Sensit.App.Calibration
 				// Dispose managed resources.
 				_equipment?.Dispose();
 				_testThread?.Dispose();
+				_log?.Dispose();
 			}
 		}
 
