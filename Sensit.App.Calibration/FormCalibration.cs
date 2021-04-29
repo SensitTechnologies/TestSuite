@@ -277,9 +277,9 @@ namespace Sensit.App.Calibration
 				TestSetting testSetting = Settings.Load<TestSetting>(fileDialog.FileName);
 
 				// Add each device to the form.
-				foreach (DeviceSetting d in testSetting.Devices)
+				foreach (KeyValuePair<string, DeviceSetting> d in testSetting.Devices)
 				{
-					AddDevice(d.Name, d.Type, d.SerialPort);
+					AddDevice(d.Key, d.Value.Type, d.Value.SerialPort);
 				}
 
 				// Add each event to the form.
@@ -348,9 +348,14 @@ namespace Sensit.App.Calibration
 				Label labelDeviceType = tableLayoutPanelDevices.GetControlFromPosition(COLUMN_DEVICES_TYPE, row) as Label;
 				ComboBox comboBoxDevicePort = tableLayoutPanelDevices.GetControlFromPosition(COLUMN_DEVICES_PORT, row) as ComboBox;
 
-				testSetting.Devices.Add(new DeviceSetting
+				// Ensure new device name is unique.
+				if (testSetting.Devices.ContainsKey(checkBoxDeviceName.Text))
 				{
-					Name = checkBoxDeviceName.Text,
+					throw new TestException("Device " + checkBoxDeviceName.Text + " has a duplicate value.");
+				}
+
+				testSetting.Devices.Add(checkBoxDeviceName.Text, new DeviceSetting
+				{
 					Type = labelDeviceType.Text,
 					SerialPort = comboBoxDevicePort.Text
 				});
@@ -364,15 +369,17 @@ namespace Sensit.App.Calibration
 				Label labelEventValue = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_VALUE, row) as Label;
 				Label labelEventDuration = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_DURATION, row) as Label;
 
-				// TODO: Check for a valid device name.
+				// Ensure device name is valid.
+				if (testSetting.Devices.ContainsKey(checkBoxEventDevice.Text) == false)
+				{
+					throw new TestException("Device " + checkBoxEventDevice.Text + " has a duplicate value.");
+				}
 
-				// Convert the variable to the appropriate enumeration.
+				// Convert the variable to the appropriate enumeration (and check that it's valid).
 				if (Enum.TryParse(labelEventVariable.Text, out VariableType variableType) == false)
 				{
 					throw new TestException("Unrecognized variable type in event " + row.ToString(CultureInfo.CurrentCulture));
 				}
-
-				// TODO:  Check for valid
 
 				testSetting.Events.Add(new EventSetting
 				{

@@ -10,8 +10,6 @@ namespace Sensit.App.Calibration
 	[Serializable]
 	public class DeviceSetting
 	{
-		public string Name { get; set; }
-
 		public string Type { get; set; }
 
 		[DisplayName("Serial Port")]
@@ -80,7 +78,7 @@ namespace Sensit.App.Calibration
 	[Serializable]
 	public class TestSetting
 	{
-		public List<DeviceSetting> Devices { get; } = new List<DeviceSetting>();
+		public Dictionary<string, DeviceSetting> Devices { get; } = new Dictionary<string, DeviceSetting>();
 
 		public List<EventSetting> Events { get; } = new List<EventSetting>();
 	}
