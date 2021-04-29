@@ -279,9 +279,9 @@ namespace Sensit.App.Calibration
 					TestSetting testSetting = Settings.Load<TestSetting>(fileDialog.FileName);
 
 					// Add each device to the form.
-					foreach (KeyValuePair<string, DeviceSetting> d in testSetting.Devices)
+					foreach (DeviceSetting d in testSetting.Devices)
 					{
-						AddDevice(d.Key, d.Value.Type, d.Value.SerialPort);
+						AddDevice(d.Name, d.Type, d.SerialPort);
 					}
 
 					// Add each event to the form.
@@ -339,6 +339,12 @@ namespace Sensit.App.Calibration
 						+ "Check the events for a number larger than a normal integer.",
 						ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 				}
+				catch (TestException ex)
+				{
+					MessageBox.Show("Can't save settings." + Environment.NewLine
+						+ ex.Message + Environment.NewLine,
+						ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
+				}
 			}
 
 			// Clean up.
@@ -357,14 +363,18 @@ namespace Sensit.App.Calibration
 				Label labelDeviceType = tableLayoutPanelDevices.GetControlFromPosition(COLUMN_DEVICES_TYPE, row) as Label;
 				ComboBox comboBoxDevicePort = tableLayoutPanelDevices.GetControlFromPosition(COLUMN_DEVICES_PORT, row) as ComboBox;
 
-				// Ensure new device name is unique.
-				if (testSetting.Devices.ContainsKey(checkBoxDeviceName.Text))
+				// If another device with the same name already exists...
+				if (testSetting.Devices.FirstOrDefault(o => o.Name == checkBoxDeviceName.Text) != null)
 				{
-					throw new TestException("Device " + checkBoxDeviceName.Text + " has a duplicate value.");
+					// Let the user know.
+					throw new TestException("Device " + checkBoxDeviceName.Text + " already exists." + Environment.NewLine +
+						"Please use a unique name for each device.");
 				}
 
-				testSetting.Devices.Add(checkBoxDeviceName.Text, new DeviceSetting
+				// Add the new device to settings.
+				testSetting.Devices.Add(new DeviceSetting
 				{
+					Name = checkBoxDeviceName.Text,
 					Type = labelDeviceType.Text,
 					SerialPort = comboBoxDevicePort.Text
 				});
@@ -378,10 +388,12 @@ namespace Sensit.App.Calibration
 				Label labelEventValue = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_VALUE, row) as Label;
 				Label labelEventDuration = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_DURATION, row) as Label;
 
-				// Ensure device name is valid.
-				if (testSetting.Devices.ContainsKey(checkBoxEventDevice.Text) == false)
+				// If the specified device does not exist...
+				if (testSetting.Devices.FirstOrDefault(o => o.Name == checkBoxEventDevice.Text) == null)
 				{
-					throw new TestException("Device " + checkBoxEventDevice.Text + " has a duplicate value.");
+					// Alert the user.
+					throw new TestException("Device " + checkBoxEventDevice.Text + " does not exist." + Environment.NewLine
+						+ "Please either add that device, or remove events referencing it.");
 				}
 
 				// Convert the variable to the appropriate enumeration (and check that it's valid).
