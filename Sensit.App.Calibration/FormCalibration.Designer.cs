@@ -390,7 +390,7 @@
 			this.tabPageEvents.Margin = new System.Windows.Forms.Padding(4);
 			this.tabPageEvents.Name = "tabPageEvents";
 			this.tabPageEvents.Padding = new System.Windows.Forms.Padding(4);
-			this.tabPageEvents.Size = new System.Drawing.Size(629, 292);
+			this.tabPageEvents.Size = new System.Drawing.Size(566, 301);
 			this.tabPageEvents.TabIndex = 2;
 			this.tabPageEvents.Text = "Events";
 			this.tabPageEvents.UseVisualStyleBackColor = true;
@@ -405,7 +405,7 @@
 			this.groupBoxEvents.Margin = new System.Windows.Forms.Padding(4);
 			this.groupBoxEvents.Name = "groupBoxEvents";
 			this.groupBoxEvents.Padding = new System.Windows.Forms.Padding(4);
-			this.groupBoxEvents.Size = new System.Drawing.Size(621, 284);
+			this.groupBoxEvents.Size = new System.Drawing.Size(558, 293);
 			this.groupBoxEvents.TabIndex = 17;
 			this.groupBoxEvents.TabStop = false;
 			this.groupBoxEvents.Text = "What should the equipment do?";
@@ -426,7 +426,7 @@
 			this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-			this.tableLayoutPanel7.Size = new System.Drawing.Size(613, 261);
+			this.tableLayoutPanel7.Size = new System.Drawing.Size(550, 270);
 			this.tableLayoutPanel7.TabIndex = 19;
 			// 
 			// tableLayoutPanelEvents
@@ -451,7 +451,7 @@
 			this.tableLayoutPanelEvents.Name = "tableLayoutPanelEvents";
 			this.tableLayoutPanelEvents.RowCount = 1;
 			this.tableLayoutPanelEvents.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelEvents.Size = new System.Drawing.Size(605, 166);
+			this.tableLayoutPanelEvents.Size = new System.Drawing.Size(542, 175);
 			this.tableLayoutPanelEvents.TabIndex = 6;
 			// 
 			// labelEventDevice
@@ -469,7 +469,7 @@
 			// 
 			this.labelEventVariable.AutoSize = true;
 			this.labelEventVariable.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelEventVariable.Location = new System.Drawing.Point(125, 0);
+			this.labelEventVariable.Location = new System.Drawing.Point(112, 0);
 			this.labelEventVariable.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelEventVariable.Name = "labelEventVariable";
 			this.labelEventVariable.Size = new System.Drawing.Size(68, 17);
@@ -480,7 +480,7 @@
 			// 
 			this.labelEventValue.AutoSize = true;
 			this.labelEventValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelEventValue.Location = new System.Drawing.Point(246, 0);
+			this.labelEventValue.Location = new System.Drawing.Point(220, 0);
 			this.labelEventValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelEventValue.Name = "labelEventValue";
 			this.labelEventValue.Size = new System.Drawing.Size(49, 17);
@@ -491,7 +491,7 @@
 			// 
 			this.labelEventDuration.AutoSize = true;
 			this.labelEventDuration.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelEventDuration.Location = new System.Drawing.Point(367, 0);
+			this.labelEventDuration.Location = new System.Drawing.Point(328, 0);
 			this.labelEventDuration.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelEventDuration.Name = "labelEventDuration";
 			this.labelEventDuration.Size = new System.Drawing.Size(93, 17);
@@ -502,7 +502,7 @@
 			// 
 			this.labelEventStatus.AutoSize = true;
 			this.labelEventStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelEventStatus.Location = new System.Drawing.Point(488, 0);
+			this.labelEventStatus.Location = new System.Drawing.Point(436, 0);
 			this.labelEventStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelEventStatus.Name = "labelEventStatus";
 			this.labelEventStatus.Size = new System.Drawing.Size(54, 17);
@@ -519,13 +519,13 @@
 			this.tableLayoutPanel9.Controls.Add(this.checkBoxEventSelectAll, 0, 0);
 			this.tableLayoutPanel9.Controls.Add(this.buttonEventDelete, 1, 0);
 			this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel9.Location = new System.Drawing.Point(4, 222);
+			this.tableLayoutPanel9.Location = new System.Drawing.Point(4, 231);
 			this.tableLayoutPanel9.Margin = new System.Windows.Forms.Padding(4);
 			this.tableLayoutPanel9.Name = "tableLayoutPanel9";
 			this.tableLayoutPanel9.RowCount = 1;
 			this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-			this.tableLayoutPanel9.Size = new System.Drawing.Size(605, 35);
+			this.tableLayoutPanel9.Size = new System.Drawing.Size(542, 35);
 			this.tableLayoutPanel9.TabIndex = 19;
 			// 
 			// checkBoxEventSelectAll
@@ -545,7 +545,7 @@
 			// 
 			this.buttonEventDelete.AutoSize = true;
 			this.buttonEventDelete.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.buttonEventDelete.Location = new System.Drawing.Point(407, 4);
+			this.buttonEventDelete.Location = new System.Drawing.Point(365, 4);
 			this.buttonEventDelete.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonEventDelete.Name = "buttonEventDelete";
 			this.buttonEventDelete.Size = new System.Drawing.Size(165, 27);
@@ -570,12 +570,12 @@
 			this.tableLayoutPanel10.Controls.Add(this.comboBoxEventVariable, 1, 0);
 			this.tableLayoutPanel10.Controls.Add(this.numericUpDownEventValue, 2, 0);
 			this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel10.Location = new System.Drawing.Point(4, 178);
+			this.tableLayoutPanel10.Location = new System.Drawing.Point(4, 187);
 			this.tableLayoutPanel10.Margin = new System.Windows.Forms.Padding(4);
 			this.tableLayoutPanel10.Name = "tableLayoutPanel10";
 			this.tableLayoutPanel10.RowCount = 1;
 			this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel10.Size = new System.Drawing.Size(605, 36);
+			this.tableLayoutPanel10.Size = new System.Drawing.Size(542, 36);
 			this.tableLayoutPanel10.TabIndex = 20;
 			// 
 			// comboBoxEventDevice
@@ -585,13 +585,13 @@
 			this.comboBoxEventDevice.Location = new System.Drawing.Point(4, 4);
 			this.comboBoxEventDevice.Margin = new System.Windows.Forms.Padding(4);
 			this.comboBoxEventDevice.Name = "comboBoxEventDevice";
-			this.comboBoxEventDevice.Size = new System.Drawing.Size(111, 24);
+			this.comboBoxEventDevice.Size = new System.Drawing.Size(100, 24);
 			this.comboBoxEventDevice.TabIndex = 3;
 			// 
 			// buttonEventAdd
 			// 
 			this.buttonEventAdd.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.buttonEventAdd.Location = new System.Drawing.Point(488, 4);
+			this.buttonEventAdd.Location = new System.Drawing.Point(436, 4);
 			this.buttonEventAdd.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonEventAdd.Name = "buttonEventAdd";
 			this.buttonEventAdd.Size = new System.Drawing.Size(100, 28);
@@ -607,7 +607,7 @@
             0,
             0,
             0});
-			this.numericUpDownEventDuration.Location = new System.Drawing.Point(367, 4);
+			this.numericUpDownEventDuration.Location = new System.Drawing.Point(328, 4);
 			this.numericUpDownEventDuration.Margin = new System.Windows.Forms.Padding(4);
 			this.numericUpDownEventDuration.Maximum = new decimal(new int[] {
             86400,
@@ -615,17 +615,17 @@
             0,
             0});
 			this.numericUpDownEventDuration.Name = "numericUpDownEventDuration";
-			this.numericUpDownEventDuration.Size = new System.Drawing.Size(112, 22);
+			this.numericUpDownEventDuration.Size = new System.Drawing.Size(100, 22);
 			this.numericUpDownEventDuration.TabIndex = 5;
 			// 
 			// comboBoxEventVariable
 			// 
 			this.comboBoxEventVariable.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxEventVariable.FormattingEnabled = true;
-			this.comboBoxEventVariable.Location = new System.Drawing.Point(125, 4);
+			this.comboBoxEventVariable.Location = new System.Drawing.Point(112, 4);
 			this.comboBoxEventVariable.Margin = new System.Windows.Forms.Padding(4);
 			this.comboBoxEventVariable.Name = "comboBoxEventVariable";
-			this.comboBoxEventVariable.Size = new System.Drawing.Size(111, 24);
+			this.comboBoxEventVariable.Size = new System.Drawing.Size(100, 24);
 			this.comboBoxEventVariable.TabIndex = 4;
 			// 
 			// numericUpDownEventValue
@@ -635,7 +635,7 @@
             0,
             0,
             0});
-			this.numericUpDownEventValue.Location = new System.Drawing.Point(246, 4);
+			this.numericUpDownEventValue.Location = new System.Drawing.Point(220, 4);
 			this.numericUpDownEventValue.Margin = new System.Windows.Forms.Padding(4);
 			this.numericUpDownEventValue.Maximum = new decimal(new int[] {
             1000,
@@ -643,7 +643,7 @@
             0,
             0});
 			this.numericUpDownEventValue.Name = "numericUpDownEventValue";
-			this.numericUpDownEventValue.Size = new System.Drawing.Size(112, 22);
+			this.numericUpDownEventValue.Size = new System.Drawing.Size(100, 22);
 			this.numericUpDownEventValue.TabIndex = 6;
 			// 
 			// tabPageLog
@@ -653,7 +653,7 @@
 			this.tabPageLog.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.tabPageLog.Name = "tabPageLog";
 			this.tabPageLog.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.tabPageLog.Size = new System.Drawing.Size(629, 292);
+			this.tabPageLog.Size = new System.Drawing.Size(566, 301);
 			this.tabPageLog.TabIndex = 7;
 			this.tabPageLog.Text = "Log";
 			this.tabPageLog.UseVisualStyleBackColor = true;
@@ -668,7 +668,7 @@
 			this.groupBoxLog.Margin = new System.Windows.Forms.Padding(4);
 			this.groupBoxLog.Name = "groupBoxLog";
 			this.groupBoxLog.Padding = new System.Windows.Forms.Padding(4);
-			this.groupBoxLog.Size = new System.Drawing.Size(623, 288);
+			this.groupBoxLog.Size = new System.Drawing.Size(560, 297);
 			this.groupBoxLog.TabIndex = 17;
 			this.groupBoxLog.TabStop = false;
 			this.groupBoxLog.Text = "Where should results be saved?";
@@ -683,7 +683,7 @@
 			this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-			this.groupBox1.Size = new System.Drawing.Size(615, 59);
+			this.groupBox1.Size = new System.Drawing.Size(552, 59);
 			this.groupBox1.TabIndex = 8;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Filename";
@@ -703,7 +703,7 @@
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 1;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(607, 36);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(544, 36);
 			this.tableLayoutPanel1.TabIndex = 1;
 			// 
 			// textBoxLogFilename
@@ -712,14 +712,14 @@
 			this.textBoxLogFilename.Location = new System.Drawing.Point(4, 4);
 			this.textBoxLogFilename.Margin = new System.Windows.Forms.Padding(4);
 			this.textBoxLogFilename.Name = "textBoxLogFilename";
-			this.textBoxLogFilename.Size = new System.Drawing.Size(491, 22);
+			this.textBoxLogFilename.Size = new System.Drawing.Size(428, 22);
 			this.textBoxLogFilename.TabIndex = 9;
 			this.textBoxLogFilename.TextChanged += new System.EventHandler(this.TextBoxLogFilename_TextChanged);
 			// 
 			// buttonLogBrowse
 			// 
 			this.buttonLogBrowse.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.buttonLogBrowse.Location = new System.Drawing.Point(503, 4);
+			this.buttonLogBrowse.Location = new System.Drawing.Point(440, 4);
 			this.buttonLogBrowse.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonLogBrowse.Name = "buttonLogBrowse";
 			this.buttonLogBrowse.Size = new System.Drawing.Size(100, 28);
@@ -735,7 +735,7 @@
 			this.tabPageStatus.Margin = new System.Windows.Forms.Padding(4);
 			this.tabPageStatus.Name = "tabPageStatus";
 			this.tabPageStatus.Padding = new System.Windows.Forms.Padding(4);
-			this.tabPageStatus.Size = new System.Drawing.Size(629, 292);
+			this.tabPageStatus.Size = new System.Drawing.Size(566, 301);
 			this.tabPageStatus.TabIndex = 4;
 			this.tabPageStatus.Text = "Status";
 			this.tabPageStatus.UseVisualStyleBackColor = true;
@@ -748,7 +748,7 @@
 			this.groupBoxVariables.Margin = new System.Windows.Forms.Padding(4);
 			this.groupBoxVariables.Name = "groupBoxVariables";
 			this.groupBoxVariables.Padding = new System.Windows.Forms.Padding(4);
-			this.groupBoxVariables.Size = new System.Drawing.Size(621, 284);
+			this.groupBoxVariables.Size = new System.Drawing.Size(558, 293);
 			this.groupBoxVariables.TabIndex = 1;
 			this.groupBoxVariables.TabStop = false;
 			this.groupBoxVariables.Text = "Measured/Controlled Variables";
@@ -767,7 +767,7 @@
 			this.flowLayoutPanelControlledVariables.Location = new System.Drawing.Point(4, 19);
 			this.flowLayoutPanelControlledVariables.Margin = new System.Windows.Forms.Padding(4);
 			this.flowLayoutPanelControlledVariables.Name = "flowLayoutPanelControlledVariables";
-			this.flowLayoutPanelControlledVariables.Size = new System.Drawing.Size(613, 261);
+			this.flowLayoutPanelControlledVariables.Size = new System.Drawing.Size(550, 270);
 			this.flowLayoutPanelControlledVariables.TabIndex = 0;
 			// 
 			// groupBoxMassFlow
@@ -1279,12 +1279,12 @@
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(155, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(221, 6);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(158, 26);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
 			this.exitToolStripMenuItem.Text = "&Exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
 			// 
@@ -1302,7 +1302,7 @@
 			// 
 			this.startToolStripMenuItem.Name = "startToolStripMenuItem";
 			this.startToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-			this.startToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
+			this.startToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
 			this.startToolStripMenuItem.Text = "&Start";
 			this.startToolStripMenuItem.Click += new System.EventHandler(this.ButtonStart_Click);
 			// 
@@ -1311,7 +1311,7 @@
 			this.pauseToolStripMenuItem.Enabled = false;
 			this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
 			this.pauseToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F6;
-			this.pauseToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
+			this.pauseToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
 			this.pauseToolStripMenuItem.Text = "&Pause";
 			this.pauseToolStripMenuItem.ToolTipText = "Hault the current test temporarily";
 			this.pauseToolStripMenuItem.Click += new System.EventHandler(this.PauseToolStripMenuItem_Click);
@@ -1321,7 +1321,7 @@
 			this.stopToolStripMenuItem.Enabled = false;
 			this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
 			this.stopToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F7;
-			this.stopToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
+			this.stopToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
 			this.stopToolStripMenuItem.Text = "&Stop";
 			this.stopToolStripMenuItem.Click += new System.EventHandler(this.ButtonStop_Click);
 			// 

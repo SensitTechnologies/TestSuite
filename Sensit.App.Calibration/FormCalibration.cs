@@ -539,7 +539,8 @@ namespace Sensit.App.Calibration
 			comboBox.Items.AddRange(SerialPort.GetPortNames());
 			tableLayoutPanelDevices.Controls.Add(comboBox, COLUMN_DEVICES_PORT, tableLayoutPanelDevices.RowCount - 1);
 
-			// TODO:  Select previously used device serial port.
+			// Select previously used device serial port (if found).
+			comboBox.SelectedIndex = comboBox.FindStringExact(port);
 
 			// Make the GUI act normally again.
 			tableLayoutPanelDevices.ResumeLayout();
