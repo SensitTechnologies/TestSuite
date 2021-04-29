@@ -80,18 +80,8 @@ namespace Sensit.App.Calibration
 	[Serializable]
 	public class TestSetting
 	{
-		public List<DeviceSetting> Devices { get; }
+		public List<DeviceSetting> Devices { get; } = new List<DeviceSetting>();
 
-		public List<EventSetting> Events { get; }
-	}
-
-	/// <summary>
-	/// Configuration for a component of a test.
-	/// </summary>
-	[Serializable]
-	public class TestComponent
-	{
-		[Category("Test Component"), Description("Actions to perform during this test component.")]
-		public List<Test.Command> Commands { get; set; }
+		public List<EventSetting> Events { get; } = new List<EventSetting>();
 	}
 }

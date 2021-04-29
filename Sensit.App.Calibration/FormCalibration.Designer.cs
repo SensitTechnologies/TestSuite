@@ -645,7 +645,7 @@
 			this.tabPageLog.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.tabPageLog.Name = "tabPageLog";
 			this.tabPageLog.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.tabPageLog.Size = new System.Drawing.Size(629, 290);
+			this.tabPageLog.Size = new System.Drawing.Size(629, 292);
 			this.tabPageLog.TabIndex = 7;
 			this.tabPageLog.Text = "Log";
 			this.tabPageLog.UseVisualStyleBackColor = true;
@@ -660,7 +660,7 @@
 			this.groupBoxLog.Margin = new System.Windows.Forms.Padding(4);
 			this.groupBoxLog.Name = "groupBoxLog";
 			this.groupBoxLog.Padding = new System.Windows.Forms.Padding(4);
-			this.groupBoxLog.Size = new System.Drawing.Size(623, 286);
+			this.groupBoxLog.Size = new System.Drawing.Size(623, 288);
 			this.groupBoxLog.TabIndex = 17;
 			this.groupBoxLog.TabStop = false;
 			this.groupBoxLog.Text = "Where should results be saved?";
@@ -1250,23 +1250,22 @@
 			// newToolStripMenuItem
 			// 
 			this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-			this.newToolStripMenuItem.Size = new System.Drawing.Size(158, 26);
-			this.newToolStripMenuItem.Text = "&New Test";
+			this.newToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+			this.newToolStripMenuItem.Text = "&New";
 			this.newToolStripMenuItem.Click += new System.EventHandler(this.NewToolStripMenuItem_Click);
 			// 
 			// openToolStripMenuItem
 			// 
 			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-			this.openToolStripMenuItem.Size = new System.Drawing.Size(158, 26);
-			this.openToolStripMenuItem.Text = "&Open Test";
+			this.openToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+			this.openToolStripMenuItem.Text = "&Open...";
 			this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItem_Click);
 			// 
 			// saveToolStripMenuItem
 			// 
-			this.saveToolStripMenuItem.Enabled = false;
 			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-			this.saveToolStripMenuItem.Size = new System.Drawing.Size(158, 26);
-			this.saveToolStripMenuItem.Text = "&Save Test";
+			this.saveToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+			this.saveToolStripMenuItem.Text = "&Save As...";
 			this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator2

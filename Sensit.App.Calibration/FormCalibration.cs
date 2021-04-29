@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Deployment.Application;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO.Ports;
 using System.Linq;
 using System.Windows.Forms;
@@ -37,9 +38,6 @@ namespace Sensit.App.Calibration
 		// allow the form to wait for tests to cancel/complete before closing application
 		private bool _closeAfterTest = false;
 
-		// test equipment
-		private Equipment _equipment;
-
 		// tests
 		private Test _test;
 
@@ -62,7 +60,7 @@ namespace Sensit.App.Calibration
 			}
 
 			// List the control devices in the form, and select the first one.
-			List<Type> deviceTypes = Utilities.FindClasses(typeof(IControlDevice));
+			List<Type> deviceTypes = Utilities.FindClasses(typeof(IDevice));
 			foreach (Type deviceType in deviceTypes)
 			{
 				comboBoxDeviceType.Items.Add(deviceType.GetDescription());
@@ -125,21 +123,9 @@ namespace Sensit.App.Calibration
 				// Disable most of the user controls.
 				SetControlEnable(true);
 
-				// Create object for the equipment.
-				_equipment = new Equipment();
-
-				// TODO:  Add devices to settings file.
-				// foreach (row in tableLayoutPanelDevices)
-				{
-					CheckBox checkBoxDeviceName = tableLayoutPanelDevices.GetControlFromPosition(COLUMN_DEVICES_NAME, 1) as CheckBox;
-					ComboBox comboBoxDeviceType = tableLayoutPanelDevices.GetControlFromPosition(COLUMN_DEVICES_TYPE, 1) as ComboBox;
-					ComboBox comboBoxDevicePort = tableLayoutPanelDevices.GetControlFromPosition(COLUMN_DEVICES_PORT, 1) as ComboBox;
-					//_equipment.Add(...);
-				}
-
 				// Create test object and link its actions to actions on this form.
 				// https://syncor.blogspot.com/2010/11/passing-getter-and-setter-of-c-property.html
-				_test = new Test(_testSettings, _equipment, textBoxLogFilename.Text)
+				_test = new Test(_testSettings, textBoxLogFilename.Text)
 				{
 					Finished = TestFinished,
 					UpdateProgress = TestUpdate,
@@ -151,7 +137,7 @@ namespace Sensit.App.Calibration
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error");
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 			}
 		}
 
@@ -255,20 +241,6 @@ namespace Sensit.App.Calibration
 
 		#region File Menu
 
-		private void SupportToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			try
-			{
-				ProcessStartInfo processStartInfo = new ProcessStartInfo("https://github.com/SensitTechnologies/TestSuite/wiki");
-				Process.Start(processStartInfo);
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show(ex.Message + Environment.NewLine +
-					"I was trying to navigate to: https://github.com/SensitTechnologies/TestSuite/wiki.", "ERROR");
-			}
-		}
-
 		private void NewToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			// Remove all devices.
@@ -304,16 +276,72 @@ namespace Sensit.App.Calibration
 			// Allow the user to select a filename.
 			SaveFileDialog fileDialog = new SaveFileDialog();
 			fileDialog.Filter = "XML-File|*.xml";
-			fileDialog.Title = "Save test settings file";
+			fileDialog.Title = "Save test as";
 			fileDialog.ShowDialog();
 
 			// If a valid filename has been selected...
 			if (!string.IsNullOrEmpty(fileDialog.FileName))
 			{
-				// TODO:  Save settings to file.
+				try
+				{
+					// Create a new test settings object.
+					TestSetting testSetting = new TestSetting();
 
-				// Save to XML file.
-				Settings.Save(_testSettings, fileDialog.FileName);
+					// Add each device to the settings object.
+					for (int row = 1; row < tableLayoutPanelDevices.RowCount; row++)
+					{
+						CheckBox checkBoxDeviceName = tableLayoutPanelDevices.GetControlFromPosition(COLUMN_DEVICES_NAME, row) as CheckBox;
+						Label labelDeviceType = tableLayoutPanelDevices.GetControlFromPosition(COLUMN_DEVICES_TYPE, row) as Label;
+						ComboBox comboBoxDevicePort = tableLayoutPanelDevices.GetControlFromPosition(COLUMN_DEVICES_PORT, row) as ComboBox;
+
+						testSetting.Devices.Add(new DeviceSetting
+						{
+							Name = checkBoxDeviceName.Text,
+							Type = labelDeviceType.Text,
+							SerialPort = comboBoxDevicePort.Text
+						});
+					}
+
+					// Add each event to the settings object.
+					for (int row = 1; row < tableLayoutPanelEvents.RowCount; row++)
+					{
+						CheckBox checkBoxEventDevice = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_DEVICE, row) as CheckBox;
+						Label labelEventVariable = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_VARIABLE, row) as Label;
+						Label labelEventValue = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_VALUE, row) as Label;
+						Label labelEventDuration = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_DURATION, row) as Label;
+
+						Enum.TryParse(labelEventVariable.Text, out VariableType variableType);
+
+						testSetting.Events.Add(new EventSetting
+						{
+							DeviceName = checkBoxEventDevice.Text,
+							Variable = variableType,
+							Value = Convert.ToDouble(labelEventValue.Text),
+							Duration = Convert.ToUInt32(labelEventDuration.Text)
+						});
+					}
+
+					// Save to XML file.
+					Settings.Save(testSetting, fileDialog.FileName);
+				}
+				catch (ArgumentException ex)
+				{
+					MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
+				}
+				catch (FormatException ex)
+				{
+					MessageBox.Show("Can't save settings." + Environment.NewLine
+						+ ex.Message + Environment.NewLine
+						+ "Check events for a non-numeric Value or Duration.",
+						ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
+				}
+				catch (OverflowException ex)
+				{
+					MessageBox.Show("Can't save settings." + Environment.NewLine
+						+ ex.Message + Environment.NewLine
+						+ "Check the events for a number larger than a normal integer.",
+						ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
+				}
 			}
 
 			// Clean up.
@@ -346,6 +374,21 @@ namespace Sensit.App.Calibration
 		#endregion
 
 		#region Help Menu
+
+		private void SupportToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				ProcessStartInfo processStartInfo = new ProcessStartInfo("https://github.com/SensitTechnologies/TestSuite/wiki");
+				Process.Start(processStartInfo);
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message + Environment.NewLine +
+					"I was trying to navigate to: https://github.com/SensitTechnologies/TestSuite/wiki.",
+					ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
+			}
+		}
 
 		/// <summary>
 		/// When the user clicks Help --> About, show an about box.
@@ -553,6 +596,8 @@ namespace Sensit.App.Calibration
 
 		private void ButtonDeviceDelete_Click(object sender, EventArgs e)
 		{
+			// TODO:  Handle case where deleting device and there are events using that device.
+
 			// Hunt backwards for checked boxes or we'll miss the last one selected.
 			for (int row = tableLayoutPanelDevices.RowCount - 1; row >= 0; row--)
 			{
