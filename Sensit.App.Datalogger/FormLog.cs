@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Deployment.Application;
+using System.Globalization;
 using System.IO.Ports;
 using System.Threading;
 using System.Timers;
@@ -149,11 +150,11 @@ namespace Sensit.App.Datalogger
 			}
 			catch (FormatException ex)
 			{
-				MessageBox.Show(ex.Message, "ERROR");
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 			}
 			catch (OverflowException ex)
 			{
-				MessageBox.Show(ex.Message, "ERROR");
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 			}
 		}
 
@@ -229,7 +230,7 @@ namespace Sensit.App.Datalogger
 			catch (Exception ex)
 			{
 				// Notify the user.
-				MessageBox.Show(ex.Message, "ERROR");
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 
 				// Stop logging.
 				// Use a method invoker because it needs to happen in the form's thread.
@@ -277,7 +278,7 @@ namespace Sensit.App.Datalogger
 				catch (Exception ex)
 				{
 					// Notify the user.
-					MessageBox.Show(ex.Message, "ERROR");
+					MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 
 					// Undo whatever was started.
 					StopLogging();
@@ -321,7 +322,7 @@ namespace Sensit.App.Datalogger
 				}
 				catch (Exception ex)
 				{
-					MessageBox.Show(ex.Message, "ERROR");
+					MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 				}
 			}
 		}
