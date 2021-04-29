@@ -273,19 +273,28 @@ namespace Sensit.App.Calibration
 			// If a valid filename has been selected...
 			if (!string.IsNullOrEmpty(fileDialog.FileName))
 			{
-				// Load settings from file.
-				TestSetting testSetting = Settings.Load<TestSetting>(fileDialog.FileName);
-
-				// Add each device to the form.
-				foreach (KeyValuePair<string, DeviceSetting> d in testSetting.Devices)
+				try
 				{
-					AddDevice(d.Key, d.Value.Type, d.Value.SerialPort);
+					// Load settings from file.
+					TestSetting testSetting = Settings.Load<TestSetting>(fileDialog.FileName);
+
+					// Add each device to the form.
+					foreach (KeyValuePair<string, DeviceSetting> d in testSetting.Devices)
+					{
+						AddDevice(d.Key, d.Value.Type, d.Value.SerialPort);
+					}
+
+					// Add each event to the form.
+					foreach (EventSetting es in testSetting.Events)
+					{
+						AddEvent(es.DeviceName, es.Variable.ToString(), es.Value.ToString(), es.Duration.ToString());
+					}
 				}
-
-				// Add each event to the form.
-				foreach (EventSetting es in testSetting.Events)
+				catch (InvalidOperationException ex)
 				{
-					AddEvent(es.DeviceName, es.Variable.ToString(), es.Value.ToString(), es.Duration.ToString());
+					MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine +
+						"(This means the logfile you're trying to open is not formatted correctly.)",
+						ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 				}
 			}
 
