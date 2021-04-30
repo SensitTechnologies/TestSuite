@@ -15,32 +15,29 @@ namespace Sensit.App.Calibration
 		// CSV writer
 		private CsvWriter _writer;
 
-		// name of the CSV file
-		private string _filename;
-
-		private Equipment _equipment;
-
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="filename">desired filename to create/append to</param>
-		public Log(string filename, Equipment equipment)
-		{
-			// Remember the file name.
-			_filename = filename;
-
-			// Save the equipment object (and check for null).
-			_equipment = equipment ?? throw new ArgumentNullException(nameof(equipment));
-		}
-
 		/// <summary>
 		/// Open the log file (for appending).
 		/// </summary>
-		/// <param name="filename"></param>
-		public void Open()
+		/// <param name="filepath">desired file path to create/append to</param>
+		public Log(string filepath)
 		{
+			// If the file exists...
+			if (File.Exists(filepath) == false)
+			{
+				throw new ArgumentException("Log file path does not exist.", nameof(filepath));
+			}
+
 			// Set up the CSV file writer filestream.
-			_writer = new CsvWriter(_filename, true);
+			_writer = new CsvWriter(filepath, true);
+		}
+
+		public void WriteHeader(Dictionary<string, IDevice> devices)
+		{
+			// Check for null argument.
+			if (devices == null)
+			{
+				throw new ArgumentNullException(nameof(devices));
+			}
 
 			// Write column headers.
 			List<string> row = new List<string>();
@@ -48,7 +45,7 @@ namespace Sensit.App.Calibration
 			// Write column header for elapsed time.
 			row.Add("Elapsed Time");
 			
-			foreach (KeyValuePair<string, IDevice> device in _equipment.Devices)
+			foreach (KeyValuePair<string, IDevice> device in devices)
 			{
 				// Add column headers for each setpoint.
 				foreach (VariableType setpoint in device.Value.Setpoints.Keys)
@@ -70,14 +67,20 @@ namespace Sensit.App.Calibration
 		/// <param name="elapsedTime"></param>
 		/// <param name="setpoint"></param>
 		/// <param name="reference"></param>
-		public void Write(TimeSpan elapsedTime)
+		public void Write(TimeSpan elapsedTime, Dictionary<string, IDevice> devices)
 		{
+			// Check for null argument.
+			if (devices == null)
+			{
+				throw new ArgumentNullException(nameof(devices));
+			}
+
 			// Save test results to csv file.
 			// Log a timestamp and the sample value to a CSV file.
 			List<string> row = new List<string>();
 			row.Add(elapsedTime.ToString());
 
-			foreach (IDevice device in _equipment.Devices.Values)
+			foreach (IDevice device in devices.Values)
 			{
 				// Add column headers for each setpoint.
 				foreach (double setpoint in device.Setpoints.Values)
@@ -92,7 +95,7 @@ namespace Sensit.App.Calibration
 				}
 			}
 
-			_writer.WriteRow(row);
+			_writer?.WriteRow(row);
 		}
 
 		public void WriteMessage(string message)
