@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace Sensit.TestSDK.Settings
@@ -11,7 +12,7 @@ namespace Sensit.TestSDK.Settings
 	/// https://docs.microsoft.com/en-us/dotnet/standard/serialization/how-to-serialize-an-object
 	/// https://docs.microsoft.com/en-us/dotnet/standard/serialization/how-to-deserialize-an-object
 	/// </remarks>
-	public class Serializer
+	public static class Serializer
 	{
 		/// <summary>
 		/// Save a serializable object to an XML file.
@@ -43,16 +44,22 @@ namespace Sensit.TestSDK.Settings
 		public static T DeserializeXML<T>(string filename)
 		{
 			// Create a serializer using the type of the object to be deserialized.
-			XmlSerializer mySerializer = new XmlSerializer(typeof(T));
+			XmlSerializer serializer = new XmlSerializer(typeof(T));
 
 			// Create a filestream to read the file.
-			FileStream myFileStream = new FileStream(filename, FileMode.Open);
+			FileStream fileStream = new FileStream(filename, FileMode.Open);
+
+			// Create an XML reader.
+			XmlReader xmlReader = XmlReader.Create(fileStream);
 
 			// Read the file.
-			T data = (T)mySerializer.Deserialize(myFileStream);
+			T data = (T)serializer.Deserialize(xmlReader);
 
 			// Close the file.
-			myFileStream.Close();
+			fileStream.Close();
+
+			// Dispose of resources.
+			xmlReader.Dispose();
 
 			// Deserialize the file and cast to the object type.
 			return data;
