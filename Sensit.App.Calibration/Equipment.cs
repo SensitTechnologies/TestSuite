@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Sensit.TestSDK.Communication;
+using Sensit.TestSDK.Devices;
 using Sensit.TestSDK.Interfaces;
+using Sensit.TestSDK.Utilities;
 
 namespace Sensit.App.Calibration
 {
@@ -15,7 +17,29 @@ namespace Sensit.App.Calibration
 	/// </remarks>
 	public class Equipment : IDisposable
 	{
-		public Dictionary<string, IDevice> Devices { get; }
+		public Dictionary<string, IDevice> Devices { get; } = new Dictionary<string, IDevice>();
+
+		public Equipment(List<DeviceSetting> deviceSettings)
+		{
+			foreach (DeviceSetting d in deviceSettings ?? throw new ArgumentNullException(nameof(deviceSettings)))
+			{
+				// Find the device class specified in settings (and check that it was found).
+				Type deviceType = Utilities.FindTypeFromAssemblyName(typeof(Manual), d.Type);
+
+				// Create an instance of the device.
+				object device = Activator.CreateInstance(deviceType);
+
+				// If the device is a serial device...
+				if (device is SerialDevice s)
+				{
+					// Set the serial port.
+					s.PortName = d.SerialPort;
+				}
+
+				// Add the device to our list of devices.
+				Devices.Add(d.Name, (IDevice)device);
+			}
+		}
 
 		/// <summary>
 		/// Initializes all equipment.
@@ -58,7 +82,7 @@ namespace Sensit.App.Calibration
 		}
 
 		/// <summary>
-		/// Close all serial devices among the devices.
+		/// Close all devices that have a "Close" method.
 		/// </summary>
 		public void Close()
 		{

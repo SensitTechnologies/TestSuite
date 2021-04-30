@@ -139,6 +139,8 @@ namespace Sensit.App.Calibration
 			catch (Exception ex)
 			{
 				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
+
+				SetControlEnable(false);
 			}
 		}
 
@@ -281,13 +283,16 @@ namespace Sensit.App.Calibration
 					// Add each device to the form.
 					foreach (DeviceSetting d in testSetting.Devices)
 					{
-						AddDevice(d.Name, d.Type, d.SerialPort);
+						// Find the device class from the string of its type.
+						Type deviceType = Utilities.FindTypeFromAssemblyName(typeof(TestSDK.Devices.Manual), d.Type);
+
+						AddDeviceToPanel(d.Name, deviceType.GetDescription(), d.SerialPort);
 					}
 
 					// Add each event to the form.
 					foreach (EventSetting es in testSetting.Events)
 					{
-						AddEvent(es.DeviceName, es.Variable.ToString(), es.Value.ToString(), es.Duration.ToString());
+						AddEvent(es.DeviceName, es.Variable.GetDescription(), es.Value, es.Duration);
 					}
 				}
 				catch (InvalidOperationException ex)
@@ -371,11 +376,17 @@ namespace Sensit.App.Calibration
 						"Please use a unique name for each device.");
 				}
 
+				// List the control devices in the form.
+				List<Type> deviceTypes = Utilities.FindClasses(typeof(IDevice));
+
+				// Find the device type with the correct description.
+				Type deviceType = deviceTypes.FirstOrDefault(o => o.GetDescription() == labelDeviceType.Text);
+
 				// Add the new device to settings.
 				testSetting.Devices.Add(new DeviceSetting
 				{
 					Name = checkBoxDeviceName.Text,
-					Type = labelDeviceType.Text,
+					Type = deviceType.ToString(),
 					SerialPort = comboBoxDevicePort.Text
 				});
 			}
@@ -405,7 +416,7 @@ namespace Sensit.App.Calibration
 					{
 						DeviceName = checkBoxEventDevice.Text,
 						Variable = variableType,
-						Value = Convert.ToDouble(labelEventValue.Text, CultureInfo.InvariantCulture),
+						Value = Convert.ToDecimal(labelEventValue.Text, CultureInfo.InvariantCulture),
 						Duration = Convert.ToUInt32(labelEventDuration.Text, CultureInfo.InvariantCulture)
 					});
 				}
@@ -514,8 +525,8 @@ namespace Sensit.App.Calibration
 			if (_test.Variables.ContainsKey(variableType))
 			{
 				groupBox.Visible = true;
-				setpoint.Text = _test.Variables[variableType].Setpoint.ToString("G4");
-				value.Text = _test.Variables[variableType].Value.ToString("G4");
+				setpoint.Text = _test.Variables[variableType].Setpoint.ToString("G4", CultureInfo.CurrentCulture);
+				value.Text = _test.Variables[variableType].Value.ToString("G4", CultureInfo.CurrentCulture);
 			}
 			else
 			{
@@ -548,10 +559,17 @@ namespace Sensit.App.Calibration
 
 		private void ButtonDeviceAdd_Click(object sender, EventArgs e)
 		{
-			AddDevice(textBoxDeviceName.Text, comboBoxDeviceType.Text, "");
+			if (string.IsNullOrWhiteSpace(textBoxDeviceName.Text))
+			{
+				MessageBox.Show("Device name is empty!");
+			}
+			else
+			{
+				AddDeviceToPanel(textBoxDeviceName.Text, comboBoxDeviceType.Text, "");
+			}
 		}
 
-		private void AddDevice(string name, string type, string port)
+		private void AddDeviceToPanel(string name, string type, string port)
 		{
 			// Stop the GUI from looking weird while we update it.
 			tableLayoutPanelDevices.SuspendLayout();
@@ -600,10 +618,10 @@ namespace Sensit.App.Calibration
 
 		private void ButtonEventAdd_Click(object sender, EventArgs e)
 		{
-			AddEvent(comboBoxEventDevice.Text, comboBoxEventVariable.Text, numericUpDownEventValue.Text, numericUpDownEventDuration.Text);
+			AddEvent(comboBoxEventDevice.Text, comboBoxEventVariable.Text, numericUpDownEventValue.Value, numericUpDownEventDuration.Value);
 		}
 
-		private void AddEvent(string device, string variable, string value, string duration)
+		private void AddEvent(string device, string variable, decimal value, decimal duration)
 		{
 			// Stop the GUI from looking weird while we update it.
 			tableLayoutPanelEvents.SuspendLayout();
@@ -636,7 +654,7 @@ namespace Sensit.App.Calibration
 				Anchor = AnchorStyles.Left | AnchorStyles.Top,
 				AutoSize = true,
 				Dock = DockStyle.None,
-				Text = value
+				Text = value.ToString(CultureInfo.InvariantCulture)
 			}, COLUMN_EVENTS_VALUE, tableLayoutPanelEvents.RowCount - 1);
 
 			// Add the duration.
@@ -645,7 +663,7 @@ namespace Sensit.App.Calibration
 				Anchor = AnchorStyles.Left | AnchorStyles.Top,
 				AutoSize = true,
 				Dock = DockStyle.None,
-				Text = duration
+				Text = duration.ToString(CultureInfo.InvariantCulture)
 			}, COLUMN_EVENTS_DURATION, tableLayoutPanelEvents.RowCount - 1);
 
 			// Add the status.
