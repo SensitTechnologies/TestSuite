@@ -118,8 +118,8 @@ namespace Sensit.App.Calibration
 		{
 			// Save the reference to the equipment and log file manager objects.
 			_settings = settings ?? throw new ArgumentNullException(nameof(settings));
-			_equipment = new Equipment();
-			_log = new Log(filename, _equipment);
+			_equipment = new Equipment(_settings.Devices);
+			_log = new Log(filename);
 
 			// Set up the background worker.
 			_testThread = new BackgroundWorker
@@ -423,7 +423,7 @@ namespace Sensit.App.Calibration
 		private void ProcessSamples()
 		{
 			// Record test data.
-			_log.Write(_elapsedTimeStopwatch.Elapsed);
+			_log.Write(_elapsedTimeStopwatch.Elapsed, _equipment.Devices);
 		}
 
 		/// <summary>
@@ -446,7 +446,7 @@ namespace Sensit.App.Calibration
 				_equipment.Devices[e.DeviceName].SetControlMode(ControlMode.Active);
 
 				// Set the setpoint.
-				ProcessSetpoint(e.DeviceName, e.Variable, e.Value, e.Interval, e.Timeout, e.ErrorTolerance, e.DwellTime);
+				ProcessSetpoint(e.DeviceName, e.Variable, Convert.ToDouble(e.Value), e.Interval, e.Timeout, Convert.ToDouble(e.ErrorTolerance), e.DwellTime);
 
 				// For each sample...
 				for (int i = 1; i <= e.Duration; i++)
@@ -506,8 +506,8 @@ namespace Sensit.App.Calibration
 				{
 					// Initialize test equipment.
 					_testThread.ReportProgress(0, "Configuring test equipment...");
-					_log.Open();
 					_equipment.Open();
+					_log.WriteHeader(_equipment.Devices);
 
 					// Repeat test if requested.
 					do
