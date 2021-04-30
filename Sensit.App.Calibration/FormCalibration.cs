@@ -397,18 +397,22 @@ namespace Sensit.App.Calibration
 				}
 
 				// Convert the variable to the appropriate enumeration (and check that it's valid).
-				if (Enum.TryParse(labelEventVariable.Text, out VariableType variableType) == false)
+				try
 				{
-					throw new TestException("Unrecognized variable type in event " + row.ToString(CultureInfo.CurrentCulture));
-				}
+					VariableType variableType = Utilities.GetEnumValueFromDescription<VariableType>(labelEventVariable.Text);
 
-				testSetting.Events.Add(new EventSetting
+					testSetting.Events.Add(new EventSetting
+					{
+						DeviceName = checkBoxEventDevice.Text,
+						Variable = variableType,
+						Value = Convert.ToDouble(labelEventValue.Text, CultureInfo.InvariantCulture),
+						Duration = Convert.ToUInt32(labelEventDuration.Text, CultureInfo.InvariantCulture)
+					});
+				}
+				catch (ArgumentException ex)
 				{
-					DeviceName = checkBoxEventDevice.Text,
-					Variable = variableType,
-					Value = Convert.ToDouble(labelEventValue.Text, CultureInfo.InvariantCulture),
-					Duration = Convert.ToUInt32(labelEventDuration.Text, CultureInfo.InvariantCulture)
-				});
+					throw new TestException("Unrecognized variable type in event " + row.ToString(CultureInfo.CurrentCulture), ex);
+				}
 			}
 
 			return testSetting;
