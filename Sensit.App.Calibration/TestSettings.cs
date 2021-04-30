@@ -25,16 +25,16 @@ namespace Sensit.App.Calibration
 
 		public VariableType Variable { get; set; }
 
-		public double Value { get; set; }
+		public decimal Value { get; set; }
 
 		// Duration of the event (in seconds).
 		public uint Duration { get; set; }
 
 		[Description("Error tolerance around setpoints [% full scale].  If exceeded, Stability Time will reset.")]
-		public double ErrorTolerance { get; set; } = 5.0;
+		public decimal ErrorTolerance { get; set; } = 5.0M;
 
 		[Description("Tolerated rate of change of setpoints [% full scale / s].  If exceeded, Stability Time will reset.")]
-		public double RateTolerance { get; set; } = 0.5;
+		public decimal RateTolerance { get; set; } = 0.5M;
 
 		// TimeSpans aren't serializable, see this for workaround:
 		// https://stackoverflow.com/questions/637933/how-to-serialize-a-timespan-to-xml
