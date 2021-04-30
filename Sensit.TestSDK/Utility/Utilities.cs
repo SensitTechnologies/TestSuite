@@ -7,6 +7,7 @@ using System.Windows.Forms;
 
 namespace Sensit.TestSDK.Utilities
 {
+	// TODO:  Split Utilities class into several classes (EnumExtentions, Interface Utilities, Table Layout Panel Utilities).
 	public static class Utilities
 	{
 		/// <summary>
@@ -57,12 +58,16 @@ namespace Sensit.TestSDK.Utilities
 		{
 			DescriptionAttribute description = (DescriptionAttribute)type.GetCustomAttribute(typeof(DescriptionAttribute));
 
+			// If the type has no description attribute...
 			if (description == null)
 			{
+				// Return the type's name instead.
 				return type?.Name;
 			}
+			// If the type has a description attribute...
 			else
 			{
+				// Return the description.
 				return description.Description;
 			}
 		}
@@ -84,6 +89,40 @@ namespace Sensit.TestSDK.Utilities
 			{
 				return category.Category;
 			}
+		}
+
+		/// <summary>
+		/// Get an enumeration's value from it's description.
+		/// </summary>
+		/// <remarks>
+		/// Source:
+		/// https://stackoverflow.com/questions/4367723/get-enum-from-description-attribute
+		/// See also:
+		/// https://stackoverflow.com/questions/3422407/finding-an-enum-value-by-its-description-attribute
+		/// https://stackoverflow.com/questions/2787506/get-enum-from-enum-attribute
+		/// </remarks>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="description"></param>
+		/// <returns></returns>
+		public static T GetEnumValueFromDescription<T>(string description) where T : Enum
+		{
+			foreach (var field in typeof(T).GetFields())
+			{
+				if (Attribute.GetCustomAttribute(field,
+				typeof(DescriptionAttribute)) is DescriptionAttribute attribute)
+				{
+					if (attribute.Description == description)
+						return (T)field.GetValue(null);
+				}
+				else
+				{
+					if (field.Name == description)
+						return (T)field.GetValue(null);
+				}
+			}
+
+			throw new ArgumentException("Not found.", nameof(description));
+			// Or return default(T);
 		}
 
 		/// <summary>
