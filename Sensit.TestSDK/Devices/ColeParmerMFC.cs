@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO.Ports;
 using Sensit.TestSDK.Calculations;
 using Sensit.TestSDK.Communication;
@@ -42,6 +43,7 @@ namespace Sensit.TestSDK.Devices
 	/// serial interfaces, but some menu differences and major electronics differences.
 	/// 
 	/// </remarks>
+	[Description("Cole Parmer MFC")]
 	public class ColeParmerMFC : SerialDevice, IMassFlowDevice, IVolumeFlowDevice, ITemperatureDevice, IPressureDevice
 	{
 		public Dictionary<VariableType, double> Readings { get; } = new Dictionary<VariableType, double>

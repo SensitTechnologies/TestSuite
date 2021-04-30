@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using Sensit.TestSDK.Calculations;
 using Sensit.TestSDK.Communication;
@@ -8,6 +9,7 @@ using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.TestSDK.Devices
 {
+	[Description("Sensit G2GLT")]
 	public class SensitG2GLT : SerialDevice
 	{
 		// 115200 and 230400 baud are supported.

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO.Ports;
 using System.Text;
 using Sensit.TestSDK.Communication;
@@ -17,6 +18,7 @@ namespace Sensit.TestSDK.Devices
 	/// of data it will send.  So this class is a generic reference device, and
 	/// will have a generic variable type which will be accessible as a string.
 	/// </remarks>
+	[Description("Serial Stream Device")]
 	public class SerialStreamDevice : SerialDevice, IMessageDevice
 	{
 		public override List<int> SupportedBaudRates { get; } = new List<int> { 300, 600, 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200, 230400, 460800, 921600 };
