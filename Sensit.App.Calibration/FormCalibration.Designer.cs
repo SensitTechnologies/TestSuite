@@ -580,6 +580,7 @@
 			// 
 			// comboBoxEventDevice
 			// 
+			this.comboBoxEventDevice.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.comboBoxEventDevice.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxEventDevice.FormattingEnabled = true;
 			this.comboBoxEventDevice.Location = new System.Drawing.Point(4, 4);
@@ -602,6 +603,7 @@
 			// 
 			// numericUpDownEventDuration
 			// 
+			this.numericUpDownEventDuration.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.numericUpDownEventDuration.Increment = new decimal(new int[] {
             60,
             0,
@@ -620,6 +622,7 @@
 			// 
 			// comboBoxEventVariable
 			// 
+			this.comboBoxEventVariable.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.comboBoxEventVariable.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxEventVariable.FormattingEnabled = true;
 			this.comboBoxEventVariable.Location = new System.Drawing.Point(112, 4);
@@ -630,6 +633,8 @@
 			// 
 			// numericUpDownEventValue
 			// 
+			this.numericUpDownEventValue.DecimalPlaces = 2;
+			this.numericUpDownEventValue.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.numericUpDownEventValue.Increment = new decimal(new int[] {
             100,
             0,
@@ -1258,33 +1263,33 @@
 			// newToolStripMenuItem
 			// 
 			this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-			this.newToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+			this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
 			this.newToolStripMenuItem.Text = "&New";
 			this.newToolStripMenuItem.Click += new System.EventHandler(this.NewToolStripMenuItem_Click);
 			// 
 			// openToolStripMenuItem
 			// 
 			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-			this.openToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+			this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
 			this.openToolStripMenuItem.Text = "&Open...";
 			this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItem_Click);
 			// 
 			// saveToolStripMenuItem
 			// 
 			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-			this.saveToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+			this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
 			this.saveToolStripMenuItem.Text = "&Save As...";
 			this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(221, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
 			this.exitToolStripMenuItem.Text = "&Exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
 			// 
@@ -1302,7 +1307,7 @@
 			// 
 			this.startToolStripMenuItem.Name = "startToolStripMenuItem";
 			this.startToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-			this.startToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+			this.startToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
 			this.startToolStripMenuItem.Text = "&Start";
 			this.startToolStripMenuItem.Click += new System.EventHandler(this.ButtonStart_Click);
 			// 
@@ -1311,7 +1316,7 @@
 			this.pauseToolStripMenuItem.Enabled = false;
 			this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
 			this.pauseToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F6;
-			this.pauseToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+			this.pauseToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
 			this.pauseToolStripMenuItem.Text = "&Pause";
 			this.pauseToolStripMenuItem.ToolTipText = "Hault the current test temporarily";
 			this.pauseToolStripMenuItem.Click += new System.EventHandler(this.PauseToolStripMenuItem_Click);
@@ -1321,7 +1326,7 @@
 			this.stopToolStripMenuItem.Enabled = false;
 			this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
 			this.stopToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F7;
-			this.stopToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+			this.stopToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
 			this.stopToolStripMenuItem.Text = "&Stop";
 			this.stopToolStripMenuItem.Click += new System.EventHandler(this.ButtonStop_Click);
 			// 
