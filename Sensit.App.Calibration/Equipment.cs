@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Sensit.TestSDK.Communication;
-using Sensit.TestSDK.Devices;
 using Sensit.TestSDK.Interfaces;
 using Sensit.TestSDK.Utilities;
 
@@ -23,8 +23,12 @@ namespace Sensit.App.Calibration
 		{
 			foreach (DeviceSetting d in deviceSettings ?? throw new ArgumentNullException(nameof(deviceSettings)))
 			{
-				// Find the device class specified in settings (and check that it was found).
-				Type deviceType = Utilities.FindTypeFromAssemblyName(typeof(Manual), d.Type);
+				// TODO:  Take the next two statements and make them into a utility method (they're used twice in FormCalibration.cs and once here).
+				// List the control devices in the form.
+				List<Type> deviceTypes = Utilities.FindClasses(typeof(IDevice));
+
+				// Find the device type with the correct description.
+				Type deviceType = deviceTypes.FirstOrDefault(o => o.GetDescription() == d.Type);
 
 				// Create an instance of the device.
 				object device = Activator.CreateInstance(deviceType);

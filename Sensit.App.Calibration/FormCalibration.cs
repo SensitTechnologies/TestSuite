@@ -283,8 +283,11 @@ namespace Sensit.App.Calibration
 					// Add each device to the form.
 					foreach (DeviceSetting d in testSetting.Devices)
 					{
-						// Find the device class from the string of its type.
-						Type deviceType = Utilities.FindTypeFromAssemblyName(typeof(TestSDK.Devices.Manual), d.Type);
+						// List the control devices in the form.
+						List<Type> deviceTypes = Utilities.FindClasses(typeof(IDevice));
+
+						// Find the device type with the correct description.
+						Type deviceType = deviceTypes.FirstOrDefault(o => o.GetDescription() == d.Type);
 
 						AddDeviceToPanel(d.Name, deviceType.GetDescription(), d.SerialPort);
 					}
@@ -379,14 +382,11 @@ namespace Sensit.App.Calibration
 				// List the control devices in the form.
 				List<Type> deviceTypes = Utilities.FindClasses(typeof(IDevice));
 
-				// Find the device type with the correct description.
-				Type deviceType = deviceTypes.FirstOrDefault(o => o.GetDescription() == labelDeviceType.Text);
-
 				// Add the new device to settings.
 				testSetting.Devices.Add(new DeviceSetting
 				{
 					Name = checkBoxDeviceName.Text,
-					Type = deviceType.ToString(),
+					Type = labelDeviceType.Text,
 					SerialPort = comboBoxDevicePort.Text
 				});
 			}

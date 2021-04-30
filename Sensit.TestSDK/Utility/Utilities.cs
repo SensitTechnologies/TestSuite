@@ -160,29 +160,6 @@ namespace Sensit.TestSDK.Utilities
 			return types.ToList();
 		}
 
-		/// <summary>
-		/// Find a class's type given the name of the desired class and the type of a class in the same assembly.
-		/// </summary>
-		/// <param name="classInSameAssembly">type of a class in the same assembly as the one being searched for</param>
-		/// <param name="className">name of the class to search for</param>
-		/// <returns></returns>
-		public static Type FindTypeFromAssemblyName(Type classInSameAssembly, string className)
-		{
-			if (classInSameAssembly == null)
-			{
-				throw new ArgumentNullException(nameof(classInSameAssembly));
-			}
-
-			// Find the device class specified in settings (and check that it was found).
-			Type type = classInSameAssembly.Assembly.GetType(className);
-			if (type == null)
-			{
-				throw new InvalidOperationException("Device type not found in TestSDK.");
-			}
-
-			return type;
-		}
-
 		#region Table Layout Panel Helper Methods
 
 		/// <summary>
