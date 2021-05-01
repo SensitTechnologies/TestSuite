@@ -713,7 +713,7 @@
 			this.groupBoxVariables.Size = new System.Drawing.Size(558, 293);
 			this.groupBoxVariables.TabIndex = 1;
 			this.groupBoxVariables.TabStop = false;
-			this.groupBoxVariables.Text = "Measured/Controlled Variables";
+			this.groupBoxVariables.Text = "Variables";
 			// 
 			// flowLayoutPanelControlledVariables
 			// 
