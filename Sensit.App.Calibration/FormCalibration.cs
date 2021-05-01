@@ -75,6 +75,9 @@ namespace Sensit.App.Calibration
 			// Select the most recently used termination option.
 			radioButtonRepeatYes.Checked = Properties.Settings.Default.Repeat;
 			radioButtonRepeatNo.Checked = !Properties.Settings.Default.Repeat;
+
+			// Select the most recently used logfile.
+			textBoxLogFilename.Text = Properties.Settings.Default.Logfile;
 		}
 
 		#endregion
@@ -289,7 +292,11 @@ namespace Sensit.App.Calibration
 						// Find the device type with the correct description.
 						Type deviceType = deviceTypes.FirstOrDefault(o => o.GetDescription() == d.Type);
 
+						// Add device to "Devices" tab.
 						AddDeviceToPanel(d.Name, deviceType.GetDescription(), d.SerialPort);
+
+						// TODO:  Add device to "Status" tab.
+						// TODO:  On "Events" tab, update status of each event as it completes.
 					}
 
 					// Add each event to the form.
@@ -565,7 +572,10 @@ namespace Sensit.App.Calibration
 			}
 			else
 			{
+				// Add device to the device list panel.
 				AddDeviceToPanel(textBoxDeviceName.Text, comboBoxDeviceType.Text, "");
+
+				// TODO:  Add device to "Status" tab.
 			}
 		}
 
