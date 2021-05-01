@@ -4,7 +4,6 @@ using System.Windows.Forms;
 using Sensit.TestSDK.Calculations;
 using Sensit.TestSDK.Forms;
 using Sensit.TestSDK.Interfaces;
-using Sensit.TestSDK.Utilities;
 
 namespace Sensit.TestSDK.Devices
 {
@@ -12,33 +11,20 @@ namespace Sensit.TestSDK.Devices
 	/// A virtual device.
 	/// </summary>
 	/// <remarks>
-	/// Useful for testing software and test equipment, or as a DUT to make manual
-	/// data entries.
+	/// Useful for testing software.
+	/// TODO:  Manual:  Make this device more useful.
 	/// </remarks>
 	public class Manual : IMassFlowDevice, IVolumeFlowDevice, IVelocityDevice, IPressureDevice,
 		ITemperatureDevice, ICurrentDevice, IVoltageDevice
 	{
-		/// <summary>
-		/// Used to determine what type of variables this controller will store.
-		/// </summary>
-		private VariableType _type;
-
-		public Dictionary<VariableType, double> Readings { get; private set; } = new Dictionary<VariableType, double>
+		public Dictionary<VariableType, double> Readings { get; } = new Dictionary<VariableType, double>
 		{
 			{ VariableType.MassFlow, 0.0 },
-			{ VariableType.Pressure, 0.0 },
-			{ VariableType.Temperature, 0.0 },
-			{ VariableType.Velocity, 0.0 },
-			{ VariableType.VolumeFlow, 0.0 }
 		};
 
 		public Dictionary<VariableType, double> Setpoints { get; } = new Dictionary<VariableType, double>
 		{
 			{ VariableType.MassFlow, 0.0 },
-			{ VariableType.Pressure, 0.0 },
-			{ VariableType.Temperature, 0.0 },
-			{ VariableType.Velocity, 0.0 },
-			{ VariableType.VolumeFlow, 0.0 }
 		};
 
 		public UnitOfMeasure.Flow FlowUnit { get; set; }
@@ -66,14 +52,14 @@ namespace Sensit.TestSDK.Devices
 		{
 			// Prompt user to enter a value.
 			double value = 0.0;
-			DialogResult result = InputDialog.Numeric("Enter " + _type.GetDescription() + ".", ref value, 0.0, 100.0);
+			DialogResult result = InputDialog.Numeric("Enter value.", ref value, 0.0, 100.0);
 
 			// If user cancels, throw an error.
 			if (result != DialogResult.OK)
 				throw new Exception("Could not read from DUT.");
 
 			// Store the result.
-			Readings[_type] = value;
+			Readings[VariableType.MassFlow] = value;
 		}
 
 		public void SetControlMode(ControlMode mode)
