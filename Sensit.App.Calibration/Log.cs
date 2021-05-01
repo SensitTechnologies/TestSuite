@@ -42,7 +42,8 @@ namespace Sensit.App.Calibration
 			// Write column headers.
 			List<string> row = new List<string>();
 
-			// Write column header for elapsed time.
+			// Write column headers for date/time and elapsed time.
+			row.Add("Timestamp");
 			row.Add("Elapsed Time");
 			
 			foreach (KeyValuePair<string, IDevice> device in devices)
@@ -78,19 +79,23 @@ namespace Sensit.App.Calibration
 			}
 
 			// Save test results to csv file.
-			// Log a timestamp and the sample value to a CSV file.
 			List<string> row = new List<string>();
+
+			// Log current date and time.
+			row.Add(DateTime.Now.ToString(CultureInfo.InvariantCulture));
+
+			// Log elapsed time.
 			row.Add(elapsedTime.ToString());
 
 			foreach (IDevice device in devices.Values)
 			{
-				// Add column headers for each setpoint.
+				// Add each setpoint.
 				foreach (double setpoint in device.Setpoints.Values)
 				{
 					row.Add(setpoint.ToString(CultureInfo.CurrentCulture));
 				}
 
-				// Add column headers for each reading.
+				// Add each reading.
 				foreach (double reading in device.Readings.Values)
 				{
 					row.Add(reading.ToString(CultureInfo.CurrentCulture));
