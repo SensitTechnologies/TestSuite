@@ -22,9 +22,9 @@ namespace Sensit.App.Calibration
 		public Log(string filepath)
 		{
 			// If the file exists...
-			if (File.Exists(filepath) == false)
+			if (string.IsNullOrWhiteSpace(filepath))
 			{
-				throw new ArgumentException("Log file path does not exist.", nameof(filepath));
+				throw new ArgumentException("Log file path is not valid." + Environment.NewLine, nameof(filepath));
 			}
 
 			// Set up the CSV file writer filestream.
@@ -50,7 +50,7 @@ namespace Sensit.App.Calibration
 				// Add column headers for each setpoint.
 				foreach (VariableType setpoint in device.Value.Setpoints.Keys)
 				{
-					row.Add(device.Key + " " + setpoint);
+					row.Add(device.Key + " " + setpoint + " Setpoint");
 				}
 
 				// Add column headers for each reading.
@@ -59,6 +59,8 @@ namespace Sensit.App.Calibration
 					row.Add(device.Key + " " + reading);
 				}
 			}
+
+			_writer?.WriteRow(row);
 		}
 
 		/// <summary>
