@@ -284,22 +284,29 @@ namespace Sensit.App.Calibration
 			// For each device...
 			foreach (IDevice device in _equipment.Devices.Values)
 			{
+				// Read the setpoint and reading.
+				device.Read();
+
 				foreach (KeyValuePair<VariableType, double> variable in device.Readings)
 				{
-					// Read the setpoint and reading.
-					device.Read();
-					double setpoint = device.Setpoints[variable.Key];
 					double reading = device.Readings[variable.Key];
 
-					// Update the GUI.
-					Variables[variable.Key] = (Convert.ToDecimal(reading), Convert.ToDecimal(setpoint));
+					// If there'a an associated setpoint...
+					if (device.Setpoints.ContainsKey(variable.Key))
+					{
+						// Fetch the setpoint.
+						double setpoint = device.Setpoints[variable.Key];
 
-					// TODO:  Check for variables out of stability.
-					//if (Math.Abs(setpoint - reading) > v.ErrorTolerance)
-					//{
-					//	// Attempt to achieve the setpoint again.
-					//	ProcessSetpoint(v, setpoint, v.Interval);
-					//}
+						// TODO:  Update the "Status" tab separately for setpoints and readings.
+						Variables[variable.Key] = (Convert.ToDecimal(reading), Convert.ToDecimal(setpoint));
+
+						// TODO:  Check for stability.
+						//if (Math.Abs(setpoint - reading) > v.ErrorTolerance)
+						//{
+						//	// Attempt to achieve the setpoint again.
+						//	ProcessSetpoint(v, setpoint, v.Interval);
+						//}
+					}
 				}
 			}
 		}
