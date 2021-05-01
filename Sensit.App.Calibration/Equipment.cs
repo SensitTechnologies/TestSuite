@@ -23,7 +23,6 @@ namespace Sensit.App.Calibration
 		{
 			foreach (DeviceSetting d in deviceSettings ?? throw new ArgumentNullException(nameof(deviceSettings)))
 			{
-				// TODO:  Take the next two statements and make them into a utility method (they're used twice in FormCalibration.cs and once here).
 				// List the control devices in the form.
 				List<Type> deviceTypes = Utilities.FindClasses(typeof(IDevice));
 
