@@ -32,7 +32,7 @@ namespace Sensit.TestSDK.Communication
 			set => Port.PortName = value;
 		}
 
-		// TODO:  Create lists and properties for other serial settings (data bits, parity, stop bits, handshaking).
+		// TODO:  SerialDevice:  Create lists/properties for serial settings (data bits, parity, stop bits, handshaking).
 
 		/// <summary>
 		/// Baud rate used by the device.

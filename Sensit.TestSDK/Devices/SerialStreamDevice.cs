@@ -78,7 +78,7 @@ namespace Sensit.TestSDK.Devices
 			// Convert the byte array to a string.
 			string converted = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
 
-			// TODO:  Add converted message to Readings.
+			// TODO:  SerialStreamDevice:  Not fully implemented; need to add converted message to Readings.
 		}
 
 		public void Read()
