@@ -63,6 +63,14 @@ namespace Sensit.App.Calibration
 			}
 		}
 
+		public void SetControlMode(ControlMode mode)
+		{
+			foreach (IDevice d in Devices.Values)
+			{
+				d.SetControlMode(mode);
+			}
+		}
+
 		/// <summary>
 		/// Update readings from all devices.
 		/// </summary>
