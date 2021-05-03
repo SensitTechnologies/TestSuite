@@ -21,12 +21,13 @@ namespace Sensit.App.Calibration
 
 		public Equipment(List<DeviceSetting> deviceSettings)
 		{
+			// Make a list of possible device types.
+			List<Type> deviceTypes = Utilities.FindClasses(typeof(IDevice));
+
 			foreach (DeviceSetting d in deviceSettings ?? throw new ArgumentNullException(nameof(deviceSettings)))
 			{
-				// List the control devices in the form.
-				List<Type> deviceTypes = Utilities.FindClasses(typeof(IDevice));
-
 				// Find the device type with the correct description.
+				// TODO:  Use DisplayName rather than Description to organize devices.
 				Type deviceType = deviceTypes.FirstOrDefault(o => o.GetDescription() == d.Type);
 
 				// Create an instance of the device.
