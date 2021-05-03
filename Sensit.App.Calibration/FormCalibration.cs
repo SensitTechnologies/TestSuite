@@ -94,18 +94,27 @@ namespace Sensit.App.Calibration
 		/// <param name="testInProgress">true if test is in progress; false otherwise</param>
 		private void SetControlEnable(bool testInProgress)
 		{
-			// Settings group boxes.
-			groupBoxDevices.Enabled = !testInProgress;
-			groupBoxEvents.Enabled = !testInProgress;
+			// Log file settings.
 			groupBoxLog.Enabled = !testInProgress;
+
+			// Device serial ports.
+			for (int row = 1; row < tableLayoutPanelDevices.RowCount; row++)
+			{
+				ComboBox comboBoxDevicePort = tableLayoutPanelDevices.GetControlFromPosition(COLUMN_DEVICES_PORT, row) as ComboBox;
+				comboBoxDevicePort.Enabled = !testInProgress;
+			}
 
 			// Repeat controls.
 			radioButtonRepeatNo.Enabled = !testInProgress;
 			radioButtonRepeatYes.Enabled = !testInProgress;
 
-			// Start, stop buttons.
+			// Buttons.
 			buttonStart.Enabled = !testInProgress;
 			buttonStop.Enabled = testInProgress;
+			buttonDeviceAdd.Enabled = !testInProgress;
+			buttonDeviceDelete.Enabled = !testInProgress;
+			buttonEventAdd.Enabled = !testInProgress;
+			buttonEventDelete.Enabled = !testInProgress;
 
 			// Menu items.
 			startToolStripMenuItem.Enabled = !testInProgress;
