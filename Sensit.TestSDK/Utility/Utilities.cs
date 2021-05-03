@@ -207,6 +207,9 @@ namespace Sensit.TestSDK.Utilities
 				}
 			}
 
+			// Delete the unused rows.
+			panel.RowCount = 1;
+
 			// Make the GUI act normally again.
 			panel.ResumeLayout();
 		}
