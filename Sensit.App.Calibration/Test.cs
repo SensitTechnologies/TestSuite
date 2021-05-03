@@ -215,10 +215,7 @@ namespace Sensit.App.Calibration
 		private void PopupRetryAbort(string message, string caption)
 		{
 			// Stop the equipment to reduce change of damage.
-			foreach (IDevice device in _equipment.Devices.Values)
-			{
-				device.SetControlMode(ControlMode.Passive);
-			}
+			_equipment.SetControlMode(ControlMode.Passive);
 
 			// Pause the elapsed time timer.
 			_elapsedTimeStopwatch.Stop();
@@ -232,11 +229,7 @@ namespace Sensit.App.Calibration
 			// If we're continuing to test, attempt to control variables again.
 			if (result == DialogResult.Yes)
 			{
-				foreach (IDevice device in _equipment.Devices.Values)
-				{
-					// Resume control mode.
-					device.SetControlMode(ControlMode.Active);
-				}
+				_equipment.SetControlMode(ControlMode.Active);
 			}
 			// If requested, cancel the test.
 			else
