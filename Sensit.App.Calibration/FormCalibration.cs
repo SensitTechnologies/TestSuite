@@ -65,7 +65,7 @@ namespace Sensit.App.Calibration
 			List<Type> deviceTypes = Utilities.FindClasses(typeof(IDevice));
 			foreach (Type deviceType in deviceTypes)
 			{
-				comboBoxDeviceType.Items.Add(deviceType.GetDescription());
+				comboBoxDeviceType.Items.Add(deviceType.GetDisplayName());
 			}
 			comboBoxDeviceType.SelectedIndex = 0;
 
@@ -331,11 +331,11 @@ namespace Sensit.App.Calibration
 						// List the control devices in the form.
 						List<Type> deviceTypes = Utilities.FindClasses(typeof(IDevice));
 
-						// Find the device type with the correct description.
-						Type deviceType = deviceTypes.FirstOrDefault(o => o.GetDescription() == d.Type);
+						// Find the device type with the correct display name.
+						Type deviceType = deviceTypes.FirstOrDefault(o => o.GetDisplayName() == d.Type);
 
 						// Add device to "Devices" tab.
-						AddDeviceToPanel(d.Name, deviceType.GetDescription(), d.SerialPort);
+						AddDeviceToPanel(d.Name, deviceType.GetDisplayName(), d.SerialPort);
 					}
 
 					// Add each event to the form.

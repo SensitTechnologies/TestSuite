@@ -26,9 +26,8 @@ namespace Sensit.App.Calibration
 
 			foreach (DeviceSetting d in deviceSettings ?? throw new ArgumentNullException(nameof(deviceSettings)))
 			{
-				// Find the device type with the correct description.
-				// TODO:  Use DisplayName rather than Description to organize devices.
-				Type deviceType = deviceTypes.FirstOrDefault(o => o.GetDescription() == d.Type);
+				// Find the device type with the correct display name.
+				Type deviceType = deviceTypes.FirstOrDefault(o => o.GetDisplayName() == d.Type);
 
 				// Create an instance of the device.
 				object device = Activator.CreateInstance(deviceType);

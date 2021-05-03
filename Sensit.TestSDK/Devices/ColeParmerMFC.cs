@@ -43,7 +43,7 @@ namespace Sensit.TestSDK.Devices
 	/// serial interfaces, but some menu differences and major electronics differences.
 	/// 
 	/// </remarks>
-	[Description("Cole Parmer MFC")]
+	[DisplayName("Cole Parmer MFC"), Description("Cole Parmer Mass Flow Controller")]
 	public class ColeParmerMFC : SerialDevice, IMassFlowDevice, IVolumeFlowDevice, ITemperatureDevice, IPressureDevice
 	{
 		public Dictionary<VariableType, double> Readings { get; } = new Dictionary<VariableType, double>

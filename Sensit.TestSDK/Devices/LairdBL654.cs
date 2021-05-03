@@ -21,7 +21,7 @@ namespace Sensit.TestSDK.Devices
 	/// https://www.lairdconnect.com/wireless-modules/bluetooth-modules/bluetooth-5-modules/bl654-series-bluetooth-module-nfc
 	/// See also the readme file in the source code repository listed above.
 	/// </remarks>
-	[Description("Laird BL654")]
+	[DisplayName("Laird BL654")]
 	public class LairdBL654 : SerialDevice
 	{
 		#region Fields

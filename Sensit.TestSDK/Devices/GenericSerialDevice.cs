@@ -17,7 +17,7 @@ namespace Sensit.TestSDK.Devices
 	/// of data it will send.  So this class is a generic reference device, and
 	/// will have a generic variable type which will be accessible as a string.
 	/// </remarks>
-	[Description("Generic Serial Device")]
+	[DisplayName("Generic Serial Device")]
 	public class GenericSerialDevice : SerialDevice, IMessageDevice
 	{
 		public string Command { get; set; } = string.Empty;

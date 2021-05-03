@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Sensit.TestSDK.Calculations
 {
 	/// <summary>
 	/// Enumerations for units of measurement
 	/// </summary>
+	[DisplayName("Unit Of Measure")]
 	public static class UnitOfMeasure
 	{
 		public enum Length
@@ -21,39 +23,59 @@ namespace Sensit.TestSDK.Calculations
 			Hectopascals,
 			Millibar,
 			Pascals,
+			[Description("Inches of Water")]
 			InchesOfWater,
+			[Description("Feet of Water")]
 			FeetOfWater,
+			[Description("Inches of Mercury")]
 			InchesOfMercury,
 			PSI,
+			[Description("Ounce Inches")]
 			OunceInches,
+			[Description("Millimeters of Water")]
 			MillimetersOfWater,
+			[Description("Centimeters of Water")]
 			CentimetersOfWater,
+			[Description("Millimeters of Mercury")]
 			MillimetersOfMercury,
 		}
 
 		public enum Velocity
 		{
+			[Description("Meters per Second")]
 			MetersPerSecond,
+			[Description("Meters per Hour")]
 			MetersPerHour,
+			[Description("Kilometers per Hour")]
 			KilometersPerHour,
 			Knot,
+			[Description("Miles per Hour")]
 			MilesPerHour,
+			[Description("Feet per Minute")]
 			FeetPerMinute,
+			[Description("Feet per Second")]
 			FeetPerSecond,
 		}
 
 		public enum Flow
 		{
+			[Description("Cubic Meters per Second")]
 			CubicMetersPerSecond,
+			[Description("Cubic Meters per Hour")]
 			CubicMetersPerHour,
+			[Description("Cubic Feet per Minute")]
 			CubicFeetPerMinute,
 		}
 
 		public enum Concentration
 		{
+			[Description("Parts per Billion")]
 			PartsPerBillion,
+			[Description("Parts per Million")]
 			PartsPerMillion,
+			[Description("Parts per Trillion")]
 			PartsPerTrillion,
+			[Description("Percent Volume")]
 			PercentVolume
 		}
 

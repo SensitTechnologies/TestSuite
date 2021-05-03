@@ -18,6 +18,7 @@ namespace Sensit.TestSDK.Utilities
 		/// How to associate "friendly strings" with enumerations:
 		/// https://stackoverflow.com/questions/1415140/can-my-enums-have-friendly-names
 		/// https://stackoverflow.com/questions/479410/enum-tostring-with-user-friendly-strings
+		/// Why not a "GetDisplayName" for enums?  Because the DisplayName attribute doesn't support enums in C#.
 		/// </remarks>
 		/// <param name="value">enumeration of interest</param>
 		/// <returns></returns>
@@ -75,6 +76,9 @@ namespace Sensit.TestSDK.Utilities
 		/// <summary>
 		/// Extension method to read a display name attribute associated with a type.
 		/// </summary>
+		/// <remarks>
+		/// Why not a "GetDisplayName" for enums?  Because the DisplayName attribute doesn't support enums in C#.
+		/// </remarks>
 		/// <param name="type"></param>
 		/// <returns></returns>
 		public static string GetDisplayName(this Type type)
