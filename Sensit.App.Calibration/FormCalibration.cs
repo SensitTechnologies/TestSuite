@@ -42,6 +42,10 @@ namespace Sensit.App.Calibration
 		// tests
 		private Test _test;
 
+		// organized list of variable-related controls that are updated during a test
+		private readonly Dictionary<(string, VariableType), UserControlVariableStatus> _variableStatusControls =
+			new Dictionary<(string, VariableType), UserControlVariableStatus>();
+
 		#endregion
 
 		#region Constructor
@@ -96,7 +100,7 @@ namespace Sensit.App.Calibration
 			groupBoxLog.Enabled = !testInProgress;
 
 			// Repeat controls.
-			radioButtonRepeatNo.Enabled = testInProgress;
+			radioButtonRepeatNo.Enabled = !testInProgress;
 			radioButtonRepeatYes.Enabled = !testInProgress;
 
 			// Start, stop buttons.
@@ -127,29 +131,42 @@ namespace Sensit.App.Calibration
 				// Create a new test settings object and populate it with the user's choices.
 				TestSetting testSetting = CreateTestSettings();
 
-				// Create a new equipment object according to the settings.
+				// Create a temporary equipment object according to the settings.
 				// TODO:  Don't use a temporary equipment variable.
 				Equipment equipment = new Equipment(testSetting.Devices);
 
-				// Remove all variables from "Status" tab.
+				// Remove all variables from "Status" tab and from the list of variable controls.
 				flowLayoutPanelControlledVariables.Controls.Clear();
+				foreach (UserControlVariableStatus c in _variableStatusControls.Values)
+				{
+					c.Dispose();
+				}
+				_variableStatusControls.Clear();
 
 				// Add variables to "Status" tab.
 				foreach (KeyValuePair<string, IDevice> device in equipment.Devices)
 				{
 					foreach (VariableType setpoint in device.Value.Setpoints.Keys)
 					{
-						flowLayoutPanelControlledVariables.Controls.Add(new UserControlVariableStatus
+						// Create a new control for the variable.
+						UserControlVariableStatus userControlVariableStatus = new UserControlVariableStatus
 						{
 							Title = device.Key + " " + setpoint,
 							UnitOfMeasure = "",
 							Value = 0.0M,
 							Setpoint = 0.0M,
 							Tolerance = 0.0M
-						});
+						};
+
+						// Keep a reference to it in a dictionary.
+						_variableStatusControls.Add((device.Key, setpoint), userControlVariableStatus);
+
+						// Add the control to the form.
+						flowLayoutPanelControlledVariables.Controls.Add(userControlVariableStatus);
 					}
 				}
 
+				// Clean up temporary object.
 				equipment.Dispose();
 
 				// Create test object and link its actions to actions on this form.
@@ -342,9 +359,11 @@ namespace Sensit.App.Calibration
 		private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			// Allow the user to select a filename.
-			SaveFileDialog fileDialog = new SaveFileDialog();
-			fileDialog.Filter = "XML-File|*.xml";
-			fileDialog.Title = "Save test as";
+			SaveFileDialog fileDialog = new SaveFileDialog
+			{
+				Filter = "XML-File|*.xml",
+				Title = "Save test as"
+			};
 			fileDialog.ShowDialog();
 
 			// If a valid filename has been selected...
@@ -539,7 +558,19 @@ namespace Sensit.App.Calibration
 			// Update the status message.
 			toolStripStatusLabel1.Text = message;
 
-			// TODO:  Update readings, setpoints, tolerances in "Status" tab.
+			// Stop the GUI from looking weird while we update it.
+			flowLayoutPanelControlledVariables.SuspendLayout();
+
+			// Update readings, setpoints, tolerances in "Status" tab.
+			foreach (KeyValuePair<(string, VariableType), TestVariable> v in _test.Variables)
+			{
+				_variableStatusControls[v.Key].Value = v.Value.Actual;
+				_variableStatusControls[v.Key].Setpoint = v.Value.Setpoint;
+				_variableStatusControls[v.Key].Tolerance = v.Value.Tolerance;
+			}
+
+			// Make the GUI act normally again.
+			flowLayoutPanelControlledVariables.ResumeLayout();
 		}
 
 		/// <summary>
@@ -765,6 +796,9 @@ namespace Sensit.App.Calibration
 				// Remember it for next time.
 				Properties.Settings.Default.Logfile = openFileDialog.FileName;
 			}
+
+			// Clean up.
+			openFileDialog.Dispose();
 		}
 	}
 }

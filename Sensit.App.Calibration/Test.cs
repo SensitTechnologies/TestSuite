@@ -10,6 +10,24 @@ using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.App.Calibration
 {
+	/// <summary>
+	/// Set of values needed to control a device's variable.
+	/// </summary>
+	public class TestVariable
+	{
+		public decimal Actual { get; set; }
+
+		public decimal Setpoint { get; set; }
+
+		public decimal Tolerance { get; set; }
+		
+		public TimeSpan Interval { get; set; }
+		
+		public TimeSpan Timeout { get; set; }
+		
+		public TimeSpan DwellTime { get; set; }
+	}
+
 	public class Test : IDisposable
 	{
 		#region Enumerations
@@ -53,7 +71,7 @@ namespace Sensit.App.Calibration
 		private bool _pause = false;
 
 		// helps calculate percent complete
-		private uint _samplesTotal;
+		private readonly uint _samplesTotal;
 
 		// helps calculate percent complete
 		private uint _samplesComplete = 0;
@@ -99,7 +117,8 @@ namespace Sensit.App.Calibration
 		/// <remarks>
 		/// This will be accessed by the FormCalibration to display the variables values and setpoints.
 		/// </remarks>
-		public Dictionary<VariableType, (decimal Value, decimal Setpoint)> Variables { get; private set; } = new Dictionary<VariableType, (decimal Value, decimal Setpoint)>();
+		public Dictionary<(string name, VariableType variable), TestVariable> Variables { get; private set; } =
+			new Dictionary<(string, VariableType), TestVariable>();
 
 		/// <summary>
 		/// True if test should repeat until manually stopped.
@@ -234,7 +253,6 @@ namespace Sensit.App.Calibration
 			// If requested, cancel the test.
 			else
 			{
-				// Abort the test.
 				_testThread.CancelAsync();
 			}
 		}
@@ -274,32 +292,22 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		private void StabilityCheck()
 		{
-			// For each device...
-			foreach (IDevice device in _equipment.Devices.Values)
+			// Fetch readings from references.
+			_equipment.Read();
+
+			foreach (KeyValuePair<(string, VariableType), TestVariable> v in Variables)
 			{
-				// Read the setpoint and reading.
-				device.Read();
+				// Get the reading from the device.
+				double reading = _equipment.Devices[v.Key.Item1].Readings[v.Key.Item2];
 
-				foreach (KeyValuePair<VariableType, double> variable in device.Readings)
+				// Update global variable.
+				v.Value.Actual = Convert.ToDecimal(reading);
+
+				// If the variable is not near the setpoint...
+				if (Math.Abs(v.Value.Setpoint - v.Value.Actual) > v.Value.Tolerance)
 				{
-					double reading = device.Readings[variable.Key];
-
-					// If there'a an associated setpoint...
-					if (device.Setpoints.ContainsKey(variable.Key))
-					{
-						// Fetch the setpoint.
-						double setpoint = device.Setpoints[variable.Key];
-
-						// TODO:  Update the "Status" tab separately for setpoints and readings.
-						Variables[variable.Key] = (Convert.ToDecimal(reading), Convert.ToDecimal(setpoint));
-
-						// TODO:  Check for stability.
-						//if (Math.Abs(setpoint - reading) > v.ErrorTolerance)
-						//{
-						//	// Attempt to achieve the setpoint again.
-						//	ProcessSetpoint(v, setpoint, v.Interval);
-						//}
-					}
+					// Attempt to achieve the setpoint again.
+					ProcessSetpoint(v.Key.Item1, v.Key.Item2);
 				}
 			}
 		}
@@ -342,13 +350,16 @@ namespace Sensit.App.Calibration
 			}
 		}
 
-		private void ProcessSetpoint(string deviceName, VariableType variable, double setpoint, TimeSpan interval, TimeSpan timeout, double tolerance, TimeSpan dwellTime)
+		private void ProcessSetpoint(string deviceName, VariableType variable)
 		{
 			// Update GUI.
 			_testThread.ReportProgress(PercentProgress, "Setting setpoint...");
 
+			// Find the values applicable to the selected device/variable.
+			TestVariable values = Variables[(deviceName, variable)];
+
 			// Set setpoint.
-			_equipment.Devices[deviceName].Setpoints[variable] = setpoint;
+			_equipment.Devices[deviceName].Setpoints[variable] = Convert.ToDouble(values.Setpoint);
 			_equipment.Devices[deviceName].Write();
 
 			// Get start time.
@@ -363,7 +374,7 @@ namespace Sensit.App.Calibration
 				if (_testThread.CancellationPending) { break; }
 
 				// Process timeouts.
-				if (timeoutWatch.Elapsed > timeout)
+				if (timeoutWatch.Elapsed > values.Timeout)
 				{
 					// Prompt user; cancel test if requested.
 					PopupRetryAbort("Not able to reach stability." + Environment.NewLine + "Retry ?", "Stability Error");
@@ -391,33 +402,32 @@ namespace Sensit.App.Calibration
 				_equipment.Devices[deviceName].Read();
 				double reading = _equipment.Devices[deviceName].Readings[variable];
 
-				// Calculate error.
-				error = reading - setpoint;
+				// Update global variable.
+				Variables[(deviceName, variable)].Actual = Convert.ToDecimal(reading);
 
-				// Update the GUI.
-				Variables[variable] = (Convert.ToDecimal(reading), Convert.ToDecimal(setpoint));
-				string message = string.Empty;
+				// Calculate error.
+				error = reading - Convert.ToDouble(values.Setpoint);
 
 				// If tolerance has been exceeded, reset the stability time.
-				if (Math.Abs(error) > tolerance)
+				if (Math.Abs(error) > Convert.ToDouble(values.Tolerance))
 				{
-					message = "Waiting for stability...";
+					_testThread.ReportProgress(PercentProgress, "Waiting for stability...");
 					stopwatch.Restart();
 				}
-				else if (dwellTime > new TimeSpan(0, 0, 0))
+				else if (values.DwellTime > new TimeSpan(0, 0, 0))
 				{
 					// Update GUI (include dwell time if applicable).
-					message = "Dwell time left:  " + (dwellTime - stopwatch.Elapsed).ToString(@"hh\:mm\:ss", CultureInfo.CurrentCulture);
+					_testThread.ReportProgress(PercentProgress, "Dwell time left:  " +
+						(values.DwellTime - stopwatch.Elapsed).ToString(@"hh\:mm\:ss", CultureInfo.CurrentCulture));
 
 					// Reset the timeout stopwatch.
 					timeoutWatch.Restart();
 				}
-				_testThread.ReportProgress(PercentProgress, message);
 
 				// Wait to get desired reading frequency.
-				Thread.Sleep(interval);
-			} while ((stopwatch.Elapsed <= dwellTime) ||
-					(Math.Abs(error) > tolerance));
+				Thread.Sleep(values.Interval);
+			} while ((stopwatch.Elapsed <= values.DwellTime) ||
+					(Math.Abs(error) > Convert.ToDouble(values.Tolerance)));
 		}
 
 		private void ProcessSamples()
@@ -445,17 +455,33 @@ namespace Sensit.App.Calibration
 				// Set active control mode.
 				_equipment.Devices[e.DeviceName].SetControlMode(ControlMode.Active);
 
+				TestVariable testVariable = new TestVariable
+				{
+					Setpoint = e.Value,
+					Tolerance = e.ErrorTolerance,
+					Interval = e.Interval,
+					Timeout = e.Timeout,
+					DwellTime = e.DwellTime
+				};
+
+				// If the variable is new, create it.  If it already exists, update it.
+				if (Variables.ContainsKey((e.DeviceName, e.Variable)) == false)
+				{
+					Variables.Add((e.DeviceName, e.Variable), testVariable);
+				}
+				else
+				{
+					Variables[(e.DeviceName, e.Variable)] = testVariable;
+				}
+
 				// Set the setpoint.
-				ProcessSetpoint(e.DeviceName, e.Variable, Convert.ToDouble(e.Value), e.Interval, e.Timeout, Convert.ToDouble(e.ErrorTolerance), e.DwellTime);
+				ProcessSetpoint(e.DeviceName, e.Variable);
 
 				// For each sample...
 				for (int i = 1; i <= e.Duration; i++)
 				{
 					// Update GUI.
 					_testThread.ReportProgress(PercentProgress, "Taking sample " + i.ToString(CultureInfo.CurrentCulture) + " of " + e.Duration + ".");
-
-					// Fetch readings from references.
-					_equipment.Read();
 
 					// Check stability of all controlled variables.
 					StabilityCheck();
@@ -530,7 +556,6 @@ namespace Sensit.App.Calibration
 
 			// Calculate end time.
 			_elapsedTimeStopwatch.Stop();
-			TimeSpan elapsedtime = _elapsedTimeStopwatch.Elapsed;
 
 			try
 			{
