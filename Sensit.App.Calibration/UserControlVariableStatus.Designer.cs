@@ -1,5 +1,5 @@
 ﻿
-namespace Sensit.TestSDK.Controls
+namespace Sensit.App.Calibration
 {
 	partial class UserControlVariableStatus
 	{
