@@ -73,6 +73,25 @@ namespace Sensit.TestSDK.Utilities
 		}
 
 		/// <summary>
+		/// Extension method to read a display name attribute associated with a type.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		public static string GetDisplayName(this Type type)
+		{
+			DisplayNameAttribute displayName = (DisplayNameAttribute)type.GetCustomAttribute(typeof(DisplayNameAttribute));
+
+			if (displayName == null)
+			{
+				return type?.Name;
+			}
+			else
+			{
+				return displayName.DisplayName;
+			}
+		}
+
+		/// <summary>
 		/// Extension method to read a category attribute associated with a type.
 		/// </summary>
 		/// <param name="type">type of interest</param>
