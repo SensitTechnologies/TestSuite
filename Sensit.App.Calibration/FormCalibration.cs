@@ -127,6 +127,31 @@ namespace Sensit.App.Calibration
 				// Create a new test settings object and populate it with the user's choices.
 				TestSetting testSetting = CreateTestSettings();
 
+				// Create a new equipment object according to the settings.
+				// TODO:  Don't use a temporary equipment variable.
+				Equipment equipment = new Equipment(testSetting.Devices);
+
+				// Remove all variables from "Status" tab.
+				flowLayoutPanelControlledVariables.Controls.Clear();
+
+				// Add variables to "Status" tab.
+				foreach (KeyValuePair<string, IDevice> device in equipment.Devices)
+				{
+					foreach (VariableType setpoint in device.Value.Setpoints.Keys)
+					{
+						flowLayoutPanelControlledVariables.Controls.Add(new UserControlVariableStatus
+						{
+							Title = device.Key + " " + setpoint,
+							UnitOfMeasure = "",
+							Value = 0.0M,
+							Setpoint = 0.0M,
+							Tolerance = 0.0M
+						});
+					}
+				}
+
+				equipment.Dispose();
+
 				// Create test object and link its actions to actions on this form.
 				// https://syncor.blogspot.com/2010/11/passing-getter-and-setter-of-c-property.html
 				_test = new Test(testSetting, textBoxLogFilename.Text)
@@ -294,9 +319,6 @@ namespace Sensit.App.Calibration
 
 						// Add device to "Devices" tab.
 						AddDeviceToPanel(d.Name, deviceType.GetDescription(), d.SerialPort);
-
-						// TODO:  Add device to "Status" tab.
-						// TODO:  On "Events" tab, update status of each event as it completes.
 					}
 
 					// Add each event to the form.
@@ -517,28 +539,7 @@ namespace Sensit.App.Calibration
 			// Update the status message.
 			toolStripStatusLabel1.Text = message;
 
-			// Update variables in "Status" tab.
-			//UpdateVariable(groupBoxMassFlow, textBoxMassFlowSetpoint, textBoxMassFlowValue, VariableType.MassFlow);
-			//UpdateVariable(groupBoxVolumeFlow, textBoxVolumeFlowSetpoint, textBoxVolumeFlowValue, VariableType.VolumeFlow);
-			//UpdateVariable(groupBoxVelocity, textBoxVelocitySetpoint, textBoxVelocityValue, VariableType.Velocity);
-			//UpdateVariable(groupBoxPressure, textBoxPressureSetpoint, textBoxPressureValue, VariableType.Pressure);
-			//UpdateVariable(groupBoxTemperature, textBoxTempSetpoint, textBoxTempValue, VariableType.Temperature);
-			//UpdateVariable(groupBoxCurrent, textBoxCurrentSetpoint, textBoxCurrentValue, VariableType.Current);
-			//UpdateVariable(groupBoxVoltage, textBoxVoltageSetpoint, textBoxVoltageValue, VariableType.Voltage);
-		}
-
-		private void UpdateVariable(GroupBox groupBox, TextBox setpoint, TextBox value, VariableType variableType)
-		{
-			if (_test.Variables.ContainsKey(variableType))
-			{
-				groupBox.Visible = true;
-				setpoint.Text = _test.Variables[variableType].Setpoint.ToString("G4", CultureInfo.CurrentCulture);
-				value.Text = _test.Variables[variableType].Value.ToString("G4", CultureInfo.CurrentCulture);
-			}
-			else
-			{
-				groupBox.Visible = false;
-			}
+			// TODO:  Update readings, setpoints, tolerances in "Status" tab.
 		}
 
 		/// <summary>
@@ -574,8 +575,6 @@ namespace Sensit.App.Calibration
 			{
 				// Add device to the device list panel.
 				AddDeviceToPanel(textBoxDeviceName.Text, comboBoxDeviceType.Text, "");
-
-				// TODO:  Add device to "Status" tab.
 			}
 		}
 
