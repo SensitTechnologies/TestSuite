@@ -141,6 +141,7 @@
 			this.tabControl.SelectedIndex = 0;
 			this.tabControl.Size = new System.Drawing.Size(430, 268);
 			this.tabControl.TabIndex = 0;
+			this.tabControl.TabStop = false;
 			// 
 			// tabPageDevices
 			// 
@@ -250,7 +251,7 @@
 			this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
 			this.tableLayoutPanel6.Size = new System.Drawing.Size(404, 29);
-			this.tableLayoutPanel6.TabIndex = 19;
+			this.tableLayoutPanel6.TabIndex = 20;
 			// 
 			// checkBoxDeviceSelectAll
 			// 
@@ -259,7 +260,7 @@
 			this.checkBoxDeviceSelectAll.Location = new System.Drawing.Point(3, 6);
 			this.checkBoxDeviceSelectAll.Name = "checkBoxDeviceSelectAll";
 			this.checkBoxDeviceSelectAll.Size = new System.Drawing.Size(70, 17);
-			this.checkBoxDeviceSelectAll.TabIndex = 0;
+			this.checkBoxDeviceSelectAll.TabIndex = 6;
 			this.checkBoxDeviceSelectAll.Text = "Select All";
 			this.checkBoxDeviceSelectAll.UseVisualStyleBackColor = true;
 			this.checkBoxDeviceSelectAll.CheckedChanged += new System.EventHandler(this.CheckBoxDeviceSelectAll_CheckedChanged);
@@ -271,7 +272,7 @@
 			this.buttonDeviceDelete.Location = new System.Drawing.Point(272, 3);
 			this.buttonDeviceDelete.Name = "buttonDeviceDelete";
 			this.buttonDeviceDelete.Size = new System.Drawing.Size(129, 23);
-			this.buttonDeviceDelete.TabIndex = 1;
+			this.buttonDeviceDelete.TabIndex = 7;
 			this.buttonDeviceDelete.Text = "Delete Selected Devices";
 			this.buttonDeviceDelete.UseVisualStyleBackColor = true;
 			this.buttonDeviceDelete.Click += new System.EventHandler(this.ButtonDeviceDelete_Click);
@@ -294,7 +295,7 @@
 			this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
 			this.tableLayoutPanel11.Size = new System.Drawing.Size(404, 29);
-			this.tableLayoutPanel11.TabIndex = 20;
+			this.tableLayoutPanel11.TabIndex = 19;
 			// 
 			// buttonDeviceAdd
 			// 
@@ -302,7 +303,7 @@
 			this.buttonDeviceAdd.Location = new System.Drawing.Point(271, 3);
 			this.buttonDeviceAdd.Name = "buttonDeviceAdd";
 			this.buttonDeviceAdd.Size = new System.Drawing.Size(75, 23);
-			this.buttonDeviceAdd.TabIndex = 2;
+			this.buttonDeviceAdd.TabIndex = 5;
 			this.buttonDeviceAdd.Text = "Add Device";
 			this.buttonDeviceAdd.UseVisualStyleBackColor = true;
 			this.buttonDeviceAdd.Click += new System.EventHandler(this.ButtonDeviceAdd_Click);
@@ -314,7 +315,7 @@
 			this.comboBoxDeviceType.Location = new System.Drawing.Point(137, 3);
 			this.comboBoxDeviceType.Name = "comboBoxDeviceType";
 			this.comboBoxDeviceType.Size = new System.Drawing.Size(128, 21);
-			this.comboBoxDeviceType.TabIndex = 0;
+			this.comboBoxDeviceType.TabIndex = 4;
 			// 
 			// textBoxDeviceName
 			// 
@@ -456,7 +457,7 @@
 			this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
 			this.tableLayoutPanel9.Size = new System.Drawing.Size(404, 29);
-			this.tableLayoutPanel9.TabIndex = 19;
+			this.tableLayoutPanel9.TabIndex = 20;
 			// 
 			// checkBoxEventSelectAll
 			// 
@@ -503,7 +504,7 @@
 			this.tableLayoutPanel10.RowCount = 1;
 			this.tableLayoutPanel10.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel10.Size = new System.Drawing.Size(404, 29);
-			this.tableLayoutPanel10.TabIndex = 20;
+			this.tableLayoutPanel10.TabIndex = 19;
 			// 
 			// comboBoxEventDevice
 			// 
@@ -521,7 +522,7 @@
 			this.buttonEventAdd.Location = new System.Drawing.Point(323, 3);
 			this.buttonEventAdd.Name = "buttonEventAdd";
 			this.buttonEventAdd.Size = new System.Drawing.Size(75, 23);
-			this.buttonEventAdd.TabIndex = 2;
+			this.buttonEventAdd.TabIndex = 7;
 			this.buttonEventAdd.Text = "Add Event";
 			this.buttonEventAdd.UseVisualStyleBackColor = true;
 			this.buttonEventAdd.Click += new System.EventHandler(this.ButtonEventAdd_Click);
@@ -542,7 +543,7 @@
             0});
 			this.numericUpDownEventDuration.Name = "numericUpDownEventDuration";
 			this.numericUpDownEventDuration.Size = new System.Drawing.Size(74, 20);
-			this.numericUpDownEventDuration.TabIndex = 5;
+			this.numericUpDownEventDuration.TabIndex = 6;
 			// 
 			// comboBoxEventVariable
 			// 
@@ -571,7 +572,7 @@
             0});
 			this.numericUpDownEventValue.Name = "numericUpDownEventValue";
 			this.numericUpDownEventValue.Size = new System.Drawing.Size(74, 20);
-			this.numericUpDownEventValue.TabIndex = 6;
+			this.numericUpDownEventValue.TabIndex = 5;
 			// 
 			// tabPageLog
 			// 
@@ -634,7 +635,7 @@
 			this.textBoxLogFilename.Location = new System.Drawing.Point(3, 3);
 			this.textBoxLogFilename.Name = "textBoxLogFilename";
 			this.textBoxLogFilename.Size = new System.Drawing.Size(319, 20);
-			this.textBoxLogFilename.TabIndex = 9;
+			this.textBoxLogFilename.TabIndex = 3;
 			this.textBoxLogFilename.TextChanged += new System.EventHandler(this.TextBoxLogFilename_TextChanged);
 			// 
 			// buttonLogBrowse
@@ -643,7 +644,7 @@
 			this.buttonLogBrowse.Location = new System.Drawing.Point(328, 3);
 			this.buttonLogBrowse.Name = "buttonLogBrowse";
 			this.buttonLogBrowse.Size = new System.Drawing.Size(75, 23);
-			this.buttonLogBrowse.TabIndex = 2;
+			this.buttonLogBrowse.TabIndex = 4;
 			this.buttonLogBrowse.Text = "Browse";
 			this.buttonLogBrowse.UseVisualStyleBackColor = true;
 			this.buttonLogBrowse.Click += new System.EventHandler(this.ButtonLogBrowse_Click);
@@ -732,33 +733,33 @@
 			// newToolStripMenuItem
 			// 
 			this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-			this.newToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+			this.newToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.newToolStripMenuItem.Text = "&New";
 			this.newToolStripMenuItem.Click += new System.EventHandler(this.NewToolStripMenuItem_Click);
 			// 
 			// openToolStripMenuItem
 			// 
 			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-			this.openToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+			this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.openToolStripMenuItem.Text = "&Open...";
 			this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItem_Click);
 			// 
 			// saveToolStripMenuItem
 			// 
 			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-			this.saveToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+			this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.saveToolStripMenuItem.Text = "&Save As...";
 			this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(120, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.exitToolStripMenuItem.Text = "&Exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
 			// 
@@ -811,14 +812,14 @@
 			// supportToolStripMenuItem
 			// 
 			this.supportToolStripMenuItem.Name = "supportToolStripMenuItem";
-			this.supportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.supportToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
 			this.supportToolStripMenuItem.Text = "&Wiki";
 			this.supportToolStripMenuItem.Click += new System.EventHandler(this.SupportToolStripMenuItem_Click);
 			// 
 			// aboutToolStripMenuItem
 			// 
 			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
 			this.aboutToolStripMenuItem.Text = "&About";
 			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
 			// 
@@ -829,7 +830,7 @@
 			this.buttonStart.Name = "buttonStart";
 			this.helpProvider1.SetShowHelp(this.buttonStart, true);
 			this.buttonStart.Size = new System.Drawing.Size(75, 23);
-			this.buttonStart.TabIndex = 0;
+			this.buttonStart.TabIndex = 1;
 			this.buttonStart.Text = "Start";
 			this.buttonStart.UseVisualStyleBackColor = true;
 			this.buttonStart.Click += new System.EventHandler(this.ButtonStart_Click);
@@ -842,7 +843,7 @@
 			this.buttonStop.Name = "buttonStop";
 			this.helpProvider1.SetShowHelp(this.buttonStop, true);
 			this.buttonStop.Size = new System.Drawing.Size(75, 23);
-			this.buttonStop.TabIndex = 1;
+			this.buttonStop.TabIndex = 2;
 			this.buttonStop.Text = "Stop";
 			this.buttonStop.UseVisualStyleBackColor = true;
 			this.buttonStop.Click += new System.EventHandler(this.ButtonStop_Click);
@@ -896,7 +897,7 @@
 			this.tableLayoutPanel3.RowCount = 1;
 			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel3.Size = new System.Drawing.Size(168, 29);
-			this.tableLayoutPanel3.TabIndex = 17;
+			this.tableLayoutPanel3.TabIndex = 14;
 			// 
 			// labelRepeat
 			// 
@@ -932,7 +933,7 @@
 			this.radioButtonRepeatNo.Location = new System.Drawing.Point(52, 3);
 			this.radioButtonRepeatNo.Name = "radioButtonRepeatNo";
 			this.radioButtonRepeatNo.Size = new System.Drawing.Size(39, 17);
-			this.radioButtonRepeatNo.TabIndex = 3;
+			this.radioButtonRepeatNo.TabIndex = 0;
 			this.radioButtonRepeatNo.TabStop = true;
 			this.radioButtonRepeatNo.Text = "No";
 			this.radioButtonRepeatNo.UseVisualStyleBackColor = true;
@@ -944,7 +945,7 @@
 			this.radioButtonRepeatYes.Location = new System.Drawing.Point(3, 3);
 			this.radioButtonRepeatYes.Name = "radioButtonRepeatYes";
 			this.radioButtonRepeatYes.Size = new System.Drawing.Size(43, 17);
-			this.radioButtonRepeatYes.TabIndex = 2;
+			this.radioButtonRepeatYes.TabIndex = 0;
 			this.radioButtonRepeatYes.TabStop = true;
 			this.radioButtonRepeatYes.Text = "Yes";
 			this.radioButtonRepeatYes.UseVisualStyleBackColor = true;
@@ -966,7 +967,7 @@
 			this.tableLayoutPanel2.RowCount = 1;
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel2.Size = new System.Drawing.Size(162, 29);
-			this.tableLayoutPanel2.TabIndex = 14;
+			this.tableLayoutPanel2.TabIndex = 17;
 			// 
 			// FormCalibration
 			// 
