@@ -3,10 +3,10 @@ This is a software suite for automating testing and calibration of sensors or in
 
 ## Installation
 Click-once installers for the apps are available for download here:
-[Automated Test App](https://clickonceapp.blob.core.windows.net/clickonce-app-container/calibration/publish.htm)
-[Datalogger App](https://clickonceapp.blob.core.windows.net/clickonce-app-container/log/publish.htm)
-[Gas Concentration App](https://clickonceapp.blob.core.windows.net/clickonce-app-container/gasconcentration/publish.htm)
-[Mass Flow Controller App](https://clickonceapp.blob.core.windows.net/clickonce-app-container/massflow/publish.htm)
+* [Automated Test App](https://clickonceapp.blob.core.windows.net/clickonce-app-container/calibration/publish.htm)
+* [Datalogger App](https://clickonceapp.blob.core.windows.net/clickonce-app-container/log/publish.htm)
+* [Gas Concentration App](https://clickonceapp.blob.core.windows.net/clickonce-app-container/gasconcentration/publish.htm)
+* [Mass Flow Controller App](https://clickonceapp.blob.core.windows.net/clickonce-app-container/massflow/publish.htm)
 
 ## Building and Publishing from Source
 See the [Requirements](https://github.com/SensitTechnologies/TestSuite/wiki/Requirements) page on the project wiki for more information, but at minimum you need:
