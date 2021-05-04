@@ -13,12 +13,7 @@ The first full release is not yet available, so installation requires building f
 After building, [publish the solution](https://docs.microsoft.com/en-us/dotnet/core/tutorials/publishing-with-visual-studio) to create an installer.  After running the installer, each program in the suite will be available from the Windows Start menu.
 
 ## Usage
-To use the Calibration app (Sensit.App.Calibration), you'll need to have two of the following equipment (until the Simulator is supported):
-* [Cole-Parmer Mass Flow Controller for Gas](https://www.coleparmer.com/p/cole-parmer-mass-flow-controllers-for-gas/43456)
-
-Select the Model and Range of your sensor under test.  Select how many devices to test.  Click "Start", then wait for the test to complete.
-
-For detailed information about using the other apps in the software suite, see the [project's wiki](https://github.com/SensitTechnologies/TestSuite/wiki).
+For detailed information about using the apps in the software suite, see the [project's wiki](https://github.com/SensitTechnologies/TestSuite/wiki).
 
 ## Contributing
 Feel free to contribute, but first read the [Contributing Guidelines](https://github.com/SensitTechnologies/TestSuite/blob/master/CONTRIBUTING.md) to see how we do things.
