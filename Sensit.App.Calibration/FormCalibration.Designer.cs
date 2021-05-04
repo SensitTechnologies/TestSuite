@@ -147,7 +147,7 @@
 			this.tabPageDevices.Controls.Add(this.groupBoxDevices);
 			this.tabPageDevices.Location = new System.Drawing.Point(4, 22);
 			this.tabPageDevices.Name = "tabPageDevices";
-			this.tabPageDevices.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+			this.tabPageDevices.Padding = new System.Windows.Forms.Padding(3);
 			this.tabPageDevices.Size = new System.Drawing.Size(422, 242);
 			this.tabPageDevices.TabIndex = 6;
 			this.tabPageDevices.Text = "Devices";
@@ -248,7 +248,7 @@
 			this.tableLayoutPanel6.Name = "tableLayoutPanel6";
 			this.tableLayoutPanel6.RowCount = 1;
 			this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+			this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
 			this.tableLayoutPanel6.Size = new System.Drawing.Size(404, 29);
 			this.tableLayoutPanel6.TabIndex = 19;
 			// 
@@ -329,7 +329,7 @@
 			this.tabPageEvents.Controls.Add(this.groupBoxEvents);
 			this.tabPageEvents.Location = new System.Drawing.Point(4, 22);
 			this.tabPageEvents.Name = "tabPageEvents";
-			this.tabPageEvents.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+			this.tabPageEvents.Padding = new System.Windows.Forms.Padding(3);
 			this.tabPageEvents.Size = new System.Drawing.Size(422, 242);
 			this.tabPageEvents.TabIndex = 2;
 			this.tabPageEvents.Text = "Events";
@@ -454,7 +454,7 @@
 			this.tableLayoutPanel9.Name = "tableLayoutPanel9";
 			this.tableLayoutPanel9.RowCount = 1;
 			this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+			this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
 			this.tableLayoutPanel9.Size = new System.Drawing.Size(404, 29);
 			this.tableLayoutPanel9.TabIndex = 19;
 			// 
@@ -577,9 +577,9 @@
 			// 
 			this.tabPageLog.Controls.Add(this.groupBoxLog);
 			this.tabPageLog.Location = new System.Drawing.Point(4, 22);
-			this.tabPageLog.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.tabPageLog.Margin = new System.Windows.Forms.Padding(2);
 			this.tabPageLog.Name = "tabPageLog";
-			this.tabPageLog.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.tabPageLog.Padding = new System.Windows.Forms.Padding(2);
 			this.tabPageLog.Size = new System.Drawing.Size(422, 242);
 			this.tabPageLog.TabIndex = 7;
 			this.tabPageLog.Text = "Log";
@@ -653,7 +653,7 @@
 			this.tabPageStatus.Controls.Add(this.groupBoxVariables);
 			this.tabPageStatus.Location = new System.Drawing.Point(4, 22);
 			this.tabPageStatus.Name = "tabPageStatus";
-			this.tabPageStatus.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+			this.tabPageStatus.Padding = new System.Windows.Forms.Padding(3);
 			this.tabPageStatus.Size = new System.Drawing.Size(422, 242);
 			this.tabPageStatus.TabIndex = 4;
 			this.tabPageStatus.Text = "Status";
@@ -811,14 +811,14 @@
 			// supportToolStripMenuItem
 			// 
 			this.supportToolStripMenuItem.Name = "supportToolStripMenuItem";
-			this.supportToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+			this.supportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.supportToolStripMenuItem.Text = "&Wiki";
 			this.supportToolStripMenuItem.Click += new System.EventHandler(this.SupportToolStripMenuItem_Click);
 			// 
 			// aboutToolStripMenuItem
 			// 
 			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.aboutToolStripMenuItem.Text = "&About";
 			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
 			// 

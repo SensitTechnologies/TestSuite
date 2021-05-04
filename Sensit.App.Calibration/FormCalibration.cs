@@ -517,13 +517,13 @@ namespace Sensit.App.Calibration
 		{
 			try
 			{
-				ProcessStartInfo processStartInfo = new ProcessStartInfo("https://github.com/SensitTechnologies/TestSuite/wiki");
+				ProcessStartInfo processStartInfo = new ProcessStartInfo("https://github.com/SensitTechnologies/TestSuite/wiki/App:--Automated-Test-System");
 				Process.Start(processStartInfo);
 			}
 			catch (Exception ex)
 			{
 				MessageBox.Show(ex.Message + Environment.NewLine +
-					"I was trying to navigate to: https://github.com/SensitTechnologies/TestSuite/wiki.",
+					"I was trying to navigate to: https://github.com/SensitTechnologies/TestSuite/wiki/App:--Automated-Test-System.",
 					ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 			}
 		}
