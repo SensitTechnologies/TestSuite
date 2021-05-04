@@ -30,26 +30,6 @@ namespace Sensit.App.Calibration
 
 	public class Test : IDisposable
 	{
-		#region Enumerations
-
-		/// <summary>
-		/// Non-measurement related commands that can be executed during a test.
-		/// </summary>
-		/// <remarks>
-		/// These actions can activate a relay, etc.
-		/// </remarks>
-		public enum Command
-		{
-			TurnOff,	// Remove power from test equipment.
-			TurnOn,		// Apply power to test equipment.
-			Default,	// Set factory default settings.
-			Range,		// Set range settings.
-			Zero,		// Perform zero-calibration.
-			Span,		// Perform span-calibration.
-		}
-
-		#endregion
-
 		#region Fields
 
 		// task that will handle test operations
@@ -110,6 +90,11 @@ namespace Sensit.App.Calibration
 				return percent;
 			}
 		}
+
+		/// <summary>
+		/// Number of events that have been completed.
+		/// </summary>
+		public uint EventsComplete { get; private set; } = 0;
 
 		/// <summary>
 		/// Controlled/independent variables for the current test component.
@@ -328,28 +313,6 @@ namespace Sensit.App.Calibration
 			_pause = false;
 		}
 
-		private static void ProcessCommand(Command? command)
-		{
-			// Perform a command.
-			switch (command)
-			{
-				case Command.TurnOff:
-					break;
-				case Command.TurnOn:
-					break;
-				case Command.Default:
-					break;
-				case Command.Range:
-					break;
-				case Command.Span:
-					break;
-				case Command.Zero:
-					break;
-				default:
-					break;
-			}
-		}
-
 		private void ProcessSetpoint(string deviceName, VariableType variable)
 		{
 			// Update GUI.
@@ -447,14 +410,11 @@ namespace Sensit.App.Calibration
 		/// if (_testThread.CancellationPending) { break; }
 		/// </code>
 		/// </remarks>
-		private void ProcessTest()
+		private void ProcessEvents()
 		{
 			// For each event...
 			foreach (EventSetting e in _settings.Events)
 			{
-				// Set active control mode.
-				_equipment.Devices[e.DeviceName].SetControlMode(ControlMode.Active);
-
 				TestVariable testVariable = new TestVariable
 				{
 					Setpoint = e.Value,
@@ -498,10 +458,14 @@ namespace Sensit.App.Calibration
 					// Wait to get desired reading frequency.
 					Thread.Sleep(e.Interval);
 
+					// Update the number of completed samples.
 					_samplesComplete++;
 
 					if (_testThread.CancellationPending) { break; }
 				}
+
+				// Update the number of completed events.
+				EventsComplete++;
 
 				if (_testThread.CancellationPending) { break; }
 			}
@@ -538,11 +502,15 @@ namespace Sensit.App.Calibration
 					// Repeat test if requested.
 					do
 					{
-						// Initialize number of samples taken.
+						// Initialize global variables and properties.
 						_samplesComplete = 0;
+						EventsComplete = 0;
+
+						// Set active control mode.
+						_equipment.SetControlMode(ControlMode.Active);
 
 						// Perform test actions.
-						ProcessTest();
+						ProcessEvents();
 					} while (Repeat && (_testThread.CancellationPending == false));
 				} while (false);
 			}
@@ -560,10 +528,7 @@ namespace Sensit.App.Calibration
 			try
 			{
 				// Stop all controllers.
-				foreach (IDevice device in _equipment.Devices.Values)
-				{
-					device.SetControlMode(ControlMode.Passive);
-				}
+				_equipment.SetControlMode(ControlMode.Passive);
 
 				// Close test equipment.
 				_testThread.ReportProgress(99, "Closing test equipment...");

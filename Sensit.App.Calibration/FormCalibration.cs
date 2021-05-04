@@ -46,6 +46,8 @@ namespace Sensit.App.Calibration
 		private readonly Dictionary<(string, VariableType), UserControlVariableStatus> _variableStatusControls =
 			new Dictionary<(string, VariableType), UserControlVariableStatus>();
 
+		private uint _eventsComplete;
+
 		#endregion
 
 		#region Constructor
@@ -103,10 +105,6 @@ namespace Sensit.App.Calibration
 				ComboBox comboBoxDevicePort = tableLayoutPanelDevices.GetControlFromPosition(COLUMN_DEVICES_PORT, row) as ComboBox;
 				comboBoxDevicePort.Enabled = !testInProgress;
 			}
-
-			// Repeat controls.
-			radioButtonRepeatNo.Enabled = !testInProgress;
-			radioButtonRepeatYes.Enabled = !testInProgress;
 
 			// Buttons.
 			buttonStart.Enabled = !testInProgress;
@@ -284,6 +282,12 @@ namespace Sensit.App.Calibration
 				else if (((RadioButton)sender) == radioButtonRepeatNo)
 				{
 					Properties.Settings.Default.Repeat = false;
+				}
+
+				// If a test exists, update it with the new setting.
+				if (_test != null)
+				{
+					_test.Repeat = Properties.Settings.Default.Repeat;
 				}
 			}
 		}
@@ -515,15 +519,17 @@ namespace Sensit.App.Calibration
 
 		private void SupportToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			const string wikiAddress = "https://github.com/SensitTechnologies/TestSuite/wiki/App:--Automated-Test-System";
+
 			try
 			{
-				ProcessStartInfo processStartInfo = new ProcessStartInfo("https://github.com/SensitTechnologies/TestSuite/wiki/App:--Automated-Test-System");
+				ProcessStartInfo processStartInfo = new ProcessStartInfo(wikiAddress);
 				Process.Start(processStartInfo);
 			}
 			catch (Exception ex)
 			{
 				MessageBox.Show(ex.Message + Environment.NewLine +
-					"I was trying to navigate to: https://github.com/SensitTechnologies/TestSuite/wiki/App:--Automated-Test-System.",
+					"I was trying to navigate to: " + wikiAddress + ".",
 					ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 			}
 		}
@@ -571,11 +577,36 @@ namespace Sensit.App.Calibration
 			flowLayoutPanelControlledVariables.SuspendLayout();
 
 			// Update readings, setpoints, tolerances in "Status" tab.
-			foreach (KeyValuePair<(string, VariableType), TestVariable> v in _test.Variables)
+			for (int i = 0; i < _test.Variables.Count; i++)
 			{
-				_variableStatusControls[v.Key].Value = v.Value.Actual;
-				_variableStatusControls[v.Key].Setpoint = v.Value.Setpoint;
-				_variableStatusControls[v.Key].Tolerance = v.Value.Tolerance;
+				var key = _test.Variables.ElementAt(i).Key;
+				var value = _test.Variables.ElementAt(i).Value;
+
+				_variableStatusControls[key].Value = value.Actual;
+				_variableStatusControls[key].Setpoint = value.Setpoint;
+				_variableStatusControls[key].Tolerance = value.Tolerance;
+			}
+
+			// If the number of complete events has been reset...
+			if (_test.EventsComplete == 0)
+			{
+				// Reset event status.
+				_eventsComplete = 0;
+				for (int row = 1; row < tableLayoutPanelEvents.RowCount; row++)
+				{
+					Label labelStatus = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_STATUS, row) as Label;
+					labelStatus.Text = "Queued";
+				}
+			}
+			// If the number of complete events has changed...
+			else if (_eventsComplete != _test.EventsComplete)
+			{
+				// Remember how many events have been completed.
+				_eventsComplete = _test.EventsComplete;
+
+				// Update the status of the completed event.
+				Label labelStatus = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_STATUS, (int)_eventsComplete) as Label;
+				labelStatus.Text = "Done";
 			}
 
 			// Make the GUI act normally again.
@@ -589,6 +620,9 @@ namespace Sensit.App.Calibration
 		{
 			// Enable most of the controls.
 			SetControlEnable(false);
+
+			// Reset global variable.
+			_eventsComplete = 0;
 
 			// If requested, close the application.
 			if (_closeAfterTest)
@@ -721,7 +755,6 @@ namespace Sensit.App.Calibration
 				Anchor = AnchorStyles.Left | AnchorStyles.Top,
 				AutoSize = true,
 				Dock = DockStyle.None,
-				Text = "Queued"
 			}, COLUMN_EVENTS_STATUS, tableLayoutPanelEvents.RowCount - 1);
 
 			// Make the GUI act normally again.
