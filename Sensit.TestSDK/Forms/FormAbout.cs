@@ -8,121 +8,115 @@ namespace Sensit.TestSDK.Forms
 	/// Generic About Box that can be used in any application.
 	/// </summary>
 	/// <remarks>
-	/// This form is the same as the stock "AboutBox" form, which you get from
-	/// Right click --> Add --> New Item --> About Box, except that
-	/// "GetExecutingAssembly" has been replaced with "GetEntryAssembly" in
-	/// the Asembly Attribute Accessors, and the option to add to the description.
+	/// This form is similar to the stock "AboutBox" form, which you get from
+	/// Right click --> Add --> New Item --> About Box.
+	/// Assembly Attribute Accessors have been replaced with normal properties
+	/// so they can be written by the calling app.
+	/// "GetExecutingAssembly" has been replaced with "GetEntryAssembly" as the
+	/// source of default values for the form.
 	/// </remarks>
 	public partial class FormAbout : Form
 	{
-		#region Constructors
+		string _title;
+		string _version;
 
 		public FormAbout()
 		{
-			Initialize();
-		}
-
-		public FormAbout(string description)
-		{
-			Initialize();
-
-			textBoxDescription.Text += Environment.NewLine + description;
-		}
-
-		private void Initialize()
-		{
 			InitializeComponent();
 
-			Text = $"About {AssemblyTitle}";
-			labelProductName.Text = AssemblyProduct;
-			labelVersion.Text = $"Version {AssemblyVersion}";
-			labelCopyright.Text = AssemblyCopyright;
-			labelCompanyName.Text = AssemblyCompany;
-			textBoxDescription.Text = AssemblyDescription;
-		}
-
-		#endregion
-
-		#region Assembly Attribute Accessors
-
-		public string AssemblyTitle
-		{
-			get
+			// Get the assembly title.
+			object[] titleAttributes = Assembly.GetEntryAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
+			if (titleAttributes.Length != 0)
 			{
-				object[] attributes = Assembly.GetEntryAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
-				if (attributes.Length > 0)
+				AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)titleAttributes[0];
+
+				// If a title string exists...
+				if (string.IsNullOrEmpty(titleAttribute.Title) == false)
 				{
-					AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
-
-					// If a title string exists...
-					if (string.IsNullOrEmpty(titleAttribute.Title) == false)
-					{
-						return titleAttribute.Title;
-					}
+					Title = titleAttribute.Title;
 				}
-				return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().CodeBase);
+			}
+			else
+			{
+				Title = System.IO.Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().CodeBase);
+			}
+
+			// Get the assembly version.
+			Version = Assembly.GetEntryAssembly().GetName().Version.ToString();
+
+			// Get the assembly description.
+			object[] descriptionAttributes = Assembly.GetEntryAssembly().GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
+			if (descriptionAttributes.Length != 0)
+			{
+				Description = ((AssemblyDescriptionAttribute)descriptionAttributes[0]).Description;
+			}
+
+			// Get the assembly product.
+			object[] productAttributes = Assembly.GetEntryAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
+			if (productAttributes.Length != 0)
+			{
+				Product = ((AssemblyProductAttribute)productAttributes[0]).Product;
+			}
+
+			// Get the assembly copyright.
+			object[] copyrightAttributes = Assembly.GetEntryAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
+			if (copyrightAttributes.Length != 0)
+			{
+				Copyright = ((AssemblyCopyrightAttribute)copyrightAttributes[0]).Copyright;
+			}
+
+			// Get the assembly company.
+			object[] companyAttributes = Assembly.GetEntryAssembly().GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
+			if (companyAttributes.Length != 0)
+			{
+				Company = ((AssemblyCompanyAttribute)companyAttributes[0]).Company;
 			}
 		}
 
-		public string AssemblyVersion
+		public string Title
 		{
-			get
+			get => _title;
+			set
 			{
-				return Assembly.GetEntryAssembly().GetName().Version.ToString();
+				_title = value;
+
+				Text = $"About {Title}";
 			}
 		}
 
-		public string AssemblyDescription
+		public string Version
 		{
-			get
+			get => _version;
+			set
 			{
-				object[] attributes = Assembly.GetEntryAssembly().GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
-				if (attributes.Length == 0)
-				{
-					return "";
-				}
-				return ((AssemblyDescriptionAttribute)attributes[0]).Description;
+				_version = value;
+
+				labelVersion.Text = $"Version {Version}";
 			}
 		}
 
-		public string AssemblyProduct
+		public string Description
 		{
-			get
-			{
-				object[] attributes = Assembly.GetEntryAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
-				if (attributes.Length == 0)
-				{
-					return "";
-				}
-				return ((AssemblyProductAttribute)attributes[0]).Product;
-			}
+			get => textBoxDescription.Text;
+			set => textBoxDescription.Text = value;
 		}
 
-		public string AssemblyCopyright
+		public string Product
 		{
-			get
-			{
-				object[] attributes = Assembly.GetEntryAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
-				if (attributes.Length == 0)
-				{
-					return "";
-				}
-				return ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
-			}
+			get => labelProductName.Text;
+			set => labelProductName.Text = value;
 		}
 
-		public string AssemblyCompany
+		public string Copyright
 		{
-			get
-			{
-				object[] attributes = Assembly.GetEntryAssembly().GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
-				if (attributes.Length == 0)
-				{
-					return "";
-				}
-				return ((AssemblyCompanyAttribute)attributes[0]).Company;
-			}
+			get => labelCopyright.Text;
+			set => labelCopyright.Text = value;
 		}
-		#endregion
+
+		public string Company
+		{
+			get => labelCompanyName.Text;
+			set => labelCompanyName.Text = value;
+		}
 	}
 }
