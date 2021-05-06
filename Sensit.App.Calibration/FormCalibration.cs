@@ -88,40 +88,49 @@ namespace Sensit.App.Calibration
 
 		#endregion
 
-		#region Test
+		#region Exit Methods
 
 		/// <summary>
-		/// Enable/disable user controls based on whether is test is being run.
+		/// When File --> Exit menu item is clicked, close the application.
 		/// </summary>
-		/// <param name="testInProgress">true if test is in progress; false otherwise</param>
-		private void SetControlEnable(bool testInProgress)
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			// Log file settings.
-			groupBoxLog.Enabled = !testInProgress;
+			// This will invoke the "FormClosing" action, so nothing else to do here.
 
-			// Device serial ports.
-			for (int row = 1; row < tableLayoutPanelDevices.RowCount; row++)
+			// Exit the application.
+			Application.Exit();
+		}
+
+		/// <summary>
+		/// Before exiting, check the user's wishes and safely end testing.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void FormCalibration_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			// If a test exists and is running...
+			if ((_test != null) && (_test.IsBusy()))
 			{
-				ComboBox comboBoxDevicePort = tableLayoutPanelDevices.GetControlFromPosition(COLUMN_DEVICES_PORT, row) as ComboBox;
-				comboBoxDevicePort.Enabled = !testInProgress;
+				// Cancel application shutdown.
+				e.Cancel = true;
+
+				// If the user chooses to abort the test...
+				if (ConfirmAbort() == true)
+				{
+					// Remember to close the application after the test finishes.
+					_closeAfterTest = true;
+				}
 			}
 
-			// Buttons.
-			buttonStart.Enabled = !testInProgress;
-			buttonStop.Enabled = testInProgress;
-			buttonDeviceAdd.Enabled = !testInProgress;
-			buttonDeviceDelete.Enabled = !testInProgress;
-			buttonEventAdd.Enabled = !testInProgress;
-			buttonEventDelete.Enabled = !testInProgress;
-
-			// Menu items.
-			startToolStripMenuItem.Enabled = !testInProgress;
-			pauseToolStripMenuItem.Enabled = testInProgress;
-			stopToolStripMenuItem.Enabled = testInProgress;
-			newToolStripMenuItem.Enabled = !testInProgress;
-			openToolStripMenuItem.Enabled = !testInProgress;
-			saveToolStripMenuItem.Enabled = !testInProgress;
+			// Save settings.
+			Properties.Settings.Default.Save();
 		}
+
+		#endregion
+
+		#region Start, Stop, Pause, Repeat Controls
 
 		/// <summary>
 		/// When "Start" button is clicked, fetch settings, create equipment/test, start test.
@@ -207,60 +216,13 @@ namespace Sensit.App.Calibration
 		}
 
 		/// <summary>
-		/// Before exiting, check the user's wishes and safely end testing.
+		/// When Test --> Pause menu item is clicked, pause the test.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void FormCalibration_FormClosing(object sender, FormClosingEventArgs e)
+		private void PauseToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			// If a test exists and is running...
-			if ((_test != null) && (_test.IsBusy()))
-			{
-				// Cancel application shutdown.
-				e.Cancel = true;
-
-				// If the user chooses to abort the test...
-				if (ConfirmAbort() == true)
-				{
-					// Remember to close the application after the test finishes.
-					_closeAfterTest = true;
-				}
-			}
-
-			// Save settings.
-			Properties.Settings.Default.Save();
-		}
-
-		/// <summary>
-		/// Before exiting, check the user's wishes and safely end testing.
-		/// </summary>
-		/// <returns>true if we're quitting; false if cancelled</returns>
-		private bool ConfirmAbort()
-		{
-			DialogResult result = DialogResult.OK;  // whether to quit or not
-
-			// If a test exists and is running...
-			if ((_test != null) && (_test.IsBusy()))
-			{
-				// Ask the user if they really want to stop the test.
-				result = MessageBox.Show("Abort the test?", "Abort", MessageBoxButtons.OKCancel);
-			}
-
-			// If we're quitting, cancel a test (don't update GUI; the "TestFinished" method will do that).
-			if (result == DialogResult.OK)
-			{
-				try
-				{
-					_test?.Stop();
-				}
-				catch (Exception ex)
-				{
-					MessageBox.Show("Could not stop test." + Environment.NewLine + ex.Message, "Error");
-				}
-			}
-
-			// Return whether or not we're stopping the test.
-			return (result == DialogResult.OK);
+			_test?.Pause();
 		}
 
 		/// <summary>
@@ -292,6 +254,274 @@ namespace Sensit.App.Calibration
 			}
 		}
 
+		#endregion
+
+		#region Devices and Events Tabs
+
+		/// <summary>
+		/// When the "Add Device" button is clicked, add the device to the device list panel.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ButtonDeviceAdd_Click(object sender, EventArgs e)
+		{
+			if (string.IsNullOrWhiteSpace(textBoxDeviceName.Text))
+			{
+				MessageBox.Show("Device name is empty!");
+			}
+			else
+			{
+				AddDeviceToPanel(textBoxDeviceName.Text, comboBoxDeviceType.Text, "");
+			}
+		}
+
+		/// <summary>
+		/// Add a device to the device list panel.
+		/// </summary>
+		/// <param name="name">unique identifier for the device</param>
+		/// <param name="type">DisplayName of the class used for the device</param>
+		/// <param name="port">serial port associated with the device</param>
+		private void AddDeviceToPanel(string name, string type, string port)
+		{
+			// Stop the GUI from looking weird while we update it.
+			tableLayoutPanelDevices.SuspendLayout();
+
+			// Add a new row to the table layout panel.
+			tableLayoutPanelDevices.RowCount++;
+			tableLayoutPanelDevices.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+
+			// Add a checkbox with the device's name.
+			tableLayoutPanelDevices.Controls.Add(new CheckBox
+			{
+				AutoSize = true,
+				Anchor = AnchorStyles.Left | AnchorStyles.Top,
+				Dock = DockStyle.None,
+				Text = name,
+			}, COLUMN_DEVICES_NAME, tableLayoutPanelDevices.RowCount - 1);
+
+			// Add the device type.
+			tableLayoutPanelDevices.Controls.Add(new Label
+			{
+				Anchor = AnchorStyles.Left | AnchorStyles.Top,
+				AutoSize = true,
+				Dock = DockStyle.None,
+				Text = type,
+			}, COLUMN_DEVICES_TYPE, tableLayoutPanelDevices.RowCount - 1);
+
+			// Add a comboBox for serial port.
+			ComboBox comboBox = new ComboBox
+			{
+				Anchor = AnchorStyles.Left | AnchorStyles.Top,
+				Dock = DockStyle.None,
+				DropDownStyle = ComboBoxStyle.DropDownList
+			};
+			comboBox.Items.AddRange(SerialPort.GetPortNames());
+			tableLayoutPanelDevices.Controls.Add(comboBox, COLUMN_DEVICES_PORT, tableLayoutPanelDevices.RowCount - 1);
+
+			// Select previously used device serial port (if found).
+			comboBox.SelectedIndex = comboBox.FindStringExact(port);
+
+			// Make the GUI act normally again.
+			tableLayoutPanelDevices.ResumeLayout();
+
+			// Add the device to the list of available devices on the "Events" tab.
+			comboBoxEventDevice.Items.Add(name);
+		}
+
+		/// <summary>
+		/// When the "Add Event" button is clicked, add the event to the event list panel.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ButtonEventAdd_Click(object sender, EventArgs e)
+		{
+			AddEvent(comboBoxEventDevice.Text, comboBoxEventVariable.Text, numericUpDownEventValue.Value, numericUpDownEventDuration.Value);
+		}
+
+		/// <summary>
+		/// Add an event to the event list panel.
+		/// </summary>
+		/// <param name="device">unique identifier for the device acted upon</param>
+		/// <param name="variable">DisplayName of the variable acted upon</param>
+		/// <param name="value">value to set the variable to</param>
+		/// <param name="duration">time to wait before starting next event [seconds]</param>
+		private void AddEvent(string device, string variable, decimal value, decimal duration)
+		{
+			// Stop the GUI from looking weird while we update it.
+			tableLayoutPanelEvents.SuspendLayout();
+
+			// Add a new row to the table layout panel.
+			tableLayoutPanelEvents.RowCount++;
+			tableLayoutPanelEvents.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+
+			// Add a checkbox with the event's name.
+			tableLayoutPanelEvents.Controls.Add(new CheckBox
+			{
+				AutoSize = true,
+				Anchor = AnchorStyles.Left | AnchorStyles.Top,
+				Dock = DockStyle.None,
+				Text = device,
+			}, COLUMN_EVENTS_DEVICE, tableLayoutPanelEvents.RowCount - 1);
+
+			// Add the variable.
+			tableLayoutPanelEvents.Controls.Add(new Label
+			{
+				Anchor = AnchorStyles.Left | AnchorStyles.Top,
+				AutoSize = true,
+				Dock = DockStyle.None,
+				Text = variable,
+			}, COLUMN_EVENTS_VARIABLE, tableLayoutPanelEvents.RowCount - 1);
+
+			// Add the variable's value.
+			tableLayoutPanelEvents.Controls.Add(new Label
+			{
+				Anchor = AnchorStyles.Left | AnchorStyles.Top,
+				AutoSize = true,
+				Dock = DockStyle.None,
+				Text = value.ToString(CultureInfo.InvariantCulture)
+			}, COLUMN_EVENTS_VALUE, tableLayoutPanelEvents.RowCount - 1);
+
+			// Add the duration.
+			tableLayoutPanelEvents.Controls.Add(new Label
+			{
+				Anchor = AnchorStyles.Left | AnchorStyles.Top,
+				AutoSize = true,
+				Dock = DockStyle.None,
+				Text = duration.ToString(CultureInfo.InvariantCulture)
+			}, COLUMN_EVENTS_DURATION, tableLayoutPanelEvents.RowCount - 1);
+
+			// Add the status.
+			tableLayoutPanelEvents.Controls.Add(new Label
+			{
+				Anchor = AnchorStyles.Left | AnchorStyles.Top,
+				AutoSize = true,
+				Dock = DockStyle.None,
+			}, COLUMN_EVENTS_STATUS, tableLayoutPanelEvents.RowCount - 1);
+
+			// Make the GUI act normally again.
+			tableLayoutPanelEvents.ResumeLayout();
+		}
+
+		/// <summary>
+		/// When the "Select All" checkbox on the Devices tab is clicked, either
+		/// select or unselect all the devices shown.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void CheckBoxDeviceSelectAll_CheckedChanged(object sender, EventArgs e)
+		{
+			foreach (CheckBox c in tableLayoutPanelDevices.Controls.OfType<CheckBox>())
+			{
+				c.Checked = ((CheckBox)sender).Checked;
+			}
+		}
+
+		/// <summary>
+		/// When the "Select All" checkbox on the Events tab is clicked, either
+		/// select or unselect all the events shown.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void CheckBoxEventSelectAll_CheckedChanged(object sender, EventArgs e)
+		{
+			foreach (CheckBox c in tableLayoutPanelEvents.Controls.OfType<CheckBox>())
+			{
+				c.Checked = ((CheckBox)sender).Checked;
+			}
+		}
+
+		/// <summary>
+		/// When the "Delete Selected" button on the Device tab is clicked,
+		/// delete all selected devices.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ButtonDeviceDelete_Click(object sender, EventArgs e)
+		{
+			// Hunt backwards for checked boxes or we'll miss the last one selected.
+			for (int row = tableLayoutPanelDevices.RowCount - 1; row >= 0; row--)
+			{
+				Control c = tableLayoutPanelDevices.GetControlFromPosition(0, row);
+				if ((c is CheckBox box) && (box.Checked))
+				{
+					// Remove the controls in the row.
+					Utilities.TableLayoutPanelRemoveRow(tableLayoutPanelDevices, row);
+
+					// Remove the option from the "Events" tab.
+					comboBoxEventDevice.Items.Remove(c.Text);
+				}
+			}
+
+			// Uncheck the checkbox.
+			checkBoxDeviceSelectAll.Checked = false;
+		}
+
+		/// <summary>
+		/// When the "Delete Selected" button on the Events tab is clicked,
+		/// delete all selected events.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ButtonEventDelete_Click(object sender, EventArgs e)
+		{
+			// Hunt backwards for checked items or we'll miss the last one selected.
+			for (int row = tableLayoutPanelEvents.RowCount - 1; row >= 0; row--)
+			{
+				Control c = tableLayoutPanelEvents.GetControlFromPosition(0, row);
+				if ((c is CheckBox box) && (box.Checked))
+				{
+					// Remove the controls in the row.
+					Utilities.TableLayoutPanelRemoveRow(tableLayoutPanelEvents, row);
+				}
+			}
+
+			// Uncheck the checkbox.
+			checkBoxEventSelectAll.Checked = false;
+		}
+
+		#endregion
+
+		#region Log Tab
+
+		/// <summary>
+		/// When the "Browse" button on the Log tab is clicked, allow the user to specify a file.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ButtonLogBrowse_Click(object sender, EventArgs e)
+		{
+			// Create a file browser.
+			OpenFileDialog openFileDialog = new OpenFileDialog()
+			{
+				InitialDirectory = textBoxLogFilename.Text,
+				Title = "Browse Log Files",
+				CheckFileExists = false,
+				CheckPathExists = true,
+				DefaultExt = "csv",
+				Filter = "txt files (*.txt)|*.txt|csv files (*.csv)|*.csv|All files (*.*)|*.*",
+				FilterIndex = 2,
+			};
+
+			// Show the dialog box to the user.
+			// If the user selects a file...
+			if (openFileDialog.ShowDialog() == DialogResult.OK)
+			{
+				// Use that file.
+				textBoxLogFilename.Text = openFileDialog.FileName;
+
+				// Remember it for next time.
+				Properties.Settings.Default.Logfile = openFileDialog.FileName;
+			}
+
+			// Clean up.
+			openFileDialog.Dispose();
+		}
+
+		/// <summary>
+		/// When the log file name is edited, remember the user's edit.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void TextBoxLogFilename_TextChanged(object sender, EventArgs e)
 		{
 			// Remember logfile name.
@@ -300,7 +530,7 @@ namespace Sensit.App.Calibration
 
 		#endregion
 
-		#region File Menu
+		#region File Operations
 
 		private void NewToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -490,33 +720,15 @@ namespace Sensit.App.Calibration
 			return testSetting;
 		}
 
-		/// <summary>
-		/// When File --> Exit menu item is clicked, close the application.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			// This will invoke the "FormClosing" action, so nothing else to do here.
-
-			// Exit the application.
-			Application.Exit();
-		}
-
-		/// <summary>
-		/// When Test --> Pause menu item is clicked, pause the test.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void PauseToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			_test?.Pause();
-		}
-
 		#endregion
 
 		#region Help Menu
 
+		/// <summary>
+		/// When the user clicks Help --> Wiki, open a browser and navigate to the wiki page for this app.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void SupportToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			const string wikiAddress = "https://github.com/SensitTechnologies/TestSuite/wiki/App:--Automated-Test-System";
@@ -559,10 +771,10 @@ namespace Sensit.App.Calibration
 
 		#endregion
 
-		#region Public Methods
+		#region Status Tab, Progress Bar
 
 		/// <summary>
-		/// Update the form with the test's status.
+		/// Update the status tab and progress bar with variable values and test status.
 		/// </summary>
 		/// <param name="message"></param>
 		public void TestUpdate(int percent, string message)
@@ -639,208 +851,73 @@ namespace Sensit.App.Calibration
 
 		#endregion
 
-		private void ButtonDeviceAdd_Click(object sender, EventArgs e)
+		#region Helper Methods
+
+		/// <summary>
+		/// Enable/disable user controls based on whether is test is being run.
+		/// </summary>
+		/// <param name="testInProgress">true if test is in progress; false otherwise</param>
+		private void SetControlEnable(bool testInProgress)
 		{
-			if (string.IsNullOrWhiteSpace(textBoxDeviceName.Text))
+			// Log file settings.
+			groupBoxLog.Enabled = !testInProgress;
+
+			// Device serial ports.
+			for (int row = 1; row < tableLayoutPanelDevices.RowCount; row++)
 			{
-				MessageBox.Show("Device name is empty!");
+				ComboBox comboBoxDevicePort = tableLayoutPanelDevices.GetControlFromPosition(COLUMN_DEVICES_PORT, row) as ComboBox;
+				comboBoxDevicePort.Enabled = !testInProgress;
 			}
-			else
+
+			// Buttons.
+			buttonStart.Enabled = !testInProgress;
+			buttonStop.Enabled = testInProgress;
+			buttonDeviceAdd.Enabled = !testInProgress;
+			buttonDeviceDelete.Enabled = !testInProgress;
+			buttonEventAdd.Enabled = !testInProgress;
+			buttonEventDelete.Enabled = !testInProgress;
+
+			// Menu items.
+			startToolStripMenuItem.Enabled = !testInProgress;
+			pauseToolStripMenuItem.Enabled = testInProgress;
+			stopToolStripMenuItem.Enabled = testInProgress;
+			newToolStripMenuItem.Enabled = !testInProgress;
+			openToolStripMenuItem.Enabled = !testInProgress;
+			saveToolStripMenuItem.Enabled = !testInProgress;
+		}
+
+		/// <summary>
+		/// Before exiting, check the user's wishes and safely end testing.
+		/// </summary>
+		/// <returns>true if we're quitting; false if cancelled</returns>
+		private bool ConfirmAbort()
+		{
+			DialogResult result = DialogResult.OK;  // whether to quit or not
+
+			// If a test exists and is running...
+			if ((_test != null) && (_test.IsBusy()))
 			{
-				// Add device to the device list panel.
-				AddDeviceToPanel(textBoxDeviceName.Text, comboBoxDeviceType.Text, "");
+				// Ask the user if they really want to stop the test.
+				result = MessageBox.Show("Abort the test?", "Abort", MessageBoxButtons.OKCancel);
 			}
-		}
 
-		private void AddDeviceToPanel(string name, string type, string port)
-		{
-			// Stop the GUI from looking weird while we update it.
-			tableLayoutPanelDevices.SuspendLayout();
-
-			// Add a new row to the table layout panel.
-			tableLayoutPanelDevices.RowCount++;
-			tableLayoutPanelDevices.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-
-			// Add a checkbox with the device's name.
-			tableLayoutPanelDevices.Controls.Add(new CheckBox
+			// If we're quitting, cancel a test (don't update GUI; the "TestFinished" method will do that).
+			if (result == DialogResult.OK)
 			{
-				AutoSize = true,
-				Anchor = AnchorStyles.Left | AnchorStyles.Top,
-				Dock = DockStyle.None,
-				Text = name,
-			}, COLUMN_DEVICES_NAME, tableLayoutPanelDevices.RowCount - 1);
-
-			// Add the device type.
-			tableLayoutPanelDevices.Controls.Add(new Label
-			{
-				Anchor = AnchorStyles.Left | AnchorStyles.Top,
-				AutoSize = true,
-				Dock = DockStyle.None,
-				Text = type,
-			}, COLUMN_DEVICES_TYPE, tableLayoutPanelDevices.RowCount - 1);
-
-			// Add a comboBox for serial port.
-			ComboBox comboBox = new ComboBox
-			{
-				Anchor = AnchorStyles.Left | AnchorStyles.Top,
-				Dock = DockStyle.None,
-				DropDownStyle = ComboBoxStyle.DropDownList
-			};
-			comboBox.Items.AddRange(SerialPort.GetPortNames());
-			tableLayoutPanelDevices.Controls.Add(comboBox, COLUMN_DEVICES_PORT, tableLayoutPanelDevices.RowCount - 1);
-
-			// Select previously used device serial port (if found).
-			comboBox.SelectedIndex = comboBox.FindStringExact(port);
-
-			// Make the GUI act normally again.
-			tableLayoutPanelDevices.ResumeLayout();
-
-			// Add the device to the list of available devices on the "Events" tab.
-			comboBoxEventDevice.Items.Add(name);
-		}
-
-		private void ButtonEventAdd_Click(object sender, EventArgs e)
-		{
-			AddEvent(comboBoxEventDevice.Text, comboBoxEventVariable.Text, numericUpDownEventValue.Value, numericUpDownEventDuration.Value);
-		}
-
-		private void AddEvent(string device, string variable, decimal value, decimal duration)
-		{
-			// Stop the GUI from looking weird while we update it.
-			tableLayoutPanelEvents.SuspendLayout();
-
-			// Add a new row to the table layout panel.
-			tableLayoutPanelEvents.RowCount++;
-			tableLayoutPanelEvents.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-
-			// Add a checkbox with the event's name.
-			tableLayoutPanelEvents.Controls.Add(new CheckBox
-			{
-				AutoSize = true,
-				Anchor = AnchorStyles.Left | AnchorStyles.Top,
-				Dock = DockStyle.None,
-				Text = device,
-			}, COLUMN_EVENTS_DEVICE, tableLayoutPanelEvents.RowCount - 1);
-
-			// Add the variable.
-			tableLayoutPanelEvents.Controls.Add(new Label
-			{
-				Anchor = AnchorStyles.Left | AnchorStyles.Top,
-				AutoSize = true,
-				Dock = DockStyle.None,
-				Text = variable,
-			}, COLUMN_EVENTS_VARIABLE, tableLayoutPanelEvents.RowCount - 1);
-
-			// Add the variable's value.
-			tableLayoutPanelEvents.Controls.Add(new Label
-			{
-				Anchor = AnchorStyles.Left | AnchorStyles.Top,
-				AutoSize = true,
-				Dock = DockStyle.None,
-				Text = value.ToString(CultureInfo.InvariantCulture)
-			}, COLUMN_EVENTS_VALUE, tableLayoutPanelEvents.RowCount - 1);
-
-			// Add the duration.
-			tableLayoutPanelEvents.Controls.Add(new Label
-			{
-				Anchor = AnchorStyles.Left | AnchorStyles.Top,
-				AutoSize = true,
-				Dock = DockStyle.None,
-				Text = duration.ToString(CultureInfo.InvariantCulture)
-			}, COLUMN_EVENTS_DURATION, tableLayoutPanelEvents.RowCount - 1);
-
-			// Add the status.
-			tableLayoutPanelEvents.Controls.Add(new Label
-			{
-				Anchor = AnchorStyles.Left | AnchorStyles.Top,
-				AutoSize = true,
-				Dock = DockStyle.None,
-			}, COLUMN_EVENTS_STATUS, tableLayoutPanelEvents.RowCount - 1);
-
-			// Make the GUI act normally again.
-			tableLayoutPanelEvents.ResumeLayout();
-		}
-
-		private void CheckBoxDeviceSelectAll_CheckedChanged(object sender, EventArgs e)
-		{
-			foreach (CheckBox c in tableLayoutPanelDevices.Controls.OfType<CheckBox>())
-			{
-				c.Checked = ((CheckBox)sender).Checked;
-			}
-		}
-
-		private void CheckBoxEventSelectAll_CheckedChanged(object sender, EventArgs e)
-		{
-			foreach (CheckBox c in tableLayoutPanelEvents.Controls.OfType<CheckBox>())
-			{
-				c.Checked = ((CheckBox)sender).Checked;
-			}
-		}
-
-		private void ButtonDeviceDelete_Click(object sender, EventArgs e)
-		{
-			// Hunt backwards for checked boxes or we'll miss the last one selected.
-			for (int row = tableLayoutPanelDevices.RowCount - 1; row >= 0; row--)
-			{
-				Control c = tableLayoutPanelDevices.GetControlFromPosition(0, row);
-				if ((c is CheckBox box) && (box.Checked))
+				try
 				{
-					// Remove the controls in the row.
-					Utilities.TableLayoutPanelRemoveRow(tableLayoutPanelDevices, row);
-
-					// Remove the option from the "Events" tab.
-					comboBoxEventDevice.Items.Remove(c.Text);
+					_test?.Stop();
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show("Could not stop test." + Environment.NewLine + ex.Message, "Error");
 				}
 			}
 
-			// Uncheck the checkbox.
-			checkBoxDeviceSelectAll.Checked = false;
+			// Return whether or not we're stopping the test.
+			return (result == DialogResult.OK);
 		}
 
-		private void ButtonEventDelete_Click(object sender, EventArgs e)
-		{
-			// Hunt backwards for checked items or we'll miss the last one selected.
-			for (int row = tableLayoutPanelEvents.RowCount - 1; row >= 0; row--)
-			{
-				Control c = tableLayoutPanelEvents.GetControlFromPosition(0, row);
-				if ((c is CheckBox box) && (box.Checked))
-				{
-					// Remove the controls in the row.
-					Utilities.TableLayoutPanelRemoveRow(tableLayoutPanelEvents, row);
-				}
-			}
-
-			// Uncheck the checkbox.
-			checkBoxEventSelectAll.Checked = false;
-		}
-
-		private void ButtonLogBrowse_Click(object sender, EventArgs e)
-		{
-			// Create a file browser.
-			OpenFileDialog openFileDialog = new OpenFileDialog()
-			{
-				InitialDirectory = textBoxLogFilename.Text,
-				Title = "Browse Log Files",
-				CheckFileExists = false,
-				CheckPathExists = true,
-				DefaultExt = "csv",
-				Filter = "txt files (*.txt)|*.txt|csv files (*.csv)|*.csv|All files (*.*)|*.*",
-				FilterIndex = 2,
-			};
-
-			// Show the dialog box to the user.
-			// If the user selects a file...
-			if (openFileDialog.ShowDialog() == DialogResult.OK)
-			{
-				// Use that file.
-				textBoxLogFilename.Text = openFileDialog.FileName;
-
-				// Remember it for next time.
-				Properties.Settings.Default.Logfile = openFileDialog.FileName;
-			}
-
-			// Clean up.
-			openFileDialog.Dispose();
-		}
+		#endregion
 	}
 }
