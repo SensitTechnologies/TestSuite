@@ -46,7 +46,11 @@ namespace Sensit.App.Automate
 		private readonly Dictionary<(string, VariableType), UserControlVariableStatus> _variableStatusControls =
 			new Dictionary<(string, VariableType), UserControlVariableStatus>();
 
+		// Number of completed events in currently running test
 		private uint _eventsComplete;
+
+		// flag set if there are unsaved changes to test settings
+		private bool _unsaved = false;
 
 		#endregion
 
@@ -91,9 +95,8 @@ namespace Sensit.App.Automate
 		/// <param name="e"></param>
 		private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			// This will invoke the "FormClosing" action, so nothing else to do here.
-
 			// Exit the application.
+			// This will invoke the "FormClosing" action, so nothing else to do here.
 			Application.Exit();
 		}
 
@@ -116,6 +119,28 @@ namespace Sensit.App.Automate
 					// Remember to close the application after the test finishes.
 					_closeAfterTest = true;
 				}
+			}
+
+			// If there are unsaved changes to test settings...
+			DialogResult result = DialogResult.No;
+			if (_unsaved)
+			{
+				result = MessageBox.Show("Save your changes?", "Unsaved changes", MessageBoxButtons.YesNoCancel);
+			}
+
+			switch (result)
+			{
+				// If the user chooses to save changes, show the save dialog.
+				case DialogResult.Yes:
+					SaveToolStripMenuItem_Click(sender, e);
+					break;
+
+				// If the user chooses to cancel, cancel application shutdown.
+				case DialogResult.Cancel:
+					e.Cancel = true;
+					break;
+
+				// If the user chooses to discard changes, do nothing (and the app will close).
 			}
 
 			// Save settings.
@@ -266,6 +291,9 @@ namespace Sensit.App.Automate
 			else
 			{
 				AddDeviceToPanel(textBoxDeviceName.Text, comboBoxDeviceType.Text, "");
+
+				// Remember there are unsaved changes.
+				_unsaved = true;
 			}
 		}
 
@@ -329,7 +357,11 @@ namespace Sensit.App.Automate
 		/// <param name="e"></param>
 		private void ButtonEventAdd_Click(object sender, EventArgs e)
 		{
+			// Add a new event to the event list panel.
 			AddEvent(comboBoxEventDevice.Text, comboBoxEventVariable.Text, numericUpDownEventValue.Value, numericUpDownEventDuration.Value);
+
+			// Remember there are unsaved changes.
+			_unsaved = true;
 		}
 
 		/// <summary>
@@ -443,6 +475,9 @@ namespace Sensit.App.Automate
 
 					// Remove the option from the "Events" tab.
 					comboBoxEventDevice.Items.Remove(c.Text);
+
+					// Remember there are unsaved changes.
+					_unsaved = true;
 				}
 			}
 
@@ -466,6 +501,9 @@ namespace Sensit.App.Automate
 				{
 					// Remove the controls in the row.
 					Utilities.TableLayoutPanelRemoveRow(tableLayoutPanelEvents, row);
+
+					// Remember there are unsaved changes.
+					_unsaved = true;
 				}
 			}
 
@@ -528,7 +566,28 @@ namespace Sensit.App.Automate
 
 		private void NewToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			ClearTestSettings();
+			// If there are unsaved changes...
+			DialogResult result = DialogResult.No;
+			if (_unsaved)
+			{
+				result = MessageBox.Show("Save your changes?", "Unsaved changes", MessageBoxButtons.YesNoCancel);
+			}
+
+			switch (result)
+			{
+				// If the user chooses to save changes, show the save dialog, then clear the form.
+				case DialogResult.Yes:
+					SaveToolStripMenuItem_Click(sender, e);
+					ClearTestSettings();
+					break;
+
+				// If the user chooses to discard changes, clear the form.
+				case DialogResult.No:
+					ClearTestSettings();
+					break;
+
+				// If the user chooses to cancel, do nothing.
+			}
 		}
 
 		private void ClearTestSettings()
@@ -541,9 +600,37 @@ namespace Sensit.App.Automate
 
 			// Remove all device choices from the "Events" tab.
 			comboBoxEventDevice.Items.Clear();
+
+			// Remember that there are no unsaved changes.
+			_unsaved = false;
 		}
 
 		private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			// If there are unsaved changes...
+			DialogResult result = DialogResult.No;
+			if (_unsaved)
+			{
+				result = MessageBox.Show("Save your changes?", "Unsaved changes", MessageBoxButtons.YesNoCancel);
+			}
+
+			switch (result)
+			{
+				// If the user chooses to save changes, show the save dialog, then open a new test.
+				case DialogResult.Yes:
+					SaveToolStripMenuItem_Click(sender, e);
+					break;
+
+				// If the user chooses to discard changes, clear the form.
+				case DialogResult.No:
+					OpenTestSettings();
+					break;
+
+				// If the user chooses to cancel, do nothing.
+			}
+		}
+
+		private void OpenTestSettings()
 		{
 			// Clear test settings.
 			ClearTestSettings();
@@ -591,6 +678,9 @@ namespace Sensit.App.Automate
 
 			// Clean up.
 			fileDialog.Dispose();
+
+			// Remember that there are no unsaved changes.
+			_unsaved = false;
 		}
 
 		private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -642,6 +732,9 @@ namespace Sensit.App.Automate
 
 			// Clean up.
 			fileDialog.Dispose();
+
+			// Remember that there are no unsaved changes.
+			_unsaved = false;
 		}
 
 		private TestSetting CreateTestSettings()
