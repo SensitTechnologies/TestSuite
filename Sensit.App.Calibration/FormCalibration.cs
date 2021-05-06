@@ -57,12 +57,6 @@ namespace Sensit.App.Calibration
 			// Initialize the form.
 			InitializeComponent();
 
-			// Add version string to title bar.
-			if (ApplicationDeployment.IsNetworkDeployed)
-			{
-				Text += " " + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
-			}
-
 			// List the control devices in the form, and select the first one.
 			List<Type> deviceTypes = Utilities.FindClasses(typeof(IDevice));
 			foreach (Type deviceType in deviceTypes)
@@ -753,14 +747,23 @@ namespace Sensit.App.Calibration
 		/// <param name="e"></param>
 		private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			// Show the repository where this program can be found.
-			// For the sake of future engineers.
-			string description = "Source code can be found at:" + Environment.NewLine
-				+ "https://github.com/SensitTechnologies/TestSuite";
-
 			// Create an about box.
-			using (FormAbout formAbout = new FormAbout(description))
+			using (FormAbout formAbout = new FormAbout())
 			{
+				// Add version string to title bar.
+				if (ApplicationDeployment.IsNetworkDeployed)
+				{
+					formAbout.Version += " " + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
+				}
+
+				// Show the repository where this program can be found.
+				// For the sake of future engineers.
+				formAbout.Description +=
+					Environment.NewLine +
+					Environment.NewLine +
+					"Source code can be found at:" +
+					Environment.NewLine +
+					"https://github.com/SensitTechnologies/TestSuite";
 
 				// Show the about box.
 				// ShowDialog() disables interaction with the app's other forms.
