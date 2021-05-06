@@ -1,11 +1,11 @@
 /.vs
 /packages
 
-/Sensit.App.Calibration/bin
-/Sensit.App.Calibration/obj
-/Sensit.App.Calibration/publish
-/Sensit.App.Calibration/*.pfx
-/Sensit.App.Calibration/*.user
+/Sensit.App.Automate/bin
+/Sensit.App.Automate/obj
+/Sensit.App.Automate/publish
+/Sensit.App.Automate/*.pfx
+/Sensit.App.Automate/*.user
 
 /Sensit.App.Datalogger/bin
 /Sensit.App.Datalogger/obj
