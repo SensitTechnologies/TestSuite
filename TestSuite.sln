@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\Unit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.MassFlow", "Sensit.App.MassFlow\Sensit.App.MassFlow.csproj", "{496EA5DF-44D3-4CBE-9BB5-A2542C219928}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.Calibration", "Sensit.App.Calibration\Sensit.App.Calibration.csproj", "{1065271E-2906-499B-A9FA-43BFB1EB218B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.Automate", "Sensit.App.Calibration\Sensit.App.Automate.csproj", "{1065271E-2906-499B-A9FA-43BFB1EB218B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.GasMixer", "Sensit.App.GasMixer\Sensit.App.GasMixer.csproj", "{172798F2-78C7-4AFB-8F28-B713CFA8E125}"
 EndProject

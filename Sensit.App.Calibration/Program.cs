@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Sensit.App.Calibration
+namespace Sensit.App.Automate
 {
 	static class Program
 	{
@@ -13,7 +13,7 @@ namespace Sensit.App.Calibration
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new FormCalibration());
+			Application.Run(new FormAutomate());
 		}
 	}
 }

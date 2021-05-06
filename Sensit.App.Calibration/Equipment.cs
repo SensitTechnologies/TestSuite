@@ -5,7 +5,7 @@ using Sensit.TestSDK.Communication;
 using Sensit.TestSDK.Interfaces;
 using Sensit.TestSDK.Utilities;
 
-namespace Sensit.App.Calibration
+namespace Sensit.App.Automate
 {
 	/// <summary>
 	/// Manage devices used to collect data during tests.

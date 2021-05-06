@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Forms;
 
-namespace Sensit.App.Calibration
+namespace Sensit.App.Automate
 {
 	public partial class UserControlVariableStatus : UserControl
 	{

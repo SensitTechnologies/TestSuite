@@ -12,12 +12,12 @@ using Sensit.TestSDK.Interfaces;
 using Sensit.TestSDK.Settings;
 using Sensit.TestSDK.Utilities;
 
-namespace Sensit.App.Calibration
+namespace Sensit.App.Automate
 {
 	/// <summary>
 	/// GUI operations and settings access are handled here.
 	/// </summary>
-	public partial class FormCalibration : Form
+	public partial class FormAutomate : Form
 	{
 		#region Constants
 
@@ -52,7 +52,7 @@ namespace Sensit.App.Calibration
 
 		#region Constructor
 
-		public FormCalibration()
+		public FormAutomate()
 		{
 			// Initialize the form.
 			InitializeComponent();
@@ -102,7 +102,7 @@ namespace Sensit.App.Calibration
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void FormCalibration_FormClosing(object sender, FormClosingEventArgs e)
+		private void FormAutomate_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			// If a test exists and is running...
 			if ((_test != null) && (_test.IsBusy()))

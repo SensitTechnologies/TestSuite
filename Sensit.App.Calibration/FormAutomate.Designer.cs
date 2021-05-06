@@ -1,6 +1,6 @@
-﻿namespace Sensit.App.Calibration
+﻿namespace Sensit.App.Automate
 {
-	partial class FormCalibration
+	partial class FormAutomate
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -969,7 +969,7 @@
 			this.tableLayoutPanel2.Size = new System.Drawing.Size(162, 29);
 			this.tableLayoutPanel2.TabIndex = 17;
 			// 
-			// FormCalibration
+			// FormAutomate
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -979,9 +979,9 @@
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.menuStrip1);
 			this.MainMenuStrip = this.menuStrip1;
-			this.Name = "FormCalibration";
-			this.Text = "Automated Test System";
-			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormCalibration_FormClosing);
+			this.Name = "FormAutomate";
+			this.Text = "Automate";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormAutomate_FormClosing);
 			this.tabControl.ResumeLayout(false);
 			this.tabPageDevices.ResumeLayout(false);
 			this.tabPageDevices.PerformLayout();

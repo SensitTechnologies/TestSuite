@@ -5,7 +5,7 @@ using Sensit.TestSDK.Interfaces;
 using System.Xml.Serialization;
 using System.Xml;
 
-namespace Sensit.App.Calibration
+namespace Sensit.App.Automate
 {
 	[Serializable]
 	public class DeviceSetting

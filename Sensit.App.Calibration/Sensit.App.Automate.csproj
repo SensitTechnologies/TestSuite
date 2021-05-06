@@ -7,8 +7,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1065271E-2906-499B-A9FA-43BFB1EB218B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Sensit.App.Calibration</RootNamespace>
-    <AssemblyName>Sensit.App.Calibration</AssemblyName>
+    <RootNamespace>Sensit.App.Automate</RootNamespace>
+    <AssemblyName>Sensit.App.Automate</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -110,11 +110,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Log.cs" />
-    <Compile Include="FormCalibration.cs">
+    <Compile Include="FormAutomate.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormCalibration.Designer.cs">
-      <DependentUpon>FormCalibration.cs</DependentUpon>
+    <Compile Include="FormAutomate.Designer.cs">
+      <DependentUpon>FormAutomate.cs</DependentUpon>
     </Compile>
     <Compile Include="TestSettings.cs" />
     <Compile Include="Program.cs" />
@@ -127,8 +127,8 @@
     <Compile Include="UserControlVariableStatus.Designer.cs">
       <DependentUpon>UserControlVariableStatus.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="FormCalibration.resx">
-      <DependentUpon>FormCalibration.cs</DependentUpon>
+    <EmbeddedResource Include="FormAutomate.resx">
+      <DependentUpon>FormAutomate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -5,7 +5,7 @@ using System.IO;
 using Sensit.TestSDK.Files;
 using Sensit.TestSDK.Interfaces;
 
-namespace Sensit.App.Calibration
+namespace Sensit.App.Automate
 {
 	/// <summary>
 	/// Manage log file.

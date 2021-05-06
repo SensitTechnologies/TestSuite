@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using Sensit.TestSDK.Exceptions;
 using Sensit.TestSDK.Interfaces;
 
-namespace Sensit.App.Calibration
+namespace Sensit.App.Automate
 {
 	/// <summary>
 	/// Set of values needed to control a device's variable.

@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Sensit Automated Test App")]
+[assembly: AssemblyTitle("Automate")]
 [assembly: AssemblyDescription("Create and run automated tests with a variaty of lab equipment.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Sensit Technologies")]
-[assembly: AssemblyProduct("Calibration App")]
-[assembly: AssemblyCopyright("Copyright ©  2021")]
+[assembly: AssemblyProduct("Sensit.App.Automate")]
+[assembly: AssemblyCopyright("Copyright © 2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
