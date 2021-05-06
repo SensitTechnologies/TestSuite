@@ -544,6 +544,8 @@
 			this.numericUpDownEventDuration.Name = "numericUpDownEventDuration";
 			this.numericUpDownEventDuration.Size = new System.Drawing.Size(74, 20);
 			this.numericUpDownEventDuration.TabIndex = 6;
+			this.numericUpDownEventDuration.Enter += new System.EventHandler(this.NumericUpDown_Enter);
+			this.numericUpDownEventDuration.MouseDown += new System.Windows.Forms.MouseEventHandler(this.NumericUpDown_MouseDown);
 			// 
 			// comboBoxEventVariable
 			// 
@@ -573,6 +575,8 @@
 			this.numericUpDownEventValue.Name = "numericUpDownEventValue";
 			this.numericUpDownEventValue.Size = new System.Drawing.Size(74, 20);
 			this.numericUpDownEventValue.TabIndex = 5;
+			this.numericUpDownEventValue.Enter += new System.EventHandler(this.NumericUpDown_Enter);
+			this.numericUpDownEventValue.MouseDown += new System.Windows.Forms.MouseEventHandler(this.NumericUpDown_MouseDown);
 			// 
 			// tabPageLog
 			// 

@@ -1015,5 +1015,49 @@ namespace Sensit.App.Automate
 		}
 
 		#endregion
+
+		#region Tab and Mouse Helpers
+
+		// used to make mouse/tab actions easier
+		private bool _selectByMouse = false;
+
+		/// <summary>
+		/// If the user uses the Tab key to enter a numeric up/down control,
+		/// highlight the value in the control to ease input of a new value.
+		/// </summary>
+		/// <remarks>
+		/// Source:
+		/// https://stackoverflow.com/questions/571074/how-to-select-all-text-in-winforms-numericupdown-upon-tab-in
+		/// </remarks>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void NumericUpDown_Enter(object sender, EventArgs e)
+		{
+			NumericUpDown curBox = sender as NumericUpDown;
+			curBox.Select();
+			curBox.Select(0, curBox.Text.Length);
+			if (MouseButtons == MouseButtons.Left)
+			{
+				_selectByMouse = true;
+			}
+		}
+
+		/// <summary>
+		/// If the user clicks on a numeric up/down control,
+		/// highlight the value in the control to ease input of a new value.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void NumericUpDown_MouseDown(object sender, MouseEventArgs e)
+		{
+			NumericUpDown curBox = sender as NumericUpDown;
+			if (_selectByMouse)
+			{
+				curBox.Select(0, curBox.Text.Length);
+				_selectByMouse = false;
+			}
+		}
+
+		#endregion
 	}
 }
