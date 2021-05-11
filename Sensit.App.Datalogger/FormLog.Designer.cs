@@ -96,7 +96,7 @@
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 341);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 339);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(444, 22);
 			this.statusStrip1.TabIndex = 1;
@@ -224,7 +224,7 @@
 			this.groupBox4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.groupBox4.Controls.Add(this.tableLayoutPanel3);
 			this.groupBox4.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.groupBox4.Location = new System.Drawing.Point(0, 287);
+			this.groupBox4.Location = new System.Drawing.Point(0, 285);
 			this.groupBox4.Name = "groupBox4";
 			this.groupBox4.Size = new System.Drawing.Size(444, 54);
 			this.groupBox4.TabIndex = 13;
@@ -343,7 +343,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(444, 363);
+			this.ClientSize = new System.Drawing.Size(444, 361);
 			this.Controls.Add(this.groupBoxBaudRate);
 			this.Controls.Add(this.groupBox4);
 			this.Controls.Add(this.groupBoxInterval);
