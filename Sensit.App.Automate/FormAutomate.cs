@@ -290,11 +290,84 @@ namespace Sensit.App.Automate
 			}
 			else
 			{
+				LayoutSuspend();
+
+				// Add the device.
 				AddDeviceToPanel(textBoxDeviceName.Text, comboBoxDeviceType.Text, "");
+
+				// Scroll to the bottom of the device's list so user can see the new device.
+				tableLayoutPanelDevices.VerticalScroll.Value = tableLayoutPanelDevices.VerticalScroll.Maximum;
 
 				// Remember there are unsaved changes.
 				_unsaved = true;
+
+				LayoutResume();
 			}
+		}
+
+		// TODO:  Remove these statements one by one until something slows down.
+		private void LayoutSuspend()
+		{
+			// Stop the GUI from looking weird while we update it.
+			tableLayoutPanelDevices.SuspendLayout();
+			tabControl.SuspendLayout();
+			tabPageDevices.SuspendLayout();
+			groupBoxDevices.SuspendLayout();
+			tableLayoutPanel4.SuspendLayout();
+			tableLayoutPanel6.SuspendLayout();
+			tableLayoutPanel11.SuspendLayout();
+			tabPageEvents.SuspendLayout();
+			groupBoxEvents.SuspendLayout();
+			tableLayoutPanel7.SuspendLayout();
+			tableLayoutPanelEvents.SuspendLayout();
+			tableLayoutPanel9.SuspendLayout();
+			tableLayoutPanel10.SuspendLayout();
+			tabPageLog.SuspendLayout();
+			groupBoxLog.SuspendLayout();
+			groupBox1.SuspendLayout();
+			tableLayoutPanel1.SuspendLayout();
+			tabPageStatus.SuspendLayout();
+			groupBoxVariables.SuspendLayout();
+			statusStrip1.SuspendLayout();
+			menuStrip1.SuspendLayout();
+			tableLayoutPanelTest.SuspendLayout();
+			tableLayoutPanelTestSetupButtons.SuspendLayout();
+			tableLayoutPanel3.SuspendLayout();
+			tableLayoutPanelRepeat.SuspendLayout();
+			tableLayoutPanel2.SuspendLayout();
+		}
+
+		// TODO:  Remove these statements one by one until something slows down.
+		private void LayoutResume()
+		{
+			// Make the GUI act normally again.
+			tableLayoutPanelDevices.ResumeLayout();
+			tabControl.ResumeLayout();
+			tabPageDevices.ResumeLayout();
+			groupBoxDevices.ResumeLayout();
+			tableLayoutPanel4.ResumeLayout();
+			tableLayoutPanelDevices.ResumeLayout();
+			tableLayoutPanel6.ResumeLayout();
+			tableLayoutPanel11.ResumeLayout();
+			tabPageEvents.ResumeLayout();
+			groupBoxEvents.ResumeLayout();
+			tableLayoutPanel7.ResumeLayout();
+			tableLayoutPanelEvents.ResumeLayout();
+			tableLayoutPanel9.ResumeLayout();
+			tableLayoutPanel10.ResumeLayout();
+			tabPageLog.ResumeLayout();
+			groupBoxLog.ResumeLayout();
+			groupBox1.ResumeLayout();
+			tableLayoutPanel1.ResumeLayout();
+			tabPageStatus.ResumeLayout();
+			groupBoxVariables.ResumeLayout();
+			statusStrip1.ResumeLayout();
+			menuStrip1.ResumeLayout();
+			tableLayoutPanelTest.ResumeLayout();
+			tableLayoutPanelTestSetupButtons.ResumeLayout();
+			tableLayoutPanel3.ResumeLayout();
+			tableLayoutPanelRepeat.ResumeLayout();
+			tableLayoutPanel2.ResumeLayout();
 		}
 
 		/// <summary>
@@ -305,9 +378,6 @@ namespace Sensit.App.Automate
 		/// <param name="port">serial port associated with the device</param>
 		private void AddDeviceToPanel(string name, string type, string port)
 		{
-			// Stop the GUI from looking weird while we update it.
-			tableLayoutPanelDevices.SuspendLayout();
-
 			// Add a new row to the table layout panel.
 			tableLayoutPanelDevices.RowCount++;
 			tableLayoutPanelDevices.RowStyles.Add(new RowStyle(SizeType.AutoSize));
@@ -343,9 +413,6 @@ namespace Sensit.App.Automate
 			// Select previously used device serial port (if found).
 			comboBox.SelectedIndex = comboBox.FindStringExact(port);
 
-			// Make the GUI act normally again.
-			tableLayoutPanelDevices.ResumeLayout();
-
 			// Add the device to the list of available devices on the "Events" tab.
 			comboBoxEventDevice.Items.Add(name);
 		}
@@ -357,11 +424,18 @@ namespace Sensit.App.Automate
 		/// <param name="e"></param>
 		private void ButtonEventAdd_Click(object sender, EventArgs e)
 		{
+			LayoutSuspend();
+
 			// Add a new event to the event list panel.
-			AddEvent(comboBoxEventDevice.Text, comboBoxEventVariable.Text, numericUpDownEventValue.Value, numericUpDownEventDuration.Value);
+			AddEventToPanel(comboBoxEventDevice.Text, comboBoxEventVariable.Text, numericUpDownEventValue.Value, numericUpDownEventDuration.Value);
+
+			// Scroll to the bottom of the device's list so user can see the new device.
+			tableLayoutPanelEvents.VerticalScroll.Value = tableLayoutPanelEvents.VerticalScroll.Maximum;
 
 			// Remember there are unsaved changes.
 			_unsaved = true;
+
+			LayoutResume();
 		}
 
 		/// <summary>
@@ -371,11 +445,8 @@ namespace Sensit.App.Automate
 		/// <param name="variable">DisplayName of the variable acted upon</param>
 		/// <param name="value">value to set the variable to</param>
 		/// <param name="duration">time to wait before starting next event [seconds]</param>
-		private void AddEvent(string device, string variable, decimal value, decimal duration)
+		private void AddEventToPanel(string device, string variable, decimal value, decimal duration)
 		{
-			// Stop the GUI from looking weird while we update it.
-			tableLayoutPanelEvents.SuspendLayout();
-
 			// Add a new row to the table layout panel.
 			tableLayoutPanelEvents.RowCount++;
 			tableLayoutPanelEvents.RowStyles.Add(new RowStyle(SizeType.AutoSize));
@@ -399,7 +470,7 @@ namespace Sensit.App.Automate
 			}, COLUMN_EVENTS_VARIABLE, tableLayoutPanelEvents.RowCount - 1);
 
 			// Add the variable's value.
-			tableLayoutPanelEvents.Controls.Add(new Label
+			tableLayoutPanelEvents.Controls.Add(new TextBox
 			{
 				Anchor = AnchorStyles.Left | AnchorStyles.Top,
 				AutoSize = true,
@@ -408,7 +479,7 @@ namespace Sensit.App.Automate
 			}, COLUMN_EVENTS_VALUE, tableLayoutPanelEvents.RowCount - 1);
 
 			// Add the duration.
-			tableLayoutPanelEvents.Controls.Add(new Label
+			tableLayoutPanelEvents.Controls.Add(new TextBox
 			{
 				Anchor = AnchorStyles.Left | AnchorStyles.Top,
 				AutoSize = true,
@@ -423,9 +494,6 @@ namespace Sensit.App.Automate
 				AutoSize = true,
 				Dock = DockStyle.None,
 			}, COLUMN_EVENTS_STATUS, tableLayoutPanelEvents.RowCount - 1);
-
-			// Make the GUI act normally again.
-			tableLayoutPanelEvents.ResumeLayout();
 		}
 
 		/// <summary>
@@ -464,6 +532,8 @@ namespace Sensit.App.Automate
 		/// <param name="e"></param>
 		private void ButtonDeviceDelete_Click(object sender, EventArgs e)
 		{
+			LayoutSuspend();
+
 			// Hunt backwards for checked boxes or we'll miss the last one selected.
 			for (int row = tableLayoutPanelDevices.RowCount - 1; row >= 0; row--)
 			{
@@ -483,6 +553,8 @@ namespace Sensit.App.Automate
 
 			// Uncheck the checkbox.
 			checkBoxDeviceSelectAll.Checked = false;
+
+			LayoutResume();
 		}
 
 		/// <summary>
@@ -493,6 +565,8 @@ namespace Sensit.App.Automate
 		/// <param name="e"></param>
 		private void ButtonEventDelete_Click(object sender, EventArgs e)
 		{
+			LayoutSuspend();
+
 			// Hunt backwards for checked items or we'll miss the last one selected.
 			for (int row = tableLayoutPanelEvents.RowCount - 1; row >= 0; row--)
 			{
@@ -509,6 +583,8 @@ namespace Sensit.App.Automate
 
 			// Uncheck the checkbox.
 			checkBoxEventSelectAll.Checked = false;
+
+			LayoutResume();
 		}
 
 		#endregion
@@ -592,6 +668,8 @@ namespace Sensit.App.Automate
 
 		private void ClearTestSettings()
 		{
+			LayoutSuspend();
+
 			// Remove all devices.
 			Utilities.TableLayoutPanelClear(tableLayoutPanelDevices);
 
@@ -603,6 +681,8 @@ namespace Sensit.App.Automate
 
 			// Remember that there are no unsaved changes.
 			_unsaved = false;
+
+			LayoutResume();
 		}
 
 		private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -649,12 +729,14 @@ namespace Sensit.App.Automate
 					// Load settings from file.
 					TestSetting testSetting = Settings.Load<TestSetting>(fileDialog.FileName);
 
+					// List the control devices in the form.
+					List<Type> deviceTypes = Utilities.FindClasses(typeof(IDevice));
+
+					LayoutSuspend();
+
 					// Add each device to the form.
 					foreach (DeviceSetting d in testSetting.Devices)
 					{
-						// List the control devices in the form.
-						List<Type> deviceTypes = Utilities.FindClasses(typeof(IDevice));
-
 						// Find the device type with the correct display name.
 						Type deviceType = deviceTypes.FirstOrDefault(o => o.GetDisplayName() == d.Type);
 
@@ -665,8 +747,10 @@ namespace Sensit.App.Automate
 					// Add each event to the form.
 					foreach (EventSetting es in testSetting.Events)
 					{
-						AddEvent(es.DeviceName, es.Variable.GetDescription(), es.Value, es.Duration);
+						AddEventToPanel(es.DeviceName, es.Variable.GetDescription(), es.Value, es.Duration);
 					}
+
+					LayoutResume();
 				}
 				catch (InvalidOperationException ex)
 				{
@@ -774,8 +858,8 @@ namespace Sensit.App.Automate
 			{
 				CheckBox checkBoxEventDevice = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_DEVICE, row) as CheckBox;
 				Label labelEventVariable = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_VARIABLE, row) as Label;
-				Label labelEventValue = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_VALUE, row) as Label;
-				Label labelEventDuration = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_DURATION, row) as Label;
+				TextBox textBoxEventValue = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_VALUE, row) as TextBox;
+				TextBox textBoxEventDuration = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_DURATION, row) as TextBox;
 
 				// If the specified device does not exist...
 				if (testSetting.Devices.FirstOrDefault(o => o.Name == checkBoxEventDevice.Text) == null)
@@ -794,8 +878,8 @@ namespace Sensit.App.Automate
 					{
 						DeviceName = checkBoxEventDevice.Text,
 						Variable = variableType,
-						Value = Convert.ToDecimal(labelEventValue.Text, CultureInfo.InvariantCulture),
-						Duration = Convert.ToUInt32(labelEventDuration.Text, CultureInfo.InvariantCulture)
+						Value = Convert.ToDecimal(textBoxEventValue.Text, CultureInfo.InvariantCulture),
+						Duration = Convert.ToUInt32(textBoxEventDuration.Text, CultureInfo.InvariantCulture)
 					});
 				}
 				catch (ArgumentException ex)
