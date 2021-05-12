@@ -1043,6 +1043,22 @@ namespace Sensit.App.Automate
 		}
 
 		/// <summary>
+		/// If the user uses the Tab key to enter a textbox,
+		/// highlight the text in the control to ease input of a new string.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void TextBox_Enter(object sender, EventArgs e)
+		{
+			TextBox textBox = sender as TextBox;
+			textBox.SelectAll();
+			if (MouseButtons == MouseButtons.Left)
+			{
+				_selectByMouse = true;
+			}
+		}
+
+		/// <summary>
 		/// If the user clicks on a numeric up/down control,
 		/// highlight the value in the control to ease input of a new value.
 		/// </summary>
@@ -1054,6 +1070,22 @@ namespace Sensit.App.Automate
 			if (_selectByMouse)
 			{
 				curBox.Select(0, curBox.Text.Length);
+				_selectByMouse = false;
+			}
+		}
+
+		/// <summary>
+		/// If a user clicks in a textbox,
+		/// highlight the text in the control to ease input of a new string.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void TextBox_MouseDown(object sender, MouseEventArgs e)
+		{
+			TextBox textBox = sender as TextBox;
+			if (_selectByMouse)
+			{
+				textBox.SelectAll();
 				_selectByMouse = false;
 			}
 		}

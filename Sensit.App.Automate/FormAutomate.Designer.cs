@@ -324,6 +324,8 @@
 			this.textBoxDeviceName.Name = "textBoxDeviceName";
 			this.textBoxDeviceName.Size = new System.Drawing.Size(128, 20);
 			this.textBoxDeviceName.TabIndex = 3;
+			this.textBoxDeviceName.Enter += new System.EventHandler(this.TextBox_Enter);
+			this.textBoxDeviceName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TextBox_MouseDown);
 			// 
 			// tabPageEvents
 			// 
