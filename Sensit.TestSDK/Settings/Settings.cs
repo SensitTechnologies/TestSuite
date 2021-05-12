@@ -9,24 +9,13 @@ namespace Sensit.TestSDK.Settings
 	public static class Settings
 	{
 		/// <summary>
-		/// Folder where settings files will be stored for the application.
-		/// </summary>
-		/// <remarks>
-		/// Default setting is the location that the application runs from.
-		/// </remarks>
-		public static string Directory { get; set; } = AppDomain.CurrentDomain.BaseDirectory;
-
-		/// <summary>
 		/// Retrieve an object of the specified type from the specified settings file
 		/// </summary>
 		/// <typeparam name="T">the type the settings object</typeparam>
-		/// <param name="filename">XML file where settings are stored</param>
+		/// <param name="filepath">path to XML file where settings are stored</param>
 		/// <returns>an object containing settings from the file</returns>
-		public static T Load<T>(string filename)
+		public static T Load<T>(string filepath)
 		{
-			// Form the path to the file.
-			string filepath = GetFilePath(filename);
-
 			// Start with a null settings class.
 			T settings = default;
 
@@ -52,12 +41,9 @@ namespace Sensit.TestSDK.Settings
 		/// </summary>
 		/// <typeparam name="T">the type the settings object</typeparam>
 		/// <param name="settings">Object to be serialized to XML</param>
-		/// <param name="fileName">XML file where settings are stored</param>
-		public static void Save<T>(T settings, string filename)
+		/// <param name="filepath">path to XML file where settings are stored</param>
+		public static void Save<T>(T settings, string filepath)
 		{
-			// Form the path to the file.
-			string filepath = GetFilePath(filename);
-
 			// Save the settings as an XML file.
 			Serializer.SerializeXML(settings, filepath);
 		}
@@ -69,13 +55,13 @@ namespace Sensit.TestSDK.Settings
 		/// </summary>
 		/// <param name="settingsName">name of the file (not including the extension)</param>
 		/// <returns>full file path</returns>
-		public static string GetFilePath(string fileName)
+		public static string GetFilePath(string directory, string fileName)
 		{
 			// Remove the file extension if one exists.
 			// But preserve path name if it exists.
 			fileName = Path.ChangeExtension(fileName, null);
 
-			return Path.Combine(Directory, fileName.Replace(' ', '_') + ".xml");
+			return Path.Combine(directory, fileName.Replace(' ', '_') + ".xml");
 		}
 
 		#endregion
