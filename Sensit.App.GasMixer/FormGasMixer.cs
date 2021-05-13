@@ -302,5 +302,29 @@ namespace Sensit.App.GasConcentration
 				toolStripStatusLabel1.Text = ex.GetType().Name.ToString(CultureInfo.CurrentCulture);
 			}
 		}
+
+		// used to make mouse/tab actions easier
+		private bool _selectByMouse = false;
+
+		private void TextBox_Enter(object sender, EventArgs e)
+		{
+			NumericUpDown curBox = sender as NumericUpDown;
+			curBox.Select();
+			curBox.Select(0, curBox.Text.Length);
+			if (MouseButtons == MouseButtons.Left)
+			{
+				_selectByMouse = true;
+			}
+		}
+
+		private void TextBox_MouseDown(object sender, MouseEventArgs e)
+		{
+			NumericUpDown curBox = sender as NumericUpDown;
+			if (_selectByMouse)
+			{
+				curBox.Select(0, curBox.Text.Length);
+				_selectByMouse = false;
+			}
+		}
 	}
 }
