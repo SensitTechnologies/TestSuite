@@ -930,7 +930,7 @@ namespace Sensit.App.Automate
 				// Add version string to title bar.
 				if (ApplicationDeployment.IsNetworkDeployed)
 				{
-					formAbout.Version += " " + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
+					formAbout.Version = " " + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
 				}
 
 				// Show the repository where this program can be found.
