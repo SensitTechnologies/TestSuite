@@ -20,13 +20,13 @@ namespace Sensit.TestSDK.Devices
 	/// </remarks>
 	public class GPDX303S : SerialDevice, IVoltageDevice, ICurrentDevice
 	{
-		private int channel = 1;
+		private int _channel = 1;
 
 		public int Channel
 		{
 			get
 			{
-				return channel;
+				return _channel;
 			}
 			set
 			{
@@ -36,7 +36,7 @@ namespace Sensit.TestSDK.Devices
 					throw new DeviceSettingNotSupportedException("Channel must be a number between 1 and 4, inclusive.");
 				}
 
-				channel = value;
+				_channel = value;
 			}
 		}
 
@@ -64,17 +64,17 @@ namespace Sensit.TestSDK.Devices
 		public void Read()
 		{
 			// Fetch the voltage reading.
-			Readings[VariableType.Voltage] = SendQuery(new GPDX303S_SCPI().VOUT(channel).Query());
+			Readings[VariableType.Voltage] = SendQuery(new GPDX303S_SCPI().VOUT(_channel).Query());
 
 			// Fetch the current reading.
-			Readings[VariableType.Current] = SendQuery(new GPDX303S_SCPI().IOUT(channel).Query());
+			Readings[VariableType.Current] = SendQuery(new GPDX303S_SCPI().IOUT(_channel).Query());
 		}
 
 		public void Write()
 		{
-			SendCommand(new GPDX303S_SCPI().ISET(channel, Convert.ToSingle(Setpoints[VariableType.Current])).Command());
+			SendCommand(new GPDX303S_SCPI().ISET(_channel, Convert.ToSingle(Setpoints[VariableType.Current])).Command());
 
-			SendCommand(new GPDX303S_SCPI().VSET(channel, Convert.ToSingle(Setpoints[VariableType.Voltage])).Command());
+			SendCommand(new GPDX303S_SCPI().VSET(_channel, Convert.ToSingle(Setpoints[VariableType.Voltage])).Command());
 		}
 
 		public void SetControlMode(ControlMode mode)
@@ -101,11 +101,11 @@ namespace Sensit.TestSDK.Devices
 			switch (type)
 			{
 				case VariableType.Current:
-					result = SendQuery(new GPDX303S_SCPI().ISET(channel).Query());
+					result = SendQuery(new GPDX303S_SCPI().ISET(_channel).Query());
 					break;
 				case VariableType.Voltage:
 					// Fetch the voltage reading.
-					result = SendQuery(new GPDX303S_SCPI().VSET(channel).Query());
+					result = SendQuery(new GPDX303S_SCPI().VSET(_channel).Query());
 					break;
 				default:
 					throw new DeviceSettingNotSupportedException("Power supply does not support " + type.ToString() + ".");
