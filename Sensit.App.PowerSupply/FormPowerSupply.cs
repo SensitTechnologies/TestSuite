@@ -11,7 +11,7 @@ namespace Sensit.App.PowerSupply
 	public partial class FormPowerSupply : Form
 	{
 		// power supply
-		private GPDX303S _powerSupply = new GPDX303S();
+		private readonly GPDX303S _powerSupply = new GPDX303S();
 
 		/// <summary>
 		/// Runs when the application starts.
