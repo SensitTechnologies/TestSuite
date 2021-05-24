@@ -17,7 +17,7 @@ namespace Sensit.TestSDK.Communication
 		/// </remarks>
 		internal SerialDevice() { }
 
-		// port used to communicate with mass flow controller
+		// port used to communicate with device
 		// (protected means it's accessible within derived classes, but not outside them)
 		protected SerialPort Port { get; } = new SerialPort();
 
@@ -64,8 +64,11 @@ namespace Sensit.TestSDK.Communication
 		{
 			try
 			{
-				// Open the serial port.
-				Port.Open();
+				// Open the serial port (if not already).
+				if (Port.IsOpen == false)
+				{
+					Port.Open();
+				}
 			}
 			catch (SystemException ex)
 			{
