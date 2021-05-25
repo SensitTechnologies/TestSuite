@@ -82,17 +82,6 @@ namespace Sensit.App.Automate
 		}
 
 		/// <summary>
-		/// Write setpoints to all devices.
-		/// </summary>
-		public void Write()
-		{
-			foreach (IDevice d in Devices.Values)
-			{
-				d.Write();
-			}
-		}
-
-		/// <summary>
 		/// Close all devices that have a "Close" method.
 		/// </summary>
 		public void Close()

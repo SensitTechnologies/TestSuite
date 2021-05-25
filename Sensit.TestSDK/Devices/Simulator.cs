@@ -18,7 +18,7 @@ namespace Sensit.TestSDK.Devices
 		ITemperatureDevice, ICurrentDevice, IVoltageDevice
 	{
 		// Values used for both setpoints and readings.
-		private Dictionary<VariableType, double> _values = new Dictionary<VariableType, double>()
+		private readonly Dictionary<VariableType, double> _values = new Dictionary<VariableType, double>()
 		{
 			{ VariableType.MassFlow, 0.0 },
 			{ VariableType.Pressure, 0.0 },
@@ -62,7 +62,7 @@ namespace Sensit.TestSDK.Devices
 			// Nothing to do here.
 		}
 
-		public void Write()
+		public void Write(VariableType variable)
 		{
 			// Nothing to do here.
 		}

@@ -273,17 +273,21 @@ namespace Sensit.App.Automate
 
 			foreach (KeyValuePair<(string, VariableType), TestVariable> v in Variables)
 			{
-				// Get the reading from the device.
-				double reading = _equipment.Devices[v.Key.Item1].Readings[v.Key.Item2];
-
-				// Update global variable.
-				v.Value.Actual = Convert.ToDecimal(reading);
-
-				// If the variable is not near the setpoint...
-				if (Math.Abs(v.Value.Setpoint - v.Value.Actual) > v.Value.Tolerance)
+				// If applicable device supports reading the value, monitor it.
+				if (_equipment.Devices[v.Key.Item1].Readings.ContainsKey(v.Key.Item2))
 				{
-					// Attempt to achieve the setpoint again.
-					ProcessSetpoint(v.Key.Item1, v.Key.Item2);
+					// Get the reading from the device.
+					double reading = _equipment.Devices[v.Key.Item1].Readings[v.Key.Item2];
+
+					// Update global variable.
+					v.Value.Actual = Convert.ToDecimal(reading);
+
+					// If the variable is not near the setpoint...
+					if (Math.Abs(v.Value.Setpoint - v.Value.Actual) > v.Value.Tolerance)
+					{
+						// Attempt to achieve the setpoint again.
+						ProcessSetpoint(v.Key.Item1, v.Key.Item2);
+					}
 				}
 			}
 		}
@@ -314,74 +318,78 @@ namespace Sensit.App.Automate
 
 			// Set setpoint.
 			_equipment.Devices[deviceName].Setpoints[variable] = Convert.ToDouble(values.Setpoint);
-			_equipment.Devices[deviceName].Write();
+			_equipment.Devices[deviceName].Write(variable);
 
-			// Get start time.
-			Stopwatch stopwatch = Stopwatch.StartNew();
-			Stopwatch timeoutWatch = Stopwatch.StartNew();
-
-			// Take readings until they are within tolerance for the required settling time.
-			double error;
-			do
+			// If applicable device supports reading the value, monitor it.
+			if (_equipment.Devices[deviceName].Readings.ContainsKey(variable))
 			{
-				// Abort if requested.
-				if (_testThread.CancellationPending) { break; }
+				// Get start time.
+				Stopwatch stopwatch = Stopwatch.StartNew();
+				Stopwatch timeoutWatch = Stopwatch.StartNew();
 
-				// Process timeouts.
-				if (timeoutWatch.Elapsed > values.Timeout)
+				// Take readings until they are within tolerance for the required settling time.
+				double error;
+				do
 				{
-					// Prompt user; cancel test if requested.
-					PopupRetryAbort("Not able to reach stability." + Environment.NewLine + "Retry ?", "Stability Error");
+					// Abort if requested.
+					if (_testThread.CancellationPending) { break; }
 
-					// Reset the timeout stopwatch.
-					timeoutWatch.Restart();
-				}
+					// Process timeouts.
+					if (timeoutWatch.Elapsed > values.Timeout)
+					{
+						// Prompt user; cancel test if requested.
+						PopupRetryAbort("Not able to reach stability." + Environment.NewLine + "Retry ?", "Stability Error");
 
-				// Process pause requests.
-				if (_pause == true)
-				{
-					// Stop the clocks.
-					stopwatch.Stop();
-					timeoutWatch.Stop();
+						// Reset the timeout stopwatch.
+						timeoutWatch.Restart();
+					}
 
-					// Pause the test.
-					ProcessPause();
+					// Process pause requests.
+					if (_pause == true)
+					{
+						// Stop the clocks.
+						stopwatch.Stop();
+						timeoutWatch.Stop();
 
-					// Restart the clocks.
-					stopwatch.Start();
-					timeoutWatch.Start();
-				}
+						// Pause the test.
+						ProcessPause();
 
-				// Get reference reading.
-				_equipment.Devices[deviceName].Read();
-				double reading = _equipment.Devices[deviceName].Readings[variable];
+						// Restart the clocks.
+						stopwatch.Start();
+						timeoutWatch.Start();
+					}
 
-				// Update global variable.
-				Variables[(deviceName, variable)].Actual = Convert.ToDecimal(reading);
+					// Get reference reading.
+					_equipment.Devices[deviceName].Read();
+					double reading = _equipment.Devices[deviceName].Readings[variable];
 
-				// Calculate error.
-				error = reading - Convert.ToDouble(values.Setpoint);
+					// Update global variable.
+					Variables[(deviceName, variable)].Actual = Convert.ToDecimal(reading);
 
-				// If tolerance has been exceeded, reset the stability time.
-				if (Math.Abs(error) > Convert.ToDouble(values.Tolerance))
-				{
-					_testThread.ReportProgress(PercentProgress, "Waiting for stability...");
-					stopwatch.Restart();
-				}
-				else if (values.DwellTime > new TimeSpan(0, 0, 0))
-				{
-					// Update GUI (include dwell time if applicable).
-					_testThread.ReportProgress(PercentProgress, "Dwell time left:  " +
-						(values.DwellTime - stopwatch.Elapsed).ToString(@"hh\:mm\:ss", CultureInfo.CurrentCulture));
+					// Calculate error.
+					error = reading - Convert.ToDouble(values.Setpoint);
 
-					// Reset the timeout stopwatch.
-					timeoutWatch.Restart();
-				}
+					// If tolerance has been exceeded, reset the stability time.
+					if (Math.Abs(error) > Convert.ToDouble(values.Tolerance))
+					{
+						_testThread.ReportProgress(PercentProgress, "Waiting for stability...");
+						stopwatch.Restart();
+					}
+					else if (values.DwellTime > new TimeSpan(0, 0, 0))
+					{
+						// Update GUI (include dwell time if applicable).
+						_testThread.ReportProgress(PercentProgress, "Dwell time left:  " +
+							(values.DwellTime - stopwatch.Elapsed).ToString(@"hh\:mm\:ss", CultureInfo.CurrentCulture));
 
-				// Wait to get desired reading frequency.
-				Thread.Sleep(values.Interval);
-			} while ((stopwatch.Elapsed <= values.DwellTime) ||
-					(Math.Abs(error) > Convert.ToDouble(values.Tolerance)));
+						// Reset the timeout stopwatch.
+						timeoutWatch.Restart();
+					}
+
+					// Wait to get desired reading frequency.
+					Thread.Sleep(values.Interval);
+				} while ((stopwatch.Elapsed <= values.DwellTime) ||
+						(Math.Abs(error) > Convert.ToDouble(values.Tolerance)));
+			}
 		}
 
 		/// <summary>

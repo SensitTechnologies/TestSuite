@@ -53,13 +53,28 @@ namespace Sensit.TestSDK.Devices
 			Readings[VariableType.Current] = SendQuery(new GPDX303S_SCPI().IOUT(channel).Query());
 		}
 
-		public void Write()
+		public void Write(VariableType variable)
 		{
 			int channel = GetChannel();
 
-			SendCommand(new GPDX303S_SCPI().ISET(channel, Convert.ToSingle(Setpoints[VariableType.Current])).Command());
+			switch (variable)
+			{
+				case VariableType.Current:
+					SendCommand(new GPDX303S_SCPI().ISET(channel, Convert.ToSingle(Setpoints[VariableType.Current])).Command());
+					break;
 
-			SendCommand(new GPDX303S_SCPI().VSET(channel, Convert.ToSingle(Setpoints[VariableType.Voltage])).Command());
+				case VariableType.Voltage:
+					SendCommand(new GPDX303S_SCPI().VSET(channel, Convert.ToSingle(Setpoints[VariableType.Voltage])).Command());
+					break;
+
+				case VariableType.Channel:
+					break;
+
+				default:
+					throw new DeviceSettingNotSupportedException("Power supply does not support " + variable.ToString() + ".");
+			}
+
+
 		}
 
 		public void SetControlMode(ControlMode mode)

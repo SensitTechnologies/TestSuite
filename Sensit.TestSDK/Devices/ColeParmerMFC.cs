@@ -326,17 +326,23 @@ namespace Sensit.TestSDK.Devices
 			}
 		}
 
-		public void Write()
+		public void Write(VariableType variable)
 		{
+			// Check if setpoint exists.
+			if (Setpoints.ContainsKey(variable) == false)
+			{
+				throw new DeviceSettingNotSupportedException("Mass Flow Controller does not support " + variable.ToString() + ".");
+			}
+
 			// Check for valid setpoint values.
-			if (Setpoints[VariableType.MassFlow] < 0.0)
+			if (Setpoints[variable] < 0.0)
 			{
 				throw new DeviceOutOfRangeException("Mass Flow Controller setpoint must be greater than or equal to 0."
-					+ Environment.NewLine + "Attempted setpoint was:  " + Setpoints[VariableType.MassFlow]);
+					+ Environment.NewLine + "Attempted setpoint was:  " + Setpoints[variable]);
 			}
 
 			// Write to device.
-			WriteMassFlow(Setpoints[VariableType.MassFlow]);
+			WriteMassFlow(Setpoints[variable]);
 		}
 
 		private void WriteMassFlow(double value)
@@ -386,7 +392,7 @@ namespace Sensit.TestSDK.Devices
 					break;
 				case ControlMode.Active:
 					// In control mode, just re-write the setpoint to the device.
-					Write();
+					WriteMassFlow(Setpoints[VariableType.MassFlow]);
 					break;
 				default:
 					throw new DeviceSettingNotSupportedException("Cannot set mass flow controller control mode:"

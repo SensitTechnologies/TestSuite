@@ -11,7 +11,7 @@ namespace Sensit.App.MassFlow
 	public partial class FormMassFlow : Form
 	{
 		// mass flow controller
-		private ColeParmerMFC _massFlowController = new ColeParmerMFC();
+		private readonly ColeParmerMFC _massFlowController = new ColeParmerMFC();
 
 		/// <summary>
 		/// Runs when the application starts.
@@ -206,7 +206,7 @@ namespace Sensit.App.MassFlow
 
 				// Write setpoint to the mass flow controller.
 				_massFlowController.Setpoints[VariableType.MassFlow] = setpoint;
-				_massFlowController.Write();
+				_massFlowController.Write(VariableType.MassFlow);
 
 				// Alert the user.
 				toolStripStatusLabel1.Text = "Success.";

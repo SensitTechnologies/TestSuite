@@ -30,7 +30,7 @@ namespace Sensit.TestSDK.Devices
 		/// <summary>
 		/// This will parse lines received from the serial port using the newline delimiter.
 		/// </summary>
-		private LineSplitter lineSplitter = new LineSplitter()
+		private readonly LineSplitter lineSplitter = new LineSplitter()
 		{
 			Delimiter = (byte)'\n',
 		};
@@ -76,9 +76,7 @@ namespace Sensit.TestSDK.Devices
 		void MessageReceived(byte[] buffer)
 		{
 			// Convert the byte array to a string.
-			string converted = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
-
-			// TODO:  SerialStreamDevice:  Not fully implemented; need to add converted message to Readings.
+			Message = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
 		}
 
 		public void Read()
@@ -91,7 +89,7 @@ namespace Sensit.TestSDK.Devices
 			// Nothing to do here.
 		}
 
-		public void Write()
+		public void Write(VariableType variable)
 		{
 			// Nothing to do here.
 		}

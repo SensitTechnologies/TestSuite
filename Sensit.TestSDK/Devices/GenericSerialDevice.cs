@@ -82,7 +82,7 @@ namespace Sensit.TestSDK.Devices
 			// Nothing to do here.
 		}
 
-		public void Write()
+		public void Write(VariableType variable)
 		{
 			// Nothing to do here.
 		}

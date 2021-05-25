@@ -218,7 +218,8 @@ namespace Sensit.App.PowerSupply
 				// Send data to power supply.
 				_powerSupply.Setpoints[VariableType.Current] = Convert.ToDouble(numericUpDownCurrent.Value);
 				_powerSupply.Setpoints[VariableType.Voltage] = Convert.ToDouble(numericUpDownVoltage.Value);
-				_powerSupply.Write();
+				_powerSupply.Write(VariableType.Current);
+				_powerSupply.Write(VariableType.Voltage);
 
 				// Alert the user.
 				toolStripStatusLabel1.Text = "Success.";

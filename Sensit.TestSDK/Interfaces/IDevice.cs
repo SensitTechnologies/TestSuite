@@ -111,7 +111,8 @@ namespace Sensit.TestSDK.Interfaces
 		/// <summary>
 		/// Write setpoint(s) to the device.
 		/// </summary>
-		void Write();
+		/// <param name="variable">which variable to write</param>
+		void Write(VariableType variable);
 
 		/// <summary>
 		/// Fetch new values from the device.
