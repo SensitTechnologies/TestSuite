@@ -20,26 +20,6 @@ namespace Sensit.TestSDK.Devices
 	/// </remarks>
 	public class GPDX303S : SerialDevice, IVoltageDevice, ICurrentDevice
 	{
-		private int _channel = 1;
-
-		public int Channel
-		{
-			get
-			{
-				return _channel;
-			}
-			set
-			{
-				// Verify valid value.
-				if ((value < 1) || (value > 4))
-				{
-					throw new DeviceSettingNotSupportedException("Channel must be a number between 1 and 4, inclusive.");
-				}
-
-				_channel = value;
-			}
-		}
-
 		/// <summary>
 		/// Baud rates supported by the mass flow controller.
 		/// </summary>
@@ -55,6 +35,7 @@ namespace Sensit.TestSDK.Devices
 		{
 			{ VariableType.Current, 0.0 },
 			{ VariableType.Voltage, 0.0 },
+			{ VariableType.Channel, 1.0 }
 		};
 
 		public UnitOfMeasure.Voltage VoltageUnit { get; set; } = UnitOfMeasure.Voltage.Volt;
@@ -63,18 +44,22 @@ namespace Sensit.TestSDK.Devices
 
 		public void Read()
 		{
+			int channel = GetChannel();
+
 			// Fetch the voltage reading.
-			Readings[VariableType.Voltage] = SendQuery(new GPDX303S_SCPI().VOUT(_channel).Query());
+			Readings[VariableType.Voltage] = SendQuery(new GPDX303S_SCPI().VOUT(channel).Query());
 
 			// Fetch the current reading.
-			Readings[VariableType.Current] = SendQuery(new GPDX303S_SCPI().IOUT(_channel).Query());
+			Readings[VariableType.Current] = SendQuery(new GPDX303S_SCPI().IOUT(channel).Query());
 		}
 
 		public void Write()
 		{
-			SendCommand(new GPDX303S_SCPI().ISET(_channel, Convert.ToSingle(Setpoints[VariableType.Current])).Command());
+			int channel = GetChannel();
 
-			SendCommand(new GPDX303S_SCPI().VSET(_channel, Convert.ToSingle(Setpoints[VariableType.Voltage])).Command());
+			SendCommand(new GPDX303S_SCPI().ISET(channel, Convert.ToSingle(Setpoints[VariableType.Current])).Command());
+
+			SendCommand(new GPDX303S_SCPI().VSET(channel, Convert.ToSingle(Setpoints[VariableType.Voltage])).Command());
 		}
 
 		public void SetControlMode(ControlMode mode)
@@ -100,12 +85,15 @@ namespace Sensit.TestSDK.Devices
 			double result;
 			switch (type)
 			{
+				case VariableType.Channel:
+					return GetChannel();
+					break;
 				case VariableType.Current:
-					result = SendQuery(new GPDX303S_SCPI().ISET(_channel).Query());
+					result = SendQuery(new GPDX303S_SCPI().ISET(GetChannel()).Query());
 					break;
 				case VariableType.Voltage:
 					// Fetch the voltage reading.
-					result = SendQuery(new GPDX303S_SCPI().VSET(_channel).Query());
+					result = SendQuery(new GPDX303S_SCPI().VSET(GetChannel()).Query());
 					break;
 				default:
 					throw new DeviceSettingNotSupportedException("Power supply does not support " + type.ToString() + ".");
@@ -169,6 +157,23 @@ namespace Sensit.TestSDK.Devices
 			}
 
 			return result;
+		}
+
+		/// <summary>
+		/// Verify that the channel is valid.
+		/// Call this before issuing any command to the instrument.
+		/// </summary>
+		/// <returns></returns>
+		private int GetChannel()
+		{
+			int channel = Convert.ToInt32(Setpoints[VariableType.Channel]);
+
+			if ((channel < 1) || (channel > 4))
+			{
+				throw new DeviceSettingNotSupportedException("Channel must be a number between 1 and 4, inclusive.");
+			}
+
+			return channel;
 		}
 	}
 }

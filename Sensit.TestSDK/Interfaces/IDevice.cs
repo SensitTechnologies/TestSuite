@@ -14,7 +14,8 @@ namespace Sensit.TestSDK.Interfaces
 		Pressure,
 		Temperature,
 		Current,
-		Voltage
+		Voltage,
+		Channel
 	}
 
 	/// <summary>
@@ -178,11 +179,6 @@ namespace Sensit.TestSDK.Interfaces
 	public interface ICurrentDevice : IDevice
 	{
 		UnitOfMeasure.Current CurrentUnit { get; set; }
-
-		/// <summary>
-		/// Channel to read from.
-		/// </summary>
-		int Channel { get; set; }
 	}
 
 	/// <summary>
@@ -192,11 +188,6 @@ namespace Sensit.TestSDK.Interfaces
 	public interface IVoltageDevice : IDevice
 	{
 		UnitOfMeasure.Voltage VoltageUnit { get; set; }
-
-		/// <summary>
-		/// Channel to read from.
-		/// </summary>
-		int Channel { get; set; }
 	}
 
 	/// <summary>
