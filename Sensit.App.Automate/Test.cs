@@ -134,10 +134,18 @@ namespace Sensit.App.Automate
 
 			// Calculate how many samples we'll take in the selected test.
 			// This allows us to calculate the test's percent progress.
+			// Also populate variables property.
 			_samplesTotal = 0;
 			foreach (EventSetting e in _settings.Events)
 			{
 				_samplesTotal += e.Duration;
+
+				// If the variable hasn't been created yet...
+				if (Variables.ContainsKey((e.DeviceName, e.Variable)) == false)
+				{
+					// Create a new variable.
+					Variables.Add((e.DeviceName, e.Variable), new TestVariable());
+				}
 			}
 		}
 
@@ -271,13 +279,13 @@ namespace Sensit.App.Automate
 			// Fetch readings from references.
 			_equipment.Read();
 
-			foreach (KeyValuePair<(string, VariableType), TestVariable> v in Variables)
+			foreach (KeyValuePair<(string name, VariableType variable), TestVariable> v in Variables)
 			{
 				// If applicable device supports reading the value, monitor it.
-				if (_equipment.Devices[v.Key.Item1].Readings.ContainsKey(v.Key.Item2))
+				if (_equipment.Devices[v.Key.name].Readings.ContainsKey(v.Key.variable))
 				{
 					// Get the reading from the device.
-					double reading = _equipment.Devices[v.Key.Item1].Readings[v.Key.Item2];
+					decimal reading = _equipment.Devices[v.Key.name].Readings[v.Key.variable];
 
 					// Update global variable.
 					v.Value.Actual = Convert.ToDecimal(reading);
@@ -316,9 +324,7 @@ namespace Sensit.App.Automate
 			// Find the values applicable to the selected device/variable.
 			TestVariable values = Variables[(deviceName, variable)];
 
-			// Set setpoint.
-			_equipment.Devices[deviceName].Setpoints[variable] = Convert.ToDouble(values.Setpoint);
-			_equipment.Devices[deviceName].Write(variable);
+			_equipment.Devices[deviceName].Write(variable, values.Setpoint);
 
 			// If applicable device supports reading the value, monitor it.
 			if (_equipment.Devices[deviceName].Readings.ContainsKey(variable))
@@ -328,7 +334,7 @@ namespace Sensit.App.Automate
 				Stopwatch timeoutWatch = Stopwatch.StartNew();
 
 				// Take readings until they are within tolerance for the required settling time.
-				double error;
+				decimal error;
 				do
 				{
 					// Abort if requested.
@@ -361,16 +367,16 @@ namespace Sensit.App.Automate
 
 					// Get reference reading.
 					_equipment.Devices[deviceName].Read();
-					double reading = _equipment.Devices[deviceName].Readings[variable];
+					decimal reading = _equipment.Devices[deviceName].Readings[variable];
 
 					// Update global variable.
 					Variables[(deviceName, variable)].Actual = Convert.ToDecimal(reading);
 
 					// Calculate error.
-					error = reading - Convert.ToDouble(values.Setpoint);
+					error = reading - values.Setpoint;
 
 					// If tolerance has been exceeded, reset the stability time.
-					if (Math.Abs(error) > Convert.ToDouble(values.Tolerance))
+					if (Math.Abs(error) > values.Tolerance)
 					{
 						_testThread.ReportProgress(PercentProgress, "Waiting for stability...");
 						stopwatch.Restart();
@@ -388,7 +394,7 @@ namespace Sensit.App.Automate
 					// Wait to get desired reading frequency.
 					Thread.Sleep(values.Interval);
 				} while ((stopwatch.Elapsed <= values.DwellTime) ||
-						(Math.Abs(error) > Convert.ToDouble(values.Tolerance)));
+						(Math.Abs(error) > values.Tolerance));
 			}
 		}
 
@@ -446,7 +452,7 @@ namespace Sensit.App.Automate
 					}
 
 					// Record sample data.
-					_log.Write(_equipment.Devices);
+					_log.Write(Variables);
 
 					// Wait to get desired reading frequency.
 					Thread.Sleep(e.Interval);
@@ -487,7 +493,7 @@ namespace Sensit.App.Automate
 					// Initialize test equipment.
 					_testThread.ReportProgress(0, "Configuring test equipment...");
 					_equipment.Open();
-					_log.WriteHeader(_equipment.Devices);
+					_log.WriteHeader(Variables);
 
 					// Repeat test if requested.
 					do

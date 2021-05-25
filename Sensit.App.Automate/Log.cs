@@ -31,12 +31,12 @@ namespace Sensit.App.Automate
 			_writer = new CsvWriter(filepath, true);
 		}
 
-		public void WriteHeader(Dictionary<string, IDevice> devices)
+		public void WriteHeader(Dictionary<(string name, VariableType variable), TestVariable> variables)
 		{
 			// Check for null argument.
-			if (devices == null)
+			if (variables == null)
 			{
-				throw new ArgumentNullException(nameof(devices));
+				throw new ArgumentNullException(nameof(variables));
 			}
 
 			// Create a list of column headers.
@@ -46,19 +46,13 @@ namespace Sensit.App.Automate
 				"Timestamp"
 			};
 
-			foreach (KeyValuePair<string, IDevice> device in devices)
+			foreach (KeyValuePair<(string name, VariableType variable), TestVariable> v in variables)
 			{
-				// Add column headers for each setpoint.
-				foreach (VariableType setpoint in device.Value.Setpoints.Keys)
-				{
-					row.Add(device.Key + " " + setpoint + " Setpoint");
-				}
+				// Add column header for the setpoint.
+				row.Add(v.Key.name + " " + v.Key.variable + " Setpoint");
 
 				// Add column headers for each reading.
-				foreach (VariableType reading in device.Value.Readings.Keys)
-				{
-					row.Add(device.Key + " " + reading);
-				}
+				row.Add(v.Key.name + " " + v.Key.variable);
 			}
 
 			_writer?.WriteRow(row);
@@ -69,12 +63,12 @@ namespace Sensit.App.Automate
 		/// </summary>
 		/// <param name="setpoint"></param>
 		/// <param name="reference"></param>
-		public void Write(Dictionary<string, IDevice> devices)
+		public void Write(Dictionary<(string name, VariableType variable), TestVariable> variables)
 		{
 			// Check for null argument.
-			if (devices == null)
+			if (variables == null)
 			{
-				throw new ArgumentNullException(nameof(devices));
+				throw new ArgumentNullException(nameof(variables));
 			}
 
 			// Create a list of test data.
@@ -84,19 +78,13 @@ namespace Sensit.App.Automate
 				DateTime.Now.ToString(CultureInfo.InvariantCulture)
 			};
 
-			foreach (IDevice device in devices.Values)
+			foreach (KeyValuePair<(string name, VariableType variable), TestVariable> v in variables)
 			{
 				// Add each setpoint.
-				foreach (double setpoint in device.Setpoints.Values)
-				{
-					row.Add(setpoint.ToString(CultureInfo.CurrentCulture));
-				}
+				row.Add(v.Value.Setpoint.ToString(CultureInfo.CurrentCulture));
 
 				// Add each reading.
-				foreach (double reading in device.Readings.Values)
-				{
-					row.Add(reading.ToString(CultureInfo.CurrentCulture));
-				}
+				row.Add(v.Value.Actual.ToString(CultureInfo.CurrentCulture));
 			}
 
 			_writer?.WriteRow(row);

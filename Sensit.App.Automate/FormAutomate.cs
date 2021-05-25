@@ -166,10 +166,6 @@ namespace Sensit.App.Automate
 				// Create a new test settings object and populate it with the user's choices.
 				TestSetting testSetting = CreateTestSettings();
 
-				// Create a temporary equipment object according to the settings.
-				// TODO:  Don't use a temporary equipment variable.
-				Equipment equipment = new Equipment(testSetting.Devices);
-
 				// Remove all variables from "Status" tab and from the list of variable controls.
 				flowLayoutPanelControlledVariables.Controls.Clear();
 				foreach (UserControlVariableStatus c in _variableStatusControls.Values)
@@ -177,32 +173,6 @@ namespace Sensit.App.Automate
 					c.Dispose();
 				}
 				_variableStatusControls.Clear();
-
-				// Add variables to "Status" tab.
-				foreach (KeyValuePair<string, IDevice> device in equipment.Devices)
-				{
-					foreach (VariableType setpoint in device.Value.Setpoints.Keys)
-					{
-						// Create a new control for the variable.
-						UserControlVariableStatus userControlVariableStatus = new UserControlVariableStatus
-						{
-							Title = device.Key + " " + setpoint,
-							UnitOfMeasure = "",
-							Value = 0.0M,
-							Setpoint = 0.0M,
-							Tolerance = 0.0M
-						};
-
-						// Keep a reference to it in a dictionary.
-						_variableStatusControls.Add((device.Key, setpoint), userControlVariableStatus);
-
-						// Add the control to the form.
-						flowLayoutPanelControlledVariables.Controls.Add(userControlVariableStatus);
-					}
-				}
-
-				// Clean up temporary object.
-				equipment.Dispose();
 
 				// Create test object and link its actions to actions on this form.
 				// https://syncor.blogspot.com/2010/11/passing-getter-and-setter-of-c-property.html
@@ -959,20 +929,40 @@ namespace Sensit.App.Automate
 		/// <param name="message"></param>
 		public void TestUpdate(int percent, string message)
 		{
+			// Stop the GUI from looking weird while we update it.
+			flowLayoutPanelControlledVariables.SuspendLayout();
+
 			// Update the progress bar.
 			toolStripProgressBar1.Value = percent;
 
 			// Update the status message.
 			toolStripStatusLabel1.Text = message;
 
-			// Stop the GUI from looking weird while we update it.
-			flowLayoutPanelControlledVariables.SuspendLayout();
-
-			// Update readings, setpoints, tolerances in "Status" tab.
+			// Update "Status" tab.
 			for (int i = 0; i < _test.Variables.Count; i++)
 			{
-				var key = _test.Variables.ElementAt(i).Key;
-				var value = _test.Variables.ElementAt(i).Value;
+				(string name, VariableType variable) key = _test.Variables.ElementAt(i).Key;
+				TestVariable value = _test.Variables.ElementAt(i).Value;
+
+				// If the variable hasn't been displayed yet...
+				if (_variableStatusControls.ContainsKey(key) == false)
+				{
+					// Create a new control for the variable.
+					UserControlVariableStatus userControlVariableStatus = new UserControlVariableStatus
+					{
+						Title = key.name + " " + key.variable,
+						UnitOfMeasure = "",
+						Value = 0.0M,
+						Setpoint = 0.0M,
+						Tolerance = 0.0M
+					};
+
+					// Keep a reference to it in a dictionary.
+					_variableStatusControls.Add(key, userControlVariableStatus);
+
+					// Add the control to the form.
+					flowLayoutPanelControlledVariables.Controls.Add(userControlVariableStatus);
+				}
 
 				_variableStatusControls[key].Value = value.Actual;
 				_variableStatusControls[key].Setpoint = value.Setpoint;
