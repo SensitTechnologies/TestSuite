@@ -13,7 +13,7 @@ namespace Sensit.App.Automate
 	public class Log : IDisposable
 	{
 		// CSV writer
-		private CsvWriter _writer;
+		private readonly CsvWriter _writer;
 
 		/// <summary>
 		/// Open the log file (for appending).
@@ -39,13 +39,13 @@ namespace Sensit.App.Automate
 				throw new ArgumentNullException(nameof(devices));
 			}
 
-			// Write column headers.
-			List<string> row = new List<string>();
+			// Create a list of column headers.
+			List<string> row = new List<string>
+			{
+				// Write column header for date/time.
+				"Timestamp"
+			};
 
-			// Write column headers for date/time and elapsed time.
-			row.Add("Timestamp");
-			row.Add("Elapsed Time");
-			
 			foreach (KeyValuePair<string, IDevice> device in devices)
 			{
 				// Add column headers for each setpoint.
@@ -67,10 +67,9 @@ namespace Sensit.App.Automate
 		/// <summary>
 		/// Write a row of data to the log file.
 		/// </summary>
-		/// <param name="elapsedTime"></param>
 		/// <param name="setpoint"></param>
 		/// <param name="reference"></param>
-		public void Write(TimeSpan elapsedTime, Dictionary<string, IDevice> devices)
+		public void Write(Dictionary<string, IDevice> devices)
 		{
 			// Check for null argument.
 			if (devices == null)
@@ -78,14 +77,12 @@ namespace Sensit.App.Automate
 				throw new ArgumentNullException(nameof(devices));
 			}
 
-			// Save test results to csv file.
-			List<string> row = new List<string>();
-
-			// Log current date and time.
-			row.Add(DateTime.Now.ToString(CultureInfo.InvariantCulture));
-
-			// Log elapsed time.
-			row.Add(elapsedTime.ToString());
+			// Create a list of test data.
+			List<string> row = new List<string>
+			{
+				// Log current date and time.
+				DateTime.Now.ToString(CultureInfo.InvariantCulture)
+			};
 
 			foreach (IDevice device in devices.Values)
 			{

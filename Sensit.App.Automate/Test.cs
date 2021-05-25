@@ -44,9 +44,6 @@ namespace Sensit.App.Automate
 		// keeper of test results
 		private readonly Log _log;
 
-		// keeper of test's elapsed time
-		private Stopwatch _elapsedTimeStopwatch;
-
 		// whether test is paused
 		private bool _pause = false;
 
@@ -221,14 +218,8 @@ namespace Sensit.App.Automate
 			// Stop the equipment to reduce change of damage.
 			_equipment.SetControlMode(ControlMode.Passive);
 
-			// Pause the elapsed time timer.
-			_elapsedTimeStopwatch.Stop();
-
 			// Alert the user (asking if they wish to retry or not).
 			DialogResult result = MessageBox.Show(message, caption, MessageBoxButtons.YesNo);
-
-			// Resume timing elapsed time.
-			_elapsedTimeStopwatch.Start();
 
 			// If we're continuing to test, attempt to control variables again.
 			if (result == DialogResult.Yes)
@@ -393,12 +384,6 @@ namespace Sensit.App.Automate
 					(Math.Abs(error) > Convert.ToDouble(values.Tolerance)));
 		}
 
-		private void ProcessSamples()
-		{
-			// Record test data.
-			_log.Write(_elapsedTimeStopwatch.Elapsed, _equipment.Devices);
-		}
-
 		/// <summary>
 		/// Perform all requested test actions in order.
 		/// </summary>
@@ -453,7 +438,7 @@ namespace Sensit.App.Automate
 					}
 
 					// Record sample data.
-					ProcessSamples();
+					_log.Write(_equipment.Devices);
 
 					// Wait to get desired reading frequency.
 					Thread.Sleep(e.Interval);
@@ -486,9 +471,6 @@ namespace Sensit.App.Automate
 		/// <param name="e"></param>
 		private void TestThread(object sender, DoWorkEventArgs e)
 		{
-			// Get start time.
-			_elapsedTimeStopwatch = Stopwatch.StartNew();
-
 			try
 			{
 				// Anything within this do-while structure can be cancelled.
@@ -521,9 +503,6 @@ namespace Sensit.App.Automate
 
 			// Everything between here and the end of the test should be fast
 			// and highly reliable since it cannot be cancelled.
-
-			// Calculate end time.
-			_elapsedTimeStopwatch.Stop();
 
 			try
 			{
