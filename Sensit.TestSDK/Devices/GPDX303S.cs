@@ -86,7 +86,7 @@ namespace Sensit.TestSDK.Devices
 			switch (type)
 			{
 				case VariableType.Channel:
-					return GetChannel();
+					result = GetChannel();
 					break;
 				case VariableType.Current:
 					result = SendQuery(new GPDX303S_SCPI().ISET(GetChannel()).Query());
