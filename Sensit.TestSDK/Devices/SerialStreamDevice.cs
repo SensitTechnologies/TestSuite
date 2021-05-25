@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO.Ports;
 using System.Text;
 using Sensit.TestSDK.Communication;
-using Sensit.TestSDK.Interfaces;
 using Sensit.TestSDK.Utilities;
 
 namespace Sensit.TestSDK.Devices
@@ -19,13 +17,9 @@ namespace Sensit.TestSDK.Devices
 	/// will have a generic variable type which will be accessible as a string.
 	/// </remarks>
 	[DisplayName("Serial Stream Device")]
-	public class SerialStreamDevice : SerialDevice, IMessageDevice
+	public class SerialStreamDevice : SerialDevice
 	{
 		public override List<int> SupportedBaudRates { get; } = new List<int> { 300, 600, 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200, 230400, 460800, 921600 };
-
-		public Dictionary<VariableType, double> Readings { get; private set; }
-
-		public Dictionary<VariableType, double> Setpoints { get; }
 
 		/// <summary>
 		/// This will parse lines received from the serial port using the newline delimiter.
@@ -77,21 +71,6 @@ namespace Sensit.TestSDK.Devices
 		{
 			// Convert the byte array to a string.
 			Message = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
-		}
-
-		public void Read()
-		{
-			// Nothing to do here; the serial port handles receiving data on its own.
-		}
-
-		public void SetControlMode(ControlMode mode)
-		{
-			// Nothing to do here.
-		}
-
-		public void Write(VariableType variable)
-		{
-			// Nothing to do here.
 		}
 	}
 }

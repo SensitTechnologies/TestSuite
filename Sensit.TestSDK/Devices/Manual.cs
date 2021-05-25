@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Windows.Forms;
-using Sensit.TestSDK.Calculations;
-using Sensit.TestSDK.Forms;
 using Sensit.TestSDK.Interfaces;
+using Sensit.TestSDK.Utilities;
 
 namespace Sensit.TestSDK.Devices
 {
@@ -12,64 +11,29 @@ namespace Sensit.TestSDK.Devices
 	/// </summary>
 	/// <remarks>
 	/// Useful for testing software.
-	/// TODO:  Manual:  Make this device more useful.
 	/// </remarks>
-	public class Manual : IMassFlowDevice, IVolumeFlowDevice, IVelocityDevice, IPressureDevice,
-		ITemperatureDevice, ICurrentDevice, IVoltageDevice
+	public class Manual : IDevice
 	{
-		public Dictionary<VariableType, double> Readings { get; } = new Dictionary<VariableType, double>
-		{
-			{ VariableType.MassFlow, 0.0 },
-		};
-
-		public Dictionary<VariableType, double> Setpoints { get; } = new Dictionary<VariableType, double>
-		{
-			{ VariableType.MassFlow, 0.0 },
-		};
-
-		public UnitOfMeasure.Flow FlowUnit { get; set; }
-
-		public UnitOfMeasure.Concentration ConcentrationUnit { get; set; }
-
-		public Gas GasSelection { get; set; } = Gas.Air;
-
-		public UnitOfMeasure.Velocity VelocityUnit { get; set; }
-
-		public UnitOfMeasure.Pressure PressureUnit { get; set; }
-
-		public UnitOfMeasure.Temperature TemperatureUnit { get; set; }
-
-		public UnitOfMeasure.Current CurrentUnit { get; set; }
-
-		public UnitOfMeasure.Voltage VoltageUnit { get; set; }
-
-		public int Channel { get; set; }
-
-		// Since there's nothing to communicate with, none of the methods
-		// have anything to do unless they get/set a property.
+		// This dictionary is purposefully empty so software knows this device does not support any readings.
+		public Dictionary<VariableType, decimal> Readings { get; } = new Dictionary<VariableType, decimal>();
+		
+		public string Message { get; }
 
 		public void Read()
 		{
-			// Prompt user to enter a value.
-			double value = 0.0;
-			DialogResult result = InputDialog.Numeric("Enter value.", ref value, 0.0, 100.0);
-
-			// If user cancels, throw an error.
-			if (result != DialogResult.OK)
-				throw new Exception("Could not read from DUT.");
-
-			// Store the result.
-			Readings[VariableType.MassFlow] = value;
+			// Do nothing.  It's the user's responsibility to record any readings.
 		}
 
 		public void SetControlMode(ControlMode mode)
 		{
-			// Nothing to do here.
+			// Prompt the user to set the device's control mode.
+			MessageBox.Show("Set manual device's control mode to:  " + mode.ToString() + ".");
 		}
 
-		public void Write(VariableType variable)
+		public void Write(VariableType variable, decimal value)
 		{
-			// Nothing to do here.
+			// Prompt the user to set the variable's value.
+			MessageBox.Show("Set " + variable.GetDescription() + " to " + value.ToString(CultureInfo.CurrentCulture) + ".");
 		}
 	}
 }

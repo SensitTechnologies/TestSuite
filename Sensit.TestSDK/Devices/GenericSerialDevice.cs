@@ -18,7 +18,7 @@ namespace Sensit.TestSDK.Devices
 	/// will have a generic variable type which will be accessible as a string.
 	/// </remarks>
 	[DisplayName("Generic Serial Device")]
-	public class GenericSerialDevice : SerialDevice, IMessageDevice
+	public class GenericSerialDevice : SerialDevice, IDevice
 	{
 		public string Command { get; set; } = string.Empty;
 
@@ -27,11 +27,8 @@ namespace Sensit.TestSDK.Devices
 		/// </summary>
 		public override List<int> SupportedBaudRates { get; } = new List<int> { 300, 600, 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200, 230400, 460800, 921600 };
 
-		// This device type has no supported readings.
-		public Dictionary<VariableType, double> Readings { get; private set; } = new Dictionary<VariableType, double> { };
-
-		// This device type has no supported setpoints.
-		public Dictionary<VariableType, double> Setpoints { get; } = new Dictionary<VariableType, double> { };
+		// This dictionary is purposefully empty so software knows this device does not support any readings.
+		public Dictionary<VariableType, decimal> Readings { get; } = new Dictionary<VariableType, decimal>();
 
 		/// <summary>
 		/// Most recent message from the device.
@@ -82,7 +79,7 @@ namespace Sensit.TestSDK.Devices
 			// Nothing to do here.
 		}
 
-		public void Write(VariableType variable)
+		public void Write(VariableType variable, decimal value)
 		{
 			// Nothing to do here.
 		}

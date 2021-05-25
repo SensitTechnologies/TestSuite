@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
+﻿using System.Collections.Generic;
 using Sensit.TestSDK.Calculations;
-using Sensit.TestSDK.Forms;
 using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.TestSDK.Devices
@@ -14,40 +11,18 @@ namespace Sensit.TestSDK.Devices
 	/// Useful for testing software and test equipment, or as a DUT to make manual
 	/// data entries.
 	/// </remarks>
-	public class Simulator : IMassFlowDevice, IVolumeFlowDevice, IVelocityDevice, IPressureDevice,
-		ITemperatureDevice, ICurrentDevice, IVoltageDevice
+	public class Simulator : IDevice
 	{
-		// Values used for both setpoints and readings.
-		private readonly Dictionary<VariableType, double> _values = new Dictionary<VariableType, double>()
+		public Dictionary<VariableType, decimal> Readings { get; } = new Dictionary<VariableType, decimal>()
 		{
-			{ VariableType.MassFlow, 0.0 },
-			{ VariableType.Pressure, 0.0 },
-			{ VariableType.Temperature, 0.0 },
-			{ VariableType.Velocity, 0.0 },
-			{ VariableType.VolumeFlow, 0.0 }
+			{ VariableType.MassFlow, 0.0M },
+			{ VariableType.Pressure, 0.0M },
+			{ VariableType.Temperature, 0.0M },
+			{ VariableType.Velocity, 0.0M },
+			{ VariableType.VolumeFlow, 0.0M }
 		};
 
-		public Dictionary<VariableType, double> Readings => _values;
-
-		public Dictionary<VariableType, double> Setpoints => _values;
-
-		public UnitOfMeasure.Flow FlowUnit { get; set; }
-
-		public UnitOfMeasure.Concentration ConcentrationUnit { get; set; }
-
-		public Gas GasSelection { get; set; } = Gas.Air;
-
-		public UnitOfMeasure.Velocity VelocityUnit { get; set; }
-
-		public UnitOfMeasure.Pressure PressureUnit { get; set; }
-
-		public UnitOfMeasure.Temperature TemperatureUnit { get; set; }
-
-		public UnitOfMeasure.Current CurrentUnit { get; set; }
-
-		public UnitOfMeasure.Voltage VoltageUnit { get; set; }
-
-		public int Channel { get; set; }
+		public string Message { get; }
 
 		// Since there's nothing to communicate with, none of the methods
 		// have anything to do unless they get/set a property.
@@ -62,7 +37,7 @@ namespace Sensit.TestSDK.Devices
 			// Nothing to do here.
 		}
 
-		public void Write(VariableType variable)
+		public void Write(VariableType variable, decimal value)
 		{
 			// Nothing to do here.
 		}

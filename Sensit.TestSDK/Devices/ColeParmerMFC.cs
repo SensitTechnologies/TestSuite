@@ -44,28 +44,80 @@ namespace Sensit.TestSDK.Devices
 	/// 
 	/// </remarks>
 	[DisplayName("Cole Parmer MFC"), Description("Cole Parmer Mass Flow Controller")]
-	public class ColeParmerMFC : SerialDevice, IMassFlowDevice, IVolumeFlowDevice, ITemperatureDevice, IPressureDevice
+	public class ColeParmerMFC : SerialDevice, IDevice
 	{
-		public Dictionary<VariableType, double> Readings { get; } = new Dictionary<VariableType, double>
+		/// <summary>
+		/// Gas Selection for Mass Flow Controllers
+		/// </summary>
+		public enum Gas
 		{
-			{ VariableType.MassFlow, 0.0 },
-			{ VariableType.Pressure, 0.0 },
-			{ VariableType.Temperature, 0.0 },
-			{ VariableType.VolumeFlow, 0.0 }
+			Air,
+			Argon,
+			Methane,
+			[Description("Carbon Monoxide")]
+			CarbonMonoxide,
+			[Description("Carbon Dioxide")]
+			CarbonDioxide,
+			Ethane,
+			Hydrogen,
+			[Description("Hydrogen Sulfide")]
+			HydrogenSulfide,
+			[Description("Hydrogen Cyanide")]
+			HydrogenCyanide,
+			Helium,
+			Nitrogen,
+			[Description("Nitrous Oxide")]
+			NitrousOxide,
+			Neon,
+			Oxygen,
+			Propane,
+			[Description("Normal Butane")]
+			normalButane,
+			Acetylene,
+			Ethylene,
+			isoButane,
+			Krypton,
+			Xenon,
+			[Description("Sulfur Hexafluoride")]
+			SulfurHexafluoride,
+			[Description("75% Argon / 25% CO2")]
+			C25,
+			[Description("90% Argon / 10% CO2")]
+			C10,
+			[Description("92% Argon / 8% CO2")]
+			C8,
+			[Description("98% Argon / 2% CO2")]
+			C2,
+			[Description("75% CO2 / 25% Argon")]
+			C75,
+			[Description("75% Argon / 25% Helium")]
+			He25,
+			[Description("75% Helium / 25% Argon")]
+			He75,
+			[Description("90% Helium / 7.5% Argon / 2.5% CO2 (Praxair - Helistar® A1025)")]
+			A1025,
+			[Description("90% Argon / 8% CO2 / 2% Oxygen (Praxair - Stargon® CS)")]
+			Star29,
+			[Description("95% Argon / 5% Methane")]
+			P5,
+		}
+
+		private decimal _setpoint = 0.0M;
+
+		public Dictionary<VariableType, decimal> Readings { get; } = new Dictionary<VariableType, decimal>
+		{
+			{ VariableType.MassFlow, 0.0M },
+			{ VariableType.Pressure, 0.0M },
+			{ VariableType.Temperature, 0.0M },
+			{ VariableType.VolumeFlow, 0.0M }
 		};
 
-		public Dictionary<VariableType, double> Setpoints { get; } = new Dictionary<VariableType, double>
-		{
-			{ VariableType.MassFlow, 0.0 }
-		};
+		public string Message { get; }
 
-		public UnitOfMeasure.Flow FlowUnit { get; set; } = UnitOfMeasure.Flow.CubicFeetPerMinute;
-
+		/// <summary>
+		/// Gas used by device to calculate mass flow from volumetric flow.
+		/// </summary>
 		public Gas GasSelection { get; set; } = Gas.Air;
-
-		public UnitOfMeasure.Temperature TemperatureUnit { get; set; } = UnitOfMeasure.Temperature.Celsius;
-
-		public UnitOfMeasure.Pressure PressureUnit { get; set; } = UnitOfMeasure.Pressure.PSI;
 
 		/// <summary>
 		/// Baud rates supported by the mass flow controller.
@@ -305,13 +357,13 @@ namespace Sensit.TestSDK.Devices
 				}
 
 				// Figure out which is which and update class properties.
-				Readings[VariableType.Pressure] = Convert.ToSingle(words[1]);
-				Readings[VariableType.Temperature] = Convert.ToSingle(words[2]);
-				Readings[VariableType.VolumeFlow] = Convert.ToSingle(words[3]);
-				Readings[VariableType.MassFlow] = Convert.ToSingle(words[4]);
+				Readings[VariableType.Pressure] = Convert.ToDecimal(words[1]);
+				Readings[VariableType.Temperature] = Convert.ToDecimal(words[2]);
+				Readings[VariableType.VolumeFlow] = Convert.ToDecimal(words[3]);
+				Readings[VariableType.MassFlow] = Convert.ToDecimal(words[4]);
 
 				// Probably don't update the control properties.
-				//Setpoint = Convert.ToSingle(words[5]);
+				//Setpoint = Convert.ToDecimal(words[5]);
 				//GasSelection = words[6];
 			}
 			catch (InvalidOperationException ex)
@@ -326,26 +378,29 @@ namespace Sensit.TestSDK.Devices
 			}
 		}
 
-		public void Write(VariableType variable)
+		public void Write(VariableType variable, decimal value)
 		{
-			// Check if setpoint exists.
-			if (Setpoints.ContainsKey(variable) == false)
+			// Check for valid variable.
+			if (variable != VariableType.MassFlow)
 			{
 				throw new DeviceSettingNotSupportedException("Mass Flow Controller does not support " + variable.ToString() + ".");
 			}
 
 			// Check for valid setpoint values.
-			if (Setpoints[variable] < 0.0)
+			if (value < 0.0M)
 			{
 				throw new DeviceOutOfRangeException("Mass Flow Controller setpoint must be greater than or equal to 0."
-					+ Environment.NewLine + "Attempted setpoint was:  " + Setpoints[variable]);
+					+ Environment.NewLine + "Attempted setpoint was:  " + value);
 			}
 
+			// Remember the setpoint.
+			_setpoint = value;
+
 			// Write to device.
-			WriteMassFlow(Setpoints[variable]);
+			WriteMassFlow(value);
 		}
 
-		private void WriteMassFlow(double value)
+		private void WriteMassFlow(decimal value)
 		{
 			try
 			{
@@ -358,12 +413,12 @@ namespace Sensit.TestSDK.Devices
 				// Split the string using spaces to separate each word.
 				char[] separators = new char[] { ' ' };
 				string[] words = message.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-				float returnedValue = Convert.ToSingle(words[5]);
+				decimal returnedValue = Convert.ToDecimal(words[5]);
 
 				// Check the setpoint.
-				// Had trouble with this statment.  Neither Double.Epsilon or double.Equals work.
+				// Had trouble with this statment.  Neither double.Epsilon or double.Equals work.
 				// So I ensure the difference is less than 1.
-				if (Math.Abs(returnedValue - value) > 1.0)
+				if (Math.Abs(returnedValue - value) > 1.0M)
 				{
 					throw new DeviceCommunicationException("Could not write setpoint (" + value.ToString() + ") to mass flow controller."
 						+ Environment.NewLine + "Value read from instrument (" + returnedValue.ToString() + ") was incorrect.");
@@ -387,12 +442,12 @@ namespace Sensit.TestSDK.Devices
 			{
 				case ControlMode.Passive:
 					// There's not really a measure mode; just write a temporary setpoint of zero.
-					WriteMassFlow(0.0);
+					WriteMassFlow(0.0M);
 
 					break;
 				case ControlMode.Active:
 					// In control mode, just re-write the setpoint to the device.
-					WriteMassFlow(Setpoints[VariableType.MassFlow]);
+					WriteMassFlow(_setpoint);
 					break;
 				default:
 					throw new DeviceSettingNotSupportedException("Cannot set mass flow controller control mode:"

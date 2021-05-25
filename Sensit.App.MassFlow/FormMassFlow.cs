@@ -150,7 +150,6 @@ namespace Sensit.App.MassFlow
 				textBoxTemperature.Text = _massFlowController.Readings[VariableType.Temperature].ToString(CultureInfo.CurrentCulture);
 				textBoxVolumetricFlow.Text = _massFlowController.Readings[VariableType.VolumeFlow].ToString(CultureInfo.CurrentCulture);
 				textBoxMassFlow.Text = _massFlowController.Readings[VariableType.MassFlow].ToString(CultureInfo.CurrentCulture);
-				textBoxSetpoint.Text = _massFlowController.Setpoints[VariableType.MassFlow].ToString(CultureInfo.CurrentCulture);
 				comboBoxGas.Text = _massFlowController.GasSelection.ToString();
 				toolStripStatusLabel1.Text = "Success.";
 			}
@@ -202,11 +201,10 @@ namespace Sensit.App.MassFlow
 			try
 			{
 				// Convert the setpoint to a number.
-				float setpoint = Convert.ToSingle(textBoxSetpoint.Text);
+				decimal setpoint = Convert.ToDecimal(textBoxSetpoint.Text);
 
 				// Write setpoint to the mass flow controller.
-				_massFlowController.Setpoints[VariableType.MassFlow] = setpoint;
-				_massFlowController.Write(VariableType.MassFlow);
+				_massFlowController.Write(VariableType.MassFlow, setpoint);
 
 				// Alert the user.
 				toolStripStatusLabel1.Text = "Success.";

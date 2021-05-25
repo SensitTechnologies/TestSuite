@@ -228,13 +228,13 @@ namespace Sensit.App.GasConcentration
 				_mfcDiluent.Read();
 
 				// Calculate total mass flow.
-				double massFlow = _mfcDiluent.Readings[VariableType.MassFlow] + _mfcAnalyte.Readings[VariableType.MassFlow];
+				decimal massFlow = _mfcDiluent.Readings[VariableType.MassFlow] + _mfcAnalyte.Readings[VariableType.MassFlow];
 
 				// Calculate analyte concentration.
-				double analyteConcentration;
+				decimal analyteConcentration;
 				if (massFlow.Equals(0.0))
 				{
-					analyteConcentration = 0.0;
+					analyteConcentration = 0.0M;
 				}
 				else
 				{
@@ -261,29 +261,28 @@ namespace Sensit.App.GasConcentration
 			try
 			{
 				// Convert the setpoints to numbers.
-				double analyteConcentration = Convert.ToDouble(textBoxGasConcentration.Text);
-				double massFlowSetpoint = Convert.ToDouble(textBoxMassFlow.Text);
+				decimal analyteConcentration = Convert.ToDecimal(textBoxGasConcentration.Text);
+				decimal massFlowSetpoint = Convert.ToDecimal(textBoxMassFlow.Text);
 
 				// Check for valid mass flow.
-				if (massFlowSetpoint < 0.0)
+				if (massFlowSetpoint < 0.0M)
 				{
 					throw new DeviceOutOfRangeException("Total Flow Setpoint must be greater than or equal to 0.0.");
 				}
 
 				// Check for valid gas concentration.
-				if ((analyteConcentration < 0.0) || (analyteConcentration > 100.0))
+				if ((analyteConcentration < 0.0M) || (analyteConcentration > 100.0M))
 				{
 					throw new DeviceOutOfRangeException("Gas Mix Setpoint must be between 0.0% and 100.0%, inclusive."
 						+ Environment.NewLine + "Attempted Gas Mix Setpoint was:  " + massFlowSetpoint);
 				}
 
 				// For analyte:  mass Flow = desired flow rate / original concentration.
-				_mfcAnalyte.Setpoints[VariableType.MassFlow] = massFlowSetpoint * (analyteConcentration / 100);
-				_mfcAnalyte.Write(VariableType.MassFlow);
+				decimal analyteMassFlow = massFlowSetpoint * (analyteConcentration / 100);
+				_mfcAnalyte.Write(VariableType.MassFlow, analyteMassFlow);
 
 				// For diluent:  mass flow = desired flow - gas under test flow.
-				_mfcDiluent.Setpoints[VariableType.MassFlow] = massFlowSetpoint - _mfcAnalyte.Setpoints[VariableType.MassFlow];
-				_mfcDiluent.Write(VariableType.MassFlow);
+				_mfcDiluent.Write(VariableType.MassFlow, massFlowSetpoint - analyteMassFlow);
 
 				// Alert the user.
 				toolStripStatusLabel1.Text = "Success.";
