@@ -190,9 +190,19 @@ namespace Sensit.App.PowerSupply
 				// Read status from power supply.
 				_powerSupply.Read();
 
-				// Update the form.
-				numericUpDownCurrent.Value = Convert.ToDecimal(_powerSupply.Readings[VariableType.Current]);
-				numericUpDownVoltage.Value = Convert.ToDecimal(_powerSupply.Readings[VariableType.Voltage]);
+				// Update current for each channel.
+				numericUpDownCh1Current.Value = _powerSupply.Readings[VariableType.Current1];
+				numericUpDownCh2Current.Value = _powerSupply.Readings[VariableType.Current2];
+				numericUpDownCh3Current.Value = _powerSupply.Readings[VariableType.Current3];
+				numericUpDownCh4Current.Value = _powerSupply.Readings[VariableType.Current4];
+
+				// Update voltage for each channel.
+				numericUpDownCh1Voltage.Value = _powerSupply.Readings[VariableType.Voltage1];
+				numericUpDownCh2Voltage.Value = _powerSupply.Readings[VariableType.Voltage2];
+				numericUpDownCh3Voltage.Value = _powerSupply.Readings[VariableType.Voltage3];
+				numericUpDownCh4Voltage.Value = _powerSupply.Readings[VariableType.Voltage4];
+
+				// Update status message.
 				toolStripStatusLabel1.Text = "Success.";
 			}
 			catch (Exception ex)
@@ -216,8 +226,17 @@ namespace Sensit.App.PowerSupply
 				toolStripStatusLabel1.Text = "Writing to power supply...";
 
 				// Send data to power supply.
-				_powerSupply.Write(VariableType.Current, numericUpDownCurrent.Value);
-				_powerSupply.Write(VariableType.Voltage, numericUpDownVoltage.Value);
+				_powerSupply.Write(VariableType.Current1, numericUpDownCh1Current.Value);
+				_powerSupply.Write(VariableType.Voltage1, numericUpDownCh1Voltage.Value);
+
+				_powerSupply.Write(VariableType.Current2, numericUpDownCh2Current.Value);
+				_powerSupply.Write(VariableType.Voltage2, numericUpDownCh2Voltage.Value);
+
+				_powerSupply.Write(VariableType.Current3, numericUpDownCh3Current.Value);
+				_powerSupply.Write(VariableType.Voltage3, numericUpDownCh3Voltage.Value);
+
+				_powerSupply.Write(VariableType.Current4, numericUpDownCh4Current.Value);
+				_powerSupply.Write(VariableType.Voltage4, numericUpDownCh4Voltage.Value);
 
 				// Alert the user.
 				toolStripStatusLabel1.Text = "Success.";
