@@ -1035,6 +1035,10 @@ namespace Sensit.App.Automate
 			// Reset global variable.
 			_eventsComplete = 0;
 
+			// Dispose of managed resources.
+			_equipment.Dispose();
+			_test.Dispose();
+
 			// If requested, close the application.
 			if (_closeAfterTest)
 			{

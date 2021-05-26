@@ -557,7 +557,6 @@ namespace Sensit.App.Automate
 			if (disposing)
 			{
 				// Dispose managed resources.
-				_equipment?.Dispose();
 				_testThread?.Dispose();
 				_log?.Dispose();
 			}
