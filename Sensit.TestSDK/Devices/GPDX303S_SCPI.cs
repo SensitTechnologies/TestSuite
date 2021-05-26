@@ -66,7 +66,7 @@ namespace Sensit.TestSDK.Devices
 			return this;
 		}
 
-		public ISCPICommand ISET(int channel, float current)
+		public ISCPICommand ISET(int channel, decimal current)
 		{
 			_command += "ISET" + channel.ToString() + ":" + current.ToString();
 
@@ -80,7 +80,7 @@ namespace Sensit.TestSDK.Devices
 			return this;
 		}
 
-		public ISCPICommand VSET(int channel, float voltage)
+		public ISCPICommand VSET(int channel, decimal voltage)
 		{
 			_command += "VSET" + channel.ToString() + ":" + voltage.ToString();
 
