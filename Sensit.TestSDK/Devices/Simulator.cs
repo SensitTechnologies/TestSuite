@@ -12,7 +12,7 @@ namespace Sensit.TestSDK.Devices
 	/// </remarks>
 	public class Simulator : IDevice
 	{
-		public Dictionary<VariableType, decimal> _values { get; } = new Dictionary<VariableType, decimal>()
+		public Dictionary<VariableType, decimal> Readings { get; } = new Dictionary<VariableType, decimal>()
 		{
 			{ VariableType.MassFlow, 0.0M },
 			{ VariableType.Pressure, 0.0M },
@@ -21,9 +21,7 @@ namespace Sensit.TestSDK.Devices
 			{ VariableType.VolumeFlow, 0.0M }
 		};
 
-		public Dictionary<VariableType, decimal> Readings => _values;
-
-		public Dictionary<VariableType, decimal> Setpoints => _values;
+		public Dictionary<VariableType, decimal> Setpoints => Readings;
 
 		public string Message { get; }
 
@@ -43,7 +41,7 @@ namespace Sensit.TestSDK.Devices
 		public void Write(VariableType variable, decimal value)
 		{
 			// Save the new value.
-			_values[variable] = value;
+			Setpoints[variable] = value;
 		}
 	}
 }
