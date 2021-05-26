@@ -294,13 +294,13 @@ namespace Sensit.App.Automate
 				// Add the device.
 				AddDeviceToPanel(textBoxDeviceName.Text, comboBoxDeviceType.Text, "");
 
+				LayoutResume();
+
 				// Scroll to the bottom of the device's list so user can see the new device.
-				tableLayoutPanelDevices.VerticalScroll.Value = tableLayoutPanelDevices.VerticalScroll.Maximum;
+				panelDevices.VerticalScroll.Value = panelDevices.VerticalScroll.Maximum;
 
 				// Remember there are unsaved changes.
 				_unsaved = true;
-
-				LayoutResume();
 			}
 		}
 
@@ -308,65 +308,70 @@ namespace Sensit.App.Automate
 		private void LayoutSuspend()
 		{
 			// Stop the GUI from looking weird while we update it.
-			tableLayoutPanelDevices.SuspendLayout();
 			tabControl.SuspendLayout();
 			tabPageDevices.SuspendLayout();
 			groupBoxDevices.SuspendLayout();
-			tableLayoutPanel4.SuspendLayout();
-			tableLayoutPanel6.SuspendLayout();
-			tableLayoutPanel11.SuspendLayout();
+			tableLayoutPanelDevicesControls.SuspendLayout();
+			tableLayoutPanelDevicesDelete.SuspendLayout();
+			tableLayoutPanelDevicesAdd.SuspendLayout();
+			panelDevices.SuspendLayout();
+			tableLayoutPanelDevices.SuspendLayout();
 			tabPageEvents.SuspendLayout();
 			groupBoxEvents.SuspendLayout();
-			tableLayoutPanel7.SuspendLayout();
+			tableLayoutPanelEventsControls.SuspendLayout();
+			tableLayoutPanelEventsDelete.SuspendLayout();
+			tableLayoutPanelEventsAdd.SuspendLayout();
+			panelEvents.SuspendLayout();
 			tableLayoutPanelEvents.SuspendLayout();
-			tableLayoutPanel9.SuspendLayout();
-			tableLayoutPanel10.SuspendLayout();
 			tabPageLog.SuspendLayout();
 			groupBoxLog.SuspendLayout();
-			groupBox1.SuspendLayout();
-			tableLayoutPanel1.SuspendLayout();
+			groupBoxFilename.SuspendLayout();
+			tableLayoutPanelFilename.SuspendLayout();
 			tabPageStatus.SuspendLayout();
 			groupBoxVariables.SuspendLayout();
-			statusStrip1.SuspendLayout();
-			menuStrip1.SuspendLayout();
+			statusStrip.SuspendLayout();
+			menuStrip.SuspendLayout();
 			tableLayoutPanelTest.SuspendLayout();
 			tableLayoutPanelTestSetupButtons.SuspendLayout();
-			tableLayoutPanel3.SuspendLayout();
 			tableLayoutPanelRepeat.SuspendLayout();
-			tableLayoutPanel2.SuspendLayout();
+			tableLayoutPanelYesNo.SuspendLayout();
+			tableLayoutPanelStartStop.SuspendLayout();
+			SuspendLayout();
 		}
 
 		// TODO:  Remove these statements one by one until something slows down.
 		private void LayoutResume()
 		{
 			// Make the GUI act normally again.
-			tableLayoutPanelDevices.ResumeLayout();
 			tabControl.ResumeLayout();
 			tabPageDevices.ResumeLayout();
 			groupBoxDevices.ResumeLayout();
-			tableLayoutPanel4.ResumeLayout();
+			tableLayoutPanelDevicesControls.ResumeLayout();
+			tableLayoutPanelDevicesDelete.ResumeLayout();
+			tableLayoutPanelDevicesAdd.ResumeLayout();
+			panelDevices.ResumeLayout();
 			tableLayoutPanelDevices.ResumeLayout();
-			tableLayoutPanel6.ResumeLayout();
-			tableLayoutPanel11.ResumeLayout();
 			tabPageEvents.ResumeLayout();
 			groupBoxEvents.ResumeLayout();
-			tableLayoutPanel7.ResumeLayout();
+			tableLayoutPanelEventsControls.ResumeLayout();
+			tableLayoutPanelEventsDelete.ResumeLayout();
+			tableLayoutPanelEventsAdd.ResumeLayout();
+			panelEvents.ResumeLayout();
 			tableLayoutPanelEvents.ResumeLayout();
-			tableLayoutPanel9.ResumeLayout();
-			tableLayoutPanel10.ResumeLayout();
 			tabPageLog.ResumeLayout();
 			groupBoxLog.ResumeLayout();
-			groupBox1.ResumeLayout();
-			tableLayoutPanel1.ResumeLayout();
+			groupBoxFilename.ResumeLayout();
+			tableLayoutPanelFilename.ResumeLayout();
 			tabPageStatus.ResumeLayout();
 			groupBoxVariables.ResumeLayout();
-			statusStrip1.ResumeLayout();
-			menuStrip1.ResumeLayout();
+			statusStrip.ResumeLayout();
+			menuStrip.ResumeLayout();
 			tableLayoutPanelTest.ResumeLayout();
 			tableLayoutPanelTestSetupButtons.ResumeLayout();
-			tableLayoutPanel3.ResumeLayout();
 			tableLayoutPanelRepeat.ResumeLayout();
-			tableLayoutPanel2.ResumeLayout();
+			tableLayoutPanelYesNo.ResumeLayout();
+			tableLayoutPanelStartStop.ResumeLayout();
+			ResumeLayout();
 		}
 
 		/// <summary>
@@ -428,13 +433,13 @@ namespace Sensit.App.Automate
 			// Add a new event to the event list panel.
 			AddEventToPanel(comboBoxEventDevice.Text, comboBoxEventVariable.Text, numericUpDownEventValue.Value, numericUpDownEventDuration.Value);
 
+			LayoutResume();
+
 			// Scroll to the bottom of the device's list so user can see the new device.
-			tableLayoutPanelEvents.VerticalScroll.Value = tableLayoutPanelEvents.VerticalScroll.Maximum;
+			panelEvents.VerticalScroll.Value = panelEvents.VerticalScroll.Maximum;
 
 			// Remember there are unsaved changes.
 			_unsaved = true;
-
-			LayoutResume();
 		}
 
 		/// <summary>
@@ -962,10 +967,10 @@ namespace Sensit.App.Automate
 			flowLayoutPanelControlledVariables.SuspendLayout();
 
 			// Update the progress bar.
-			toolStripProgressBar1.Value = percent;
+			toolStripProgressBar.Value = percent;
 
 			// Update the status message.
-			toolStripStatusLabel1.Text = message;
+			toolStripStatusLabel.Text = message;
 
 			// Update "Status" tab.
 			for (int i = 0; i < _test.Variables.Count; i++)
@@ -1046,10 +1051,10 @@ namespace Sensit.App.Automate
 			}
 
 			// Update the progress bar.
-			toolStripProgressBar1.Value = 0;
+			toolStripProgressBar.Value = 0;
 
 			// Update the status message.
-			toolStripStatusLabel1.Text = "Ready...";
+			toolStripStatusLabel.Text = "Ready...";
 		}
 
 		#endregion
