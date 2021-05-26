@@ -294,7 +294,7 @@ namespace Sensit.App.Automate
 					if (Math.Abs(v.Value.Setpoint - v.Value.Actual) > v.Value.Tolerance)
 					{
 						// Attempt to achieve the setpoint again.
-						ProcessSetpoint(v.Key.Item1, v.Key.Item2);
+						ProcessSetpoint(v.Key.name, v.Key.variable);
 					}
 				}
 			}
