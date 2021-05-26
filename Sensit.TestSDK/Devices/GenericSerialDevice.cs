@@ -30,6 +30,9 @@ namespace Sensit.TestSDK.Devices
 		// This dictionary is purposefully empty so software knows this device does not support any readings.
 		public Dictionary<VariableType, decimal> Readings { get; } = new Dictionary<VariableType, decimal>();
 
+		// This device type has no supported setpoints.
+		public Dictionary<VariableType, decimal> Setpoints { get; } = new Dictionary<VariableType, decimal> { };
+
 		/// <summary>
 		/// Most recent message from the device.
 		/// </summary>

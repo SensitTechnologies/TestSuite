@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Sensit.TestSDK.Calculations;
 using Sensit.TestSDK.Interfaces;
 
 namespace Sensit.TestSDK.Devices
@@ -13,7 +12,7 @@ namespace Sensit.TestSDK.Devices
 	/// </remarks>
 	public class Simulator : IDevice
 	{
-		public Dictionary<VariableType, decimal> Readings { get; } = new Dictionary<VariableType, decimal>()
+		public Dictionary<VariableType, decimal> _values { get; } = new Dictionary<VariableType, decimal>()
 		{
 			{ VariableType.MassFlow, 0.0M },
 			{ VariableType.Pressure, 0.0M },
@@ -21,6 +20,10 @@ namespace Sensit.TestSDK.Devices
 			{ VariableType.Velocity, 0.0M },
 			{ VariableType.VolumeFlow, 0.0M }
 		};
+
+		public Dictionary<VariableType, decimal> Readings => _values;
+
+		public Dictionary<VariableType, decimal> Setpoints => _values;
 
 		public string Message { get; }
 
@@ -39,7 +42,8 @@ namespace Sensit.TestSDK.Devices
 
 		public void Write(VariableType variable, decimal value)
 		{
-			// Nothing to do here.
+			// Save the new value.
+			_values[variable] = value;
 		}
 	}
 }

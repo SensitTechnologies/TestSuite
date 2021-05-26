@@ -46,70 +46,17 @@ namespace Sensit.TestSDK.Devices
 	[DisplayName("Cole Parmer MFC"), Description("Cole Parmer Mass Flow Controller")]
 	public class ColeParmerMFC : SerialDevice, IDevice
 	{
-		/// <summary>
-		/// Gas Selection for Mass Flow Controllers
-		/// </summary>
-		public enum Gas
-		{
-			Air,
-			Argon,
-			Methane,
-			[Description("Carbon Monoxide")]
-			CarbonMonoxide,
-			[Description("Carbon Dioxide")]
-			CarbonDioxide,
-			Ethane,
-			Hydrogen,
-			[Description("Hydrogen Sulfide")]
-			HydrogenSulfide,
-			[Description("Hydrogen Cyanide")]
-			HydrogenCyanide,
-			Helium,
-			Nitrogen,
-			[Description("Nitrous Oxide")]
-			NitrousOxide,
-			Neon,
-			Oxygen,
-			Propane,
-			[Description("Normal Butane")]
-			normalButane,
-			Acetylene,
-			Ethylene,
-			isoButane,
-			Krypton,
-			Xenon,
-			[Description("Sulfur Hexafluoride")]
-			SulfurHexafluoride,
-			[Description("75% Argon / 25% CO2")]
-			C25,
-			[Description("90% Argon / 10% CO2")]
-			C10,
-			[Description("92% Argon / 8% CO2")]
-			C8,
-			[Description("98% Argon / 2% CO2")]
-			C2,
-			[Description("75% CO2 / 25% Argon")]
-			C75,
-			[Description("75% Argon / 25% Helium")]
-			He25,
-			[Description("75% Helium / 25% Argon")]
-			He75,
-			[Description("90% Helium / 7.5% Argon / 2.5% CO2 (Praxair - Helistar® A1025)")]
-			A1025,
-			[Description("90% Argon / 8% CO2 / 2% Oxygen (Praxair - Stargon® CS)")]
-			Star29,
-			[Description("95% Argon / 5% Methane")]
-			P5,
-		}
-
-		private decimal _setpoint = 0.0M;
-
 		public Dictionary<VariableType, decimal> Readings { get; } = new Dictionary<VariableType, decimal>
 		{
 			{ VariableType.MassFlow, 0.0M },
 			{ VariableType.Pressure, 0.0M },
 			{ VariableType.Temperature, 0.0M },
 			{ VariableType.VolumeFlow, 0.0M }
+		};
+
+		public Dictionary<VariableType, decimal> Setpoints { get; } = new Dictionary<VariableType, decimal>
+		{
+			{ VariableType.MassFlow, 0.0M }
 		};
 
 		public string Message { get; }
@@ -394,7 +341,7 @@ namespace Sensit.TestSDK.Devices
 			}
 
 			// Remember the setpoint.
-			_setpoint = value;
+			Setpoints[VariableType.MassFlow] = value;
 
 			// Write to device.
 			WriteMassFlow(value);
@@ -447,7 +394,7 @@ namespace Sensit.TestSDK.Devices
 					break;
 				case ControlMode.Active:
 					// In control mode, just re-write the setpoint to the device.
-					WriteMassFlow(_setpoint);
+					WriteMassFlow(Setpoints[VariableType.MassFlow]);
 					break;
 				default:
 					throw new DeviceSettingNotSupportedException("Cannot set mass flow controller control mode:"

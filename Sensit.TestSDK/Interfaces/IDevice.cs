@@ -12,9 +12,78 @@ namespace Sensit.TestSDK.Interfaces
 		Velocity,
 		Pressure,
 		Temperature,
-		Current,
-		Voltage,
-		Channel
+		[Description("Ch 1 Current")]
+		Current1,
+		[Description("Ch 1 Voltage")]
+		Voltage1,
+		[Description("Ch 2 Current")]
+		Current2,
+		[Description("Ch 2 Voltage")]
+		Voltage2,
+		[Description("Ch 3 Current")]
+		Current3,
+		[Description("Ch 3 Voltage")]
+		Voltage3,
+		[Description("Ch 4 Current")]
+		Current4,
+		[Description("Ch 4 Voltage")]
+		Voltage4
+	}
+
+	/// <summary>
+	/// Gas Selection for Mass Flow Controllers
+	/// </summary>
+	public enum Gas
+	{
+		Air,
+		Argon,
+		Methane,
+		[Description("Carbon Monoxide")]
+		CarbonMonoxide,
+		[Description("Carbon Dioxide")]
+		CarbonDioxide,
+		Ethane,
+		Hydrogen,
+		[Description("Hydrogen Sulfide")]
+		HydrogenSulfide,
+		[Description("Hydrogen Cyanide")]
+		HydrogenCyanide,
+		Helium,
+		Nitrogen,
+		[Description("Nitrous Oxide")]
+		NitrousOxide,
+		Neon,
+		Oxygen,
+		Propane,
+		[Description("Normal Butane")]
+		normalButane,
+		Acetylene,
+		Ethylene,
+		isoButane,
+		Krypton,
+		Xenon,
+		[Description("Sulfur Hexafluoride")]
+		SulfurHexafluoride,
+		[Description("75% Argon / 25% CO2")]
+		C25,
+		[Description("90% Argon / 10% CO2")]
+		C10,
+		[Description("92% Argon / 8% CO2")]
+		C8,
+		[Description("98% Argon / 2% CO2")]
+		C2,
+		[Description("75% CO2 / 25% Argon")]
+		C75,
+		[Description("75% Argon / 25% Helium")]
+		He25,
+		[Description("75% Helium / 25% Argon")]
+		He75,
+		[Description("90% Helium / 7.5% Argon / 2.5% CO2 (Praxair - Helistar® A1025)")]
+		A1025,
+		[Description("90% Argon / 8% CO2 / 2% Oxygen (Praxair - Stargon® CS)")]
+		Star29,
+		[Description("95% Argon / 5% Methane")]
+		P5,
 	}
 
 	/// <summary>
@@ -40,6 +109,14 @@ namespace Sensit.TestSDK.Interfaces
 		/// Supported readings and their values.
 		/// </summary>
 		Dictionary<VariableType, decimal> Readings { get; }
+
+		/// <summary>
+		/// Supported setpoints and their values.
+		/// </summary>
+		/// <remarks>
+		/// Intended to be used to read, not write, setpoints.
+		/// </remarks>
+		Dictionary<VariableType, decimal> Setpoints { get; }
 
 		/// <summary>
 		/// Fetch new values from the device.

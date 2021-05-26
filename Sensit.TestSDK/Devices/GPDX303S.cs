@@ -19,22 +19,6 @@ namespace Sensit.TestSDK.Devices
 	/// </remarks>
 	public class GPDX303S : SerialDevice, IDevice
 	{
-		private int _channel = 1;
-
-		private int Channel
-		{
-			get => _channel;
-			set
-			{
-				if ((value < 1) || (value > 4))
-				{
-					throw new DeviceSettingNotSupportedException("Channel must be a number between 1 and 4, inclusive.");
-				}
-
-				_channel = value;
-			}
-		}
-
 		/// <summary>
 		/// Baud rates supported by the mass flow controller.
 		/// </summary>
@@ -42,40 +26,85 @@ namespace Sensit.TestSDK.Devices
 
 		public Dictionary<VariableType, decimal> Readings { get; } = new Dictionary<VariableType, decimal>
 		{
-			{ VariableType.Current, 0.0M },
-			{ VariableType.Voltage, 0.0M },
+			{ VariableType.Current1, 0.0M }, // Channel 1
+			{ VariableType.Voltage1, 0.0M },
+			{ VariableType.Current2, 0.0M }, // Channel 2
+			{ VariableType.Voltage2, 0.0M },
+			{ VariableType.Current3, 0.0M }, // Channel 3
+			{ VariableType.Voltage3, 0.0M },
+			{ VariableType.Current4, 0.0M }, // Channel 4
+			{ VariableType.Voltage4, 0.0M }
+		};
+
+		public Dictionary<VariableType, decimal> Setpoints { get; } = new Dictionary<VariableType, decimal>
+		{
+			{ VariableType.Current1, 0.0M }, // Channel 1
+			{ VariableType.Voltage1, 0.0M },
+			{ VariableType.Current2, 0.0M }, // Channel 2
+			{ VariableType.Voltage2, 0.0M },
+			{ VariableType.Current3, 0.0M }, // Channel 3
+			{ VariableType.Voltage3, 0.0M },
+			{ VariableType.Current4, 0.0M }, // Channel 4
+			{ VariableType.Voltage4, 0.0M }
 		};
 
 		public string Message { get; }
 
 		public void Read()
 		{
-			// Fetch the voltage reading.
-			Readings[VariableType.Voltage] = SendQuery(new GPDX303S_SCPI().VOUT(Channel).Query());
-
-			// Fetch the current reading.
-			Readings[VariableType.Current] = SendQuery(new GPDX303S_SCPI().IOUT(Channel).Query());
+			// Fetch current and voltage readings from each channel.
+			Readings[VariableType.Voltage1] = SendQuery(new GPDX303S_SCPI().VOUT(1).Query());
+			Readings[VariableType.Current1] = SendQuery(new GPDX303S_SCPI().IOUT(1).Query());
+			Readings[VariableType.Voltage2] = SendQuery(new GPDX303S_SCPI().VOUT(2).Query());
+			Readings[VariableType.Current2] = SendQuery(new GPDX303S_SCPI().IOUT(2).Query());
+			Readings[VariableType.Voltage3] = SendQuery(new GPDX303S_SCPI().VOUT(3).Query());
+			Readings[VariableType.Current3] = SendQuery(new GPDX303S_SCPI().IOUT(3).Query());
+			Readings[VariableType.Voltage4] = SendQuery(new GPDX303S_SCPI().VOUT(4).Query());
+			Readings[VariableType.Current4] = SendQuery(new GPDX303S_SCPI().IOUT(4).Query());
 		}
 
 		public void Write(VariableType variable, decimal value)
 		{
 			switch (variable)
 			{
-				case VariableType.Current:
-					SendCommand(new GPDX303S_SCPI().ISET(Channel, Convert.ToSingle(value)).Command());
+				case VariableType.Current1:
+					SendCommand(new GPDX303S_SCPI().ISET(1, value).Command());
 					break;
 
-				case VariableType.Voltage:
-					SendCommand(new GPDX303S_SCPI().VSET(Channel, Convert.ToSingle(value)).Command());
+				case VariableType.Current2:
+					SendCommand(new GPDX303S_SCPI().ISET(2, value).Command());
 					break;
 
-				case VariableType.Channel:
-					Channel = (int)value;
+				case VariableType.Current3:
+					SendCommand(new GPDX303S_SCPI().ISET(3, value).Command());
+					break;
+
+				case VariableType.Current4:
+					SendCommand(new GPDX303S_SCPI().ISET(4, value).Command());
+					break;
+
+				case VariableType.Voltage1:
+					SendCommand(new GPDX303S_SCPI().VSET(1, value).Command());
+					break;
+
+				case VariableType.Voltage2:
+					SendCommand(new GPDX303S_SCPI().VSET(2, value).Command());
+					break;
+
+				case VariableType.Voltage3:
+					SendCommand(new GPDX303S_SCPI().VSET(3, value).Command());
+					break;
+
+				case VariableType.Voltage4:
+					SendCommand(new GPDX303S_SCPI().VSET(4, value).Command());
 					break;
 
 				default:
-					throw new DeviceSettingNotSupportedException("Power supply does not support " + variable.ToString() + ".");
+					throw new DeviceSettingNotSupportedException("GPDX303S power supply does not support " + variable.ToString() + ".");
 			}
+
+			// Remember the setpoint.
+			Setpoints[variable] = value;
 		}
 
 		public void SetControlMode(ControlMode mode)
@@ -91,7 +120,7 @@ namespace Sensit.TestSDK.Devices
 					SendCommand(new GPDX303S_SCPI().OUT(true).Command());
 					break;
 				default:
-					throw new DeviceSettingNotSupportedException("Cannot set power supply control mode:"
+					throw new DeviceSettingNotSupportedException("Cannot set GPDX303S power supply control mode:"
 						+ Environment.NewLine + "Unrecognized mode.");
 			}
 		}
@@ -101,19 +130,36 @@ namespace Sensit.TestSDK.Devices
 			decimal result;
 			switch (type)
 			{
-				case VariableType.Channel:
-					result = Channel;
+				case VariableType.Current1:
+					result = SendQuery(new GPDX303S_SCPI().ISET(1).Query());
 					break;
-				case VariableType.Current:
-					result = SendQuery(new GPDX303S_SCPI().ISET(Channel).Query());
+				case VariableType.Current2:
+					result = SendQuery(new GPDX303S_SCPI().ISET(2).Query());
 					break;
-				case VariableType.Voltage:
-					// Fetch the voltage reading.
-					result = SendQuery(new GPDX303S_SCPI().VSET(Channel).Query());
+				case VariableType.Current3:
+					result = SendQuery(new GPDX303S_SCPI().ISET(3).Query());
+					break;
+				case VariableType.Current4:
+					result = SendQuery(new GPDX303S_SCPI().ISET(4).Query());
+					break;
+				case VariableType.Voltage1:
+					result = SendQuery(new GPDX303S_SCPI().VSET(1).Query());
+					break;
+				case VariableType.Voltage2:
+					result = SendQuery(new GPDX303S_SCPI().VSET(2).Query());
+					break;
+				case VariableType.Voltage3:
+					result = SendQuery(new GPDX303S_SCPI().VSET(3).Query());
+					break;
+				case VariableType.Voltage4:
+					result = SendQuery(new GPDX303S_SCPI().VSET(4).Query());
 					break;
 				default:
-					throw new DeviceSettingNotSupportedException("Power supply does not support " + type.ToString() + ".");
+					throw new DeviceSettingNotSupportedException("GPDX303S power supply does not support " + type.ToString() + ".");
 			}
+
+			// Update the setpoint.
+			Setpoints[type] = result;
 
 			return result;
 		}
@@ -127,12 +173,12 @@ namespace Sensit.TestSDK.Devices
 			}
 			catch (InvalidOperationException ex)
 			{
-				throw new DevicePortException("Could not read from power supply."
+				throw new DevicePortException("Could not read from GPDX303S power supply."
 					+ Environment.NewLine + ex.Message);
 			}
 			catch (TimeoutException ex)
 			{
-				throw new DeviceCommunicationException("No response from power supply."
+				throw new DeviceCommunicationException("No response from GPDX303S power supply."
 					+ Environment.NewLine + ex.Message);
 			}
 		}
@@ -163,12 +209,12 @@ namespace Sensit.TestSDK.Devices
 			}
 			catch (InvalidOperationException ex)
 			{
-				throw new DevicePortException("Could not read from power supply."
+				throw new DevicePortException("Could not read from GPDX303S power supply."
 					+ Environment.NewLine + ex.Message);
 			}
 			catch (TimeoutException ex)
 			{
-				throw new DeviceCommunicationException("No response from power supply."
+				throw new DeviceCommunicationException("No response from GPDX303S power supply."
 					+ Environment.NewLine + ex.Message);
 			}
 

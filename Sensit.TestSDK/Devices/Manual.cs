@@ -14,9 +14,10 @@ namespace Sensit.TestSDK.Devices
 	/// </remarks>
 	public class Manual : IDevice
 	{
-		// This dictionary is purposefully empty so software knows this device does not support any readings.
+		// These dictionaries are purposefully empty so software knows this device does not support any readings or setpoints.
 		public Dictionary<VariableType, decimal> Readings { get; } = new Dictionary<VariableType, decimal>();
-		
+		public Dictionary<VariableType, decimal> Setpoints { get; } = new Dictionary<VariableType, decimal>();
+
 		public string Message { get; }
 
 		public void Read()
@@ -26,8 +27,7 @@ namespace Sensit.TestSDK.Devices
 
 		public void SetControlMode(ControlMode mode)
 		{
-			// Prompt the user to set the device's control mode.
-			MessageBox.Show("Set manual device's control mode to:  " + mode.ToString() + ".");
+			// Nothing to do here.
 		}
 
 		public void Write(VariableType variable, decimal value)
