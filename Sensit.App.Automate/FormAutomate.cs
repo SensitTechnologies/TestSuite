@@ -39,6 +39,9 @@ namespace Sensit.App.Automate
 		// allow the form to wait for tests to cancel/complete before closing application
 		private bool _closeAfterTest = false;
 
+		// test equipment
+		private Equipment _equipment;
+
 		// tests
 		private Test _test;
 
@@ -163,8 +166,20 @@ namespace Sensit.App.Automate
 				// Disable most of the user controls.
 				SetControlEnable(true);
 
-				// Create a new test settings object and populate it with the user's choices.
+				// Create a test settings object and populate it with the user's choices.
 				TestSetting testSetting = CreateTestSettings();
+
+				// Create an equipment object and populate it with the user's choices.
+				_equipment = new Equipment(testSetting.Devices);
+
+				// Create a test object and link its actions to actions on this form.
+				// https://syncor.blogspot.com/2010/11/passing-getter-and-setter-of-c-property.html
+				_test = new Test(testSetting.Events, _equipment, textBoxLogFilename.Text)
+				{
+					Finished = TestFinished,
+					UpdateProgress = TestUpdate,
+					Repeat = Properties.Settings.Default.Repeat
+				};
 
 				// Remove all variables from "Status" tab and from the list of variable controls.
 				flowLayoutPanelControlledVariables.Controls.Clear();
@@ -174,14 +189,28 @@ namespace Sensit.App.Automate
 				}
 				_variableStatusControls.Clear();
 
-				// Create test object and link its actions to actions on this form.
-				// https://syncor.blogspot.com/2010/11/passing-getter-and-setter-of-c-property.html
-				_test = new Test(testSetting, textBoxLogFilename.Text)
+				// Add variables to "Status" tab.
+				foreach (KeyValuePair<string, IDevice> device in _equipment.Devices)
 				{
-					Finished = TestFinished,
-					UpdateProgress = TestUpdate,
-					Repeat = Properties.Settings.Default.Repeat
-				};
+					foreach (VariableType setpoint in device.Value.Setpoints.Keys)
+					{
+						// Create a new control for the variable.
+						UserControlVariableStatus userControlVariableStatus = new UserControlVariableStatus
+						{
+							Title = device.Key + " " + setpoint,
+							UnitOfMeasure = "",
+							Value = 0.0M,
+							Setpoint = 0.0M,
+							Tolerance = 0.0M
+						};
+
+						// Keep a reference to it in a dictionary.
+						_variableStatusControls.Add((device.Key, setpoint), userControlVariableStatus);
+
+						// Add the control to the form.
+						flowLayoutPanelControlledVariables.Controls.Add(userControlVariableStatus);
+					}
+				}
 
 				// Start the test.
 				_test.Start();

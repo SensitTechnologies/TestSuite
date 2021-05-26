@@ -35,10 +35,10 @@ namespace Sensit.App.Automate
 		// task that will handle test operations
 		private readonly BackgroundWorker _testThread;
 
-		// settings for test
-		private readonly TestSetting _settings;
+		// test events
+		private readonly List<EventSetting> _events;
 
-		// test equipment object
+		// test equipment
 		private readonly Equipment _equipment;
 
 		// keeper of test results
@@ -74,7 +74,13 @@ namespace Sensit.App.Automate
 		{
 			get
 			{
-				int percent = (int)(_samplesComplete / (double)_samplesTotal * 100.0);
+				int percent = 0;
+
+				// Prevent exception if all events have 0 duration.
+				if (_samplesTotal != 0)
+				{
+					percent = (int)(_samplesComplete / (double)_samplesTotal * 100.0);
+				}
 
 				// Check for overflow or underflow.
 				if ((percent < 0) || (percent > 100))
@@ -115,11 +121,13 @@ namespace Sensit.App.Automate
 		/// Constructor
 		/// </summary>
 		/// <param name="equipment">equipment used by the test</param>
-		public Test(TestSetting settings, string filename)
+		public Test(List<EventSetting> events, Equipment equipment, string filename)
 		{
-			// Save the reference to the equipment and log file manager objects.
-			_settings = settings ?? throw new ArgumentNullException(nameof(settings));
-			_equipment = new Equipment(_settings.Devices);
+			// Save object references.
+			_events = events;
+			_equipment = equipment;
+
+			// Create a log.
 			_log = new Log(filename);
 
 			// Set up the background worker.
@@ -134,18 +142,10 @@ namespace Sensit.App.Automate
 
 			// Calculate how many samples we'll take in the selected test.
 			// This allows us to calculate the test's percent progress.
-			// Also populate variables property.
 			_samplesTotal = 0;
-			foreach (EventSetting e in _settings.Events)
+			foreach (EventSetting e in _events)
 			{
 				_samplesTotal += e.Duration;
-
-				// If the variable hasn't been created yet...
-				if (Variables.ContainsKey((e.DeviceName, e.Variable)) == false)
-				{
-					// Create a new variable.
-					Variables.Add((e.DeviceName, e.Variable), new TestVariable());
-				}
 			}
 		}
 
@@ -412,7 +412,7 @@ namespace Sensit.App.Automate
 		private void ProcessEvents()
 		{
 			// For each event...
-			foreach (EventSetting e in _settings.Events)
+			foreach (EventSetting e in _events)
 			{
 				TestVariable testVariable = new TestVariable
 				{
@@ -452,7 +452,7 @@ namespace Sensit.App.Automate
 					}
 
 					// Record sample data.
-					_log.Write(Variables);
+					_log.Write(_equipment.Devices);
 
 					// Wait to get desired reading frequency.
 					Thread.Sleep(e.Interval);
@@ -493,7 +493,7 @@ namespace Sensit.App.Automate
 					// Initialize test equipment.
 					_testThread.ReportProgress(0, "Configuring test equipment...");
 					_equipment.Open();
-					_log.WriteHeader(Variables);
+					_log.WriteHeader(_equipment.Devices);
 
 					// Repeat test if requested.
 					do
