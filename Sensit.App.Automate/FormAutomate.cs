@@ -711,9 +711,6 @@ namespace Sensit.App.Automate
 
 		private void OpenTestSettings()
 		{
-			// Clear test settings.
-			ClearTestSettings();
-
 			// Allow the user to select a filename.
 			OpenFileDialog fileDialog = new OpenFileDialog();
 			fileDialog.Filter = "XML-File|*.xml";
@@ -725,6 +722,9 @@ namespace Sensit.App.Automate
 			{
 				try
 				{
+					// Clear test settings.
+					ClearTestSettings();
+
 					// Load settings from file.
 					TestSetting testSetting = Settings.Load<TestSetting>(fileDialog.FileName);
 
