@@ -155,6 +155,7 @@
 			// 
 			// comboBoxDiluentPort
 			// 
+			this.comboBoxDiluentPort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxDiluentPort.FormattingEnabled = true;
 			this.comboBoxDiluentPort.Location = new System.Drawing.Point(133, 32);
 			this.comboBoxDiluentPort.Name = "comboBoxDiluentPort";
@@ -164,6 +165,7 @@
 			// 
 			// comboBoxAnalytePort
 			// 
+			this.comboBoxAnalytePort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxAnalytePort.FormattingEnabled = true;
 			this.comboBoxAnalytePort.Location = new System.Drawing.Point(6, 32);
 			this.comboBoxAnalytePort.Name = "comboBoxAnalytePort";
@@ -232,6 +234,7 @@
 			// 
 			// comboBoxDiluentGas
 			// 
+			this.comboBoxDiluentGas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxDiluentGas.FormattingEnabled = true;
 			this.comboBoxDiluentGas.Location = new System.Drawing.Point(141, 16);
 			this.comboBoxDiluentGas.Name = "comboBoxDiluentGas";
@@ -241,6 +244,7 @@
 			// 
 			// comboBoxAnalyteGas
 			// 
+			this.comboBoxAnalyteGas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxAnalyteGas.FormattingEnabled = true;
 			this.comboBoxAnalyteGas.Location = new System.Drawing.Point(35, 16);
 			this.comboBoxAnalyteGas.Name = "comboBoxAnalyteGas";
@@ -388,7 +392,7 @@
 			this.textBoxGasConcentration.Location = new System.Drawing.Point(104, 32);
 			this.textBoxGasConcentration.Name = "textBoxGasConcentration";
 			this.textBoxGasConcentration.Size = new System.Drawing.Size(100, 20);
-			this.textBoxGasConcentration.TabIndex = 8;
+			this.textBoxGasConcentration.TabIndex = 7;
 			this.textBoxGasConcentration.Enter += new System.EventHandler(this.TextBox_Enter);
 			this.textBoxGasConcentration.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TextBox_MouseDown);
 			// 
@@ -397,7 +401,7 @@
 			this.buttonReadAll.Location = new System.Drawing.Point(256, 3);
 			this.buttonReadAll.Name = "buttonReadAll";
 			this.buttonReadAll.Size = new System.Drawing.Size(75, 23);
-			this.buttonReadAll.TabIndex = 7;
+			this.buttonReadAll.TabIndex = 8;
 			this.buttonReadAll.Text = "Read All";
 			this.buttonReadAll.UseVisualStyleBackColor = true;
 			this.buttonReadAll.Click += new System.EventHandler(this.ButtonReadConcentration_Click);
