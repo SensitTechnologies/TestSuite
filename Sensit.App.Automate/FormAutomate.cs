@@ -707,23 +707,26 @@ namespace Sensit.App.Automate
 
 				// If the user chooses to discard changes, clear the form.
 				case DialogResult.No:
-					OpenTestSettings();
+					// Allow the user to select a filename.
+					OpenFileDialog fileDialog = new OpenFileDialog();
+					fileDialog.Filter = "XML-File|*.xml";
+					fileDialog.Title = "Open test settings file";
+					fileDialog.ShowDialog();
+
+					OpenTestSettings(fileDialog.FileName);
+
+					// Clean up.
+					fileDialog.Dispose();
 					break;
 
 				// If the user chooses to cancel, do nothing.
 			}
 		}
 
-		private void OpenTestSettings()
+		private void OpenTestSettings(string fileName)
 		{
-			// Allow the user to select a filename.
-			OpenFileDialog fileDialog = new OpenFileDialog();
-			fileDialog.Filter = "XML-File|*.xml";
-			fileDialog.Title = "Open test settings file";
-			fileDialog.ShowDialog();
-
 			// If a valid filename has been selected...
-			if (!string.IsNullOrEmpty(fileDialog.FileName))
+			if (!string.IsNullOrEmpty(fileName))
 			{
 				try
 				{
@@ -731,7 +734,7 @@ namespace Sensit.App.Automate
 					ClearTestSettings();
 
 					// Load settings from file.
-					TestSetting testSetting = Settings.Load<TestSetting>(fileDialog.FileName);
+					TestSetting testSetting = Settings.Load<TestSetting>(fileName);
 
 					// List the control devices in the form.
 					List<Type> deviceTypes = Utilities.FindClasses(typeof(IDevice));
@@ -764,11 +767,45 @@ namespace Sensit.App.Automate
 				}
 			}
 
-			// Clean up.
-			fileDialog.Dispose();
-
 			// Remember that there are no unsaved changes.
 			_unsaved = false;
+		}
+
+		private void FormAutomate_DragEnter(object sender, DragEventArgs e)
+		{
+			if (e.Data.GetDataPresent(DataFormats.FileDrop))
+				e.Effect = DragDropEffects.All;
+			else
+				e.Effect = DragDropEffects.None;
+		}
+
+		private void FormAutomate_DragDrop(object sender, DragEventArgs e)
+		{
+			string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+			foreach (string file in files)
+			{
+				// If there are unsaved changes...
+				DialogResult result = DialogResult.No;
+				if (_unsaved)
+				{
+					result = MessageBox.Show("Save your changes?", "Unsaved changes", MessageBoxButtons.YesNoCancel);
+				}
+
+				switch (result)
+				{
+					// If the user chooses to save changes, show the save dialog, then open a new test.
+					case DialogResult.Yes:
+						SaveToolStripMenuItem_Click(sender, e);
+						break;
+
+					// If the user chooses to discard changes, clear the form.
+					case DialogResult.No:
+						OpenTestSettings(file);
+						break;
+
+						// If the user chooses to cancel, do nothing.
+				}
+			}
 		}
 
 		private void SaveToolStripMenuItem_Click(object sender, EventArgs e)

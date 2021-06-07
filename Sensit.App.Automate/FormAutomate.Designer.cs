@@ -999,6 +999,7 @@
 			// 
 			// FormAutomate
 			// 
+			this.AllowDrop = true;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoSize = true;
@@ -1010,6 +1011,8 @@
 			this.Name = "FormAutomate";
 			this.Text = "Automate";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormAutomate_FormClosing);
+			this.DragDrop += new System.Windows.Forms.DragEventHandler(this.FormAutomate_DragDrop);
+			this.DragEnter += new System.Windows.Forms.DragEventHandler(this.FormAutomate_DragEnter);
 			this.tabControl.ResumeLayout(false);
 			this.tabPageDevices.ResumeLayout(false);
 			this.tabPageDevices.PerformLayout();
