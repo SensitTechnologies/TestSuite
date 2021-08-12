@@ -384,6 +384,7 @@
 			this.textBoxMassFlow.Name = "textBoxMassFlow";
 			this.textBoxMassFlow.Size = new System.Drawing.Size(100, 20);
 			this.textBoxMassFlow.TabIndex = 6;
+			this.textBoxMassFlow.Text = "100";
 			this.textBoxMassFlow.Enter += new System.EventHandler(this.TextBox_Enter);
 			this.textBoxMassFlow.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TextBox_MouseDown);
 			// 
@@ -393,6 +394,7 @@
 			this.textBoxGasConcentration.Name = "textBoxGasConcentration";
 			this.textBoxGasConcentration.Size = new System.Drawing.Size(100, 20);
 			this.textBoxGasConcentration.TabIndex = 7;
+			this.textBoxGasConcentration.Text = "0";
 			this.textBoxGasConcentration.Enter += new System.EventHandler(this.TextBox_Enter);
 			this.textBoxGasConcentration.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TextBox_MouseDown);
 			// 
@@ -418,6 +420,7 @@
 			// 
 			// FormGasMixer
 			// 
+			this.AcceptButton = this.buttonWriteAll;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(387, 287);
