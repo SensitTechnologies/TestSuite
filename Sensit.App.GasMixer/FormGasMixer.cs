@@ -230,16 +230,8 @@ namespace Sensit.App.GasConcentration
 				// Calculate total mass flow.
 				decimal massFlow = _mfcDiluent.Readings[VariableType.MassFlow] + _mfcAnalyte.Readings[VariableType.MassFlow];
 
-				// Calculate analyte concentration.
-				decimal analyteConcentration;
-				if (massFlow.Equals(0.0))
-				{
-					analyteConcentration = 0.0M;
-				}
-				else
-				{
-					analyteConcentration = _mfcAnalyte.Readings[VariableType.MassFlow] / massFlow * 100;
-				}
+				// Calculate analyte concentration (but if mass flow is zero, just show concentration as zero; avoids division by zero).
+				decimal analyteConcentration = massFlow.Equals(0.0M) ? 0.0M : _mfcAnalyte.Readings[VariableType.MassFlow] / massFlow * 100;
 
 				// Update the form.
 				textBoxGasConcentration.Text = analyteConcentration.ToString();
@@ -307,9 +299,8 @@ namespace Sensit.App.GasConcentration
 
 		private void TextBox_Enter(object sender, EventArgs e)
 		{
-			NumericUpDown curBox = sender as NumericUpDown;
-			curBox.Select();
-			curBox.Select(0, curBox.Text.Length);
+			TextBox textBox = sender as TextBox;
+			textBox.SelectAll();
 			if (MouseButtons == MouseButtons.Left)
 			{
 				_selectByMouse = true;
@@ -318,10 +309,10 @@ namespace Sensit.App.GasConcentration
 
 		private void TextBox_MouseDown(object sender, MouseEventArgs e)
 		{
-			NumericUpDown curBox = sender as NumericUpDown;
+			TextBox textBox = sender as TextBox;
 			if (_selectByMouse)
 			{
-				curBox.Select(0, curBox.Text.Length);
+				textBox.SelectAll();
 				_selectByMouse = false;
 			}
 		}
