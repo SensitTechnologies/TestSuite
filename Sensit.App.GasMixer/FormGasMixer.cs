@@ -16,6 +16,12 @@ namespace Sensit.App.GasConcentration
 		private readonly ColeParmerMFC _mfcAnalyte = new ColeParmerMFC();
 		private readonly ColeParmerMFC _mfcDiluent = new ColeParmerMFC();
 
+		// timer for elapsed time
+		private readonly Timer _timer = new Timer();
+
+		// timestamp for elapsed time
+		private uint _elapsedSeconds = 0;
+
 		/// <summary>
 		/// Runs when the application starts.
 		/// </summary>
@@ -29,6 +35,12 @@ namespace Sensit.App.GasConcentration
 			{
 				Text += " " + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
 			}
+
+			// Set timer interval to 1 second.
+			_timer.Interval = 1000;
+
+			// Set timer callback.
+			_timer.Tick += new EventHandler(OnTimedEvent);
 
 			// Find all available serial ports.
 			string[] portNames = SerialPort.GetPortNames();
@@ -54,6 +66,21 @@ namespace Sensit.App.GasConcentration
 			// Select the most recently used gas, or the first if that's not available.
 			index = comboBoxDiluentGas.FindStringExact(Properties.Settings.Default.GasDiluent);
 			comboBoxDiluentGas.SelectedIndex = index == -1 ? 0 : index;
+		}
+
+		/// <summary>
+		/// When the timer ticks, update elapsed time.
+		/// <summary>
+		private void OnTimedEvent(object state, EventArgs e)
+		{
+			// Increment elapsed time.
+			_elapsedSeconds++;
+
+			// Convert to time span.
+			TimeSpan t = TimeSpan.FromSeconds(_elapsedSeconds);
+
+			// Show to user.
+			toolStripStatusLabel1.Text = "Elapsed time:  " + t.ToString();
 		}
 
 		/// <summary>
@@ -101,6 +128,12 @@ namespace Sensit.App.GasConcentration
 						groupBoxGasses.Enabled = true;
 						groupBoxFlowAndMixture.Enabled = true;
 						toolStripStatusLabel1.Text = "Port open.";
+
+						// Start the timer.
+						_timer.Enabled = true;
+
+						// Reset elapsed time.
+						_elapsedSeconds = 0;
 					}
 					else if (((RadioButton)sender) == radioButtonClosed)
 					{
@@ -114,6 +147,9 @@ namespace Sensit.App.GasConcentration
 						groupBoxGasses.Enabled = false;
 						groupBoxFlowAndMixture.Enabled = false;
 						toolStripStatusLabel1.Text = "Port closed.";
+
+						// Disable the timer.
+						_timer.Enabled = false;
 					}
 				}
 				// If an error occurs...
@@ -208,6 +244,9 @@ namespace Sensit.App.GasConcentration
 				_mfcAnalyte.SetGas(analyteGas);
 				_mfcDiluent.SetGas(diluentGas);
 
+				// Reset elapsed time.
+				_elapsedSeconds = 0;
+
 				// Alert the user.
 				toolStripStatusLabel1.Text = "Success.";
 			}
@@ -236,6 +275,9 @@ namespace Sensit.App.GasConcentration
 				// Update the form.
 				textBoxGasConcentration.Text = analyteConcentration.ToString();
 				textBoxMassFlow.Text = massFlow.ToString();
+
+				// Reset elapsed time.
+				_elapsedSeconds = 0;
 
 				// Alert the user.
 				toolStripStatusLabel1.Text = "Success.";
@@ -275,6 +317,9 @@ namespace Sensit.App.GasConcentration
 
 				// For diluent:  mass flow = desired flow - gas under test flow.
 				_mfcDiluent.Write(VariableType.MassFlow, massFlowSetpoint - analyteMassFlow);
+
+				// Reset elapsed time.
+				_elapsedSeconds = 0;
 
 				// Alert the user.
 				toolStripStatusLabel1.Text = "Success.";
