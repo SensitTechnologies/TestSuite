@@ -39,6 +39,8 @@ namespace Sensit.App.Automate
 
 		// TimeSpans aren't serializable, see this for workaround:
 		// https://stackoverflow.com/questions/637933/how-to-serialize-a-timespan-to-xml
+		// The format used is ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601#Durations).
+		// For example, "P3Y6M4DT12H30M5S" represents a duration of "three years, six months, four days, twelve hours, thirty minutes, and five seconds".
 		[DisplayName("Dwell Time"), Category("Test Variable"), Description("Required time to be at setpoint before continuing test."), XmlIgnore]
 		public TimeSpan DwellTime { get; set; } = new TimeSpan(0, 0, 0);
 
