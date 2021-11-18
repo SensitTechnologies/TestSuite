@@ -777,7 +777,7 @@
 			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
 			this.saveToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
 			this.saveToolStripMenuItem.Text = "&Save As...";
-			this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItem_Click);
+			this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveAsToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator
 			// 

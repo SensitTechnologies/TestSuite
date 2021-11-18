@@ -135,7 +135,7 @@ namespace Sensit.App.Automate
 			{
 				// If the user chooses to save changes, show the save dialog.
 				case DialogResult.Yes:
-					SaveToolStripMenuItem_Click(sender, e);
+					SaveAsToolStripMenuItem_Click(sender, e);
 					break;
 
 				// If the user chooses to cancel, cancel application shutdown.
@@ -647,17 +647,17 @@ namespace Sensit.App.Automate
 		private void NewToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			// If there are unsaved changes...
-			DialogResult result = DialogResult.No;
+			DialogResult dialogResult = DialogResult.No;
 			if (_unsaved)
 			{
-				result = MessageBox.Show("Save your changes?", "Unsaved changes", MessageBoxButtons.YesNoCancel);
+				dialogResult = MessageBox.Show("Save your changes?", "Unsaved changes", MessageBoxButtons.YesNoCancel);
 			}
 
-			switch (result)
+			switch (dialogResult)
 			{
 				// If the user chooses to save changes, show the save dialog, then clear the form.
 				case DialogResult.Yes:
-					SaveToolStripMenuItem_Click(sender, e);
+					SaveAsToolStripMenuItem_Click(sender, e);
 					ClearTestSettings();
 					break;
 
@@ -702,7 +702,7 @@ namespace Sensit.App.Automate
 			{
 				// If the user chooses to save changes, show the save dialog, then open a new test.
 				case DialogResult.Yes:
-					SaveToolStripMenuItem_Click(sender, e);
+					SaveAsToolStripMenuItem_Click(sender, e);
 					break;
 
 				// If the user chooses to discard changes, clear the form.
@@ -795,7 +795,7 @@ namespace Sensit.App.Automate
 				{
 					// If the user chooses to save changes, show the save dialog, then open a new test.
 					case DialogResult.Yes:
-						SaveToolStripMenuItem_Click(sender, e);
+						SaveAsToolStripMenuItem_Click(sender, e);
 						break;
 
 					// If the user chooses to discard changes, clear the form.
@@ -808,7 +808,7 @@ namespace Sensit.App.Automate
 			}
 		}
 
-		private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
+		private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			// Allow the user to select a filename.
 			SaveFileDialog fileDialog = new SaveFileDialog
