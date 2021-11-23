@@ -255,7 +255,7 @@ namespace Sensit.App.Serial
 
 				// Serial Number
 				UpdateProgress("Writing serial number...", 90);
-				WriteG3Console("mrs" + _sensor + words[0]);
+				WriteSerialNumber(words[0]);
 
 				// Write manufacturing record to sensor EEPROM.
 				UpdateProgress("Saving to EEPROM...", 95);
@@ -284,6 +284,29 @@ namespace Sensit.App.Serial
 		}
 
 		#region Programmer Commands
+
+		private void WriteSerialNumber(string serialNumber)
+		{
+			// Sens serial number to G3.
+			WriteG3Console("mrs" + _sensor + serialNumber);
+
+			// Add serial number to button.
+			switch (_sensor)
+			{
+				case 1:
+					buttonSensor1.Text += Environment.NewLine + serialNumber;
+					break;
+				case 2:
+					buttonSensor2.Text += Environment.NewLine + serialNumber;
+					break;
+				case 3:
+					buttonSensor3.Text += Environment.NewLine + serialNumber;
+					break;
+				case 4:
+					buttonSensor4.Text += Environment.NewLine + serialNumber;
+					break;
+			}
+		}
 
 		private void WriteSensorType(ushort sensorTypeCode)
 		{
@@ -315,23 +338,28 @@ namespace Sensit.App.Serial
 		private void WriteBaseRecord(ushort sensorTypeCode)
 		{
 			string command = "br";
+			string buttonText = Environment.NewLine;
 			switch (sensorTypeCode)
 			{
 				case 0:
 					// Oxygen sensor
 					command += '1';
+					buttonText += "O2";
 					break;
 				case 1:
 					// Carbon monoxide sensor
 					command += '2';
+					buttonText += "CO";
 					break;
 				case 2:
 					// Hydrogen sulfide sensor
 					command += '3';
+					buttonText += "H2S";
 					break;
 				case 4:
 					// Hydrogen cyanide sensor
 					command += '4';
+					buttonText += "HCN";
 					break;
 				default:
 					throw new DeviceSettingNotSupportedException(
@@ -343,11 +371,24 @@ namespace Sensit.App.Serial
 
 			// Write base record to sensor EEPROM.
 			WriteG3Console("brw" + _sensor);
+
+			// Add sensor's type to button.
+			switch (_sensor)
+			{
+				case 1:
+					buttonSensor1.Text += buttonText;
+					break;
+				case 2:
+					buttonSensor2.Text += buttonText;
+					break;
+				case 3:
+					buttonSensor3.Text += buttonText;
+					break;
+				case 4:
+					buttonSensor4.Text += buttonText;
+					break;
+			}
 		}
-
-		#endregion
-
-		#region Helper Methods
 
 		private void WriteG3Console(string command)
 		{
@@ -360,6 +401,10 @@ namespace Sensit.App.Serial
 				throw new DeviceCommandFailedException("Could not set sensor type");
 			}
 		}
+
+		#endregion
+
+		#region Helper Methods
 
 		private void SelectNextSensor(bool pass)
 		{
@@ -404,15 +449,19 @@ namespace Sensit.App.Serial
 			{
 				case 1:
 					buttonSensor1.BackColor = COLOR_IDLE;
+					buttonSensor1.Text = "1";
 					break;
 				case 2:
 					buttonSensor2.BackColor = COLOR_IDLE;
+					buttonSensor2.Text = "2";
 					break;
 				case 3:
 					buttonSensor3.BackColor = COLOR_IDLE;
+					buttonSensor3.Text = "3";
 					break;
 				case 4:
 					buttonSensor4.BackColor = COLOR_IDLE;
+					buttonSensor4.Text = "4";
 					break;
 			}
 
@@ -433,15 +482,19 @@ namespace Sensit.App.Serial
 			{
 				case 1:
 					buttonSensor1.BackColor = COLOR_ACTIVE;
+					buttonSensor1.Text = "1";
 					break;
 				case 2:
 					buttonSensor2.BackColor = COLOR_ACTIVE;
+					buttonSensor2.Text = "2";
 					break;
 				case 3:
 					buttonSensor3.BackColor = COLOR_ACTIVE;
+					buttonSensor3.Text = "3";
 					break;
 				case 4:
 					buttonSensor4.BackColor = COLOR_ACTIVE;
+					buttonSensor4.Text = "4";
 					break;
 			}
 
