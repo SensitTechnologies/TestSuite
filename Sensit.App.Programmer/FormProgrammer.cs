@@ -98,6 +98,7 @@ namespace Sensit.App.Serial
 
 						// Update the user interface.
 						comboBoxSerialPort.Enabled = false;
+						buttonPortRefresh.Enabled = false;
 						groupBoxBarcode.Enabled = true;
 						groupBoxStatus.Enabled = true;
 						toolStripStatusLabel.Text = "Scan sensor 1.";
@@ -115,6 +116,7 @@ namespace Sensit.App.Serial
 
 						// Update user interface.
 						comboBoxSerialPort.Enabled = true;
+						buttonPortRefresh.Enabled = true;
 						groupBoxBarcode.Enabled = false;
 						groupBoxStatus.Enabled = false;
 						toolStripStatusLabel.Text = "Port closed.";
