@@ -12,8 +12,9 @@ namespace Sensit.App.Serial
 	public partial class FormProgrammer : Form
 	{
 		// colors indicating sensor status
-		private readonly Color COLOR_PASS = Color.LightGreen;
-		private readonly Color COLOR_FAIL = Color.Pink;
+		private readonly Color COLOR_IDLE = DefaultBackColor;
+		private readonly Color COLOR_PASS = Color.Green;
+		private readonly Color COLOR_FAIL = Color.Red;
 		private readonly Color COLOR_ACTIVE = Color.Yellow;
 
 		// serial device to control programmer
@@ -101,8 +102,8 @@ namespace Sensit.App.Serial
 						groupBoxStatus.Enabled = true;
 						toolStripStatusLabel.Text = "Scan sensor 1.";
 
-						// Start with the first sensor.
-						ButtonSensor1_Click(null, null);
+						// Give focus to barcode textbox.
+						textBoxBarcode.Focus();
 					}
 					else if (((RadioButton)sender) == radioButtonClosed)
 					{
@@ -164,7 +165,7 @@ namespace Sensit.App.Serial
 		/// <param name="e"></param>
 		private void ButtonSensor1_Click(object sender, EventArgs e)
 		{
-			SelectSensor(1);
+			UpdateSensorIdle(1);
 		}
 
 		/// <summary>
@@ -174,7 +175,7 @@ namespace Sensit.App.Serial
 		/// <param name="e"></param>
 		private void ButtonSensor2_Click(object sender, EventArgs e)
 		{
-			SelectSensor(2);
+			UpdateSensorIdle(2);
 		}
 
 		/// <summary>
@@ -184,7 +185,7 @@ namespace Sensit.App.Serial
 		/// <param name="e"></param>
 		private void ButtonSensor3_Click(object sender, EventArgs e)
 		{
-			SelectSensor(3);
+			UpdateSensorIdle(3);
 		}
 
 		/// <summary>
@@ -194,7 +195,7 @@ namespace Sensit.App.Serial
 		/// <param name="e"></param>
 		private void ButtonSensor4_Click(object sender, EventArgs e)
 		{
-			SelectSensor(4);
+			UpdateSensorIdle(4);
 		}
 
 		/// <summary>
@@ -207,6 +208,9 @@ namespace Sensit.App.Serial
 			// Disable the text box.
 			textBoxBarcode.Enabled = false;
 
+			// Ensure the active sensor is obvious to the user.
+			UpdateSensorActive(_sensor);
+
 			try
 			{
 				// Parse the barcode text.
@@ -217,36 +221,36 @@ namespace Sensit.App.Serial
 				WriteBaseRecord(Convert.ToUInt16(words[0].Substring(0, 1)));
 
 				// Manufacturing Record Validity = 0
-				UpdateProgress("Writing manufacturing record validity...", 10);
+				UpdateProgress("Writing validity...", 10);
 				WriteG3Console("mrv0");
 
 				// Manufacturing Record Issue = 0
-				UpdateProgress("Writing manufacturing record issue...", 20);
+				UpdateProgress("Writing issue...", 20);
 				WriteG3Console("mris0");
 
 				// Manufacturing Record ID = C
-				UpdateProgress("Writing manufacturing record ID...", 30);
+				UpdateProgress("Writing ID...", 30);
 				WriteG3Console("mridC");
 
 				// Manufacturing Record Revision = 0
-				UpdateProgress("Writing manufacturing record revision", 40);
+				UpdateProgress("Writing revision", 40);
 				WriteG3Console("mrre0");
 
 				// Manufacturing Record Read
-				UpdateProgress("Writing manufacturing record (read?)...", 50);
+				UpdateProgress("Writing read(?)...", 50);
 				WriteG3Console("mrrr" + _sensor);
 
 				// Manufacturing Record Point Release = 0
-				UpdateProgress("Writing manufacturing record point release...", 60);
+				UpdateProgress("Writing point release...", 60);
 				WriteG3Console("mrp0");
 
 				// Manufacturing Record Date
-				UpdateProgress("Writing manufacturing record date...", 70);
+				UpdateProgress("Writing date...", 70);
 				string date = DateTime.Today.ToString("MMddyyyy", CultureInfo.InvariantCulture);
 				WriteG3Console("mrd" + date);
 
 				// Manufacturing Record Sensor Type
-				UpdateProgress("Writing manufacturing record sensor type...", 80);
+				UpdateProgress("Writing sensor type...", 80);
 				WriteSensorType(Convert.ToUInt16(words[0].Substring(0, 1)));
 
 				// Serial Number
@@ -254,11 +258,10 @@ namespace Sensit.App.Serial
 				WriteG3Console("mrs" + _sensor + words[0]);
 
 				// Write manufacturing record to sensor EEPROM.
-				UpdateProgress("Writing manufacturing record to EEPROM...", 95);
+				UpdateProgress("Saving to EEPROM...", 95);
 				WriteG3Console("mrw" + _sensor);
 
 				// Sensor PASS and select the next sensor.
-				UpdateProgress("Sensor PASS.", 100);
 				SelectNextSensor(true);
 			}
 			catch (Exception ex)
@@ -369,23 +372,23 @@ namespace Sensit.App.Serial
 			{
 				case 1:
 					buttonSensor1.BackColor = resultColor;
-					buttonSensor2.BackColor = COLOR_ACTIVE;
 					_sensor = 2;
+					UpdateProgress("Scan sensor " + _sensor + ".", 100);
 					break;
 				case 2:
 					buttonSensor2.BackColor = resultColor;
-					buttonSensor3.BackColor = COLOR_ACTIVE;
 					_sensor = 3;
+					UpdateProgress("Scan sensor " + _sensor + ".", 100);
 					break;
 				case 3:
 					buttonSensor3.BackColor = resultColor;
-					buttonSensor4.BackColor = COLOR_ACTIVE;
 					_sensor = 4;
+					UpdateProgress("Scan sensor " + _sensor + ".", 100);
 					break;
 				case 4:
 					buttonSensor4.BackColor = resultColor;
-					buttonSensor1.BackColor = COLOR_ACTIVE;
 					_sensor = 1;
+					UpdateProgress("Done! Scan sensor 1 to start again.", 100);
 					break;
 			}
 		}
@@ -394,25 +397,37 @@ namespace Sensit.App.Serial
 		/// Update the GUI to show the currently selected sensor.
 		/// </summary>
 		/// <param name="sensor"></param>
-		private void SelectSensor(ushort sensor)
+		private void UpdateSensorIdle(ushort sensor)
 		{
 			// Change the previously selected sensor's color.
-			switch (_sensor)
+			switch (sensor)
 			{
 				case 1:
-					buttonSensor1.BackColor = buttonProgram.BackColor;
+					buttonSensor1.BackColor = COLOR_IDLE;
 					break;
 				case 2:
-					buttonSensor2.BackColor = buttonProgram.BackColor;
+					buttonSensor2.BackColor = COLOR_IDLE;
 					break;
 				case 3:
-					buttonSensor3.BackColor = buttonProgram.BackColor;
+					buttonSensor3.BackColor = COLOR_IDLE;
 					break;
 				case 4:
-					buttonSensor4.BackColor = buttonProgram.BackColor;
+					buttonSensor4.BackColor = COLOR_IDLE;
 					break;
 			}
 
+			// Remember the selected sensor.
+			_sensor = sensor;
+
+			// Give focus to barcode textbox.
+			textBoxBarcode.Focus();
+
+			// Update status message.
+			UpdateProgress("Scan sensor " + _sensor, 0);
+		}
+
+		private void UpdateSensorActive(ushort sensor)
+		{
 			// Change the new selected sensor's color.
 			switch (sensor)
 			{
@@ -432,9 +447,6 @@ namespace Sensit.App.Serial
 
 			// Remember the selected sensor.
 			_sensor = sensor;
-
-			// Give focus to barcode textbox.
-			textBoxBarcode.Focus();
 		}
 
 		private void UpdateProgress(string message, int progress)
