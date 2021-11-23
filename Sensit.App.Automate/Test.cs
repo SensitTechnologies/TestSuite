@@ -366,7 +366,7 @@ namespace Sensit.App.Automate
 					}
 
 					// Get reference reading.
-					_equipment.Devices[deviceName].Read();
+					_equipment.Devices[deviceName].WriteThenRead();
 					decimal reading = _equipment.Devices[deviceName].Readings[variable];
 
 					// Update global variable.

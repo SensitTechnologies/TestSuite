@@ -49,6 +49,12 @@
 /Sensit.App.PowerSupply/*.pfx
 /Sensit.App.PowerSupply/*.user
 
+/Sensit.App.Programmer/bin
+/Sensit.App.Programmer/obj
+/Sensit.App.Programmer/publish
+/Sensit.App.Programmer/*.pfx
+/Sensit.App.Programmer/*.user
+
 /Sensit.TestSDK/bin
 /Sensit.TestSDK/obj
 /Sensit.TestSDK/*.user

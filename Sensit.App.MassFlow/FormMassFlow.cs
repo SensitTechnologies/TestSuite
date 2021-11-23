@@ -68,7 +68,7 @@ namespace Sensit.App.MassFlow
 					if (((RadioButton)sender) == radioButtonOpen)
 					{
 						// Alert the user.
-						toolStripStatusLabel1.Text = "Opening serial port...";
+						toolStripStatusLabel.Text = "Opening serial port...";
 
 						// Open the Mass Flow Controller (and let it know what serial port to use).
 						_massFlowController.Open(Properties.Settings.Default.Port);
@@ -76,12 +76,12 @@ namespace Sensit.App.MassFlow
 						// Update the user interface.
 						comboBoxSerialPort.Enabled = false;
 						groupBoxMassFlow.Enabled = true;
-						toolStripStatusLabel1.Text = "Port open.";
+						toolStripStatusLabel.Text = "Port open.";
 					}
 					else if (((RadioButton)sender) == radioButtonClosed)
 					{
 						// Alert the user.
-						toolStripStatusLabel1.Text = "Closing serial port...";
+						toolStripStatusLabel.Text = "Closing serial port...";
 
 						// Close the serial port.
 						_massFlowController.Close();
@@ -89,7 +89,7 @@ namespace Sensit.App.MassFlow
 						// Update user interface.
 						comboBoxSerialPort.Enabled = true;
 						groupBoxMassFlow.Enabled = false;
-						toolStripStatusLabel1.Text = "Port closed.";
+						toolStripStatusLabel.Text = "Port closed.";
 					}
 				}
 				// If an error occurs...
@@ -140,10 +140,10 @@ namespace Sensit.App.MassFlow
 			try
 			{
 				// Alert the user.
-				toolStripStatusLabel1.Text = "Reading from mass flow controller...";
+				toolStripStatusLabel.Text = "Reading from mass flow controller...";
 
 				// Read status from the mass flow controller.
-				_massFlowController.Read();
+				_massFlowController.WriteThenRead();
 
 				// Update the form.
 				textBoxPressure.Text = _massFlowController.Readings[VariableType.Pressure].ToString(CultureInfo.CurrentCulture);
@@ -151,13 +151,13 @@ namespace Sensit.App.MassFlow
 				textBoxVolumetricFlow.Text = _massFlowController.Readings[VariableType.VolumeFlow].ToString(CultureInfo.CurrentCulture);
 				textBoxMassFlow.Text = _massFlowController.Readings[VariableType.MassFlow].ToString(CultureInfo.CurrentCulture);
 				comboBoxGas.Text = _massFlowController.GasSelection.ToString();
-				toolStripStatusLabel1.Text = "Success.";
+				toolStripStatusLabel.Text = "Success.";
 			}
 			catch (Exception ex)
 			{
 				// If an error occurs, alert the user.
 				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
-				toolStripStatusLabel1.Text = ex.Message;
+				toolStripStatusLabel.Text = ex.Message;
 			}
 		}
 
@@ -171,7 +171,7 @@ namespace Sensit.App.MassFlow
 			try
 			{
 				// Alert the user.
-				toolStripStatusLabel1.Text = "Writing gas selection...";
+				toolStripStatusLabel.Text = "Writing gas selection...";
 
 				// Find the selected gas.
 				Enum.TryParse(comboBoxGas.Text, out Gas gas);
@@ -181,13 +181,13 @@ namespace Sensit.App.MassFlow
 				_massFlowController.SetGas();
 
 				// Alert the user.
-				toolStripStatusLabel1.Text = "Success.";
+				toolStripStatusLabel.Text = "Success.";
 			}
 			catch (Exception ex)
 			{
 				// If an error occurs, alert the user.
 				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
-				toolStripStatusLabel1.Text = ex.Message;
+				toolStripStatusLabel.Text = ex.Message;
 			}
 		}
 
@@ -207,7 +207,7 @@ namespace Sensit.App.MassFlow
 				_massFlowController.Write(VariableType.MassFlow, setpoint);
 
 				// Alert the user.
-				toolStripStatusLabel1.Text = "Success.";
+				toolStripStatusLabel.Text = "Success.";
 			}
 			catch (FormatException ex)
 			{
@@ -215,13 +215,13 @@ namespace Sensit.App.MassFlow
 				MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine +
 					"Did you type a valid setpoint?",
 					ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
-				toolStripStatusLabel1.Text = ex.Message;
+				toolStripStatusLabel.Text = ex.Message;
 			}
 			catch (Exception ex)
 			{
 				// If an error occurs, alert the user.
 				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
-				toolStripStatusLabel1.Text = ex.Message;
+				toolStripStatusLabel.Text = ex.Message;
 			}
 		}
 	}

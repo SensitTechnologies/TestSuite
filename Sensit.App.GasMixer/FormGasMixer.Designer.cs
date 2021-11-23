@@ -74,7 +74,7 @@
             this.fileToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(387, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(433, 24);
 			this.menuStrip1.TabIndex = 0;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -106,7 +106,7 @@
 			this.groupBoxSerialPorts.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBoxSerialPorts.Location = new System.Drawing.Point(0, 24);
 			this.groupBoxSerialPorts.Name = "groupBoxSerialPorts";
-			this.groupBoxSerialPorts.Size = new System.Drawing.Size(387, 72);
+			this.groupBoxSerialPorts.Size = new System.Drawing.Size(433, 72);
 			this.groupBoxSerialPorts.TabIndex = 1;
 			this.groupBoxSerialPorts.TabStop = false;
 			this.groupBoxSerialPorts.Text = "Serial Ports";
@@ -182,7 +182,7 @@
 			this.groupBoxGasses.Enabled = false;
 			this.groupBoxGasses.Location = new System.Drawing.Point(0, 96);
 			this.groupBoxGasses.Name = "groupBoxGasses";
-			this.groupBoxGasses.Size = new System.Drawing.Size(387, 80);
+			this.groupBoxGasses.Size = new System.Drawing.Size(433, 80);
 			this.groupBoxGasses.TabIndex = 3;
 			this.groupBoxGasses.TabStop = false;
 			this.groupBoxGasses.Text = "Gasses";
@@ -286,9 +286,9 @@
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 265);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 319);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(387, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(433, 22);
 			this.statusStrip1.TabIndex = 4;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
@@ -307,7 +307,7 @@
 			this.groupBoxFlowAndMixture.Enabled = false;
 			this.groupBoxFlowAndMixture.Location = new System.Drawing.Point(0, 176);
 			this.groupBoxFlowAndMixture.Name = "groupBoxFlowAndMixture";
-			this.groupBoxFlowAndMixture.Size = new System.Drawing.Size(387, 89);
+			this.groupBoxFlowAndMixture.Size = new System.Drawing.Size(433, 143);
 			this.groupBoxFlowAndMixture.TabIndex = 5;
 			this.groupBoxFlowAndMixture.TabStop = false;
 			this.groupBoxFlowAndMixture.Text = "Flow && Mixture";
@@ -423,7 +423,7 @@
 			this.AcceptButton = this.buttonWriteAll;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(387, 287);
+			this.ClientSize = new System.Drawing.Size(433, 341);
 			this.Controls.Add(this.groupBoxFlowAndMixture);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.groupBoxGasses);

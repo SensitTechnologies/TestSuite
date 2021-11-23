@@ -38,7 +38,7 @@ namespace Sensit.TestSDK.Devices
 		/// </summary>
 		public string Message { get; private set; }
 
-		public void Read()
+		public void WriteThenRead()
 		{
 			try
 			{
@@ -75,6 +75,13 @@ namespace Sensit.TestSDK.Devices
 				throw new DeviceCommunicationException("Invalid response from Generic Serial Device."
 					+ Environment.NewLine + ex.Message);
 			}
+		}
+
+		public void WriteThenRead(string command)
+		{
+			Command = command;
+
+			WriteThenRead();
 		}
 
 		public void SetControlMode(ControlMode mode)

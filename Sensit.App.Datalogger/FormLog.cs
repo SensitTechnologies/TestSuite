@@ -201,7 +201,7 @@ namespace Sensit.App.Datalogger
 				_genericSerialDevice.Command = textBoxCommand.Text.Replace("\\n", "\n").Replace("\\r", "\r").Replace("\\t", "\t");
 
 				// Fetch a value from the DUT.
-				_genericSerialDevice.Read();
+				_genericSerialDevice.WriteThenRead();
 				string sample = _genericSerialDevice.Message;
 
 				// Log a timestamp and the sample value to a CSV file.

@@ -28,7 +28,7 @@ namespace Sensit.TestSDK.Devices
 		// Since there's nothing to communicate with, none of the methods
 		// have anything to do unless they get/set a property.
 
-		public void Read()
+		public void WriteThenRead()
 		{
 			// Nothing to do here.
 		}

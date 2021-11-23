@@ -50,7 +50,7 @@ namespace Sensit.TestSDK.Devices
 
 		public string Message { get; }
 
-		public void Read()
+		public void WriteThenRead()
 		{
 			// Fetch current and voltage readings from each channel.
 			Readings[VariableType.Voltage1] = SendQuery(new GPDX303S_SCPI().VOUT(1).Query());

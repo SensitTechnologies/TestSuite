@@ -58,7 +58,7 @@
 			this.buttonWriteSP = new System.Windows.Forms.Button();
 			this.buttonWriteGas = new System.Windows.Forms.Button();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+			this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.groupBoxSerialPort.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.groupBoxMassFlow.SuspendLayout();
@@ -382,7 +382,7 @@
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
+            this.toolStripStatusLabel});
 			this.statusStrip1.Location = new System.Drawing.Point(3, 202);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(328, 22);
@@ -391,9 +391,9 @@
 			// 
 			// toolStripStatusLabel1
 			// 
-			this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-			this.toolStripStatusLabel1.Size = new System.Drawing.Size(39, 17);
-			this.toolStripStatusLabel1.Text = "Ready";
+			this.toolStripStatusLabel.Name = "toolStripStatusLabel1";
+			this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
+			this.toolStripStatusLabel.Text = "Ready";
 			// 
 			// FormMassFlow
 			// 
@@ -434,7 +434,7 @@
 		private System.Windows.Forms.ComboBox comboBoxSerialPort;
 		private System.Windows.Forms.GroupBox groupBoxMassFlow;
 		private System.Windows.Forms.StatusStrip statusStrip1;
-		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private System.Windows.Forms.Label labelPressure;
 		private System.Windows.Forms.Label labelTemperature;

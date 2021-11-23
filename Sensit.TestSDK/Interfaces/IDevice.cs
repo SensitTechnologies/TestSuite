@@ -121,7 +121,7 @@ namespace Sensit.TestSDK.Interfaces
 		/// <summary>
 		/// Fetch new values from the device.
 		/// </summary>
-		void Read();
+		void WriteThenRead();
 
 		/// <summary>
 		/// Change the device's control mode.

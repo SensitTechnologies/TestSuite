@@ -44,6 +44,7 @@
 			this.buttonStop = new System.Windows.Forms.Button();
 			this.buttonStart = new System.Windows.Forms.Button();
 			this.tableLayoutPanelSerialPort = new System.Windows.Forms.TableLayoutPanel();
+			this.labelComPort = new System.Windows.Forms.Label();
 			this.comboBoxSerialPort = new System.Windows.Forms.ComboBox();
 			this.buttonPortRefresh = new System.Windows.Forms.Button();
 			this.labelBaudRate = new System.Windows.Forms.Label();
@@ -52,10 +53,9 @@
 			this.comboBoxStopBits = new System.Windows.Forms.ComboBox();
 			this.labelParity = new System.Windows.Forms.Label();
 			this.comboBoxParity = new System.Windows.Forms.ComboBox();
-			this.labelComPort = new System.Windows.Forms.Label();
-			this.groupBoxSerialPort = new System.Windows.Forms.GroupBox();
-			this.radioButtonClosed = new System.Windows.Forms.RadioButton();
 			this.radioButtonOpen = new System.Windows.Forms.RadioButton();
+			this.radioButtonClosed = new System.Windows.Forms.RadioButton();
+			this.groupBoxSerialPort = new System.Windows.Forms.GroupBox();
 			this.groupBoxSample = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
 			this.numericUpDownInterval = new System.Windows.Forms.NumericUpDown();
@@ -63,22 +63,22 @@
 			this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
 			this.groupBoxStop = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-			this.label1 = new System.Windows.Forms.Label();
-			this.radioButton1 = new System.Windows.Forms.RadioButton();
-			this.numericUpDown6 = new System.Windows.Forms.NumericUpDown();
 			this.radioButton2 = new System.Windows.Forms.RadioButton();
+			this.radioButton3 = new System.Windows.Forms.RadioButton();
+			this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+			this.radioButton1 = new System.Windows.Forms.RadioButton();
+			this.radioButton4 = new System.Windows.Forms.RadioButton();
 			this.numericUpDown7 = new System.Windows.Forms.NumericUpDown();
 			this.numericUpDown8 = new System.Windows.Forms.NumericUpDown();
 			this.numericUpDown9 = new System.Windows.Forms.NumericUpDown();
-			this.radioButton3 = new System.Windows.Forms.RadioButton();
-			this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+			this.label1 = new System.Windows.Forms.Label();
+			this.label3 = new System.Windows.Forms.Label();
+			this.label4 = new System.Windows.Forms.Label();
+			this.numericUpDown6 = new System.Windows.Forms.NumericUpDown();
 			this.groupBoxCommand = new System.Windows.Forms.GroupBox();
 			this.textBoxCommand = new System.Windows.Forms.TextBox();
 			this.groupBoxResponse = new System.Windows.Forms.GroupBox();
 			this.textBoxResponse = new System.Windows.Forms.TextBox();
-			this.label3 = new System.Windows.Forms.Label();
-			this.label4 = new System.Windows.Forms.Label();
-			this.radioButton4 = new System.Windows.Forms.RadioButton();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.groupBoxMassFlow.SuspendLayout();
@@ -93,10 +93,10 @@
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownInterval)).BeginInit();
 			this.groupBoxStop.SuspendLayout();
 			this.tableLayoutPanel5.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
 			this.groupBoxCommand.SuspendLayout();
 			this.groupBoxResponse.SuspendLayout();
 			this.SuspendLayout();
@@ -287,6 +287,16 @@
 			this.tableLayoutPanelSerialPort.Size = new System.Drawing.Size(378, 56);
 			this.tableLayoutPanelSerialPort.TabIndex = 14;
 			// 
+			// labelComPort
+			// 
+			this.labelComPort.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelComPort.AutoSize = true;
+			this.labelComPort.Location = new System.Drawing.Point(3, 8);
+			this.labelComPort.Name = "labelComPort";
+			this.labelComPort.Size = new System.Drawing.Size(56, 13);
+			this.labelComPort.TabIndex = 0;
+			this.labelComPort.Text = "COM Port:";
+			// 
 			// comboBoxSerialPort
 			// 
 			this.comboBoxSerialPort.AllowDrop = true;
@@ -378,28 +388,15 @@
 			this.comboBoxParity.Size = new System.Drawing.Size(72, 21);
 			this.comboBoxParity.TabIndex = 6;
 			// 
-			// labelComPort
+			// radioButtonOpen
 			// 
-			this.labelComPort.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelComPort.AutoSize = true;
-			this.labelComPort.Location = new System.Drawing.Point(3, 8);
-			this.labelComPort.Name = "labelComPort";
-			this.labelComPort.Size = new System.Drawing.Size(56, 13);
-			this.labelComPort.TabIndex = 0;
-			this.labelComPort.Text = "COM Port:";
-			// 
-			// groupBoxSerialPort
-			// 
-			this.groupBoxSerialPort.AutoSize = true;
-			this.groupBoxSerialPort.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.groupBoxSerialPort.Controls.Add(this.tableLayoutPanelSerialPort);
-			this.groupBoxSerialPort.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBoxSerialPort.Location = new System.Drawing.Point(0, 72);
-			this.groupBoxSerialPort.Name = "groupBoxSerialPort";
-			this.groupBoxSerialPort.Size = new System.Drawing.Size(384, 75);
-			this.groupBoxSerialPort.TabIndex = 8;
-			this.groupBoxSerialPort.TabStop = false;
-			this.groupBoxSerialPort.Text = "Serial Port";
+			this.radioButtonOpen.AutoSize = true;
+			this.radioButtonOpen.Location = new System.Drawing.Point(318, 3);
+			this.radioButtonOpen.Name = "radioButtonOpen";
+			this.radioButtonOpen.Size = new System.Drawing.Size(51, 17);
+			this.radioButtonOpen.TabIndex = 12;
+			this.radioButtonOpen.Text = "Open";
+			this.radioButtonOpen.UseVisualStyleBackColor = true;
 			// 
 			// radioButtonClosed
 			// 
@@ -413,15 +410,18 @@
 			this.radioButtonClosed.Text = "Closed";
 			this.radioButtonClosed.UseVisualStyleBackColor = true;
 			// 
-			// radioButtonOpen
+			// groupBoxSerialPort
 			// 
-			this.radioButtonOpen.AutoSize = true;
-			this.radioButtonOpen.Location = new System.Drawing.Point(318, 3);
-			this.radioButtonOpen.Name = "radioButtonOpen";
-			this.radioButtonOpen.Size = new System.Drawing.Size(51, 17);
-			this.radioButtonOpen.TabIndex = 12;
-			this.radioButtonOpen.Text = "Open";
-			this.radioButtonOpen.UseVisualStyleBackColor = true;
+			this.groupBoxSerialPort.AutoSize = true;
+			this.groupBoxSerialPort.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.groupBoxSerialPort.Controls.Add(this.tableLayoutPanelSerialPort);
+			this.groupBoxSerialPort.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBoxSerialPort.Location = new System.Drawing.Point(0, 72);
+			this.groupBoxSerialPort.Name = "groupBoxSerialPort";
+			this.groupBoxSerialPort.Size = new System.Drawing.Size(384, 75);
+			this.groupBoxSerialPort.TabIndex = 8;
+			this.groupBoxSerialPort.TabStop = false;
+			this.groupBoxSerialPort.Text = "Serial Port";
 			// 
 			// groupBoxSample
 			// 
@@ -555,15 +555,38 @@
 			this.tableLayoutPanel5.Size = new System.Drawing.Size(378, 114);
 			this.tableLayoutPanel5.TabIndex = 14;
 			// 
-			// label1
+			// radioButton2
 			// 
-			this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(98, 0);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(35, 13);
-			this.label1.TabIndex = 16;
-			this.label1.Text = "Hours";
+			this.radioButton2.AutoSize = true;
+			this.radioButton2.Location = new System.Drawing.Point(3, 16);
+			this.radioButton2.Name = "radioButton2";
+			this.radioButton2.Size = new System.Drawing.Size(89, 17);
+			this.radioButton2.TabIndex = 19;
+			this.radioButton2.Text = "Elapsed Time";
+			this.radioButton2.UseVisualStyleBackColor = true;
+			// 
+			// radioButton3
+			// 
+			this.radioButton3.AutoSize = true;
+			this.radioButton3.Location = new System.Drawing.Point(3, 42);
+			this.radioButton3.Name = "radioButton3";
+			this.radioButton3.Size = new System.Drawing.Size(76, 17);
+			this.radioButton3.TabIndex = 20;
+			this.radioButton3.Text = "Date/Time";
+			this.radioButton3.UseVisualStyleBackColor = true;
+			// 
+			// dateTimePicker2
+			// 
+			this.dateTimePicker2.Checked = false;
+			this.tableLayoutPanel5.SetColumnSpan(this.dateTimePicker2, 2);
+			this.dateTimePicker2.Enabled = false;
+			this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+			this.dateTimePicker2.Location = new System.Drawing.Point(98, 42);
+			this.dateTimePicker2.MinDate = new System.DateTime(2021, 5, 28, 16, 58, 24, 0);
+			this.dateTimePicker2.Name = "dateTimePicker2";
+			this.dateTimePicker2.Size = new System.Drawing.Size(121, 20);
+			this.dateTimePicker2.TabIndex = 27;
+			this.dateTimePicker2.Value = new System.DateTime(2021, 5, 28, 16, 58, 24, 0);
 			// 
 			// radioButton1
 			// 
@@ -575,39 +598,17 @@
 			this.radioButton1.Text = "# of Scans";
 			this.radioButton1.UseVisualStyleBackColor = true;
 			// 
-			// numericUpDown6
+			// radioButton4
 			// 
-			this.tableLayoutPanel5.SetColumnSpan(this.numericUpDown6, 3);
-			this.numericUpDown6.Enabled = false;
-			this.numericUpDown6.Increment = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-			this.numericUpDown6.Location = new System.Drawing.Point(98, 68);
-			this.numericUpDown6.Maximum = new decimal(new int[] {
-            36000000,
-            0,
-            0,
-            0});
-			this.numericUpDown6.Name = "numericUpDown6";
-			this.numericUpDown6.Size = new System.Drawing.Size(90, 20);
-			this.numericUpDown6.TabIndex = 21;
-			this.numericUpDown6.Value = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-			// 
-			// radioButton2
-			// 
-			this.radioButton2.AutoSize = true;
-			this.radioButton2.Location = new System.Drawing.Point(3, 16);
-			this.radioButton2.Name = "radioButton2";
-			this.radioButton2.Size = new System.Drawing.Size(89, 17);
-			this.radioButton2.TabIndex = 19;
-			this.radioButton2.Text = "Elapsed Time";
-			this.radioButton2.UseVisualStyleBackColor = true;
+			this.radioButton4.AutoSize = true;
+			this.radioButton4.Checked = true;
+			this.radioButton4.Location = new System.Drawing.Point(3, 94);
+			this.radioButton4.Name = "radioButton4";
+			this.radioButton4.Size = new System.Drawing.Size(81, 17);
+			this.radioButton4.TabIndex = 17;
+			this.radioButton4.TabStop = true;
+			this.radioButton4.Text = "Stop Button";
+			this.radioButton4.UseVisualStyleBackColor = true;
 			// 
 			// numericUpDown7
 			// 
@@ -663,28 +664,59 @@
             0,
             0});
 			// 
-			// radioButton3
+			// label1
 			// 
-			this.radioButton3.AutoSize = true;
-			this.radioButton3.Location = new System.Drawing.Point(3, 42);
-			this.radioButton3.Name = "radioButton3";
-			this.radioButton3.Size = new System.Drawing.Size(76, 17);
-			this.radioButton3.TabIndex = 20;
-			this.radioButton3.Text = "Date/Time";
-			this.radioButton3.UseVisualStyleBackColor = true;
+			this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(98, 0);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(35, 13);
+			this.label1.TabIndex = 16;
+			this.label1.Text = "Hours";
 			// 
-			// dateTimePicker2
+			// label3
 			// 
-			this.dateTimePicker2.Checked = false;
-			this.tableLayoutPanel5.SetColumnSpan(this.dateTimePicker2, 2);
-			this.dateTimePicker2.Enabled = false;
-			this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.dateTimePicker2.Location = new System.Drawing.Point(98, 42);
-			this.dateTimePicker2.MinDate = new System.DateTime(2021, 5, 28, 16, 58, 24, 0);
-			this.dateTimePicker2.Name = "dateTimePicker2";
-			this.dateTimePicker2.Size = new System.Drawing.Size(121, 20);
-			this.dateTimePicker2.TabIndex = 27;
-			this.dateTimePicker2.Value = new System.DateTime(2021, 5, 28, 16, 58, 24, 0);
+			this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(168, 0);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(44, 13);
+			this.label3.TabIndex = 29;
+			this.label3.Text = "Minutes";
+			// 
+			// label4
+			// 
+			this.label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(238, 0);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(49, 13);
+			this.label4.TabIndex = 30;
+			this.label4.Text = "Seconds";
+			// 
+			// numericUpDown6
+			// 
+			this.tableLayoutPanel5.SetColumnSpan(this.numericUpDown6, 3);
+			this.numericUpDown6.Enabled = false;
+			this.numericUpDown6.Increment = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+			this.numericUpDown6.Location = new System.Drawing.Point(98, 68);
+			this.numericUpDown6.Maximum = new decimal(new int[] {
+            36000000,
+            0,
+            0,
+            0});
+			this.numericUpDown6.Name = "numericUpDown6";
+			this.numericUpDown6.Size = new System.Drawing.Size(90, 20);
+			this.numericUpDown6.TabIndex = 21;
+			this.numericUpDown6.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
 			// 
 			// groupBoxCommand
 			// 
@@ -727,38 +759,6 @@
 			this.textBoxResponse.ReadOnly = true;
 			this.textBoxResponse.Size = new System.Drawing.Size(378, 20);
 			this.textBoxResponse.TabIndex = 10;
-			// 
-			// label3
-			// 
-			this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(168, 0);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(44, 13);
-			this.label3.TabIndex = 29;
-			this.label3.Text = "Minutes";
-			// 
-			// label4
-			// 
-			this.label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(238, 0);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(49, 13);
-			this.label4.TabIndex = 30;
-			this.label4.Text = "Seconds";
-			// 
-			// radioButton4
-			// 
-			this.radioButton4.AutoSize = true;
-			this.radioButton4.Checked = true;
-			this.radioButton4.Location = new System.Drawing.Point(3, 94);
-			this.radioButton4.Name = "radioButton4";
-			this.radioButton4.Size = new System.Drawing.Size(81, 17);
-			this.radioButton4.TabIndex = 17;
-			this.radioButton4.TabStop = true;
-			this.radioButton4.Text = "Stop Button";
-			this.radioButton4.UseVisualStyleBackColor = true;
 			// 
 			// FormLog
 			// 
@@ -804,10 +804,10 @@
 			this.groupBoxStop.PerformLayout();
 			this.tableLayoutPanel5.ResumeLayout(false);
 			this.tableLayoutPanel5.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).EndInit();
 			this.groupBoxCommand.ResumeLayout(false);
 			this.groupBoxCommand.PerformLayout();
 			this.groupBoxResponse.ResumeLayout(false);

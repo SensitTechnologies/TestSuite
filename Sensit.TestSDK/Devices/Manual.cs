@@ -20,7 +20,7 @@ namespace Sensit.TestSDK.Devices
 
 		public string Message { get; }
 
-		public void Read()
+		public void WriteThenRead()
 		{
 			// Do nothing.  It's the user's responsibility to record any readings.
 		}

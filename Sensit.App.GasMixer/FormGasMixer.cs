@@ -263,8 +263,8 @@ namespace Sensit.App.GasConcentration
 			try
 			{
 				// Fetch new values from the mass flow controllers.
-				_mfcAnalyte.Read();
-				_mfcDiluent.Read();
+				_mfcAnalyte.WriteThenRead();
+				_mfcDiluent.WriteThenRead();
 
 				// Calculate total mass flow.
 				decimal massFlow = _mfcDiluent.Readings[VariableType.MassFlow] + _mfcAnalyte.Readings[VariableType.MassFlow];

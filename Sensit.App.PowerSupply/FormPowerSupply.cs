@@ -188,7 +188,7 @@ namespace Sensit.App.PowerSupply
 				toolStripStatusLabel1.Text = "Reading from power supply...";
 
 				// Read status from power supply.
-				_powerSupply.Read();
+				_powerSupply.WriteThenRead();
 
 				// Update current for each channel.
 				numericUpDownCh1Current.Value = _powerSupply.Readings[VariableType.Current1];

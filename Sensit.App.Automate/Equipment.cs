@@ -77,7 +77,7 @@ namespace Sensit.App.Automate
 		{
 			foreach (IDevice d in Devices.Values)
 			{
-				d.Read();
+				d.WriteThenRead();
 			}
 		}
 

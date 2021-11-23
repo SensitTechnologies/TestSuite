@@ -282,7 +282,7 @@ namespace Sensit.TestSDK.Devices
 			}
 		}
 
-		public void Read()
+		public void WriteThenRead()
 		{
 			try
 			{
