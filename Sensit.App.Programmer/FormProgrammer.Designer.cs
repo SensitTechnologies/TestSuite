@@ -1,5 +1,5 @@
 ﻿
-namespace Sensit.App.Serial
+namespace Sensit.App.Programmer
 {
 	partial class FormProgrammer
 	{

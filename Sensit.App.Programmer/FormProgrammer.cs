@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using Sensit.TestSDK.Devices;
 using Sensit.TestSDK.Exceptions;
 
-namespace Sensit.App.Serial
+namespace Sensit.App.Programmer
 {
 	public partial class FormProgrammer : Form
 	{
@@ -329,7 +329,7 @@ namespace Sensit.App.Serial
 					break;
 				case 5:
 					// Hydrogen cyanide sensor
-					command += '4';
+					command += '5';
 					break;
 			}
 
@@ -358,7 +358,7 @@ namespace Sensit.App.Serial
 					command += '3';
 					buttonText += "H2S";
 					break;
-				case 4:
+				case 5:
 					// Hydrogen cyanide sensor
 					command += '4';
 					buttonText += "HCN";
@@ -400,7 +400,7 @@ namespace Sensit.App.Serial
 			// Response should be an echo of the command.
 			if (_programmer.Message != command)
 			{
-				throw new DeviceCommandFailedException("Could not set sensor type");
+				throw new DeviceCommandFailedException("No response from G3.");
 			}
 		}
 

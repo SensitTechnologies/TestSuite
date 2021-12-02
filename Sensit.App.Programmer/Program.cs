@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Sensit.App.Serial
+namespace Sensit.App.Programmer
 {
 	static class Program
 	{
