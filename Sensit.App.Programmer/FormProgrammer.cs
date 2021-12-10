@@ -11,6 +11,15 @@ namespace Sensit.App.Programmer
 {
 	public partial class FormProgrammer : Form
 	{
+		private enum SensorType
+		{
+			LeadFreeOxygen,     // LFO2-A4
+			HydrogenSulfide,	// H2S-A1, H2S-B1
+			CarbonMonoxide,		// CO-AF
+			HydrogenCyanide,	// HCN-A1
+			SulfurDioxide		// SO2-AF
+		}
+
 		// colors indicating sensor status
 		private readonly Color COLOR_IDLE = DefaultBackColor;
 		private readonly Color COLOR_PASS = Color.Green;
@@ -218,49 +227,99 @@ namespace Sensit.App.Programmer
 				// Parse the barcode text.
 				string[] words = textBoxBarcode.Text.Split(' ');
 
+				// Get number of digits.
+				int numDigits = words[0].Length;
+
+				// Parse the serial number.  It follows format “TTTBBBBNN”
+				// TTT = Sensor type (this could be only two digits if the first number is 0).
+				// BBBB = Batch Number
+				// NN = Number in Batch
+				uint sensorTypeCode;
+				uint sensorBatch;
+				uint sensorNum;
+				if (numDigits == 9)
+				{
+					sensorTypeCode = uint.Parse(words[0].Substring(0, 3));
+					sensorBatch = uint.Parse(words[0].Substring(3, 4));
+					sensorNum = uint.Parse(words[0].Substring(7, 2));
+				}
+				else if (numDigits == 8)
+				{
+					sensorTypeCode = uint.Parse(words[0].Substring(0, 2));
+					sensorBatch = uint.Parse(words[0].Substring(2, 4));
+					sensorNum = uint.Parse(words[0].Substring(6, 2));
+				}
+				else throw new TestException("Invalid serial number format.");
+
+				// Translate code into sensor type.
+				SensorType sensorType;
+				switch(sensorTypeCode)
+				{
+					case 185:
+						sensorType = SensorType.LeadFreeOxygen;
+						break;
+					case 20:
+					case 21:
+					case 22:
+						sensorType = SensorType.HydrogenSulfide;
+						break;
+					case 11:
+					case 15:
+						sensorType = SensorType.CarbonMonoxide;
+						break;
+					case 55:
+						sensorType = SensorType.HydrogenCyanide;
+						break;
+					case 51:
+						sensorType = SensorType.SulfurDioxide;
+						throw new TestException("SO2 sensors are not supported yet.");
+					default:
+						throw new TestException("Unknown sensor type.");
+				}
+
 				// Use the first character to determine the sensor type.
-				UpdateProgress("Writing base record...", 5);
-				WriteBaseRecord(Convert.ToUInt16(words[0].Substring(0, 1)));
+				UpdateProgress("Writing sensor " + _sensor + "...", 5);
+				WriteBaseRecord(sensorType);
 
 				// Manufacturing Record Validity = 0
-				UpdateProgress("Writing validity...", 10);
+				UpdateProgress("Writing sensor " + _sensor + "...", 10);
 				WriteG3Console("mrv0");
 
 				// Manufacturing Record Issue = 0
-				UpdateProgress("Writing issue...", 20);
+				UpdateProgress("Writing sensor " + _sensor + "...", 20);
 				WriteG3Console("mris0");
 
 				// Manufacturing Record ID = C
-				UpdateProgress("Writing ID...", 30);
+				UpdateProgress("Writing sensor " + _sensor + "...", 30);
 				WriteG3Console("mridC");
 
 				// Manufacturing Record Revision = 0
-				UpdateProgress("Writing revision", 40);
+				UpdateProgress("Writing sensor " + _sensor + "...", 40);
 				WriteG3Console("mrre0");
 
 				// Manufacturing Record Read
-				UpdateProgress("Writing read(?)...", 50);
+				UpdateProgress("Writing sensor " + _sensor + "...", 50);
 				WriteG3Console("mrrr" + _sensor);
 
 				// Manufacturing Record Point Release = 0
-				UpdateProgress("Writing point release...", 60);
+				UpdateProgress("Writing sensor " + _sensor + "...", 60);
 				WriteG3Console("mrp0");
 
 				// Manufacturing Record Date
-				UpdateProgress("Writing date...", 70);
+				UpdateProgress("Writing sensor " + _sensor + "...", 70);
 				string date = DateTime.Today.ToString("MMddyyyy", CultureInfo.InvariantCulture);
 				WriteG3Console("mrd" + date);
 
 				// Manufacturing Record Sensor Type
-				UpdateProgress("Writing sensor type...", 80);
-				WriteSensorType(Convert.ToUInt16(words[0].Substring(0, 1)));
+				UpdateProgress("Writing sensor " + _sensor + "...", 80);
+				WriteSensorType(sensorType);
 
 				// Serial Number
-				UpdateProgress("Writing serial number...", 90);
+				UpdateProgress("Writing sensor " + _sensor + "...", 90);
 				WriteSerialNumber(words[0]);
 
 				// Write manufacturing record to sensor EEPROM.
-				UpdateProgress("Saving to EEPROM...", 95);
+				UpdateProgress("Writing sensor " + _sensor + "...", 95);
 				WriteG3Console("mrw" + _sensor);
 
 				// Sensor PASS and select the next sensor.
@@ -310,62 +369,59 @@ namespace Sensit.App.Programmer
 			}
 		}
 
-		private void WriteSensorType(ushort sensorTypeCode)
+		private void WriteSensorType(SensorType sensorType)
 		{
 			string command = "mrc";
-			switch (sensorTypeCode)
+			switch (sensorType)
 			{
-				case 0:
-					// Oxygen sensor
+				case SensorType.LeadFreeOxygen:
 					command += '1';
 					break;
-				case 1:
+				case SensorType.CarbonMonoxide:
 					// Carbon monoxide sensor
 					command += '3';
 					break;
-				case 2:
+				case SensorType.HydrogenSulfide:
 					// Hydrogen sulfide sensor
 					command += '4';
 					break;
-				case 5:
+				case SensorType.HydrogenCyanide:
 					// Hydrogen cyanide sensor
 					command += '5';
 					break;
+				default:
+					throw new DeviceSettingNotSupportedException("Invalid sensor type");
 			}
 
 			// Send sensor type to G3.
 			WriteG3Console(command);
 		}
 
-		private void WriteBaseRecord(ushort sensorTypeCode)
+		private void WriteBaseRecord(SensorType sensorType)
 		{
 			string command = "br";
 			string buttonText = Environment.NewLine;
-			switch (sensorTypeCode)
+			switch (sensorType)
 			{
-				case 0:
-					// Oxygen sensor
+				case SensorType.LeadFreeOxygen:
 					command += '1';
 					buttonText += "O2";
 					break;
-				case 1:
-					// Carbon monoxide sensor
+				case SensorType.CarbonMonoxide:
 					command += '2';
 					buttonText += "CO";
 					break;
-				case 2:
-					// Hydrogen sulfide sensor
+				case SensorType.HydrogenSulfide:
 					command += '3';
 					buttonText += "H2S";
 					break;
-				case 5:
+				case SensorType.HydrogenCyanide:
 					// Hydrogen cyanide sensor
 					command += '4';
 					buttonText += "HCN";
 					break;
 				default:
-					throw new DeviceSettingNotSupportedException(
-						"Invalid sensor type: " + sensorTypeCode);
+					throw new DeviceSettingNotSupportedException("Invalid sensor type");
 			}
 
 			// Send base record info to G3.
