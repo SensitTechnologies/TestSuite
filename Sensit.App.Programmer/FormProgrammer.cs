@@ -237,7 +237,13 @@ namespace Sensit.App.Programmer
 				uint sensorTypeCode;
 				uint sensorBatch;
 				uint sensorNum;
-				if (numDigits == 9)
+				if (numDigits == 10)
+				{
+					sensorTypeCode = uint.Parse(words[0].Substring(0, 4));
+					sensorBatch = uint.Parse(words[0].Substring(4, 4));
+					sensorNum = uint.Parse(words[0].Substring(8, 2));
+				}
+				else if (numDigits == 9)
 				{
 					sensorTypeCode = uint.Parse(words[0].Substring(0, 3));
 					sensorBatch = uint.Parse(words[0].Substring(3, 4));
