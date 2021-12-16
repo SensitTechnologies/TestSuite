@@ -210,6 +210,72 @@ namespace Sensit.App.Programmer
 		}
 
 		/// <summary>
+		/// Parse an Alphasense electrochemical sensor's serial number.
+		/// </summary>
+		/// <param name="serialNumber"></param>
+		/// <returns></returns>
+		private SensorType ParseAlphasenseBarcode(string serialNumber)
+		{
+			// Get number of digits.
+			int numDigits = serialNumber.Length;
+
+			// Parse the serial number.  It follows format “TTTBBBBNN”
+			// TTT = Sensor type (this could be only two digits if the first number is 0).
+			// BBBB = Batch Number
+			// NN = Number in Batch
+			uint sensorTypeCode;
+			uint sensorBatch;
+			uint sensorNum;
+			if (numDigits == 10)
+			{
+				sensorTypeCode = uint.Parse(serialNumber.Substring(0, 4));
+				sensorBatch = uint.Parse(serialNumber.Substring(4, 4));
+				sensorNum = uint.Parse(serialNumber.Substring(8, 2));
+			}
+			else if (numDigits == 9)
+			{
+				sensorTypeCode = uint.Parse(serialNumber.Substring(0, 3));
+				sensorBatch = uint.Parse(serialNumber.Substring(3, 4));
+				sensorNum = uint.Parse(serialNumber.Substring(7, 2));
+			}
+			else if (numDigits == 8)
+			{
+				sensorTypeCode = uint.Parse(serialNumber.Substring(0, 2));
+				sensorBatch = uint.Parse(serialNumber.Substring(2, 4));
+				sensorNum = uint.Parse(serialNumber.Substring(6, 2));
+			}
+			else throw new TestException("Invalid serial number format.");
+
+			// Translate code into sensor type.
+			SensorType sensorType;
+			switch (sensorTypeCode)
+			{
+				case 185:
+					sensorType = SensorType.LeadFreeOxygen;
+					break;
+				case 20:
+				case 21:
+				case 22:
+					sensorType = SensorType.HydrogenSulfide;
+					break;
+				case 11:
+				case 15:
+					sensorType = SensorType.CarbonMonoxide;
+					break;
+				case 55:
+					sensorType = SensorType.HydrogenCyanide;
+					break;
+				case 51:
+					sensorType = SensorType.SulfurDioxide;
+					throw new TestException("SO2 sensors are not supported yet.");
+				default:
+					throw new TestException("Unknown sensor type.");
+			}
+
+			return sensorType;
+		}
+
+		/// <summary>
 		/// When the "Program" button is clicked, program a sensor.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -227,61 +293,8 @@ namespace Sensit.App.Programmer
 				// Parse the barcode text.
 				string[] words = textBoxBarcode.Text.Split(' ');
 
-				// Get number of digits.
-				int numDigits = words[0].Length;
-
-				// Parse the serial number.  It follows format “TTTBBBBNN”
-				// TTT = Sensor type (this could be only two digits if the first number is 0).
-				// BBBB = Batch Number
-				// NN = Number in Batch
-				uint sensorTypeCode;
-				uint sensorBatch;
-				uint sensorNum;
-				if (numDigits == 10)
-				{
-					sensorTypeCode = uint.Parse(words[0].Substring(0, 4));
-					sensorBatch = uint.Parse(words[0].Substring(4, 4));
-					sensorNum = uint.Parse(words[0].Substring(8, 2));
-				}
-				else if (numDigits == 9)
-				{
-					sensorTypeCode = uint.Parse(words[0].Substring(0, 3));
-					sensorBatch = uint.Parse(words[0].Substring(3, 4));
-					sensorNum = uint.Parse(words[0].Substring(7, 2));
-				}
-				else if (numDigits == 8)
-				{
-					sensorTypeCode = uint.Parse(words[0].Substring(0, 2));
-					sensorBatch = uint.Parse(words[0].Substring(2, 4));
-					sensorNum = uint.Parse(words[0].Substring(6, 2));
-				}
-				else throw new TestException("Invalid serial number format.");
-
-				// Translate code into sensor type.
-				SensorType sensorType;
-				switch(sensorTypeCode)
-				{
-					case 185:
-						sensorType = SensorType.LeadFreeOxygen;
-						break;
-					case 20:
-					case 21:
-					case 22:
-						sensorType = SensorType.HydrogenSulfide;
-						break;
-					case 11:
-					case 15:
-						sensorType = SensorType.CarbonMonoxide;
-						break;
-					case 55:
-						sensorType = SensorType.HydrogenCyanide;
-						break;
-					case 51:
-						sensorType = SensorType.SulfurDioxide;
-						throw new TestException("SO2 sensors are not supported yet.");
-					default:
-						throw new TestException("Unknown sensor type.");
-				}
+				// Determine sensor type from serial number.
+				SensorType sensorType = ParseAlphasenseBarcode(words[0]);
 
 				// Use the first character to determine the sensor type.
 				UpdateProgress("Writing sensor " + _sensor + "...", 5);
@@ -326,18 +339,18 @@ namespace Sensit.App.Programmer
 
 				// Write manufacturing record to sensor EEPROM.
 				UpdateProgress("Writing sensor " + _sensor + "...", 95);
-				WriteG3Console("mrw" + _sensor);
+				WriteG3ConsoleWithVerify("mrw" + _sensor);
 
 				// Sensor PASS and select the next sensor.
 				SelectNextSensor(true);
 			}
 			catch (Exception ex)
 			{
-				// Alert user that a sensor failed.
-				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
-
 				// Sensor FAIL and select the next sensor.
 				SelectNextSensor(false);
+
+				// Alert user that a sensor failed.
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 			}
 
 			// Clear text box for next scanned barcode.
@@ -434,7 +447,7 @@ namespace Sensit.App.Programmer
 			WriteG3Console(command);
 
 			// Write base record to sensor EEPROM.
-			WriteG3Console("brw" + _sensor);
+			WriteG3ConsoleWithVerify("brw" + _sensor);
 
 			// Add sensor's type to button.
 			switch (_sensor)
@@ -459,10 +472,49 @@ namespace Sensit.App.Programmer
 			// Send command to programmer (and terminate with a carriage return).
 			_programmer.WriteThenRead(command + "\r");
 
+			// If no response is received, alert the user.
+			if (string.IsNullOrWhiteSpace(_programmer.Message))
+			{
+				throw new DeviceCommunicationException("No response from G3.");
+			}
 			// Response should be an echo of the command.
-			if (_programmer.Message != command)
+			else if (_programmer.Message != command)
+			{
+				throw new DeviceCommunicationException("Bad response from G3");
+			}
+		}
+
+		private void WriteG3ConsoleWithVerify(string command)
+		{
+			// Send command to programmer (and terminate with a carriage return).
+			_programmer.WriteThenRead(command + "\r");
+
+			// If no response is received, alert the user.
+			if (string.IsNullOrWhiteSpace(_programmer.Message))
 			{
 				throw new DeviceCommandFailedException("No response from G3.");
+			}
+			// Response should be an echo of the command + "Valid" or "Invalid"
+			else
+			{
+				// Split string into the echo of the command and the result.
+				string echo = _programmer.Message.Substring(0, command.Length);
+				string result = _programmer.Message.Remove(0, command.Length);
+
+				if (echo != command)
+				{
+					throw new DeviceCommunicationException("Bad response from G3");
+				}
+				else switch (result)
+					{
+						case "Invalid":
+							throw new TestException("Invalid Smart Sensor");
+							break;
+						case "Valid":
+							break;
+						default:
+							throw new DeviceCommunicationException("Unexpected response from G3.");
+					}
 			}
 		}
 
