@@ -116,7 +116,8 @@ namespace Sensit.TestSDK.Devices
 					// If the device has not already been detected...
 					if (!bluetoothDevices.ContainsKey(mac[1]))
 					{
-						// Add to dictionary.  Key = mac address; Value = device name (if one exists).
+						// Add to dictionary.
+						// Key = mac address; Value = device name (if one exists).
 						bluetoothDevices.Add(key: mac[1], value: words[2]);
 					}
 				}

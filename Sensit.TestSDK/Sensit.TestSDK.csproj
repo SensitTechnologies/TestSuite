@@ -122,6 +122,7 @@
     </Compile>
     <Compile Include="Settings\Serializer.cs" />
     <Compile Include="Settings\Settings.cs" />
+    <Compile Include="Settings\SettingTypes.cs" />
     <Compile Include="Utility\AutoDisposer.cs" />
     <Compile Include="Utility\LineSplitter.cs" />
     <Compile Include="Utility\Utilities.cs" />
