@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text.RegularExpressions;
 using System.Threading;
 using Sensit.TestSDK.Communication;
 using Sensit.TestSDK.Exceptions;
@@ -58,7 +57,8 @@ namespace Sensit.TestSDK.Devices
 
 				// Save the whole string as a message to be logged.
 				// Replace any newlines or tabs with spaces to avoid weird log files.
-				Message = Regex.Replace(message, @"\t|\n|\r", " ");
+				Message = message.Replace(@"\t|\n|\r", " ");
+				Message = Message.Trim();
 			}
 			catch (InvalidOperationException ex)
 			{
