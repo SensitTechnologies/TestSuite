@@ -251,7 +251,7 @@ namespace Sensit.TestSDK.Devices
 			}
 		}
 
-		public byte[] Write(byte[] command)
+		public List<byte> Write(List<byte> command)
 		{
 			// return value
 			List<byte> response = new List<byte>();
@@ -264,13 +264,15 @@ namespace Sensit.TestSDK.Devices
 				}
 
 				// Write to the serial port.
-				Port.Write(command, 0, command.Length);
+				Port.Write(command.ToArray(), 0, command.Count);
 
 				// Read from the serial port.
 				Thread.Sleep(1000);
 				if (Port.BytesToRead != 0)
 				{
-					response.AddRange(Encoding.ASCII.GetBytes(Port.ReadExisting()));
+					byte[] buffer = new byte[Port.BytesToRead];
+					Port.Read(buffer, 0, Port.BytesToRead);
+					response.AddRange(buffer);
 				}
 
 				// Flush the port.
@@ -292,7 +294,7 @@ namespace Sensit.TestSDK.Devices
 					+ Environment.NewLine + ex.Message);
 			}
 
-			return response.ToArray();
+			return response;
 		}
 	}
 }
