@@ -118,5 +118,38 @@ namespace Sensit.TestSDK.Calculations
 			// don't complement crc on output
 			return crc;
 		}
+
+		public static uint Crc32Custom(uint[] data)
+		{
+			// Validate data before using.
+			if (data == null)
+			{
+				throw new ArgumentNullException(nameof(data), Properties.Resources.Checksum_Calculate);
+			}
+
+			uint crc = 0xFFFFFFFF;
+
+			foreach (uint datum in data)
+			{
+				// xor next UInt32 to crc
+				crc ^= datum;
+
+				// For each of the 32 bits...
+				for (int index = 0; index < 32; index++)
+				{
+					if ((crc & 0x80000000) == 0x80000000)
+					{
+						// Polynomial used in STM32
+						crc = (crc << 1) ^ 0x04C11DB7;
+					}
+					else
+					{
+						crc <<= 1;
+					}
+				}
+			}
+
+			return crc;
+		}
 	}
 }
