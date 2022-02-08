@@ -470,6 +470,7 @@ namespace Sensit.App.Programmer
 		private void WriteG3Console(string command)
 		{
 			// Send command to programmer (and terminate with a carriage return).
+			// TODO:  Need a delay of 500 ms between write and read.
 			_programmer.WriteThenRead(command + "\r");
 
 			// If no response is received, alert the user.
@@ -487,6 +488,7 @@ namespace Sensit.App.Programmer
 		private void WriteG3ConsoleWithVerify(string command)
 		{
 			// Send command to programmer (and terminate with a carriage return).
+			// TODO:  Need a delay of 500 ms between write and read.
 			_programmer.WriteThenRead(command + "\r");
 
 			// If no response is received, alert the user.
