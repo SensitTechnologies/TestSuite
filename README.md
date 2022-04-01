@@ -1,4 +1,5 @@
 # Sensit Technologies Test Suite
+[![Board Status](https://dev.azure.com/sensittechnologies/1e996872-9b0d-441e-88e1-78124cb6ccbf/c2ca1a45-950b-40d7-bd83-b8d3d220ae6f/_apis/work/boardbadge/6e32bfb0-03fb-4a80-94b9-bc168eddd5a9?columnOptions=1)](https://dev.azure.com/sensittechnologies/1e996872-9b0d-441e-88e1-78124cb6ccbf/_boards/board/t/c2ca1a45-950b-40d7-bd83-b8d3d220ae6f/Microsoft.RequirementCategory/)
 This is a software suite for automating testing and calibration of sensors or instrumentation.  It provides a series of .NET desktop apps that control various types of test equipment and Devices Under Test (DUTs) to automatically gather and record data.
 
 ## Installation
