@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Windows.Forms;
 
 namespace Sensit.TestSDK.Forms
@@ -38,7 +37,7 @@ namespace Sensit.TestSDK.Forms
 			}
 			else
 			{
-				Title = System.IO.Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().CodeBase);
+				Title = System.IO.Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location);
 			}
 
 			// Get the assembly version.
