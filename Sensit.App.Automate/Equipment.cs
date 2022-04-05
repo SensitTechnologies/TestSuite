@@ -55,10 +55,6 @@ namespace Sensit.App.Automate
 				{
 					s.Open();
 				}
-				else if (d is VisaDevice v)
-				{
-					v.Open();
-				}
 			}
 		}
 
@@ -91,10 +87,6 @@ namespace Sensit.App.Automate
 				if (d is SerialDevice s)
 				{
 					s.Close();
-				}
-				else if (d is VisaDevice v)
-				{
-					v.Close();
 				}
 			}
 		}

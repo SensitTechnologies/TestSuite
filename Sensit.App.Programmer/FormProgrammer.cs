@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Deployment.Application;
 using System.Drawing;
 using System.Globalization;
 using System.IO.Ports;
@@ -39,12 +38,6 @@ namespace Sensit.App.Programmer
 		{
 			// Initialize the form.
 			InitializeComponent();
-
-			// Add version string to title bar.
-			if (ApplicationDeployment.IsNetworkDeployed)
-			{
-				Text += " " + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
-			}
 
 			// Find all available serial ports.
 			comboBoxSerialPort.Items.AddRange(SerialPort.GetPortNames());
@@ -511,7 +504,6 @@ namespace Sensit.App.Programmer
 					{
 						case "Invalid":
 							throw new TestException("Invalid Smart Sensor");
-							break;
 						case "Valid":
 							break;
 						default:

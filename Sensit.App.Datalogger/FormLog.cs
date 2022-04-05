@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Deployment.Application;
 using System.Globalization;
 using System.IO.Ports;
 using System.Threading;
@@ -45,12 +44,6 @@ namespace Sensit.App.Datalogger
 		{
 			// Initialize the form.
 			InitializeComponent();
-
-			// Add version string to title bar.
-			if (ApplicationDeployment.IsNetworkDeployed)
-			{
-				Text += " " + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
-			}
 
 			// Recall the most recently used log file.
 			textBoxFilename.Text = Properties.Settings.Default.Filename;

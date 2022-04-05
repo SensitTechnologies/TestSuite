@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Deployment.Application;
 using System.Globalization;
 using System.IO.Ports;
 using System.Windows.Forms;
@@ -20,12 +19,6 @@ namespace Sensit.App.MassFlow
 		{
 			// Initialize the form.
 			InitializeComponent();
-
-			// Add version string to title bar.
-			if (ApplicationDeployment.IsNetworkDeployed)
-			{
-				Text += " " + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
-			}
 
 			// Find all available serial ports.
 			comboBoxSerialPort.Items.AddRange(SerialPort.GetPortNames());

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Deployment.Application;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO.Ports;
@@ -968,12 +967,6 @@ namespace Sensit.App.Automate
 			// Create an about box.
 			using (FormAbout formAbout = new FormAbout())
 			{
-				// Add version string to title bar.
-				if (ApplicationDeployment.IsNetworkDeployed)
-				{
-					formAbout.Version = " " + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
-				}
-
 				// Show the repository where this program can be found.
 				// For the sake of future engineers.
 				formAbout.Description +=

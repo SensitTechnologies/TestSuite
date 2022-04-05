@@ -62,7 +62,6 @@
     <Compile Include="Calculations\UnitOfMeasure.cs" />
     <Compile Include="Communication\SCPIDevice.cs" />
     <Compile Include="Communication\SerialDevice.cs" />
-    <Compile Include="Communication\VisaDevice.cs" />
     <Compile Include="Devices\GPDX303S.cs" />
     <Compile Include="Devices\GPDX303S_SCPI.cs" />
     <Compile Include="Devices\LairdBL654.cs" />
@@ -74,16 +73,9 @@
     <Compile Include="Controls\UserCustomStep.Designer.cs">
       <DependentUpon>UserCustomStep.cs</DependentUpon>
     </Compile>
-    <Compile Include="Database\SqlServer.cs" />
-    <Compile Include="Database\TestSTPTool.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TestSTPTool.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Devices\ColeParmerMFC.cs" />
     <Compile Include="Devices\GenericSerialDevice.cs" />
     <Compile Include="Devices\SerialStreamDevice.cs" />
-    <Compile Include="Email\Email.cs" />
     <Compile Include="Exceptions\DeviceExceptions.cs" />
     <Compile Include="Exceptions\TestExceptions.cs" />
     <Compile Include="Files\CSV.cs" />
@@ -105,12 +97,6 @@
     <Compile Include="Forms\FormObjectEditor.Designer.cs">
       <DependentUpon>FormObjectEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormTestCase.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\FormTestCase.Designer.cs">
-      <DependentUpon>FormTestCase.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\InputDialog.cs" />
     <Compile Include="Interfaces\IDevice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -129,16 +115,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <EntityDeploy Include="Database\TestSTPTool.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>TestSTPTool.Designer.cs</LastGenOutput>
-    </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Database\TestSTPTool.edmx.sql" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">
@@ -182,9 +161,6 @@
     <EmbeddedResource Include="Forms\FormObjectEditor.resx">
       <DependentUpon>FormObjectEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormTestCase.resx">
-      <DependentUpon>FormTestCase.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -192,47 +168,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="AE.Net.Mail">
-      <Version>1.7.10</Version>
-    </PackageReference>
-    <PackageReference Include="EntityFramework.SqlServerCompact">
-      <Version>6.4.4</Version>
-    </PackageReference>
-    <PackageReference Include="Google.Apis">
-      <Version>1.51.0</Version>
-    </PackageReference>
-    <PackageReference Include="Google.Apis.Gmail.v1">
-      <Version>1.51.0.2251</Version>
-    </PackageReference>
-    <PackageReference Include="Kelary.Ivi.Visa">
-      <Version>5.11.3422</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces">
-      <Version>5.0.0</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.CSharp">
-      <Version>4.7.0</Version>
-    </PackageReference>
-    <PackageReference Include="MongoDB.Driver">
-      <Version>2.12.3</Version>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>13.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="System.Runtime">
-      <Version>4.3.1</Version>
-    </PackageReference>
-    <PackageReference Include="System.Security.Cryptography.Algorithms">
-      <Version>4.3.1</Version>
-    </PackageReference>
-    <PackageReference Include="System.Security.Cryptography.X509Certificates">
-      <Version>4.3.2</Version>
-    </PackageReference>
-    <PackageReference Include="System.ValueTuple">
-      <Version>4.5.0</Version>
-    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

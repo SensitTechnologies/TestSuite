@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Deployment.Application;
 using System.Globalization;
 using System.IO.Ports;
 using System.Windows.Forms;
@@ -29,12 +28,6 @@ namespace Sensit.App.GasConcentration
 		{
 			// Initialize the form.
 			InitializeComponent();
-
-			// Add version string to title bar.
-			if (ApplicationDeployment.IsNetworkDeployed)
-			{
-				Text += " " + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
-			}
 
 			// Set timer interval to 1 second.
 			_timer.Interval = 1000;
