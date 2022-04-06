@@ -18,8 +18,9 @@ For detailed information about using the apps in the software suite, see the [pr
 * Control equipment manually with the **Gas Concentration App**, **Mass Flow Controller App**, and **Power Supply App**.
 
 ## Building and Publishing from Source
-See the [Requirements](https://github.com/SensitTechnologies/TestSuite/wiki/Requirements) page on the project wiki for more information, but at minimum you need:
-* [Microsoft Visual Studio](https://visualstudio.microsoft.com) with Microsoft .NET Framework 4.8.
+The apps are written in C# with .NET 6.0 and use WinForms, so they work in a Microsoft Windows environment, but can also run on Linux if .NET is installed.
+* [Microsoft Visual Studio](https://visualstudio.microsoft.com) (Community edition is free for open source projects!)
+* Microsoft .NET 6.0 - If Visual Studio is already installed but the correct .NET version is not, run the _Visual Studio Installer_, navigate to _Individual Components_ and select the appropriate framework to install.  Or feel free to upgrade to the latest framework, then submit a pull request.
 
 After building, [publish the solution](https://docs.microsoft.com/en-us/dotnet/core/tutorials/publishing-with-visual-studio) to create an installer.  After running the installer, each program in the suite will be available from the Windows Start menu.  You can also publish the installer to a web location such as an Azure storage blob container (which is how the web installers linked above work).
 
