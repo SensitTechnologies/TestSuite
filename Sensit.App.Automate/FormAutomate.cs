@@ -110,7 +110,7 @@ namespace Sensit.App.Automate
 		private void FormAutomate_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			// If a test exists and is running...
-			if ((_test != null) && (_test.IsBusy()))
+			if ((_test != null) && _test.IsBusy)
 			{
 				// Cancel application shutdown.
 				e.Cancel = true;
@@ -1092,7 +1092,7 @@ namespace Sensit.App.Automate
 		#region Helper Methods
 
 		/// <summary>
-		/// Enable/disable user controls based on whether is test is being run.
+		/// Enable/disable user controls based on whether test is being run.
 		/// </summary>
 		/// <param name="testInProgress">true if test is in progress; false otherwise</param>
 		private void SetControlEnable(bool testInProgress)
@@ -1133,7 +1133,7 @@ namespace Sensit.App.Automate
 			DialogResult result = DialogResult.OK;  // whether to quit or not
 
 			// If a test exists and is running...
-			if ((_test != null) && (_test.IsBusy()))
+			if ((_test != null) && _test.IsBusy)
 			{
 				// Ask the user if they really want to stop the test.
 				result = MessageBox.Show("Abort the test?", "Abort", MessageBoxButtons.OKCancel);

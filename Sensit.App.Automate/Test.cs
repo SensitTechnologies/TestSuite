@@ -68,6 +68,15 @@ namespace Sensit.App.Automate
 		#region Properties
 
 		/// <summary>
+		/// Return whether a test is running.
+		/// </summary>
+		/// <returns>true if test is running; false otherwise</returns>
+		public bool IsBusy
+		{
+			get { return _testThread.IsBusy; }
+		}
+
+		/// <summary>
 		/// Progress of the test, in percent.
 		/// </summary>
 		public int PercentProgress
@@ -178,15 +187,6 @@ namespace Sensit.App.Automate
 		{
 			// Set a global flag which will cause the test to pause at a convenient spot.
 			_pause = true;
-		}
-
-		/// <summary>
-		/// Return whether a test is running.
-		/// </summary>
-		/// <returns>true if test is running; false otherwise</returns>
-		public bool IsBusy()
-		{
-			return _testThread.IsBusy;
 		}
 
 		private void ProgressChanged(object sender, ProgressChangedEventArgs e)
