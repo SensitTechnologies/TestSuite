@@ -19,7 +19,7 @@ For detailed information about using the apps in the software suite, see the [pr
 
 ## Building and Publishing from Source
 See the [Requirements](https://github.com/SensitTechnologies/TestSuite/wiki/Requirements) page on the project wiki for more information, but at minimum you need:
-* [Microsoft Visual Studio](https://visualstudio.microsoft.com) with Microsoft .NET Framework 4.8.
+* [Microsoft Visual Studio](https://visualstudio.microsoft.com) with Microsoft .NET 6.0.
 
 After building, [publish the solution](https://docs.microsoft.com/en-us/dotnet/core/tutorials/publishing-with-visual-studio) to create an installer.  After running the installer, each program in the suite will be available from the Windows Start menu.  You can also publish the installer to a web location such as an Azure storage blob container (which is how the web installers linked above work).
 
