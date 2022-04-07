@@ -4,7 +4,7 @@
 This is a software suite for automating testing and calibration of sensors or instrumentation.  It provides a series of .NET desktop apps that control various types of test equipment and Devices Under Test (DUTs) to automatically gather and record data.
 
 ## Installation
-Click-once installers for the apps are available for download here:
+Click-once installers for the apps are available for download here:  (Note that the applications have not been published since the migration to .NET 6.0, so they still require .NET Framework 4.8.)
 * [Automated Test App](https://clickonceapp.blob.core.windows.net/clickonce-app-container/calibration/publish.htm)
 * [Datalogger App](https://clickonceapp.blob.core.windows.net/clickonce-app-container/log/publish.htm)
 * [Gas Concentration App](https://clickonceapp.blob.core.windows.net/clickonce-app-container/gasconcentration/publish.htm)
