@@ -13,35 +13,23 @@
 /Sensit.App.Datalogger/*.pfx
 /Sensit.App.Datalogger/*.user
 
-/Sensit.App.G2GLT/bin
-/Sensit.App.G2GLT/obj
-/Sensit.App.G2GLT/publich
-/Sensit.App.G2GLT/*.pfx
-/Sensit.App.G2GLT/*.user
-
 /Sensit.App.GasMixer/bin
 /Sensit.App.GasMixer/obj
 /Sensit.App.GasMixer/publish
 /Sensit.App.GasMixer/*.pfx
 /Sensit.App.GasMixer/*.user
 
-/Sensit.App.G3/bin
-/Sensit.App.G3/obj
-/Sensit.App.G3/publish
-/Sensit.App.G3/*.pfx
-/Sensit.App.G3/*.user
-
-/Sensit.App.Keysight_34972A/bin
-/Sensit.App.Keysight_34972A/obj
-/Sensit.App.Keysight_34972A/publish
-/Sensit.App.Keysight_34972A/*.pfx
-/Sensit.App.Keysight_34972A/*.user
-
 /Sensit.App.MassFlow/bin
 /Sensit.App.MassFlow/obj
 /Sensit.App.MassFlow/publish
 /Sensit.App.MassFlow/*.pfx
 /Sensit.App.MassFlow/*.user
+
+/Sensit.App.Pogo/bin
+/Sensit.App.Pogo/obj
+/Sensit.App.Pogo/publish
+/Sensit/App.Pogo/*.pfx
+/Sensit/App.Pogo/*.user
 
 /Sensit.App.PowerSupply/bin
 /Sensit.App.PowerSupply/obj

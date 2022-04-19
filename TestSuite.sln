@@ -1,23 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28729.10
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.TestSDK", "Sensit.TestSDK\Sensit.TestSDK.csproj", "{A147B18E-A3F8-4B5D-A963-6A4E8189AB88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sensit.TestSDK", "Sensit.TestSDK\Sensit.TestSDK.csproj", "{A147B18E-A3F8-4B5D-A963-6A4E8189AB88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{618F2948-45D1-4AD5-94DF-B5FB617B9E77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{618F2948-45D1-4AD5-94DF-B5FB617B9E77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.MassFlow", "Sensit.App.MassFlow\Sensit.App.MassFlow.csproj", "{496EA5DF-44D3-4CBE-9BB5-A2542C219928}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sensit.App.MassFlow", "Sensit.App.MassFlow\Sensit.App.MassFlow.csproj", "{496EA5DF-44D3-4CBE-9BB5-A2542C219928}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.Automate", "Sensit.App.Automate\Sensit.App.Automate.csproj", "{1065271E-2906-499B-A9FA-43BFB1EB218B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sensit.App.Automate", "Sensit.App.Automate\Sensit.App.Automate.csproj", "{1065271E-2906-499B-A9FA-43BFB1EB218B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.GasMixer", "Sensit.App.GasMixer\Sensit.App.GasMixer.csproj", "{172798F2-78C7-4AFB-8F28-B713CFA8E125}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sensit.App.GasMixer", "Sensit.App.GasMixer\Sensit.App.GasMixer.csproj", "{172798F2-78C7-4AFB-8F28-B713CFA8E125}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.PowerSupply", "Sensit.App.PowerSupply\Sensit.App.PowerSupply.csproj", "{596CE27B-6503-49DB-A93A-7105C908BFBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sensit.App.PowerSupply", "Sensit.App.PowerSupply\Sensit.App.PowerSupply.csproj", "{596CE27B-6503-49DB-A93A-7105C908BFBF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.Log", "Sensit.App.Datalogger\Sensit.App.Log.csproj", "{394790AA-641A-4EA4-A198-567E0B9AA8FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sensit.App.Log", "Sensit.App.Datalogger\Sensit.App.Log.csproj", "{394790AA-641A-4EA4-A198-567E0B9AA8FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.Programmer", "Sensit.App.Programmer\Sensit.App.Programmer.csproj", "{DAE7BC16-2B74-4897-9923-4D451D3439CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sensit.App.Programmer", "Sensit.App.Programmer\Sensit.App.Programmer.csproj", "{DAE7BC16-2B74-4897-9923-4D451D3439CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.Pogo", "Sensit.App.Pogo\Sensit.App.Pogo.csproj", "{4EFA7B8F-86F1-4BDA-95D3-95D438C8AA94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,6 +76,12 @@ Global
 		{DAE7BC16-2B74-4897-9923-4D451D3439CE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DAE7BC16-2B74-4897-9923-4D451D3439CE}.Remote Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DAE7BC16-2B74-4897-9923-4D451D3439CE}.Remote Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EFA7B8F-86F1-4BDA-95D3-95D438C8AA94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EFA7B8F-86F1-4BDA-95D3-95D438C8AA94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EFA7B8F-86F1-4BDA-95D3-95D438C8AA94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EFA7B8F-86F1-4BDA-95D3-95D438C8AA94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EFA7B8F-86F1-4BDA-95D3-95D438C8AA94}.Remote Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EFA7B8F-86F1-4BDA-95D3-95D438C8AA94}.Remote Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
