@@ -51,6 +51,48 @@ namespace Sensit.TestSDK.Devices
 			_lineSplitter.OnIncomingBinaryBlock(Encoding.ASCII.GetBytes(Port.ReadExisting()));
 		}
 
+		/// <summary>
+		/// Transmit a command, wait, then read a response.
+		/// </summary>
+		/// <param name="command">message to transmit</param>
+		/// <param name="delay">time to wait (ms)</param>
+		/// <returns></returns>
+		private List<string> WriteThenRead(string command, int delay)
+		{
+			// list of responses from Laird device
+			List<string> responses = new List<string>();
+
+			// Local function:  Save responses from the Laird Bluetooth module.
+			void LineReceived(byte[] bytes)
+			{
+				// Convert the bytes into a string
+				responses.Add(Encoding.ASCII.GetString(bytes));
+			}
+
+			// Clear anything from previous communication.
+			Port.DiscardInBuffer();
+			_lineSplitter.Clear();
+
+			// Subscribe to event handlers.
+			// When serial data is received, call the line scanner.
+			// When full lines are received, save them.
+			Port.DataReceived += DataReceived;
+			_lineSplitter.LineReceived += bytes => LineReceived(bytes);
+
+			// Write the command to the Laird device.
+			Port.Write(command);
+
+			// Pause for results to be received.
+			Thread.Sleep(delay);
+
+			// Unsubscribe from event handlers.
+			// This prevents our return value from being edited after this method returns.
+			Port.DataReceived -= DataReceived;
+			_lineSplitter.LineReceived -= LineReceived;
+
+			return responses;
+		}
+
 		#endregion
 
 		public override void Open()
@@ -150,42 +192,6 @@ namespace Sensit.TestSDK.Devices
 			return bluetoothDevices;
 		}
 
-		private List<string> WriteThenRead(string command, int delay)
-		{
-			// list of responses from Laird device
-			List<string> responses = new List<string>();
-
-			// Local function:  Save responses from the Laird Bluetooth module.
-			void LineReceived(byte[] bytes)
-			{
-				// Convert the bytes into a string
-				responses.Add(Encoding.ASCII.GetString(bytes));
-			}
-
-			// Clear anything from previous communication.
-			Port.DiscardInBuffer();
-			_lineSplitter.Clear();
-
-			// Subscribe to event handlers.
-			// When serial data is received, call the line scanner.
-			// When full lines are received, save them.
-			Port.DataReceived += DataReceived;
-			_lineSplitter.LineReceived += bytes => LineReceived(bytes);
-
-			// Write the command to the Laird device.
-			Port.Write(command);
-
-			// Pause for results to be received.
-			Thread.Sleep(delay);
-
-			// Unsubscribe from event handlers.
-			// This prevents our return value from being edited after this method returns.
-			Port.DataReceived -= DataReceived;
-			_lineSplitter.LineReceived -= LineReceived;
-
-			return responses;
-		}
-
 		/// <summary>
 		/// Connect to Bluetooth device (and enter "passthrough" mode).
 		/// </summary>
@@ -230,7 +236,9 @@ namespace Sensit.TestSDK.Devices
 				{
 					response += s;
 				}
-				throw new DeviceCommandFailedException("BL654 failed to exit passthrough mode.");
+				throw new DeviceCommandFailedException("BL654 failed to exit passthrough mode."
+					+ Environment.NewLine
+					+ "Please unplug the dongle, then reconnect it.");
 			}
 
 			// Disconnect from the paired device.
@@ -251,6 +259,14 @@ namespace Sensit.TestSDK.Devices
 			}
 		}
 
+		/// <summary>
+		/// Transmit a list of bytes, collect responses for 1 second, then return them.
+		/// </summary>
+		/// <param name="command">list of bytes to transmit</param>
+		/// <returns></returns>
+		/// <exception cref="DeviceOutOfRangeException"></exception>
+		/// <exception cref="DevicePortException"></exception>
+		/// <exception cref="DeviceCommunicationException"></exception>
 		public List<byte> Write(List<byte> command)
 		{
 			// return value
