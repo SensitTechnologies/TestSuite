@@ -64,8 +64,5 @@
     <Compile Remove="Calculations\SerialNumber.cs" />
     <Compile Remove="Utility\passwords.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="appsettings.json" />
-  </ItemGroup>
   <PropertyGroup />
 </Project>
