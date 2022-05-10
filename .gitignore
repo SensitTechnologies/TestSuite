@@ -19,6 +19,12 @@
 /Sensit.App.GasMixer/*.pfx
 /Sensit.App.GasMixer/*.user
 
+/Sensit.App.GPS/bin
+/Sensit.App.GPS/obj
+/Sensit.App.GPS/publish
+/Sensit.App.GPS/*.pfx
+/Sensit.App.GPS/*.user
+
 /Sensit.App.MassFlow/bin
 /Sensit.App.MassFlow/obj
 /Sensit.App.MassFlow/publish

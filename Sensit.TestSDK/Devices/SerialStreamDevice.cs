@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO.Ports;
 using System.Text;
@@ -21,23 +22,27 @@ namespace Sensit.TestSDK.Devices
 	{
 		public override List<int> SupportedBaudRates { get; } = new List<int> { 300, 600, 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200, 230400, 460800, 921600 };
 
+		#region Delegates
+
+		/// <summary>
+		/// Notify the user that a message has been received.
+		/// </summary>
+		public Action<string> MessageReceived { get; set; }
+
+		#endregion
+
 		/// <summary>
 		/// This will parse lines received from the serial port using the newline delimiter.
 		/// </summary>
-		private readonly LineSplitter lineSplitter = new LineSplitter()
+		private readonly LineSplitter lineSplitter = new()
 		{
 			Delimiter = (byte)'\n',
 		};
 
-		/// <summary>
-		/// Most recent message from the device.
-		/// </summary>
-		public string Message { get; private set; }
-
-		SerialStreamDevice()
+		public SerialStreamDevice()
 		{
 			// Subscribe to the message parser's message received event.
-			lineSplitter.LineReceived += MessageReceived;
+			lineSplitter.LineReceived += LineReceived;
 
 			// Subscribe to serial port's data received event.
 			Port.DataReceived += new SerialDataReceivedEventHandler(DataReceived);
@@ -52,7 +57,7 @@ namespace Sensit.TestSDK.Devices
 		/// </remarks>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		void DataReceived(object sender, SerialDataReceivedEventArgs e)
+		private void DataReceived(object sender, SerialDataReceivedEventArgs e)
 		{
 			int dataLength = Port.BytesToRead;
 			byte[] data = new byte[dataLength];
@@ -67,10 +72,14 @@ namespace Sensit.TestSDK.Devices
 		/// Called when a full message is received and parsed.
 		/// </summary>
 		/// <param name="buffer">the received message</param>
-		void MessageReceived(byte[] buffer)
+		private void LineReceived(byte[] buffer)
 		{
 			// Convert the byte array to a string.
-			Message = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
+			string message = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
+
+			// Notify the user that a message has been received.
+			// Run actions required when test is completed (i.e. update GUI).
+			MessageReceived?.Invoke(message);
 		}
 	}
 }
