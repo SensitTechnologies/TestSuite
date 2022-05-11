@@ -13,7 +13,8 @@ namespace Sensit.App.GPS
 
 		private const double LATITUDE = 41.478142;
 		private const double LONGITUDE = -87.055367;
-		private const double TOLERANCE = 1.0;
+		private const double POSITION_TOLERANCE = 1.0;
+		private readonly TimeSpan TIME_TOLERANCE = new(0, 0, 1);
 
 		#endregion
 
@@ -171,19 +172,18 @@ namespace Sensit.App.GPS
 				// If the message begins with "SPGGA"...
 				if (pieces[0].Equals("$GPGGA") && pieces.Length >= 14)
 				{
-					// Convert timestamp to local time.
-					int timestamp = (int)Convert.ToDouble(pieces[1]);
-					int hours = (timestamp % 1000000 - timestamp % 10000) / 10000;
-					int minutes = (timestamp % 10000 - timestamp % 100) / 100;
-					int seconds =  timestamp % 100;
+					// Convert timestamp to a date/time variable.
+					DateTime.TryParseExact(pieces[1],
+						"HHmmss.fff",
+						CultureInfo.InvariantCulture,
+						DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,
+						out DateTime dateTime);
 
 					// Display timestamp to the user.
-					TimeSpan timeSpan = new TimeSpan(hours, minutes, seconds);
-					textBoxTimestamp.Text = timeSpan.ToString();
+					textBoxTimestamp.Text = dateTime.ToString("h:mm:ss tt");
 
 					// Test timestamp.
-					DateTime dateTime = new(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, hours, minutes, seconds);
-					SetResult(textBoxPassTimestamp, DateTime.UtcNow.Equals(dateTime));
+					SetResult(textBoxPassTimestamp, (TimeSpan)(DateTime.UtcNow - dateTime) < TIME_TOLERANCE);
 
 					// If latitude format is correct...
 					if (double.TryParse(pieces[2], out double latitude))
@@ -199,7 +199,7 @@ namespace Sensit.App.GPS
 						textBoxLatitude.Text = latitude.ToString("0.00000") + " " + pieces[3];
 
 						// Test latitude.
-						SetResult(textBoxPassLatitude, Math.Abs(latitude - LATITUDE) < TOLERANCE);
+						SetResult(textBoxPassLatitude, Math.Abs(latitude - LATITUDE) < POSITION_TOLERANCE);
 					}
 
 					// If longitude format is correct...
@@ -216,7 +216,7 @@ namespace Sensit.App.GPS
 						textBoxLongitude.Text = longitude.ToString("0.00000") + " " + pieces[5];
 
 						// Test longitude.
-						SetResult(textBoxPassLongitude, Math.Abs(longitude - LONGITUDE) < TOLERANCE);
+						SetResult(textBoxPassLongitude, Math.Abs(longitude - LONGITUDE) < POSITION_TOLERANCE);
 					}
 
 					// If GPS fix status format is correct...
