@@ -12,30 +12,43 @@ namespace Sensit.App.Datalogger
 {
 	public partial class FormLog : Form
 	{
+		#region Fields
+
 		// timer to control when we take samples from the DUT
 		private readonly System.Timers.Timer _timer = new();
 
 		// CSV file writer to log data captured from DUT
 		private CsvWriter _writer;
 
-		// number of samples logged
-		private ulong _samples;
-
-		/// <summary>
-		/// Flag to tell if we're logging or not.
-		/// </summary>
-		/// <remarks>
-		/// Has 3 states:  2 = stopped; 1 = running; 0 = idle.
-		/// Initialized to "stopped" state.
-		/// </remarks>
+		// Flag to tell if we're logging or not.
+		// Has 3 states:  2 = stopped; 1 = running; 0 = idle.
+		// Initialized to "stopped" state.
 		private int _logging = 2;
 
 		// This is a thread synchronizeation event handler; it makes us wait until the
 		// timer finishes its current task before closing the resources it's using.
-		readonly EventWaitHandle _loggingLock = new(false, EventResetMode.AutoReset);
+		private readonly EventWaitHandle _loggingLock = new(false, EventResetMode.AutoReset);
 
 		// generic serial device (send a message, get a response)
 		private readonly GenericSerialDevice _genericSerialDevice = new();
+
+		// modes we can use to stop logging
+		private enum StopMode { Manual, ElapsedTime, TimeDate, Scans }
+
+		// mode we're currently using.
+		private StopMode _stopMode;
+
+		// timestamp for elapsed time
+		private TimeSpan _elapsedTime;
+
+		private DateTime _stopDateTime;
+
+		// number of samples logged
+		private ulong _samples;
+
+		#endregion
+
+		#region Constructor
 
 		/// <summary>
 		/// Constructor
@@ -76,8 +89,41 @@ namespace Sensit.App.Datalogger
 				Properties.Settings.Default.Port = comboBoxSerialPort.Text;
 			});
 
-			comboBoxBaudRate.SelectedIndexChanged += ComboBoxBaudRate_SelectedIndexChanged;
-			comboBoxDataBits.SelectedIndexChanged += ComboBoxDataBits_SelectedIndexChanged;
+			// When the baud rate is changed, save the new value.
+			comboBoxBaudRate.SelectedIndexChanged += new ((sender, e) =>
+			{
+				try
+				{
+					// Save the new setting to the application settings file.
+					Properties.Settings.Default.BaudRate = Convert.ToInt32(comboBoxBaudRate.Text);
+				}
+				catch (FormatException ex)
+				{
+					MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
+				}
+				catch (OverflowException ex)
+				{
+					MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
+				}
+			});
+
+			// When the number of data bits is changed, save the new value.
+			comboBoxDataBits.SelectedIndexChanged += new ((sender, e) =>
+			{
+				try
+				{
+					// Save the new setting to the application settings file.
+					Properties.Settings.Default.DataBits = Convert.ToInt32(comboBoxDataBits.Text);
+				}
+				catch (FormatException ex)
+				{
+					MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
+				}
+				catch (OverflowException ex)
+				{
+					MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
+				}
+			});
 
 			// When the parity is changed, save the new value.
 			comboBoxParity.SelectedIndexChanged += new ((sender, e) =>
@@ -104,12 +150,20 @@ namespace Sensit.App.Datalogger
 				_timer.Interval = decimal.ToDouble(numericUpDownInterval.Value);
 			});
 
+			// When the command is changed, save the new value.
+			textBoxCommand.TextChanged += new ((sender, e) =>
+			{
+				Properties.Settings.Default.Command = textBoxCommand.Text;
+			});
+
 			// Set the method which runs when the timer elapses.
 			_timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
 
 			// We need to wait until one event is done to try another one.
 			_timer.AutoReset = false;
 		}
+
+		#endregion
 
 		/// <summary>
 		/// When the File --> Exit menu item is clicked, exit the program.
@@ -154,68 +208,6 @@ namespace Sensit.App.Datalogger
 		}
 
 		/// <summary>
-		/// When the baud rate is changed, save the new value.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ComboBoxBaudRate_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			try
-			{
-				// Save the new setting to the application settings file.
-				Properties.Settings.Default.BaudRate = Convert.ToInt32(comboBoxBaudRate.Text);
-			}
-			catch (FormatException ex)
-			{
-				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
-			}
-			catch (OverflowException ex)
-			{
-				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
-			}
-		}
-
-		/// <summary>
-		/// When the number of data bits is changed, save the new value.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		/// <exception cref="NotImplementedException"></exception>
-		private void ComboBoxDataBits_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			try
-			{
-				// Save the new setting to the application settings file.
-				Properties.Settings.Default.DataBits = Convert.ToInt32(comboBoxDataBits.Text);
-			}
-			catch (FormatException ex)
-			{
-				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
-			}
-			catch (OverflowException ex)
-			{
-				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
-			}
-		}
-
-		private void ComboBoxParity_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			// Save the new setting to the application settings file.
-			Properties.Settings.Default.Parity = comboBoxParity.Text;
-		}
-
-		/// <summary>
-		/// When the command is changed, save the new value.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void TextBoxCommand_TextChanged(object sender, EventArgs e)
-		{
-			// Save the new command to the application settings file.
-			Properties.Settings.Default.Command = textBoxCommand.Text;
-		}
-
-		/// <summary>
 		/// When the timer ticks, log a datum.
 		/// </summary>
 		/// <param name="source"></param>
@@ -253,9 +245,26 @@ namespace Sensit.App.Datalogger
 					// Display the sample value to the user.
 					textBoxResponse.Text = sample;
 
-					// Update the status message.
+					// Update elapsed time.
+					_elapsedTime += new TimeSpan(0, 0, 0, 0, (int)_timer.Interval);
+
+					// Update samples taken.
 					_samples++;
-					toolStripStatusLabel.Text = "Logged " + _samples + " samples.";
+
+					// Compare date/time to stop.
+					// https://stackoverflow.com/questions/93472/datetimepicker-pick-both-date-and-time
+					_stopDateTime = dateTimePickerDate.Value.Date + dateTimePickerTime.Value.TimeOfDay;
+
+					// Update the status message.
+					toolStripStatusLabel.Text = "Logged " + _samples + " samples in " + _elapsedTime.ToString() + ".";
+
+					// Determine when to stop.
+					if (((_stopMode == StopMode.ElapsedTime) && (_elapsedTime > new TimeSpan((int)numericUpDownHours.Value, (int)numericUpDownMinutes.Value, (int)numericUpDownSeconds.Value))) ||
+						((_stopMode == StopMode.TimeDate) && (_stopDateTime > DateTime.Now)) ||
+						((_stopMode == StopMode.Scans) && (_samples > numericUpDownNumScans.Value)))
+					{
+						StopLogging();
+					}
 				}));
 
 				// Start the timer again.
@@ -289,7 +298,7 @@ namespace Sensit.App.Datalogger
 			{
 				try
 				{
-					// Parse the selected serial port settings.
+					// Apply the selected serial port settings.
 					_genericSerialDevice.PortName = Properties.Settings.Default.Port;
 					_genericSerialDevice.BaudRate = Convert.ToInt32(comboBoxBaudRate.Text);
 					_genericSerialDevice.DataBits = Convert.ToInt32(comboBoxDataBits.Text);
@@ -303,16 +312,30 @@ namespace Sensit.App.Datalogger
 					// Set up the CSV file writer filestream.
 					_writer = new CsvWriter(Properties.Settings.Default.Filename, true);
 
+					// Reset elapsed time.
+					_elapsedTime = new(0, 0, 0);
+
+					// Reset samples taken.
+					_samples = 0;
+
+					// Remember date/time to stop.
+					// https://stackoverflow.com/questions/93472/datetimepicker-pick-both-date-and-time
+					_stopDateTime = dateTimePickerDate.Value.Date + dateTimePickerTime.Value.TimeOfDay;
+
+					// Set the desired interval.
+					_timer.Interval = decimal.ToDouble(numericUpDownInterval.Value);
+
 					// Start the timer.
 					_timer.Enabled = true;
 
 					// Set logging state to 0 "idle".
 					_logging = 0;
 
-					// Update GUI.
+					// Alert the user.
 					toolStripStatusLabel.Text = "Logging data...";
-					buttonStart.Enabled = false;
-					buttonStop.Enabled = true;
+
+					// Disable most of the user controls.
+					SetControlEnable(true);
 				}
 				// If an error occurs...
 				catch (Exception ex)
@@ -355,9 +378,10 @@ namespace Sensit.App.Datalogger
 					// Close the DUT serial port.
 					_genericSerialDevice?.Close();
 
-					// Update GUI.
-					buttonStart.Enabled = true;
-					buttonStop.Enabled = false;
+					// Enable most of the controls.
+					SetControlEnable(false);
+
+					// Alert the user.
 					toolStripStatusLabel.Text = "Ready...";
 				}
 				catch (Exception ex)
@@ -365,6 +389,30 @@ namespace Sensit.App.Datalogger
 					MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 				}
 			}
+		}
+
+		/// <summary>
+		/// Enable/disable user controls based on whether test is being run.
+		/// </summary>
+		/// <param name="testInProgress">true if test is in progress; false otherwise</param>
+		private void SetControlEnable(bool testInProgress)
+		{
+			// Filename controls
+			groupBoxFilename.Enabled = !testInProgress;
+
+			// Serial port controls
+			groupBoxSerialPort.Enabled = !testInProgress;
+
+			// Stop controls
+			groupBoxStop.Enabled = !testInProgress;
+
+			// Buttons.
+			buttonStart.Enabled = !testInProgress;
+			buttonStop.Enabled = testInProgress;
+
+			// Menu items.
+			startToolStripMenuItem.Enabled = !testInProgress;
+			stopToolStripMenuItem.Enabled = testInProgress;
 		}
 
 		/// <summary>
@@ -391,8 +439,79 @@ namespace Sensit.App.Datalogger
 			Properties.Settings.Default.Save();
 		}
 
+		/// <summary>
+		/// When the "Stop" method changes, remember the change.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void RadioButton_CheckedChanged(object sender, EventArgs e)
 		{
+			// Do stuff only if the radio button is checked.
+			// (Otherwise the actions will run twice.)
+			if (((RadioButton)sender).Checked)
+			{
+				// If the "Open" radio button has been checked...
+				if (((RadioButton)sender) == radioButtonElapsedTime)
+				{
+					// Remember the user's selection.
+					_stopMode = StopMode.ElapsedTime;
+
+					// Update the user interface.
+					numericUpDownHours.Enabled = true;
+					numericUpDownMinutes.Enabled = true;
+					numericUpDownSeconds.Enabled = true;
+
+					dateTimePickerDate.Enabled = false;
+					dateTimePickerTime.Enabled = false;
+
+					numericUpDownNumScans.Enabled = false;
+				}
+				else if (((RadioButton)sender) == radioButtonDateTime)
+				{
+					// Remember the user's selection.
+					_stopMode = StopMode.TimeDate;
+
+					// Update user interface.
+					numericUpDownHours.Enabled = false;
+					numericUpDownMinutes.Enabled = false;
+					numericUpDownSeconds.Enabled = false;
+
+					dateTimePickerDate.Enabled = true;
+					dateTimePickerTime.Enabled = true;
+
+					numericUpDownNumScans.Enabled = false;
+				}
+				else if (((RadioButton)sender) == radioButtonNumScans)
+				{
+					// Remember the user's selection.
+					_stopMode = StopMode.Scans;
+
+					// Update user interface.
+					numericUpDownHours.Enabled = false;
+					numericUpDownMinutes.Enabled = false;
+					numericUpDownSeconds.Enabled = false;
+
+					dateTimePickerDate.Enabled = false;
+					dateTimePickerTime.Enabled = false;
+
+					numericUpDownNumScans.Enabled = true;
+				}
+				else if (((RadioButton)sender) == radioButtonStop)
+				{
+					// Remember the user's selection.
+					_stopMode = StopMode.Manual;
+
+					// Update user interface.
+					numericUpDownHours.Enabled = false;
+					numericUpDownMinutes.Enabled = false;
+					numericUpDownSeconds.Enabled = false;
+
+					dateTimePickerDate.Enabled = false;
+					dateTimePickerTime.Enabled = false;
+
+					numericUpDownNumScans.Enabled = false;
+				}
+			}
 
 		}
 	}

@@ -32,6 +32,9 @@
 			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.groupBoxFilename = new System.Windows.Forms.GroupBox();
@@ -107,11 +110,12 @@
 			// 
 			this.menuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
 			this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.testToolStripMenuItem});
 			this.menuStrip.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip.Name = "menuStrip";
-			this.menuStrip.Padding = new System.Windows.Forms.Padding(8, 3, 0, 3);
-			this.menuStrip.Size = new System.Drawing.Size(532, 30);
+			this.menuStrip.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
+			this.menuStrip.Size = new System.Drawing.Size(466, 24);
 			this.menuStrip.TabIndex = 0;
 			this.menuStrip.Text = "menuStrip1";
 			// 
@@ -120,32 +124,57 @@
 			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exitToolStripMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-			this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
+			this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
 			this.fileToolStripMenuItem.Text = "&File";
 			// 
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(116, 26);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(93, 22);
 			this.exitToolStripMenuItem.Text = "&Exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
+			// 
+			// testToolStripMenuItem
+			// 
+			this.testToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.startToolStripMenuItem,
+            this.stopToolStripMenuItem});
+			this.testToolStripMenuItem.Name = "testToolStripMenuItem";
+			this.testToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+			this.testToolStripMenuItem.Text = "&Test";
+			// 
+			// startToolStripMenuItem
+			// 
+			this.startToolStripMenuItem.Name = "startToolStripMenuItem";
+			this.startToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
+			this.startToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+			this.startToolStripMenuItem.Text = "&Start";
+			this.startToolStripMenuItem.Click += new System.EventHandler(this.ButtonStart_Click);
+			// 
+			// stopToolStripMenuItem
+			// 
+			this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
+			this.stopToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F7;
+			this.stopToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+			this.stopToolStripMenuItem.Text = "&Stop";
+			this.stopToolStripMenuItem.Click += new System.EventHandler(this.ButtonStop_Click);
 			// 
 			// statusStrip
 			// 
 			this.statusStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
 			this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
-			this.statusStrip.Location = new System.Drawing.Point(0, 727);
+			this.statusStrip.Location = new System.Drawing.Point(0, 543);
 			this.statusStrip.Name = "statusStrip";
-			this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-			this.statusStrip.Size = new System.Drawing.Size(532, 26);
+			this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 17, 0);
+			this.statusStrip.Size = new System.Drawing.Size(466, 22);
 			this.statusStrip.TabIndex = 1;
 			this.statusStrip.Text = "statusStrip1";
 			// 
 			// toolStripStatusLabel
 			// 
 			this.toolStripStatusLabel.Name = "toolStripStatusLabel";
-			this.toolStripStatusLabel.Size = new System.Drawing.Size(50, 20);
+			this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
 			this.toolStripStatusLabel.Text = "Ready";
 			// 
 			// groupBoxFilename
@@ -154,11 +183,11 @@
 			this.groupBoxFilename.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.groupBoxFilename.Controls.Add(this.tableLayoutPanelFilename);
 			this.groupBoxFilename.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBoxFilename.Location = new System.Drawing.Point(0, 30);
-			this.groupBoxFilename.Margin = new System.Windows.Forms.Padding(5);
+			this.groupBoxFilename.Location = new System.Drawing.Point(0, 24);
+			this.groupBoxFilename.Margin = new System.Windows.Forms.Padding(4);
 			this.groupBoxFilename.Name = "groupBoxFilename";
-			this.groupBoxFilename.Padding = new System.Windows.Forms.Padding(5);
-			this.groupBoxFilename.Size = new System.Drawing.Size(532, 75);
+			this.groupBoxFilename.Padding = new System.Windows.Forms.Padding(4);
+			this.groupBoxFilename.Size = new System.Drawing.Size(466, 58);
 			this.groupBoxFilename.TabIndex = 7;
 			this.groupBoxFilename.TabStop = false;
 			this.groupBoxFilename.Text = "Filename";
@@ -173,30 +202,30 @@
 			this.tableLayoutPanelFilename.Controls.Add(this.textBoxFilename, 0, 0);
 			this.tableLayoutPanelFilename.Controls.Add(this.buttonBrowse, 1, 0);
 			this.tableLayoutPanelFilename.Dock = System.Windows.Forms.DockStyle.Top;
-			this.tableLayoutPanelFilename.Location = new System.Drawing.Point(5, 25);
-			this.tableLayoutPanelFilename.Margin = new System.Windows.Forms.Padding(5);
+			this.tableLayoutPanelFilename.Location = new System.Drawing.Point(4, 20);
+			this.tableLayoutPanelFilename.Margin = new System.Windows.Forms.Padding(4);
 			this.tableLayoutPanelFilename.Name = "tableLayoutPanelFilename";
 			this.tableLayoutPanelFilename.RowCount = 1;
 			this.tableLayoutPanelFilename.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelFilename.Size = new System.Drawing.Size(522, 45);
+			this.tableLayoutPanelFilename.Size = new System.Drawing.Size(458, 34);
 			this.tableLayoutPanelFilename.TabIndex = 1;
 			// 
 			// textBoxFilename
 			// 
 			this.textBoxFilename.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBoxFilename.Location = new System.Drawing.Point(5, 5);
-			this.textBoxFilename.Margin = new System.Windows.Forms.Padding(5);
+			this.textBoxFilename.Location = new System.Drawing.Point(4, 4);
+			this.textBoxFilename.Margin = new System.Windows.Forms.Padding(4);
 			this.textBoxFilename.Name = "textBoxFilename";
-			this.textBoxFilename.Size = new System.Drawing.Size(401, 27);
+			this.textBoxFilename.Size = new System.Drawing.Size(354, 23);
 			this.textBoxFilename.TabIndex = 9;
 			// 
 			// buttonBrowse
 			// 
 			this.buttonBrowse.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.buttonBrowse.Location = new System.Drawing.Point(416, 5);
-			this.buttonBrowse.Margin = new System.Windows.Forms.Padding(5);
+			this.buttonBrowse.Location = new System.Drawing.Point(366, 4);
+			this.buttonBrowse.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonBrowse.Name = "buttonBrowse";
-			this.buttonBrowse.Size = new System.Drawing.Size(101, 35);
+			this.buttonBrowse.Size = new System.Drawing.Size(88, 26);
 			this.buttonBrowse.TabIndex = 2;
 			this.buttonBrowse.Text = "Browse";
 			this.buttonBrowse.UseVisualStyleBackColor = true;
@@ -208,11 +237,11 @@
 			this.groupBoxStartStop.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.groupBoxStartStop.Controls.Add(this.tableLayoutPanelStartStop);
 			this.groupBoxStartStop.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.groupBoxStartStop.Location = new System.Drawing.Point(0, 648);
-			this.groupBoxStartStop.Margin = new System.Windows.Forms.Padding(5);
+			this.groupBoxStartStop.Location = new System.Drawing.Point(0, 481);
+			this.groupBoxStartStop.Margin = new System.Windows.Forms.Padding(4);
 			this.groupBoxStartStop.Name = "groupBoxStartStop";
-			this.groupBoxStartStop.Padding = new System.Windows.Forms.Padding(5);
-			this.groupBoxStartStop.Size = new System.Drawing.Size(532, 79);
+			this.groupBoxStartStop.Padding = new System.Windows.Forms.Padding(4);
+			this.groupBoxStartStop.Size = new System.Drawing.Size(466, 62);
 			this.groupBoxStartStop.TabIndex = 13;
 			this.groupBoxStartStop.TabStop = false;
 			this.groupBoxStartStop.Text = "Start/Stop";
@@ -225,12 +254,12 @@
 			this.tableLayoutPanelStartStop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.tableLayoutPanelStartStop.Controls.Add(this.tableLayoutPanelButtons, 0, 0);
 			this.tableLayoutPanelStartStop.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanelStartStop.Location = new System.Drawing.Point(5, 25);
-			this.tableLayoutPanelStartStop.Margin = new System.Windows.Forms.Padding(5);
+			this.tableLayoutPanelStartStop.Location = new System.Drawing.Point(4, 20);
+			this.tableLayoutPanelStartStop.Margin = new System.Windows.Forms.Padding(4);
 			this.tableLayoutPanelStartStop.Name = "tableLayoutPanelStartStop";
 			this.tableLayoutPanelStartStop.RowCount = 1;
 			this.tableLayoutPanelStartStop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanelStartStop.Size = new System.Drawing.Size(522, 49);
+			this.tableLayoutPanelStartStop.Size = new System.Drawing.Size(458, 38);
 			this.tableLayoutPanelStartStop.TabIndex = 1;
 			// 
 			// tableLayoutPanelButtons
@@ -243,21 +272,21 @@
 			this.tableLayoutPanelButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.tableLayoutPanelButtons.Controls.Add(this.buttonStop, 1, 0);
 			this.tableLayoutPanelButtons.Controls.Add(this.buttonStart, 0, 0);
-			this.tableLayoutPanelButtons.Location = new System.Drawing.Point(150, 5);
-			this.tableLayoutPanelButtons.Margin = new System.Windows.Forms.Padding(5);
+			this.tableLayoutPanelButtons.Location = new System.Drawing.Point(133, 4);
+			this.tableLayoutPanelButtons.Margin = new System.Windows.Forms.Padding(4);
 			this.tableLayoutPanelButtons.Name = "tableLayoutPanelButtons";
 			this.tableLayoutPanelButtons.RowCount = 1;
 			this.tableLayoutPanelButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanelButtons.Size = new System.Drawing.Size(222, 39);
+			this.tableLayoutPanelButtons.Size = new System.Drawing.Size(192, 30);
 			this.tableLayoutPanelButtons.TabIndex = 0;
 			// 
 			// buttonStop
 			// 
 			this.buttonStop.Enabled = false;
-			this.buttonStop.Location = new System.Drawing.Point(116, 5);
-			this.buttonStop.Margin = new System.Windows.Forms.Padding(5);
+			this.buttonStop.Location = new System.Drawing.Point(100, 4);
+			this.buttonStop.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonStop.Name = "buttonStop";
-			this.buttonStop.Size = new System.Drawing.Size(101, 29);
+			this.buttonStop.Size = new System.Drawing.Size(88, 22);
 			this.buttonStop.TabIndex = 1;
 			this.buttonStop.Text = "Stop";
 			this.buttonStop.UseVisualStyleBackColor = true;
@@ -265,10 +294,10 @@
 			// 
 			// buttonStart
 			// 
-			this.buttonStart.Location = new System.Drawing.Point(5, 5);
-			this.buttonStart.Margin = new System.Windows.Forms.Padding(5);
+			this.buttonStart.Location = new System.Drawing.Point(4, 4);
+			this.buttonStart.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonStart.Name = "buttonStart";
-			this.buttonStart.Size = new System.Drawing.Size(101, 29);
+			this.buttonStart.Size = new System.Drawing.Size(88, 22);
 			this.buttonStart.TabIndex = 0;
 			this.buttonStart.Text = "Start";
 			this.buttonStart.UseVisualStyleBackColor = true;
@@ -298,14 +327,14 @@
 			this.tableLayoutPanelSerialPort.Controls.Add(this.comboBoxHandshake, 4, 2);
 			this.tableLayoutPanelSerialPort.Controls.Add(this.labelHandshake, 3, 2);
 			this.tableLayoutPanelSerialPort.Dock = System.Windows.Forms.DockStyle.Top;
-			this.tableLayoutPanelSerialPort.Location = new System.Drawing.Point(5, 25);
-			this.tableLayoutPanelSerialPort.Margin = new System.Windows.Forms.Padding(5);
+			this.tableLayoutPanelSerialPort.Location = new System.Drawing.Point(4, 20);
+			this.tableLayoutPanelSerialPort.Margin = new System.Windows.Forms.Padding(4);
 			this.tableLayoutPanelSerialPort.Name = "tableLayoutPanelSerialPort";
 			this.tableLayoutPanelSerialPort.RowCount = 3;
 			this.tableLayoutPanelSerialPort.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelSerialPort.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelSerialPort.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelSerialPort.Size = new System.Drawing.Size(522, 121);
+			this.tableLayoutPanelSerialPort.Size = new System.Drawing.Size(458, 96);
 			this.tableLayoutPanelSerialPort.TabIndex = 14;
 			// 
 			// comboBoxDataBits
@@ -313,20 +342,20 @@
 			this.comboBoxDataBits.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.comboBoxDataBits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxDataBits.FormattingEnabled = true;
-			this.comboBoxDataBits.Location = new System.Drawing.Point(95, 88);
-			this.comboBoxDataBits.Margin = new System.Windows.Forms.Padding(5);
+			this.comboBoxDataBits.Location = new System.Drawing.Point(75, 69);
+			this.comboBoxDataBits.Margin = new System.Windows.Forms.Padding(4);
 			this.comboBoxDataBits.Name = "comboBoxDataBits";
-			this.comboBoxDataBits.Size = new System.Drawing.Size(135, 28);
+			this.comboBoxDataBits.Size = new System.Drawing.Size(127, 23);
 			this.comboBoxDataBits.TabIndex = 15;
 			// 
 			// labelDataBits
 			// 
 			this.labelDataBits.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelDataBits.AutoSize = true;
-			this.labelDataBits.Location = new System.Drawing.Point(5, 92);
-			this.labelDataBits.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+			this.labelDataBits.Location = new System.Drawing.Point(4, 73);
+			this.labelDataBits.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelDataBits.Name = "labelDataBits";
-			this.labelDataBits.Size = new System.Drawing.Size(72, 20);
+			this.labelDataBits.Size = new System.Drawing.Size(56, 15);
 			this.labelDataBits.TabIndex = 14;
 			this.labelDataBits.Text = "Data Bits:";
 			// 
@@ -334,10 +363,10 @@
 			// 
 			this.labelComPort.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelComPort.AutoSize = true;
-			this.labelComPort.Location = new System.Drawing.Point(5, 12);
-			this.labelComPort.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+			this.labelComPort.Location = new System.Drawing.Point(4, 9);
+			this.labelComPort.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelComPort.Name = "labelComPort";
-			this.labelComPort.Size = new System.Drawing.Size(75, 20);
+			this.labelComPort.Size = new System.Drawing.Size(63, 15);
 			this.labelComPort.TabIndex = 0;
 			this.labelComPort.Text = "COM Port:";
 			// 
@@ -347,19 +376,19 @@
 			this.comboBoxSerialPort.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.comboBoxSerialPort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxSerialPort.FormattingEnabled = true;
-			this.comboBoxSerialPort.Location = new System.Drawing.Point(95, 5);
-			this.comboBoxSerialPort.Margin = new System.Windows.Forms.Padding(5);
+			this.comboBoxSerialPort.Location = new System.Drawing.Point(75, 4);
+			this.comboBoxSerialPort.Margin = new System.Windows.Forms.Padding(4);
 			this.comboBoxSerialPort.Name = "comboBoxSerialPort";
-			this.comboBoxSerialPort.Size = new System.Drawing.Size(135, 28);
+			this.comboBoxSerialPort.Size = new System.Drawing.Size(127, 23);
 			this.comboBoxSerialPort.TabIndex = 1;
 			// 
 			// buttonPortRefresh
 			// 
 			this.buttonPortRefresh.Image = ((System.Drawing.Image)(resources.GetObject("buttonPortRefresh.Image")));
-			this.buttonPortRefresh.Location = new System.Drawing.Point(240, 5);
-			this.buttonPortRefresh.Margin = new System.Windows.Forms.Padding(5);
+			this.buttonPortRefresh.Location = new System.Drawing.Point(210, 4);
+			this.buttonPortRefresh.Margin = new System.Windows.Forms.Padding(4);
 			this.buttonPortRefresh.Name = "buttonPortRefresh";
-			this.buttonPortRefresh.Size = new System.Drawing.Size(37, 35);
+			this.buttonPortRefresh.Size = new System.Drawing.Size(32, 26);
 			this.buttonPortRefresh.TabIndex = 2;
 			this.buttonPortRefresh.UseVisualStyleBackColor = true;
 			// 
@@ -367,10 +396,10 @@
 			// 
 			this.labelBaudRate.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelBaudRate.AutoSize = true;
-			this.labelBaudRate.Location = new System.Drawing.Point(5, 54);
-			this.labelBaudRate.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+			this.labelBaudRate.Location = new System.Drawing.Point(4, 42);
+			this.labelBaudRate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelBaudRate.Name = "labelBaudRate";
-			this.labelBaudRate.Size = new System.Drawing.Size(80, 20);
+			this.labelBaudRate.Size = new System.Drawing.Size(63, 15);
 			this.labelBaudRate.TabIndex = 3;
 			this.labelBaudRate.Text = "Baud Rate:";
 			// 
@@ -378,10 +407,10 @@
 			// 
 			this.comboBoxBaudRate.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.comboBoxBaudRate.FormattingEnabled = true;
-			this.comboBoxBaudRate.Location = new System.Drawing.Point(95, 50);
-			this.comboBoxBaudRate.Margin = new System.Windows.Forms.Padding(5);
+			this.comboBoxBaudRate.Location = new System.Drawing.Point(75, 38);
+			this.comboBoxBaudRate.Margin = new System.Windows.Forms.Padding(4);
 			this.comboBoxBaudRate.Name = "comboBoxBaudRate";
-			this.comboBoxBaudRate.Size = new System.Drawing.Size(135, 28);
+			this.comboBoxBaudRate.Size = new System.Drawing.Size(127, 23);
 			this.comboBoxBaudRate.TabIndex = 4;
 			// 
 			// comboBoxParity
@@ -389,20 +418,20 @@
 			this.comboBoxParity.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.comboBoxParity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxParity.FormattingEnabled = true;
-			this.comboBoxParity.Location = new System.Drawing.Point(382, 5);
-			this.comboBoxParity.Margin = new System.Windows.Forms.Padding(5);
+			this.comboBoxParity.Location = new System.Drawing.Point(327, 4);
+			this.comboBoxParity.Margin = new System.Windows.Forms.Padding(4);
 			this.comboBoxParity.Name = "comboBoxParity";
-			this.comboBoxParity.Size = new System.Drawing.Size(135, 28);
+			this.comboBoxParity.Size = new System.Drawing.Size(127, 23);
 			this.comboBoxParity.TabIndex = 11;
 			// 
 			// labelStopBits
 			// 
 			this.labelStopBits.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelStopBits.AutoSize = true;
-			this.labelStopBits.Location = new System.Drawing.Point(287, 54);
-			this.labelStopBits.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+			this.labelStopBits.Location = new System.Drawing.Point(250, 42);
+			this.labelStopBits.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelStopBits.Name = "labelStopBits";
-			this.labelStopBits.Size = new System.Drawing.Size(71, 20);
+			this.labelStopBits.Size = new System.Drawing.Size(56, 15);
 			this.labelStopBits.TabIndex = 5;
 			this.labelStopBits.Text = "Stop Bits:";
 			// 
@@ -411,20 +440,20 @@
 			this.comboBoxStopBits.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.comboBoxStopBits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxStopBits.FormattingEnabled = true;
-			this.comboBoxStopBits.Location = new System.Drawing.Point(382, 50);
-			this.comboBoxStopBits.Margin = new System.Windows.Forms.Padding(5);
+			this.comboBoxStopBits.Location = new System.Drawing.Point(327, 38);
+			this.comboBoxStopBits.Margin = new System.Windows.Forms.Padding(4);
 			this.comboBoxStopBits.Name = "comboBoxStopBits";
-			this.comboBoxStopBits.Size = new System.Drawing.Size(135, 28);
+			this.comboBoxStopBits.Size = new System.Drawing.Size(127, 23);
 			this.comboBoxStopBits.TabIndex = 6;
 			// 
 			// labelParity
 			// 
 			this.labelParity.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelParity.AutoSize = true;
-			this.labelParity.Location = new System.Drawing.Point(287, 12);
-			this.labelParity.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+			this.labelParity.Location = new System.Drawing.Point(250, 9);
+			this.labelParity.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelParity.Name = "labelParity";
-			this.labelParity.Size = new System.Drawing.Size(48, 20);
+			this.labelParity.Size = new System.Drawing.Size(40, 15);
 			this.labelParity.TabIndex = 12;
 			this.labelParity.Text = "Parity:";
 			// 
@@ -433,20 +462,20 @@
 			this.comboBoxHandshake.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.comboBoxHandshake.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxHandshake.FormattingEnabled = true;
-			this.comboBoxHandshake.Location = new System.Drawing.Point(382, 88);
-			this.comboBoxHandshake.Margin = new System.Windows.Forms.Padding(5);
+			this.comboBoxHandshake.Location = new System.Drawing.Point(327, 69);
+			this.comboBoxHandshake.Margin = new System.Windows.Forms.Padding(4);
 			this.comboBoxHandshake.Name = "comboBoxHandshake";
-			this.comboBoxHandshake.Size = new System.Drawing.Size(135, 28);
+			this.comboBoxHandshake.Size = new System.Drawing.Size(127, 23);
 			this.comboBoxHandshake.TabIndex = 13;
 			// 
 			// labelHandshake
 			// 
 			this.labelHandshake.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelHandshake.AutoSize = true;
-			this.labelHandshake.Location = new System.Drawing.Point(287, 92);
-			this.labelHandshake.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+			this.labelHandshake.Location = new System.Drawing.Point(250, 73);
+			this.labelHandshake.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.labelHandshake.Name = "labelHandshake";
-			this.labelHandshake.Size = new System.Drawing.Size(85, 20);
+			this.labelHandshake.Size = new System.Drawing.Size(69, 15);
 			this.labelHandshake.TabIndex = 10;
 			this.labelHandshake.Text = "Handshake:";
 			// 
@@ -456,11 +485,11 @@
 			this.groupBoxSerialPort.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.groupBoxSerialPort.Controls.Add(this.tableLayoutPanelSerialPort);
 			this.groupBoxSerialPort.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBoxSerialPort.Location = new System.Drawing.Point(0, 105);
-			this.groupBoxSerialPort.Margin = new System.Windows.Forms.Padding(5);
+			this.groupBoxSerialPort.Location = new System.Drawing.Point(0, 82);
+			this.groupBoxSerialPort.Margin = new System.Windows.Forms.Padding(4);
 			this.groupBoxSerialPort.Name = "groupBoxSerialPort";
-			this.groupBoxSerialPort.Padding = new System.Windows.Forms.Padding(5);
-			this.groupBoxSerialPort.Size = new System.Drawing.Size(532, 151);
+			this.groupBoxSerialPort.Padding = new System.Windows.Forms.Padding(4);
+			this.groupBoxSerialPort.Size = new System.Drawing.Size(466, 120);
 			this.groupBoxSerialPort.TabIndex = 8;
 			this.groupBoxSerialPort.TabStop = false;
 			this.groupBoxSerialPort.Text = "Serial Port";
@@ -471,11 +500,11 @@
 			this.groupBoxSample.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.groupBoxSample.Controls.Add(this.tableLayoutPanelSample);
 			this.groupBoxSample.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBoxSample.Location = new System.Drawing.Point(0, 256);
-			this.groupBoxSample.Margin = new System.Windows.Forms.Padding(5);
+			this.groupBoxSample.Location = new System.Drawing.Point(0, 202);
+			this.groupBoxSample.Margin = new System.Windows.Forms.Padding(4);
 			this.groupBoxSample.Name = "groupBoxSample";
-			this.groupBoxSample.Padding = new System.Windows.Forms.Padding(5);
-			this.groupBoxSample.Size = new System.Drawing.Size(532, 67);
+			this.groupBoxSample.Padding = new System.Windows.Forms.Padding(4);
+			this.groupBoxSample.Size = new System.Drawing.Size(466, 55);
 			this.groupBoxSample.TabIndex = 17;
 			this.groupBoxSample.TabStop = false;
 			this.groupBoxSample.Text = "Sample Interval";
@@ -487,12 +516,12 @@
 			this.tableLayoutPanelSample.ColumnCount = 2;
 			this.tableLayoutPanelSample.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.15405F));
 			this.tableLayoutPanelSample.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 72.84595F));
-			this.tableLayoutPanelSample.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+			this.tableLayoutPanelSample.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 24F));
 			this.tableLayoutPanelSample.Controls.Add(this.numericUpDownInterval, 0, 2);
 			this.tableLayoutPanelSample.Controls.Add(this.label5, 1, 2);
 			this.tableLayoutPanelSample.Dock = System.Windows.Forms.DockStyle.Top;
-			this.tableLayoutPanelSample.Location = new System.Drawing.Point(5, 25);
-			this.tableLayoutPanelSample.Margin = new System.Windows.Forms.Padding(5);
+			this.tableLayoutPanelSample.Location = new System.Drawing.Point(4, 20);
+			this.tableLayoutPanelSample.Margin = new System.Windows.Forms.Padding(4);
 			this.tableLayoutPanelSample.Name = "tableLayoutPanelSample";
 			this.tableLayoutPanelSample.RowCount = 7;
 			this.tableLayoutPanelSample.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -502,7 +531,7 @@
 			this.tableLayoutPanelSample.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelSample.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelSample.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelSample.Size = new System.Drawing.Size(522, 37);
+			this.tableLayoutPanelSample.Size = new System.Drawing.Size(458, 31);
 			this.tableLayoutPanelSample.TabIndex = 14;
 			// 
 			// numericUpDownInterval
@@ -513,15 +542,20 @@
             0,
             0,
             0});
-			this.numericUpDownInterval.Location = new System.Drawing.Point(5, 5);
-			this.numericUpDownInterval.Margin = new System.Windows.Forms.Padding(5);
+			this.numericUpDownInterval.Location = new System.Drawing.Point(4, 4);
+			this.numericUpDownInterval.Margin = new System.Windows.Forms.Padding(4);
 			this.numericUpDownInterval.Maximum = new decimal(new int[] {
             36000000,
             0,
             0,
             0});
+			this.numericUpDownInterval.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
 			this.numericUpDownInterval.Name = "numericUpDownInterval";
-			this.numericUpDownInterval.Size = new System.Drawing.Size(131, 27);
+			this.numericUpDownInterval.Size = new System.Drawing.Size(116, 23);
 			this.numericUpDownInterval.TabIndex = 1;
 			this.numericUpDownInterval.Value = new decimal(new int[] {
             1000,
@@ -533,10 +567,10 @@
 			// 
 			this.label5.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(146, 8);
-			this.label5.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+			this.label5.Location = new System.Drawing.Point(128, 8);
+			this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(28, 20);
+			this.label5.Size = new System.Drawing.Size(23, 15);
 			this.label5.TabIndex = 14;
 			this.label5.Text = "ms";
 			// 
@@ -546,12 +580,12 @@
 			this.tableLayoutPanelStop.SetColumnSpan(this.dateTimePickerTime, 2);
 			this.dateTimePickerTime.Enabled = false;
 			this.dateTimePickerTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-			this.dateTimePickerTime.Location = new System.Drawing.Point(330, 62);
-			this.dateTimePickerTime.Margin = new System.Windows.Forms.Padding(5);
+			this.dateTimePickerTime.Location = new System.Drawing.Point(284, 50);
+			this.dateTimePickerTime.Margin = new System.Windows.Forms.Padding(4);
 			this.dateTimePickerTime.MinDate = new System.DateTime(2021, 5, 28, 0, 0, 0, 0);
 			this.dateTimePickerTime.Name = "dateTimePickerTime";
 			this.dateTimePickerTime.ShowUpDown = true;
-			this.dateTimePickerTime.Size = new System.Drawing.Size(132, 27);
+			this.dateTimePickerTime.Size = new System.Drawing.Size(116, 23);
 			this.dateTimePickerTime.TabIndex = 27;
 			// 
 			// groupBoxStop
@@ -560,11 +594,11 @@
 			this.groupBoxStop.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.groupBoxStop.Controls.Add(this.tableLayoutPanelStop);
 			this.groupBoxStop.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBoxStop.Location = new System.Drawing.Point(0, 323);
-			this.groupBoxStop.Margin = new System.Windows.Forms.Padding(5);
+			this.groupBoxStop.Location = new System.Drawing.Point(0, 257);
+			this.groupBoxStop.Margin = new System.Windows.Forms.Padding(4);
 			this.groupBoxStop.Name = "groupBoxStop";
-			this.groupBoxStop.Padding = new System.Windows.Forms.Padding(5);
-			this.groupBoxStop.Size = new System.Drawing.Size(532, 195);
+			this.groupBoxStop.Padding = new System.Windows.Forms.Padding(4);
+			this.groupBoxStop.Size = new System.Drawing.Size(466, 159);
 			this.groupBoxStop.TabIndex = 20;
 			this.groupBoxStop.TabStop = false;
 			this.groupBoxStop.Text = "Stop";
@@ -593,8 +627,8 @@
 			this.tableLayoutPanelStop.Controls.Add(this.label4, 3, 0);
 			this.tableLayoutPanelStop.Controls.Add(this.numericUpDownNumScans, 1, 3);
 			this.tableLayoutPanelStop.Dock = System.Windows.Forms.DockStyle.Top;
-			this.tableLayoutPanelStop.Location = new System.Drawing.Point(5, 25);
-			this.tableLayoutPanelStop.Margin = new System.Windows.Forms.Padding(5);
+			this.tableLayoutPanelStop.Location = new System.Drawing.Point(4, 20);
+			this.tableLayoutPanelStop.Margin = new System.Windows.Forms.Padding(4);
 			this.tableLayoutPanelStop.Name = "tableLayoutPanelStop";
 			this.tableLayoutPanelStop.RowCount = 5;
 			this.tableLayoutPanelStop.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -602,17 +636,17 @@
 			this.tableLayoutPanelStop.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelStop.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelStop.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelStop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
-			this.tableLayoutPanelStop.Size = new System.Drawing.Size(522, 165);
+			this.tableLayoutPanelStop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
+			this.tableLayoutPanelStop.Size = new System.Drawing.Size(458, 135);
 			this.tableLayoutPanelStop.TabIndex = 14;
 			// 
 			// radioButtonElapsedTime
 			// 
 			this.radioButtonElapsedTime.AutoSize = true;
-			this.radioButtonElapsedTime.Location = new System.Drawing.Point(5, 25);
-			this.radioButtonElapsedTime.Margin = new System.Windows.Forms.Padding(5);
+			this.radioButtonElapsedTime.Location = new System.Drawing.Point(4, 19);
+			this.radioButtonElapsedTime.Margin = new System.Windows.Forms.Padding(4);
 			this.radioButtonElapsedTime.Name = "radioButtonElapsedTime";
-			this.radioButtonElapsedTime.Size = new System.Drawing.Size(119, 24);
+			this.radioButtonElapsedTime.Size = new System.Drawing.Size(94, 19);
 			this.radioButtonElapsedTime.TabIndex = 19;
 			this.radioButtonElapsedTime.Text = "Elapsed Time";
 			this.radioButtonElapsedTime.UseVisualStyleBackColor = true;
@@ -621,10 +655,10 @@
 			// radioButtonDateTime
 			// 
 			this.radioButtonDateTime.AutoSize = true;
-			this.radioButtonDateTime.Location = new System.Drawing.Point(5, 62);
-			this.radioButtonDateTime.Margin = new System.Windows.Forms.Padding(5);
+			this.radioButtonDateTime.Location = new System.Drawing.Point(4, 50);
+			this.radioButtonDateTime.Margin = new System.Windows.Forms.Padding(4);
 			this.radioButtonDateTime.Name = "radioButtonDateTime";
-			this.radioButtonDateTime.Size = new System.Drawing.Size(101, 24);
+			this.radioButtonDateTime.Size = new System.Drawing.Size(80, 19);
 			this.radioButtonDateTime.TabIndex = 20;
 			this.radioButtonDateTime.Text = "Date/Time";
 			this.radioButtonDateTime.UseVisualStyleBackColor = true;
@@ -637,21 +671,21 @@
 			this.dateTimePickerDate.CustomFormat = "M/dd/yyyy hh:mm:ss";
 			this.dateTimePickerDate.Enabled = false;
 			this.dateTimePickerDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.dateTimePickerDate.Location = new System.Drawing.Point(134, 62);
-			this.dateTimePickerDate.Margin = new System.Windows.Forms.Padding(5);
+			this.dateTimePickerDate.Location = new System.Drawing.Point(106, 50);
+			this.dateTimePickerDate.Margin = new System.Windows.Forms.Padding(4);
 			this.dateTimePickerDate.MinDate = new System.DateTime(2021, 5, 28, 16, 58, 24, 0);
 			this.dateTimePickerDate.Name = "dateTimePickerDate";
-			this.dateTimePickerDate.Size = new System.Drawing.Size(160, 27);
+			this.dateTimePickerDate.Size = new System.Drawing.Size(140, 23);
 			this.dateTimePickerDate.TabIndex = 27;
 			this.dateTimePickerDate.Value = new System.DateTime(2022, 5, 28, 16, 58, 1, 0);
 			// 
 			// radioButtonNumScans
 			// 
 			this.radioButtonNumScans.AutoSize = true;
-			this.radioButtonNumScans.Location = new System.Drawing.Point(5, 99);
-			this.radioButtonNumScans.Margin = new System.Windows.Forms.Padding(5);
+			this.radioButtonNumScans.Location = new System.Drawing.Point(4, 81);
+			this.radioButtonNumScans.Margin = new System.Windows.Forms.Padding(4);
 			this.radioButtonNumScans.Name = "radioButtonNumScans";
-			this.radioButtonNumScans.Size = new System.Drawing.Size(98, 24);
+			this.radioButtonNumScans.Size = new System.Drawing.Size(79, 19);
 			this.radioButtonNumScans.TabIndex = 18;
 			this.radioButtonNumScans.Text = "# of Scans";
 			this.radioButtonNumScans.UseVisualStyleBackColor = true;
@@ -661,10 +695,10 @@
 			// 
 			this.radioButtonStop.AutoSize = true;
 			this.radioButtonStop.Checked = true;
-			this.radioButtonStop.Location = new System.Drawing.Point(5, 136);
-			this.radioButtonStop.Margin = new System.Windows.Forms.Padding(5);
+			this.radioButtonStop.Location = new System.Drawing.Point(4, 112);
+			this.radioButtonStop.Margin = new System.Windows.Forms.Padding(4);
 			this.radioButtonStop.Name = "radioButtonStop";
-			this.radioButtonStop.Size = new System.Drawing.Size(109, 24);
+			this.radioButtonStop.Size = new System.Drawing.Size(88, 19);
 			this.radioButtonStop.TabIndex = 17;
 			this.radioButtonStop.TabStop = true;
 			this.radioButtonStop.Text = "Stop Button";
@@ -674,15 +708,15 @@
 			// numericUpDownHours
 			// 
 			this.numericUpDownHours.Enabled = false;
-			this.numericUpDownHours.Location = new System.Drawing.Point(134, 25);
-			this.numericUpDownHours.Margin = new System.Windows.Forms.Padding(5);
+			this.numericUpDownHours.Location = new System.Drawing.Point(106, 19);
+			this.numericUpDownHours.Margin = new System.Windows.Forms.Padding(4);
 			this.numericUpDownHours.Maximum = new decimal(new int[] {
             36000000,
             0,
             0,
             0});
 			this.numericUpDownHours.Name = "numericUpDownHours";
-			this.numericUpDownHours.Size = new System.Drawing.Size(69, 27);
+			this.numericUpDownHours.Size = new System.Drawing.Size(60, 23);
 			this.numericUpDownHours.TabIndex = 22;
 			this.numericUpDownHours.Value = new decimal(new int[] {
             1,
@@ -693,15 +727,15 @@
 			// numericUpDownMinutes
 			// 
 			this.numericUpDownMinutes.Enabled = false;
-			this.numericUpDownMinutes.Location = new System.Drawing.Point(232, 25);
-			this.numericUpDownMinutes.Margin = new System.Windows.Forms.Padding(5);
+			this.numericUpDownMinutes.Location = new System.Drawing.Point(195, 19);
+			this.numericUpDownMinutes.Margin = new System.Windows.Forms.Padding(4);
 			this.numericUpDownMinutes.Maximum = new decimal(new int[] {
             59,
             0,
             0,
             0});
 			this.numericUpDownMinutes.Name = "numericUpDownMinutes";
-			this.numericUpDownMinutes.Size = new System.Drawing.Size(69, 27);
+			this.numericUpDownMinutes.Size = new System.Drawing.Size(60, 23);
 			this.numericUpDownMinutes.TabIndex = 23;
 			this.numericUpDownMinutes.Value = new decimal(new int[] {
             1,
@@ -712,15 +746,15 @@
 			// numericUpDownSeconds
 			// 
 			this.numericUpDownSeconds.Enabled = false;
-			this.numericUpDownSeconds.Location = new System.Drawing.Point(330, 25);
-			this.numericUpDownSeconds.Margin = new System.Windows.Forms.Padding(5);
+			this.numericUpDownSeconds.Location = new System.Drawing.Point(284, 19);
+			this.numericUpDownSeconds.Margin = new System.Windows.Forms.Padding(4);
 			this.numericUpDownSeconds.Maximum = new decimal(new int[] {
             59,
             0,
             0,
             0});
 			this.numericUpDownSeconds.Name = "numericUpDownSeconds";
-			this.numericUpDownSeconds.Size = new System.Drawing.Size(69, 27);
+			this.numericUpDownSeconds.Size = new System.Drawing.Size(60, 23);
 			this.numericUpDownSeconds.TabIndex = 24;
 			this.numericUpDownSeconds.Value = new decimal(new int[] {
             59,
@@ -732,10 +766,10 @@
 			// 
 			this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(134, 0);
-			this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+			this.label1.Location = new System.Drawing.Point(106, 0);
+			this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(48, 20);
+			this.label1.Size = new System.Drawing.Size(39, 15);
 			this.label1.TabIndex = 16;
 			this.label1.Text = "Hours";
 			// 
@@ -743,10 +777,10 @@
 			// 
 			this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(232, 0);
-			this.label3.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+			this.label3.Location = new System.Drawing.Point(195, 0);
+			this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(61, 20);
+			this.label3.Size = new System.Drawing.Size(50, 15);
 			this.label3.TabIndex = 29;
 			this.label3.Text = "Minutes";
 			// 
@@ -754,10 +788,10 @@
 			// 
 			this.label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(330, 0);
-			this.label4.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+			this.label4.Location = new System.Drawing.Point(284, 0);
+			this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(64, 20);
+			this.label4.Size = new System.Drawing.Size(51, 15);
 			this.label4.TabIndex = 30;
 			this.label4.Text = "Seconds";
 			// 
@@ -770,15 +804,15 @@
             0,
             0,
             0});
-			this.numericUpDownNumScans.Location = new System.Drawing.Point(134, 99);
-			this.numericUpDownNumScans.Margin = new System.Windows.Forms.Padding(5);
+			this.numericUpDownNumScans.Location = new System.Drawing.Point(106, 81);
+			this.numericUpDownNumScans.Margin = new System.Windows.Forms.Padding(4);
 			this.numericUpDownNumScans.Maximum = new decimal(new int[] {
             36000000,
             0,
             0,
             0});
 			this.numericUpDownNumScans.Name = "numericUpDownNumScans";
-			this.numericUpDownNumScans.Size = new System.Drawing.Size(120, 27);
+			this.numericUpDownNumScans.Size = new System.Drawing.Size(105, 23);
 			this.numericUpDownNumScans.TabIndex = 21;
 			this.numericUpDownNumScans.Value = new decimal(new int[] {
             1000,
@@ -791,11 +825,11 @@
 			this.groupBoxCommand.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.groupBoxCommand.Controls.Add(this.textBoxCommand);
 			this.groupBoxCommand.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBoxCommand.Location = new System.Drawing.Point(0, 518);
-			this.groupBoxCommand.Margin = new System.Windows.Forms.Padding(5);
+			this.groupBoxCommand.Location = new System.Drawing.Point(0, 416);
+			this.groupBoxCommand.Margin = new System.Windows.Forms.Padding(4);
 			this.groupBoxCommand.Name = "groupBoxCommand";
-			this.groupBoxCommand.Padding = new System.Windows.Forms.Padding(5);
-			this.groupBoxCommand.Size = new System.Drawing.Size(532, 60);
+			this.groupBoxCommand.Padding = new System.Windows.Forms.Padding(4);
+			this.groupBoxCommand.Size = new System.Drawing.Size(466, 45);
 			this.groupBoxCommand.TabIndex = 21;
 			this.groupBoxCommand.TabStop = false;
 			this.groupBoxCommand.Text = "Command";
@@ -803,10 +837,10 @@
 			// textBoxCommand
 			// 
 			this.textBoxCommand.Dock = System.Windows.Forms.DockStyle.Top;
-			this.textBoxCommand.Location = new System.Drawing.Point(5, 25);
-			this.textBoxCommand.Margin = new System.Windows.Forms.Padding(5);
+			this.textBoxCommand.Location = new System.Drawing.Point(4, 20);
+			this.textBoxCommand.Margin = new System.Windows.Forms.Padding(4);
 			this.textBoxCommand.Name = "textBoxCommand";
-			this.textBoxCommand.Size = new System.Drawing.Size(522, 27);
+			this.textBoxCommand.Size = new System.Drawing.Size(458, 23);
 			this.textBoxCommand.TabIndex = 10;
 			// 
 			// groupBoxResponse
@@ -815,11 +849,11 @@
 			this.groupBoxResponse.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.groupBoxResponse.Controls.Add(this.textBoxResponse);
 			this.groupBoxResponse.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBoxResponse.Location = new System.Drawing.Point(0, 578);
-			this.groupBoxResponse.Margin = new System.Windows.Forms.Padding(5);
+			this.groupBoxResponse.Location = new System.Drawing.Point(0, 461);
+			this.groupBoxResponse.Margin = new System.Windows.Forms.Padding(4);
 			this.groupBoxResponse.Name = "groupBoxResponse";
-			this.groupBoxResponse.Padding = new System.Windows.Forms.Padding(5);
-			this.groupBoxResponse.Size = new System.Drawing.Size(532, 57);
+			this.groupBoxResponse.Padding = new System.Windows.Forms.Padding(4);
+			this.groupBoxResponse.Size = new System.Drawing.Size(466, 47);
 			this.groupBoxResponse.TabIndex = 22;
 			this.groupBoxResponse.TabStop = false;
 			this.groupBoxResponse.Text = "Response";
@@ -827,18 +861,18 @@
 			// textBoxResponse
 			// 
 			this.textBoxResponse.Dock = System.Windows.Forms.DockStyle.Top;
-			this.textBoxResponse.Location = new System.Drawing.Point(5, 25);
-			this.textBoxResponse.Margin = new System.Windows.Forms.Padding(5);
+			this.textBoxResponse.Location = new System.Drawing.Point(4, 20);
+			this.textBoxResponse.Margin = new System.Windows.Forms.Padding(4);
 			this.textBoxResponse.Name = "textBoxResponse";
 			this.textBoxResponse.ReadOnly = true;
-			this.textBoxResponse.Size = new System.Drawing.Size(522, 27);
+			this.textBoxResponse.Size = new System.Drawing.Size(458, 23);
 			this.textBoxResponse.TabIndex = 10;
 			// 
 			// FormLog
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(532, 753);
+			this.ClientSize = new System.Drawing.Size(466, 565);
 			this.Controls.Add(this.groupBoxResponse);
 			this.Controls.Add(this.groupBoxCommand);
 			this.Controls.Add(this.groupBoxStop);
@@ -849,7 +883,7 @@
 			this.Controls.Add(this.statusStrip);
 			this.Controls.Add(this.menuStrip);
 			this.MainMenuStrip = this.menuStrip;
-			this.Margin = new System.Windows.Forms.Padding(5);
+			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "FormLog";
 			this.Text = "Data logger";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormLog_FormClosing);
@@ -946,6 +980,9 @@
 		private System.Windows.Forms.ComboBox comboBoxParity;
 		private System.Windows.Forms.ComboBox comboBoxDataBits;
 		private System.Windows.Forms.Label labelDataBits;
+		private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem startToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem stopToolStripMenuItem;
 	}
 }
 
