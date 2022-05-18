@@ -40,6 +40,10 @@ namespace Sensit.TestSDK.Devices
 		public bool IsOpen => Port.IsOpen;
 
 		public override List<int> SupportedBaudRates { get; } = new List<int> { 115200 };
+		public override List<int> SupportedDataBits { get; } = new List<int> { 8 };
+		public override List<Parity> SupportedParity { get; } = new List<Parity> { Parity.None };
+		public override List<StopBits> SupportedStopBits { get; } = new List<StopBits> { StopBits.One };
+		public override List<Handshake> SupportedHandshake { get; } = new List<Handshake> { Handshake.RequestToSend };
 
 		#endregion
 

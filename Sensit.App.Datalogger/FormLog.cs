@@ -13,7 +13,7 @@ namespace Sensit.App.Datalogger
 	public partial class FormLog : Form
 	{
 		// timer to control when we take samples from the DUT
-		private System.Timers.Timer _timer;
+		private readonly System.Timers.Timer _timer = new();
 
 		// CSV file writer to log data captured from DUT
 		private CsvWriter _writer;
@@ -32,10 +32,10 @@ namespace Sensit.App.Datalogger
 
 		// This is a thread synchronizeation event handler; it makes us wait until the
 		// timer finishes its current task before closing the resources it's using.
-		EventWaitHandle _loggingLock = new EventWaitHandle(false, EventResetMode.AutoReset);
+		readonly EventWaitHandle _loggingLock = new(false, EventResetMode.AutoReset);
 
 		// generic serial device (send a message, get a response)
-		private GenericSerialDevice _genericSerialDevice = new GenericSerialDevice();
+		private readonly GenericSerialDevice _genericSerialDevice = new();
 
 		/// <summary>
 		/// Constructor
@@ -45,29 +45,64 @@ namespace Sensit.App.Datalogger
 			// Initialize the form.
 			InitializeComponent();
 
-			// Recall the most recently used log file.
+			// Populate available settings.
+			comboBoxSerialPort.DataSource = SerialPort.GetPortNames();
+			comboBoxBaudRate.DataSource = _genericSerialDevice.SupportedBaudRates;
+			comboBoxDataBits.DataSource = _genericSerialDevice.SupportedDataBits;
+			comboBoxParity.DataSource = Enum.GetNames(typeof(Parity));
+			comboBoxStopBits.DataSource = Enum.GetNames(typeof(StopBits));
+			comboBoxHandshake.DataSource = Enum.GetNames(typeof(Handshake));
+
+			// Select the most recently used settings.
 			textBoxFilename.Text = Properties.Settings.Default.Filename;
-
-			// Find all available serial ports.
-			comboBoxSerialPort.Items.AddRange(SerialPort.GetPortNames());
-
-			// Select the most recently used serial port.
 			comboBoxSerialPort.Text = Properties.Settings.Default.Port;
-
-			// Find all available baud rates.
-			foreach (int b in _genericSerialDevice.SupportedBaudRates)
-			{
-				comboBoxBaudRate.Items.Add(b);
-			}
-
-			// Select the most recently used baud rate.
 			comboBoxBaudRate.Text = Properties.Settings.Default.BaudRate.ToString();
-
-			// Set the most recently used command.
+			comboBoxDataBits.Text = Properties.Settings.Default.DataBits.ToString();
+			comboBoxParity.Text = Properties.Settings.Default.Parity;
+			comboBoxStopBits.Text = Properties.Settings.Default.StopBits;
+			comboBoxHandshake.Text = Properties.Settings.Default.Handshake;
 			textBoxCommand.Text = Properties.Settings.Default.Command;
+			numericUpDownInterval.Value = Properties.Settings.Default.Interval;
 
-			// Instantiate the timer and set the most recent interval.
-			_timer = new System.Timers.Timer(Properties.Settings.Default.Interval);
+			// When the filename is changed, save the new value.
+			textBoxFilename.TextChanged += new ((sender, e) =>
+			{
+				Properties.Settings.Default.Filename = textBoxFilename.Text;
+			});
+
+			// When the serial port is changed, save the new value.
+			comboBoxSerialPort.SelectedIndexChanged += new ((sender, e) =>
+			{
+				Properties.Settings.Default.Port = comboBoxSerialPort.Text;
+			});
+
+			comboBoxBaudRate.SelectedIndexChanged += ComboBoxBaudRate_SelectedIndexChanged;
+			comboBoxDataBits.SelectedIndexChanged += ComboBoxDataBits_SelectedIndexChanged;
+
+			// When the parity is changed, save the new value.
+			comboBoxParity.SelectedIndexChanged += new ((sender, e) =>
+			{
+				Properties.Settings.Default.Parity = comboBoxParity.Text;
+			});
+
+			// When the number of stop bits is changed, save the new value.
+			comboBoxStopBits.SelectedIndexChanged += new ((sender, e) =>
+			{
+				Properties.Settings.Default.StopBits = comboBoxStopBits.Text;
+			});
+
+			// When the handshaking mode is changed, save the new value.
+			comboBoxHandshake.SelectedIndexChanged += new ((sender, e) =>
+			{
+				Properties.Settings.Default.Handshake = comboBoxHandshake.Text;
+			});
+
+			// When the selected logging interval is changed, save the new value.
+			// Set the timer's interval property (which controls how often samples are taken).
+			numericUpDownInterval.ValueChanged += new ((sender, e) =>
+			{
+				_timer.Interval = decimal.ToDouble(numericUpDownInterval.Value);
+			});
 
 			// Set the method which runs when the timer elapses.
 			_timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
@@ -119,18 +154,7 @@ namespace Sensit.App.Datalogger
 		}
 
 		/// <summary>
-		/// When the selected serial port is changed, save the new value.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ComboBoxSerialPort_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			// Save the serial port number to the application settings file.
-			Properties.Settings.Default.Port = comboBoxSerialPort.Text;
-		}
-
-		/// <summary>
-		/// When the selected baud rate is changed, save the new value.
+		/// When the baud rate is changed, save the new value.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -138,7 +162,7 @@ namespace Sensit.App.Datalogger
 		{
 			try
 			{
-				// Save the new baud rate to the application settings file.
+				// Save the new setting to the application settings file.
 				Properties.Settings.Default.BaudRate = Convert.ToInt32(comboBoxBaudRate.Text);
 			}
 			catch (FormatException ex)
@@ -152,14 +176,32 @@ namespace Sensit.App.Datalogger
 		}
 
 		/// <summary>
-		/// When the selected logging interval is changed, save the new value.
+		/// When the number of data bits is changed, save the new value.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void NumericUpDownInterval_ValueChanged(object sender, EventArgs e)
+		/// <exception cref="NotImplementedException"></exception>
+		private void ComboBoxDataBits_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			// Set the timer's interval property (which controls how often samples are taken).
-			_timer.Interval = decimal.ToDouble(numericUpDownInterval.Value);
+			try
+			{
+				// Save the new setting to the application settings file.
+				Properties.Settings.Default.DataBits = Convert.ToInt32(comboBoxDataBits.Text);
+			}
+			catch (FormatException ex)
+			{
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
+			}
+			catch (OverflowException ex)
+			{
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
+			}
+		}
+
+		private void ComboBoxParity_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			// Save the new setting to the application settings file.
+			Properties.Settings.Default.Parity = comboBoxParity.Text;
 		}
 
 		/// <summary>
@@ -213,7 +255,7 @@ namespace Sensit.App.Datalogger
 
 					// Update the status message.
 					_samples++;
-					toolStripStatusLabel1.Text = "Logged " + _samples + " samples.";
+					toolStripStatusLabel.Text = "Logged " + _samples + " samples.";
 				}));
 
 				// Start the timer again.
@@ -247,11 +289,16 @@ namespace Sensit.App.Datalogger
 			{
 				try
 				{
-					// Parse the selected baud rate.
-					int baudrate = Convert.ToInt32(comboBoxBaudRate.Text);
+					// Parse the selected serial port settings.
+					_genericSerialDevice.PortName = Properties.Settings.Default.Port;
+					_genericSerialDevice.BaudRate = Convert.ToInt32(comboBoxBaudRate.Text);
+					_genericSerialDevice.DataBits = Convert.ToInt32(comboBoxDataBits.Text);
+					_genericSerialDevice.Parity = (Parity)Enum.Parse(typeof(Parity), comboBoxParity.Text);
+					_genericSerialDevice.StopBits = (StopBits)Enum.Parse(typeof(StopBits), comboBoxStopBits.Text);
+					_genericSerialDevice.Handshake = (Handshake)Enum.Parse(typeof(Handshake), comboBoxHandshake.Text);
 
-					// Open the DUT serial port.
-					_genericSerialDevice.Open(comboBoxSerialPort.Text, baudrate);
+					// Open the serial port.
+					_genericSerialDevice.Open();
 
 					// Set up the CSV file writer filestream.
 					_writer = new CsvWriter(Properties.Settings.Default.Filename, true);
@@ -263,7 +310,7 @@ namespace Sensit.App.Datalogger
 					_logging = 0;
 
 					// Update GUI.
-					toolStripStatusLabel1.Text = "Logging data...";
+					toolStripStatusLabel.Text = "Logging data...";
 					buttonStart.Enabled = false;
 					buttonStop.Enabled = true;
 				}
@@ -311,7 +358,7 @@ namespace Sensit.App.Datalogger
 					// Update GUI.
 					buttonStart.Enabled = true;
 					buttonStop.Enabled = false;
-					toolStripStatusLabel1.Text = "Ready...";
+					toolStripStatusLabel.Text = "Ready...";
 				}
 				catch (Exception ex)
 				{
@@ -342,6 +389,11 @@ namespace Sensit.App.Datalogger
 
 			// Save settings.
 			Properties.Settings.Default.Save();
+		}
+
+		private void RadioButton_CheckedChanged(object sender, EventArgs e)
+		{
+
 		}
 	}
 }

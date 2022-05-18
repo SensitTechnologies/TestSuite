@@ -66,10 +66,12 @@ namespace Sensit.TestSDK.Devices
 		/// </summary>
 		public Gas GasSelection { get; set; } = Gas.Air;
 
-		/// <summary>
-		/// Baud rates supported by the mass flow controller.
-		/// </summary>
+		// supported serial settings
 		public override List<int> SupportedBaudRates { get; } = new List<int> { 9600, 19200 };
+		public override List<int> SupportedDataBits { get; } = new List<int> { 8 };
+		public override List<Parity> SupportedParity { get; } = new List<Parity> { Parity.None };
+		public override List<StopBits> SupportedStopBits { get; } = new List<StopBits> { StopBits.One };
+		public override List<Handshake> SupportedHandshake { get; } = new List<Handshake> { Handshake.None };
 
 		/// <summary>
 		/// Commands sent to the device

@@ -29,218 +29,235 @@
 		private void InitializeComponent()
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLog));
-			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-			this.groupBoxMassFlow = new System.Windows.Forms.GroupBox();
-			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			this.statusStrip = new System.Windows.Forms.StatusStrip();
+			this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			this.groupBoxFilename = new System.Windows.Forms.GroupBox();
+			this.tableLayoutPanelFilename = new System.Windows.Forms.TableLayoutPanel();
 			this.textBoxFilename = new System.Windows.Forms.TextBox();
 			this.buttonBrowse = new System.Windows.Forms.Button();
-			this.groupBox4 = new System.Windows.Forms.GroupBox();
-			this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+			this.groupBoxStartStop = new System.Windows.Forms.GroupBox();
+			this.tableLayoutPanelStartStop = new System.Windows.Forms.TableLayoutPanel();
+			this.tableLayoutPanelButtons = new System.Windows.Forms.TableLayoutPanel();
 			this.buttonStop = new System.Windows.Forms.Button();
 			this.buttonStart = new System.Windows.Forms.Button();
 			this.tableLayoutPanelSerialPort = new System.Windows.Forms.TableLayoutPanel();
+			this.comboBoxDataBits = new System.Windows.Forms.ComboBox();
+			this.labelDataBits = new System.Windows.Forms.Label();
 			this.labelComPort = new System.Windows.Forms.Label();
 			this.comboBoxSerialPort = new System.Windows.Forms.ComboBox();
 			this.buttonPortRefresh = new System.Windows.Forms.Button();
 			this.labelBaudRate = new System.Windows.Forms.Label();
 			this.comboBoxBaudRate = new System.Windows.Forms.ComboBox();
+			this.comboBoxParity = new System.Windows.Forms.ComboBox();
 			this.labelStopBits = new System.Windows.Forms.Label();
 			this.comboBoxStopBits = new System.Windows.Forms.ComboBox();
 			this.labelParity = new System.Windows.Forms.Label();
-			this.comboBoxParity = new System.Windows.Forms.ComboBox();
-			this.radioButtonOpen = new System.Windows.Forms.RadioButton();
-			this.radioButtonClosed = new System.Windows.Forms.RadioButton();
+			this.comboBoxHandshake = new System.Windows.Forms.ComboBox();
+			this.labelHandshake = new System.Windows.Forms.Label();
 			this.groupBoxSerialPort = new System.Windows.Forms.GroupBox();
 			this.groupBoxSample = new System.Windows.Forms.GroupBox();
-			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+			this.tableLayoutPanelSample = new System.Windows.Forms.TableLayoutPanel();
 			this.numericUpDownInterval = new System.Windows.Forms.NumericUpDown();
 			this.label5 = new System.Windows.Forms.Label();
-			this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+			this.dateTimePickerTime = new System.Windows.Forms.DateTimePicker();
 			this.groupBoxStop = new System.Windows.Forms.GroupBox();
-			this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-			this.radioButton2 = new System.Windows.Forms.RadioButton();
-			this.radioButton3 = new System.Windows.Forms.RadioButton();
-			this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-			this.radioButton1 = new System.Windows.Forms.RadioButton();
-			this.radioButton4 = new System.Windows.Forms.RadioButton();
-			this.numericUpDown7 = new System.Windows.Forms.NumericUpDown();
-			this.numericUpDown8 = new System.Windows.Forms.NumericUpDown();
-			this.numericUpDown9 = new System.Windows.Forms.NumericUpDown();
+			this.tableLayoutPanelStop = new System.Windows.Forms.TableLayoutPanel();
+			this.radioButtonElapsedTime = new System.Windows.Forms.RadioButton();
+			this.radioButtonDateTime = new System.Windows.Forms.RadioButton();
+			this.dateTimePickerDate = new System.Windows.Forms.DateTimePicker();
+			this.radioButtonNumScans = new System.Windows.Forms.RadioButton();
+			this.radioButtonStop = new System.Windows.Forms.RadioButton();
+			this.numericUpDownHours = new System.Windows.Forms.NumericUpDown();
+			this.numericUpDownMinutes = new System.Windows.Forms.NumericUpDown();
+			this.numericUpDownSeconds = new System.Windows.Forms.NumericUpDown();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
-			this.numericUpDown6 = new System.Windows.Forms.NumericUpDown();
+			this.numericUpDownNumScans = new System.Windows.Forms.NumericUpDown();
 			this.groupBoxCommand = new System.Windows.Forms.GroupBox();
 			this.textBoxCommand = new System.Windows.Forms.TextBox();
 			this.groupBoxResponse = new System.Windows.Forms.GroupBox();
 			this.textBoxResponse = new System.Windows.Forms.TextBox();
-			this.menuStrip1.SuspendLayout();
-			this.statusStrip1.SuspendLayout();
-			this.groupBoxMassFlow.SuspendLayout();
-			this.tableLayoutPanel1.SuspendLayout();
-			this.groupBox4.SuspendLayout();
-			this.tableLayoutPanel3.SuspendLayout();
-			this.tableLayoutPanel2.SuspendLayout();
+			this.menuStrip.SuspendLayout();
+			this.statusStrip.SuspendLayout();
+			this.groupBoxFilename.SuspendLayout();
+			this.tableLayoutPanelFilename.SuspendLayout();
+			this.groupBoxStartStop.SuspendLayout();
+			this.tableLayoutPanelStartStop.SuspendLayout();
+			this.tableLayoutPanelButtons.SuspendLayout();
 			this.tableLayoutPanelSerialPort.SuspendLayout();
 			this.groupBoxSerialPort.SuspendLayout();
 			this.groupBoxSample.SuspendLayout();
-			this.tableLayoutPanel4.SuspendLayout();
+			this.tableLayoutPanelSample.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownInterval)).BeginInit();
 			this.groupBoxStop.SuspendLayout();
-			this.tableLayoutPanel5.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
+			this.tableLayoutPanelStop.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownHours)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutes)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownSeconds)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumScans)).BeginInit();
 			this.groupBoxCommand.SuspendLayout();
 			this.groupBoxResponse.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// menuStrip1
+			// menuStrip
 			// 
-			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.menuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+			this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem});
-			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(384, 24);
-			this.menuStrip1.TabIndex = 0;
-			this.menuStrip1.Text = "menuStrip1";
+			this.menuStrip.Location = new System.Drawing.Point(0, 0);
+			this.menuStrip.Name = "menuStrip";
+			this.menuStrip.Padding = new System.Windows.Forms.Padding(8, 3, 0, 3);
+			this.menuStrip.Size = new System.Drawing.Size(532, 30);
+			this.menuStrip.TabIndex = 0;
+			this.menuStrip.Text = "menuStrip1";
 			// 
 			// fileToolStripMenuItem
 			// 
 			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exitToolStripMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-			this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+			this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
 			this.fileToolStripMenuItem.Text = "&File";
 			// 
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(93, 22);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(116, 26);
 			this.exitToolStripMenuItem.Text = "&Exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
 			// 
-			// statusStrip1
+			// statusStrip
 			// 
-			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 454);
-			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(384, 22);
-			this.statusStrip1.TabIndex = 1;
-			this.statusStrip1.Text = "statusStrip1";
+			this.statusStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+			this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel});
+			this.statusStrip.Location = new System.Drawing.Point(0, 727);
+			this.statusStrip.Name = "statusStrip";
+			this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
+			this.statusStrip.Size = new System.Drawing.Size(532, 26);
+			this.statusStrip.TabIndex = 1;
+			this.statusStrip.Text = "statusStrip1";
 			// 
-			// toolStripStatusLabel1
+			// toolStripStatusLabel
 			// 
-			this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-			this.toolStripStatusLabel1.Size = new System.Drawing.Size(39, 17);
-			this.toolStripStatusLabel1.Text = "Ready";
+			this.toolStripStatusLabel.Name = "toolStripStatusLabel";
+			this.toolStripStatusLabel.Size = new System.Drawing.Size(50, 20);
+			this.toolStripStatusLabel.Text = "Ready";
 			// 
-			// groupBoxMassFlow
+			// groupBoxFilename
 			// 
-			this.groupBoxMassFlow.AutoSize = true;
-			this.groupBoxMassFlow.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.groupBoxMassFlow.Controls.Add(this.tableLayoutPanel1);
-			this.groupBoxMassFlow.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBoxMassFlow.Location = new System.Drawing.Point(0, 24);
-			this.groupBoxMassFlow.Name = "groupBoxMassFlow";
-			this.groupBoxMassFlow.Size = new System.Drawing.Size(384, 48);
-			this.groupBoxMassFlow.TabIndex = 7;
-			this.groupBoxMassFlow.TabStop = false;
-			this.groupBoxMassFlow.Text = "Filename";
+			this.groupBoxFilename.AutoSize = true;
+			this.groupBoxFilename.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.groupBoxFilename.Controls.Add(this.tableLayoutPanelFilename);
+			this.groupBoxFilename.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBoxFilename.Location = new System.Drawing.Point(0, 30);
+			this.groupBoxFilename.Margin = new System.Windows.Forms.Padding(5);
+			this.groupBoxFilename.Name = "groupBoxFilename";
+			this.groupBoxFilename.Padding = new System.Windows.Forms.Padding(5);
+			this.groupBoxFilename.Size = new System.Drawing.Size(532, 75);
+			this.groupBoxFilename.TabIndex = 7;
+			this.groupBoxFilename.TabStop = false;
+			this.groupBoxFilename.Text = "Filename";
 			// 
-			// tableLayoutPanel1
+			// tableLayoutPanelFilename
 			// 
-			this.tableLayoutPanel1.AutoSize = true;
-			this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutPanel1.ColumnCount = 2;
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel1.Controls.Add(this.textBoxFilename, 0, 0);
-			this.tableLayoutPanel1.Controls.Add(this.buttonBrowse, 1, 0);
-			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 16);
-			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.RowCount = 1;
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(378, 29);
-			this.tableLayoutPanel1.TabIndex = 1;
+			this.tableLayoutPanelFilename.AutoSize = true;
+			this.tableLayoutPanelFilename.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.tableLayoutPanelFilename.ColumnCount = 2;
+			this.tableLayoutPanelFilename.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanelFilename.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelFilename.Controls.Add(this.textBoxFilename, 0, 0);
+			this.tableLayoutPanelFilename.Controls.Add(this.buttonBrowse, 1, 0);
+			this.tableLayoutPanelFilename.Dock = System.Windows.Forms.DockStyle.Top;
+			this.tableLayoutPanelFilename.Location = new System.Drawing.Point(5, 25);
+			this.tableLayoutPanelFilename.Margin = new System.Windows.Forms.Padding(5);
+			this.tableLayoutPanelFilename.Name = "tableLayoutPanelFilename";
+			this.tableLayoutPanelFilename.RowCount = 1;
+			this.tableLayoutPanelFilename.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelFilename.Size = new System.Drawing.Size(522, 45);
+			this.tableLayoutPanelFilename.TabIndex = 1;
 			// 
 			// textBoxFilename
 			// 
 			this.textBoxFilename.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBoxFilename.Location = new System.Drawing.Point(3, 3);
+			this.textBoxFilename.Location = new System.Drawing.Point(5, 5);
+			this.textBoxFilename.Margin = new System.Windows.Forms.Padding(5);
 			this.textBoxFilename.Name = "textBoxFilename";
-			this.textBoxFilename.Size = new System.Drawing.Size(291, 20);
+			this.textBoxFilename.Size = new System.Drawing.Size(401, 27);
 			this.textBoxFilename.TabIndex = 9;
 			// 
 			// buttonBrowse
 			// 
 			this.buttonBrowse.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.buttonBrowse.Location = new System.Drawing.Point(300, 3);
+			this.buttonBrowse.Location = new System.Drawing.Point(416, 5);
+			this.buttonBrowse.Margin = new System.Windows.Forms.Padding(5);
 			this.buttonBrowse.Name = "buttonBrowse";
-			this.buttonBrowse.Size = new System.Drawing.Size(75, 23);
+			this.buttonBrowse.Size = new System.Drawing.Size(101, 35);
 			this.buttonBrowse.TabIndex = 2;
 			this.buttonBrowse.Text = "Browse";
 			this.buttonBrowse.UseVisualStyleBackColor = true;
 			this.buttonBrowse.Click += new System.EventHandler(this.ButtonBrowse_Click);
 			// 
-			// groupBox4
+			// groupBoxStartStop
 			// 
-			this.groupBox4.AutoSize = true;
-			this.groupBox4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.groupBox4.Controls.Add(this.tableLayoutPanel3);
-			this.groupBox4.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.groupBox4.Location = new System.Drawing.Point(0, 400);
-			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(384, 54);
-			this.groupBox4.TabIndex = 13;
-			this.groupBox4.TabStop = false;
+			this.groupBoxStartStop.AutoSize = true;
+			this.groupBoxStartStop.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.groupBoxStartStop.Controls.Add(this.tableLayoutPanelStartStop);
+			this.groupBoxStartStop.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.groupBoxStartStop.Location = new System.Drawing.Point(0, 648);
+			this.groupBoxStartStop.Margin = new System.Windows.Forms.Padding(5);
+			this.groupBoxStartStop.Name = "groupBoxStartStop";
+			this.groupBoxStartStop.Padding = new System.Windows.Forms.Padding(5);
+			this.groupBoxStartStop.Size = new System.Drawing.Size(532, 79);
+			this.groupBoxStartStop.TabIndex = 13;
+			this.groupBoxStartStop.TabStop = false;
+			this.groupBoxStartStop.Text = "Start/Stop";
 			// 
-			// tableLayoutPanel3
+			// tableLayoutPanelStartStop
 			// 
-			this.tableLayoutPanel3.AutoSize = true;
-			this.tableLayoutPanel3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutPanel3.ColumnCount = 1;
-			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanel2, 0, 0);
-			this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 16);
-			this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-			this.tableLayoutPanel3.RowCount = 1;
-			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel3.Size = new System.Drawing.Size(378, 35);
-			this.tableLayoutPanel3.TabIndex = 1;
+			this.tableLayoutPanelStartStop.AutoSize = true;
+			this.tableLayoutPanelStartStop.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.tableLayoutPanelStartStop.ColumnCount = 1;
+			this.tableLayoutPanelStartStop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanelStartStop.Controls.Add(this.tableLayoutPanelButtons, 0, 0);
+			this.tableLayoutPanelStartStop.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableLayoutPanelStartStop.Location = new System.Drawing.Point(5, 25);
+			this.tableLayoutPanelStartStop.Margin = new System.Windows.Forms.Padding(5);
+			this.tableLayoutPanelStartStop.Name = "tableLayoutPanelStartStop";
+			this.tableLayoutPanelStartStop.RowCount = 1;
+			this.tableLayoutPanelStartStop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanelStartStop.Size = new System.Drawing.Size(522, 49);
+			this.tableLayoutPanelStartStop.TabIndex = 1;
 			// 
-			// tableLayoutPanel2
+			// tableLayoutPanelButtons
 			// 
-			this.tableLayoutPanel2.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.tableLayoutPanel2.AutoSize = true;
-			this.tableLayoutPanel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutPanel2.ColumnCount = 2;
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel2.Controls.Add(this.buttonStop, 1, 0);
-			this.tableLayoutPanel2.Controls.Add(this.buttonStart, 0, 0);
-			this.tableLayoutPanel2.Location = new System.Drawing.Point(108, 3);
-			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-			this.tableLayoutPanel2.RowCount = 1;
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel2.Size = new System.Drawing.Size(162, 29);
-			this.tableLayoutPanel2.TabIndex = 0;
+			this.tableLayoutPanelButtons.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.tableLayoutPanelButtons.AutoSize = true;
+			this.tableLayoutPanelButtons.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.tableLayoutPanelButtons.ColumnCount = 2;
+			this.tableLayoutPanelButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanelButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanelButtons.Controls.Add(this.buttonStop, 1, 0);
+			this.tableLayoutPanelButtons.Controls.Add(this.buttonStart, 0, 0);
+			this.tableLayoutPanelButtons.Location = new System.Drawing.Point(150, 5);
+			this.tableLayoutPanelButtons.Margin = new System.Windows.Forms.Padding(5);
+			this.tableLayoutPanelButtons.Name = "tableLayoutPanelButtons";
+			this.tableLayoutPanelButtons.RowCount = 1;
+			this.tableLayoutPanelButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanelButtons.Size = new System.Drawing.Size(222, 39);
+			this.tableLayoutPanelButtons.TabIndex = 0;
 			// 
 			// buttonStop
 			// 
 			this.buttonStop.Enabled = false;
-			this.buttonStop.Location = new System.Drawing.Point(84, 3);
+			this.buttonStop.Location = new System.Drawing.Point(116, 5);
+			this.buttonStop.Margin = new System.Windows.Forms.Padding(5);
 			this.buttonStop.Name = "buttonStop";
-			this.buttonStop.Size = new System.Drawing.Size(75, 23);
+			this.buttonStop.Size = new System.Drawing.Size(101, 29);
 			this.buttonStop.TabIndex = 1;
 			this.buttonStop.Text = "Stop";
 			this.buttonStop.UseVisualStyleBackColor = true;
@@ -248,9 +265,10 @@
 			// 
 			// buttonStart
 			// 
-			this.buttonStart.Location = new System.Drawing.Point(3, 3);
+			this.buttonStart.Location = new System.Drawing.Point(5, 5);
+			this.buttonStart.Margin = new System.Windows.Forms.Padding(5);
 			this.buttonStart.Name = "buttonStart";
-			this.buttonStart.Size = new System.Drawing.Size(75, 23);
+			this.buttonStart.Size = new System.Drawing.Size(101, 29);
 			this.buttonStart.TabIndex = 0;
 			this.buttonStart.Text = "Start";
 			this.buttonStart.UseVisualStyleBackColor = true;
@@ -260,40 +278,66 @@
 			// 
 			this.tableLayoutPanelSerialPort.AutoSize = true;
 			this.tableLayoutPanelSerialPort.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutPanelSerialPort.ColumnCount = 6;
+			this.tableLayoutPanelSerialPort.ColumnCount = 5;
 			this.tableLayoutPanelSerialPort.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanelSerialPort.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.tableLayoutPanelSerialPort.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanelSerialPort.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanelSerialPort.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanelSerialPort.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelSerialPort.Controls.Add(this.comboBoxDataBits, 0, 2);
+			this.tableLayoutPanelSerialPort.Controls.Add(this.labelDataBits, 0, 2);
 			this.tableLayoutPanelSerialPort.Controls.Add(this.labelComPort, 0, 0);
 			this.tableLayoutPanelSerialPort.Controls.Add(this.comboBoxSerialPort, 1, 0);
 			this.tableLayoutPanelSerialPort.Controls.Add(this.buttonPortRefresh, 2, 0);
 			this.tableLayoutPanelSerialPort.Controls.Add(this.labelBaudRate, 0, 1);
 			this.tableLayoutPanelSerialPort.Controls.Add(this.comboBoxBaudRate, 1, 1);
-			this.tableLayoutPanelSerialPort.Controls.Add(this.labelStopBits, 3, 0);
-			this.tableLayoutPanelSerialPort.Controls.Add(this.comboBoxStopBits, 4, 0);
-			this.tableLayoutPanelSerialPort.Controls.Add(this.labelParity, 3, 1);
-			this.tableLayoutPanelSerialPort.Controls.Add(this.comboBoxParity, 4, 1);
-			this.tableLayoutPanelSerialPort.Controls.Add(this.radioButtonOpen, 5, 0);
-			this.tableLayoutPanelSerialPort.Controls.Add(this.radioButtonClosed, 5, 1);
+			this.tableLayoutPanelSerialPort.Controls.Add(this.comboBoxParity, 4, 0);
+			this.tableLayoutPanelSerialPort.Controls.Add(this.labelStopBits, 3, 1);
+			this.tableLayoutPanelSerialPort.Controls.Add(this.comboBoxStopBits, 4, 1);
+			this.tableLayoutPanelSerialPort.Controls.Add(this.labelParity, 3, 0);
+			this.tableLayoutPanelSerialPort.Controls.Add(this.comboBoxHandshake, 4, 2);
+			this.tableLayoutPanelSerialPort.Controls.Add(this.labelHandshake, 3, 2);
 			this.tableLayoutPanelSerialPort.Dock = System.Windows.Forms.DockStyle.Top;
-			this.tableLayoutPanelSerialPort.Location = new System.Drawing.Point(3, 16);
+			this.tableLayoutPanelSerialPort.Location = new System.Drawing.Point(5, 25);
+			this.tableLayoutPanelSerialPort.Margin = new System.Windows.Forms.Padding(5);
 			this.tableLayoutPanelSerialPort.Name = "tableLayoutPanelSerialPort";
-			this.tableLayoutPanelSerialPort.RowCount = 2;
+			this.tableLayoutPanelSerialPort.RowCount = 3;
 			this.tableLayoutPanelSerialPort.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelSerialPort.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelSerialPort.Size = new System.Drawing.Size(378, 56);
+			this.tableLayoutPanelSerialPort.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelSerialPort.Size = new System.Drawing.Size(522, 121);
 			this.tableLayoutPanelSerialPort.TabIndex = 14;
+			// 
+			// comboBoxDataBits
+			// 
+			this.comboBoxDataBits.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.comboBoxDataBits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxDataBits.FormattingEnabled = true;
+			this.comboBoxDataBits.Location = new System.Drawing.Point(95, 88);
+			this.comboBoxDataBits.Margin = new System.Windows.Forms.Padding(5);
+			this.comboBoxDataBits.Name = "comboBoxDataBits";
+			this.comboBoxDataBits.Size = new System.Drawing.Size(135, 28);
+			this.comboBoxDataBits.TabIndex = 15;
+			// 
+			// labelDataBits
+			// 
+			this.labelDataBits.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelDataBits.AutoSize = true;
+			this.labelDataBits.Location = new System.Drawing.Point(5, 92);
+			this.labelDataBits.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+			this.labelDataBits.Name = "labelDataBits";
+			this.labelDataBits.Size = new System.Drawing.Size(72, 20);
+			this.labelDataBits.TabIndex = 14;
+			this.labelDataBits.Text = "Data Bits:";
 			// 
 			// labelComPort
 			// 
 			this.labelComPort.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelComPort.AutoSize = true;
-			this.labelComPort.Location = new System.Drawing.Point(3, 8);
+			this.labelComPort.Location = new System.Drawing.Point(5, 12);
+			this.labelComPort.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
 			this.labelComPort.Name = "labelComPort";
-			this.labelComPort.Size = new System.Drawing.Size(56, 13);
+			this.labelComPort.Size = new System.Drawing.Size(75, 20);
 			this.labelComPort.TabIndex = 0;
 			this.labelComPort.Text = "COM Port:";
 			// 
@@ -303,17 +347,19 @@
 			this.comboBoxSerialPort.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.comboBoxSerialPort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxSerialPort.FormattingEnabled = true;
-			this.comboBoxSerialPort.Location = new System.Drawing.Point(70, 3);
+			this.comboBoxSerialPort.Location = new System.Drawing.Point(95, 5);
+			this.comboBoxSerialPort.Margin = new System.Windows.Forms.Padding(5);
 			this.comboBoxSerialPort.Name = "comboBoxSerialPort";
-			this.comboBoxSerialPort.Size = new System.Drawing.Size(72, 21);
+			this.comboBoxSerialPort.Size = new System.Drawing.Size(135, 28);
 			this.comboBoxSerialPort.TabIndex = 1;
 			// 
 			// buttonPortRefresh
 			// 
 			this.buttonPortRefresh.Image = ((System.Drawing.Image)(resources.GetObject("buttonPortRefresh.Image")));
-			this.buttonPortRefresh.Location = new System.Drawing.Point(148, 3);
+			this.buttonPortRefresh.Location = new System.Drawing.Point(240, 5);
+			this.buttonPortRefresh.Margin = new System.Windows.Forms.Padding(5);
 			this.buttonPortRefresh.Name = "buttonPortRefresh";
-			this.buttonPortRefresh.Size = new System.Drawing.Size(28, 23);
+			this.buttonPortRefresh.Size = new System.Drawing.Size(37, 35);
 			this.buttonPortRefresh.TabIndex = 2;
 			this.buttonPortRefresh.UseVisualStyleBackColor = true;
 			// 
@@ -321,9 +367,10 @@
 			// 
 			this.labelBaudRate.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelBaudRate.AutoSize = true;
-			this.labelBaudRate.Location = new System.Drawing.Point(3, 36);
+			this.labelBaudRate.Location = new System.Drawing.Point(5, 54);
+			this.labelBaudRate.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
 			this.labelBaudRate.Name = "labelBaudRate";
-			this.labelBaudRate.Size = new System.Drawing.Size(61, 13);
+			this.labelBaudRate.Size = new System.Drawing.Size(80, 20);
 			this.labelBaudRate.TabIndex = 3;
 			this.labelBaudRate.Text = "Baud Rate:";
 			// 
@@ -331,84 +378,77 @@
 			// 
 			this.comboBoxBaudRate.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.comboBoxBaudRate.FormattingEnabled = true;
-			this.comboBoxBaudRate.Items.AddRange(new object[] {
-            "9600",
-            "19200",
-            "38400",
-            "57600",
-            "76800",
-            "115200"});
-			this.comboBoxBaudRate.Location = new System.Drawing.Point(70, 32);
+			this.comboBoxBaudRate.Location = new System.Drawing.Point(95, 50);
+			this.comboBoxBaudRate.Margin = new System.Windows.Forms.Padding(5);
 			this.comboBoxBaudRate.Name = "comboBoxBaudRate";
-			this.comboBoxBaudRate.Size = new System.Drawing.Size(72, 21);
+			this.comboBoxBaudRate.Size = new System.Drawing.Size(135, 28);
 			this.comboBoxBaudRate.TabIndex = 4;
+			// 
+			// comboBoxParity
+			// 
+			this.comboBoxParity.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.comboBoxParity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxParity.FormattingEnabled = true;
+			this.comboBoxParity.Location = new System.Drawing.Point(382, 5);
+			this.comboBoxParity.Margin = new System.Windows.Forms.Padding(5);
+			this.comboBoxParity.Name = "comboBoxParity";
+			this.comboBoxParity.Size = new System.Drawing.Size(135, 28);
+			this.comboBoxParity.TabIndex = 11;
 			// 
 			// labelStopBits
 			// 
 			this.labelStopBits.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelStopBits.AutoSize = true;
-			this.labelStopBits.Location = new System.Drawing.Point(182, 8);
+			this.labelStopBits.Location = new System.Drawing.Point(287, 54);
+			this.labelStopBits.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
 			this.labelStopBits.Name = "labelStopBits";
-			this.labelStopBits.Size = new System.Drawing.Size(52, 13);
-			this.labelStopBits.TabIndex = 10;
+			this.labelStopBits.Size = new System.Drawing.Size(71, 20);
+			this.labelStopBits.TabIndex = 5;
 			this.labelStopBits.Text = "Stop Bits:";
 			// 
 			// comboBoxStopBits
 			// 
 			this.comboBoxStopBits.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.comboBoxStopBits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxStopBits.FormattingEnabled = true;
-			this.comboBoxStopBits.Items.AddRange(new object[] {
-            "1",
-            "2"});
-			this.comboBoxStopBits.Location = new System.Drawing.Point(240, 3);
+			this.comboBoxStopBits.Location = new System.Drawing.Point(382, 50);
+			this.comboBoxStopBits.Margin = new System.Windows.Forms.Padding(5);
 			this.comboBoxStopBits.Name = "comboBoxStopBits";
-			this.comboBoxStopBits.Size = new System.Drawing.Size(72, 21);
-			this.comboBoxStopBits.TabIndex = 11;
+			this.comboBoxStopBits.Size = new System.Drawing.Size(135, 28);
+			this.comboBoxStopBits.TabIndex = 6;
 			// 
 			// labelParity
 			// 
 			this.labelParity.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelParity.AutoSize = true;
-			this.labelParity.Location = new System.Drawing.Point(182, 36);
+			this.labelParity.Location = new System.Drawing.Point(287, 12);
+			this.labelParity.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
 			this.labelParity.Name = "labelParity";
-			this.labelParity.Size = new System.Drawing.Size(36, 13);
-			this.labelParity.TabIndex = 5;
+			this.labelParity.Size = new System.Drawing.Size(48, 20);
+			this.labelParity.TabIndex = 12;
 			this.labelParity.Text = "Parity:";
 			// 
-			// comboBoxParity
+			// comboBoxHandshake
 			// 
-			this.comboBoxParity.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.comboBoxParity.FormattingEnabled = true;
-			this.comboBoxParity.Items.AddRange(new object[] {
-            "Even",
-            "Odd",
-            "None"});
-			this.comboBoxParity.Location = new System.Drawing.Point(240, 32);
-			this.comboBoxParity.Name = "comboBoxParity";
-			this.comboBoxParity.Size = new System.Drawing.Size(72, 21);
-			this.comboBoxParity.TabIndex = 6;
+			this.comboBoxHandshake.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.comboBoxHandshake.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxHandshake.FormattingEnabled = true;
+			this.comboBoxHandshake.Location = new System.Drawing.Point(382, 88);
+			this.comboBoxHandshake.Margin = new System.Windows.Forms.Padding(5);
+			this.comboBoxHandshake.Name = "comboBoxHandshake";
+			this.comboBoxHandshake.Size = new System.Drawing.Size(135, 28);
+			this.comboBoxHandshake.TabIndex = 13;
 			// 
-			// radioButtonOpen
+			// labelHandshake
 			// 
-			this.radioButtonOpen.AutoSize = true;
-			this.radioButtonOpen.Location = new System.Drawing.Point(318, 3);
-			this.radioButtonOpen.Name = "radioButtonOpen";
-			this.radioButtonOpen.Size = new System.Drawing.Size(51, 17);
-			this.radioButtonOpen.TabIndex = 12;
-			this.radioButtonOpen.Text = "Open";
-			this.radioButtonOpen.UseVisualStyleBackColor = true;
-			// 
-			// radioButtonClosed
-			// 
-			this.radioButtonClosed.AutoSize = true;
-			this.radioButtonClosed.Checked = true;
-			this.radioButtonClosed.Location = new System.Drawing.Point(318, 32);
-			this.radioButtonClosed.Name = "radioButtonClosed";
-			this.radioButtonClosed.Size = new System.Drawing.Size(57, 17);
-			this.radioButtonClosed.TabIndex = 13;
-			this.radioButtonClosed.TabStop = true;
-			this.radioButtonClosed.Text = "Closed";
-			this.radioButtonClosed.UseVisualStyleBackColor = true;
+			this.labelHandshake.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelHandshake.AutoSize = true;
+			this.labelHandshake.Location = new System.Drawing.Point(287, 92);
+			this.labelHandshake.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+			this.labelHandshake.Name = "labelHandshake";
+			this.labelHandshake.Size = new System.Drawing.Size(85, 20);
+			this.labelHandshake.TabIndex = 10;
+			this.labelHandshake.Text = "Handshake:";
 			// 
 			// groupBoxSerialPort
 			// 
@@ -416,9 +456,11 @@
 			this.groupBoxSerialPort.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.groupBoxSerialPort.Controls.Add(this.tableLayoutPanelSerialPort);
 			this.groupBoxSerialPort.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBoxSerialPort.Location = new System.Drawing.Point(0, 72);
+			this.groupBoxSerialPort.Location = new System.Drawing.Point(0, 105);
+			this.groupBoxSerialPort.Margin = new System.Windows.Forms.Padding(5);
 			this.groupBoxSerialPort.Name = "groupBoxSerialPort";
-			this.groupBoxSerialPort.Size = new System.Drawing.Size(384, 75);
+			this.groupBoxSerialPort.Padding = new System.Windows.Forms.Padding(5);
+			this.groupBoxSerialPort.Size = new System.Drawing.Size(532, 151);
 			this.groupBoxSerialPort.TabIndex = 8;
 			this.groupBoxSerialPort.TabStop = false;
 			this.groupBoxSerialPort.Text = "Serial Port";
@@ -427,38 +469,41 @@
 			// 
 			this.groupBoxSample.AutoSize = true;
 			this.groupBoxSample.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.groupBoxSample.Controls.Add(this.tableLayoutPanel4);
+			this.groupBoxSample.Controls.Add(this.tableLayoutPanelSample);
 			this.groupBoxSample.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBoxSample.Location = new System.Drawing.Point(0, 147);
+			this.groupBoxSample.Location = new System.Drawing.Point(0, 256);
+			this.groupBoxSample.Margin = new System.Windows.Forms.Padding(5);
 			this.groupBoxSample.Name = "groupBoxSample";
-			this.groupBoxSample.Size = new System.Drawing.Size(384, 45);
+			this.groupBoxSample.Padding = new System.Windows.Forms.Padding(5);
+			this.groupBoxSample.Size = new System.Drawing.Size(532, 67);
 			this.groupBoxSample.TabIndex = 17;
 			this.groupBoxSample.TabStop = false;
 			this.groupBoxSample.Text = "Sample Interval";
 			// 
-			// tableLayoutPanel4
+			// tableLayoutPanelSample
 			// 
-			this.tableLayoutPanel4.AutoSize = true;
-			this.tableLayoutPanel4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutPanel4.ColumnCount = 2;
-			this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.15405F));
-			this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 72.84595F));
-			this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel4.Controls.Add(this.numericUpDownInterval, 0, 2);
-			this.tableLayoutPanel4.Controls.Add(this.label5, 1, 2);
-			this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Top;
-			this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 16);
-			this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-			this.tableLayoutPanel4.RowCount = 7;
-			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel4.Size = new System.Drawing.Size(378, 26);
-			this.tableLayoutPanel4.TabIndex = 14;
+			this.tableLayoutPanelSample.AutoSize = true;
+			this.tableLayoutPanelSample.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.tableLayoutPanelSample.ColumnCount = 2;
+			this.tableLayoutPanelSample.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.15405F));
+			this.tableLayoutPanelSample.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 72.84595F));
+			this.tableLayoutPanelSample.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+			this.tableLayoutPanelSample.Controls.Add(this.numericUpDownInterval, 0, 2);
+			this.tableLayoutPanelSample.Controls.Add(this.label5, 1, 2);
+			this.tableLayoutPanelSample.Dock = System.Windows.Forms.DockStyle.Top;
+			this.tableLayoutPanelSample.Location = new System.Drawing.Point(5, 25);
+			this.tableLayoutPanelSample.Margin = new System.Windows.Forms.Padding(5);
+			this.tableLayoutPanelSample.Name = "tableLayoutPanelSample";
+			this.tableLayoutPanelSample.RowCount = 7;
+			this.tableLayoutPanelSample.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelSample.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelSample.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelSample.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelSample.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelSample.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelSample.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelSample.Size = new System.Drawing.Size(522, 37);
+			this.tableLayoutPanelSample.TabIndex = 14;
 			// 
 			// numericUpDownInterval
 			// 
@@ -468,14 +513,15 @@
             0,
             0,
             0});
-			this.numericUpDownInterval.Location = new System.Drawing.Point(3, 3);
+			this.numericUpDownInterval.Location = new System.Drawing.Point(5, 5);
+			this.numericUpDownInterval.Margin = new System.Windows.Forms.Padding(5);
 			this.numericUpDownInterval.Maximum = new decimal(new int[] {
             36000000,
             0,
             0,
             0});
 			this.numericUpDownInterval.Name = "numericUpDownInterval";
-			this.numericUpDownInterval.Size = new System.Drawing.Size(96, 20);
+			this.numericUpDownInterval.Size = new System.Drawing.Size(131, 27);
 			this.numericUpDownInterval.TabIndex = 1;
 			this.numericUpDownInterval.Value = new decimal(new int[] {
             1000,
@@ -487,178 +533,196 @@
 			// 
 			this.label5.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(105, 6);
+			this.label5.Location = new System.Drawing.Point(146, 8);
+			this.label5.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
 			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(20, 13);
+			this.label5.Size = new System.Drawing.Size(28, 20);
 			this.label5.TabIndex = 14;
 			this.label5.Text = "ms";
 			// 
-			// dateTimePicker1
+			// dateTimePickerTime
 			// 
-			this.dateTimePicker1.Checked = false;
-			this.tableLayoutPanel5.SetColumnSpan(this.dateTimePicker1, 2);
-			this.dateTimePicker1.Enabled = false;
-			this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-			this.dateTimePicker1.Location = new System.Drawing.Point(238, 42);
-			this.dateTimePicker1.MinDate = new System.DateTime(2021, 5, 28, 0, 0, 0, 0);
-			this.dateTimePicker1.Name = "dateTimePicker1";
-			this.dateTimePicker1.ShowUpDown = true;
-			this.dateTimePicker1.Size = new System.Drawing.Size(100, 20);
-			this.dateTimePicker1.TabIndex = 27;
+			this.dateTimePickerTime.Checked = false;
+			this.tableLayoutPanelStop.SetColumnSpan(this.dateTimePickerTime, 2);
+			this.dateTimePickerTime.Enabled = false;
+			this.dateTimePickerTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+			this.dateTimePickerTime.Location = new System.Drawing.Point(330, 62);
+			this.dateTimePickerTime.Margin = new System.Windows.Forms.Padding(5);
+			this.dateTimePickerTime.MinDate = new System.DateTime(2021, 5, 28, 0, 0, 0, 0);
+			this.dateTimePickerTime.Name = "dateTimePickerTime";
+			this.dateTimePickerTime.ShowUpDown = true;
+			this.dateTimePickerTime.Size = new System.Drawing.Size(132, 27);
+			this.dateTimePickerTime.TabIndex = 27;
 			// 
 			// groupBoxStop
 			// 
 			this.groupBoxStop.AutoSize = true;
 			this.groupBoxStop.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.groupBoxStop.Controls.Add(this.tableLayoutPanel5);
+			this.groupBoxStop.Controls.Add(this.tableLayoutPanelStop);
 			this.groupBoxStop.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBoxStop.Location = new System.Drawing.Point(0, 192);
+			this.groupBoxStop.Location = new System.Drawing.Point(0, 323);
+			this.groupBoxStop.Margin = new System.Windows.Forms.Padding(5);
 			this.groupBoxStop.Name = "groupBoxStop";
-			this.groupBoxStop.Size = new System.Drawing.Size(384, 133);
+			this.groupBoxStop.Padding = new System.Windows.Forms.Padding(5);
+			this.groupBoxStop.Size = new System.Drawing.Size(532, 195);
 			this.groupBoxStop.TabIndex = 20;
 			this.groupBoxStop.TabStop = false;
 			this.groupBoxStop.Text = "Stop";
 			// 
-			// tableLayoutPanel5
+			// tableLayoutPanelStop
 			// 
-			this.tableLayoutPanel5.AutoSize = true;
-			this.tableLayoutPanel5.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutPanel5.ColumnCount = 5;
-			this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-			this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-			this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-			this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-			this.tableLayoutPanel5.Controls.Add(this.dateTimePicker1, 3, 2);
-			this.tableLayoutPanel5.Controls.Add(this.radioButton2, 0, 1);
-			this.tableLayoutPanel5.Controls.Add(this.radioButton3, 0, 2);
-			this.tableLayoutPanel5.Controls.Add(this.dateTimePicker2, 1, 2);
-			this.tableLayoutPanel5.Controls.Add(this.radioButton1, 0, 3);
-			this.tableLayoutPanel5.Controls.Add(this.radioButton4, 0, 4);
-			this.tableLayoutPanel5.Controls.Add(this.numericUpDown7, 1, 1);
-			this.tableLayoutPanel5.Controls.Add(this.numericUpDown8, 2, 1);
-			this.tableLayoutPanel5.Controls.Add(this.numericUpDown9, 3, 1);
-			this.tableLayoutPanel5.Controls.Add(this.label1, 1, 0);
-			this.tableLayoutPanel5.Controls.Add(this.label3, 2, 0);
-			this.tableLayoutPanel5.Controls.Add(this.label4, 3, 0);
-			this.tableLayoutPanel5.Controls.Add(this.numericUpDown6, 1, 3);
-			this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Top;
-			this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 16);
-			this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-			this.tableLayoutPanel5.RowCount = 5;
-			this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel5.Size = new System.Drawing.Size(378, 114);
-			this.tableLayoutPanel5.TabIndex = 14;
+			this.tableLayoutPanelStop.AutoSize = true;
+			this.tableLayoutPanelStop.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.tableLayoutPanelStop.ColumnCount = 5;
+			this.tableLayoutPanelStop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelStop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+			this.tableLayoutPanelStop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+			this.tableLayoutPanelStop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+			this.tableLayoutPanelStop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+			this.tableLayoutPanelStop.Controls.Add(this.dateTimePickerTime, 3, 2);
+			this.tableLayoutPanelStop.Controls.Add(this.radioButtonElapsedTime, 0, 1);
+			this.tableLayoutPanelStop.Controls.Add(this.radioButtonDateTime, 0, 2);
+			this.tableLayoutPanelStop.Controls.Add(this.dateTimePickerDate, 1, 2);
+			this.tableLayoutPanelStop.Controls.Add(this.radioButtonNumScans, 0, 3);
+			this.tableLayoutPanelStop.Controls.Add(this.radioButtonStop, 0, 4);
+			this.tableLayoutPanelStop.Controls.Add(this.numericUpDownHours, 1, 1);
+			this.tableLayoutPanelStop.Controls.Add(this.numericUpDownMinutes, 2, 1);
+			this.tableLayoutPanelStop.Controls.Add(this.numericUpDownSeconds, 3, 1);
+			this.tableLayoutPanelStop.Controls.Add(this.label1, 1, 0);
+			this.tableLayoutPanelStop.Controls.Add(this.label3, 2, 0);
+			this.tableLayoutPanelStop.Controls.Add(this.label4, 3, 0);
+			this.tableLayoutPanelStop.Controls.Add(this.numericUpDownNumScans, 1, 3);
+			this.tableLayoutPanelStop.Dock = System.Windows.Forms.DockStyle.Top;
+			this.tableLayoutPanelStop.Location = new System.Drawing.Point(5, 25);
+			this.tableLayoutPanelStop.Margin = new System.Windows.Forms.Padding(5);
+			this.tableLayoutPanelStop.Name = "tableLayoutPanelStop";
+			this.tableLayoutPanelStop.RowCount = 5;
+			this.tableLayoutPanelStop.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelStop.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelStop.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelStop.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelStop.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutPanelStop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
+			this.tableLayoutPanelStop.Size = new System.Drawing.Size(522, 165);
+			this.tableLayoutPanelStop.TabIndex = 14;
 			// 
-			// radioButton2
+			// radioButtonElapsedTime
 			// 
-			this.radioButton2.AutoSize = true;
-			this.radioButton2.Location = new System.Drawing.Point(3, 16);
-			this.radioButton2.Name = "radioButton2";
-			this.radioButton2.Size = new System.Drawing.Size(89, 17);
-			this.radioButton2.TabIndex = 19;
-			this.radioButton2.Text = "Elapsed Time";
-			this.radioButton2.UseVisualStyleBackColor = true;
+			this.radioButtonElapsedTime.AutoSize = true;
+			this.radioButtonElapsedTime.Location = new System.Drawing.Point(5, 25);
+			this.radioButtonElapsedTime.Margin = new System.Windows.Forms.Padding(5);
+			this.radioButtonElapsedTime.Name = "radioButtonElapsedTime";
+			this.radioButtonElapsedTime.Size = new System.Drawing.Size(119, 24);
+			this.radioButtonElapsedTime.TabIndex = 19;
+			this.radioButtonElapsedTime.Text = "Elapsed Time";
+			this.radioButtonElapsedTime.UseVisualStyleBackColor = true;
+			this.radioButtonElapsedTime.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
 			// 
-			// radioButton3
+			// radioButtonDateTime
 			// 
-			this.radioButton3.AutoSize = true;
-			this.radioButton3.Location = new System.Drawing.Point(3, 42);
-			this.radioButton3.Name = "radioButton3";
-			this.radioButton3.Size = new System.Drawing.Size(76, 17);
-			this.radioButton3.TabIndex = 20;
-			this.radioButton3.Text = "Date/Time";
-			this.radioButton3.UseVisualStyleBackColor = true;
+			this.radioButtonDateTime.AutoSize = true;
+			this.radioButtonDateTime.Location = new System.Drawing.Point(5, 62);
+			this.radioButtonDateTime.Margin = new System.Windows.Forms.Padding(5);
+			this.radioButtonDateTime.Name = "radioButtonDateTime";
+			this.radioButtonDateTime.Size = new System.Drawing.Size(101, 24);
+			this.radioButtonDateTime.TabIndex = 20;
+			this.radioButtonDateTime.Text = "Date/Time";
+			this.radioButtonDateTime.UseVisualStyleBackColor = true;
+			this.radioButtonDateTime.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
 			// 
-			// dateTimePicker2
+			// dateTimePickerDate
 			// 
-			this.dateTimePicker2.Checked = false;
-			this.tableLayoutPanel5.SetColumnSpan(this.dateTimePicker2, 2);
-			this.dateTimePicker2.Enabled = false;
-			this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.dateTimePicker2.Location = new System.Drawing.Point(98, 42);
-			this.dateTimePicker2.MinDate = new System.DateTime(2021, 5, 28, 16, 58, 24, 0);
-			this.dateTimePicker2.Name = "dateTimePicker2";
-			this.dateTimePicker2.Size = new System.Drawing.Size(121, 20);
-			this.dateTimePicker2.TabIndex = 27;
-			this.dateTimePicker2.Value = new System.DateTime(2021, 5, 28, 16, 58, 24, 0);
+			this.dateTimePickerDate.Checked = false;
+			this.tableLayoutPanelStop.SetColumnSpan(this.dateTimePickerDate, 2);
+			this.dateTimePickerDate.CustomFormat = "M/dd/yyyy hh:mm:ss";
+			this.dateTimePickerDate.Enabled = false;
+			this.dateTimePickerDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+			this.dateTimePickerDate.Location = new System.Drawing.Point(134, 62);
+			this.dateTimePickerDate.Margin = new System.Windows.Forms.Padding(5);
+			this.dateTimePickerDate.MinDate = new System.DateTime(2021, 5, 28, 16, 58, 24, 0);
+			this.dateTimePickerDate.Name = "dateTimePickerDate";
+			this.dateTimePickerDate.Size = new System.Drawing.Size(160, 27);
+			this.dateTimePickerDate.TabIndex = 27;
+			this.dateTimePickerDate.Value = new System.DateTime(2022, 5, 28, 16, 58, 1, 0);
 			// 
-			// radioButton1
+			// radioButtonNumScans
 			// 
-			this.radioButton1.AutoSize = true;
-			this.radioButton1.Location = new System.Drawing.Point(3, 68);
-			this.radioButton1.Name = "radioButton1";
-			this.radioButton1.Size = new System.Drawing.Size(77, 17);
-			this.radioButton1.TabIndex = 18;
-			this.radioButton1.Text = "# of Scans";
-			this.radioButton1.UseVisualStyleBackColor = true;
+			this.radioButtonNumScans.AutoSize = true;
+			this.radioButtonNumScans.Location = new System.Drawing.Point(5, 99);
+			this.radioButtonNumScans.Margin = new System.Windows.Forms.Padding(5);
+			this.radioButtonNumScans.Name = "radioButtonNumScans";
+			this.radioButtonNumScans.Size = new System.Drawing.Size(98, 24);
+			this.radioButtonNumScans.TabIndex = 18;
+			this.radioButtonNumScans.Text = "# of Scans";
+			this.radioButtonNumScans.UseVisualStyleBackColor = true;
+			this.radioButtonNumScans.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
 			// 
-			// radioButton4
+			// radioButtonStop
 			// 
-			this.radioButton4.AutoSize = true;
-			this.radioButton4.Checked = true;
-			this.radioButton4.Location = new System.Drawing.Point(3, 94);
-			this.radioButton4.Name = "radioButton4";
-			this.radioButton4.Size = new System.Drawing.Size(81, 17);
-			this.radioButton4.TabIndex = 17;
-			this.radioButton4.TabStop = true;
-			this.radioButton4.Text = "Stop Button";
-			this.radioButton4.UseVisualStyleBackColor = true;
+			this.radioButtonStop.AutoSize = true;
+			this.radioButtonStop.Checked = true;
+			this.radioButtonStop.Location = new System.Drawing.Point(5, 136);
+			this.radioButtonStop.Margin = new System.Windows.Forms.Padding(5);
+			this.radioButtonStop.Name = "radioButtonStop";
+			this.radioButtonStop.Size = new System.Drawing.Size(109, 24);
+			this.radioButtonStop.TabIndex = 17;
+			this.radioButtonStop.TabStop = true;
+			this.radioButtonStop.Text = "Stop Button";
+			this.radioButtonStop.UseVisualStyleBackColor = true;
+			this.radioButtonStop.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
 			// 
-			// numericUpDown7
+			// numericUpDownHours
 			// 
-			this.numericUpDown7.Enabled = false;
-			this.numericUpDown7.Location = new System.Drawing.Point(98, 16);
-			this.numericUpDown7.Maximum = new decimal(new int[] {
+			this.numericUpDownHours.Enabled = false;
+			this.numericUpDownHours.Location = new System.Drawing.Point(134, 25);
+			this.numericUpDownHours.Margin = new System.Windows.Forms.Padding(5);
+			this.numericUpDownHours.Maximum = new decimal(new int[] {
             36000000,
             0,
             0,
             0});
-			this.numericUpDown7.Name = "numericUpDown7";
-			this.numericUpDown7.Size = new System.Drawing.Size(51, 20);
-			this.numericUpDown7.TabIndex = 22;
-			this.numericUpDown7.Value = new decimal(new int[] {
+			this.numericUpDownHours.Name = "numericUpDownHours";
+			this.numericUpDownHours.Size = new System.Drawing.Size(69, 27);
+			this.numericUpDownHours.TabIndex = 22;
+			this.numericUpDownHours.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
 			// 
-			// numericUpDown8
+			// numericUpDownMinutes
 			// 
-			this.numericUpDown8.Enabled = false;
-			this.numericUpDown8.Location = new System.Drawing.Point(168, 16);
-			this.numericUpDown8.Maximum = new decimal(new int[] {
+			this.numericUpDownMinutes.Enabled = false;
+			this.numericUpDownMinutes.Location = new System.Drawing.Point(232, 25);
+			this.numericUpDownMinutes.Margin = new System.Windows.Forms.Padding(5);
+			this.numericUpDownMinutes.Maximum = new decimal(new int[] {
             59,
             0,
             0,
             0});
-			this.numericUpDown8.Name = "numericUpDown8";
-			this.numericUpDown8.Size = new System.Drawing.Size(51, 20);
-			this.numericUpDown8.TabIndex = 23;
-			this.numericUpDown8.Value = new decimal(new int[] {
+			this.numericUpDownMinutes.Name = "numericUpDownMinutes";
+			this.numericUpDownMinutes.Size = new System.Drawing.Size(69, 27);
+			this.numericUpDownMinutes.TabIndex = 23;
+			this.numericUpDownMinutes.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
 			// 
-			// numericUpDown9
+			// numericUpDownSeconds
 			// 
-			this.numericUpDown9.Enabled = false;
-			this.numericUpDown9.Location = new System.Drawing.Point(238, 16);
-			this.numericUpDown9.Maximum = new decimal(new int[] {
+			this.numericUpDownSeconds.Enabled = false;
+			this.numericUpDownSeconds.Location = new System.Drawing.Point(330, 25);
+			this.numericUpDownSeconds.Margin = new System.Windows.Forms.Padding(5);
+			this.numericUpDownSeconds.Maximum = new decimal(new int[] {
             59,
             0,
             0,
             0});
-			this.numericUpDown9.Name = "numericUpDown9";
-			this.numericUpDown9.Size = new System.Drawing.Size(52, 20);
-			this.numericUpDown9.TabIndex = 24;
-			this.numericUpDown9.Value = new decimal(new int[] {
+			this.numericUpDownSeconds.Name = "numericUpDownSeconds";
+			this.numericUpDownSeconds.Size = new System.Drawing.Size(69, 27);
+			this.numericUpDownSeconds.TabIndex = 24;
+			this.numericUpDownSeconds.Value = new decimal(new int[] {
             59,
             0,
             0,
@@ -668,9 +732,10 @@
 			// 
 			this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(98, 0);
+			this.label1.Location = new System.Drawing.Point(134, 0);
+			this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(35, 13);
+			this.label1.Size = new System.Drawing.Size(48, 20);
 			this.label1.TabIndex = 16;
 			this.label1.Text = "Hours";
 			// 
@@ -678,9 +743,10 @@
 			// 
 			this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(168, 0);
+			this.label3.Location = new System.Drawing.Point(232, 0);
+			this.label3.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(44, 13);
+			this.label3.Size = new System.Drawing.Size(61, 20);
 			this.label3.TabIndex = 29;
 			this.label3.Text = "Minutes";
 			// 
@@ -688,31 +754,33 @@
 			// 
 			this.label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(238, 0);
+			this.label4.Location = new System.Drawing.Point(330, 0);
+			this.label4.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
 			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(49, 13);
+			this.label4.Size = new System.Drawing.Size(64, 20);
 			this.label4.TabIndex = 30;
 			this.label4.Text = "Seconds";
 			// 
-			// numericUpDown6
+			// numericUpDownNumScans
 			// 
-			this.tableLayoutPanel5.SetColumnSpan(this.numericUpDown6, 3);
-			this.numericUpDown6.Enabled = false;
-			this.numericUpDown6.Increment = new decimal(new int[] {
+			this.tableLayoutPanelStop.SetColumnSpan(this.numericUpDownNumScans, 3);
+			this.numericUpDownNumScans.Enabled = false;
+			this.numericUpDownNumScans.Increment = new decimal(new int[] {
             1000,
             0,
             0,
             0});
-			this.numericUpDown6.Location = new System.Drawing.Point(98, 68);
-			this.numericUpDown6.Maximum = new decimal(new int[] {
+			this.numericUpDownNumScans.Location = new System.Drawing.Point(134, 99);
+			this.numericUpDownNumScans.Margin = new System.Windows.Forms.Padding(5);
+			this.numericUpDownNumScans.Maximum = new decimal(new int[] {
             36000000,
             0,
             0,
             0});
-			this.numericUpDown6.Name = "numericUpDown6";
-			this.numericUpDown6.Size = new System.Drawing.Size(90, 20);
-			this.numericUpDown6.TabIndex = 21;
-			this.numericUpDown6.Value = new decimal(new int[] {
+			this.numericUpDownNumScans.Name = "numericUpDownNumScans";
+			this.numericUpDownNumScans.Size = new System.Drawing.Size(120, 27);
+			this.numericUpDownNumScans.TabIndex = 21;
+			this.numericUpDownNumScans.Value = new decimal(new int[] {
             1000,
             0,
             0,
@@ -723,9 +791,11 @@
 			this.groupBoxCommand.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.groupBoxCommand.Controls.Add(this.textBoxCommand);
 			this.groupBoxCommand.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBoxCommand.Location = new System.Drawing.Point(0, 325);
+			this.groupBoxCommand.Location = new System.Drawing.Point(0, 518);
+			this.groupBoxCommand.Margin = new System.Windows.Forms.Padding(5);
 			this.groupBoxCommand.Name = "groupBoxCommand";
-			this.groupBoxCommand.Size = new System.Drawing.Size(384, 39);
+			this.groupBoxCommand.Padding = new System.Windows.Forms.Padding(5);
+			this.groupBoxCommand.Size = new System.Drawing.Size(532, 60);
 			this.groupBoxCommand.TabIndex = 21;
 			this.groupBoxCommand.TabStop = false;
 			this.groupBoxCommand.Text = "Command";
@@ -733,9 +803,10 @@
 			// textBoxCommand
 			// 
 			this.textBoxCommand.Dock = System.Windows.Forms.DockStyle.Top;
-			this.textBoxCommand.Location = new System.Drawing.Point(3, 16);
+			this.textBoxCommand.Location = new System.Drawing.Point(5, 25);
+			this.textBoxCommand.Margin = new System.Windows.Forms.Padding(5);
 			this.textBoxCommand.Name = "textBoxCommand";
-			this.textBoxCommand.Size = new System.Drawing.Size(378, 20);
+			this.textBoxCommand.Size = new System.Drawing.Size(522, 27);
 			this.textBoxCommand.TabIndex = 10;
 			// 
 			// groupBoxResponse
@@ -744,9 +815,11 @@
 			this.groupBoxResponse.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.groupBoxResponse.Controls.Add(this.textBoxResponse);
 			this.groupBoxResponse.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBoxResponse.Location = new System.Drawing.Point(0, 364);
+			this.groupBoxResponse.Location = new System.Drawing.Point(0, 578);
+			this.groupBoxResponse.Margin = new System.Windows.Forms.Padding(5);
 			this.groupBoxResponse.Name = "groupBoxResponse";
-			this.groupBoxResponse.Size = new System.Drawing.Size(384, 39);
+			this.groupBoxResponse.Padding = new System.Windows.Forms.Padding(5);
+			this.groupBoxResponse.Size = new System.Drawing.Size(532, 57);
 			this.groupBoxResponse.TabIndex = 22;
 			this.groupBoxResponse.TabStop = false;
 			this.groupBoxResponse.Text = "Response";
@@ -754,60 +827,62 @@
 			// textBoxResponse
 			// 
 			this.textBoxResponse.Dock = System.Windows.Forms.DockStyle.Top;
-			this.textBoxResponse.Location = new System.Drawing.Point(3, 16);
+			this.textBoxResponse.Location = new System.Drawing.Point(5, 25);
+			this.textBoxResponse.Margin = new System.Windows.Forms.Padding(5);
 			this.textBoxResponse.Name = "textBoxResponse";
 			this.textBoxResponse.ReadOnly = true;
-			this.textBoxResponse.Size = new System.Drawing.Size(378, 20);
+			this.textBoxResponse.Size = new System.Drawing.Size(522, 27);
 			this.textBoxResponse.TabIndex = 10;
 			// 
 			// FormLog
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(384, 476);
+			this.ClientSize = new System.Drawing.Size(532, 753);
 			this.Controls.Add(this.groupBoxResponse);
 			this.Controls.Add(this.groupBoxCommand);
 			this.Controls.Add(this.groupBoxStop);
 			this.Controls.Add(this.groupBoxSample);
-			this.Controls.Add(this.groupBox4);
+			this.Controls.Add(this.groupBoxStartStop);
 			this.Controls.Add(this.groupBoxSerialPort);
-			this.Controls.Add(this.groupBoxMassFlow);
-			this.Controls.Add(this.statusStrip1);
-			this.Controls.Add(this.menuStrip1);
-			this.MainMenuStrip = this.menuStrip1;
+			this.Controls.Add(this.groupBoxFilename);
+			this.Controls.Add(this.statusStrip);
+			this.Controls.Add(this.menuStrip);
+			this.MainMenuStrip = this.menuStrip;
+			this.Margin = new System.Windows.Forms.Padding(5);
 			this.Name = "FormLog";
 			this.Text = "Data logger";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormLog_FormClosing);
-			this.menuStrip1.ResumeLayout(false);
-			this.menuStrip1.PerformLayout();
-			this.statusStrip1.ResumeLayout(false);
-			this.statusStrip1.PerformLayout();
-			this.groupBoxMassFlow.ResumeLayout(false);
-			this.groupBoxMassFlow.PerformLayout();
-			this.tableLayoutPanel1.ResumeLayout(false);
-			this.tableLayoutPanel1.PerformLayout();
-			this.groupBox4.ResumeLayout(false);
-			this.groupBox4.PerformLayout();
-			this.tableLayoutPanel3.ResumeLayout(false);
-			this.tableLayoutPanel3.PerformLayout();
-			this.tableLayoutPanel2.ResumeLayout(false);
+			this.menuStrip.ResumeLayout(false);
+			this.menuStrip.PerformLayout();
+			this.statusStrip.ResumeLayout(false);
+			this.statusStrip.PerformLayout();
+			this.groupBoxFilename.ResumeLayout(false);
+			this.groupBoxFilename.PerformLayout();
+			this.tableLayoutPanelFilename.ResumeLayout(false);
+			this.tableLayoutPanelFilename.PerformLayout();
+			this.groupBoxStartStop.ResumeLayout(false);
+			this.groupBoxStartStop.PerformLayout();
+			this.tableLayoutPanelStartStop.ResumeLayout(false);
+			this.tableLayoutPanelStartStop.PerformLayout();
+			this.tableLayoutPanelButtons.ResumeLayout(false);
 			this.tableLayoutPanelSerialPort.ResumeLayout(false);
 			this.tableLayoutPanelSerialPort.PerformLayout();
 			this.groupBoxSerialPort.ResumeLayout(false);
 			this.groupBoxSerialPort.PerformLayout();
 			this.groupBoxSample.ResumeLayout(false);
 			this.groupBoxSample.PerformLayout();
-			this.tableLayoutPanel4.ResumeLayout(false);
-			this.tableLayoutPanel4.PerformLayout();
+			this.tableLayoutPanelSample.ResumeLayout(false);
+			this.tableLayoutPanelSample.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownInterval)).EndInit();
 			this.groupBoxStop.ResumeLayout(false);
 			this.groupBoxStop.PerformLayout();
-			this.tableLayoutPanel5.ResumeLayout(false);
-			this.tableLayoutPanel5.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).EndInit();
+			this.tableLayoutPanelStop.ResumeLayout(false);
+			this.tableLayoutPanelStop.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownHours)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutes)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownSeconds)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumScans)).EndInit();
 			this.groupBoxCommand.ResumeLayout(false);
 			this.groupBoxCommand.PerformLayout();
 			this.groupBoxResponse.ResumeLayout(false);
@@ -819,18 +894,18 @@
 
 		#endregion
 
-		private System.Windows.Forms.MenuStrip menuStrip1;
+		private System.Windows.Forms.MenuStrip menuStrip;
 		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-		private System.Windows.Forms.StatusStrip statusStrip1;
-		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-		private System.Windows.Forms.GroupBox groupBoxMassFlow;
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+		private System.Windows.Forms.StatusStrip statusStrip;
+		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
+		private System.Windows.Forms.GroupBox groupBoxFilename;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelFilename;
 		private System.Windows.Forms.TextBox textBoxFilename;
 		private System.Windows.Forms.Button buttonBrowse;
-		private System.Windows.Forms.GroupBox groupBox4;
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+		private System.Windows.Forms.GroupBox groupBoxStartStop;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelStartStop;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelButtons;
 		private System.Windows.Forms.Button buttonStop;
 		private System.Windows.Forms.Button buttonStart;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelSerialPort;
@@ -839,36 +914,38 @@
 		private System.Windows.Forms.Button buttonPortRefresh;
 		private System.Windows.Forms.Label labelBaudRate;
 		private System.Windows.Forms.ComboBox comboBoxBaudRate;
+		private System.Windows.Forms.Label labelHandshake;
 		private System.Windows.Forms.Label labelStopBits;
 		private System.Windows.Forms.ComboBox comboBoxStopBits;
-		private System.Windows.Forms.Label labelParity;
-		private System.Windows.Forms.ComboBox comboBoxParity;
 		private System.Windows.Forms.GroupBox groupBoxSerialPort;
-		private System.Windows.Forms.RadioButton radioButtonOpen;
-		private System.Windows.Forms.RadioButton radioButtonClosed;
 		private System.Windows.Forms.GroupBox groupBoxSample;
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelSample;
 		private System.Windows.Forms.NumericUpDown numericUpDownInterval;
 		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.DateTimePicker dateTimePicker1;
+		private System.Windows.Forms.DateTimePicker dateTimePickerTime;
 		private System.Windows.Forms.GroupBox groupBoxStop;
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelStop;
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.RadioButton radioButton1;
-		private System.Windows.Forms.NumericUpDown numericUpDown6;
-		private System.Windows.Forms.RadioButton radioButton2;
-		private System.Windows.Forms.NumericUpDown numericUpDown7;
-		private System.Windows.Forms.NumericUpDown numericUpDown8;
-		private System.Windows.Forms.NumericUpDown numericUpDown9;
-		private System.Windows.Forms.RadioButton radioButton3;
-		private System.Windows.Forms.DateTimePicker dateTimePicker2;
+		private System.Windows.Forms.RadioButton radioButtonNumScans;
+		private System.Windows.Forms.NumericUpDown numericUpDownNumScans;
+		private System.Windows.Forms.RadioButton radioButtonElapsedTime;
+		private System.Windows.Forms.NumericUpDown numericUpDownHours;
+		private System.Windows.Forms.NumericUpDown numericUpDownMinutes;
+		private System.Windows.Forms.NumericUpDown numericUpDownSeconds;
+		private System.Windows.Forms.RadioButton radioButtonDateTime;
+		private System.Windows.Forms.DateTimePicker dateTimePickerDate;
 		private System.Windows.Forms.GroupBox groupBoxCommand;
 		private System.Windows.Forms.TextBox textBoxCommand;
 		private System.Windows.Forms.GroupBox groupBoxResponse;
 		private System.Windows.Forms.TextBox textBoxResponse;
-		private System.Windows.Forms.RadioButton radioButton4;
+		private System.Windows.Forms.RadioButton radioButtonStop;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.ComboBox comboBoxHandshake;
+		private System.Windows.Forms.Label labelParity;
+		private System.Windows.Forms.ComboBox comboBoxParity;
+		private System.Windows.Forms.ComboBox comboBoxDataBits;
+		private System.Windows.Forms.Label labelDataBits;
 	}
 }
 

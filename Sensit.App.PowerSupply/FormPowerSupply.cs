@@ -58,7 +58,7 @@ namespace Sensit.App.PowerSupply
 						toolStripStatusLabel1.Text = "Opening serial port...";
 
 						// Open the Mass Flow Controller (and let it know what serial port to use).
-						_powerSupply.Open(Properties.Settings.Default.Port, 9600);
+						_powerSupply.Open(Properties.Settings.Default.Port, 9600, 8, Parity.None, StopBits.One, Handshake.None);
 
 						// Update the user interface.
 						comboBoxSerialPort.Enabled = false;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO.Ports;
 using System.Threading;
 using Sensit.TestSDK.Communication;
 using Sensit.TestSDK.Exceptions;
@@ -21,10 +22,12 @@ namespace Sensit.TestSDK.Devices
 	{
 		public string Command { get; set; } = string.Empty;
 
-		/// <summary>
-		/// List of supported baud rates
-		/// </summary>
+		// generic device supports all common settings
 		public override List<int> SupportedBaudRates { get; } = new List<int> { 300, 600, 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200, 230400, 460800, 921600 };
+		public override List<int> SupportedDataBits { get; } = new List<int> { 5, 6, 7, 8 };
+		public override List<Parity> SupportedParity { get; } = new List<Parity> { Parity.None, Parity.Odd, Parity.Even, Parity.Mark, Parity.Space };
+		public override List<StopBits> SupportedStopBits { get; } = new List<StopBits> { StopBits.None, StopBits.One, StopBits.Two, StopBits.OnePointFive };
+		public override List<Handshake> SupportedHandshake { get; } = new List<Handshake> { Handshake.None, Handshake.XOnXOff, Handshake.RequestToSend, Handshake.RequestToSendXOnXOff };
 
 		// This dictionary is purposefully empty so software knows this device does not support any readings.
 		public Dictionary<VariableType, decimal> Readings { get; } = new Dictionary<VariableType, decimal>();

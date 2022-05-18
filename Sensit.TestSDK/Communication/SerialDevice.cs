@@ -5,6 +5,9 @@ using Sensit.TestSDK.Exceptions;
 
 namespace Sensit.TestSDK.Communication
 {
+	/// <summary>
+	/// Abstract class for a serial device with properties for supported settings.
+	/// </summary>
 	public abstract class SerialDevice : IDisposable
 	{
 		/// <summary>
@@ -22,20 +25,12 @@ namespace Sensit.TestSDK.Communication
 		protected SerialPort Port { get; } = new SerialPort();
 
 		/// <summary>
-		/// List of supported baud rates
+		/// Baud rates supported by the device
 		/// </summary>
 		public abstract List<int> SupportedBaudRates { get; }
 
-		public string PortName
-		{
-			get => Port.PortName;
-			set => Port.PortName = value;
-		}
-
-		// TODO:  SerialDevice:  Create lists/properties for serial settings (data bits, parity, stop bits, handshaking).
-
 		/// <summary>
-		/// Baud rate used by the device.
+		/// Baud rate used by the device
 		/// </summary>
 		public int BaudRate
 		{
@@ -55,6 +50,127 @@ namespace Sensit.TestSDK.Communication
 				}
 				else throw new DeviceSettingNotSupportedException(GetType().Name + " does not support baud rate " + value + ".");
 			}
+		}
+
+		/// <summary>
+		/// Parity settings supported by the device
+		/// </summary>
+		public abstract List<Parity> SupportedParity { get; }
+
+		/// <summary>
+		/// Parity used by the device
+		/// </summary>
+		public Parity Parity
+		{
+			get
+			{
+				if (SupportedParity.Contains(Port.Parity) == false)
+				{
+					Port.Parity = SupportedParity[0];
+				}
+				return Port.Parity;
+			}
+			set
+			{
+				if (SupportedParity.Contains(value))
+				{
+					Port.Parity = value;
+				}
+				else throw new DeviceSettingNotSupportedException(GetType().Name + " does not support parity " + value + ".");
+			}
+		}
+
+		/// <summary>
+		/// Data bit settings supported by the device
+		/// </summary>
+		public abstract List<int> SupportedDataBits { get; }
+
+		/// <summary>
+		/// Data bits used by the device
+		/// </summary>
+		public int DataBits
+		{
+			get
+			{
+				if (SupportedDataBits.Contains(Port.DataBits) == false)
+				{
+					Port.DataBits = SupportedDataBits[0];
+				}
+				return Port.DataBits;
+			}
+			set
+			{
+				if (SupportedDataBits.Contains(value))
+				{
+					Port.DataBits = value;
+				}
+				else throw new DeviceSettingNotSupportedException(GetType().Name + " does not support " + value + " data bits.");
+			}
+		}
+
+		/// <summary>
+		/// Stop bit settings supported by the device
+		/// </summary>
+		public abstract List<StopBits> SupportedStopBits { get; }
+
+		/// <summary>
+		/// Stop bits used by the device.
+		/// </summary>
+		public StopBits StopBits
+		{
+			get
+			{
+				if (SupportedStopBits.Contains(Port.StopBits) == false)
+				{
+					Port.StopBits = SupportedStopBits[0];
+				}
+				return Port.StopBits;
+			}
+			set
+			{
+				if (SupportedStopBits.Contains(Port.StopBits))
+				{
+					Port.StopBits = value;
+				}
+				else throw new DeviceSettingNotSupportedException(GetType().Name + " does not support " + value + " stop bits.");
+			}
+		}
+
+		/// <summary>
+		/// Handshake settings supported by the device
+		/// </summary>
+		public abstract List<Handshake> SupportedHandshake { get; }
+
+		/// <summary>
+		/// Handshake setting used by the device
+		/// </summary>
+		public Handshake Handshake
+		{
+			get
+			{
+				if (SupportedHandshake.Contains(Port.Handshake) == false)
+				{
+					Port.Handshake = SupportedHandshake[0];
+				}
+				return Port.Handshake;
+			}
+			set
+			{
+				if (SupportedHandshake.Contains(Port.Handshake))
+				{
+					Port.Handshake = value;
+				}
+				else throw new DeviceSettingNotSupportedException(GetType().Name + " does not support handshake setting of " + value + ".");
+			}
+		}
+
+		/// <summary>
+		/// Name of the serial port to use (i.e. "COM3")
+		/// </summary>
+		public string PortName
+		{
+			get => Port.PortName;
+			set => Port.PortName = value;
 		}
 
 		/// <summary>
@@ -93,31 +209,18 @@ namespace Sensit.TestSDK.Communication
 		/// </summary>
 		/// <param name="portName">name of port (e.g. "COM3")</param>
 		/// <param name="baudRate">baud rate (e.g. "9600")</param>
-		public void Open(string portName, int baudRate)
-		{
-			// Set serial port settings.
-			PortName = portName;
-			BaudRate = baudRate;
-
-			Open();
-		}
-
-		/// <summary>
-		/// Initialize the serial interface.
-		/// </summary>
-		/// <param name="portName">name of port (e.g. "COM3")</param>
-		/// <param name="baudRate">baud rate (e.g. "9600")</param>
 		/// <param name="dataBits">number of data bits</param>
-		/// <param name="parity">parity</param>
+		/// <param name="parity">parity mode</param>
 		/// <param name="stopBits">number of stop bits</param>
-		public void Open(string portName, int baudRate, int dataBits, Parity parity, StopBits stopBits)
+		/// <param name="handshake">handshake mode</param>
+		public void Open(string portName, int baudRate, int dataBits, Parity parity, StopBits stopBits, Handshake handshake)
 		{
 			// Set serial port settings.
 			PortName = portName;
 			BaudRate = baudRate;
-			Port.DataBits = dataBits;
-			Port.Parity = parity;
-			Port.StopBits = stopBits;
+			DataBits = dataBits;
+			Parity = parity;
+			StopBits = stopBits;
 
 			Open();
 		}
