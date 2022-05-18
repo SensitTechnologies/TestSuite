@@ -303,10 +303,12 @@ namespace Sensit.App.Automate
 			}
 		}
 
-		// TODO:  Remove these statements one by one until something slows down.
+		/// <summary>
+		/// Prevent the form from looking weird while we update it.
+		/// </summary>
 		private void LayoutSuspend()
 		{
-			// Stop the GUI from looking weird while we update it.
+			// TODO:  Remove these statements one by one until something slows down.
 			tabControl.SuspendLayout();
 			tabPageDevices.SuspendLayout();
 			groupBoxDevices.SuspendLayout();
@@ -338,10 +340,12 @@ namespace Sensit.App.Automate
 			SuspendLayout();
 		}
 
-		// TODO:  Remove these statements one by one until something slows down.
+		/// <summary>
+		/// Make the form act normally again.
+		/// </summary>
 		private void LayoutResume()
 		{
-			// Make the GUI act normally again.
+			// TODO:  Remove these statements one by one until something slows down.
 			tabControl.ResumeLayout();
 			tabPageDevices.ResumeLayout();
 			groupBoxDevices.ResumeLayout();
@@ -649,6 +653,7 @@ namespace Sensit.App.Automate
 			DialogResult dialogResult = DialogResult.No;
 			if (_unsaved)
 			{
+				// Prompt the user to save changes.
 				dialogResult = MessageBox.Show("Save your changes?", "Unsaved changes", MessageBoxButtons.YesNoCancel);
 			}
 
@@ -688,6 +693,11 @@ namespace Sensit.App.Automate
 			LayoutResume();
 		}
 
+		/// <summary>
+		/// When the user clicks File --> Open, open a test configuration file.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			// If there are unsaved changes...
@@ -707,15 +717,15 @@ namespace Sensit.App.Automate
 				// If the user chooses to discard changes, clear the form.
 				case DialogResult.No:
 					// Allow the user to select a filename.
-					OpenFileDialog fileDialog = new OpenFileDialog();
-					fileDialog.Filter = "XML-File|*.xml";
-					fileDialog.Title = "Open test settings file";
-					fileDialog.ShowDialog();
+					OpenFileDialog openFileDialog = new OpenFileDialog();
+					openFileDialog.Filter = "XML-File|*.xml";
+					openFileDialog.Title = "Open test settings file";
+					openFileDialog.ShowDialog();
 
-					OpenTestSettings(fileDialog.FileName);
+					OpenTestSettings(openFileDialog.FileName);
 
 					// Clean up.
-					fileDialog.Dispose();
+					openFileDialog.Dispose();
 					break;
 
 				// If the user chooses to cancel, do nothing.
