@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Sensit.TestSDK;
 
 namespace Sensit.TestSDK.Calculations
 {
