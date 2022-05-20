@@ -266,6 +266,7 @@ namespace Sensit.App.GPS
 				timer.Enabled = false;
 
 				// Alert the user (and make it bold).
+				toolStripProgressBar.Value = TIMEOUT;
 				toolStripStatusLabel.Text = "PASS";
 				toolStripStatusLabel.Font = new Font(toolStripStatusLabel.Font, FontStyle.Bold);
 				toolStripStatusLabel.ForeColor = Color.Green;
@@ -289,7 +290,7 @@ namespace Sensit.App.GPS
 				TimeSpan t = TimeSpan.FromSeconds(elapsedSeconds);
 
 				// Update the user interface.
-				toolStripStatusLabel.Text = "Elapsed time:  " + t.ToString();
+				toolStripStatusLabel.Text = "Elapsed time:  " + t.ToString(@"m\:ss");
 				toolStripProgressBar.Value = (int)elapsedSeconds;
 
 				// If timeout has elapsed...
@@ -302,6 +303,7 @@ namespace Sensit.App.GPS
 					timer.Enabled = false;
 
 					// Update the user interface.
+					toolStripProgressBar.Value = 0;
 					toolStripStatusLabel.Text = "FAIL";
 					toolStripStatusLabel.Font = new Font(toolStripStatusLabel.Font, FontStyle.Bold);
 					toolStripStatusLabel.ForeColor = Color.Red;
@@ -334,6 +336,17 @@ namespace Sensit.App.GPS
 				groupBoxSerialPort.Enabled = false;
 				buttonStart.Enabled = false;
 				buttonStop.Enabled = true;
+				textBoxTimestamp.Text = string.Empty;
+				textBoxLatitude.Text = string.Empty;
+				textBoxLongitude.Text = string.Empty;
+				textBoxFixType.Text = string.Empty;
+				textBoxSatellites.Text = string.Empty;
+				textBoxStatusFixType.Text = string.Empty;
+				textBoxStatusLatitude.Text = string.Empty;
+				textBoxStatusLongitude.Text = string.Empty;
+				textBoxStatusSatellites.Text = string.Empty;
+				textBoxStatusTimestamp.Text = string.Empty;
+				toolStripProgressBar.Value = 0;
 				toolStripStatusLabel.Text = "Testing...";
 				toolStripStatusLabel.Font = new Font(toolStripStatusLabel.Font, FontStyle.Regular);
 				toolStripStatusLabel.ForeColor = SystemColors.ControlText;
