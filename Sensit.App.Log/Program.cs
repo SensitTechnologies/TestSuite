@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Sensit.App.Datalogger
+namespace Sensit.App.Log
 {
 	static class Program
 	{

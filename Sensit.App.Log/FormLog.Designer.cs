@@ -1,4 +1,4 @@
-﻿namespace Sensit.App.Datalogger
+﻿namespace Sensit.App.Log
 {
 	partial class FormLog
 	{

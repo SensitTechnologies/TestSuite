@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using Sensit.TestSDK.Devices;
 using Sensit.TestSDK.Files;
 
-namespace Sensit.App.Datalogger
+namespace Sensit.App.Log
 {
 	public partial class FormLog : Form
 	{

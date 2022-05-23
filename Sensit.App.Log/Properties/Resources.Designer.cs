@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sensit.App.Datalogger.Properties
+namespace Sensit.App.Log.Properties
 {
 
 
@@ -44,7 +44,7 @@ namespace Sensit.App.Datalogger.Properties
 			{
 				if ((resourceMan == null))
 				{
-					global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sensit.App.Datalogger.Properties.Resources", typeof(Resources).Assembly);
+					global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sensit.App.Log.Properties.Resources", typeof(Resources).Assembly);
 					resourceMan = temp;
 				}
 				return resourceMan;

@@ -2,8 +2,8 @@
   <PropertyGroup>
     <TargetFramework>net6.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Sensit.App.Datalogger</RootNamespace>
-    <AssemblyName>Sensit.App.Datalogger</AssemblyName>
+    <RootNamespace>Sensit.App.Log</RootNamespace>
+    <AssemblyName>Sensit.App.Log</AssemblyName>
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>

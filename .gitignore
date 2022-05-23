@@ -3,49 +3,41 @@
 
 /Sensit.App.Automate/bin
 /Sensit.App.Automate/obj
-/Sensit.App.Automate/publish
 /Sensit.App.Automate/*.pfx
 /Sensit.App.Automate/*.user
 
-/Sensit.App.Datalogger/bin
-/Sensit.App.Datalogger/obj
-/Sensit.App.Datalogger/publish
-/Sensit.App.Datalogger/*.pfx
-/Sensit.App.Datalogger/*.user
+/Sensit.App.Log/bin
+/Sensit.App.Log/obj
+/Sensit.App.Log/*.pfx
+/Sensit.App.Log/*.user
 
 /Sensit.App.GasMixer/bin
 /Sensit.App.GasMixer/obj
-/Sensit.App.GasMixer/publish
 /Sensit.App.GasMixer/*.pfx
 /Sensit.App.GasMixer/*.user
 
 /Sensit.App.GPS/bin
 /Sensit.App.GPS/obj
-/Sensit.App.GPS/publish
 /Sensit.App.GPS/*.pfx
 /Sensit.App.GPS/*.user
 
 /Sensit.App.MassFlow/bin
 /Sensit.App.MassFlow/obj
-/Sensit.App.MassFlow/publish
 /Sensit.App.MassFlow/*.pfx
 /Sensit.App.MassFlow/*.user
 
 /Sensit.App.Pogo/bin
 /Sensit.App.Pogo/obj
-/Sensit.App.Pogo/publish
 /Sensit/App.Pogo/*.pfx
 /Sensit/App.Pogo/*.user
 
 /Sensit.App.PowerSupply/bin
 /Sensit.App.PowerSupply/obj
-/Sensit.App.PowerSupply/publish
 /Sensit.App.PowerSupply/*.pfx
 /Sensit.App.PowerSupply/*.user
 
 /Sensit.App.Programmer/bin
 /Sensit.App.Programmer/obj
-/Sensit.App.Programmer/publish
 /Sensit.App.Programmer/*.pfx
 /Sensit.App.Programmer/*.user
 

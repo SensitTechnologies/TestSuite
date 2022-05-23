@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sensit.App.Datalogger.Properties {
+namespace Sensit.App.Log.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
