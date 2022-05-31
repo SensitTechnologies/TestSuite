@@ -224,24 +224,24 @@ namespace Sensit.App.Log
 
 			try
 			{
-				// Insert newline characters as requested.
-				_genericSerialDevice.Command = textBoxCommand.Text.Replace("\\n", "\n").Replace("\\r", "\r").Replace("\\t", "\t");
-
-				// Fetch a value from the DUT.
-				_genericSerialDevice.WriteThenRead();
-				string sample = _genericSerialDevice.Message;
-
-				// Log a timestamp and the sample value to a CSV file.
-				List<string> row = new List<string>();
-				row.Add(e.SignalTime.ToString());
-				row.Add(sample);
-				_writer.WriteRow(row);
-
 				// Use a method invoker to interact with the Form's thread.
 				// It must be asynchronous (BeginInvoke, not Invoke) or else the two
 				// threads might get stuck waiting for each other).
 				BeginInvoke(new Action(() =>
 				{
+					// Insert newline characters as requested.
+					_genericSerialDevice.Command = textBoxCommand.Text.Replace("\\n", "\n").Replace("\\r", "\r").Replace("\\t", "\t");
+
+					// Fetch a value from the DUT.
+					_genericSerialDevice.WriteThenRead();
+					string sample = _genericSerialDevice.Message;
+
+					// Log a timestamp and the sample value to a CSV file.
+					List<string> row = new();
+					row.Add(e.SignalTime.ToString());
+					row.Add(sample);
+					_writer.WriteRow(row);
+
 					// Display the sample value to the user.
 					textBoxResponse.Text = sample;
 
@@ -261,7 +261,7 @@ namespace Sensit.App.Log
 					// Determine when to stop.
 					if (((_stopMode == StopMode.ElapsedTime) && (_elapsedTime > new TimeSpan((int)numericUpDownHours.Value, (int)numericUpDownMinutes.Value, (int)numericUpDownSeconds.Value))) ||
 						((_stopMode == StopMode.TimeDate) && (_stopDateTime > DateTime.Now)) ||
-						((_stopMode == StopMode.Scans) && (_samples > numericUpDownNumScans.Value)))
+						((_stopMode == StopMode.Scans) && (_samples >= numericUpDownNumScans.Value)))
 					{
 						StopLogging();
 					}
