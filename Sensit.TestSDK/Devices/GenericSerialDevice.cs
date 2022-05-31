@@ -61,8 +61,8 @@ namespace Sensit.TestSDK.Devices
 
 				// Save the whole string as a message to be logged.
 				// Replace any newlines or tabs with spaces to avoid weird log files.
-				// http://net-informations.com/q/faq/newline.html
-				Message = Regex.Replace(message, @"\t|\n|\r", " ");
+				// https://stackoverflow.com/questions/206717/how-do-i-replace-multiple-spaces-with-a-single-space-in-c
+				Message = Regex.Replace(message, @"\s+", " ");
 				Message = Message.Trim();
 			}
 			catch (InvalidOperationException ex)
