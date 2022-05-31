@@ -811,6 +811,11 @@
             0,
             0,
             0});
+			this.numericUpDownNumScans.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
 			this.numericUpDownNumScans.Name = "numericUpDownNumScans";
 			this.numericUpDownNumScans.Size = new System.Drawing.Size(105, 23);
 			this.numericUpDownNumScans.TabIndex = 21;
