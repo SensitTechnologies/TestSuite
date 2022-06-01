@@ -189,7 +189,7 @@ namespace Sensit.App.Log
 			// Show the repository where this program can be found.
 			// For the sake of future engineers.
 			formAbout.Description =
-				"The Datalogger application is designed to log data from devices that can be polled via a serial port." +
+				"This application records data from devices that can be polled via a serial port." +
 				Environment.NewLine +
 				Environment.NewLine +
 				"Source code can be found at:" +
