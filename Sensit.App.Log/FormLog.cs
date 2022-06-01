@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO.Ports;
 using System.Threading;
@@ -7,6 +8,7 @@ using System.Timers;
 using System.Windows.Forms;
 using Sensit.TestSDK.Devices;
 using Sensit.TestSDK.Files;
+using Sensit.TestSDK.Forms;
 
 namespace Sensit.App.Log
 {
@@ -165,6 +167,69 @@ namespace Sensit.App.Log
 
 		#endregion
 
+		#region Menu
+
+		/// <summary>
+		/// When the user clicks Help --> About, show an about box.
+		/// </summary>
+		/// <remarks>
+		/// Shows the repository where this program can be found,
+		/// for the sake of future developers.
+		/// </remarks>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			// Create an about box.
+			using FormAbout formAbout = new()
+			{
+				Company = "Sensit Technologies"
+			};
+
+			// Show the repository where this program can be found.
+			// For the sake of future engineers.
+			formAbout.Description =
+				"The Datalogger application is designed to log data from devices that can be polled via a serial port." +
+				Environment.NewLine +
+				Environment.NewLine +
+				"Source code can be found at:" +
+				Environment.NewLine +
+				"https://github.com/SensitTechnologies/TestSuite";
+
+			// Show the about box.
+			// ShowDialog() disables interaction with the app's other forms.
+			// Show() does not.
+			formAbout.ShowDialog();
+		}
+
+		/// <summary>
+		/// When the user clicks Help --> Wiki, open a browser and navigate to the wiki page for this app.
+		/// </summary>
+		/// <remarks>
+		/// https://stackoverflow.com/questions/502199/how-to-open-a-web-page-from-my-application
+		/// </remarks>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void WikiToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			const string wikiAddress = "https://github.com/SensitTechnologies/TestSuite/wiki/Sensit.App.Log";
+
+			try
+			{
+				Process.Start(new ProcessStartInfo
+				{
+					FileName = wikiAddress,
+					UseShellExecute = true
+				});
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message + Environment.NewLine +
+					"I was trying to navigate to: " + wikiAddress + ".",
+					ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
+			}
+		}
+
 		/// <summary>
 		/// When the File --> Exit menu item is clicked, exit the program.
 		/// </summary>
@@ -175,6 +240,10 @@ namespace Sensit.App.Log
 			// Exit the program.
 			Application.Exit();
 		}
+
+		#endregion
+
+		#region Filename
 
 		/// <summary>
 		/// When the "Browse" button is clicked, show a filebrowser.
@@ -206,6 +275,8 @@ namespace Sensit.App.Log
 				Properties.Settings.Default.Filename = openFileDialog.FileName;
 			}
 		}
+
+		#endregion
 
 		/// <summary>
 		/// When the timer ticks, log a datum.
@@ -391,6 +462,8 @@ namespace Sensit.App.Log
 			}
 		}
 
+		#region Helper
+
 		/// <summary>
 		/// Enable/disable user controls based on whether test is being run.
 		/// </summary>
@@ -414,6 +487,8 @@ namespace Sensit.App.Log
 			startToolStripMenuItem.Enabled = !testInProgress;
 			stopToolStripMenuItem.Enabled = testInProgress;
 		}
+
+		#endregion
 
 		/// <summary>
 		/// When the "Stop" button is clicked, attempt to stop logging.
