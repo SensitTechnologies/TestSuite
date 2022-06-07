@@ -26,7 +26,7 @@ namespace Sensit.App.Programmer
 		private readonly Color COLOR_ACTIVE = Color.Yellow;
 
 		// serial device to control programmer
-		private readonly GenericSerialDevice _programmer = new GenericSerialDevice();
+		private readonly GenericSerialDevice _programmer = new();
 
 		// which sensor is being used (start with sensor 1)
 		private ushort _sensor = 1;

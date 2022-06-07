@@ -45,8 +45,7 @@ namespace Sensit.App.Automate
 		private Test _test;
 
 		// organized list of variable-related controls that are updated during a test
-		private readonly Dictionary<(string, VariableType), UserControlVariableStatus> _variableStatusControls =
-			new Dictionary<(string, VariableType), UserControlVariableStatus>();
+		private readonly Dictionary<(string, VariableType), UserControlVariableStatus> _variableStatusControls = new();
 
 		// Number of completed events in currently running test
 		private uint _eventsComplete;
@@ -194,7 +193,7 @@ namespace Sensit.App.Automate
 					foreach (VariableType setpoint in device.Value.Setpoints.Keys)
 					{
 						// Create a new control for the variable.
-						UserControlVariableStatus userControlVariableStatus = new UserControlVariableStatus
+						UserControlVariableStatus userControlVariableStatus = new()
 						{
 							Title = device.Key + " " + setpoint,
 							UnitOfMeasure = "",
@@ -408,7 +407,7 @@ namespace Sensit.App.Automate
 			}, COLUMN_DEVICES_TYPE, tableLayoutPanelDevices.RowCount - 1);
 
 			// Add a comboBox for serial port.
-			ComboBox comboBox = new ComboBox
+			ComboBox comboBox = new()
 			{
 				Anchor = AnchorStyles.Left | AnchorStyles.Top,
 				Dock = DockStyle.None,
@@ -606,7 +605,7 @@ namespace Sensit.App.Automate
 		private void ButtonLogBrowse_Click(object sender, EventArgs e)
 		{
 			// Create a file browser.
-			OpenFileDialog openFileDialog = new OpenFileDialog()
+			OpenFileDialog openFileDialog = new()
 			{
 				InitialDirectory = textBoxLogFilename.Text,
 				Title = "Browse Log Files",
@@ -647,6 +646,11 @@ namespace Sensit.App.Automate
 
 		#region File Operations
 
+		/// <summary>
+		/// When File --> New is selected, clear the form so the user can create a new test.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void NewToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			// If there are unsaved changes...
@@ -717,7 +721,7 @@ namespace Sensit.App.Automate
 				// If the user chooses to discard changes, clear the form.
 				case DialogResult.No:
 					// Allow the user to select a filename.
-					OpenFileDialog openFileDialog = new OpenFileDialog();
+					OpenFileDialog openFileDialog = new();
 					openFileDialog.Filter = "XML-File|*.xml";
 					openFileDialog.Title = "Open test settings file";
 					openFileDialog.ShowDialog();
@@ -807,7 +811,7 @@ namespace Sensit.App.Automate
 						SaveAsToolStripMenuItem_Click(sender, e);
 						break;
 
-					// If the user chooses to discard changes, clear the form.
+					// If the user chooses to discard changes, open a new test.
 					case DialogResult.No:
 						OpenTestSettings(file);
 						break;
@@ -820,7 +824,7 @@ namespace Sensit.App.Automate
 		private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			// Allow the user to select a filename.
-			SaveFileDialog fileDialog = new SaveFileDialog
+			SaveFileDialog fileDialog = new()
 			{
 				Filter = "XML-File|*.xml",
 				Title = "Save test as"
@@ -874,7 +878,7 @@ namespace Sensit.App.Automate
 		private TestSetting CreateTestSettings()
 		{
 			// Create a new test settings object.
-			TestSetting testSetting = new TestSetting();
+			TestSetting testSetting = new();
 
 			// Add each device to the settings object.
 			for (int row = 1; row < tableLayoutPanelDevices.RowCount; row++)
@@ -952,11 +956,11 @@ namespace Sensit.App.Automate
 		/// <param name="e"></param>
 		private void SupportToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			const string wikiAddress = "https://github.com/SensitTechnologies/TestSuite/wiki/App:--Automated-Test-System";
+			const string wikiAddress = "https://github.com/SensitTechnologies/TestSuite/wiki/Sensit.App.Automate";
 
 			try
 			{
-				ProcessStartInfo processStartInfo = new ProcessStartInfo(wikiAddress);
+				ProcessStartInfo processStartInfo = new(wikiAddress);
 				Process.Start(processStartInfo);
 			}
 			catch (Exception ex)
@@ -975,22 +979,21 @@ namespace Sensit.App.Automate
 		private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			// Create an about box.
-			using (FormAbout formAbout = new FormAbout())
-			{
-				// Show the repository where this program can be found.
-				// For the sake of future engineers.
-				formAbout.Description +=
-					Environment.NewLine +
-					Environment.NewLine +
-					"Source code can be found at:" +
-					Environment.NewLine +
-					"https://github.com/SensitTechnologies/TestSuite";
+			using FormAbout formAbout = new();
 
-				// Show the about box.
-				// ShowDialog() disables interaction with the app's other forms.
-				// Show() does not.
-				formAbout.ShowDialog();
-			}
+			// Show the repository where this program can be found.
+			// For the sake of future engineers.
+			formAbout.Description +=
+				Environment.NewLine +
+				Environment.NewLine +
+				"Source code can be found at:" +
+				Environment.NewLine +
+				"https://github.com/SensitTechnologies/TestSuite";
+
+			// Show the about box.
+			// ShowDialog() disables interaction with the app's other forms.
+			// Show() does not.
+			formAbout.ShowDialog();
 		}
 
 		#endregion
@@ -1022,7 +1025,7 @@ namespace Sensit.App.Automate
 				if (_variableStatusControls.ContainsKey(key) == false)
 				{
 					// Create a new control for the variable.
-					UserControlVariableStatus userControlVariableStatus = new UserControlVariableStatus
+					UserControlVariableStatus userControlVariableStatus = new()
 					{
 						Title = key.name + " " + key.variable,
 						UnitOfMeasure = "",

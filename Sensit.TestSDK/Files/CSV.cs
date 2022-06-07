@@ -28,7 +28,7 @@ namespace Sensit.TestSDK.Files
 				throw new ArgumentNullException(nameof(row));
 			}
 
-			StringBuilder sb = new StringBuilder();
+			StringBuilder sb = new();
 			bool firstColumn = true;
 
 			foreach (string value in row)

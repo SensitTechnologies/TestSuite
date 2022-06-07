@@ -10,10 +10,10 @@ namespace Sensit.TestSDK.Utilities.Tests
 		public void DetectorTestTwoLinesArrivingTogether()
 		{
 			// Create a list to hold data packets.
-			List<byte[]> result_lines = new List<byte[]>();
+			List<byte[]> result_lines = new();
 
 			// Create a line splitter object.
-			LineSplitter lineSplitter = new LineSplitter();
+			LineSplitter lineSplitter = new();
 
 			// When a new data packet is received, add it to the list of data packets.
 			lineSplitter.LineReceived += result_lines.Add;

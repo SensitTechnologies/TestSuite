@@ -72,7 +72,7 @@ namespace Sensit.TestSDK.Forms
 				}
 
 				// Create a new tree node
-				TreeNode treeNode = new TreeNode(propertyInfoForText.GetValue(item, null).ToString())
+				TreeNode treeNode = new(propertyInfoForText.GetValue(item, null).ToString())
 				{
 					// Store a reference to the actual object as the TreeNode's Tag property
 					Tag = item

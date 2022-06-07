@@ -11,8 +11,8 @@ namespace Sensit.TestSDK.Forms
 		private static Form CreateBox(string caption)
 		{
 			// Create a new form.
-			Size size = new Size(160, 70);
-			Form inputBox = new Form
+			Size size = new(160, 70);
+			Form inputBox = new()
 			{
 				// Set the form's properties.
 				MinimizeBox = false,
@@ -23,7 +23,7 @@ namespace Sensit.TestSDK.Forms
 			};
 
 			// Create an OK button.
-			Button okButton = new Button()
+			Button okButton = new()
 			{
 				DialogResult = DialogResult.OK,
 				Name = "buttonOK",
@@ -35,7 +35,7 @@ namespace Sensit.TestSDK.Forms
 			inputBox.Controls.Add(okButton);
 
 			// Create a Cancel button.
-			Button cancelButton = new Button()
+			Button cancelButton = new()
 			{
 				DialogResult = DialogResult.Cancel,
 				Name = "buttonCancel",
@@ -61,7 +61,7 @@ namespace Sensit.TestSDK.Forms
 			Form inputBox = CreateBox(caption);
 
 			// Create a numeric up/down control.
-			NumericUpDown numericInput = new NumericUpDown
+			NumericUpDown numericInput = new()
 			{
 				Location = new Point(5, 5),
 				Value = input,
@@ -84,7 +84,7 @@ namespace Sensit.TestSDK.Forms
 			Form inputBox = CreateBox(caption);
 
 			// Create a numeric up/down control.
-			NumericUpDown numericInput = new NumericUpDown
+			NumericUpDown numericInput = new()
 			{
 				Location = new Point(5, 5),
 				Value = (decimal)input,
@@ -108,7 +108,7 @@ namespace Sensit.TestSDK.Forms
 			Form inputBox = CreateBox(caption);
 
 			// Create a numeric up/down control.
-			TextBox textBox = new TextBox
+			TextBox textBox = new()
 			{
 				Location = new Point(5, 5),
 				Text = input

@@ -27,7 +27,7 @@ namespace Sensit.TestSDK.Devices
 		#region Fields
 
 		// Use the line splitter class to parse the Laird module's results.
-		private readonly LineSplitter _lineSplitter = new LineSplitter()
+		private readonly LineSplitter _lineSplitter = new()
 		{
 			// Laird module separates lines with newline character.
 			Delimiter = (byte)'\n',
@@ -64,7 +64,7 @@ namespace Sensit.TestSDK.Devices
 		private List<string> WriteThenRead(string command, int delay)
 		{
 			// list of responses from Laird device
-			List<string> responses = new List<string>();
+			List<string> responses = new();
 
 			// Local function:  Save responses from the Laird Bluetooth module.
 			void LineReceived(byte[] bytes)
@@ -142,7 +142,7 @@ namespace Sensit.TestSDK.Devices
 		public SortedDictionary<string, string> Scan(int delay)
 		{
 			// list of Bluetooth devices found
-			SortedDictionary<string, string> bluetoothDevices = new SortedDictionary<string, string>();
+			SortedDictionary<string, string> bluetoothDevices = new();
 
 			// Local function:  Save full lines that are received.
 			void LineReceived(byte[] bytes)
@@ -274,7 +274,7 @@ namespace Sensit.TestSDK.Devices
 		public List<byte> Write(List<byte> command)
 		{
 			// return value
-			List<byte> response = new List<byte>();
+			List<byte> response = new();
 
 			try
 			{

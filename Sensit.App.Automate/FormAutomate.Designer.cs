@@ -364,7 +364,7 @@
 			this.tabPageEvents.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.tabPageEvents.Name = "tabPageEvents";
 			this.tabPageEvents.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			this.tabPageEvents.Size = new System.Drawing.Size(492, 293);
+			this.tabPageEvents.Size = new System.Drawing.Size(493, 290);
 			this.tabPageEvents.TabIndex = 2;
 			this.tabPageEvents.Text = "Events";
 			this.tabPageEvents.UseVisualStyleBackColor = true;
@@ -379,7 +379,7 @@
 			this.groupBoxEvents.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.groupBoxEvents.Name = "groupBoxEvents";
 			this.groupBoxEvents.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			this.groupBoxEvents.Size = new System.Drawing.Size(484, 287);
+			this.groupBoxEvents.Size = new System.Drawing.Size(485, 284);
 			this.groupBoxEvents.TabIndex = 17;
 			this.groupBoxEvents.TabStop = false;
 			this.groupBoxEvents.Text = "What should the equipment do?";
@@ -400,7 +400,7 @@
 			this.tableLayoutPanelEventsControls.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelEventsControls.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelEventsControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
-			this.tableLayoutPanelEventsControls.Size = new System.Drawing.Size(476, 265);
+			this.tableLayoutPanelEventsControls.Size = new System.Drawing.Size(477, 262);
 			this.tableLayoutPanelEventsControls.TabIndex = 19;
 			// 
 			// tableLayoutPanelEventsDelete
@@ -413,13 +413,13 @@
 			this.tableLayoutPanelEventsDelete.Controls.Add(this.checkBoxEventSelectAll, 0, 0);
 			this.tableLayoutPanelEventsDelete.Controls.Add(this.buttonEventDelete, 1, 0);
 			this.tableLayoutPanelEventsDelete.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanelEventsDelete.Location = new System.Drawing.Point(4, 231);
+			this.tableLayoutPanelEventsDelete.Location = new System.Drawing.Point(4, 228);
 			this.tableLayoutPanelEventsDelete.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.tableLayoutPanelEventsDelete.Name = "tableLayoutPanelEventsDelete";
 			this.tableLayoutPanelEventsDelete.RowCount = 1;
 			this.tableLayoutPanelEventsDelete.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelEventsDelete.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-			this.tableLayoutPanelEventsDelete.Size = new System.Drawing.Size(468, 31);
+			this.tableLayoutPanelEventsDelete.Size = new System.Drawing.Size(469, 31);
 			this.tableLayoutPanelEventsDelete.TabIndex = 20;
 			// 
 			// checkBoxEventSelectAll
@@ -464,12 +464,12 @@
 			this.tableLayoutPanelEventsAdd.Controls.Add(this.comboBoxEventVariable, 1, 0);
 			this.tableLayoutPanelEventsAdd.Controls.Add(this.numericUpDownEventValue, 2, 0);
 			this.tableLayoutPanelEventsAdd.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanelEventsAdd.Location = new System.Drawing.Point(4, 192);
+			this.tableLayoutPanelEventsAdd.Location = new System.Drawing.Point(4, 189);
 			this.tableLayoutPanelEventsAdd.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.tableLayoutPanelEventsAdd.Name = "tableLayoutPanelEventsAdd";
 			this.tableLayoutPanelEventsAdd.RowCount = 1;
 			this.tableLayoutPanelEventsAdd.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelEventsAdd.Size = new System.Drawing.Size(468, 33);
+			this.tableLayoutPanelEventsAdd.Size = new System.Drawing.Size(469, 33);
 			this.tableLayoutPanelEventsAdd.TabIndex = 19;
 			// 
 			// comboBoxEventDevice
@@ -557,7 +557,7 @@
 			this.panelEvents.Location = new System.Drawing.Point(4, 3);
 			this.panelEvents.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.panelEvents.Name = "panelEvents";
-			this.panelEvents.Size = new System.Drawing.Size(468, 183);
+			this.panelEvents.Size = new System.Drawing.Size(469, 180);
 			this.panelEvents.TabIndex = 21;
 			// 
 			// tableLayoutPanelEvents
@@ -581,7 +581,7 @@
 			this.tableLayoutPanelEvents.Name = "tableLayoutPanelEvents";
 			this.tableLayoutPanelEvents.RowCount = 1;
 			this.tableLayoutPanelEvents.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelEvents.Size = new System.Drawing.Size(468, 13);
+			this.tableLayoutPanelEvents.Size = new System.Drawing.Size(469, 13);
 			this.tableLayoutPanelEvents.TabIndex = 7;
 			// 
 			// labelEventDevice
@@ -643,10 +643,10 @@
 			// 
 			this.tabPageLog.Controls.Add(this.groupBoxLog);
 			this.tabPageLog.Location = new System.Drawing.Point(4, 24);
-			this.tabPageLog.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.tabPageLog.Margin = new System.Windows.Forms.Padding(2);
 			this.tabPageLog.Name = "tabPageLog";
-			this.tabPageLog.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-			this.tabPageLog.Size = new System.Drawing.Size(492, 293);
+			this.tabPageLog.Padding = new System.Windows.Forms.Padding(2);
+			this.tabPageLog.Size = new System.Drawing.Size(493, 290);
 			this.tabPageLog.TabIndex = 7;
 			this.tabPageLog.Text = "Log";
 			this.tabPageLog.UseVisualStyleBackColor = true;
@@ -661,7 +661,7 @@
 			this.groupBoxLog.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.groupBoxLog.Name = "groupBoxLog";
 			this.groupBoxLog.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			this.groupBoxLog.Size = new System.Drawing.Size(488, 289);
+			this.groupBoxLog.Size = new System.Drawing.Size(489, 286);
 			this.groupBoxLog.TabIndex = 17;
 			this.groupBoxLog.TabStop = false;
 			this.groupBoxLog.Text = "Where should results be saved?";
@@ -676,7 +676,7 @@
 			this.groupBoxFilename.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.groupBoxFilename.Name = "groupBoxFilename";
 			this.groupBoxFilename.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			this.groupBoxFilename.Size = new System.Drawing.Size(480, 55);
+			this.groupBoxFilename.Size = new System.Drawing.Size(481, 55);
 			this.groupBoxFilename.TabIndex = 8;
 			this.groupBoxFilename.TabStop = false;
 			this.groupBoxFilename.Text = "Filename";
@@ -696,7 +696,7 @@
 			this.tableLayoutPanelFilename.Name = "tableLayoutPanelFilename";
 			this.tableLayoutPanelFilename.RowCount = 1;
 			this.tableLayoutPanelFilename.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelFilename.Size = new System.Drawing.Size(472, 33);
+			this.tableLayoutPanelFilename.Size = new System.Drawing.Size(473, 33);
 			this.tableLayoutPanelFilename.TabIndex = 1;
 			// 
 			// textBoxLogFilename
@@ -705,14 +705,14 @@
 			this.textBoxLogFilename.Location = new System.Drawing.Point(4, 3);
 			this.textBoxLogFilename.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.textBoxLogFilename.Name = "textBoxLogFilename";
-			this.textBoxLogFilename.Size = new System.Drawing.Size(368, 23);
+			this.textBoxLogFilename.Size = new System.Drawing.Size(369, 23);
 			this.textBoxLogFilename.TabIndex = 3;
 			this.textBoxLogFilename.TextChanged += new System.EventHandler(this.TextBoxLogFilename_TextChanged);
 			// 
 			// buttonLogBrowse
 			// 
 			this.buttonLogBrowse.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.buttonLogBrowse.Location = new System.Drawing.Point(380, 3);
+			this.buttonLogBrowse.Location = new System.Drawing.Point(381, 3);
 			this.buttonLogBrowse.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.buttonLogBrowse.Name = "buttonLogBrowse";
 			this.buttonLogBrowse.Size = new System.Drawing.Size(88, 27);
@@ -728,7 +728,7 @@
 			this.tabPageStatus.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.tabPageStatus.Name = "tabPageStatus";
 			this.tabPageStatus.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			this.tabPageStatus.Size = new System.Drawing.Size(492, 293);
+			this.tabPageStatus.Size = new System.Drawing.Size(493, 290);
 			this.tabPageStatus.TabIndex = 4;
 			this.tabPageStatus.Text = "Status";
 			this.tabPageStatus.UseVisualStyleBackColor = true;
@@ -741,7 +741,7 @@
 			this.groupBoxVariables.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.groupBoxVariables.Name = "groupBoxVariables";
 			this.groupBoxVariables.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			this.groupBoxVariables.Size = new System.Drawing.Size(484, 287);
+			this.groupBoxVariables.Size = new System.Drawing.Size(485, 284);
 			this.groupBoxVariables.TabIndex = 1;
 			this.groupBoxVariables.TabStop = false;
 			this.groupBoxVariables.Text = "Variables";
@@ -753,7 +753,7 @@
 			this.flowLayoutPanelControlledVariables.Location = new System.Drawing.Point(4, 19);
 			this.flowLayoutPanelControlledVariables.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.flowLayoutPanelControlledVariables.Name = "flowLayoutPanelControlledVariables";
-			this.flowLayoutPanelControlledVariables.Size = new System.Drawing.Size(476, 265);
+			this.flowLayoutPanelControlledVariables.Size = new System.Drawing.Size(477, 262);
 			this.flowLayoutPanelControlledVariables.TabIndex = 0;
 			// 
 			// statusStrip
@@ -854,7 +854,7 @@
 			// 
 			this.startToolStripMenuItem.Name = "startToolStripMenuItem";
 			this.startToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-			this.startToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.startToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
 			this.startToolStripMenuItem.Text = "&Start";
 			this.startToolStripMenuItem.Click += new System.EventHandler(this.ButtonStart_Click);
 			// 
@@ -863,7 +863,7 @@
 			this.pauseToolStripMenuItem.Enabled = false;
 			this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
 			this.pauseToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F6;
-			this.pauseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.pauseToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
 			this.pauseToolStripMenuItem.Text = "&Pause";
 			this.pauseToolStripMenuItem.ToolTipText = "Hault the current test temporarily";
 			this.pauseToolStripMenuItem.Click += new System.EventHandler(this.PauseToolStripMenuItem_Click);
@@ -873,7 +873,7 @@
 			this.stopToolStripMenuItem.Enabled = false;
 			this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
 			this.stopToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F7;
-			this.stopToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.stopToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
 			this.stopToolStripMenuItem.Text = "&Stop";
 			this.stopToolStripMenuItem.Click += new System.EventHandler(this.ButtonStop_Click);
 			// 

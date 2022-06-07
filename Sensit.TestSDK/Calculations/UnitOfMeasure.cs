@@ -110,8 +110,7 @@ namespace Sensit.TestSDK.Calculations
 		#region Conversion Factors
 
 		// Conversion factors for length; the base unit is meters.
-		private static readonly Dictionary<Length, double> LengthConversion =
-			new Dictionary<Length, double>()
+		private static readonly Dictionary<Length, double> LengthConversion = new()
 		{
 			{ Length.Meters, 1.0 },
 			{ Length.Centimeters, 100.0 },
@@ -120,8 +119,7 @@ namespace Sensit.TestSDK.Calculations
 		};
 
 		// Conversion factors for pressure; KPA is the base unit.
-		private static readonly Dictionary<Pressure, double> PressureConversion =
-			new Dictionary<Pressure, double>()
+		private static readonly Dictionary<Pressure, double> PressureConversion = new()
 		{
 			{ Pressure.Kilopascals, 1.0 },
 			{ Pressure.Hectopascals, 10.0 },
@@ -138,8 +136,7 @@ namespace Sensit.TestSDK.Calculations
 		};
 
 		// Conversion factors for velocity; m/s is the base unit.
-		private static readonly Dictionary<Velocity, double> VelocityConversion
-			= new Dictionary<Velocity, double>()
+		private static readonly Dictionary<Velocity, double> VelocityConversion = new()
 		{
 			{ Velocity.MetersPerSecond, 1.0 },
 			{ Velocity.MetersPerHour, 3600.0 },
@@ -151,7 +148,7 @@ namespace Sensit.TestSDK.Calculations
 		};
 
 		// Conversion factors for volumetric flow; m^3/s is the base unit.
-		private static readonly Dictionary<Flow, double> FlowConversion = new Dictionary<Flow, double>()
+		private static readonly Dictionary<Flow, double> FlowConversion = new()
 		{
 			{ Flow.CubicMetersPerSecond, 1.0 },
 			{ Flow.CubicMetersPerHour, 3600.0 },
@@ -159,7 +156,7 @@ namespace Sensit.TestSDK.Calculations
 		};
 
 		// Conversion factors for gas concentration; parts per million is the base unit.
-		private static readonly Dictionary<Concentration, double> ConcentrationConversion = new Dictionary<Concentration, double>()
+		private static readonly Dictionary<Concentration, double> ConcentrationConversion = new()
 		{
 			{ Concentration.PartsPerTrillion, 1000000.0 },
 			{ Concentration.PartsPerBillion, 1000.0 },
@@ -168,7 +165,7 @@ namespace Sensit.TestSDK.Calculations
 		};
 
 		// Conversion factors for temperature; Celsius is the base unit.
-		private static readonly Dictionary<Temperature, double> TemperatureConversion = new Dictionary<Temperature, double>()
+		private static readonly Dictionary<Temperature, double> TemperatureConversion = new()
 		{
 			{ Temperature.Celsius, 1.0 },
 			{ Temperature.Kelvin, 1.0 },
@@ -177,14 +174,14 @@ namespace Sensit.TestSDK.Calculations
 		};
 
 		// Conversion factors for current; Amp is the base unit.
-		private static readonly Dictionary<Current, double> CurrentConversion = new Dictionary<Current, double>()
+		private static readonly Dictionary<Current, double> CurrentConversion = new()
 		{
 			{ Current.Amp, 1.0 },
 			{ Current.Milliamp, 1000.0 }
 		};
 
 		// Conversion factors for voltage; Volt is the base unit.
-		private static readonly Dictionary<Voltage, double> VoltageConversion = new Dictionary<Voltage, double>()
+		private static readonly Dictionary<Voltage, double> VoltageConversion = new()
 		{
 			{ Voltage.Volt, 1.0 },
 			{ Voltage.Millivolt, 1000.0 }

@@ -96,7 +96,7 @@ namespace Sensit.TestSDK.Devices
 		/// https://stackoverflow.com/questions/8002455/how-to-easily-initialize-a-list-of-tuples
 		/// Note this may require .NET framework 7.0 or later to compile.
 		/// </remarks>
-		private static readonly Dictionary<Gas, (int Index, string Code)> GasCommand = new Dictionary<Gas, (int Index, string Code)>
+		private static readonly Dictionary<Gas, (int Index, string Code)> GasCommand = new()
 		{
 			{ Gas.Air,                  (0, "Air") },
 			{ Gas.Argon,                (1, "Ar") },

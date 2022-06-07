@@ -253,7 +253,7 @@ namespace Sensit.App.Log
 		private void ButtonBrowse_Click(object sender, EventArgs e)
 		{
 			// Create a file browser.
-			OpenFileDialog openFileDialog = new OpenFileDialog()
+			OpenFileDialog openFileDialog = new()
 			{
 				InitialDirectory = textBoxFilename.Text,
 				Title = "Browse Log Files",

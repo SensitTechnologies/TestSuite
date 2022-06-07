@@ -23,10 +23,10 @@ namespace Sensit.TestSDK.Settings
 		public static void SerializeXML<T>(T myObject, string filename)
 		{
 			// Create a serializer using the type of the object to be serialized.
-			XmlSerializer mySerializer = new XmlSerializer(typeof(T));
+			XmlSerializer mySerializer = new(typeof(T));
 
 			// Create a StreamWriter object.
-			StreamWriter myWriter = new StreamWriter(filename);
+			StreamWriter myWriter = new(filename);
 
 			// Write the file.
 			mySerializer.Serialize(myWriter, myObject);
@@ -44,10 +44,10 @@ namespace Sensit.TestSDK.Settings
 		public static T DeserializeXML<T>(string filename)
 		{
 			// Create a serializer using the type of the object to be deserialized.
-			XmlSerializer serializer = new XmlSerializer(typeof(T));
+			XmlSerializer serializer = new(typeof(T));
 
 			// Create a filestream to read the file.
-			FileStream fileStream = new FileStream(filename, FileMode.Open);
+			FileStream fileStream = new(filename, FileMode.Open);
 
 			// Create an XML reader.
 			XmlReader xmlReader = XmlReader.Create(fileStream);

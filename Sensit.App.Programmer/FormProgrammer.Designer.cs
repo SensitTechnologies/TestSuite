@@ -74,7 +74,8 @@ namespace Sensit.App.Programmer
             this.helpToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(384, 24);
+			this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
+			this.menuStrip1.Size = new System.Drawing.Size(448, 24);
 			this.menuStrip1.TabIndex = 0;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -105,13 +106,13 @@ namespace Sensit.App.Programmer
 			// wikiToolStripMenuItem
 			// 
 			this.wikiToolStripMenuItem.Name = "wikiToolStripMenuItem";
-			this.wikiToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+			this.wikiToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.wikiToolStripMenuItem.Text = "&Wiki";
 			// 
 			// aboutToolStripMenuItem
 			// 
 			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.aboutToolStripMenuItem.Text = "&About";
 			// 
 			// statusStrip
@@ -120,22 +121,23 @@ namespace Sensit.App.Programmer
 			this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar,
             this.toolStripStatusLabel});
-			this.statusStrip.Location = new System.Drawing.Point(0, 432);
+			this.statusStrip.Location = new System.Drawing.Point(0, 499);
 			this.statusStrip.Name = "statusStrip";
-			this.statusStrip.Size = new System.Drawing.Size(384, 29);
+			this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
+			this.statusStrip.Size = new System.Drawing.Size(448, 33);
 			this.statusStrip.TabIndex = 4;
 			this.statusStrip.Text = "statusStrip1";
 			// 
 			// toolStripProgressBar
 			// 
 			this.toolStripProgressBar.Name = "toolStripProgressBar";
-			this.toolStripProgressBar.Size = new System.Drawing.Size(100, 23);
+			this.toolStripProgressBar.Size = new System.Drawing.Size(117, 27);
 			// 
 			// toolStripStatusLabel
 			// 
-			this.toolStripStatusLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.toolStripStatusLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.toolStripStatusLabel.Name = "toolStripStatusLabel";
-			this.toolStripStatusLabel.Size = new System.Drawing.Size(62, 24);
+			this.toolStripStatusLabel.Size = new System.Drawing.Size(62, 28);
 			this.toolStripStatusLabel.Text = "Ready...";
 			// 
 			// groupBoxSerialPort
@@ -145,8 +147,10 @@ namespace Sensit.App.Programmer
 			this.groupBoxSerialPort.Controls.Add(this.tableLayoutPanelSerialPort);
 			this.groupBoxSerialPort.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBoxSerialPort.Location = new System.Drawing.Point(0, 24);
+			this.groupBoxSerialPort.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.groupBoxSerialPort.Name = "groupBoxSerialPort";
-			this.groupBoxSerialPort.Size = new System.Drawing.Size(384, 48);
+			this.groupBoxSerialPort.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			this.groupBoxSerialPort.Size = new System.Drawing.Size(448, 55);
 			this.groupBoxSerialPort.TabIndex = 9;
 			this.groupBoxSerialPort.TabStop = false;
 			this.groupBoxSerialPort.Text = "Serial Port";
@@ -160,17 +164,18 @@ namespace Sensit.App.Programmer
 			this.tableLayoutPanelSerialPort.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanelSerialPort.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanelSerialPort.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanelSerialPort.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanelSerialPort.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 23F));
 			this.tableLayoutPanelSerialPort.Controls.Add(this.comboBoxSerialPort, 0, 0);
 			this.tableLayoutPanelSerialPort.Controls.Add(this.buttonPortRefresh, 1, 0);
 			this.tableLayoutPanelSerialPort.Controls.Add(this.radioButtonOpen, 2, 0);
 			this.tableLayoutPanelSerialPort.Controls.Add(this.radioButtonClosed, 3, 0);
 			this.tableLayoutPanelSerialPort.Dock = System.Windows.Forms.DockStyle.Top;
-			this.tableLayoutPanelSerialPort.Location = new System.Drawing.Point(3, 16);
+			this.tableLayoutPanelSerialPort.Location = new System.Drawing.Point(4, 19);
+			this.tableLayoutPanelSerialPort.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.tableLayoutPanelSerialPort.Name = "tableLayoutPanelSerialPort";
 			this.tableLayoutPanelSerialPort.RowCount = 1;
 			this.tableLayoutPanelSerialPort.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelSerialPort.Size = new System.Drawing.Size(378, 29);
+			this.tableLayoutPanelSerialPort.Size = new System.Drawing.Size(440, 33);
 			this.tableLayoutPanelSerialPort.TabIndex = 14;
 			// 
 			// comboBoxSerialPort
@@ -179,18 +184,20 @@ namespace Sensit.App.Programmer
 			this.comboBoxSerialPort.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.comboBoxSerialPort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxSerialPort.FormattingEnabled = true;
-			this.comboBoxSerialPort.Location = new System.Drawing.Point(3, 3);
+			this.comboBoxSerialPort.Location = new System.Drawing.Point(4, 3);
+			this.comboBoxSerialPort.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.comboBoxSerialPort.Name = "comboBoxSerialPort";
-			this.comboBoxSerialPort.Size = new System.Drawing.Size(218, 21);
+			this.comboBoxSerialPort.Size = new System.Drawing.Size(260, 23);
 			this.comboBoxSerialPort.TabIndex = 1;
 			this.comboBoxSerialPort.SelectedIndexChanged += new System.EventHandler(this.ComboBoxSerialPort_SelectedIndexChanged);
 			// 
 			// buttonPortRefresh
 			// 
 			this.buttonPortRefresh.Image = ((System.Drawing.Image)(resources.GetObject("buttonPortRefresh.Image")));
-			this.buttonPortRefresh.Location = new System.Drawing.Point(227, 3);
+			this.buttonPortRefresh.Location = new System.Drawing.Point(272, 3);
+			this.buttonPortRefresh.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.buttonPortRefresh.Name = "buttonPortRefresh";
-			this.buttonPortRefresh.Size = new System.Drawing.Size(28, 23);
+			this.buttonPortRefresh.Size = new System.Drawing.Size(33, 27);
 			this.buttonPortRefresh.TabIndex = 2;
 			this.buttonPortRefresh.UseVisualStyleBackColor = true;
 			this.buttonPortRefresh.Click += new System.EventHandler(this.ButtonPortRefresh_Click);
@@ -199,9 +206,10 @@ namespace Sensit.App.Programmer
 			// 
 			this.radioButtonOpen.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.radioButtonOpen.AutoSize = true;
-			this.radioButtonOpen.Location = new System.Drawing.Point(261, 6);
+			this.radioButtonOpen.Location = new System.Drawing.Point(313, 7);
+			this.radioButtonOpen.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.radioButtonOpen.Name = "radioButtonOpen";
-			this.radioButtonOpen.Size = new System.Drawing.Size(51, 17);
+			this.radioButtonOpen.Size = new System.Drawing.Size(54, 19);
 			this.radioButtonOpen.TabIndex = 3;
 			this.radioButtonOpen.Text = "Open";
 			this.radioButtonOpen.UseVisualStyleBackColor = true;
@@ -212,9 +220,10 @@ namespace Sensit.App.Programmer
 			this.radioButtonClosed.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.radioButtonClosed.AutoSize = true;
 			this.radioButtonClosed.Checked = true;
-			this.radioButtonClosed.Location = new System.Drawing.Point(318, 6);
+			this.radioButtonClosed.Location = new System.Drawing.Point(375, 7);
+			this.radioButtonClosed.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.radioButtonClosed.Name = "radioButtonClosed";
-			this.radioButtonClosed.Size = new System.Drawing.Size(57, 17);
+			this.radioButtonClosed.Size = new System.Drawing.Size(61, 19);
 			this.radioButtonClosed.TabIndex = 4;
 			this.radioButtonClosed.TabStop = true;
 			this.radioButtonClosed.Text = "Closed";
@@ -228,9 +237,11 @@ namespace Sensit.App.Programmer
 			this.groupBoxBarcode.Controls.Add(this.tableLayoutPanel2);
 			this.groupBoxBarcode.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBoxBarcode.Enabled = false;
-			this.groupBoxBarcode.Location = new System.Drawing.Point(0, 72);
+			this.groupBoxBarcode.Location = new System.Drawing.Point(0, 79);
+			this.groupBoxBarcode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.groupBoxBarcode.Name = "groupBoxBarcode";
-			this.groupBoxBarcode.Size = new System.Drawing.Size(384, 48);
+			this.groupBoxBarcode.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			this.groupBoxBarcode.Size = new System.Drawing.Size(448, 55);
 			this.groupBoxBarcode.TabIndex = 11;
 			this.groupBoxBarcode.TabStop = false;
 			this.groupBoxBarcode.Text = "Barcode";
@@ -245,27 +256,30 @@ namespace Sensit.App.Programmer
 			this.tableLayoutPanel2.Controls.Add(this.textBoxBarcode, 0, 0);
 			this.tableLayoutPanel2.Controls.Add(this.buttonProgram, 1, 0);
 			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
-			this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 16);
+			this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 19);
+			this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
 			this.tableLayoutPanel2.RowCount = 1;
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel2.Size = new System.Drawing.Size(378, 29);
+			this.tableLayoutPanel2.Size = new System.Drawing.Size(440, 33);
 			this.tableLayoutPanel2.TabIndex = 1;
 			// 
 			// textBoxBarcode
 			// 
 			this.textBoxBarcode.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBoxBarcode.Location = new System.Drawing.Point(3, 3);
+			this.textBoxBarcode.Location = new System.Drawing.Point(4, 3);
+			this.textBoxBarcode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.textBoxBarcode.Name = "textBoxBarcode";
-			this.textBoxBarcode.Size = new System.Drawing.Size(291, 20);
+			this.textBoxBarcode.Size = new System.Drawing.Size(336, 23);
 			this.textBoxBarcode.TabIndex = 5;
 			// 
 			// buttonProgram
 			// 
 			this.buttonProgram.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.buttonProgram.Location = new System.Drawing.Point(300, 3);
+			this.buttonProgram.Location = new System.Drawing.Point(348, 3);
+			this.buttonProgram.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.buttonProgram.Name = "buttonProgram";
-			this.buttonProgram.Size = new System.Drawing.Size(75, 23);
+			this.buttonProgram.Size = new System.Drawing.Size(88, 27);
 			this.buttonProgram.TabIndex = 6;
 			this.buttonProgram.Text = "Program";
 			this.buttonProgram.UseVisualStyleBackColor = true;
@@ -278,9 +292,11 @@ namespace Sensit.App.Programmer
 			this.groupBoxStatus.Controls.Add(this.tableLayoutPanel1);
 			this.groupBoxStatus.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBoxStatus.Enabled = false;
-			this.groupBoxStatus.Location = new System.Drawing.Point(0, 120);
+			this.groupBoxStatus.Location = new System.Drawing.Point(0, 134);
+			this.groupBoxStatus.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.groupBoxStatus.Name = "groupBoxStatus";
-			this.groupBoxStatus.Size = new System.Drawing.Size(384, 312);
+			this.groupBoxStatus.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			this.groupBoxStatus.Size = new System.Drawing.Size(448, 365);
 			this.groupBoxStatus.TabIndex = 12;
 			this.groupBoxStatus.TabStop = false;
 			this.groupBoxStatus.Text = "Status";
@@ -291,12 +307,13 @@ namespace Sensit.App.Programmer
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanelGasConcentration, 0, 0);
 			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 16);
+			this.tableLayoutPanel1.Location = new System.Drawing.Point(4, 19);
+			this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 1;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 293F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(378, 293);
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 338F));
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(440, 343);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
 			// tableLayoutPanelGasConcentration
@@ -307,25 +324,27 @@ namespace Sensit.App.Programmer
 			this.tableLayoutPanelGasConcentration.ColumnCount = 2;
 			this.tableLayoutPanelGasConcentration.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanelGasConcentration.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanelGasConcentration.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanelGasConcentration.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 23F));
 			this.tableLayoutPanelGasConcentration.Controls.Add(this.buttonSensor4, 0, 1);
 			this.tableLayoutPanelGasConcentration.Controls.Add(this.buttonSensor1, 1, 1);
 			this.tableLayoutPanelGasConcentration.Controls.Add(this.buttonSensor2, 1, 0);
 			this.tableLayoutPanelGasConcentration.Controls.Add(this.buttonSensor3, 0, 0);
-			this.tableLayoutPanelGasConcentration.Location = new System.Drawing.Point(83, 40);
+			this.tableLayoutPanelGasConcentration.Location = new System.Drawing.Point(95, 50);
+			this.tableLayoutPanelGasConcentration.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.tableLayoutPanelGasConcentration.Name = "tableLayoutPanelGasConcentration";
 			this.tableLayoutPanelGasConcentration.RowCount = 2;
 			this.tableLayoutPanelGasConcentration.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelGasConcentration.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelGasConcentration.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanelGasConcentration.Size = new System.Drawing.Size(212, 212);
+			this.tableLayoutPanelGasConcentration.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
+			this.tableLayoutPanelGasConcentration.Size = new System.Drawing.Size(250, 242);
 			this.tableLayoutPanelGasConcentration.TabIndex = 1;
 			// 
 			// buttonSensor4
 			// 
-			this.buttonSensor4.Location = new System.Drawing.Point(3, 109);
+			this.buttonSensor4.Location = new System.Drawing.Point(4, 124);
+			this.buttonSensor4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.buttonSensor4.Name = "buttonSensor4";
-			this.buttonSensor4.Size = new System.Drawing.Size(100, 100);
+			this.buttonSensor4.Size = new System.Drawing.Size(117, 115);
 			this.buttonSensor4.TabIndex = 10;
 			this.buttonSensor4.Text = "4";
 			this.buttonSensor4.UseVisualStyleBackColor = true;
@@ -333,9 +352,10 @@ namespace Sensit.App.Programmer
 			// 
 			// buttonSensor1
 			// 
-			this.buttonSensor1.Location = new System.Drawing.Point(109, 109);
+			this.buttonSensor1.Location = new System.Drawing.Point(129, 124);
+			this.buttonSensor1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.buttonSensor1.Name = "buttonSensor1";
-			this.buttonSensor1.Size = new System.Drawing.Size(100, 100);
+			this.buttonSensor1.Size = new System.Drawing.Size(117, 115);
 			this.buttonSensor1.TabIndex = 7;
 			this.buttonSensor1.Text = "1";
 			this.buttonSensor1.UseVisualStyleBackColor = true;
@@ -343,9 +363,10 @@ namespace Sensit.App.Programmer
 			// 
 			// buttonSensor2
 			// 
-			this.buttonSensor2.Location = new System.Drawing.Point(109, 3);
+			this.buttonSensor2.Location = new System.Drawing.Point(129, 3);
+			this.buttonSensor2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.buttonSensor2.Name = "buttonSensor2";
-			this.buttonSensor2.Size = new System.Drawing.Size(100, 100);
+			this.buttonSensor2.Size = new System.Drawing.Size(117, 115);
 			this.buttonSensor2.TabIndex = 8;
 			this.buttonSensor2.Text = "2";
 			this.buttonSensor2.UseVisualStyleBackColor = true;
@@ -353,9 +374,10 @@ namespace Sensit.App.Programmer
 			// 
 			// buttonSensor3
 			// 
-			this.buttonSensor3.Location = new System.Drawing.Point(3, 3);
+			this.buttonSensor3.Location = new System.Drawing.Point(4, 3);
+			this.buttonSensor3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.buttonSensor3.Name = "buttonSensor3";
-			this.buttonSensor3.Size = new System.Drawing.Size(100, 100);
+			this.buttonSensor3.Size = new System.Drawing.Size(117, 115);
 			this.buttonSensor3.TabIndex = 9;
 			this.buttonSensor3.Text = "3";
 			this.buttonSensor3.UseVisualStyleBackColor = true;
@@ -364,15 +386,16 @@ namespace Sensit.App.Programmer
 			// FormProgrammer
 			// 
 			this.AcceptButton = this.buttonProgram;
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(384, 461);
+			this.ClientSize = new System.Drawing.Size(448, 532);
 			this.Controls.Add(this.groupBoxStatus);
 			this.Controls.Add(this.groupBoxBarcode);
 			this.Controls.Add(this.groupBoxSerialPort);
 			this.Controls.Add(this.statusStrip);
 			this.Controls.Add(this.menuStrip1);
 			this.MainMenuStrip = this.menuStrip1;
+			this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.Name = "FormProgrammer";
 			this.Text = "Smart Sensor Programmer";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormProgrammer_FormClosed);

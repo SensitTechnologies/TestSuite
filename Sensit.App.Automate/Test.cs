@@ -414,7 +414,7 @@ namespace Sensit.App.Automate
 			// For each event...
 			foreach (EventSetting e in _events)
 			{
-				TestVariable testVariable = new TestVariable
+				TestVariable testVariable = new()
 				{
 					Setpoint = e.Value,
 					Tolerance = e.ErrorTolerance,

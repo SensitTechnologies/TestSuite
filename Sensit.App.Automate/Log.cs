@@ -40,7 +40,7 @@ namespace Sensit.App.Automate
 			}
 
 			// Create a list of column headers.
-			List<string> row = new List<string>
+			List<string> row = new()
 			{
 				// Write column header for date/time.
 				"Timestamp"
@@ -78,7 +78,7 @@ namespace Sensit.App.Automate
 			}
 
 			// Create a list of test data.
-			List<string> row = new List<string>
+			List<string> row = new()
 			{
 				// Log current date and time.
 				DateTime.Now.ToString(CultureInfo.InvariantCulture)
@@ -104,7 +104,7 @@ namespace Sensit.App.Automate
 
 		public void WriteMessage(string message)
 		{
-			List<string> row = new List<string>() { message };
+			List<string> row = new() { message };
 			_writer.WriteRow(row);
 		}
 

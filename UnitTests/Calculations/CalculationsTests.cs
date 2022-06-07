@@ -33,7 +33,7 @@ namespace UnitTests.Calculations
 			// Arrange.
 			// Test polynomial is y = x^2 + 2x + 3, where x = 5.
 			// Result is y = 25 + 10 + 3 = 38.
-			List<double> coefficients = new List<double>() { 1, 2, 3 };
+			List<double> coefficients = new() { 1, 2, 3 };
 			const double x = 5;
 
 			// amount of error allowed (half the value of the least significant digit of precision)
@@ -51,7 +51,7 @@ namespace UnitTests.Calculations
 		{
 			// Arrange.
 			// Create a list of data that represents a step response from 0 to 100% over 10 seconds.
-			List<double> data = new List<double>() { 0, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 };
+			List<double> data = new() { 0, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 };
 
 			// Pretend the data was taken once per second.
 			double period = 1.0;
@@ -70,7 +70,7 @@ namespace UnitTests.Calculations
 			// Act and assert.
 			// Input each data point into the exponential averaging method.
 			// Check the results against known values that make an exponential curve.
-			List<double> expectedResults = new List<double>() { 0.0, 39.3, 63.2, 77.7, 86.5, 91.8, 95.0, 97.0, 98.2, 98.9, 99.3 };
+			List<double> expectedResults = new() { 0.0, 39.3, 63.2, 77.7, 86.5, 91.8, 95.0, 97.0, 98.2, 98.9, 99.3 };
 			for (int i = 0; i < data.Count; i++)
 			{
 				average = Calculate.ExpAverage(average, data[i], period, tau);

@@ -12,11 +12,11 @@ namespace Sensit.App.GasConcentration
 	{
 		// mass flow controllers
 		// You need two to mix gasses and control gas concentration.
-		private readonly ColeParmerMFC _mfcAnalyte = new ColeParmerMFC();
-		private readonly ColeParmerMFC _mfcDiluent = new ColeParmerMFC();
+		private readonly ColeParmerMFC _mfcAnalyte = new();
+		private readonly ColeParmerMFC _mfcDiluent = new();
 
 		// timer for elapsed time
-		private readonly Timer _timer = new Timer();
+		private readonly Timer _timer = new();
 
 		// timestamp for elapsed time
 		private uint _elapsedSeconds = 0;
