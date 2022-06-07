@@ -41,6 +41,11 @@ namespace Sensit.TestSDK.Devices
 		/// </summary>
 		public string Message { get; private set; }
 
+		/// <summary>
+		/// How long to wait betwee command and response.
+		/// </summary>
+		public uint Delay { get; set; } = 200;
+
 		public void WriteThenRead()
 		{
 			try
@@ -49,7 +54,7 @@ namespace Sensit.TestSDK.Devices
 				Port.Write(Command);
 
 				// Read from the serial port.
-				Thread.Sleep(200);
+				Thread.Sleep((int)Delay);
 				string message = string.Empty;
 				while (Port.BytesToRead != 0)
 				{
