@@ -80,20 +80,14 @@ namespace Sensit.App.Programmer
 		}
 
 		/// <summary>
-		/// Open the serial port.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void RadioButton_CheckedChanged(object sender, EventArgs e)
+		/// Change serial port on/off
+		/// <paramref name="opening"/>
+		private void SerialInput(bool opening)
 		{
-			// Do stuff only if the radio button is checked.
-			// (Otherwise the actions will run twice.)
-			if (((RadioButton)sender).Checked)
-			{
 				try
 				{
-					// If the "Open" radio button has been checked...
-					if (((RadioButton)sender) == radioButtonOpen)
+					//If opening is true, open serial port and disable boxes
+					if (opening == true)
 					{
 						// Alert the user.
 						toolStripStatusLabel.Text = "Opening serial port...";
@@ -105,14 +99,12 @@ namespace Sensit.App.Programmer
 						// Update the user interface.
 						comboBoxSerialPort.Enabled = false;
 						buttonPortRefresh.Enabled = false;
-						groupBoxBarcode.Enabled = true;
-						groupBoxStatus.Enabled = true;
+						groupBoxBarcode.Enabled = false;
+						groupBoxStatus.Enabled = false;
 						toolStripStatusLabel.Text = "Scan sensor 1.";
-
-						// Give focus to barcode textbox.
-						textBoxBarcode.Focus();
 					}
-					else if (((RadioButton)sender) == radioButtonClosed)
+					//If opening is false, close serial port and enable boxes
+					else if (opening == false)
 					{
 						// Alert the user.
 						toolStripStatusLabel.Text = "Closing serial port...";
@@ -123,9 +115,12 @@ namespace Sensit.App.Programmer
 						// Update user interface.
 						comboBoxSerialPort.Enabled = true;
 						buttonPortRefresh.Enabled = true;
-						groupBoxBarcode.Enabled = false;
-						groupBoxStatus.Enabled = false;
+						groupBoxBarcode.Enabled = true;
+						groupBoxStatus.Enabled = true;
 						toolStripStatusLabel.Text = "Port closed.";
+
+						//Give focus to barcode group box
+						groupBoxBarcode.Focus();
 					}
 				}
 				// If an error occurs...
@@ -133,11 +128,8 @@ namespace Sensit.App.Programmer
 				{
 					// Alert the user.
 					MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
-
-					// Undo the user action.
-					radioButtonClosed.Checked = true;
 				}
-			}
+			
 		}
 
 		/// <summary>
@@ -279,6 +271,9 @@ namespace Sensit.App.Programmer
 		/// <param name="e"></param>
 		private void ButtonProgram_Click(object sender, EventArgs e)
 		{
+			//Open serial port
+			SerialInput(true);
+
 			// Disable the text box.
 			textBoxBarcode.Enabled = false;
 
@@ -349,6 +344,9 @@ namespace Sensit.App.Programmer
 				// Alert user that a sensor failed.
 				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 			}
+
+			//Close Serial Port
+			SerialInput(false);
 
 			// Clear text box for next scanned barcode.
 			textBoxBarcode.Text = "";
