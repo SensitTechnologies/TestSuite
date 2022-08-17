@@ -48,3 +48,6 @@
 /UnitTests/obj
 /UnitTests/bin
 /TestResults
+/ElectrochemComm/obj
+/ElectrochemComm/bin/Debug/net6.0-windows
+/ElectrochemComm/Sensit.App.Aardvark.csproj.user
