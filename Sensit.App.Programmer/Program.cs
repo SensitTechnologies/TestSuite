@@ -6,18 +6,18 @@ using System.Windows.Forms;
 
 namespace Sensit.App.Programmer
 {
-	static class Program
-	{
-		/// <summary>
-		/// The main entry point for the application.
-		/// </summary>
-		[STAThread]
-		static void Main()
-		{
-			Application.EnableVisualStyles();
-			Application.SetHighDpiMode(HighDpiMode.SystemAware);
-			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new FormProgrammer());
-		}
-	}
+    static class Program
+    {
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new FormProgrammer());
+        }
+    }
 }
