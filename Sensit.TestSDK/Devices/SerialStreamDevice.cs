@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO.Ports;
 using System.Text;
 using Sensit.TestSDK.Communication;
+using Sensit.TestSDK.Interfaces;
 using Sensit.TestSDK.Utilities;
 
 namespace Sensit.TestSDK.Devices
