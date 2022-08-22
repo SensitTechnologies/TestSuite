@@ -1,21 +1,22 @@
 ﻿using System;
-using System.Runtime.InteropServices;
+using System.Collections.Generic;
+using Sensit.TestSDK;
+using Sensit.TestSDK.Devices;
+using Sensit.TestSDK.Exceptions;
 
-namespace Sensit.TestSDK.Devices
+namespace Sensit.App.Aardvark
 {
     /// <summary>
     /// Class to communicate with the electrochemical sensors with I2C communication on the Aardvark
     /// </summary>
     public class AardvarkI2C
     {
+        #region Fields
 
         private int Aardvark;
-        private byte[] data;
-        private byte status;
-        private ushort address;
-        private ushort cat24AddNum;
-        private ushort cat24AddLen;
-        private ushort cat24addr = 0x57;//Cat24C256 Address
+        private ushort EEPROM_I2C_ADDRESS = 0x57;//Cat24C256
+
+        #endregion
 
         /// <summary>
         /// Aardvark communication for Eeprom on the Electrochem Sensor
@@ -66,48 +67,56 @@ namespace Sensit.TestSDK.Devices
         /// Write to the EEPROM on the electrochem sensor
         /// </summary>
         /// <returns></returns>
-        public byte eepromWrite(ushort AddressLoc, ushort totalLength, byte[] data)
+        public List<byte> EepromWrite(ushort address, ushort length)
         {
-            byte[] buffer = new byte[66];
-
+            //Data got corrupted, will reiterate as best as I can. Helps avoid errors when aardvark gets unplugged
             AardvarkApi.aa_target_power(Aardvark, AardvarkApi.AA_TARGET_POWER_BOTH);
             AardvarkApi.aa_i2c_free_bus(Aardvark);
+            // ^Was this even here before??? This corrupted everything has me very lost.
 
-            for (ushort i = 0, add = AddressLoc, len = totalLength; (i <= (ushort)(totalLength / 64)); i++, add += 64, len -= 64)
+            List<byte> eepromData = new();
+            try
             {
-                //adding in the address two the write buffer
-                //MSB first and LSB second
-                buffer[0] = (byte)(add >> 8);
-                buffer[1] = (byte)(add & 0xff);
+                byte[] page = new byte[66];
+                for (ushort i = 0, add = address, len = length; (i <= (ushort)(length / 64)); i++, add += 64, len -= 64)
+                {
+                    //adding in the address two the write buffer
+                    //MSB first and LSB second
+                    page[0] = (byte)(add >> 8);
+                    page[1] = (byte)(add & 0xff);
 
-                //put data in fullwrite buffer
-                for (ushort j = 0; (j < 64) && (j < len); j++)
-                {
-                    buffer[j + 2] = data[(i * 64) + j];
-                }
+                    //put data in fullwrite buffer
+                    for (ushort j = 0; (j < 64) && (j < len); j++)
+                    {
+                        page[j + 2] = page[(i * 64) + j];
+                    }
 
-                status = 0;
-                if (len < 64)//Do a remainder write
-                {
-                    status = eeI2CWrite(add, buffer, (ushort)(len + 2));
-                }
-                else //Do a full write
-                {
-                    status = eeI2CWrite(add, buffer, 66);
-                }
-                //need the ms time in between or there will be an ack error (3)
-                AardvarkApi.aa_sleep_ms(1);
-
-                if (status > 0)
-                {
-                    AardvarkApi.aa_i2c_free_bus(Aardvark);
-                    AardvarkApi.aa_target_power(Aardvark, AardvarkApi.AA_TARGET_POWER_NONE);
-                    return status;
+                    if (len < 64)//Do a remainder write
+                    {
+                        page = EeI2CWrite(add, (ushort)(len + 2));
+                    }
+                    else //Do a full write
+                    {
+                        page = EeI2CWrite(add, 66);
+                    }
+                    //need the ms time in between or there will be an ack error (3)
+                    AardvarkApi.aa_sleep_ms(1);
                 }
             }
+            catch (DeviceException e)
+            {
+                //Data got corrupted, will reiterate as best as I can. Helps avoid errors when aardvark gets unplugged
+                AardvarkApi.aa_i2c_free_bus(Aardvark);
+                AardvarkApi.aa_target_power(Aardvark, AardvarkApi.AA_TARGET_POWER_NONE);
+
+                throw e;
+            }
+
+            //Data got corrupted, will try to reiterate. Helps avoid errors when aardvark gets unplugged
             AardvarkApi.aa_i2c_free_bus(Aardvark);
             AardvarkApi.aa_target_power(Aardvark, AardvarkApi.AA_TARGET_POWER_NONE);
-            return 0;
+
+            return eepromData;
         }
 
         /// <summary>
@@ -118,75 +127,68 @@ namespace Sensit.TestSDK.Devices
         /// <param name="data"></param>
         /// <returns></returns>
         ///
-        public byte eepromRead(ushort AddressLoc, ushort totalLength, byte[] data)
+        public List<byte> EepromRead(ushort address, ushort length)
         {
-            byte[] buffer = new byte[64];
-
+            //Helps avoid errors when aardvark gets unplugged
             AardvarkApi.aa_target_power(Aardvark, AardvarkApi.AA_TARGET_POWER_BOTH);
             AardvarkApi.aa_i2c_free_bus(Aardvark);
 
-            for (ushort i = 0, add = AddressLoc, len = totalLength; (i <= ((ushort)(totalLength / 64))); i++, add += 64, len -= 64)
+            List<byte> eepromData = new();
+            try
             {
+                byte[] page = new byte[64];
+                for (ushort i = 0, add = address, len = length; (i <= ((ushort)(length / 64))); i++, add += 64, len -= 64)
+                {
 
-                if (len < 64)
-                {
-                    status = eeI2CRead(add, buffer, len);
-                }
-                else
-                {
-                    status = eeI2CRead(add, buffer, 64);
-                }
+                    if (len < 64)
+                    {
+                        page = EeI2CRead(add, len);
+                    }
+                    else
+                    {
+                        page = EeI2CRead(add, 64);
+                    }
 
-                if (status > 0)
-                {
-                    AardvarkApi.aa_i2c_free_bus(Aardvark);
-                    AardvarkApi.aa_target_power(Aardvark, AardvarkApi.AA_TARGET_POWER_NONE);
-                    return 1;
+                    for (ushort j = 0; (j < 64) && (j < len) && (j < eepromData.Count); j++)
+                    {
+                        eepromData[(i * 64) + j] = page[j];
+                    }
+                    AardvarkApi.aa_sleep_ms(1); //what is this??
                 }
-
-                for (ushort j = 0; (j < 64) && (j < len) && (j < data.Length); j++)
-                {
-                    data[(i * 64) + j] = buffer[j];
-                }
-                AardvarkApi.aa_sleep_ms(1);
             }
+            catch (DeviceException e)
+            {
+                //Helps avoid errors when aardvark gets unplugged
+                AardvarkApi.aa_i2c_free_bus(Aardvark);
+                AardvarkApi.aa_target_power(Aardvark, AardvarkApi.AA_TARGET_POWER_NONE);
 
-            AardvarkApi.aa_i2c_free_bus(Aardvark);
-            AardvarkApi.aa_target_power(Aardvark, AardvarkApi.AA_TARGET_POWER_NONE);
-            return 0;
+                throw e;
+            }
+            return eepromData;
         }
+
         /// <summary>
         /// Using I2C on Aardvark to read from EEPROM
         /// </summary>
         /// <param name="addr"></param>
-        /// <param name="data"></param>
         /// <param name="length"></param>
         /// <returns></returns>
-        private byte eeI2CRead(ushort addr, byte[] data, ushort length)
+        private byte[] EeI2CRead(ushort addr, ushort length)
         {
             byte[] address = { ((byte)(addr >> 8)), ((byte)addr) };
             ushort num_written = 0;
+
+            byte[] data = new byte[length];
             ushort num_read = 0;
-            int status;
-
             //access address
-            status = AardvarkApi.aa_i2c_write_read(Aardvark, cat24addr, AardvarkI2cFlags.AA_I2C_NO_FLAGS, 2, address, ref num_written, length, data, ref num_read);
-
-            if (((ushort)status) > 0)
+            int status = AardvarkApi.aa_i2c_write_read(Aardvark, EEPROM_I2C_ADDRESS,
+                AardvarkI2cFlags.AA_I2C_NO_FLAGS, 2, address, ref num_written, length, data, ref num_read);
+            if (status != 0)
             {
-            }
-
-            if ((status >> 8) > 0)
-            {
-                return 1;
-            }
-
-
-
-            return 0;
-
+                throw new DeviceException("Couldn't read from EEPROM.");
+            }    
+            return data;
         }
-
         /// <summary>
         /// Using I2C on Aardvark to write from EEPROM
         /// </summary>
@@ -194,25 +196,21 @@ namespace Sensit.TestSDK.Devices
         /// <param name="data"></param>
         /// <param name="length"></param>
         /// <returns></returns>
-        private byte eeI2CWrite(ushort addr, byte[] data, ushort length)
+      private byte[] EeI2CWrite(ushort addr, ushort length)
         {
-            byte[] address = { ((byte)(addr >> 8)), ((byte)addr) };
-            int status;
+            byte[] address = { ((byte)(addr >> 8)), (byte)addr };
             ushort written = 0;
+            byte[] data = new byte[length];
 
-            status = AardvarkApi.aa_i2c_write_ext(Aardvark, cat24addr, AardvarkI2cFlags.AA_I2C_NO_FLAGS, length, data, ref written);
+            int status = AardvarkApi.aa_i2c_write_ext(Aardvark, EEPROM_I2C_ADDRESS, AardvarkI2cFlags.AA_I2C_NO_FLAGS, length, data, ref written);
 
-            if (written == length)
+           if (written != length)
             {
-                //no errors
-                return 0;
+                throw new DeviceException("Can't write to EEPROM");
             }
-            else
-            {
-                return 1;
-            }
+
+            return data;
         }
-
         /// <summary>
         /// Deconstructer for AardvarkI2C class
         /// </summary>
@@ -220,6 +218,5 @@ namespace Sensit.TestSDK.Devices
         {
             AardvarkApi.aa_close(Aardvark);
         }
-
     }
 }
