@@ -31,8 +31,11 @@ namespace Sensit.App.Log
 		// timer finishes its current task before closing the resources it's using.
 		private readonly EventWaitHandle _loggingLock = new(false, EventResetMode.AutoReset);
 
-		// generic serial device (send a message, get a response)
-		private readonly GenericSerialDevice _genericSerialDevice = new();
+		// polled serial device (send a message, get a response)
+		private readonly GenericSerialDevice _genericSerialDevice;
+
+		// streaming serial device (sends responses periodically)
+		private readonly SerialStreamDevice _serialStreamDevice;
 
 		// modes we can use to stop logging
 		private enum StopMode { Manual, ElapsedTime, TimeDate, Scans }
@@ -48,6 +51,9 @@ namespace Sensit.App.Log
 		// number of samples logged
 		private ulong _samples;
 
+		// sampling method
+		private bool _isPolled = false;
+
 		#endregion
 
 		#region Constructor
@@ -59,6 +65,16 @@ namespace Sensit.App.Log
 		{
 			// Initialize the form.
 			InitializeComponent();
+
+			// Initialize the serial stream device.
+			_serialStreamDevice = new()
+			{
+				// Specify the delegate that receives messages.
+				MessageReceived = ResponseReceived
+			};
+
+			// Initialize the serial polled device.
+			_genericSerialDevice = new();
 
 			// Populate available settings.
 			comboBoxSerialPort.DataSource = SerialPort.GetPortNames();
@@ -279,6 +295,22 @@ namespace Sensit.App.Log
 		#endregion
 
 		/// <summary>
+		/// Log messages sent from a streaming device.
+		/// </summary>
+		/// <param name="message">string sent from serial device</param>
+		private void ResponseReceived(string message)
+		{
+			// Use a method invoker to interact with the Form's thread.
+			// It must be asynchronous (BeginInvoke, not Invoke) or else the two
+			// threads might get stuck waiting for each other).
+			BeginInvoke(new Action(() =>
+			{
+				// TODO:  Process received message.
+				RecordData(DateTime.Now, message);
+			}));
+		}
+
+		/// <summary>
 		/// When the timer ticks, log a datum.
 		/// </summary>
 		/// <param name="source"></param>
@@ -307,35 +339,8 @@ namespace Sensit.App.Log
 					_genericSerialDevice.WriteThenRead();
 					string sample = _genericSerialDevice.Message;
 
-					// Log a timestamp and the sample value to a CSV file.
-					List<string> row = new();
-					row.Add(e.SignalTime.ToString());
-					row.Add(sample);
-					_writer.WriteRow(row);
-
-					// Display the sample value to the user.
-					textBoxResponse.Text = sample;
-
-					// Update elapsed time.
-					_elapsedTime += new TimeSpan(0, 0, 0, 0, (int)_timer.Interval);
-
-					// Update samples taken.
-					_samples++;
-
-					// Compare date/time to stop.
-					// https://stackoverflow.com/questions/93472/datetimepicker-pick-both-date-and-time
-					_stopDateTime = dateTimePickerDate.Value.Date + dateTimePickerTime.Value.TimeOfDay;
-
-					// Update the status message.
-					toolStripStatusLabel.Text = "Logged " + _samples + " samples in " + _elapsedTime.ToString() + ".";
-
-					// Determine when to stop.
-					if (((_stopMode == StopMode.ElapsedTime) && (_elapsedTime > new TimeSpan((int)numericUpDownHours.Value, (int)numericUpDownMinutes.Value, (int)numericUpDownSeconds.Value))) ||
-						((_stopMode == StopMode.TimeDate) && (_stopDateTime > DateTime.Now)) ||
-						((_stopMode == StopMode.Scans) && (_samples >= numericUpDownNumScans.Value)))
-					{
-						StopLogging();
-					}
+					// Log the result.
+					RecordData(e.SignalTime, sample);
 				}));
 
 				// Start the timer again.
@@ -357,6 +362,39 @@ namespace Sensit.App.Log
 			_loggingLock.Set();
 		}
 
+		private void RecordData(DateTime time, string sample)
+		{
+			// Log a timestamp and the sample value to a CSV file.
+			List<string> row = new();
+			row.Add(time.ToString());
+			row.Add(sample);
+			_writer.WriteRow(row);
+
+			// Display the sample value to the user.
+			textBoxResponse.Text = sample;
+
+			// Update elapsed time.
+			_elapsedTime += new TimeSpan(0, 0, 0, 0, (int)_timer.Interval);
+
+			// Update samples taken.
+			_samples++;
+
+			// Compare date/time to stop.
+			// https://stackoverflow.com/questions/93472/datetimepicker-pick-both-date-and-time
+			_stopDateTime = dateTimePickerDate.Value.Date + dateTimePickerTime.Value.TimeOfDay;
+
+			// Update the status message.
+			toolStripStatusLabel.Text = "Logged " + _samples + " samples in " + _elapsedTime.ToString() + ".";
+
+			// Determine when to stop.
+			if (((_stopMode == StopMode.ElapsedTime) && (_elapsedTime > new TimeSpan((int)numericUpDownHours.Value, (int)numericUpDownMinutes.Value, (int)numericUpDownSeconds.Value))) ||
+				((_stopMode == StopMode.TimeDate) && (_stopDateTime > DateTime.Now)) ||
+				((_stopMode == StopMode.Scans) && (_samples >= numericUpDownNumScans.Value)))
+			{
+				StopLogging();
+			}
+		}
+
 		/// <summary>
 		/// When the "Start" button is clicked, attempt to start logging.
 		/// </summary>
@@ -369,16 +407,38 @@ namespace Sensit.App.Log
 			{
 				try
 				{
-					// Apply the selected serial port settings.
-					_genericSerialDevice.PortName = Properties.Settings.Default.Port;
-					_genericSerialDevice.BaudRate = Convert.ToInt32(comboBoxBaudRate.Text);
-					_genericSerialDevice.DataBits = Convert.ToInt32(comboBoxDataBits.Text);
-					_genericSerialDevice.Parity = (Parity)Enum.Parse(typeof(Parity), comboBoxParity.Text);
-					_genericSerialDevice.StopBits = (StopBits)Enum.Parse(typeof(StopBits), comboBoxStopBits.Text);
-					_genericSerialDevice.Handshake = (Handshake)Enum.Parse(typeof(Handshake), comboBoxHandshake.Text);
+					if (_isPolled)
+					{
+						// Apply the selected serial port settings.
+						_genericSerialDevice.PortName = Properties.Settings.Default.Port;
+						_genericSerialDevice.BaudRate = Convert.ToInt32(comboBoxBaudRate.Text);
+						_genericSerialDevice.DataBits = Convert.ToInt32(comboBoxDataBits.Text);
+						_genericSerialDevice.Parity = (Parity)Enum.Parse(typeof(Parity), comboBoxParity.Text);
+						_genericSerialDevice.StopBits = (StopBits)Enum.Parse(typeof(StopBits), comboBoxStopBits.Text);
+						_genericSerialDevice.Handshake = (Handshake)Enum.Parse(typeof(Handshake), comboBoxHandshake.Text);
 
-					// Open the serial port.
-					_genericSerialDevice.Open();
+						// Open the serial port.
+						_genericSerialDevice.Open();
+
+						// Set the desired interval.
+						_timer.Interval = decimal.ToDouble(numericUpDownInterval.Value);
+
+						// Start the timer.
+						_timer.Enabled = true;
+					}
+					else
+					{
+						// Apply the selected serial port settings.
+						_serialStreamDevice.PortName = Properties.Settings.Default.Port;
+						_serialStreamDevice.BaudRate = Convert.ToInt32(comboBoxBaudRate.Text);
+						_serialStreamDevice.DataBits = Convert.ToInt32(comboBoxDataBits.Text);
+						_serialStreamDevice.Parity = (Parity)Enum.Parse(typeof(Parity), comboBoxParity.Text);
+						_serialStreamDevice.StopBits = (StopBits)Enum.Parse(typeof(StopBits), comboBoxStopBits.Text);
+						_serialStreamDevice.Handshake = (Handshake)Enum.Parse(typeof(Handshake), comboBoxHandshake.Text);
+
+						// Open the serial port.
+						_serialStreamDevice.Open();
+					}
 
 					// Set up the CSV file writer filestream.
 					_writer = new CsvWriter(Properties.Settings.Default.Filename, true);
@@ -392,12 +452,6 @@ namespace Sensit.App.Log
 					// Remember date/time to stop.
 					// https://stackoverflow.com/questions/93472/datetimepicker-pick-both-date-and-time
 					_stopDateTime = dateTimePickerDate.Value.Date + dateTimePickerTime.Value.TimeOfDay;
-
-					// Set the desired interval.
-					_timer.Interval = decimal.ToDouble(numericUpDownInterval.Value);
-
-					// Start the timer.
-					_timer.Enabled = true;
 
 					// Set logging state to 0 "idle".
 					_logging = 0;
@@ -448,6 +502,9 @@ namespace Sensit.App.Log
 
 					// Close the DUT serial port.
 					_genericSerialDevice?.Close();
+
+					// Close the DUT serial port.
+					_serialStreamDevice?.Close();
 
 					// Enable most of the controls.
 					SetControlEnable(false);
@@ -519,7 +576,7 @@ namespace Sensit.App.Log
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void RadioButton_CheckedChanged(object sender, EventArgs e)
+		private void RadioButtonStop_CheckedChanged(object sender, EventArgs e)
 		{
 			// Do stuff only if the radio button is checked.
 			// (Otherwise the actions will run twice.)
@@ -588,6 +645,33 @@ namespace Sensit.App.Log
 				}
 			}
 
+		}
+
+		/// <summary>
+		/// When the sample method changes, remember the selected method.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void RadioButtonSample_CheckedChanged(object sender, EventArgs e)
+		{
+			// Do stuff only if the radio button is checked.
+			// (Otherwise the actions will run twice.)
+			if (((RadioButton)sender).Checked)
+			{
+				// If the "Polled" radio button has been checked...
+				if (((RadioButton)sender) == radioButtonPolled)
+				{
+					_isPolled = true;
+				}
+				else if (((RadioButton)sender) == radioButtonStream)
+				{
+					_isPolled = false;
+				}
+
+				// Update user interface.
+				textBoxCommand.Enabled = _isPolled;
+				numericUpDownInterval.Enabled = _isPolled;
+			}
 		}
 	}
 }
