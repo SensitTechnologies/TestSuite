@@ -15,7 +15,7 @@ namespace Sensit.App.GPS
 		private const double LATITUDE = 41.478142;
 		private const double LONGITUDE = -87.055367;
 		private const double POSITION_TOLERANCE = 1.0;
-		private readonly TimeSpan TIME_TOLERANCE = new(0, 0, 1);
+		private readonly TimeSpan TIME_TOLERANCE = new(0, 2, 0);
 
 		/// <summary>
 		/// Test fails if lock not found within this time period (seconds)
@@ -143,7 +143,7 @@ namespace Sensit.App.GPS
 
 		#endregion
 
-		#region Status
+		#region Test
 
 		/// <summary>
 		/// Evaluate messages sent from the GPS device.
@@ -178,7 +178,7 @@ namespace Sensit.App.GPS
 					textBoxTimestamp.Text = dateTime.ToString("h:mm:ss tt");
 
 					// Test timestamp.
-					SetStatus(textBoxStatusTimestamp, (TimeSpan)(DateTime.UtcNow - dateTime) < TIME_TOLERANCE);
+					SetStatus(textBoxStatusTimestamp, DateTime.UtcNow - dateTime < TIME_TOLERANCE);
 
 					// If latitude format is correct...
 					if (double.TryParse(pieces[2], out double latitude))
@@ -236,10 +236,6 @@ namespace Sensit.App.GPS
 				}
 			}));
 		}
-
-		#endregion
-
-		#region Test
 
 		private void SetStatus(TextBox control, bool pass)
 		{
