@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Sensit.TestSDK;
 using Sensit.TestSDK.Devices;
 using Sensit.TestSDK.Exceptions;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Sensit.App.Aardvark
 {
@@ -64,20 +66,28 @@ namespace Sensit.App.Aardvark
         }
 
         /// <summary>
-        /// Write to the EEPROM on the electrochem sensor
+        /// Write to the EEPROM on the electrochemical sensor.
         /// </summary>
-        /// <returns></returns>
+        /// <param name="address">starting address of the location to pull bytes from</param>
+        /// <param name="length">number of bytes to pull</param>
+        /// <returns>list of requested bytes</returns>
         public List<byte> EepromWrite(ushort address, ushort length)
         {
-            //Data got corrupted, will reiterate as best as I can. Helps avoid errors when aardvark gets unplugged
+            //Helps avoid errors when aardvark gets unplugged
             AardvarkApi.aa_target_power(Aardvark, AardvarkApi.AA_TARGET_POWER_BOTH);
             AardvarkApi.aa_i2c_free_bus(Aardvark);
-            // ^Was this even here before??? This corrupted everything has me very lost.
+            // ********* ^^^^ Was this even here before??? This corrupted everything has me very lost.
 
+            //Creates the byte List the method will return
             List<byte> eepromData = new();
+
+            //Attempt to Write to the EEPROM
             try
             {
-                byte[] page = new byte[66];
+                //Writes can only be done at the start of a page address. Create 64 byte pages
+                //Confirm with Everett that it's 66 bytes as a 2 byte buffer
+                List<byte> page = new() { Capacity = 66 };
+
                 for (ushort i = 0, add = address, len = length; (i <= (ushort)(length / 64)); i++, add += 64, len -= 64)
                 {
                     //adding in the address two the write buffer
@@ -103,16 +113,18 @@ namespace Sensit.App.Aardvark
                     AardvarkApi.aa_sleep_ms(1);
                 }
             }
+            //If attempt fails, throw Device Exception
             catch (DeviceException e)
             {
                 //Data got corrupted, will reiterate as best as I can. Helps avoid errors when aardvark gets unplugged
                 AardvarkApi.aa_i2c_free_bus(Aardvark);
                 AardvarkApi.aa_target_power(Aardvark, AardvarkApi.AA_TARGET_POWER_NONE);
 
-                throw e;
+                //Check with Adam to make sure I did this exception right
+                throw new DeviceCommandFailedException();
             }
 
-            //Data got corrupted, will try to reiterate. Helps avoid errors when aardvark gets unplugged
+            //Helps avoid errors when aardvark gets unplugged
             AardvarkApi.aa_i2c_free_bus(Aardvark);
             AardvarkApi.aa_target_power(Aardvark, AardvarkApi.AA_TARGET_POWER_NONE);
 
@@ -120,40 +132,52 @@ namespace Sensit.App.Aardvark
         }
 
         /// <summary>
-        /// Reads the memory from the Electrochemical Sensor's EEPROM
+        /// Reads the current memory from the sensor's EEPROM
         /// </summary>
-        /// <param name="AddressLoc"></param>
-        /// <param name="totalLength"></param>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        ///
+        /// <param name="address">address location to start reading from</param>
+        /// <param name="length">number of bytes to read</param>
+        /// <returns>list of requested bytes</returns>
         public List<byte> EepromRead(ushort address, ushort length)
         {
             //Helps avoid errors when aardvark gets unplugged
             AardvarkApi.aa_target_power(Aardvark, AardvarkApi.AA_TARGET_POWER_BOTH);
             AardvarkApi.aa_i2c_free_bus(Aardvark);
 
+            //List of bytes to return
             List<byte> eepromData = new();
+
+            //Attempt to read from EEPROM
             try
             {
-                byte[] page = new byte[64];
-                for (ushort i = 0, add = address, len = length; (i <= ((ushort)(length / 64))); i++, add += 64, len -= 64)
-                {
+                //Check with Adam and Everett
+                /* If I remember what Peter said correctly, you can read from anywhere on a page.
+                 * You just have to start the Write at the start of the page. So is breaking it 
+                 * up into pages necessary for reading from the EEPROM? I'm not sure on how this
+                 * works quite yet so I don't know. If it doesn't need pages though, removing the page 
+                 * spacing would make the code cleaner and more efficient.
+                 */
+                List<byte> page = new(){Capacity = 64};
 
+                //Pretty sure this breaks up the length into page lengths
+                for (ushort i = 0, add = address, len = length; 
+                    (i <= ((ushort)(length / 64))); i++, add += 64, len -= 64)
+                {
                     if (len < 64)
                     {
-                        page = EeI2CRead(add, len);
+                        page.AddRange(EeI2CRead(add, len));
                     }
                     else
                     {
-                        page = EeI2CRead(add, 64);
+                        page.AddRange(EeI2CRead(add, 64));
                     }
-
-                    for (ushort j = 0; (j < 64) && (j < len) && (j < eepromData.Count); j++)
-                    {
-                        eepromData[(i * 64) + j] = page[j];
-                    }
+                    
                     AardvarkApi.aa_sleep_ms(1); //what is this??
+
+                    //Add page to bottom of the list of read data.
+                    eepromData.AddRange(page);
+
+                    //Remove all elements from the page
+                    page.Clear();
                 }
             }
             catch (DeviceException e)
@@ -162,41 +186,47 @@ namespace Sensit.App.Aardvark
                 AardvarkApi.aa_i2c_free_bus(Aardvark);
                 AardvarkApi.aa_target_power(Aardvark, AardvarkApi.AA_TARGET_POWER_NONE);
 
-                throw e;
+                throw new DeviceCommandFailedException();
             }
             return eepromData;
         }
 
         /// <summary>
-        /// Using I2C on Aardvark to read from EEPROM
+        /// Uses the I2C to read data from the EEPROM
         /// </summary>
-        /// <param name="addr"></param>
-        /// <param name="length"></param>
-        /// <returns></returns>
-        private byte[] EeI2CRead(ushort addr, ushort length)
+        /// <param name="addr">address to start reading bytes from</param>
+        /// <param name="length">number of bytes to read</param>
+        /// <returns>a list of requested data</returns>
+        private List<byte> EeI2CRead(ushort addr, ushort length)
         {
             byte[] address = { ((byte)(addr >> 8)), ((byte)addr) };
             ushort num_written = 0;
 
             byte[] data = new byte[length];
             ushort num_read = 0;
+
             //access address
             int status = AardvarkApi.aa_i2c_write_read(Aardvark, EEPROM_I2C_ADDRESS,
                 AardvarkI2cFlags.AA_I2C_NO_FLAGS, 2, address, ref num_written, length, data, ref num_read);
+
             if (status != 0)
             {
-                throw new DeviceException("Couldn't read from EEPROM.");
-            }    
-            return data;
+                throw new DeviceCommunicationException();
+            }
+
+            //convert data array to list
+            List<byte> readData = data.ToList();
+
+            return readData;
         }
+
         /// <summary>
-        /// Using I2C on Aardvark to write from EEPROM
+        /// Use the IC2 to write to the EEPROM.
         /// </summary>
-        /// <param name="addr"></param>
-        /// <param name="data"></param>
-        /// <param name="length"></param>
-        /// <returns></returns>
-      private byte[] EeI2CWrite(ushort addr, ushort length)
+        /// <param name="addr">address to start writing on</param>
+        /// <param name="length">nunmber of bytes to write</param>
+        /// <returns>a list of requested data</returns>
+      private List<byte> EeI2CWrite(ushort addr, ushort length)
         {
             byte[] address = { ((byte)(addr >> 8)), (byte)addr };
             ushort written = 0;
@@ -209,14 +239,20 @@ namespace Sensit.App.Aardvark
                 throw new DeviceException("Can't write to EEPROM");
             }
 
-            return data;
+           //Converts the data array into a list
+            List<byte> dataList = data.ToList();
+
+            return dataList;
         }
+        /*
         /// <summary>
         /// Deconstructer for AardvarkI2C class
         /// </summary>
-        ~AardvarkI2C()
+        AardvarkI2C()
         {
             AardvarkApi.aa_close(Aardvark);
         }
+        */
+        //Temporarily commented out. It is throwing an error.
     }
 }
