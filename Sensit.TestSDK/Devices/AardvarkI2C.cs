@@ -170,7 +170,7 @@ namespace Sensit.App.Aardvark
                     {
                         page.AddRange(EeI2CRead(add, 64));
                     }
-                    
+                
                     AardvarkApi.aa_sleep_ms(1); //what is this??
 
                     //Add page to bottom of the list of read data.
@@ -244,15 +244,13 @@ namespace Sensit.App.Aardvark
 
             return dataList;
         }
-        /*
+        
         /// <summary>
         /// Deconstructer for AardvarkI2C class
         /// </summary>
-        AardvarkI2C()
+        ~AardvarkI2C()
         {
             AardvarkApi.aa_close(Aardvark);
         }
-        */
-        //Temporarily commented out. It is throwing an error.
     }
 }
