@@ -42,7 +42,7 @@ namespace Sensit.TestSDK.Devices
 		public string Message { get; private set; }
 
 		/// <summary>
-		/// How long to wait betwee command and response.
+		/// How long to wait between command and response.
 		/// </summary>
 		public uint Delay { get; set; } = 200;
 

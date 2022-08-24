@@ -66,8 +66,15 @@
 			this.groupBoxSerialPort = new System.Windows.Forms.GroupBox();
 			this.groupBoxSample = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanelSample = new System.Windows.Forms.TableLayoutPanel();
+			this.labelCommand = new System.Windows.Forms.Label();
+			this.label6 = new System.Windows.Forms.Label();
+			this.label2 = new System.Windows.Forms.Label();
+			this.textBoxCommand = new System.Windows.Forms.TextBox();
 			this.numericUpDownInterval = new System.Windows.Forms.NumericUpDown();
+			this.radioButtonPolled = new System.Windows.Forms.RadioButton();
+			this.radioButtonStream = new System.Windows.Forms.RadioButton();
 			this.label5 = new System.Windows.Forms.Label();
+			this.label7 = new System.Windows.Forms.Label();
 			this.dateTimePickerTime = new System.Windows.Forms.DateTimePicker();
 			this.groupBoxStop = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanelStop = new System.Windows.Forms.TableLayoutPanel();
@@ -83,8 +90,6 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
 			this.numericUpDownNumScans = new System.Windows.Forms.NumericUpDown();
-			this.groupBoxCommand = new System.Windows.Forms.GroupBox();
-			this.textBoxCommand = new System.Windows.Forms.TextBox();
 			this.groupBoxResponse = new System.Windows.Forms.GroupBox();
 			this.textBoxResponse = new System.Windows.Forms.TextBox();
 			this.menuStrip.SuspendLayout();
@@ -105,7 +110,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutes)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownSeconds)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumScans)).BeginInit();
-			this.groupBoxCommand.SuspendLayout();
 			this.groupBoxResponse.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -191,7 +195,7 @@
 			this.statusStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
 			this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
-			this.statusStrip.Location = new System.Drawing.Point(0, 543);
+			this.statusStrip.Location = new System.Drawing.Point(0, 613);
 			this.statusStrip.Name = "statusStrip";
 			this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 17, 0);
 			this.statusStrip.Size = new System.Drawing.Size(466, 22);
@@ -264,7 +268,7 @@
 			this.groupBoxStartStop.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.groupBoxStartStop.Controls.Add(this.tableLayoutPanelStartStop);
 			this.groupBoxStartStop.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.groupBoxStartStop.Location = new System.Drawing.Point(0, 481);
+			this.groupBoxStartStop.Location = new System.Drawing.Point(0, 551);
 			this.groupBoxStartStop.Margin = new System.Windows.Forms.Padding(4);
 			this.groupBoxStartStop.Name = "groupBoxStartStop";
 			this.groupBoxStartStop.Padding = new System.Windows.Forms.Padding(4);
@@ -531,35 +535,84 @@
 			this.groupBoxSample.Margin = new System.Windows.Forms.Padding(4);
 			this.groupBoxSample.Name = "groupBoxSample";
 			this.groupBoxSample.Padding = new System.Windows.Forms.Padding(4);
-			this.groupBoxSample.Size = new System.Drawing.Size(466, 55);
+			this.groupBoxSample.Size = new System.Drawing.Size(466, 140);
 			this.groupBoxSample.TabIndex = 17;
 			this.groupBoxSample.TabStop = false;
-			this.groupBoxSample.Text = "Sample Interval";
+			this.groupBoxSample.Text = "Sample";
 			// 
 			// tableLayoutPanelSample
 			// 
 			this.tableLayoutPanelSample.AutoSize = true;
 			this.tableLayoutPanelSample.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutPanelSample.ColumnCount = 2;
-			this.tableLayoutPanelSample.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.15405F));
-			this.tableLayoutPanelSample.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 72.84595F));
-			this.tableLayoutPanelSample.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 24F));
-			this.tableLayoutPanelSample.Controls.Add(this.numericUpDownInterval, 0, 2);
-			this.tableLayoutPanelSample.Controls.Add(this.label5, 1, 2);
+			this.tableLayoutPanelSample.ColumnCount = 4;
+			this.tableLayoutPanelSample.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelSample.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelSample.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelSample.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPanelSample.Controls.Add(this.labelCommand, 1, 2);
+			this.tableLayoutPanelSample.Controls.Add(this.label6, 1, 0);
+			this.tableLayoutPanelSample.Controls.Add(this.label2, 1, 1);
+			this.tableLayoutPanelSample.Controls.Add(this.textBoxCommand, 2, 2);
+			this.tableLayoutPanelSample.Controls.Add(this.numericUpDownInterval, 2, 3);
+			this.tableLayoutPanelSample.Controls.Add(this.radioButtonPolled, 0, 1);
+			this.tableLayoutPanelSample.Controls.Add(this.radioButtonStream, 0, 0);
+			this.tableLayoutPanelSample.Controls.Add(this.label5, 3, 3);
+			this.tableLayoutPanelSample.Controls.Add(this.label7, 1, 3);
 			this.tableLayoutPanelSample.Dock = System.Windows.Forms.DockStyle.Top;
 			this.tableLayoutPanelSample.Location = new System.Drawing.Point(4, 20);
 			this.tableLayoutPanelSample.Margin = new System.Windows.Forms.Padding(4);
 			this.tableLayoutPanelSample.Name = "tableLayoutPanelSample";
-			this.tableLayoutPanelSample.RowCount = 7;
+			this.tableLayoutPanelSample.RowCount = 4;
 			this.tableLayoutPanelSample.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelSample.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelSample.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelSample.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelSample.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelSample.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelSample.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelSample.Size = new System.Drawing.Size(458, 31);
+			this.tableLayoutPanelSample.Size = new System.Drawing.Size(458, 116);
 			this.tableLayoutPanelSample.TabIndex = 14;
+			// 
+			// labelCommand
+			// 
+			this.labelCommand.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelCommand.AutoSize = true;
+			this.labelCommand.Location = new System.Drawing.Point(91, 62);
+			this.labelCommand.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.labelCommand.Name = "labelCommand";
+			this.labelCommand.Size = new System.Drawing.Size(67, 15);
+			this.labelCommand.TabIndex = 25;
+			this.labelCommand.Text = "Command:";
+			// 
+			// label6
+			// 
+			this.label6.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.label6.AutoSize = true;
+			this.tableLayoutPanelSample.SetColumnSpan(this.label6, 3);
+			this.label6.Location = new System.Drawing.Point(91, 6);
+			this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(199, 15);
+			this.label6.TabIndex = 24;
+			this.label6.Text = "Device sends data at regular interval.";
+			// 
+			// label2
+			// 
+			this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.label2.AutoSize = true;
+			this.tableLayoutPanelSample.SetColumnSpan(this.label2, 3);
+			this.label2.Location = new System.Drawing.Point(91, 33);
+			this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(248, 15);
+			this.label2.TabIndex = 23;
+			this.label2.Text = "Device sends data in response to a command.";
+			// 
+			// textBoxCommand
+			// 
+			this.textBoxCommand.Dock = System.Windows.Forms.DockStyle.Top;
+			this.textBoxCommand.Location = new System.Drawing.Point(166, 58);
+			this.textBoxCommand.Margin = new System.Windows.Forms.Padding(4);
+			this.textBoxCommand.Name = "textBoxCommand";
+			this.textBoxCommand.Size = new System.Drawing.Size(122, 23);
+			this.textBoxCommand.TabIndex = 22;
 			// 
 			// numericUpDownInterval
 			// 
@@ -569,7 +622,7 @@
             0,
             0,
             0});
-			this.numericUpDownInterval.Location = new System.Drawing.Point(4, 4);
+			this.numericUpDownInterval.Location = new System.Drawing.Point(166, 89);
 			this.numericUpDownInterval.Margin = new System.Windows.Forms.Padding(4);
 			this.numericUpDownInterval.Maximum = new decimal(new int[] {
             36000000,
@@ -582,7 +635,7 @@
             0,
             0});
 			this.numericUpDownInterval.Name = "numericUpDownInterval";
-			this.numericUpDownInterval.Size = new System.Drawing.Size(116, 23);
+			this.numericUpDownInterval.Size = new System.Drawing.Size(122, 23);
 			this.numericUpDownInterval.TabIndex = 1;
 			this.numericUpDownInterval.Value = new decimal(new int[] {
             1000,
@@ -590,16 +643,53 @@
             0,
             0});
 			// 
+			// radioButtonPolled
+			// 
+			this.radioButtonPolled.AutoSize = true;
+			this.radioButtonPolled.Checked = true;
+			this.radioButtonPolled.Location = new System.Drawing.Point(4, 31);
+			this.radioButtonPolled.Margin = new System.Windows.Forms.Padding(4);
+			this.radioButtonPolled.Name = "radioButtonPolled";
+			this.radioButtonPolled.Size = new System.Drawing.Size(58, 19);
+			this.radioButtonPolled.TabIndex = 20;
+			this.radioButtonPolled.TabStop = true;
+			this.radioButtonPolled.Text = "Polled";
+			this.radioButtonPolled.UseVisualStyleBackColor = true;
+			this.radioButtonPolled.CheckedChanged += new System.EventHandler(this.RadioButtonSample_CheckedChanged);
+			// 
+			// radioButtonStream
+			// 
+			this.radioButtonStream.AutoSize = true;
+			this.radioButtonStream.Location = new System.Drawing.Point(4, 4);
+			this.radioButtonStream.Margin = new System.Windows.Forms.Padding(4);
+			this.radioButtonStream.Name = "radioButtonStream";
+			this.radioButtonStream.Size = new System.Drawing.Size(79, 19);
+			this.radioButtonStream.TabIndex = 21;
+			this.radioButtonStream.Text = "Streaming";
+			this.radioButtonStream.UseVisualStyleBackColor = true;
+			this.radioButtonStream.CheckedChanged += new System.EventHandler(this.RadioButtonSample_CheckedChanged);
+			// 
 			// label5
 			// 
 			this.label5.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(128, 8);
+			this.label5.Location = new System.Drawing.Point(296, 93);
 			this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(23, 15);
 			this.label5.TabIndex = 14;
 			this.label5.Text = "ms";
+			// 
+			// label7
+			// 
+			this.label7.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.label7.AutoSize = true;
+			this.label7.Location = new System.Drawing.Point(91, 93);
+			this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(49, 15);
+			this.label7.TabIndex = 26;
+			this.label7.Text = "Interval:";
 			// 
 			// dateTimePickerTime
 			// 
@@ -621,7 +711,7 @@
 			this.groupBoxStop.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.groupBoxStop.Controls.Add(this.tableLayoutPanelStop);
 			this.groupBoxStop.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBoxStop.Location = new System.Drawing.Point(0, 257);
+			this.groupBoxStop.Location = new System.Drawing.Point(0, 342);
 			this.groupBoxStop.Margin = new System.Windows.Forms.Padding(4);
 			this.groupBoxStop.Name = "groupBoxStop";
 			this.groupBoxStop.Padding = new System.Windows.Forms.Padding(4);
@@ -677,7 +767,7 @@
 			this.radioButtonElapsedTime.TabIndex = 19;
 			this.radioButtonElapsedTime.Text = "Elapsed Time";
 			this.radioButtonElapsedTime.UseVisualStyleBackColor = true;
-			this.radioButtonElapsedTime.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
+			this.radioButtonElapsedTime.CheckedChanged += new System.EventHandler(this.RadioButtonStop_CheckedChanged);
 			// 
 			// radioButtonDateTime
 			// 
@@ -689,7 +779,7 @@
 			this.radioButtonDateTime.TabIndex = 20;
 			this.radioButtonDateTime.Text = "Date/Time";
 			this.radioButtonDateTime.UseVisualStyleBackColor = true;
-			this.radioButtonDateTime.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
+			this.radioButtonDateTime.CheckedChanged += new System.EventHandler(this.RadioButtonStop_CheckedChanged);
 			// 
 			// dateTimePickerDate
 			// 
@@ -712,11 +802,11 @@
 			this.radioButtonNumScans.Location = new System.Drawing.Point(4, 81);
 			this.radioButtonNumScans.Margin = new System.Windows.Forms.Padding(4);
 			this.radioButtonNumScans.Name = "radioButtonNumScans";
-			this.radioButtonNumScans.Size = new System.Drawing.Size(79, 19);
+			this.radioButtonNumScans.Size = new System.Drawing.Size(93, 19);
 			this.radioButtonNumScans.TabIndex = 18;
-			this.radioButtonNumScans.Text = "# of Scans";
+			this.radioButtonNumScans.Text = "# of Samples";
 			this.radioButtonNumScans.UseVisualStyleBackColor = true;
-			this.radioButtonNumScans.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
+			this.radioButtonNumScans.CheckedChanged += new System.EventHandler(this.RadioButtonStop_CheckedChanged);
 			// 
 			// radioButtonStop
 			// 
@@ -730,7 +820,7 @@
 			this.radioButtonStop.TabStop = true;
 			this.radioButtonStop.Text = "Stop Button";
 			this.radioButtonStop.UseVisualStyleBackColor = true;
-			this.radioButtonStop.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
+			this.radioButtonStop.CheckedChanged += new System.EventHandler(this.RadioButtonStop_CheckedChanged);
 			// 
 			// numericUpDownHours
 			// 
@@ -852,36 +942,13 @@
             0,
             0});
 			// 
-			// groupBoxCommand
-			// 
-			this.groupBoxCommand.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.groupBoxCommand.Controls.Add(this.textBoxCommand);
-			this.groupBoxCommand.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBoxCommand.Location = new System.Drawing.Point(0, 416);
-			this.groupBoxCommand.Margin = new System.Windows.Forms.Padding(4);
-			this.groupBoxCommand.Name = "groupBoxCommand";
-			this.groupBoxCommand.Padding = new System.Windows.Forms.Padding(4);
-			this.groupBoxCommand.Size = new System.Drawing.Size(466, 45);
-			this.groupBoxCommand.TabIndex = 21;
-			this.groupBoxCommand.TabStop = false;
-			this.groupBoxCommand.Text = "Command";
-			// 
-			// textBoxCommand
-			// 
-			this.textBoxCommand.Dock = System.Windows.Forms.DockStyle.Top;
-			this.textBoxCommand.Location = new System.Drawing.Point(4, 20);
-			this.textBoxCommand.Margin = new System.Windows.Forms.Padding(4);
-			this.textBoxCommand.Name = "textBoxCommand";
-			this.textBoxCommand.Size = new System.Drawing.Size(458, 23);
-			this.textBoxCommand.TabIndex = 10;
-			// 
 			// groupBoxResponse
 			// 
 			this.groupBoxResponse.AutoSize = true;
 			this.groupBoxResponse.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.groupBoxResponse.Controls.Add(this.textBoxResponse);
 			this.groupBoxResponse.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBoxResponse.Location = new System.Drawing.Point(0, 461);
+			this.groupBoxResponse.Location = new System.Drawing.Point(0, 501);
 			this.groupBoxResponse.Margin = new System.Windows.Forms.Padding(4);
 			this.groupBoxResponse.Name = "groupBoxResponse";
 			this.groupBoxResponse.Padding = new System.Windows.Forms.Padding(4);
@@ -904,9 +971,8 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(466, 565);
+			this.ClientSize = new System.Drawing.Size(466, 635);
 			this.Controls.Add(this.groupBoxResponse);
-			this.Controls.Add(this.groupBoxCommand);
 			this.Controls.Add(this.groupBoxStop);
 			this.Controls.Add(this.groupBoxSample);
 			this.Controls.Add(this.groupBoxStartStop);
@@ -949,8 +1015,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinutes)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownSeconds)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumScans)).EndInit();
-			this.groupBoxCommand.ResumeLayout(false);
-			this.groupBoxCommand.PerformLayout();
 			this.groupBoxResponse.ResumeLayout(false);
 			this.groupBoxResponse.PerformLayout();
 			this.ResumeLayout(false);
@@ -986,8 +1050,6 @@
 		private System.Windows.Forms.GroupBox groupBoxSerialPort;
 		private System.Windows.Forms.GroupBox groupBoxSample;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelSample;
-		private System.Windows.Forms.NumericUpDown numericUpDownInterval;
-		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.DateTimePicker dateTimePickerTime;
 		private System.Windows.Forms.GroupBox groupBoxStop;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanelStop;
@@ -1000,8 +1062,6 @@
 		private System.Windows.Forms.NumericUpDown numericUpDownSeconds;
 		private System.Windows.Forms.RadioButton radioButtonDateTime;
 		private System.Windows.Forms.DateTimePicker dateTimePickerDate;
-		private System.Windows.Forms.GroupBox groupBoxCommand;
-		private System.Windows.Forms.TextBox textBoxCommand;
 		private System.Windows.Forms.GroupBox groupBoxResponse;
 		private System.Windows.Forms.TextBox textBoxResponse;
 		private System.Windows.Forms.RadioButton radioButtonStop;
@@ -1018,6 +1078,15 @@
 		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem wikiToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+		private System.Windows.Forms.RadioButton radioButtonStream;
+		private System.Windows.Forms.NumericUpDown numericUpDownInterval;
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.RadioButton radioButtonPolled;
+		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.TextBox textBoxCommand;
+		private System.Windows.Forms.Label labelCommand;
+		private System.Windows.Forms.Label label7;
 	}
 }
 
