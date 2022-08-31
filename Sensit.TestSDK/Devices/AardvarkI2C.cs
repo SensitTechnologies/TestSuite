@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using Sensit.TestSDK;
-using Sensit.TestSDK.Devices;
-using Sensit.TestSDK.Exceptions;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Sensit.TestSDK.Exceptions;
 
-namespace Sensit.App.Aardvark
+namespace Sensit.TestSDK.Devices
 {
-    /// <summary>
-    /// Class to communicate with the electrochemical sensors with I2C communication on the Aardvark
-    /// </summary>
-    public class AardvarkI2C
+	/// <summary>
+	/// Class to communicate with the electrochemical sensors with I2C communication on the Aardvark
+	/// </summary>
+	public class AardvarkI2C
     {
         #region Fields
 
@@ -107,11 +103,15 @@ namespace Sensit.App.Aardvark
                     }
                     else //Do a full write
                     {
+                        //Debug.WriteLine($"WE got to this part.");
                         page = EeI2CWrite(add, 66);
+
+                        //Debug.WriteLine($"WE got to this part.");
                     }
                     //need the ms time in between or there will be an ack error (3)
                     AardvarkApi.aa_sleep_ms(1);
                 }
+
             }
             //If attempt fails, throw Device Exception
             catch (DeviceException e)
@@ -121,7 +121,8 @@ namespace Sensit.App.Aardvark
                 AardvarkApi.aa_target_power(Aardvark, AardvarkApi.AA_TARGET_POWER_NONE);
 
                 //Check with Adam to make sure I did this exception right
-                throw new DeviceCommandFailedException();
+                //throw new DeviceCommandFailedException();
+                throw e;
             }
 
             //Helps avoid errors when aardvark gets unplugged
@@ -149,28 +150,22 @@ namespace Sensit.App.Aardvark
             //Attempt to read from EEPROM
             try
             {
-                //Check with Adam and Everett
-                /* If I remember what Peter said correctly, you can read from anywhere on a page.
-                 * You just have to start the Write at the start of the page. So is breaking it 
-                 * up into pages necessary for reading from the EEPROM? I'm not sure on how this
-                 * works quite yet so I don't know. If it doesn't need pages though, removing the page 
-                 * spacing would make the code cleaner and more efficient.
-                 */
                 List<byte> page = new(){Capacity = 64};
 
                 //Pretty sure this breaks up the length into page lengths
                 for (ushort i = 0, add = address, len = length; 
                     (i <= ((ushort)(length / 64))); i++, add += 64, len -= 64)
                 {
+                   
                     if (len < 64)
                     {
                         page.AddRange(EeI2CRead(add, len));
                     }
-                    else
+                    else if (len > 0)
                     {
                         page.AddRange(EeI2CRead(add, 64));
                     }
-                
+                    
                     AardvarkApi.aa_sleep_ms(1); //what is this??
 
                     //Add page to bottom of the list of read data.
@@ -186,7 +181,7 @@ namespace Sensit.App.Aardvark
                 AardvarkApi.aa_i2c_free_bus(Aardvark);
                 AardvarkApi.aa_target_power(Aardvark, AardvarkApi.AA_TARGET_POWER_NONE);
 
-                throw new DeviceCommandFailedException();
+                throw e;
             }
             return eepromData;
         }
@@ -199,7 +194,7 @@ namespace Sensit.App.Aardvark
         /// <returns>a list of requested data</returns>
         private List<byte> EeI2CRead(ushort addr, ushort length)
         {
-            byte[] address = { ((byte)(addr >> 8)), ((byte)addr) };
+            byte[] address = { (byte)(addr >> 8), ((byte)addr) };
             ushort num_written = 0;
 
             byte[] data = new byte[length];
@@ -211,7 +206,7 @@ namespace Sensit.App.Aardvark
 
             if (status != 0)
             {
-                throw new DeviceCommunicationException();
+                throw new DeviceException();
             }
 
             //convert data array to list

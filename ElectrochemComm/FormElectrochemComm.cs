@@ -9,7 +9,7 @@ namespace Sensit.App.Aardvark
     public partial class ElectrochemForm : Form
     {
         #region Fields
-        public AardvarkI2C Aardvark;
+        public AardvarkI2C aardvark;
 
         ///////////								Smart Sensor Device ID Record										 ////////////
         public ushort SS_ID_REC_VALID = 0xAA;
@@ -66,7 +66,7 @@ namespace Sensit.App.Aardvark
 
             adsAddNum = 0;
 
-            Aardvark = new AardvarkI2C();
+            aardvark = new AardvarkI2C();
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Sensit.App.Aardvark
             }
 
             //Writes data to the EEPROM
-            List<byte> dataList = Aardvark.EepromWrite(cat24AddNum, cat24AddLen);
+            List<byte> dataList = aardvark.EepromWrite(cat24AddNum, cat24AddLen);
         }
 
         /// <summary>
@@ -115,12 +115,13 @@ namespace Sensit.App.Aardvark
         /// <param name="e"></param>
         private void ButtonRead_Click(object sender, EventArgs e)
         {
+            Debug.WriteLine($"Aardvark start: {aardvark}");
             //Clear Output Text Box
             textBoxOutput.Text = "";
 
             /**********************///EEPROM Read//*************************/
             //Don't know if we need this anymore
-            byte[] buffer = new byte[64];//the buffer to separate the data textboxes into 64 bytes
+            //byte[] buffer = new byte[64];//the buffer to separate the data textboxes into 64 bytes
 
             cat24Str = textBoxRAddress.Text;
             Int32.TryParse(cat24Str, out int parsed);
@@ -137,19 +138,50 @@ namespace Sensit.App.Aardvark
             cat24AddLen = (ushort)parsed;
 
             //Make the Read List
-            List<byte> readList = new(Aardvark.EepromRead(cat24AddNum, cat24AddLen));
+            List<byte> readList = new(aardvark.EepromRead(cat24AddNum, cat24AddLen));
 
-            //Reset progress bar limits
-            progressBarRead.Minimum = 0;
-            progressBarRead.Maximum = cat24AddLen;
+			//Reset progress bar limits
 
-            foreach (byte data in readList)
-            {
-                textBoxOutput.Text += ($"{data} \r\n");
-                progressBarRead.Increment(1);
-            }
-            progressBarRead.Equals(0);
-            Debug.Print("Number of elements in cat24Data list is: " + readList.Count);
-        }       
+			progressBarRead.Minimum = 0;
+			progressBarRead.Maximum = cat24AddLen;
+
+			foreach (byte data in readList)
+			{
+				textBoxOutput.Text += ($"{data} \r\n");
+				progressBarRead.Increment(1);
+			}
+			progressBarRead.Equals(0);
+			Debug.Print("Number of elements in cat24Data list is: " + readList.Count);
+		}
+
+        private void ManufactureValidityInput_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ManufactureIdInput_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ManufactureRecordInput_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ManufactureSsDateInput_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ManufactureSensorTypeInput_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ManufactureRevisionInput_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
