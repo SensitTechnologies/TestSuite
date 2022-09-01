@@ -650,6 +650,7 @@ namespace Sensit.App.Programmer
 			// 
 			// FormProgrammer
 			// 
+			this.AcceptButton = this.buttonWrite;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(285, 315);
