@@ -104,7 +104,7 @@ namespace Sensit.App.Programmer
 			this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar,
             this.toolStripStatusLabel});
-			this.statusStrip.Location = new System.Drawing.Point(0, 668);
+			this.statusStrip.Location = new System.Drawing.Point(0, 310);
 			this.statusStrip.Name = "statusStrip";
 			this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 18, 0);
 			this.statusStrip.Size = new System.Drawing.Size(586, 41);
@@ -187,7 +187,7 @@ namespace Sensit.App.Programmer
 			this.groupBoxStatus.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.groupBoxStatus.Name = "groupBoxStatus";
 			this.groupBoxStatus.Padding = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.groupBoxStatus.Size = new System.Drawing.Size(586, 566);
+			this.groupBoxStatus.Size = new System.Drawing.Size(586, 208);
 			this.groupBoxStatus.TabIndex = 12;
 			this.groupBoxStatus.TabStop = false;
 			this.groupBoxStatus.Text = "Status";
@@ -197,7 +197,7 @@ namespace Sensit.App.Programmer
 			this.AcceptButton = this.buttonProgram;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(586, 709);
+			this.ClientSize = new System.Drawing.Size(586, 351);
 			this.Controls.Add(this.groupBoxStatus);
 			this.Controls.Add(this.groupBoxBarcode);
 			this.Controls.Add(this.statusStrip);
