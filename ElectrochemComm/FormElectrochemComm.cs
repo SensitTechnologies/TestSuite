@@ -3,6 +3,8 @@ using Sensit.TestSDK.Devices;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using Sensit.TestSDK.Exceptions;
+using System.Globalization;
+using System.Text;
 
 namespace Sensit.App.Aardvark
 {
@@ -43,28 +45,10 @@ namespace Sensit.App.Aardvark
         public int SS_MAN_REC_CHECKSUM = 0x3C;
         public int SS_MAN_REC_RELEASE = 0x3A;
 
-        //the last 7 bits are used for address
-        public ushort cat24addr = 0x57;//Cat24C256 Address
-        public ushort adsaddr = 0x48;//ADS1115 Address //still wrong
-
-        public String cat24Str;
-        public String adsStr;
-
-        public ushort cat24AddNum;
-        public ushort cat24AddLen;
-        public ushort adsAddNum;
         #endregion
         public ElectrochemForm()
         {
             InitializeComponent();
-
-            cat24Str = String.Empty;
-            adsStr = String.Empty;
-
-            cat24AddNum = 0;
-            cat24AddLen = 0;
-
-            adsAddNum = 0;
 
             aardvark = new AardvarkI2C();
         }
@@ -76,36 +60,37 @@ namespace Sensit.App.Aardvark
         /// <param name="e"></param>
         private void ButtonWrite_Click(object sender, EventArgs e)
         {
-            cat24Str = textBoxData.Text;
-
-            //adding Two more bytes to have the address written to it at first
-            byte[] data = new byte[textBoxData.Text.Length];
-
-            for (int i = 0; i < data.Length; i++)
+            try
             {
-                data[i] = (byte)(textBoxData.Text.ElementAt<char>(i));
+                aardvark.Open();
+                //adding Two more bytes to have the address written to it at first
+                List<byte> data = Encoding.ASCII.GetBytes(textBoxData.Text).ToList();
+
+                //Setting Address to Write
+                ushort address = ushort.Parse(textBoxWriteAddress.Text);
+
+                //Check for valid start address
+                if (address > 32768)
+                {
+                    throw new TestException("Please enter an address that is less than 32,768.");
+                }
+
+                //Check for valid end address
+                if ((address + data.Count) > 32768)
+                {
+                    throw new TestException("Data exceeds maximum address");
+                }
+
+                //Writes data to the EEPROM
+                aardvark.EepromWrite(address, data.ToList());
+
+                aardvark.Close();
             }
-            cat24AddLen = (ushort)(textBoxData.Text.Length);
-
-            //Setting Address to Write
-            cat24Str = textBoxWAddress.Text;
-            Int32.TryParse(cat24Str, out int parsed);
-            cat24AddNum = (ushort)parsed;
-
-            //places maximum limit on address
-            if (cat24AddNum > 32768)
+            catch (Exception ex)
             {
-                cat24AddNum = 32768;
+                // Alert user that a sensor failed.
+                MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
             }
-
-            //places maxmum limit on text length
-            if ((cat24AddNum + cat24AddLen) > 32768)
-            {
-                cat24AddLen = (ushort)(32768 - cat24AddNum);
-            }
-
-            //Writes data to the EEPROM
-            List<byte> dataList = aardvark.EepromWrite(cat24AddNum, cat24AddLen);
         }
 
         /// <summary>
@@ -115,44 +100,46 @@ namespace Sensit.App.Aardvark
         /// <param name="e"></param>
         private void ButtonRead_Click(object sender, EventArgs e)
         {
-            Debug.WriteLine($"Aardvark start: {aardvark}");
-            //Clear Output Text Box
-            textBoxOutput.Text = "";
-
-            /**********************///EEPROM Read//*************************/
-            //Don't know if we need this anymore
-            //byte[] buffer = new byte[64];//the buffer to separate the data textboxes into 64 bytes
-
-            cat24Str = textBoxRAddress.Text;
-            Int32.TryParse(cat24Str, out int parsed);
-            cat24AddNum = (ushort)parsed;
-            if (cat24AddNum > 32768)
+            try
             {
-                cat24AddNum = 32768;
+                aardvark.Open();
+
+                //Clear Output Text Box
+                textBoxOutput.Text = "";
+
+                ushort address = ushort.Parse(textBoxReadAddress.Text);
+                if (address > 32768)
+                {
+                    throw new TestException("Please enter an address that is less than 32,768.");
+                }
+                textBoxOutput.Text += "Address is " + address.ToString() + Environment.NewLine;
+
+                //Length at EEPROM read
+                ushort length = ushort.Parse(textBoxReadLength.Text);
+
+                //Make the Read List
+                List<byte> readList = aardvark.EepromRead(address, length);
+
+                //Reset progress bar limits
+
+                progressBarRead.Minimum = 0;
+                progressBarRead.Maximum = length;
+
+                foreach (byte data in readList)
+                {
+                    textBoxOutput.Text += ($"{data} \r\n");
+                    progressBarRead.Increment(1);
+                }
+                progressBarRead.Equals(0);
+
+                aardvark.Close();
             }
-            textBoxOutput.Text += "Address is " + cat24AddNum.ToString() + "\r\n";
-
-            //Length at EEPROM read
-            cat24Str = textBoxReadLength.Text;
-            Int32.TryParse(cat24Str, out parsed);
-            cat24AddLen = (ushort)parsed;
-
-            //Make the Read List
-            List<byte> readList = new(aardvark.EepromRead(cat24AddNum, cat24AddLen));
-
-			//Reset progress bar limits
-
-			progressBarRead.Minimum = 0;
-			progressBarRead.Maximum = cat24AddLen;
-
-			foreach (byte data in readList)
-			{
-				textBoxOutput.Text += ($"{data} \r\n");
-				progressBarRead.Increment(1);
-			}
-			progressBarRead.Equals(0);
-			Debug.Print("Number of elements in cat24Data list is: " + readList.Count);
-		}
+            catch (Exception ex)
+            {
+                // Alert user that a sensor failed.
+                MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
+            }
+        }
 
         private void ManufactureValidityInput_Click(object sender, EventArgs e)
         {

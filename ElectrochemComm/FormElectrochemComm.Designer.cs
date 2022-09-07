@@ -31,8 +31,8 @@
 			this.textBoxOutput = new System.Windows.Forms.TextBox();
 			this.buttonWrite = new System.Windows.Forms.Button();
 			this.buttonRead = new System.Windows.Forms.Button();
-			this.textBoxRAddress = new System.Windows.Forms.TextBox();
-			this.textBoxWAddress = new System.Windows.Forms.TextBox();
+			this.textBoxReadAddress = new System.Windows.Forms.TextBox();
+			this.textBoxWriteAddress = new System.Windows.Forms.TextBox();
 			this.textBoxReadLength = new System.Windows.Forms.TextBox();
 			this.addressReadLabel = new System.Windows.Forms.Label();
 			this.lengthReadLabel = new System.Windows.Forms.Label();
@@ -76,21 +76,21 @@
 			this.buttonRead.UseVisualStyleBackColor = true;
 			this.buttonRead.Click += new System.EventHandler(this.ButtonRead_Click);
 			// 
-			// textBoxRAddress
+			// textBoxReadAddress
 			// 
-			this.textBoxRAddress.Location = new System.Drawing.Point(149, 93);
-			this.textBoxRAddress.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.textBoxRAddress.Name = "textBoxRAddress";
-			this.textBoxRAddress.Size = new System.Drawing.Size(69, 27);
-			this.textBoxRAddress.TabIndex = 0;
+			this.textBoxReadAddress.Location = new System.Drawing.Point(149, 93);
+			this.textBoxReadAddress.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.textBoxReadAddress.Name = "textBoxReadAddress";
+			this.textBoxReadAddress.Size = new System.Drawing.Size(69, 27);
+			this.textBoxReadAddress.TabIndex = 0;
 			// 
 			// textBoxWAddress
 			// 
-			this.textBoxWAddress.Location = new System.Drawing.Point(149, 229);
-			this.textBoxWAddress.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.textBoxWAddress.Name = "textBoxWAddress";
-			this.textBoxWAddress.Size = new System.Drawing.Size(75, 27);
-			this.textBoxWAddress.TabIndex = 3;
+			this.textBoxWriteAddress.Location = new System.Drawing.Point(149, 229);
+			this.textBoxWriteAddress.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.textBoxWriteAddress.Name = "textBoxWAddress";
+			this.textBoxWriteAddress.Size = new System.Drawing.Size(75, 27);
+			this.textBoxWriteAddress.TabIndex = 3;
 			// 
 			// textBoxReadLength
 			// 
@@ -163,8 +163,8 @@
 			this.DebugBox.Controls.Add(this.lengthReadLabel);
 			this.DebugBox.Controls.Add(this.addressReadLabel);
 			this.DebugBox.Controls.Add(this.textBoxReadLength);
-			this.DebugBox.Controls.Add(this.textBoxWAddress);
-			this.DebugBox.Controls.Add(this.textBoxRAddress);
+			this.DebugBox.Controls.Add(this.textBoxWriteAddress);
+			this.DebugBox.Controls.Add(this.textBoxReadAddress);
 			this.DebugBox.Controls.Add(this.buttonRead);
 			this.DebugBox.Controls.Add(this.buttonWrite);
 			this.DebugBox.Controls.Add(this.textBoxOutput);
@@ -195,14 +195,14 @@
         private TextBox textBoxOutput;
         private Button buttonWrite;
         private Button buttonRead;
-        private TextBox textBoxWAddress;
+        private TextBox textBoxWriteAddress;
         private TextBox textBoxReadLength;
         private Label addressReadLabel;
         private Label lengthReadLabel;
         private Label addressWriteLabel;
         private TextBox textBoxData;
         private Label dataWriteLabel;
-        public TextBox textBoxRAddress;
+        public TextBox textBoxReadAddress;
         public ProgressBar progressBarRead;
         private GroupBox DebugBox;
     }

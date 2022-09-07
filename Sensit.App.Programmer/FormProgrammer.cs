@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Threading;
@@ -13,13 +15,11 @@ namespace Sensit.App.Programmer
 		private enum SensorType
 		{
 			LeadFreeOxygen,     // LFO2-A4
-			HydrogenSulfide,	// H2S-A1, H2S-B1
-			CarbonMonoxide,		// CO-AF
-			HydrogenCyanide,	// HCN-A1
-			SulfurDioxide		// SO2-AF
+			HydrogenSulfide,    // H2S-A1, H2S-B1
+			CarbonMonoxide,     // CO-AF
+			HydrogenCyanide,    // HCN-A1
+			SulfurDioxide       // SO2-AF
 		}
-
-		// colors indicating sensor status
 
 		/// <summary>
 		/// Run when the application starts.
@@ -47,7 +47,16 @@ namespace Sensit.App.Programmer
 		/// <param name="e"></param>
 		private void FormProgrammer_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			// TODO:  Close the aardvark.
+			try
+			{
+				//Close the aardvark.
+				CloseAardvark();
+			}
+			catch (Exception ex)
+			{
+				// Alert user.
+				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
+			}
 
 			// Store the current values of the application settings properties.
 			// If this call is omitted, then the settings will not be saved after the application quits.
@@ -170,19 +179,21 @@ namespace Sensit.App.Programmer
 
 		#region Programmer Commands
 
+		AardvarkI2C aardvarkI2C = new();
+
 		private void OpenAardvark()
 		{
-			Thread.Sleep(500);
+			aardvarkI2C.Open();
 		}
 
 		private void CloseAardvark()
 		{
-			Thread.Sleep(500);
+			aardvarkI2C.Close();
 		}
 
 		private void ReadBaseRecord()
 		{
-			Thread.Sleep(500);
+			aardvarkI2C.EepromRead(0, 256); //all four pages
 		}
 
 		/// <summary>
@@ -192,34 +203,47 @@ namespace Sensit.App.Programmer
 		/// <exception cref="DeviceSettingNotSupportedException"></exception>
 		private void WriteBaseRecord(SensorType sensorType)
 		{
+			List<byte> returnData = new();
 			// TODO: Create a sensor base record object based on sensor type.
 			// TODO: Convert base record to List<byte>.
 			// TODO: Write List<byte> to sensor EEPROM.
-			Thread.Sleep(500);
-
+			
 			switch (sensorType)
 			{
 				case SensorType.LeadFreeOxygen:
 					textBoxSensorType.Text = "O2";
+					SensorDataLibrary.OxygenBaseRecord oxygenBaseRecord = new();
+					returnData.AddRange(oxygenBaseRecord.BaseRecord());
 					break;
 				case SensorType.CarbonMonoxide:
 					textBoxSensorType.Text = "CO";
+					SensorDataLibrary.CarbonMonoxideBaseRecord carbonMonoxideBaseRecord = new();
+					returnData.AddRange((carbonMonoxideBaseRecord.BaseRecord()));
 					break;
 				case SensorType.HydrogenSulfide:
 					textBoxSensorType.Text = "H2S";
+					SensorDataLibrary.HydrogenSulfideBaseRecord hydrogenSulfideBaseRecord = new();
+					returnData.AddRange((hydrogenSulfideBaseRecord.BaseRecord()));
 					break;
 				case SensorType.HydrogenCyanide:
 					textBoxSensorType.Text = "HCN";
+					SensorDataLibrary.HydrogenCyanideBaseRecord hydrogenCyanideBaseRecord = new();
+					returnData.AddRange((hydrogenCyanideBaseRecord.BaseRecord()));
 					break;
 				default:
 					textBoxSensorType.Text = "Invalid";
 					throw new DeviceSettingNotSupportedException("Invalid sensor type");
 			}
+
+			//TODO: delete after validating byte list return is correct. Currently 4 byte data is backwards...
+			foreach (byte b in returnData) { Debug.WriteLine(b); }
+
+			aardvarkI2C.EepromWrite(0, returnData); //write just once
 		}
 
 		private void ReadDeviceID()
 		{
-			Thread.Sleep(500);
+			aardvarkI2C.EepromRead(256, 64);
 		}
 
 		/// <summary>
@@ -233,12 +257,12 @@ namespace Sensit.App.Programmer
 			string date = DateTime.Today.ToString("MMddyyyy", CultureInfo.InvariantCulture);
 
 			// TODO:  Write device ID to sensor EEPROM.
-			Thread.Sleep(500);
+			
 		}
 
 		private void ReadManufacturingRecord()
 		{
-			Thread.Sleep(500);
+			aardvarkI2C.EepromRead(320, 64);
 		}
 
 		/// <summary>
@@ -248,7 +272,6 @@ namespace Sensit.App.Programmer
 		private void WriteManufacturingRecord(string serialNumber)
 		{
 			// TODO:  Write manufacturing record to sensor EEPROM.
-			Thread.Sleep(500);
 
 			// Add serial number to button.
 			textBoxSerialNumber.Text += Environment.NewLine + serialNumber;
