@@ -103,44 +103,24 @@ namespace Sensit.TestSDK.Devices
 				throw new DeviceCommunicationException("Could not free I2C bus.");
 			}
 
-			//Writes can only be done at the start of a page address. Create 64 byte pages
-			//Confirm with Everett that it's 66 bytes with a 2 byte buffer
-			List<byte> page = new ();
-
 			//Attempt to Write to the EEPROM
-			for (ushort i = 0, add = address, len = (ushort)data.Count; (i <= (ushort)(data.Count / 64)); i++, add += 64, len -= 64)
+			List<byte> page = new();
+
+			foreach (byte b in data)
 			{
-				//adding in the address two the write buffer
-				//MSB first and LSB second
-				page[0] = (byte)(add >> 8);
-				page[1] = (byte)(add & 0xff);
-
-				//put data in fullwrite buffer
-				for (ushort j = 0; (j < 64) && (j < len); j++)
+				page.Add(b);
+				if (page.Count == 64)
 				{
-					page[j + 2] = page[(i * 64) + j];
+					page.InsertRange(0, BitConverter.GetBytes(address));
+					I2CWrite(EEPROM_I2C_ADDRESS, page);
+					page.Clear();
+					address += 64;
 				}
-
-				if (len < 64)//Do a remainder write
-				{
-					I2CWrite(add, page.ToList());
-					/* everett's original code had it calling the array renamed to "page"
-						* so since we changed the method back to needing a list input, I put page back.
-						* 
-						* Before:
-						* page = I2CWrite(add, (ushort)(len + 2));
-						*/
-				}
-				else //Do a full write
-				{
-					I2CWrite(add, page.ToList());
-					/* page is getting return data from 
-						* I2CWrite (ushort address, List<byte> data)
-						*/
-				}
-
-				//need the ms time in between or there will be an ack error (3)
-				AardvarkApi.aa_sleep_ms(1);
+			}
+			if (page.Count != 0)
+			{
+				page.InsertRange(0, BitConverter.GetBytes(address));
+				I2CWrite(EEPROM_I2C_ADDRESS, page);
 			}
 
 			//Helps avoid errors when aardvark gets unplugged
@@ -205,7 +185,7 @@ namespace Sensit.TestSDK.Devices
 				//Remove all elements from the page
 				page.Clear();
 			}
-			
+
 
 			//Helps avoid errors when aardvark gets unplugged
 			status = AardvarkApi.aa_i2c_free_bus(Aardvark);
@@ -244,11 +224,11 @@ namespace Sensit.TestSDK.Devices
 			{
 				throw new DeviceCommandFailedException("Could not read from Aardvark.");
 			}
-			if(writeData.Count != numWritten)
+			if (writeData.Count != numWritten)
 			{
 				throw new DeviceCommandFailedException("Number of data written to Aardvark is incorrect.");
 			}
-			if(readLength != num_read)
+			if (readLength != num_read)
 			{
 				throw new DeviceCommandFailedException("Number of data read from Aardvark is incorrect.");
 			}
@@ -267,11 +247,11 @@ namespace Sensit.TestSDK.Devices
 
 			int status = AardvarkApi.aa_i2c_write_ext(Aardvark, address, AardvarkI2cFlags.AA_I2C_NO_FLAGS, (ushort)data.Count, data.ToArray(), ref written);
 
-			if(status != 0)
+			if (status != 0)
 			{
-				throw new DeviceCommunicationException("Could not write to Aardvark.");
+				throw new DeviceCommunicationException("Could not write to Aardvark." + $"Status number: {status}");
 			}
-			
+
 			if (written != data.Count)
 			{
 				throw new DeviceCommunicationException("Could not write to EEPROM");
