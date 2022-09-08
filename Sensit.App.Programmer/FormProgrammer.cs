@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
-using System.Threading;
 using System.Windows.Forms;
 using Sensit.TestSDK.Devices;
 using Sensit.TestSDK.Exceptions;
@@ -12,15 +10,6 @@ namespace Sensit.App.Programmer
 {
 	public partial class FormProgrammer : Form
 	{
-		private enum SensorType
-		{
-			LeadFreeOxygen,     // LFO2-A4
-			HydrogenSulfide,    // H2S-A1, H2S-B1
-			CarbonMonoxide,     // CO-AF
-			HydrogenCyanide,    // HCN-A1
-			SulfurDioxide       // SO2-AF
-		}
-
 		/// <summary>
 		/// Run when the application starts.
 		/// </summary>
@@ -47,17 +36,6 @@ namespace Sensit.App.Programmer
 		/// <param name="e"></param>
 		private void FormProgrammer_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			try
-			{
-				//Close the aardvark.
-				CloseAardvark();
-			}
-			catch (Exception ex)
-			{
-				// Alert user.
-				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
-			}
-
 			// Store the current values of the application settings properties.
 			// If this call is omitted, then the settings will not be saved after the application quits.
 			Properties.Settings.Default.Save();
@@ -133,7 +111,7 @@ namespace Sensit.App.Programmer
 				string[] words = textBoxBarcode.Text.Split(' ');
 
 				// Determine sensor type from serial number.
-				SensorType sensorType = ParseAlphasenseBarcode(words[0]);
+				SensorDataLibrary.SensorType sensorType = ParseAlphasenseBarcode(words[0]);
 
 				// Initialize the aardvark.
 				UpdateProgress("Initializing aardvark...", 5);
@@ -193,7 +171,27 @@ namespace Sensit.App.Programmer
 
 		private void ReadBaseRecord()
 		{
-			aardvarkI2C.EepromRead(0, 256); //all four pages
+			List<byte> readData = aardvarkI2C.EepromRead(0, 64);
+			SensorDataLibrary.BaseRecordFormat0 baseRecordFormat0 = new SensorDataLibrary.BaseRecordFormat0();
+			baseRecordFormat0.SetBytes(readData);
+			switch (baseRecordFormat0.SensorType)
+			{
+				case SensorDataLibrary.SensorType.Oxygen:
+					textBoxSensorType.Text = "O2";
+					break;
+				case SensorDataLibrary.SensorType.CarbonMonoxide:
+					textBoxSensorType.Text = "CO";
+					break;
+				case SensorDataLibrary.SensorType.HydrogenSulfide:
+					textBoxSensorType.Text = "H2S";
+					break;
+				case SensorDataLibrary.SensorType.HydrogenCyanide:
+					textBoxSensorType.Text = "HCN";
+					break;
+				default:
+					textBoxSensorType.Text = "Invalid";
+					throw new DeviceSettingNotSupportedException("Invalid sensor type");
+			}
 		}
 
 		/// <summary>
@@ -201,7 +199,7 @@ namespace Sensit.App.Programmer
 		/// </summary>
 		/// <param name="sensorType"></param>
 		/// <exception cref="DeviceSettingNotSupportedException"></exception>
-		private void WriteBaseRecord(SensorType sensorType)
+		private void WriteBaseRecord(SensorDataLibrary.SensorType sensorType)
 		{
 			List<byte> returnData = new();
 			// TODO: Create a sensor base record object based on sensor type.
@@ -210,33 +208,43 @@ namespace Sensit.App.Programmer
 			
 			switch (sensorType)
 			{
-				case SensorType.LeadFreeOxygen:
+				case SensorDataLibrary.SensorType.Oxygen:
 					textBoxSensorType.Text = "O2";
-					SensorDataLibrary.OxygenBaseRecord oxygenBaseRecord = new();
-					returnData.AddRange(oxygenBaseRecord.BaseRecord());
+					SensorDataLibrary.BaseRecordFormat2 oxygenBaseRecord = new();
+					oxygenBaseRecord.SensorType = SensorDataLibrary.SensorType.Oxygen;
+					oxygenBaseRecord.ZeroMax = SensorDataLibrary.ZERO_MAX_OXYGEN;
+					oxygenBaseRecord.ZeroMin = SensorDataLibrary.ZERO_MIN_OXYGEN;
+					returnData.AddRange(oxygenBaseRecord.GetBytes());
 					break;
-				case SensorType.CarbonMonoxide:
+				case SensorDataLibrary.SensorType.CarbonMonoxide:
 					textBoxSensorType.Text = "CO";
-					SensorDataLibrary.CarbonMonoxideBaseRecord carbonMonoxideBaseRecord = new();
-					returnData.AddRange((carbonMonoxideBaseRecord.BaseRecord()));
+					SensorDataLibrary.BaseRecordFormat0 carbonMonoxideBaseRecord = new();
+					carbonMonoxideBaseRecord.SensorType = SensorDataLibrary.SensorType.CarbonMonoxide;
+					carbonMonoxideBaseRecord.CalScale = SensorDataLibrary.CARBONMONOXIDE_CAL_SCALE;
+					carbonMonoxideBaseRecord.CalPointOne = SensorDataLibrary.CARBONMONOXIDE_CAL_POINT_ONE;
+					carbonMonoxideBaseRecord.AutoZero = 1;
+					carbonMonoxideBaseRecord.ZeroMax = 2;
+					carbonMonoxideBaseRecord.ZeroMin = 3;
+					returnData.AddRange((carbonMonoxideBaseRecord.GetBytes()));
 					break;
-				case SensorType.HydrogenSulfide:
+				case SensorDataLibrary.SensorType.HydrogenSulfide:
 					textBoxSensorType.Text = "H2S";
-					SensorDataLibrary.HydrogenSulfideBaseRecord hydrogenSulfideBaseRecord = new();
-					returnData.AddRange((hydrogenSulfideBaseRecord.BaseRecord()));
+					SensorDataLibrary.BaseRecordFormat0 hydrogenSulfideBaseRecord = new();
+					hydrogenSulfideBaseRecord.SensorType = SensorDataLibrary.SensorType.HydrogenSulfide;
+					hydrogenSulfideBaseRecord.CalScale = SensorDataLibrary.HYDROGENSULFIDE_CAL_SCALE;
+					returnData.AddRange((hydrogenSulfideBaseRecord.GetBytes()));
 					break;
-				case SensorType.HydrogenCyanide:
+				case SensorDataLibrary.SensorType.HydrogenCyanide:
 					textBoxSensorType.Text = "HCN";
-					SensorDataLibrary.HydrogenCyanideBaseRecord hydrogenCyanideBaseRecord = new();
-					returnData.AddRange((hydrogenCyanideBaseRecord.BaseRecord()));
+					SensorDataLibrary.BaseRecordFormat0 hydrogenCyanideBaseRecord = new();
+					hydrogenCyanideBaseRecord.SensorType = SensorDataLibrary.SensorType.HydrogenCyanide;
+					hydrogenCyanideBaseRecord.CalScale = SensorDataLibrary.HYDROGENCYANIDE_CAL_SCALE;
+					returnData.AddRange((hydrogenCyanideBaseRecord.GetBytes()));
 					break;
 				default:
 					textBoxSensorType.Text = "Invalid";
 					throw new DeviceSettingNotSupportedException("Invalid sensor type");
 			}
-
-			//TODO: delete after validating byte list return is correct. Currently 4 byte data is backwards...
-			foreach (byte b in returnData) { Debug.WriteLine(b); }
 
 			aardvarkI2C.EepromWrite(0, returnData); //write just once
 		}
@@ -251,7 +259,7 @@ namespace Sensit.App.Programmer
 		/// </summary>
 		/// <param name="sensorType"></param>
 		/// <param name="serialNumber"></param>
-		private void WriteDeviceID(SensorType sensorType, string serialNumber)
+		private void WriteDeviceID(SensorDataLibrary.SensorType sensorType, string serialNumber)
 		{
 			// We need the date.
 			string date = DateTime.Today.ToString("MMddyyyy", CultureInfo.InvariantCulture);
@@ -286,7 +294,7 @@ namespace Sensit.App.Programmer
 		/// </summary>
 		/// <param name="serialNumber"></param>
 		/// <returns></returns>
-		private static SensorType ParseAlphasenseBarcode(string serialNumber)
+		private static SensorDataLibrary.SensorType ParseAlphasenseBarcode(string serialNumber)
 		{
 			// Get number of digits.
 			int numDigits = serialNumber.Length;
@@ -319,26 +327,26 @@ namespace Sensit.App.Programmer
 			else throw new TestException("Invalid serial number format.");
 
 			// Translate code into sensor type.
-			SensorType sensorType;
+			SensorDataLibrary.SensorType sensorType;
 			switch (sensorTypeCode)
 			{
 				case 185:
-					sensorType = SensorType.LeadFreeOxygen;
+					sensorType = SensorDataLibrary.SensorType.Oxygen;
 					break;
 				case 20:
 				case 21:
 				case 22:
-					sensorType = SensorType.HydrogenSulfide;
+					sensorType = SensorDataLibrary.SensorType.HydrogenSulfide;
 					break;
 				case 11:
 				case 15:
-					sensorType = SensorType.CarbonMonoxide;
+					sensorType = SensorDataLibrary.SensorType.CarbonMonoxide;
 					break;
 				case 55:
-					sensorType = SensorType.HydrogenCyanide;
+					sensorType = SensorDataLibrary.SensorType.HydrogenCyanide;
 					break;
 				case 51:
-					sensorType = SensorType.SulfurDioxide;
+					sensorType = SensorDataLibrary.SensorType.SulfurDioxide;
 					throw new TestException("SO2 sensors are not supported yet.");
 				default:
 					throw new TestException("Unknown sensor type.");
@@ -377,6 +385,7 @@ namespace Sensit.App.Programmer
 			textBoxSensorDateCode.Text = string.Empty;
 			textBoxDateProgrammed.Text = string.Empty;
 		}
+
 
 		#endregion
 	}
