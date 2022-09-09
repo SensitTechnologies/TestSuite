@@ -80,6 +80,9 @@ namespace Sensit.App.Programmer
 			}
 			catch (Exception ex)
 			{
+				//Close the aardvark
+				aardvarkI2C.Close();
+
 				// Inform user that test failed.
 				toolStripStatusLabel.Text = "FAIL";
 				toolStripStatusLabel.Font = new Font(toolStripStatusLabel.Font, FontStyle.Bold);
@@ -127,7 +130,7 @@ namespace Sensit.App.Programmer
 
 				// Write manufacturing record.
 				UpdateProgress("Writing manufacturing record...", 75);
-				WriteManufacturingRecord(words[0]);
+				WriteManufacturingRecord(sensorType, words[0]);
 
 				// Close the aardvark.
 				UpdateProgress("Closing aardvark...", 95);
@@ -140,6 +143,9 @@ namespace Sensit.App.Programmer
 			}
 			catch (Exception ex)
 			{
+				//Close the aardvark
+				aardvarkI2C.Close();
+
 				// Inform user that test failed.
 				toolStripStatusLabel.Text = "FAIL";
 				toolStripStatusLabel.Font = new Font(toolStripStatusLabel.Font, FontStyle.Bold);
@@ -190,6 +196,10 @@ namespace Sensit.App.Programmer
 					break;
 				default:
 					textBoxSensorType.Text = "Invalid";
+
+					//Close the aardvark
+					aardvarkI2C.Close();
+
 					throw new DeviceSettingNotSupportedException("Invalid sensor type");
 			}
 		}
@@ -242,16 +252,70 @@ namespace Sensit.App.Programmer
 					returnData.AddRange((hydrogenCyanideBaseRecord.GetBytes()));
 					break;
 				default:
+					//Close the aardvark
+					aardvarkI2C.Close();
+
 					textBoxSensorType.Text = "Invalid";
 					throw new DeviceSettingNotSupportedException("Invalid sensor type");
 			}
 
-			aardvarkI2C.EepromWrite(0, returnData); //write just once
+			aardvarkI2C.EepromWrite(0, returnData); //Page 0
 		}
 
 		private void ReadDeviceID()
 		{
-			aardvarkI2C.EepromRead(256, 64);
+			List<byte> readData = aardvarkI2C.EepromRead(256, 64);
+			SensorDataLibrary.DeviceID deviceID = new();
+			deviceID.SetBytes(readData); //breaking read
+			textBoxSerialNumber.Text = deviceID.SerialNumber;
+
+			switch (deviceID.Month)
+			{
+				case 1:
+					textBoxDateProgrammed.Text = $"January {deviceID.Day}, {deviceID.Year}";
+					break;
+				case 2:
+					textBoxDateProgrammed.Text = $"February {deviceID.Day}, {deviceID.Year}";
+					break;
+				case 3:
+					textBoxDateProgrammed.Text = $"March {deviceID.Day}, {deviceID.Year}";
+					break;
+				case 4:
+					textBoxDateProgrammed.Text = $"April {deviceID.Day}, {deviceID.Year}";
+					break;
+				case 5:
+					textBoxDateProgrammed.Text = $"May {deviceID.Day}, {deviceID.Year}";
+					break;
+				case 6:
+					textBoxDateProgrammed.Text = $"June {deviceID.Day}, {deviceID.Year}";
+					break;
+				case 7:
+					textBoxDateProgrammed.Text = $"July {deviceID.Day}, {deviceID.Year}";
+					break;
+				case 8:
+					textBoxDateProgrammed.Text = $"August {deviceID.Day}, {deviceID.Year}";
+					break;
+				case 9:
+					textBoxDateProgrammed.Text = $"September {deviceID.Day}, {deviceID.Year}";
+					break;
+				case 10:
+					textBoxDateProgrammed.Text = $"October {deviceID.Day}, {deviceID.Year}";
+					break;
+				case 11:
+					textBoxDateProgrammed.Text = $"November {deviceID.Day}, {deviceID.Year}";
+					break;
+				case 12:
+					textBoxDateProgrammed.Text = $"December {deviceID.Day}, {deviceID.Year}";
+					break;
+
+				default:
+					//Close the aardvark
+					aardvarkI2C.Close();
+
+					textBoxDateProgrammed.Text = "Not a valid date.";
+					throw new DeviceCommandFailedException ("Sensor does not contain a valid date in Device ID.");
+			}
+
 		}
 
 		/// <summary>
@@ -264,25 +328,52 @@ namespace Sensit.App.Programmer
 			// We need the date.
 			string date = DateTime.Today.ToString("MMddyyyy", CultureInfo.InvariantCulture);
 
-			// TODO:  Write device ID to sensor EEPROM.
-			
+			//Write device ID to sensor EEPROM.
+			SensorDataLibrary.DeviceID deviceID = new()
+			{
+				SensorType = sensorType,
+				Year = ushort.Parse(date.Substring(4, 4)),
+				Month = byte.Parse(date[..2]),
+				Day = byte.Parse(date.Substring(2, 2)),
+				SerialNumber = serialNumber
+			};
+
+			aardvarkI2C.EepromWrite(256, deviceID.GetBytes());
+
 		}
 
 		private void ReadManufacturingRecord()
 		{
 			aardvarkI2C.EepromRead(320, 64);
+
+			//When exception is put in...
+			//Close the aardvark
+			//aardvarkI2C.Close();
 		}
 
 		/// <summary>
 		/// Write manufacturing record to sensor EEPROM.
 		/// </summary>
 		/// <param name="serialNumber"></param>
-		private void WriteManufacturingRecord(string serialNumber)
+		private void WriteManufacturingRecord(SensorDataLibrary.SensorType sensorType, string serialNumber)
 		{
-			// TODO:  Write manufacturing record to sensor EEPROM.
+			// We need the date.
+			string date = DateTime.Today.ToString("MMddyyyy", CultureInfo.InvariantCulture);
+
+			// TODO:  Write device ID to sensor EEPROM.
+			SensorDataLibrary.ManufactureID manufactureID = new()
+			{
+				SensorType = sensorType,
+				Year = ushort.Parse(date.Substring(4, 4)),
+				Month = byte.Parse(date[..2]),
+				Day = byte.Parse(date.Substring(2, 2)),
+				SerialNumber = serialNumber
+			};
 
 			// Add serial number to button.
 			textBoxSerialNumber.Text += Environment.NewLine + serialNumber;
+
+			aardvarkI2C.EepromWrite(0, manufactureID.GetBytes());
 		}
 
 		#endregion
@@ -382,7 +473,6 @@ namespace Sensit.App.Programmer
 			// Clear status data.
 			textBoxSerialNumber.Text = string.Empty;
 			textBoxSensorType.Text = string.Empty;
-			textBoxSensorDateCode.Text = string.Empty;
 			textBoxDateProgrammed.Text = string.Empty;
 		}
 

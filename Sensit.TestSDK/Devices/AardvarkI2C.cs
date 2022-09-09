@@ -249,7 +249,7 @@ namespace Sensit.TestSDK.Devices
 
 			if (status != 0)
 			{
-				throw new DeviceCommunicationException("Could not write to Aardvark." + $"Status number: {status}");
+				throw new DeviceCommunicationException("Could not write to Aardvark." + $" Status number: {status}");
 			}
 
 			if (written != data.Count)

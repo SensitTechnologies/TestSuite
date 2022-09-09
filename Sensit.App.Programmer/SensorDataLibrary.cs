@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Sensit.TestSDK.Calculations;
 using Sensit.TestSDK.Exceptions;
 
@@ -77,7 +78,9 @@ namespace Sensit.App.Programmer
 			public int CalMaxOne { get; set; } = 0; //4 byte
 			public int CalMinOne { get; set; } = 0; //4 byte
 			public byte CalGasTwo { get; set; } = 0; //1 byte  
-			public int CalDate { get; set; } = 0x02031400; //month, day, 2 bytes for year
+			public ushort Year { get; set; } = 0x0014;
+			public byte Month { get; set; } = 0x03;
+			public byte Day { get; set; } = 0x02;
 			public int AutoZero { get; set; } = 0; //4 byte
 			public int ZeroMax { get; set; } = 0; //4 byte. VARIABLE: Format0 = 0. Format2 = 26000.
 			public int ZeroMin { get; set; } = 0; //4 byte. VARIABLE: Format0 = 0. Format2 = 26000.
@@ -110,13 +113,16 @@ namespace Sensit.App.Programmer
 				data.AddRange(ToBigEndianArray(CalMaxTwo));
 				data.AddRange(ToBigEndianArray(CalMinTwo));
 				data.Add(CalGasThree);
-				data.AddRange(new List<byte> { 0, 0, 0, 0, 0, 0, 0 }); //7
-				data.AddRange(ToBigEndianArray(CalDate));
+				data.AddRange(new List<byte> { 0, 0, 0, 0, 0, 0, 0 });
+				data.Add((byte)(Year >> 8));
+				data.Add((byte)(Year & 0xFF));
+				data.Add(Month);
+				data.Add(Day);
 				data.Add((byte)0);
 				data.AddRange(ToBigEndianArray(AutoZero));
 				data.AddRange(ToBigEndianArray(ZeroMax));
 				data.AddRange(ToBigEndianArray(ZeroMin));
-				data.Add((byte)0);
+				data.Add(0);
 
 				// Generate a checksum (then convert to byte array).
 				byte[] crc = BitConverter.GetBytes(CalcCRC(data));
@@ -149,8 +155,9 @@ namespace Sensit.App.Programmer
 				CalMaxTwo = FromBigEndianArray(data.ToArray(), 26);
 				CalMinTwo = FromBigEndianArray(data.ToArray(), 30);
 				CalGasThree = data[34];
-				//Unused 7 bytes
-				CalDate = FromBigEndianArray(data.ToArray(), 42);
+				Year = FromBigEndianArrayUshort(data.ToArray(), 42);
+				Month = data[44];
+				Day = data[45];
 				AutoZero = FromBigEndianArray(data.ToArray(), 47);
 				ZeroMax = FromBigEndianArray(data.ToArray(), 51);
 				ZeroMin = FromBigEndianArray(data.ToArray(), 55);
@@ -182,9 +189,12 @@ namespace Sensit.App.Programmer
 				data.AddRange(ToBigEndianArray(CalMinOne));
 				data.Add(CalGasTwo);
 				data.AddRange(ToBigEndianArray(MinSpan));
-				data.AddRange(new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 });
+				data.AddRange(new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0});
 				data.AddRange(ToBigEndianArray(ZeroCalibration)); //***7 bytes***
-				data.AddRange(ToBigEndianArray(CalDate));
+				data.Add((byte)(Year >> 8));
+				data.Add((byte)(Year & 0xFF));
+				data.Add(Month);
+				data.Add(Day);
 				data.Add((byte)0);
 				data.AddRange(ToBigEndianArray(AutoZero));
 				data.AddRange(ToBigEndianArray(ZeroMax));
@@ -219,8 +229,10 @@ namespace Sensit.App.Programmer
 				CalMinOne = FromBigEndianArray(data.ToArray(), 17);
 				CalGasTwo = data[21];
 				MinSpan = FromBigEndianArray(data.ToArray(), 22);
-				ZeroCalibration = FromBigEndianArray(data.ToArray(), 32);
-				CalDate = FromBigEndianArray(data.ToArray(), 42);
+				ZeroCalibration = FromBigEndianArray(data.ToArray(), 35);
+				Year = FromBigEndianArrayUshort(data.ToArray(), 42);
+				Month = data[44];
+				Day = data[45];
 				AutoZero = FromBigEndianArray(data.ToArray(), 47);
 				ZeroMax = FromBigEndianArray(data.ToArray(), 51);
 				ZeroMin = FromBigEndianArray(data.ToArray(), 55);
@@ -239,79 +251,157 @@ namespace Sensit.App.Programmer
 		#region DeviceID
 
 		/// <summary>
-		/// Abstract class for Device ID (page 4)
+		/// Class for Device ID (page 4)
 		/// </summary>
 		public class DeviceID
 		{
 			//page 4 on the EEPROM
 			public Validity DeviceIDValidity { get; set; } = Validity.Valid;
-			public SensorType IDClass { get; set; }
+			public SensorType SensorType { get; set; }
 			public byte RecordFormat { get; set; }
-			public int DateCode { get; set; } //1 byte week, 2 bytes year
-			public int SSDate { get; set; } //1 byte month, 1 byte day, 2 bytes year
-			public List<byte> SerialNumber { get; set; } //ASCII data
-			public int MaxExposure { get; set; } = 0; //bytes 0x30 - 0x31
-			public int MaxRange { get; set; } = 0; //bytes 0x32 - 0x33
-			public int MinRange { get; set; } = 0; //bytes 0x34 - 0x35
-			public int Issue { get; set; } = 0; //bytes 0x36 - 0x37
-			public int Revision { get; set; } = 0; //bytes 0x38 - 0x39
-			public int PointRelease { get; set; } = 0; //bytes 0x3A - 0x3B
+			public ushort Year { get; set; }
+			public byte Month { get; set; }
+			public byte Day { get; set; }
+			public string SerialNumber { get; set; } //ASCII data
+			public ushort MaxExposure { get; set; } = 0; //bytes 0x30 - 0x31
+			public ushort MaxRange { get; set; } = 0; //bytes 0x32 - 0x33
+			public ushort MinRange { get; set; } = 0; //bytes 0x34 - 0x35
+			public ushort Issue { get; set; } = 0; //bytes 0x36 - 0x37
+			public ushort Revision { get; set; } = 0; //bytes 0x38 - 0x39
+			public ushort PointRelease { get; set; } = 0; //bytes 0x3A - 0x3B
 			public int Checksum { get; set; } //bytes 0x3C - 0x3F
 
 			public List<byte> GetBytes()
 			{
 				List<byte> data = new();
+
 				data.Add((byte)DeviceIDValidity);
-				data.Add((byte)IDClass);
-				data.AddRange(ToBigEndianArray(RecordFormat));
-				
+				data.Add((byte)SensorType);
+				data.Add(0);
+				data.Add((byte)RecordFormat);
+				data.AddRange(new List<byte> { 0, 0, 0 });
+				data.Add((byte)(Year >> 8)); //7 output
+				data.Add((byte)(Year & 0xFF)); //230 output
+				data.Add(Month); //9 output
+				data.Add(Day); //9 output
+				data.AddRange(new List<byte> { 0, 0, 0, 0, 0 });
+				data.AddRange(ToBigEndianArray(SerialNumber));
+				data.AddRange(ToBigEndianArray(MaxExposure));
+				data.AddRange(ToBigEndianArray(MaxRange));
+				data.AddRange(ToBigEndianArray(MinRange));
+				data.AddRange(ToBigEndianArray(Issue));
+				data.AddRange(ToBigEndianArray(Revision));
+				data.AddRange(ToBigEndianArray(PointRelease));
+
+				// Generate a checksum (then convert to byte array).
+				byte[] crc = BitConverter.GetBytes(CalcCRC(data));
+
+				// Ensure CRC is big endian.
+				if (BitConverter.IsLittleEndian)
+				{
+					Array.Reverse(crc);
+				}
+
+				// Add checksum to message.
+				data.AddRange(crc);
 
 				return data;
+			}
+			
+			public void SetBytes(List<byte> data)
+			{
+				DeviceIDValidity = (Validity)data[0];
+				SensorType = (SensorType)data[1];
+				RecordFormat = data[3]; //3 bytes
+										//datecode = 0
+				Year = FromBigEndianArrayUshort(data.ToArray(), 7);
+				Month = data[9];
+				Day = data[10];
+				SerialNumber = Encoding.UTF8.GetString(data.ToArray(), 16, 32);
+				MaxExposure = FromBigEndianArrayUshort(data.ToArray(), 48);
+				MaxRange = FromBigEndianArrayUshort(data.ToArray(), 50);
+				MinRange = FromBigEndianArrayUshort(data.ToArray(), 52);
+				Issue = FromBigEndianArrayUshort(data.ToArray(), 54);
+				Revision = FromBigEndianArrayUshort(data.ToArray(), 56);
+				PointRelease = FromBigEndianArrayUshort(data.ToArray(), 58);
+
+				// Check CRC.
+				if (CheckCrc(data) == false)
+				{
+					throw new DeviceCommandFailedException("Bad CRC from sensor EEPROM.");
+				}
 			}
 		}
 		#endregion
 
-		#region ManufacturingRecord
+		#region Manufacturing Record
 
 		/// <summary>
-		/// Abstract class for Manufacturing ID Records (page 5)
+		/// Class for Manufacturing ID Records (page 5)
 		/// </summary>
 		public class ManufactureID
 		{
 			//page 5 on the EEPROM
-			public Validity ManufacturingValidity { get; set; } = Validity.Valid;
-			public SensorType ManufacturingClass { get; set; } //Variable
-			public byte UnusedMROne { get; set; } = 0;
-			public byte RecordFormat { get; set; } = 0; //Wouldn't this change based off sensor type?
-			public int UnusedMRTwo { get; set; } = 0;
-			public int SSDate { get; set; } //1 byte month, 1 byte day, 2 bytes year
-			public int SerialNumber { get; set; } //ASCII data
-			public int UnusedMRThree { get; set; } = 0;
-			public int Issue { get; set; } = 0;
-			public int Revision { get; set; } = 0;
-			public int PointRelease { get; set; } = 0;
+			public Validity Validity { get; set; } = Validity.Valid;
+			public SensorType SensorType { get; set; } //Variable
+			public byte RecordFormat { get; set; }
+			public ushort Year { get; set; }
+			public byte Month { get; set; }
+			public byte Day { get; set; }
+			public string SerialNumber { get; set; } //ASCII data
+			public ushort Issue { get; set; } = 0;
+			public ushort Revision { get; set; } = 0;
+			public ushort PointRelease { get; set; } = 0;
 			public int CheckSum { get; set; } //Calculation
 
 			public List<byte> GetBytes()
 			{
-				List<byte> data = new()
-			{
-				(byte)ManufacturingValidity,
-				(byte)ManufacturingClass,
-				UnusedMROne,
-				RecordFormat,
-				(byte)UnusedMRTwo,
-				(byte)SSDate,
-				//TODO: Serial number
-				(byte)UnusedMRThree,
-				(byte)Issue,
-				(byte)Revision,
-				(byte)PointRelease,
-				(byte)CheckSum
+				List<byte> data = new();
+				data.Add((byte)Validity);
+				data.Add((byte)SensorType);
+				data.Add(0);
+				data.Add(RecordFormat);
+				data.AddRange(new List<byte> { 0, 0, 0 });
+				data.AddRange(ToBigEndianArray(Year));
+				data.Add(Month);
+				data.Add(Day);
+				data.AddRange(new List<byte> { 0, 0, 0, 0, 0 });
+				data.AddRange(ToBigEndianArray((32 - SerialNumber.Length) + SerialNumber));
+				data.AddRange(new List<byte> { 0,0,0,0,0,0});
+				data.AddRange(ToBigEndianArray(Issue));
+				data.AddRange(ToBigEndianArray(Revision));
+				data.AddRange(ToBigEndianArray((PointRelease)));
+				// Generate a checksum (then convert to byte array).
+				byte[] crc = BitConverter.GetBytes(CalcCRC(data));
 
-			};
-
+				// Ensure CRC is big endian.
+				if (BitConverter.IsLittleEndian)
+				{
+					Array.Reverse(crc);
+				}
+				// Add checksum to message.
+				data.AddRange(crc);
 				return data;
+			}
+
+			public void SetBytes(List<byte> data)
+			{
+				Validity = (Validity)data[0];
+				SensorType = (SensorType) data[1];
+				RecordFormat = data[3];
+				Year = FromBigEndianArrayUshort(data.ToArray(), 7);
+				Month = data[9];
+				Day = data[10];
+				SerialNumber = Encoding.UTF8.GetString(data.ToArray(), 16, 32);
+				Issue = FromBigEndianArrayUshort(data.ToArray(), 50);
+				Revision = FromBigEndianArrayUshort(data.ToArray(), 52);
+				PointRelease = FromBigEndianArrayUshort(data.ToArray(), 54);
+
+				// Check CRC.
+				if (CheckCrc(data) == false)
+				{
+					throw new DeviceCommandFailedException("Bad CRC from sensor EEPROM.");
+				}
 			}
 		}
 		#endregion
@@ -397,18 +487,57 @@ namespace Sensit.App.Programmer
 			return BitConverter.ToInt32(data, startIndex);
 		}
 
-		private static byte[] ToBigEndianArray(int value)
+		private static ushort FromBigEndianArrayUshort(byte[] data, int startIndex)
 		{
-			byte[] bytes = BitConverter.GetBytes(value);
+			if (BitConverter.IsLittleEndian)
+			{
+				Array.Reverse(data);
+			}
+
+			return (ushort)BitConverter.ToInt16(data, startIndex);
+		}
+
+		private static List<byte> ToBigEndianArray(int value)
+		{
+			List<byte> bytes = BitConverter.GetBytes(value).ToList();
 
 			if (BitConverter.IsLittleEndian)
 			{
-				Array.Reverse(bytes);
+				bytes.Reverse();
 			}
 
 			return bytes;
 		}
 
+		private static List<byte> ToBigEndianArray(ushort value)
+		{
+			List<byte> bytes = BitConverter.GetBytes(value).ToList();
+
+			if (BitConverter.IsLittleEndian)
+			{
+				bytes.Reverse();
+			}
+
+			return bytes;
+		}
+
+		private static List<byte> ToBigEndianArray(string value)
+		{
+			List<byte> bytes = new (Encoding.ASCII.GetBytes(value)); 
+
+			if (BitConverter.IsLittleEndian)
+			{
+				bytes.Reverse();
+			}
+
+			//Serial Number is the only string in the library. Add bytes until it is the correct size.
+			while(bytes.Count != 32) 
+			{
+				bytes.Insert(0, 0);
+			}
+
+			return bytes;
+		}
 
 		#endregion
 	}
