@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Sensit.TestSDK.Calculations;
@@ -10,6 +11,11 @@ namespace Sensit.App.Programmer
 	public class SensorDataLibrary
 	{
 		#region Constants
+		public static readonly ushort PAGE_SIZE = 64;
+
+		public static readonly ushort ADDRESS_BASE_RECORD = (ushort)(0 * PAGE_SIZE);
+		public static readonly ushort ADDRESS_DEVICE_ID = (ushort)(4 * PAGE_SIZE);
+		public static readonly ushort ADDRESS_MANUFACTURING_ID = (ushort)(5 * PAGE_SIZE);
 
 		//Oxygen Sensor
 		public static readonly int ZERO_MAX_OXYGEN = 26000;
@@ -165,7 +171,8 @@ namespace Sensit.App.Programmer
 				//Check crc.
 				if (CheckCrc(data) == false)
 				{
-					throw new DeviceCommandFailedException("Bad CRC from sensor EEPROM.");
+					foreach(byte b in data) { Debug.WriteLine(b); }
+					throw new DeviceCommandFailedException("Bad CRC from sensor BR0.");
 				}
 			}
 		}
@@ -240,7 +247,7 @@ namespace Sensit.App.Programmer
 				// Check CRC.
 				if (CheckCrc(data) == false)
 				{
-					throw new DeviceCommandFailedException("Bad CRC from sensor EEPROM.");
+					throw new DeviceCommandFailedException("Bad CRC from sensor BR2.");
 				}
 
 			}
@@ -328,7 +335,7 @@ namespace Sensit.App.Programmer
 				// Check CRC.
 				if (CheckCrc(data) == false)
 				{
-					throw new DeviceCommandFailedException("Bad CRC from sensor EEPROM.");
+					throw new DeviceCommandFailedException("Bad CRC from sensor D_ID.");
 				}
 			}
 		}
@@ -400,7 +407,7 @@ namespace Sensit.App.Programmer
 				// Check CRC.
 				if (CheckCrc(data) == false)
 				{
-					throw new DeviceCommandFailedException("Bad CRC from sensor EEPROM.");
+					throw new DeviceCommandFailedException("Bad CRC from sensor MR.");
 				}
 			}
 		}

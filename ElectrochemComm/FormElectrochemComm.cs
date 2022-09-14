@@ -1,10 +1,7 @@
-using System;
-using Sensit.TestSDK.Devices;
-using System.Runtime.InteropServices;
-using System.Diagnostics;
-using Sensit.TestSDK.Exceptions;
 using System.Globalization;
 using System.Text;
+using Sensit.TestSDK.Devices;
+using Sensit.TestSDK.Exceptions;
 
 namespace Sensit.App.Aardvark
 {
@@ -67,7 +64,7 @@ namespace Sensit.App.Aardvark
 				List<byte> data = Encoding.ASCII.GetBytes(textBoxData.Text).ToList();
 
 				//Setting Address to Write
-				ushort address = ushort.Parse(textBoxWriteAddress.Text);
+				ushort address = UInt16.Parse(textBoxWriteAddress.Text);
 
 				//Check for valid start address
 				if (address > 32768)
@@ -110,13 +107,14 @@ namespace Sensit.App.Aardvark
 				//Clear Output Text Box
 				textBoxOutput.Text = "";
 
-				ushort address = ushort.Parse(textBoxReadAddress.Text);
+				//Setting Address to Read
+				ushort address = UInt16.Parse(textBoxReadAddress.Text);
+
 				if (address > 32768)
 				{
 					aardvark.Close();
 					throw new TestException("Please enter an address that is less than 32,768.");
 				}
-				textBoxOutput.Text += "Address is " + address.ToString() + Environment.NewLine;
 
 				//Length at EEPROM read
 				ushort length = ushort.Parse(textBoxReadLength.Text);
@@ -124,17 +122,11 @@ namespace Sensit.App.Aardvark
 				//Make the Read List
 				List<byte> readList = aardvark.EepromRead(address, length);
 
-				//Reset progress bar limits
-
-				progressBarRead.Minimum = 0;
-				progressBarRead.Maximum = length;
-
-				foreach (byte data in readList)
+				//output read info to text box
+				foreach (byte b in readList)
 				{
-					textBoxOutput.Text += ($"{data} \r\n");
-					progressBarRead.Increment(1);
+					textBoxOutput.Text += b +Environment.NewLine;
 				}
-				progressBarRead.Equals(0);
 
 				aardvark.Close();
 			}

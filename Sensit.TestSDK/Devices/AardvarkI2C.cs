@@ -13,7 +13,7 @@ namespace Sensit.TestSDK.Devices
 		#region Fields
 
 		private int Aardvark;
-		private ushort EEPROM_I2C_ADDRESS = 0x57;//Cat24C256
+		private ushort EEPROM_I2C_ADDRESS = 0x57; //Cat24C256
 
 		#endregion
 
@@ -29,24 +29,28 @@ namespace Sensit.TestSDK.Devices
 			maxDev = AardvarkApi.aa_find_devices(1, devices);
 			if (maxDev == 0)
 			{
+				Close();
 				throw new DeviceCommunicationException("Could not find Aardvark." + Environment.NewLine + "Is it plugged in?");
 			}
 
-			if ((devices[0] & ((ushort)0x8000)) == 0x8000)
+			if ((devices[0] & (0x8000)) == 0x8000)
 			{
 				throw new DeviceCommunicationException("Aardvark already in use.");
 			}
 
 			Aardvark = AardvarkApi.aa_open(devices[0]);
+
+			//if valid, will be greater than zero
 			if (Aardvark <= 0)
 			{
-				throw new DeviceCommunicationException("Could not open Aardvark.");
+				throw new DeviceCommunicationException("Could not open Aardvark. Try unplugging and replugging it in.");
 			}
 
 			// Ensure that the I2C subsystem is enabled
 			int status = AardvarkApi.aa_configure(Aardvark, AardvarkConfig.AA_CONFIG_SPI_I2C);
-			if (status == 0)
+			if (status < 0)
 			{
+				Close();
 				throw new DeviceCommunicationException("Could not configure Aardvark for I2C.");
 			}
 
@@ -58,15 +62,17 @@ namespace Sensit.TestSDK.Devices
 			// This command is only effective on v2.0 hardware or greater.
 			// The pullup resistors on the v1.02 hardware are enabled by default.
 			status = AardvarkApi.aa_i2c_pullup(Aardvark, AardvarkApi.AA_I2C_PULLUP_BOTH);
-			if (status == 0)
+			if (status < 0)
 			{
+				Close();
 				throw new DeviceCommunicationException("Could not configure Aardvark pull-up resistors.");
 			}
 
 			// Set the bitrate the number is amount in kHz
 			status = AardvarkApi.aa_i2c_bitrate(Aardvark, 400);
-			if (status == 0)
+			if (status < 0)
 			{
+				Close();
 				throw new DeviceCommunicationException("Could not set Aardvark's bitrate.");
 			}
 		}
@@ -77,10 +83,6 @@ namespace Sensit.TestSDK.Devices
 		public void Close()
 		{
 			int status = AardvarkApi.aa_close(Aardvark);
-			if (status == 0)
-			{
-				throw new DeviceCommunicationException("Could not close Aardvark.");
-			}
 		}
 
 		/// <summary>
@@ -93,13 +95,16 @@ namespace Sensit.TestSDK.Devices
 		{
 			//Helps avoid errors when aardvark gets unplugged
 			int status = AardvarkApi.aa_target_power(Aardvark, AardvarkApi.AA_TARGET_POWER_BOTH);
-			if (status == 0)
+			if (status < 0)
 			{
+				Close();
 				throw new DeviceCommunicationException("Could not turn Aardvark power on.");
 			}
 			status = AardvarkApi.aa_i2c_free_bus(Aardvark);
-			if (status == 0)
-			{
+			//Error -108: BUS_ALREADY_FREE.
+			if ((status < 0) && (status != -108))
+			{ 
+				Close();
 				throw new DeviceCommunicationException("Could not free I2C bus.");
 			}
 
@@ -111,27 +116,32 @@ namespace Sensit.TestSDK.Devices
 				page.Add(b);
 				if (page.Count == 64)
 				{
-					page.InsertRange(0, BitConverter.GetBytes(address));
+					page.InsertRange(0, new List<byte> { (byte)(address >> 8), ((byte)address) });
 					I2CWrite(EEPROM_I2C_ADDRESS, page);
 					page.Clear();
 					address += 64;
 				}
 			}
+
 			if (page.Count != 0)
 			{
-				page.InsertRange(0, BitConverter.GetBytes(address));
+				page.InsertRange(0, new List<byte> { (byte)(address >> 8), ((byte)address) });
 				I2CWrite(EEPROM_I2C_ADDRESS, page);
 			}
 
 			//Helps avoid errors when aardvark gets unplugged
 			status = AardvarkApi.aa_i2c_free_bus(Aardvark);
-			if (status == 0)
+
+			//Error -108: BUS_ALREADY_FREE.
+			if ((status < 0) && (status != -108))
 			{
+				Close();
 				throw new DeviceCommunicationException("Could not free I2C bus.");
 			}
 			status = AardvarkApi.aa_target_power(Aardvark, AardvarkApi.AA_TARGET_POWER_NONE);
-			if (status != 0)
+			if (status < 0)
 			{
+				Close();
 				throw new DeviceCommunicationException("Could not turn Aardvark power off.");
 			}
 		}
@@ -146,56 +156,56 @@ namespace Sensit.TestSDK.Devices
 		{
 			//Helps avoid errors when aardvark gets unplugged
 			int status = AardvarkApi.aa_target_power(Aardvark, AardvarkApi.AA_TARGET_POWER_BOTH);
-			if (status == 0)
+			if (status < 0)
 			{
+				Close();
 				throw new DeviceCommunicationException("Could not turn Aardvark power on.");
 			}
-			status = AardvarkApi.aa_i2c_free_bus(Aardvark);
-			if (status == 0)
+			status = AardvarkApi.aa_i2c_free_bus(Aardvark); 
+			
+			//Error -108: BUS_ALREADY_FREE.
+			if ((status < 0) && (status != -108))
 			{
+				Close();
 				throw new DeviceCommunicationException("Could not free I2C bus.");
 			}
 
 			//List of bytes to return
 			List<byte> eepromData = new();
 
-			//Attempt to read from EEPROM
-			List<byte> page = new() { Capacity = 64 };
-
-			//Pretty sure this breaks up the length into page lengths
-			for (ushort i = 0, add = address, len = length;
-				(i <= ((ushort)(length / 64))); i++, add += 64, len -= 64)
+			while (length >= 64)
 			{
-				List<byte> addr = new() { (byte)(add >> 8), ((byte)add) };
-				if (len < 64)
-				{
-					page.AddRange(I2CWriteThenRead(EEPROM_I2C_ADDRESS, addr, len));
-				}
-				else if (len > 0)
-				{
-					page.AddRange(I2CWriteThenRead(EEPROM_I2C_ADDRESS, addr, 64));
-				}
+				List<byte> addr = new() { (byte)(address >> 8), ((byte)address) };
+				eepromData.AddRange(I2CWriteThenRead(EEPROM_I2C_ADDRESS, addr, 64));
+				address+=64;
+				length -= 64;
 
 				//need the ms time in between or there will be an ack error (3)
 				AardvarkApi.aa_sleep_ms(1);
-
-				//Add page to bottom of the list of read data.
-				eepromData.AddRange(page);
-
-				//Remove all elements from the page
-				page.Clear();
 			}
 
+			if (length > 0)
+			{
+				List<byte> addr = new() { (byte)(address >> 8), ((byte)address) };
+				eepromData.AddRange(I2CWriteThenRead(EEPROM_I2C_ADDRESS, addr, length));
+
+				//need the ms time in between or there will be an ack error (3)
+				AardvarkApi.aa_sleep_ms(1);
+			}
 
 			//Helps avoid errors when aardvark gets unplugged
 			status = AardvarkApi.aa_i2c_free_bus(Aardvark);
-			if (status == 0)
+
+			//Error -108: BUS_ALREADY_FREE.
+			if ((status < 0) && (status != -108))
 			{
+				Close();
 				throw new DeviceCommunicationException("Could not free I2C bus.");
 			}
 			status = AardvarkApi.aa_target_power(Aardvark, AardvarkApi.AA_TARGET_POWER_NONE);
-			if (status != 0)
+			if (status < 0)
 			{
+				Close();
 				throw new DeviceCommunicationException("Could not turn Aardvark power off.");
 			}
 
@@ -220,7 +230,8 @@ namespace Sensit.TestSDK.Devices
 			int status = AardvarkApi.aa_i2c_write_read(Aardvark, address,
 				AardvarkI2cFlags.AA_I2C_NO_FLAGS, (ushort)writeData.Count, writeData.ToArray(), ref numWritten, readLength, readData, ref num_read);
 
-			if (status != 0)
+			//Status AA_OK == 0
+			if (status < 0) 
 			{
 				throw new DeviceCommandFailedException("Could not read from Aardvark.");
 			}
@@ -242,18 +253,20 @@ namespace Sensit.TestSDK.Devices
 		/// <param name="address">address to start writing on</param>
 		/// <param name="data">data to write</param>
 		private void I2CWrite(ushort address, List<byte> data)
-		{
+		{               
 			ushort written = 0;
 
 			int status = AardvarkApi.aa_i2c_write_ext(Aardvark, address, AardvarkI2cFlags.AA_I2C_NO_FLAGS, (ushort)data.Count, data.ToArray(), ref written);
 
-			if (status != 0)
+			if (status < 0)
 			{
+				Close();
 				throw new DeviceCommunicationException("Could not write to Aardvark." + $" Status number: {status}");
 			}
 
 			if (written != data.Count)
 			{
+				Close();
 				throw new DeviceCommunicationException("Could not write to EEPROM");
 			}
 		}
