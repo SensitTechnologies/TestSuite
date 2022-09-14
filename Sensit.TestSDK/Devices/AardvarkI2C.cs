@@ -100,13 +100,6 @@ namespace Sensit.TestSDK.Devices
 				Close();
 				throw new DeviceCommunicationException("Could not turn Aardvark power on.");
 			}
-			status = AardvarkApi.aa_i2c_free_bus(Aardvark);
-			//Error -108: BUS_ALREADY_FREE.
-			if ((status < 0) && (status != -108))
-			{ 
-				Close();
-				throw new DeviceCommunicationException("Could not free I2C bus.");
-			}
 
 			//Attempt to Write to the EEPROM
 			List<byte> page = new();
@@ -129,15 +122,6 @@ namespace Sensit.TestSDK.Devices
 				I2CWrite(EEPROM_I2C_ADDRESS, page);
 			}
 
-			//Helps avoid errors when aardvark gets unplugged
-			status = AardvarkApi.aa_i2c_free_bus(Aardvark);
-
-			//Error -108: BUS_ALREADY_FREE.
-			if ((status < 0) && (status != -108))
-			{
-				Close();
-				throw new DeviceCommunicationException("Could not free I2C bus.");
-			}
 			status = AardvarkApi.aa_target_power(Aardvark, AardvarkApi.AA_TARGET_POWER_NONE);
 			if (status < 0)
 			{
@@ -160,14 +144,6 @@ namespace Sensit.TestSDK.Devices
 			{
 				Close();
 				throw new DeviceCommunicationException("Could not turn Aardvark power on.");
-			}
-			status = AardvarkApi.aa_i2c_free_bus(Aardvark); 
-			
-			//Error -108: BUS_ALREADY_FREE.
-			if ((status < 0) && (status != -108))
-			{
-				Close();
-				throw new DeviceCommunicationException("Could not free I2C bus.");
 			}
 
 			//List of bytes to return
@@ -193,15 +169,6 @@ namespace Sensit.TestSDK.Devices
 				AardvarkApi.aa_sleep_ms(1);
 			}
 
-			//Helps avoid errors when aardvark gets unplugged
-			status = AardvarkApi.aa_i2c_free_bus(Aardvark);
-
-			//Error -108: BUS_ALREADY_FREE.
-			if ((status < 0) && (status != -108))
-			{
-				Close();
-				throw new DeviceCommunicationException("Could not free I2C bus.");
-			}
 			status = AardvarkApi.aa_target_power(Aardvark, AardvarkApi.AA_TARGET_POWER_NONE);
 			if (status < 0)
 			{
