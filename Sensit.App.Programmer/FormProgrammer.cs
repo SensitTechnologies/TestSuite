@@ -177,7 +177,7 @@ namespace Sensit.App.Programmer
 
 		private void ReadBaseRecord()
 		{
-			List<byte> readData = aardvarkI2C.EepromRead(0, 64);
+			List<byte> readData = aardvarkI2C.EepromRead(SensorDataLibrary.ADDRESS_BASE_RECORD, SensorDataLibrary.PAGE_SIZE);
 			SensorDataLibrary.BaseRecordFormat0 baseRecordFormat0 = new SensorDataLibrary.BaseRecordFormat0();
 			baseRecordFormat0.SetBytes(readData);
 			switch (baseRecordFormat0.SensorType)
@@ -259,14 +259,14 @@ namespace Sensit.App.Programmer
 					throw new DeviceSettingNotSupportedException("Invalid sensor type");
 			}
 
-			aardvarkI2C.EepromWrite(0, returnData); //Page 0
+			aardvarkI2C.EepromWrite(SensorDataLibrary.ADDRESS_BASE_RECORD, returnData);
 		}
 
 		private void ReadDeviceID()
 		{
-			List<byte> readData = aardvarkI2C.EepromRead(256, 64);
+			List<byte> readData = aardvarkI2C.EepromRead(SensorDataLibrary.ADDRESS_DEVICE_ID, SensorDataLibrary.PAGE_SIZE);
 			SensorDataLibrary.DeviceID deviceID = new();
-			deviceID.SetBytes(readData); //breaking read
+			deviceID.SetBytes(readData);
 			textBoxSerialNumber.Text = deviceID.SerialNumber;
 
 			switch (deviceID.Month)
@@ -338,17 +338,12 @@ namespace Sensit.App.Programmer
 				SerialNumber = serialNumber
 			};
 
-			aardvarkI2C.EepromWrite(256, deviceID.GetBytes());
-
+			aardvarkI2C.EepromWrite(SensorDataLibrary.ADDRESS_DEVICE_ID, deviceID.GetBytes()); 
 		}
 
 		private void ReadManufacturingRecord()
 		{
-			aardvarkI2C.EepromRead(320, 64);
-
-			//When exception is put in...
-			//Close the aardvark
-			//aardvarkI2C.Close();
+			aardvarkI2C.EepromRead(SensorDataLibrary.ADDRESS_MANUFACTURING_ID, SensorDataLibrary.PAGE_SIZE);
 		}
 
 		/// <summary>
@@ -373,7 +368,7 @@ namespace Sensit.App.Programmer
 			// Add serial number to button.
 			textBoxSerialNumber.Text += Environment.NewLine + serialNumber;
 
-			aardvarkI2C.EepromWrite(0, manufactureID.GetBytes());
+			aardvarkI2C.EepromWrite(SensorDataLibrary.ADDRESS_MANUFACTURING_ID, manufactureID.GetBytes());
 		}
 
 		#endregion
