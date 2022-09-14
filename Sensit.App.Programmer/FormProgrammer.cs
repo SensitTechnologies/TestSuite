@@ -269,53 +269,8 @@ namespace Sensit.App.Programmer
 			deviceID.SetBytes(readData);
 			textBoxSerialNumber.Text = deviceID.SerialNumber;
 
-			switch (deviceID.Month)
-			{
-				case 1:
-					textBoxDateProgrammed.Text = $"January {deviceID.Day}, {deviceID.Year}";
-					break;
-				case 2:
-					textBoxDateProgrammed.Text = $"February {deviceID.Day}, {deviceID.Year}";
-					break;
-				case 3:
-					textBoxDateProgrammed.Text = $"March {deviceID.Day}, {deviceID.Year}";
-					break;
-				case 4:
-					textBoxDateProgrammed.Text = $"April {deviceID.Day}, {deviceID.Year}";
-					break;
-				case 5:
-					textBoxDateProgrammed.Text = $"May {deviceID.Day}, {deviceID.Year}";
-					break;
-				case 6:
-					textBoxDateProgrammed.Text = $"June {deviceID.Day}, {deviceID.Year}";
-					break;
-				case 7:
-					textBoxDateProgrammed.Text = $"July {deviceID.Day}, {deviceID.Year}";
-					break;
-				case 8:
-					textBoxDateProgrammed.Text = $"August {deviceID.Day}, {deviceID.Year}";
-					break;
-				case 9:
-					textBoxDateProgrammed.Text = $"September {deviceID.Day}, {deviceID.Year}";
-					break;
-				case 10:
-					textBoxDateProgrammed.Text = $"October {deviceID.Day}, {deviceID.Year}";
-					break;
-				case 11:
-					textBoxDateProgrammed.Text = $"November {deviceID.Day}, {deviceID.Year}";
-					break;
-				case 12:
-					textBoxDateProgrammed.Text = $"December {deviceID.Day}, {deviceID.Year}";
-					break;
-
-				default:
-					//Close the aardvark
-					aardvarkI2C.Close();
-
-					textBoxDateProgrammed.Text = "Not a valid date.";
-					throw new DeviceCommandFailedException ("Sensor does not contain a valid date in Device ID.");
-			}
-
+			DateTime date = new DateTime(deviceID.Year, deviceID.Month, deviceID.Day);
+			textBoxDateProgrammed.Text = date.ToString("MM-dd-yyyy", CultureInfo.InvariantCulture);
 		}
 
 		/// <summary>
@@ -327,6 +282,7 @@ namespace Sensit.App.Programmer
 		{
 			// We need the date.
 			string date = DateTime.Today.ToString("MMddyyyy", CultureInfo.InvariantCulture);
+			textBoxDateProgrammed.Text = DateTime.Today.ToString("MM-dd-yyyy", CultureInfo.InvariantCulture);
 
 			//Write device ID to sensor EEPROM.
 			SensorDataLibrary.DeviceID deviceID = new()

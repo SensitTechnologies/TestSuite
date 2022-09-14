@@ -287,10 +287,10 @@ namespace Sensit.App.Programmer
 				data.Add(0);
 				data.Add((byte)RecordFormat);
 				data.AddRange(new List<byte> { 0, 0, 0 });
-				data.Add((byte)(Year >> 8)); //7 output
-				data.Add((byte)(Year & 0xFF)); //230 output
-				data.Add(Month); //9 output
-				data.Add(Day); //9 output
+				data.Add((byte)(Year >> 8));
+				data.Add((byte)(Year & 0xFF));
+				data.Add(Month);
+				data.Add(Day);
 				data.AddRange(new List<byte> { 0, 0, 0, 0, 0 });
 				data.AddRange(ToBigEndianArray(SerialNumber));
 				data.AddRange(ToBigEndianArray(MaxExposure));
@@ -321,10 +321,18 @@ namespace Sensit.App.Programmer
 				SensorType = (SensorType)data[1];
 				RecordFormat = data[3]; //3 bytes
 										//datecode = 0
-				Year = FromBigEndianArrayUshort(data.ToArray(), 7);
+				Year = (ushort)((data[7] << 8) + data[8]);
 				Month = data[9];
 				Day = data[10];
-				SerialNumber = Encoding.UTF8.GetString(data.ToArray(), 16, 32);
+
+				byte[] serialNumberArray = data.GetRange(16, 32).ToArray();
+
+				if (BitConverter.IsLittleEndian)
+				{
+					Array.Reverse(serialNumberArray);
+					SerialNumber = Encoding.UTF8.GetString(serialNumberArray);
+				}
+
 				MaxExposure = FromBigEndianArrayUshort(data.ToArray(), 48);
 				MaxRange = FromBigEndianArrayUshort(data.ToArray(), 50);
 				MinRange = FromBigEndianArrayUshort(data.ToArray(), 52);
@@ -373,7 +381,7 @@ namespace Sensit.App.Programmer
 				data.Add(Month);
 				data.Add(Day);
 				data.AddRange(new List<byte> { 0, 0, 0, 0, 0 });
-				data.AddRange(ToBigEndianArray((32 - SerialNumber.Length) + SerialNumber));
+				data.AddRange(ToBigEndianArray(SerialNumber));
 				data.AddRange(new List<byte> { 0,0,0,0,0,0});
 				data.AddRange(ToBigEndianArray(Issue));
 				data.AddRange(ToBigEndianArray(Revision));
@@ -396,7 +404,7 @@ namespace Sensit.App.Programmer
 				Validity = (Validity)data[0];
 				SensorType = (SensorType) data[1];
 				RecordFormat = data[3];
-				Year = FromBigEndianArrayUshort(data.ToArray(), 7);
+				Year = (ushort)((data[7] << 8) + data[8]);
 				Month = data[9];
 				Day = data[10];
 				SerialNumber = Encoding.UTF8.GetString(data.ToArray(), 16, 32);
@@ -531,11 +539,6 @@ namespace Sensit.App.Programmer
 		private static List<byte> ToBigEndianArray(string value)
 		{
 			List<byte> bytes = new (Encoding.ASCII.GetBytes(value)); 
-
-			if (BitConverter.IsLittleEndian)
-			{
-				bytes.Reverse();
-			}
 
 			//Serial Number is the only string in the library. Add bytes until it is the correct size.
 			while(bytes.Count != 32) 
