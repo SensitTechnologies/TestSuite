@@ -17,11 +17,6 @@ namespace Sensit.App.GPS
 		private const double POSITION_TOLERANCE = 1.0;
 		private readonly TimeSpan TIME_TOLERANCE = new(0, 2, 0);
 
-		/// <summary>
-		/// Test fails if lock not found within this time period (seconds)
-		/// </summary>
-		private const int TIMEOUT = 120;
-
 		#endregion
 
 		#region Fields
@@ -56,9 +51,6 @@ namespace Sensit.App.GPS
 			// Initialize the form.
 			InitializeComponent();
 
-			// Set up progress bar.
-			toolStripProgressBar.Maximum = TIMEOUT;
-
 			// Initialize the GPS serial stream device.
 			gpsDevice = new()
 			{
@@ -77,6 +69,9 @@ namespace Sensit.App.GPS
 
 			// Select the most recently used port.
 			comboBoxSerialPort.Text = Properties.Settings.Default.Port;
+
+			// Set the most recently used timeout.
+			numericUpDownTimeout.Value = Properties.Settings.Default.Timeout;
 		}
 
 		#endregion
@@ -110,7 +105,7 @@ namespace Sensit.App.GPS
 
 		#endregion
 
-		#region Serial Port
+		#region Settings
 
 		/// <summary>
 		/// Remember the most recently selected serial port.
@@ -121,6 +116,16 @@ namespace Sensit.App.GPS
 		{
 			// Save the serial port selection in the application settings.
 			Properties.Settings.Default.Port = comboBoxSerialPort.Text;
+		}
+
+		/// <summary>
+		/// Remember the most recently selected test duration.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void NumericUpDownTimeout_ValueChanged(object sender, EventArgs e)
+		{
+			Properties.Settings.Default.Timeout = (uint)numericUpDownTimeout.Value;
 		}
 
 		/// <summary>
@@ -262,11 +267,11 @@ namespace Sensit.App.GPS
 				timer.Enabled = false;
 
 				// Alert the user (and make it bold).
-				toolStripProgressBar.Value = TIMEOUT;
+				toolStripProgressBar.Value = toolStripProgressBar.Maximum;
 				toolStripStatusLabel.Text = "PASS";
 				toolStripStatusLabel.Font = new Font(toolStripStatusLabel.Font, FontStyle.Bold);
 				toolStripStatusLabel.ForeColor = Color.Green;
-				groupBoxSerialPort.Enabled = true;
+				groupBoxSettings.Enabled = true;
 				buttonStart.Enabled = true;
 				buttonStop.Enabled = false;
 			}
@@ -287,25 +292,31 @@ namespace Sensit.App.GPS
 
 				// Update the user interface.
 				toolStripStatusLabel.Text = "Elapsed time:  " + t.ToString(@"m\:ss");
-				toolStripProgressBar.Value = (int)elapsedSeconds;
 
-				// If timeout has elapsed...
-				if (elapsedSeconds >= TIMEOUT)
+				// If a timeout exists...
+				if (Properties.Settings.Default.Timeout != 0)
 				{
-					// Close the serial port.
-					gpsDevice.Close();
+					// Update the progress bar.
+					toolStripProgressBar.Value = (int)elapsedSeconds;
 
-					// Disable the timer.
-					timer.Enabled = false;
+					// If the timeout has elapsed...
+					if (elapsedSeconds >= Properties.Settings.Default.Timeout)
+					{
+						// Close the serial port.
+						gpsDevice.Close();
 
-					// Update the user interface.
-					toolStripProgressBar.Value = 0;
-					toolStripStatusLabel.Text = "FAIL";
-					toolStripStatusLabel.Font = new Font(toolStripStatusLabel.Font, FontStyle.Bold);
-					toolStripStatusLabel.ForeColor = Color.Red;
-					groupBoxSerialPort.Enabled = true;
-					buttonStart.Enabled = true;
-					buttonStop.Enabled = false;
+						// Disable the timer.
+						timer.Enabled = false;
+
+						// Update the user interface.
+						toolStripProgressBar.Value = toolStripProgressBar.Minimum;
+						toolStripStatusLabel.Text = "FAIL";
+						toolStripStatusLabel.Font = new Font(toolStripStatusLabel.Font, FontStyle.Bold);
+						toolStripStatusLabel.ForeColor = Color.Red;
+						groupBoxSettings.Enabled = true;
+						buttonStart.Enabled = true;
+						buttonStop.Enabled = false;
+					}
 				}
 			}
 			// If an error occurs...
@@ -325,11 +336,14 @@ namespace Sensit.App.GPS
 		{
 			try
 			{
+				// Set up progress bar.
+				toolStripProgressBar.Maximum = (int)Properties.Settings.Default.Timeout;
+
 				// Open the serial port (and let it know what serial port to use).
-				gpsDevice.Open(Properties.Settings.Default.Port);
+				//gpsDevice.Open(Properties.Settings.Default.Port);
 
 				// Update the user interface.
-				groupBoxSerialPort.Enabled = false;
+				groupBoxSettings.Enabled = false;
 				buttonStart.Enabled = false;
 				buttonStop.Enabled = true;
 				textBoxTimestamp.Text = string.Empty;
@@ -342,7 +356,7 @@ namespace Sensit.App.GPS
 				textBoxStatusLongitude.Text = string.Empty;
 				textBoxStatusSatellites.Text = string.Empty;
 				textBoxStatusTimestamp.Text = string.Empty;
-				toolStripProgressBar.Value = 0;
+				toolStripProgressBar.Value = toolStripProgressBar.Minimum;
 				toolStripStatusLabel.Text = "Testing...";
 				toolStripStatusLabel.Font = new Font(toolStripStatusLabel.Font, FontStyle.Regular);
 				toolStripStatusLabel.ForeColor = SystemColors.ControlText;
@@ -377,13 +391,13 @@ namespace Sensit.App.GPS
 				timer.Enabled = false;
 
 				// Update user interface.
-				groupBoxSerialPort.Enabled = true;
+				groupBoxSettings.Enabled = true;
 				buttonStart.Enabled = true;
 				buttonStop.Enabled = false;
 				toolStripStatusLabel.Text = "Ready...";
 				toolStripStatusLabel.Font = new Font(toolStripStatusLabel.Font, FontStyle.Regular);
 				toolStripStatusLabel.ForeColor = SystemColors.ControlText;
-				toolStripProgressBar.Value = 0;
+				toolStripProgressBar.Value = toolStripProgressBar.Minimum;
 			}
 			// If an error occurs...
 			catch (Exception ex)
