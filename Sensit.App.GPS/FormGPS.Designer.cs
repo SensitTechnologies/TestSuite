@@ -46,6 +46,7 @@
 			this.buttonStart = new System.Windows.Forms.Button();
 			this.buttonStop = new System.Windows.Forms.Button();
 			this.groupBoxSettings = new System.Windows.Forms.GroupBox();
+			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.tableLayoutPanelSerialPort = new System.Windows.Forms.TableLayoutPanel();
 			this.comboBoxSerialPort = new System.Windows.Forms.ComboBox();
 			this.buttonPortRefresh = new System.Windows.Forms.Button();
@@ -79,6 +80,7 @@
 			this.tableLayoutPanelTestSetupButtons.SuspendLayout();
 			this.tableLayoutPanelStartStop.SuspendLayout();
 			this.groupBoxSettings.SuspendLayout();
+			this.tableLayoutPanel1.SuspendLayout();
 			this.tableLayoutPanelSerialPort.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownTimeout)).BeginInit();
 			this.tableLayoutPanelStatus.SuspendLayout();
@@ -96,7 +98,7 @@
 			this.menuStrip.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip.Name = "menuStrip";
 			this.menuStrip.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-			this.menuStrip.Size = new System.Drawing.Size(320, 24);
+			this.menuStrip.Size = new System.Drawing.Size(314, 24);
 			this.menuStrip.TabIndex = 14;
 			this.menuStrip.Text = "menuStrip1";
 			// 
@@ -168,10 +170,10 @@
 			this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar,
             this.toolStripStatusLabel});
-			this.statusStrip.Location = new System.Drawing.Point(0, 322);
+			this.statusStrip.Location = new System.Drawing.Point(0, 329);
 			this.statusStrip.Name = "statusStrip";
 			this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
-			this.statusStrip.Size = new System.Drawing.Size(320, 32);
+			this.statusStrip.Size = new System.Drawing.Size(314, 32);
 			this.statusStrip.TabIndex = 15;
 			this.statusStrip.Text = "statusStrip1";
 			// 
@@ -196,12 +198,12 @@
 			this.tableLayoutPanelTestSetupButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanelTestSetupButtons.Controls.Add(this.tableLayoutPanelStartStop, 0, 0);
 			this.tableLayoutPanelTestSetupButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.tableLayoutPanelTestSetupButtons.Location = new System.Drawing.Point(0, 283);
+			this.tableLayoutPanelTestSetupButtons.Location = new System.Drawing.Point(0, 290);
 			this.tableLayoutPanelTestSetupButtons.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.tableLayoutPanelTestSetupButtons.Name = "tableLayoutPanelTestSetupButtons";
 			this.tableLayoutPanelTestSetupButtons.RowCount = 1;
 			this.tableLayoutPanelTestSetupButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanelTestSetupButtons.Size = new System.Drawing.Size(320, 39);
+			this.tableLayoutPanelTestSetupButtons.Size = new System.Drawing.Size(314, 39);
 			this.tableLayoutPanelTestSetupButtons.TabIndex = 16;
 			// 
 			// tableLayoutPanelStartStop
@@ -215,7 +217,7 @@
 			this.tableLayoutPanelStartStop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 23F));
 			this.tableLayoutPanelStartStop.Controls.Add(this.buttonStart, 0, 0);
 			this.tableLayoutPanelStartStop.Controls.Add(this.buttonStop, 1, 0);
-			this.tableLayoutPanelStartStop.Location = new System.Drawing.Point(64, 3);
+			this.tableLayoutPanelStartStop.Location = new System.Drawing.Point(61, 3);
 			this.tableLayoutPanelStartStop.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.tableLayoutPanelStartStop.Name = "tableLayoutPanelStartStop";
 			this.tableLayoutPanelStartStop.RowCount = 1;
@@ -250,24 +252,40 @@
 			// 
 			this.groupBoxSettings.AutoSize = true;
 			this.groupBoxSettings.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.groupBoxSettings.Controls.Add(this.tableLayoutPanelSerialPort);
+			this.groupBoxSettings.Controls.Add(this.tableLayoutPanel1);
 			this.groupBoxSettings.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBoxSettings.Location = new System.Drawing.Point(0, 24);
 			this.groupBoxSettings.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.groupBoxSettings.Name = "groupBoxSettings";
 			this.groupBoxSettings.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			this.groupBoxSettings.Size = new System.Drawing.Size(320, 82);
+			this.groupBoxSettings.Size = new System.Drawing.Size(314, 88);
 			this.groupBoxSettings.TabIndex = 17;
 			this.groupBoxSettings.TabStop = false;
 			this.groupBoxSettings.Text = "Settings";
 			// 
+			// tableLayoutPanel1
+			// 
+			this.tableLayoutPanel1.AutoSize = true;
+			this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.tableLayoutPanel1.ColumnCount = 1;
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanelSerialPort, 0, 0);
+			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableLayoutPanel1.Location = new System.Drawing.Point(4, 19);
+			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+			this.tableLayoutPanel1.RowCount = 1;
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(306, 66);
+			this.tableLayoutPanel1.TabIndex = 0;
+			// 
 			// tableLayoutPanelSerialPort
 			// 
+			this.tableLayoutPanelSerialPort.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.tableLayoutPanelSerialPort.AutoSize = true;
 			this.tableLayoutPanelSerialPort.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.tableLayoutPanelSerialPort.ColumnCount = 3;
 			this.tableLayoutPanelSerialPort.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanelSerialPort.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanelSerialPort.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanelSerialPort.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanelSerialPort.Controls.Add(this.comboBoxSerialPort, 1, 0);
 			this.tableLayoutPanelSerialPort.Controls.Add(this.buttonPortRefresh, 2, 0);
@@ -275,15 +293,14 @@
 			this.tableLayoutPanelSerialPort.Controls.Add(this.labelTimeout, 0, 1);
 			this.tableLayoutPanelSerialPort.Controls.Add(this.labelSeconds, 2, 1);
 			this.tableLayoutPanelSerialPort.Controls.Add(this.numericUpDownTimeout, 1, 1);
-			this.tableLayoutPanelSerialPort.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanelSerialPort.Location = new System.Drawing.Point(4, 19);
+			this.tableLayoutPanelSerialPort.Location = new System.Drawing.Point(22, 3);
 			this.tableLayoutPanelSerialPort.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.tableLayoutPanelSerialPort.Name = "tableLayoutPanelSerialPort";
 			this.tableLayoutPanelSerialPort.RowCount = 2;
 			this.tableLayoutPanelSerialPort.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanelSerialPort.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelSerialPort.Size = new System.Drawing.Size(312, 60);
-			this.tableLayoutPanelSerialPort.TabIndex = 14;
+			this.tableLayoutPanelSerialPort.Size = new System.Drawing.Size(261, 60);
+			this.tableLayoutPanelSerialPort.TabIndex = 15;
 			// 
 			// comboBoxSerialPort
 			// 
@@ -293,20 +310,18 @@
 			this.comboBoxSerialPort.Location = new System.Drawing.Point(70, 3);
 			this.comboBoxSerialPort.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.comboBoxSerialPort.Name = "comboBoxSerialPort";
-			this.comboBoxSerialPort.Size = new System.Drawing.Size(190, 23);
+			this.comboBoxSerialPort.Size = new System.Drawing.Size(131, 23);
 			this.comboBoxSerialPort.TabIndex = 4;
-			this.comboBoxSerialPort.SelectedIndexChanged += new System.EventHandler(this.ComboBoxSerialPort_SelectedIndexChanged);
 			// 
 			// buttonPortRefresh
 			// 
 			this.buttonPortRefresh.Image = ((System.Drawing.Image)(resources.GetObject("buttonPortRefresh.Image")));
-			this.buttonPortRefresh.Location = new System.Drawing.Point(275, 3);
+			this.buttonPortRefresh.Location = new System.Drawing.Point(209, 3);
 			this.buttonPortRefresh.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.buttonPortRefresh.Name = "buttonPortRefresh";
 			this.buttonPortRefresh.Size = new System.Drawing.Size(33, 27);
 			this.buttonPortRefresh.TabIndex = 2;
 			this.buttonPortRefresh.UseVisualStyleBackColor = true;
-			this.buttonPortRefresh.Click += new System.EventHandler(this.ButtonPortRefresh_Click);
 			// 
 			// labelSerialPort
 			// 
@@ -332,11 +347,11 @@
 			// 
 			this.labelSeconds.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelSeconds.AutoSize = true;
-			this.labelSeconds.Location = new System.Drawing.Point(274, 39);
+			this.labelSeconds.Location = new System.Drawing.Point(208, 39);
 			this.labelSeconds.Name = "labelSeconds";
-			this.labelSeconds.Size = new System.Drawing.Size(24, 15);
+			this.labelSeconds.Size = new System.Drawing.Size(50, 15);
 			this.labelSeconds.TabIndex = 7;
-			this.labelSeconds.Text = "sec";
+			this.labelSeconds.Text = "seconds";
 			// 
 			// numericUpDownTimeout
 			// 
@@ -350,7 +365,6 @@
 			this.numericUpDownTimeout.Name = "numericUpDownTimeout";
 			this.numericUpDownTimeout.Size = new System.Drawing.Size(131, 23);
 			this.numericUpDownTimeout.TabIndex = 8;
-			this.numericUpDownTimeout.ValueChanged += new System.EventHandler(this.NumericUpDownTimeout_ValueChanged);
 			// 
 			// tableLayoutPanelStatus
 			// 
@@ -364,7 +378,7 @@
 			this.tableLayoutPanelStatus.RowCount = 1;
 			this.tableLayoutPanelStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.tableLayoutPanelStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 148F));
-			this.tableLayoutPanelStatus.Size = new System.Drawing.Size(312, 155);
+			this.tableLayoutPanelStatus.Size = new System.Drawing.Size(306, 156);
 			this.tableLayoutPanelStatus.TabIndex = 0;
 			// 
 			// tableLayoutPanelVariables
@@ -395,7 +409,7 @@
 			this.tableLayoutPanelVariables.Controls.Add(this.textBoxFixType, 1, 3);
 			this.tableLayoutPanelVariables.Controls.Add(this.textBoxSatellites, 1, 4);
 			this.tableLayoutPanelVariables.Controls.Add(this.textBoxStatusSatellites, 3, 4);
-			this.tableLayoutPanelVariables.Location = new System.Drawing.Point(11, 5);
+			this.tableLayoutPanelVariables.Location = new System.Drawing.Point(8, 5);
 			this.tableLayoutPanelVariables.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.tableLayoutPanelVariables.Name = "tableLayoutPanelVariables";
 			this.tableLayoutPanelVariables.RowCount = 5;
@@ -605,11 +619,11 @@
 			this.groupBoxStatus.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.groupBoxStatus.Controls.Add(this.tableLayoutPanelStatus);
 			this.groupBoxStatus.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBoxStatus.Location = new System.Drawing.Point(0, 106);
+			this.groupBoxStatus.Location = new System.Drawing.Point(0, 112);
 			this.groupBoxStatus.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.groupBoxStatus.Name = "groupBoxStatus";
 			this.groupBoxStatus.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			this.groupBoxStatus.Size = new System.Drawing.Size(320, 177);
+			this.groupBoxStatus.Size = new System.Drawing.Size(314, 178);
 			this.groupBoxStatus.TabIndex = 18;
 			this.groupBoxStatus.TabStop = false;
 			this.groupBoxStatus.Text = "Status";
@@ -618,7 +632,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(320, 354);
+			this.ClientSize = new System.Drawing.Size(314, 361);
 			this.Controls.Add(this.groupBoxStatus);
 			this.Controls.Add(this.groupBoxSettings);
 			this.Controls.Add(this.tableLayoutPanelTestSetupButtons);
@@ -636,6 +650,8 @@
 			this.tableLayoutPanelStartStop.ResumeLayout(false);
 			this.groupBoxSettings.ResumeLayout(false);
 			this.groupBoxSettings.PerformLayout();
+			this.tableLayoutPanel1.ResumeLayout(false);
+			this.tableLayoutPanel1.PerformLayout();
 			this.tableLayoutPanelSerialPort.ResumeLayout(false);
 			this.tableLayoutPanelSerialPort.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownTimeout)).EndInit();
@@ -667,11 +683,6 @@
 		private Button buttonStart;
 		private Button buttonStop;
 		private GroupBox groupBoxSettings;
-		private TableLayoutPanel tableLayoutPanelSerialPort;
-		private Button buttonPortRefresh;
-		private ComboBox comboBoxSerialPort;
-		private Label labelSerialPort;
-		private Label labelTimeout;
 		private TableLayoutPanel tableLayoutPanelStatus;
 		private TableLayoutPanel tableLayoutPanelVariables;
 		private TextBox textBoxStatusFixType;
@@ -693,6 +704,12 @@
 		private TextBox textBoxSatellites;
 		private TextBox textBoxStatusSatellites;
 		private GroupBox groupBoxStatus;
+		private TableLayoutPanel tableLayoutPanel1;
+		private TableLayoutPanel tableLayoutPanelSerialPort;
+		private ComboBox comboBoxSerialPort;
+		private Button buttonPortRefresh;
+		private Label labelSerialPort;
+		private Label labelTimeout;
 		private Label labelSeconds;
 		private NumericUpDown numericUpDownTimeout;
 	}
