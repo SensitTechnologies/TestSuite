@@ -21,7 +21,7 @@ namespace Sensit.App.Programmer
 
 		//Oxygen Sensor
 		public static readonly int ZERO_MAX_OXYGEN = 26000;
-		public static readonly int ZERO_MIN_OXYGEN = 26000;
+		public static readonly int ZERO_MIN_OXYGEN = 22000;
 
 		//Carbon Monoxide Sensor
 		public static readonly int CARBONMONOXIDE_CAL_SCALE = 0x36C90;
@@ -201,7 +201,7 @@ namespace Sensit.App.Programmer
 		public class BaseRecordFormat2 : BaseRecord
 		{
 			public int MinSpan { get; set; } = 1000; //4 byte
-			public int ZeroCalibration { get; set; } //***7*** byte
+			public ushort ZeroCalibration { get; set; }
 			public override byte RecordFormat { get; set; } = 2;
 
 			public override List<byte> GetBytes()
@@ -220,17 +220,14 @@ namespace Sensit.App.Programmer
 				data.AddRange(ToBigEndianArray(MinSpan));
 
 				//9 unused bytes
-				data.AddRange(new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0 });
+				data.AddRange(new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 });
 
-				//Zero Calibration has 7 byte size
-				byte[] zeroCal = new byte[7];
-				Array.Copy(BitConverter.GetBytes(ZeroCalibration), zeroCal, BitConverter.GetBytes(ZeroCalibration).Length);
-				data.AddRange(ToBigEndianArray(zeroCal));
-
+				data.AddRange(BitConverter.GetBytes(ZeroCalibration));
+				
+				data.Add(Day);
+				data.Add(Month);
 				data.Add((byte)(Year >> 8));
 				data.Add((byte)(Year & 0xFF));
-				data.Add(Month);
-				data.Add(Day);
 				data.Add(0);
 				data.AddRange(ToBigEndianArray(AutoZero));
 				data.AddRange(ToBigEndianArray(ZeroMax));
@@ -264,7 +261,7 @@ namespace Sensit.App.Programmer
 				CalMinOne = FromBigEndianArray(data.ToArray(), 17);
 				CalGasTwo = data[21];
 				MinSpan = FromBigEndianArray(data.ToArray(), 22);
-				ZeroCalibration = FromBigEndianArray(data.ToArray(), 35);
+				ZeroCalibration = FromBigEndianArrayUshort(data.ToArray(), 35);
 				Year = FromBigEndianArrayUshort(data.ToArray(), 42);
 				Month = data[44];
 				Day = data[45];
@@ -576,12 +573,14 @@ namespace Sensit.App.Programmer
 		{
 			List<byte> bytes = BitConverter.GetBytes(value).ToList();
 
-			if (BitConverter.IsLittleEndian)
-			{
-				bytes.Reverse();
-			}
+			List<byte> redoneBytes = new();
 
-			return bytes;
+			redoneBytes[0] = bytes[0];
+			redoneBytes[1] = bytes[1];
+			redoneBytes[2] = bytes[2];
+			redoneBytes[3] = bytes[3];
+
+			return redoneBytes;
 		}
 
 		/// <summary>
