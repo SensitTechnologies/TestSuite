@@ -163,24 +163,40 @@ namespace Sensit.App.Programmer
 
 		#region Programmer Commands
 
+		//Create object of aardvark.
 		AardvarkI2C aardvarkI2C = new();
 
+		/// <summary>
+		/// Opens the Aardvark
+		/// </summary>
 		private void OpenAardvark()
 		{
 			aardvarkI2C.Open();
 		}
 
+		/// <summary>
+		/// Closes the Aardvark.
+		/// </summary>
 		private void CloseAardvark()
 		{
 			aardvarkI2C.Close();
 		}
 
+		/// <summary>
+		/// Read Base Record from sensor's EEPROM.
+		/// </summary>
+		/// <exception cref="DeviceSettingNotSupportedException">Sulfur Dioxide not implemented</exception>
 		private void ReadBaseRecord()
 		{
+			//Retrieve byte list from EEPROM's Base Record
 			List<byte> readData = aardvarkI2C.EepromRead(SensorDataLibrary.ADDRESS_BASE_RECORD, SensorDataLibrary.PAGE_SIZE);
-			SensorDataLibrary.BaseRecordFormat0 baseRecordFormat0 = new SensorDataLibrary.BaseRecordFormat0();
-			baseRecordFormat0.SetBytes(readData);
-			switch (baseRecordFormat0.SensorType)
+
+			//Determine Record Format from data
+			SensorDataLibrary.BaseRecordFormat0 baseRecordFormat = new SensorDataLibrary.BaseRecordFormat0();
+			baseRecordFormat.SetBytes(readData);
+
+			//Determine Sensor Type
+			switch (baseRecordFormat.SensorType)
 			{
 				case SensorDataLibrary.SensorType.Oxygen:
 					textBoxSensorType.Text = "O2";
@@ -213,6 +229,7 @@ namespace Sensit.App.Programmer
 		{
 			List<byte> returnData = new();
 
+			//Set and retrieve info for sensor type based off serial number
 			switch (sensorType)
 			{
 				case SensorDataLibrary.SensorType.Oxygen:
@@ -262,16 +279,24 @@ namespace Sensit.App.Programmer
 					throw new DeviceSettingNotSupportedException("Invalid sensor type.");
 			}
 
+			//Write data to sensor's EEPROM
 			aardvarkI2C.EepromWrite(SensorDataLibrary.ADDRESS_BASE_RECORD, returnData);
 		}
 
+		/// <summary>
+		/// Reads Device ID from sensor's EEPROM.
+		/// </summary>
 		private void ReadDeviceID()
 		{
+			//Read Device ID from sensor's EEPROM
 			List<byte> readData = aardvarkI2C.EepromRead(SensorDataLibrary.ADDRESS_DEVICE_ID, SensorDataLibrary.PAGE_SIZE);
 			SensorDataLibrary.DeviceID deviceID = new();
 			deviceID.SetBytes(readData);
+
+			//Write Serial Number to form
 			textBoxSerialNumber.Text = deviceID.SerialNumber;
 
+			//Write Date Programmed to form
 			DateTime date = new DateTime(deviceID.Year, deviceID.Month, deviceID.Day);
 			textBoxDateProgrammed.Text = date.ToString("MM-dd-yyyy", CultureInfo.InvariantCulture);
 		}
@@ -285,6 +310,8 @@ namespace Sensit.App.Programmer
 		{
 			// We need the date.
 			string date = DateTime.Today.ToString("MMddyyyy", CultureInfo.InvariantCulture);
+
+			//Write date to be programmed into EEPROM on form.
 			textBoxDateProgrammed.Text = DateTime.Today.ToString("MM-dd-yyyy", CultureInfo.InvariantCulture);
 
 			//Write device ID to sensor EEPROM.
@@ -297,11 +324,16 @@ namespace Sensit.App.Programmer
 				SerialNumber = serialNumber
 			};
 
-			aardvarkI2C.EepromWrite(SensorDataLibrary.ADDRESS_DEVICE_ID, deviceID.GetBytes()); 
+			//Write Device ID to EEPROM
+			aardvarkI2C.EepromWrite(SensorDataLibrary.ADDRESS_DEVICE_ID, deviceID.GetBytes());
 		}
 
+		/// <summary>
+		/// Reads Manufacturing Record from sensor's EEPROM.
+		/// </summary>
 		private void ReadManufacturingRecord()
 		{
+			//Read from EEPROM
 			aardvarkI2C.EepromRead(SensorDataLibrary.ADDRESS_MANUFACTURING_ID, SensorDataLibrary.PAGE_SIZE);
 		}
 
@@ -314,7 +346,7 @@ namespace Sensit.App.Programmer
 			// We need the date.
 			string date = DateTime.Today.ToString("MMddyyyy", CultureInfo.InvariantCulture);
 
-			// TODO:  Write device ID to sensor EEPROM.
+			//Set info to Manufacture ID in SensorDataLibrary
 			SensorDataLibrary.ManufactureID manufactureID = new()
 			{
 				SensorType = sensorType,
@@ -324,9 +356,10 @@ namespace Sensit.App.Programmer
 				SerialNumber = serialNumber
 			};
 
-			// Add serial number to button.
+			// Add serial number to form
 			textBoxSerialNumber.Text += Environment.NewLine + serialNumber;
 
+			//Write info to EEPROM
 			aardvarkI2C.EepromWrite(SensorDataLibrary.ADDRESS_MANUFACTURING_ID, manufactureID.GetBytes());
 		}
 
