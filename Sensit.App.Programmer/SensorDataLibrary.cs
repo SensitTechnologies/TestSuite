@@ -139,10 +139,10 @@ namespace Sensit.App.Programmer
 				data.AddRange(ToBigEndianArray(CalMinTwo));
 				data.Add(CalGasThree);
 				data.AddRange(new List<byte> { 0, 0, 0, 0, 0, 0, 0 });
-				data.Add((byte)(Year >> 8));
-				data.Add((byte)(Year & 0xFF));
-				data.Add(Month);
 				data.Add(Day);
+				data.Add(Month);
+				data.Add((byte)(Year >> 8));
+				data.Add((byte)(Year & 0xFF));			
 				data.Add((byte)0);
 				data.AddRange(ToBigEndianArray(AutoZero));
 				data.AddRange(ToBigEndianArray(ZeroMax));
@@ -180,9 +180,9 @@ namespace Sensit.App.Programmer
 				CalMaxTwo = FromBigEndianArray(data.ToArray(), 26);
 				CalMinTwo = FromBigEndianArray(data.ToArray(), 30);
 				CalGasThree = data[34];
-				Year = FromBigEndianArrayUshort(data.ToArray(), 42);
-				Month = data[44];
-				Day = data[45];
+				Day = data[42];
+				Month = data[43];
+				Year = FromBigEndianArrayUshort(data.ToArray(), 44);
 				AutoZero = FromBigEndianArray(data.ToArray(), 47);
 				ZeroMax = FromBigEndianArray(data.ToArray(), 51);
 				ZeroMin = FromBigEndianArray(data.ToArray(), 55);
@@ -262,9 +262,9 @@ namespace Sensit.App.Programmer
 				CalGasTwo = data[21];
 				MinSpan = FromBigEndianArray(data.ToArray(), 22);
 				ZeroCalibration = FromBigEndianArrayUshort(data.ToArray(), 35);
-				Year = FromBigEndianArrayUshort(data.ToArray(), 42);
-				Month = data[44];
-				Day = data[45];
+				Day = data[42];
+				Month = data[43];
+				Year = FromBigEndianArrayUshort(data.ToArray(), 44);
 				AutoZero = FromBigEndianArray(data.ToArray(), 47);
 				ZeroMax = FromBigEndianArray(data.ToArray(), 51);
 				ZeroMin = FromBigEndianArray(data.ToArray(), 55);
@@ -315,10 +315,10 @@ namespace Sensit.App.Programmer
 				data.Add(0);
 				data.Add(RecordFormat);
 				data.AddRange(new List<byte> { 0, 0, 0 });
+				data.Add(Day);
+				data.Add(Month);
 				data.Add((byte)(Year >> 8));
 				data.Add((byte)(Year & 0xFF));
-				data.Add(Month);
-				data.Add(Day);
 				data.AddRange(new List<byte> { 0, 0, 0, 0, 0 });
 				data.AddRange(ToBigEndianArray(SerialNumber));
 				data.AddRange(ToBigEndianArray(MaxExposure));
@@ -353,9 +353,9 @@ namespace Sensit.App.Programmer
 				SensorType = (SensorType)data[1];
 				RecordFormat = data[3]; //3 bytes
 										//datecode = 0
-				Year = (ushort)((data[7] << 8) + data[8]);
-				Month = data[9];
-				Day = data[10];
+				Day = data[7];
+				Month = data[8];
+				Year = (ushort)((data[9] << 10) + data[9]);
 
 				byte[] serialNumberArray = data.GetRange(16, 32).ToArray();
 
@@ -412,9 +412,10 @@ namespace Sensit.App.Programmer
 				data.Add(0);
 				data.Add(RecordFormat);
 				data.AddRange(new List<byte> { 0, 0, 0 });
-				data.AddRange(ToBigEndianArray(Year));
-				data.Add(Month);
 				data.Add(Day);
+				data.Add(Month);
+				data.Add((byte)(Year >> 8));
+				data.Add((byte)(Year & 0xFF));
 				data.AddRange(new List<byte> { 0, 0, 0, 0, 0 });
 				data.AddRange(ToBigEndianArray(SerialNumber));
 				data.AddRange(new List<byte> { 0, 0, 0, 0, 0, 0 });
@@ -443,9 +444,9 @@ namespace Sensit.App.Programmer
 				Validity = (Validity)data[0];
 				SensorType = (SensorType)data[1];
 				RecordFormat = data[3];
-				Year = (ushort)((data[7] << 8) + data[8]);
-				Month = data[9];
-				Day = data[10];
+				Day = data[7];
+				Month = data[8];
+				Year = (ushort)((data[9] << 10) + data[9]);
 				SerialNumber = Encoding.UTF8.GetString(data.ToArray(), 16, 32);
 				Issue = FromBigEndianArrayUshort(data.ToArray(), 50);
 				Revision = FromBigEndianArrayUshort(data.ToArray(), 52);
