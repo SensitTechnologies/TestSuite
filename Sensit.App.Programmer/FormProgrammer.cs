@@ -212,15 +212,15 @@ namespace Sensit.App.Programmer
 		private void WriteBaseRecord(SensorDataLibrary.SensorType sensorType)
 		{
 			List<byte> returnData = new();
-			// TODO: Create a sensor base record object based on sensor type.
-			// TODO: Convert base record to List<byte>.
-			// TODO: Write List<byte> to sensor EEPROM.
-			
+
 			switch (sensorType)
 			{
 				case SensorDataLibrary.SensorType.Oxygen:
 					textBoxSensorType.Text = "O2";
 					SensorDataLibrary.BaseRecordFormat2 oxygenBaseRecord = new();
+					oxygenBaseRecord.SensorRev = 1;
+					oxygenBaseRecord.CalScale = 0;
+					oxygenBaseRecord.ZeroCalibration = 19699;
 					oxygenBaseRecord.SensorType = SensorDataLibrary.SensorType.Oxygen;
 					oxygenBaseRecord.ZeroMax = SensorDataLibrary.ZERO_MAX_OXYGEN;
 					oxygenBaseRecord.ZeroMin = SensorDataLibrary.ZERO_MIN_OXYGEN;
@@ -229,6 +229,7 @@ namespace Sensit.App.Programmer
 				case SensorDataLibrary.SensorType.CarbonMonoxide:
 					textBoxSensorType.Text = "CO";
 					SensorDataLibrary.BaseRecordFormat0 carbonMonoxideBaseRecord = new();
+					carbonMonoxideBaseRecord.SensorRev = 1;
 					carbonMonoxideBaseRecord.SensorType = SensorDataLibrary.SensorType.CarbonMonoxide;
 					carbonMonoxideBaseRecord.CalScale = SensorDataLibrary.CARBONMONOXIDE_CAL_SCALE;
 					carbonMonoxideBaseRecord.CalPointOne = SensorDataLibrary.CARBONMONOXIDE_CAL_POINT_ONE;
@@ -240,6 +241,7 @@ namespace Sensit.App.Programmer
 				case SensorDataLibrary.SensorType.HydrogenSulfide:
 					textBoxSensorType.Text = "H2S";
 					SensorDataLibrary.BaseRecordFormat0 hydrogenSulfideBaseRecord = new();
+					hydrogenSulfideBaseRecord.SensorRev = 1;
 					hydrogenSulfideBaseRecord.SensorType = SensorDataLibrary.SensorType.HydrogenSulfide;
 					hydrogenSulfideBaseRecord.CalScale = SensorDataLibrary.HYDROGENSULFIDE_CAL_SCALE;
 					returnData.AddRange((hydrogenSulfideBaseRecord.GetBytes()));
@@ -247,6 +249,7 @@ namespace Sensit.App.Programmer
 				case SensorDataLibrary.SensorType.HydrogenCyanide:
 					textBoxSensorType.Text = "HCN";
 					SensorDataLibrary.BaseRecordFormat0 hydrogenCyanideBaseRecord = new();
+					hydrogenCyanideBaseRecord.SensorRev = 1;
 					hydrogenCyanideBaseRecord.SensorType = SensorDataLibrary.SensorType.HydrogenCyanide;
 					hydrogenCyanideBaseRecord.CalScale = SensorDataLibrary.HYDROGENCYANIDE_CAL_SCALE;
 					returnData.AddRange((hydrogenCyanideBaseRecord.GetBytes()));
@@ -256,7 +259,7 @@ namespace Sensit.App.Programmer
 					aardvarkI2C.Close();
 
 					textBoxSensorType.Text = "Invalid";
-					throw new DeviceSettingNotSupportedException("Invalid sensor type");
+					throw new DeviceSettingNotSupportedException("Invalid sensor type.");
 			}
 
 			aardvarkI2C.EepromWrite(SensorDataLibrary.ADDRESS_BASE_RECORD, returnData);

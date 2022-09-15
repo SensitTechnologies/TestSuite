@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Sensit.TestSDK.Calculations;
@@ -77,7 +76,7 @@ namespace Sensit.App.Programmer
 			public Validity BaseRecordValidity { get; set; } = Validity.Valid; //1 byte
 			public SensorType SensorType { get; set; } //1 byte VARIABLE
 			public byte SensorRev { get; set; } = 1; //1 byte
-			public byte BaseRecordFormat { get; set; } = 0; //1 byte
+			public abstract byte RecordFormat { get; set; } //1 byte. Number variable
 			public int CalScale { get; set; } //4 byte VARIABLE
 			public byte CalGasOne { get; set; } = 0; //1 byte
 			public int CalPointOne { get; set; } //4 byte VARIABLE: only not zero is on CO sensor
@@ -101,6 +100,7 @@ namespace Sensit.App.Programmer
 			public int CalMaxTwo { get; set; } = 0; //4 byte
 			public int CalMinTwo { get; set; } = 0; //4 byte
 			public byte CalGasThree { get; set; } = 0; //Only CO has define. 00
+			public override byte RecordFormat { get; set; } = 0;
 
 			public override List<byte> GetBytes()
 			{
@@ -108,7 +108,7 @@ namespace Sensit.App.Programmer
 				data.Add((byte)BaseRecordValidity);
 				data.Add((byte)SensorType);
 				data.Add(SensorRev);
-				data.Add(BaseRecordFormat);
+				data.Add(RecordFormat);
 				data.AddRange(ToBigEndianArray(CalScale));
 				data.Add(CalGasOne);
 				data.AddRange(ToBigEndianArray(CalPointOne));
@@ -150,7 +150,7 @@ namespace Sensit.App.Programmer
 				BaseRecordValidity = (Validity)data[0];
 				SensorType = (SensorType)data[1];
 				SensorRev = data[2];
-				BaseRecordFormat = data[3];
+				RecordFormat = data[3];
 				CalScale = FromBigEndianArray(data.ToArray(), 4);
 				CalGasOne = data[8];
 				CalPointOne = FromBigEndianArray(data.ToArray(), 9);
@@ -171,7 +171,6 @@ namespace Sensit.App.Programmer
 				//Check crc.
 				if (CheckCrc(data) == false)
 				{
-					foreach(byte b in data) { Debug.WriteLine(b); }
 					throw new DeviceCommandFailedException("Bad CRC from sensor BR0.");
 				}
 			}
@@ -180,15 +179,16 @@ namespace Sensit.App.Programmer
 		public class BaseRecordFormat2 : BaseRecord
 		{
 			public int MinSpan { get; set; } = 1000; //4 byte
-			public int ZeroCalibration { get; set; } = 19699; //***7*** byte
+			public int ZeroCalibration { get; set; } //***7*** byte
+			public override byte RecordFormat { get; set; } = 2;
 
 			public override List<byte> GetBytes()
 			{
 				List<byte> data = new();
-				data.Add((byte)BaseRecordValidity);
+				data.Add((byte)BaseRecordValidity); 
 				data.Add((byte)SensorType);
 				data.Add(SensorRev);
-				data.Add(BaseRecordFormat);
+				data.Add(RecordFormat); 
 				data.AddRange(ToBigEndianArray(CalScale));
 				data.Add(CalGasOne);
 				data.AddRange(ToBigEndianArray(CalPointOne));
@@ -196,17 +196,24 @@ namespace Sensit.App.Programmer
 				data.AddRange(ToBigEndianArray(CalMinOne));
 				data.Add(CalGasTwo);
 				data.AddRange(ToBigEndianArray(MinSpan));
-				data.AddRange(new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0});
-				data.AddRange(ToBigEndianArray(ZeroCalibration)); //***7 bytes***
+
+				//9 unused bytes
+				data.AddRange(new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0 });
+
+				//Zero Calibration has 7 byte size
+				byte[] zeroCal = new byte[7];
+				Array.Copy(BitConverter.GetBytes(ZeroCalibration), zeroCal, BitConverter.GetBytes(ZeroCalibration).Length);
+				data.AddRange(ToBigEndianArray(zeroCal));
+
 				data.Add((byte)(Year >> 8));
 				data.Add((byte)(Year & 0xFF));
 				data.Add(Month);
 				data.Add(Day);
-				data.Add((byte)0);
+				data.Add(0);
 				data.AddRange(ToBigEndianArray(AutoZero));
 				data.AddRange(ToBigEndianArray(ZeroMax));
 				data.AddRange(ToBigEndianArray(ZeroMin));
-				data.Add((byte)0);
+				data.Add(0);
 
 				// Generate a checksum (then convert to byte array).
 				byte[] crc = BitConverter.GetBytes(CalcCRC(data));
@@ -219,7 +226,6 @@ namespace Sensit.App.Programmer
 
 				// Add checksum to message.
 				data.AddRange(crc);
-
 				return data;
 			}
 
@@ -228,7 +234,7 @@ namespace Sensit.App.Programmer
 				BaseRecordValidity = (Validity)data[0];
 				SensorType = (SensorType)data[1];
 				SensorRev = data[2];
-				BaseRecordFormat = data[3];
+				RecordFormat = data[3];
 				CalScale = FromBigEndianArray(data.ToArray(), 4);
 				CalGasOne = data[8];
 				CalPointOne = FromBigEndianArray(data.ToArray(), 9);
@@ -285,7 +291,7 @@ namespace Sensit.App.Programmer
 				data.Add((byte)DeviceIDValidity);
 				data.Add((byte)SensorType);
 				data.Add(0);
-				data.Add((byte)RecordFormat);
+				data.Add(RecordFormat);
 				data.AddRange(new List<byte> { 0, 0, 0 });
 				data.Add((byte)(Year >> 8));
 				data.Add((byte)(Year & 0xFF));
@@ -522,6 +528,16 @@ namespace Sensit.App.Programmer
 			}
 
 			return bytes;
+		}
+
+		private static List<byte> ToBigEndianArray(byte[] value)
+		{
+			if (BitConverter.IsLittleEndian)
+			{
+				value.Reverse();
+			}
+
+			return value.ToList();
 		}
 
 		private static List<byte> ToBigEndianArray(ushort value)
