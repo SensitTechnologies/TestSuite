@@ -340,7 +340,7 @@ namespace Sensit.App.GPS
 				toolStripProgressBar.Maximum = (int)Properties.Settings.Default.Timeout;
 
 				// Open the serial port (and let it know what serial port to use).
-				//gpsDevice.Open(Properties.Settings.Default.Port);
+				gpsDevice.Open(Properties.Settings.Default.Port);
 
 				// Update the user interface.
 				groupBoxSettings.Enabled = false;
