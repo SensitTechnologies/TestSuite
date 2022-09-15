@@ -10,8 +10,11 @@ namespace Sensit.App.Programmer
 	public class SensorDataLibrary
 	{
 		#region Constants
+
+		//EEPROM's page size 
 		public static readonly ushort PAGE_SIZE = 64;
 
+		//Byte address locations for each record type
 		public static readonly ushort ADDRESS_BASE_RECORD = (ushort)(0 * PAGE_SIZE);
 		public static readonly ushort ADDRESS_DEVICE_ID = (ushort)(4 * PAGE_SIZE);
 		public static readonly ushort ADDRESS_MANUFACTURING_ID = (ushort)(5 * PAGE_SIZE);
@@ -71,6 +74,9 @@ namespace Sensit.App.Programmer
 
 		#region BaseRecordClasses
 
+		/// <summary>
+		/// Abstract class for shared values between sensor record formats.
+		/// </summary>
 		public abstract class BaseRecord
 		{
 			public Validity BaseRecordValidity { get; set; } = Validity.Valid; //1 byte
@@ -90,10 +96,23 @@ namespace Sensit.App.Programmer
 			public int ZeroMax { get; set; } = 0; //4 byte. VARIABLE: Format0 = 0. Format2 = 26000.
 			public int ZeroMin { get; set; } = 0; //4 byte. VARIABLE: Format0 = 0. Format2 = 26000.
 
+			/// <summary>
+			/// Get info from Sensor Data Library to put onto EEPROM.
+			/// </summary>
+			/// <returns>List of bytes to program onto EEPROM.</returns>
 			public abstract List<byte> GetBytes();
+
+			/// <summary>
+			/// Get info from EEPROM to set variables in Sensor Data Library.
+			/// </summary>
+			/// <param name="data">List of bytes from EEPROM</param>
 			public abstract void SetBytes(List<byte> data);
 		}
 
+		/// <summary>
+		/// Record Library for sensors with format 0.
+		/// (HCN, CO, H2S)
+		/// </summary>
 		public class BaseRecordFormat0 : BaseRecord
 		{
 			public int CalPointTwo { get; set; } = 0; //4 byte
@@ -176,6 +195,9 @@ namespace Sensit.App.Programmer
 			}
 		}
 
+		/// <summary>
+		/// Record Library for sensors with format 2 (O2)
+		/// </summary>
 		public class BaseRecordFormat2 : BaseRecord
 		{
 			public int MinSpan { get; set; } = 1000; //4 byte
@@ -185,10 +207,10 @@ namespace Sensit.App.Programmer
 			public override List<byte> GetBytes()
 			{
 				List<byte> data = new();
-				data.Add((byte)BaseRecordValidity); 
+				data.Add((byte)BaseRecordValidity);
 				data.Add((byte)SensorType);
 				data.Add(SensorRev);
-				data.Add(RecordFormat); 
+				data.Add(RecordFormat);
 				data.AddRange(ToBigEndianArray(CalScale));
 				data.Add(CalGasOne);
 				data.AddRange(ToBigEndianArray(CalPointOne));
@@ -264,11 +286,10 @@ namespace Sensit.App.Programmer
 		#region DeviceID
 
 		/// <summary>
-		/// Class for Device ID (page 4)
+		/// Class for Device ID (page 4 of EEPROM)
 		/// </summary>
 		public class DeviceID
 		{
-			//page 4 on the EEPROM
 			public Validity DeviceIDValidity { get; set; } = Validity.Valid;
 			public SensorType SensorType { get; set; }
 			public byte RecordFormat { get; set; }
@@ -284,6 +305,10 @@ namespace Sensit.App.Programmer
 			public ushort PointRelease { get; set; } = 0; //bytes 0x3A - 0x3B
 			public int Checksum { get; set; } //bytes 0x3C - 0x3F
 
+			/// <summary>
+			/// Get info from Sensor Data Library to put onto EEPROM.
+			/// </summary>
+			/// <returns>List of bytes to program onto EEPROM.</returns>
 			public List<byte> GetBytes()
 			{
 				List<byte> data = new();
@@ -320,7 +345,11 @@ namespace Sensit.App.Programmer
 
 				return data;
 			}
-			
+
+			/// <summary>
+			/// Get info from EEPROM to set variables in Sensor Data Library.
+			/// </summary>
+			/// <param name="data">List of bytes from EEPROM</param>
 			public void SetBytes(List<byte> data)
 			{
 				DeviceIDValidity = (Validity)data[0];
@@ -362,7 +391,6 @@ namespace Sensit.App.Programmer
 		/// </summary>
 		public class ManufactureID
 		{
-			//page 5 on the EEPROM
 			public Validity Validity { get; set; } = Validity.Valid;
 			public SensorType SensorType { get; set; } //Variable
 			public byte RecordFormat { get; set; }
@@ -375,6 +403,10 @@ namespace Sensit.App.Programmer
 			public ushort PointRelease { get; set; } = 0;
 			public int CheckSum { get; set; } //Calculation
 
+			/// <summary>
+			/// Get info from Sensor Data Library to put onto EEPROM.
+			/// </summary>
+			/// <returns>List of bytes to program onto EEPROM.</returns>
 			public List<byte> GetBytes()
 			{
 				List<byte> data = new();
@@ -388,7 +420,7 @@ namespace Sensit.App.Programmer
 				data.Add(Day);
 				data.AddRange(new List<byte> { 0, 0, 0, 0, 0 });
 				data.AddRange(ToBigEndianArray(SerialNumber));
-				data.AddRange(new List<byte> { 0,0,0,0,0,0});
+				data.AddRange(new List<byte> { 0, 0, 0, 0, 0, 0 });
 				data.AddRange(ToBigEndianArray(Issue));
 				data.AddRange(ToBigEndianArray(Revision));
 				data.AddRange(ToBigEndianArray((PointRelease)));
@@ -405,10 +437,14 @@ namespace Sensit.App.Programmer
 				return data;
 			}
 
+			/// <summary>
+			/// Get info from EEPROM to set variables in Sensor Data Library.
+			/// </summary>
+			/// <param name="data">List of bytes from EEPROM</param>
 			public void SetBytes(List<byte> data)
 			{
 				Validity = (Validity)data[0];
-				SensorType = (SensorType) data[1];
+				SensorType = (SensorType)data[1];
 				RecordFormat = data[3];
 				Year = (ushort)((data[7] << 8) + data[8]);
 				Month = data[9];
@@ -428,6 +464,7 @@ namespace Sensit.App.Programmer
 		#endregion
 
 		#region Methods
+
 		/// <summary>
 		/// Calculate the checksum.
 		/// </summary>
@@ -498,6 +535,12 @@ namespace Sensit.App.Programmer
 			return (crcReceived == crcCalc);
 		}
 
+		/// <summary>
+		/// Switch info gotten from G3 to LittleEndianArray
+		/// </summary>
+		/// <param name="data">byte list of data</param>
+		/// <param name="startIndex">int address of data</param>
+		/// <returns>int of converted values from data</returns>
 		private static int FromBigEndianArray(byte[] data, int startIndex)
 		{
 			if (BitConverter.IsLittleEndian)
@@ -508,6 +551,12 @@ namespace Sensit.App.Programmer
 			return BitConverter.ToInt32(data, startIndex);
 		}
 
+		/// <summary>
+		/// Switch info gotten from G3 to LittleEndianArray
+		/// </summary>
+		/// <param name="data">byte list of data</param>
+		/// <param name="startIndex">int address of data</param>
+		/// <returns>ushort of converted values from data</returns>
 		private static ushort FromBigEndianArrayUshort(byte[] data, int startIndex)
 		{
 			if (BitConverter.IsLittleEndian)
@@ -518,6 +567,11 @@ namespace Sensit.App.Programmer
 			return (ushort)BitConverter.ToInt16(data, startIndex);
 		}
 
+		/// <summary>
+		/// Switch info gotten from Sensor Data Library to BigEndianArray for G3.
+		/// </summary>
+		/// <param name="value">value to switch into a big endian array</param>
+		/// <returns>Big endian list of bytes holding value</returns>
 		private static List<byte> ToBigEndianArray(int value)
 		{
 			List<byte> bytes = BitConverter.GetBytes(value).ToList();
@@ -530,6 +584,11 @@ namespace Sensit.App.Programmer
 			return bytes;
 		}
 
+		/// <summary>
+		/// Switch info gotten from Sensor Data Library to BigEndianArray for G3.
+		/// </summary>
+		/// <param name="value">value to switch into a big endian array</param>
+		/// <returns>Big endian list of bytes holding value</returns>
 		private static List<byte> ToBigEndianArray(byte[] value)
 		{
 			if (BitConverter.IsLittleEndian)
@@ -540,6 +599,11 @@ namespace Sensit.App.Programmer
 			return value.ToList();
 		}
 
+		/// <summary>
+		/// Switch info gotten from Sensor Data Library to BigEndianArray for G3.
+		/// </summary>
+		/// <param name="value">value to switch into a big endian array</param>
+		/// <returns>Big endian list of bytes holding value</returns>
 		private static List<byte> ToBigEndianArray(ushort value)
 		{
 			List<byte> bytes = BitConverter.GetBytes(value).ToList();
@@ -552,12 +616,17 @@ namespace Sensit.App.Programmer
 			return bytes;
 		}
 
+		/// <summary>
+		/// Switch info gotten from Sensor Data Library to BigEndianArray for G3.
+		/// </summary>
+		/// <param name="value">value to switch into a big endian array</param>
+		/// <returns>Big endian list of bytes holding value</returns>
 		private static List<byte> ToBigEndianArray(string value)
 		{
-			List<byte> bytes = new (Encoding.ASCII.GetBytes(value)); 
+			List<byte> bytes = new(Encoding.ASCII.GetBytes(value));
 
 			//Serial Number is the only string in the library. Add bytes until it is the correct size.
-			while(bytes.Count != 32) 
+			while (bytes.Count != 32)
 			{
 				bytes.Insert(0, 0);
 			}
@@ -567,10 +636,6 @@ namespace Sensit.App.Programmer
 
 		#endregion
 	}
-
-
-
-	
 }
 
 

@@ -154,7 +154,7 @@ namespace Sensit.TestSDK.Devices
 			{
 				List<byte> addr = new() { (byte)(address >> 8), ((byte)address) };
 				eepromData.AddRange(I2CWriteThenRead(EEPROM_I2C_ADDRESS, addr, 64));
-				address+=64;
+				address += 64;
 				length -= 64;
 
 				//need the ms time in between or there will be an ack error (3)
@@ -199,7 +199,7 @@ namespace Sensit.TestSDK.Devices
 				AardvarkI2cFlags.AA_I2C_NO_FLAGS, (ushort)writeData.Count, writeData.ToArray(), ref numWritten, readLength, readData, ref num_read);
 
 			//Status AA_OK == 0
-			if (status < 0) 
+			if (status < 0)
 			{
 				throw new DeviceCommandFailedException("Could not read from Aardvark.");
 			}
@@ -221,7 +221,7 @@ namespace Sensit.TestSDK.Devices
 		/// <param name="address">address to start writing on</param>
 		/// <param name="data">data to write</param>
 		private void I2CWrite(ushort address, List<byte> data)
-		{               
+		{
 			ushort written = 0;
 
 			int status = AardvarkApi.aa_i2c_write_ext(Aardvark, address, AardvarkI2cFlags.AA_I2C_NO_FLAGS, (ushort)data.Count, data.ToArray(), ref written);
