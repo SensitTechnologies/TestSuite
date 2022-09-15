@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Sensit.TestSDK.Exceptions;
 
 namespace Sensit.TestSDK.Devices
@@ -236,6 +237,9 @@ namespace Sensit.TestSDK.Devices
 				Close();
 				throw new DeviceCommunicationException("Could not write to EEPROM");
 			}
+
+			//Waiting for write to complete.
+			Thread.Sleep(5);
 		}
 
 		/// <summary>
