@@ -354,9 +354,9 @@ namespace Sensit.App.Programmer
 				DeviceIDValidity = (Validity)data[0];
 				SensorType = (SensorType)data[1];
 				RecordFormat = data[3];
-				Day = FromBigEndianArrayUshort(data.ToArray(), 7);
-				Month = FromBigEndianArrayUshort(data.ToArray(), 9);
-				Year = FromBigEndianArray(data.ToArray(), 11);
+				Day = DigitsIntoUshort(data.ToArray(), 7);
+				Month = DigitsIntoUshort(data.ToArray(), 9);
+				Year = DigitsIntoInt(data.ToArray(), 11);
 
 				byte[] serialNumberArray = data.GetRange(16, 32).ToArray();
 
@@ -440,9 +440,9 @@ namespace Sensit.App.Programmer
 				Validity = (Validity)data[0];
 				SensorType = (SensorType)data[1];
 				RecordFormat = data[3];
-				Day = FromBigEndianArrayUshort(data.ToArray(), 7);
-				Month = FromBigEndianArrayUshort(data.ToArray(), 9);
-				Year = FromBigEndianArray(data.ToArray(), 11);
+				Day = DigitsIntoUshort(data.ToArray(), 7);
+				Month = DigitsIntoUshort(data.ToArray(), 9);
+				Year = DigitsIntoInt(data.ToArray(), 11);
 				SerialNumber = Encoding.UTF8.GetString(data.ToArray(), 16, 32);
 				Issue = FromBigEndianArrayUshort(data.ToArray(), 50);
 				Revision = FromBigEndianArrayUshort(data.ToArray(), 52);
@@ -623,6 +623,23 @@ namespace Sensit.App.Programmer
 				digits.Insert(0, 0);
 			}
 			return digits;
+		}
+
+		private static ushort DigitsIntoUshort(byte[] digits, int startIndex)
+		{
+			string s = $"{digits[startIndex]}{digits[startIndex + 1]}";
+
+			ushort output = UInt16.Parse(s);
+
+			return output;
+		}
+		private static int DigitsIntoInt(byte[] digits, int startIndex)
+		{
+			string s = $"{digits[startIndex]}{digits[startIndex + 1]}{digits[startIndex + 2]}{digits[startIndex + 3]}";
+
+			int output = Int32.Parse(s);
+
+			return output;
 		}
 
 		#endregion

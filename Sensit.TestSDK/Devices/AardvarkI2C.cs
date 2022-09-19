@@ -237,7 +237,7 @@ namespace Sensit.TestSDK.Devices
 			}
 
 			//Pause
-			AardvarkApi.aa_sleep_ms(5);
+			AardvarkApi.aa_sleep_ms(100);
 
 			return readData.ToList();
 		}
