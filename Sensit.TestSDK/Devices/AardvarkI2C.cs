@@ -10,11 +10,6 @@ namespace Sensit.TestSDK.Devices
 	/// </summary>
 	public class AardvarkI2C
 	{
-		/* NOTE: Sleeps are being added to all Aardvark methods. When running the programmer without stepping through 
-		 * to slow the program down, the Aardvark consistently throws errors in all methods. Changes to try and optimize 
-		 * code do not help with the issue. So for now, I am assuming it is an error with the Aardvark itself. 
-		 */
-
 		#region Fields
 
 		private int Aardvark;

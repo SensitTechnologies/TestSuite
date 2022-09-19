@@ -175,7 +175,7 @@ namespace Sensit.App.Programmer
 
 		#region Programmer Commands
 
-		//Create object of aardvark.
+		//Create an instance of aardvark.
 		AardvarkI2C aardvarkI2C = new();
 
 		/// <summary>
@@ -333,6 +333,7 @@ namespace Sensit.App.Programmer
 				SerialNumber = serialNumber
 			};
 
+			//Set record format based off of sensor type.
 			if (sensorType == SensorDataLibrary.SensorType.Oxygen)
 			{
 				deviceID.RecordFormat = 2;
@@ -374,6 +375,7 @@ namespace Sensit.App.Programmer
 				SerialNumber = serialNumber
 			};
 
+			//Set record format based off of sensor type.
 			if (sensorType == SensorDataLibrary.SensorType.Oxygen)
 			{
 				manufactureID.RecordFormat = 2;
