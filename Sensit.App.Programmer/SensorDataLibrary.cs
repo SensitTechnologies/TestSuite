@@ -214,7 +214,9 @@ namespace Sensit.App.Programmer
 				data.Add((byte)SensorType);
 				data.Add(SensorRev);
 				data.Add(RecordFormat);
-				data.AddRange(ToBigEndianArray(CalScale));
+				List<byte> flippedCalScale = new(ToBigEndianArray(CalScale));
+				flippedCalScale.Reverse();
+				data.AddRange(flippedCalScale);
 				data.Add(CalGasOne);
 				data.AddRange(ToBigEndianArray(CalPointOne));
 				data.AddRange(ToBigEndianArray(CalMaxOne));
