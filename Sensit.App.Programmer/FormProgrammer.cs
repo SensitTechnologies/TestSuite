@@ -50,6 +50,9 @@ namespace Sensit.App.Programmer
 		{
 			// Update the user interface.
 			ClearStatus();
+			buttonWrite.Enabled = false;
+			buttonRead.Enabled = false;
+			textBoxBarcode.Enabled = false;
 
 			try
 			{
@@ -91,6 +94,9 @@ namespace Sensit.App.Programmer
 				// Alert user that a sensor failed.
 				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 			}
+			//Update user interface
+			buttonWrite.Enabled = true;
+			buttonRead.Enabled = true;
 
 			// Update barcode textbox and give focus to it.
 			textBoxBarcode.Text = "";
@@ -107,6 +113,9 @@ namespace Sensit.App.Programmer
 		{
 			// Update the user interface.
 			ClearStatus();
+			buttonWrite.Enabled = false;
+			buttonRead.Enabled = false;
+			textBoxBarcode.Enabled = false;
 
 			try
 			{
@@ -154,6 +163,9 @@ namespace Sensit.App.Programmer
 				// Alert user that a sensor failed.
 				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 			}
+			//Update user interface
+			buttonWrite.Enabled = true;
+			buttonRead.Enabled = true;
 
 			// Update barcode textbox and give focus to it.
 			textBoxBarcode.Text = "";
@@ -321,6 +333,15 @@ namespace Sensit.App.Programmer
 				SerialNumber = serialNumber
 			};
 
+			if (sensorType == SensorDataLibrary.SensorType.Oxygen)
+			{
+				deviceID.RecordFormat = 2;
+			}
+			else
+			{
+				deviceID.RecordFormat = 0;
+			}
+
 			//Write Device ID to EEPROM
 			aardvarkI2C.EepromWrite(SensorDataLibrary.ADDRESS_DEVICE_ID, deviceID.GetBytes());
 		}
@@ -352,6 +373,15 @@ namespace Sensit.App.Programmer
 				Day = ushort.Parse(date.Substring(2, 2)),
 				SerialNumber = serialNumber
 			};
+
+			if (sensorType == SensorDataLibrary.SensorType.Oxygen)
+			{
+				manufactureID.RecordFormat = 2;
+			}
+			else
+			{
+				manufactureID.RecordFormat = 0;
+			}
 
 			// Add serial number to form
 			textBoxSerialNumber.Text += Environment.NewLine + serialNumber;

@@ -222,19 +222,19 @@ namespace Sensit.App.Programmer
 				data.AddRange(ToBigEndianArray(CalMaxOne));
 				data.AddRange(ToBigEndianArray(CalMinOne));
 				data.Add(CalGasTwo);
-				data.AddRange(ToBigEndianArray(MinSpan));
+				data.AddRange(ToBigEndianArray(MinSpan)); //flip
 
 				//9 unused bytes
 				data.AddRange(new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 });
 
-				data.AddRange(BitConverter.GetBytes(ZeroCalibration));
+				data.AddRange(ToBigEndianArray(ZeroCalibration));
 				data.Add(Day);
 				data.Add(Month);
 				data.AddRange(ToBigEndianArray(Year));
 				data.Add(0);
 				data.AddRange(ToBigEndianArray(AutoZero));
-				data.AddRange(ToBigEndianArray(ZeroMax));
-				data.AddRange(ToBigEndianArray(ZeroMin));
+				data.AddRange(ToBigEndianArray(ZeroMax)); //flip
+				data.AddRange(ToBigEndianArray(ZeroMin)); //flip
 				data.Add(0);
 
 				// Generate a checksum (then convert to byte array).
@@ -318,8 +318,8 @@ namespace Sensit.App.Programmer
 				data.Add(0);
 				data.Add(RecordFormat);
 				data.AddRange(new List<byte> { 0, 0, 0 });
-				data.AddRange(BreakIntIntoDigits(Day));
-				data.AddRange(BreakIntIntoDigits(Month));
+				data.AddRange(BreakIntoDigitsUshort(Day));
+				data.AddRange(BreakIntoDigitsUshort(Month));
 				data.AddRange(BreakIntoDigits(Year));
 				data.Add(0);
 				data.AddRange(ToBigEndianArray(SerialNumber));
@@ -409,8 +409,8 @@ namespace Sensit.App.Programmer
 				data.Add(0);
 				data.Add(RecordFormat);
 				data.AddRange(new List<byte> { 0, 0, 0 });
-				data.AddRange(BreakIntIntoDigits(Day));
-				data.AddRange(BreakIntIntoDigits(Month));
+				data.AddRange(BreakIntoDigitsUshort(Day));
+				data.AddRange(BreakIntoDigitsUshort(Month));
 				data.AddRange(BreakIntoDigits(Year));
 				data.Add(0);
 				data.AddRange(ToBigEndianArray(SerialNumber));
@@ -560,14 +560,12 @@ namespace Sensit.App.Programmer
 		{
 			List<byte> bytes = BitConverter.GetBytes(value).ToList();
 
-			byte[] redoneBytes = new byte[4];
+			if (BitConverter.IsLittleEndian)
+			{
+				bytes.Reverse();
+			}
 
-			redoneBytes[0] = bytes[0];
-			redoneBytes[1] = bytes[1];
-			redoneBytes[2] = bytes[2];
-			redoneBytes[3] = bytes[3];
-
-			return redoneBytes.ToList();
+			return bytes.ToList();
 		}
 
 		/// <summary>
@@ -605,6 +603,11 @@ namespace Sensit.App.Programmer
 			return bytes;
 		}
 
+		/// <summary>
+		/// Breaks Integer into a byte list of its digits
+		/// </summary>
+		/// <param name="value">integer to parse</param>
+		/// <returns>byte array of digits</returns>
 		private static List<byte> BreakIntoDigits(int value)
 		{
 			List<byte> digits = new List<byte>(value.ToString().Select(t => byte.Parse(t.ToString())));
@@ -615,16 +618,27 @@ namespace Sensit.App.Programmer
 			return digits;
 		}
 
-		private static List<byte> BreakIntIntoDigits(ushort value)
+		/// <summary>
+		/// Breaks Ushort into a byte list of its digits
+		/// </summary>
+		/// <param name="value">ushort to parse</param>
+		/// <returns>byte array of digits</returns>
+		private static List<byte> BreakIntoDigitsUshort(ushort value)
 		{
 			List<byte> digits = new List<byte>(value.ToString().Select(t => byte.Parse(t.ToString())));
-			while (digits.Count < 2) 
-			{ 
+			while (digits.Count < 2)
+			{
 				digits.Insert(0, 0);
 			}
 			return digits;
 		}
 
+		/// <summary>
+		/// Takes an array of 2 digits and converts them into a ushort.
+		/// </summary>
+		/// <param name="digits">byte array to take digits from</param>
+		/// <param name="startIndex">starting index in digits to parse</param>
+		/// <returns>ushort from specified bytes</returns>
 		private static ushort DigitsIntoUshort(byte[] digits, int startIndex)
 		{
 			string s = $"{digits[startIndex]}{digits[startIndex + 1]}";
@@ -633,6 +647,13 @@ namespace Sensit.App.Programmer
 
 			return output;
 		}
+
+		/// <summary>
+		/// Takes an array of 4 digits and converts them into an integer.
+		/// </summary>
+		/// <param name="digits">byte array to take digits from</param>
+		/// <param name="startIndex">starting index in digits to parse</param>
+		/// <returns>integer from specified bytes</returns>
 		private static int DigitsIntoInt(byte[] digits, int startIndex)
 		{
 			string s = $"{digits[startIndex]}{digits[startIndex + 1]}{digits[startIndex + 2]}{digits[startIndex + 3]}";
