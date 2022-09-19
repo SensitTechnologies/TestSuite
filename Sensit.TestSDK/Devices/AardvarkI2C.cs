@@ -11,6 +11,11 @@ namespace Sensit.TestSDK.Devices
 	/// </summary>
 	public class AardvarkI2C
 	{
+		/* NOTE: Sleeps are being added to all Aardvark methods. When running the programmer without stepping through 
+		 * to slow the program down, the Aardvark consistently throws errors in all methods. Changes to try and optimize 
+		 * code do not help with the issue. So for now, I am assuming it is an error with the Aardvark itself. 
+		 */
+
 		#region Fields
 
 		private int Aardvark;
@@ -34,6 +39,9 @@ namespace Sensit.TestSDK.Devices
 				throw new DeviceCommunicationException("Could not find Aardvark." + Environment.NewLine + "Is it plugged in?");
 			}
 
+			//Pause
+			AardvarkApi.aa_sleep_ms(1);
+
 			if ((devices[0] & (0x8000)) == 0x8000)
 			{
 				throw new DeviceCommunicationException("Aardvark already in use.");
@@ -47,6 +55,9 @@ namespace Sensit.TestSDK.Devices
 				throw new DeviceCommunicationException("Could not open Aardvark. Try unplugging and replugging it in.");
 			}
 
+			//Pause
+			AardvarkApi.aa_sleep_ms(1);
+
 			// Ensure that the I2C subsystem is enabled
 			int status = AardvarkApi.aa_configure(Aardvark, AardvarkConfig.AA_CONFIG_SPI_I2C);
 			if (status < 0)
@@ -54,6 +65,9 @@ namespace Sensit.TestSDK.Devices
 				Close();
 				throw new DeviceCommunicationException("Could not configure Aardvark for I2C.");
 			}
+
+			//Pause
+			AardvarkApi.aa_sleep_ms(1);
 
 			// This command is only effective on v2.0 hardware or greater.
 			// The power pins on the v1.02 hardware are not enabled by default.
@@ -69,6 +83,9 @@ namespace Sensit.TestSDK.Devices
 				throw new DeviceCommunicationException("Could not configure Aardvark pull-up resistors.");
 			}
 
+			//Pause
+			AardvarkApi.aa_sleep_ms(1);
+
 			// Set the bitrate the number is amount in kHz
 			status = AardvarkApi.aa_i2c_bitrate(Aardvark, 400);
 			if (status < 0)
@@ -76,6 +93,9 @@ namespace Sensit.TestSDK.Devices
 				Close();
 				throw new DeviceCommunicationException("Could not set Aardvark's bitrate.");
 			}
+
+			//Pause
+			AardvarkApi.aa_sleep_ms(1);
 		}
 
 		/// <summary>
@@ -83,7 +103,9 @@ namespace Sensit.TestSDK.Devices
 		/// </summary>
 		public void Close()
 		{
-			int status = AardvarkApi.aa_close(Aardvark);
+			AardvarkApi.aa_close(Aardvark);
+			//Pause
+			AardvarkApi.aa_sleep_ms(1);
 		}
 
 		/// <summary>
@@ -101,6 +123,8 @@ namespace Sensit.TestSDK.Devices
 				Close();
 				throw new DeviceCommunicationException("Could not turn Aardvark power on.");
 			}
+			//Pause
+			AardvarkApi.aa_sleep_ms(1);
 
 			//Attempt to Write to the EEPROM
 			List<byte> page = new();
@@ -129,6 +153,9 @@ namespace Sensit.TestSDK.Devices
 				Close();
 				throw new DeviceCommunicationException("Could not turn Aardvark power off.");
 			}
+
+			//Pause
+			AardvarkApi.aa_sleep_ms(1);
 		}
 
 		/// <summary>
@@ -147,6 +174,9 @@ namespace Sensit.TestSDK.Devices
 				throw new DeviceCommunicationException("Could not turn Aardvark power on.");
 			}
 
+			//Pause
+			AardvarkApi.aa_sleep_ms(1);
+
 			//List of bytes to return
 			List<byte> eepromData = new();
 
@@ -156,18 +186,12 @@ namespace Sensit.TestSDK.Devices
 				eepromData.AddRange(I2CWriteThenRead(EEPROM_I2C_ADDRESS, addr, 64));
 				address += 64;
 				length -= 64;
-
-				//need the ms time in between or there will be an ack error (3)
-				AardvarkApi.aa_sleep_ms(1);
 			}
 
 			if (length > 0)
 			{
 				List<byte> addr = new() { (byte)(address >> 8), ((byte)address) };
 				eepromData.AddRange(I2CWriteThenRead(EEPROM_I2C_ADDRESS, addr, length));
-
-				//need the ms time in between or there will be an ack error (3)
-				AardvarkApi.aa_sleep_ms(1);
 			}
 
 			status = AardvarkApi.aa_target_power(Aardvark, AardvarkApi.AA_TARGET_POWER_NONE);
@@ -212,6 +236,9 @@ namespace Sensit.TestSDK.Devices
 				throw new DeviceCommandFailedException("Number of data read from Aardvark is incorrect.");
 			}
 
+			//Pause
+			AardvarkApi.aa_sleep_ms(5);
+
 			return readData.ToList();
 		}
 
@@ -239,7 +266,7 @@ namespace Sensit.TestSDK.Devices
 			}
 
 			//Waiting for write to complete.
-			Thread.Sleep(5);
+			AardvarkApi.aa_sleep_ms(10);
 		}
 
 		/// <summary>

@@ -236,7 +236,7 @@ namespace Sensit.App.Programmer
 					textBoxSensorType.Text = "O2";
 					SensorDataLibrary.BaseRecordFormat2 oxygenBaseRecord = new();
 					oxygenBaseRecord.SensorRev = 1;
-					oxygenBaseRecord.CalScale = 0;
+					oxygenBaseRecord.CalScale = SensorDataLibrary.CAL_SCALE_OXYGEN;
 					oxygenBaseRecord.ZeroCalibration = 19699;
 					oxygenBaseRecord.SensorType = SensorDataLibrary.SensorType.Oxygen;
 					oxygenBaseRecord.ZeroMax = SensorDataLibrary.ZERO_MAX_OXYGEN;
@@ -250,9 +250,6 @@ namespace Sensit.App.Programmer
 					carbonMonoxideBaseRecord.SensorType = SensorDataLibrary.SensorType.CarbonMonoxide;
 					carbonMonoxideBaseRecord.CalScale = SensorDataLibrary.CARBONMONOXIDE_CAL_SCALE;
 					carbonMonoxideBaseRecord.CalPointOne = SensorDataLibrary.CARBONMONOXIDE_CAL_POINT_ONE;
-					carbonMonoxideBaseRecord.AutoZero = 1;
-					carbonMonoxideBaseRecord.ZeroMax = 2;
-					carbonMonoxideBaseRecord.ZeroMin = 3;
 					returnData.AddRange((carbonMonoxideBaseRecord.GetBytes()));
 					break;
 				case SensorDataLibrary.SensorType.HydrogenSulfide:
@@ -318,9 +315,9 @@ namespace Sensit.App.Programmer
 			SensorDataLibrary.DeviceID deviceID = new()
 			{
 				SensorType = sensorType,
-				Year = ushort.Parse(date.Substring(4, 4)),
-				Month = byte.Parse(date[..2]),
-				Day = byte.Parse(date.Substring(2, 2)),
+				Year = int.Parse(date.Substring(4, 4)),
+				Month = ushort.Parse(date[..2]),
+				Day = ushort.Parse(date.Substring(2, 2)),
 				SerialNumber = serialNumber
 			};
 
@@ -350,9 +347,9 @@ namespace Sensit.App.Programmer
 			SensorDataLibrary.ManufactureID manufactureID = new()
 			{
 				SensorType = sensorType,
-				Year = ushort.Parse(date.Substring(4, 4)),
-				Month = byte.Parse(date[..2]),
-				Day = byte.Parse(date.Substring(2, 2)),
+				Year = int.Parse(date.Substring(4, 4)),
+				Month = ushort.Parse(date[..2]),
+				Day = ushort.Parse(date.Substring(2, 2)),
 				SerialNumber = serialNumber
 			};
 
