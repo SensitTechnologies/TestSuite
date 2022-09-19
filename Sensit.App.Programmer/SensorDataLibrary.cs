@@ -222,7 +222,7 @@ namespace Sensit.App.Programmer
 				data.AddRange(ToBigEndianArray(CalMaxOne));
 				data.AddRange(ToBigEndianArray(CalMinOne));
 				data.Add(CalGasTwo);
-				data.AddRange(ToBigEndianArray(MinSpan)); //flip
+				data.AddRange(ToBigEndianArray(MinSpan));
 
 				//9 unused bytes
 				data.AddRange(new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 });
@@ -233,8 +233,8 @@ namespace Sensit.App.Programmer
 				data.AddRange(ToBigEndianArray(Year));
 				data.Add(0);
 				data.AddRange(ToBigEndianArray(AutoZero));
-				data.AddRange(ToBigEndianArray(ZeroMax)); //flip
-				data.AddRange(ToBigEndianArray(ZeroMin)); //flip
+				data.AddRange(ToBigEndianArray(ZeroMax));
+				data.AddRange(ToBigEndianArray(ZeroMin));
 				data.Add(0);
 
 				// Generate a checksum (then convert to byte array).
