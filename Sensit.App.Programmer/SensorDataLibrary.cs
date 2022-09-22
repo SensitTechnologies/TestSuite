@@ -22,6 +22,7 @@ namespace Sensit.App.Programmer
 		//Oxygen Sensor
 		public static readonly int ZERO_MAX_OXYGEN = 26000;
 		public static readonly int ZERO_MIN_OXYGEN = 22000;
+		public static readonly int CAL_SCALE_OXYGEN = 0;
 
 		//Carbon Monoxide Sensor
 		public static readonly int CARBONMONOXIDE_CAL_SCALE = 0x36C90;
@@ -79,22 +80,22 @@ namespace Sensit.App.Programmer
 		/// </summary>
 		public abstract class BaseRecord
 		{
-			public Validity BaseRecordValidity { get; set; } = Validity.Valid; //1 byte
-			public SensorType SensorType { get; set; } //1 byte VARIABLE
-			public byte SensorRev { get; set; } = 1; //1 byte
-			public abstract byte RecordFormat { get; set; } //1 byte. Number variable
-			public int CalScale { get; set; } //4 byte VARIABLE
-			public byte CalGasOne { get; set; } = 0; //1 byte
-			public int CalPointOne { get; set; } //4 byte VARIABLE: only not zero is on CO sensor
-			public int CalMaxOne { get; set; } = 0; //4 byte
-			public int CalMinOne { get; set; } = 0; //4 byte
-			public byte CalGasTwo { get; set; } = 0; //1 byte  
+			public Validity BaseRecordValidity { get; set; } = Validity.Valid; 
+			public SensorType SensorType { get; set; }
+			public byte SensorRev { get; set; } = 1;
+			public abstract byte RecordFormat { get; set; }
+			public int CalScale { get; set; } 
+			public byte CalGasOne { get; set; } = 0;
+			public int CalPointOne { get; set; } 
+			public int CalMaxOne { get; set; } = 0; 
+			public int CalMinOne { get; set; } = 0; 
+			public byte CalGasTwo { get; set; } = 0;  
 			public ushort Year { get; set; } = 0x0014;
 			public byte Month { get; set; } = 0x03;
 			public byte Day { get; set; } = 0x02;
-			public int AutoZero { get; set; } = 0; //4 byte
-			public int ZeroMax { get; set; } = 0; //4 byte. VARIABLE: Format0 = 0. Format2 = 26000.
-			public int ZeroMin { get; set; } = 0; //4 byte. VARIABLE: Format0 = 0. Format2 = 26000.
+			public int AutoZero { get; set; } = 0; 
+			public int ZeroMax { get; set; } = 0;
+			public int ZeroMin { get; set; } = 0;
 
 			/// <summary>
 			/// Get info from Sensor Data Library to put onto EEPROM.
@@ -115,10 +116,10 @@ namespace Sensit.App.Programmer
 		/// </summary>
 		public class BaseRecordFormat0 : BaseRecord
 		{
-			public int CalPointTwo { get; set; } = 0; //4 byte
-			public int CalMaxTwo { get; set; } = 0; //4 byte
-			public int CalMinTwo { get; set; } = 0; //4 byte
-			public byte CalGasThree { get; set; } = 0; //Only CO has define. 00
+			public int CalPointTwo { get; set; } = 0; 
+			public int CalMaxTwo { get; set; } = 0;
+			public int CalMinTwo { get; set; } = 0;
+			public byte CalGasThree { get; set; } = 0;
 			public override byte RecordFormat { get; set; } = 0;
 
 			public override List<byte> GetBytes()
@@ -128,7 +129,12 @@ namespace Sensit.App.Programmer
 				data.Add((byte)SensorType);
 				data.Add(SensorRev);
 				data.Add(RecordFormat);
-				data.AddRange(ToBigEndianArray(CalScale));
+				
+				//Flip CalScale value so it is written in the correct order.
+				List<byte> flippedCalScale = new(ToBigEndianArray(CalScale));
+				flippedCalScale.Reverse();
+				data.AddRange(flippedCalScale);
+
 				data.Add(CalGasOne);
 				data.AddRange(ToBigEndianArray(CalPointOne));
 				data.AddRange(ToBigEndianArray(CalMaxOne));
@@ -141,9 +147,8 @@ namespace Sensit.App.Programmer
 				data.AddRange(new List<byte> { 0, 0, 0, 0, 0, 0, 0 });
 				data.Add(Day);
 				data.Add(Month);
-				data.Add((byte)(Year >> 8));
-				data.Add((byte)(Year & 0xFF));			
-				data.Add((byte)0);
+				data.AddRange(ToBigEndianArray(Year));
+				data.Add(0);
 				data.AddRange(ToBigEndianArray(AutoZero));
 				data.AddRange(ToBigEndianArray(ZeroMax));
 				data.AddRange(ToBigEndianArray(ZeroMin));
@@ -200,7 +205,7 @@ namespace Sensit.App.Programmer
 		/// </summary>
 		public class BaseRecordFormat2 : BaseRecord
 		{
-			public int MinSpan { get; set; } = 1000; //4 byte
+			public int MinSpan { get; set; } = 1000;
 			public ushort ZeroCalibration { get; set; }
 			public override byte RecordFormat { get; set; } = 2;
 
@@ -211,7 +216,12 @@ namespace Sensit.App.Programmer
 				data.Add((byte)SensorType);
 				data.Add(SensorRev);
 				data.Add(RecordFormat);
-				data.AddRange(ToBigEndianArray(CalScale));
+
+				//Flip CalScale value so it is written in the correct order.
+				List<byte> flippedCalScale = new(ToBigEndianArray(CalScale));
+				flippedCalScale.Reverse();
+				data.AddRange(flippedCalScale);
+
 				data.Add(CalGasOne);
 				data.AddRange(ToBigEndianArray(CalPointOne));
 				data.AddRange(ToBigEndianArray(CalMaxOne));
@@ -222,12 +232,10 @@ namespace Sensit.App.Programmer
 				//9 unused bytes
 				data.AddRange(new List<byte> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 });
 
-				data.AddRange(BitConverter.GetBytes(ZeroCalibration));
-				
+				data.AddRange(ToBigEndianArray(ZeroCalibration));
 				data.Add(Day);
 				data.Add(Month);
-				data.Add((byte)(Year >> 8));
-				data.Add((byte)(Year & 0xFF));
+				data.AddRange(ToBigEndianArray(Year));
 				data.Add(0);
 				data.AddRange(ToBigEndianArray(AutoZero));
 				data.AddRange(ToBigEndianArray(ZeroMax));
@@ -290,9 +298,9 @@ namespace Sensit.App.Programmer
 			public Validity DeviceIDValidity { get; set; } = Validity.Valid;
 			public SensorType SensorType { get; set; }
 			public byte RecordFormat { get; set; }
-			public ushort Year { get; set; }
-			public byte Month { get; set; }
-			public byte Day { get; set; }
+			public ushort Day { get; set; }
+			public ushort Month { get; set; }
+			public int Year { get; set; }
 			public string SerialNumber { get; set; } //ASCII data
 			public ushort MaxExposure { get; set; } = 0; //bytes 0x30 - 0x31
 			public ushort MaxRange { get; set; } = 0; //bytes 0x32 - 0x33
@@ -315,11 +323,10 @@ namespace Sensit.App.Programmer
 				data.Add(0);
 				data.Add(RecordFormat);
 				data.AddRange(new List<byte> { 0, 0, 0 });
-				data.Add(Day);
-				data.Add(Month);
-				data.Add((byte)(Year >> 8));
-				data.Add((byte)(Year & 0xFF));
-				data.AddRange(new List<byte> { 0, 0, 0, 0, 0 });
+				data.AddRange(BreakIntoDigitsUshort(Day));
+				data.AddRange(BreakIntoDigitsUshort(Month));
+				data.AddRange(BreakIntoDigits(Year));
+				data.Add(0);
 				data.AddRange(ToBigEndianArray(SerialNumber));
 				data.AddRange(ToBigEndianArray(MaxExposure));
 				data.AddRange(ToBigEndianArray(MaxRange));
@@ -351,20 +358,11 @@ namespace Sensit.App.Programmer
 			{
 				DeviceIDValidity = (Validity)data[0];
 				SensorType = (SensorType)data[1];
-				RecordFormat = data[3]; //3 bytes
-										//datecode = 0
-				Day = data[7];
-				Month = data[8];
-				Year = (ushort)((data[9] << 10) + data[9]);
-
-				byte[] serialNumberArray = data.GetRange(16, 32).ToArray();
-
-				if (BitConverter.IsLittleEndian)
-				{
-					Array.Reverse(serialNumberArray);
-					SerialNumber = Encoding.UTF8.GetString(serialNumberArray);
-				}
-
+				RecordFormat = data[3];
+				Day = DigitsIntoUshort(data.ToArray(), 7);
+				Month = DigitsIntoUshort(data.ToArray(), 9);
+				Year = DigitsIntoInt(data.ToArray(), 11);
+				SerialNumber = Encoding.UTF8.GetString(data.ToArray(), 16, 32);
 				MaxExposure = FromBigEndianArrayUshort(data.ToArray(), 48);
 				MaxRange = FromBigEndianArrayUshort(data.ToArray(), 50);
 				MinRange = FromBigEndianArrayUshort(data.ToArray(), 52);
@@ -391,9 +389,9 @@ namespace Sensit.App.Programmer
 			public Validity Validity { get; set; } = Validity.Valid;
 			public SensorType SensorType { get; set; } //Variable
 			public byte RecordFormat { get; set; }
-			public ushort Year { get; set; }
-			public byte Month { get; set; }
-			public byte Day { get; set; }
+			public ushort Day { get; set; }
+			public ushort Month { get; set; }
+			public int Year { get; set; }
 			public string SerialNumber { get; set; } //ASCII data
 			public ushort Issue { get; set; } = 0;
 			public ushort Revision { get; set; } = 0;
@@ -412,16 +410,16 @@ namespace Sensit.App.Programmer
 				data.Add(0);
 				data.Add(RecordFormat);
 				data.AddRange(new List<byte> { 0, 0, 0 });
-				data.Add(Day);
-				data.Add(Month);
-				data.Add((byte)(Year >> 8));
-				data.Add((byte)(Year & 0xFF));
-				data.AddRange(new List<byte> { 0, 0, 0, 0, 0 });
+				data.AddRange(BreakIntoDigitsUshort(Day));
+				data.AddRange(BreakIntoDigitsUshort(Month));
+				data.AddRange(BreakIntoDigits(Year));
+				data.Add(0);
 				data.AddRange(ToBigEndianArray(SerialNumber));
 				data.AddRange(new List<byte> { 0, 0, 0, 0, 0, 0 });
 				data.AddRange(ToBigEndianArray(Issue));
 				data.AddRange(ToBigEndianArray(Revision));
 				data.AddRange(ToBigEndianArray((PointRelease)));
+
 				// Generate a checksum (then convert to byte array).
 				byte[] crc = BitConverter.GetBytes(CalcCRC(data));
 
@@ -444,9 +442,9 @@ namespace Sensit.App.Programmer
 				Validity = (Validity)data[0];
 				SensorType = (SensorType)data[1];
 				RecordFormat = data[3];
-				Day = data[7];
-				Month = data[8];
-				Year = (ushort)((data[9] << 10) + data[9]);
+				Day = DigitsIntoUshort(data.ToArray(), 7);
+				Month = DigitsIntoUshort(data.ToArray(), 9);
+				Year = DigitsIntoInt(data.ToArray(), 11);
 				SerialNumber = Encoding.UTF8.GetString(data.ToArray(), 16, 32);
 				Issue = FromBigEndianArrayUshort(data.ToArray(), 50);
 				Revision = FromBigEndianArrayUshort(data.ToArray(), 52);
@@ -541,11 +539,6 @@ namespace Sensit.App.Programmer
 		/// <returns>int of converted values from data</returns>
 		private static int FromBigEndianArray(byte[] data, int startIndex)
 		{
-			if (BitConverter.IsLittleEndian)
-			{
-				Array.Reverse(data);
-			}
-
 			return BitConverter.ToInt32(data, startIndex);
 		}
 
@@ -557,12 +550,7 @@ namespace Sensit.App.Programmer
 		/// <returns>ushort of converted values from data</returns>
 		private static ushort FromBigEndianArrayUshort(byte[] data, int startIndex)
 		{
-			if (BitConverter.IsLittleEndian)
-			{
-				Array.Reverse(data);
-			}
-
-			return (ushort)BitConverter.ToInt16(data, startIndex);
+			return BitConverter.ToUInt16(data, startIndex);
 		}
 
 		/// <summary>
@@ -574,29 +562,12 @@ namespace Sensit.App.Programmer
 		{
 			List<byte> bytes = BitConverter.GetBytes(value).ToList();
 
-			List<byte> redoneBytes = new();
-
-			redoneBytes[0] = bytes[0];
-			redoneBytes[1] = bytes[1];
-			redoneBytes[2] = bytes[2];
-			redoneBytes[3] = bytes[3];
-
-			return redoneBytes;
-		}
-
-		/// <summary>
-		/// Switch info gotten from Sensor Data Library to BigEndianArray for G3.
-		/// </summary>
-		/// <param name="value">value to switch into a big endian array</param>
-		/// <returns>Big endian list of bytes holding value</returns>
-		private static List<byte> ToBigEndianArray(byte[] value)
-		{
 			if (BitConverter.IsLittleEndian)
 			{
-				value.Reverse();
+				bytes.Reverse();
 			}
 
-			return value.ToList();
+			return bytes.ToList();
 		}
 
 		/// <summary>
@@ -628,10 +599,70 @@ namespace Sensit.App.Programmer
 			//Serial Number is the only string in the library. Add bytes until it is the correct size.
 			while (bytes.Count != 32)
 			{
-				bytes.Insert(0, 0);
+				bytes.Add(0);
 			}
 
 			return bytes;
+		}
+
+		/// <summary>
+		/// Breaks Integer into a byte list of its digits
+		/// </summary>
+		/// <param name="value">integer to parse</param>
+		/// <returns>byte array of digits</returns>
+		private static List<byte> BreakIntoDigits(int value)
+		{
+			List<byte> digits = new List<byte>(value.ToString().Select(t => byte.Parse(t.ToString())));
+			while (digits.Count < 4)
+			{
+				digits.Insert(0, 0);
+			}
+			return digits;
+		}
+
+		/// <summary>
+		/// Breaks Ushort into a byte list of its digits
+		/// </summary>
+		/// <param name="value">ushort to parse</param>
+		/// <returns>byte array of digits</returns>
+		private static List<byte> BreakIntoDigitsUshort(ushort value)
+		{
+			List<byte> digits = new List<byte>(value.ToString().Select(t => byte.Parse(t.ToString())));
+			while (digits.Count < 2)
+			{
+				digits.Insert(0, 0);
+			}
+			return digits;
+		}
+
+		/// <summary>
+		/// Takes an array of 2 digits and converts them into a ushort.
+		/// </summary>
+		/// <param name="digits">byte array to take digits from</param>
+		/// <param name="startIndex">starting index in digits to parse</param>
+		/// <returns>ushort from specified bytes</returns>
+		private static ushort DigitsIntoUshort(byte[] digits, int startIndex)
+		{
+			string s = $"{digits[startIndex]}{digits[startIndex + 1]}";
+
+			ushort output = UInt16.Parse(s);
+
+			return output;
+		}
+
+		/// <summary>
+		/// Takes an array of 4 digits and converts them into an integer.
+		/// </summary>
+		/// <param name="digits">byte array to take digits from</param>
+		/// <param name="startIndex">starting index in digits to parse</param>
+		/// <returns>integer from specified bytes</returns>
+		private static int DigitsIntoInt(byte[] digits, int startIndex)
+		{
+			string s = $"{digits[startIndex]}{digits[startIndex + 1]}{digits[startIndex + 2]}{digits[startIndex + 3]}";
+
+			int output = Int32.Parse(s);
+
+			return output;
 		}
 
 		#endregion

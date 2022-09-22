@@ -50,6 +50,9 @@ namespace Sensit.App.Programmer
 		{
 			// Update the user interface.
 			ClearStatus();
+			buttonWrite.Enabled = false;
+			buttonRead.Enabled = false;
+			textBoxBarcode.Enabled = false;
 
 			try
 			{
@@ -91,6 +94,9 @@ namespace Sensit.App.Programmer
 				// Alert user that a sensor failed.
 				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 			}
+			//Update user interface
+			buttonWrite.Enabled = true;
+			buttonRead.Enabled = true;
 
 			// Update barcode textbox and give focus to it.
 			textBoxBarcode.Text = "";
@@ -107,6 +113,9 @@ namespace Sensit.App.Programmer
 		{
 			// Update the user interface.
 			ClearStatus();
+			buttonWrite.Enabled = false;
+			buttonRead.Enabled = false;
+			textBoxBarcode.Enabled = false;
 
 			try
 			{
@@ -154,6 +163,9 @@ namespace Sensit.App.Programmer
 				// Alert user that a sensor failed.
 				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 			}
+			//Update user interface
+			buttonWrite.Enabled = true;
+			buttonRead.Enabled = true;
 
 			// Update barcode textbox and give focus to it.
 			textBoxBarcode.Text = "";
@@ -163,7 +175,7 @@ namespace Sensit.App.Programmer
 
 		#region Programmer Commands
 
-		//Create object of aardvark.
+		//Create an instance of aardvark.
 		AardvarkI2C aardvarkI2C = new();
 
 		/// <summary>
@@ -236,7 +248,7 @@ namespace Sensit.App.Programmer
 					textBoxSensorType.Text = "O2";
 					SensorDataLibrary.BaseRecordFormat2 oxygenBaseRecord = new();
 					oxygenBaseRecord.SensorRev = 1;
-					oxygenBaseRecord.CalScale = 0;
+					oxygenBaseRecord.CalScale = SensorDataLibrary.CAL_SCALE_OXYGEN;
 					oxygenBaseRecord.ZeroCalibration = 19699;
 					oxygenBaseRecord.SensorType = SensorDataLibrary.SensorType.Oxygen;
 					oxygenBaseRecord.ZeroMax = SensorDataLibrary.ZERO_MAX_OXYGEN;
@@ -250,9 +262,6 @@ namespace Sensit.App.Programmer
 					carbonMonoxideBaseRecord.SensorType = SensorDataLibrary.SensorType.CarbonMonoxide;
 					carbonMonoxideBaseRecord.CalScale = SensorDataLibrary.CARBONMONOXIDE_CAL_SCALE;
 					carbonMonoxideBaseRecord.CalPointOne = SensorDataLibrary.CARBONMONOXIDE_CAL_POINT_ONE;
-					carbonMonoxideBaseRecord.AutoZero = 1;
-					carbonMonoxideBaseRecord.ZeroMax = 2;
-					carbonMonoxideBaseRecord.ZeroMin = 3;
 					returnData.AddRange((carbonMonoxideBaseRecord.GetBytes()));
 					break;
 				case SensorDataLibrary.SensorType.HydrogenSulfide:
@@ -318,11 +327,21 @@ namespace Sensit.App.Programmer
 			SensorDataLibrary.DeviceID deviceID = new()
 			{
 				SensorType = sensorType,
-				Year = ushort.Parse(date.Substring(4, 4)),
-				Month = byte.Parse(date[..2]),
-				Day = byte.Parse(date.Substring(2, 2)),
+				Year = int.Parse(date.Substring(4, 4)),
+				Month = ushort.Parse(date[..2]),
+				Day = ushort.Parse(date.Substring(2, 2)),
 				SerialNumber = serialNumber
 			};
+
+			//Set record format based off of sensor type.
+			if (sensorType == SensorDataLibrary.SensorType.Oxygen)
+			{
+				deviceID.RecordFormat = 2;
+			}
+			else
+			{
+				deviceID.RecordFormat = 0;
+			}
 
 			//Write Device ID to EEPROM
 			aardvarkI2C.EepromWrite(SensorDataLibrary.ADDRESS_DEVICE_ID, deviceID.GetBytes());
@@ -350,11 +369,21 @@ namespace Sensit.App.Programmer
 			SensorDataLibrary.ManufactureID manufactureID = new()
 			{
 				SensorType = sensorType,
-				Year = ushort.Parse(date.Substring(4, 4)),
-				Month = byte.Parse(date[..2]),
-				Day = byte.Parse(date.Substring(2, 2)),
+				Year = int.Parse(date.Substring(4, 4)),
+				Month = ushort.Parse(date[..2]),
+				Day = ushort.Parse(date.Substring(2, 2)),
 				SerialNumber = serialNumber
 			};
+
+			//Set record format based off of sensor type.
+			if (sensorType == SensorDataLibrary.SensorType.Oxygen)
+			{
+				manufactureID.RecordFormat = 2;
+			}
+			else
+			{
+				manufactureID.RecordFormat = 0;
+			}
 
 			// Add serial number to form
 			textBoxSerialNumber.Text += Environment.NewLine + serialNumber;
