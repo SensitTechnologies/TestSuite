@@ -310,7 +310,24 @@ namespace Sensit.App.GPS
 
 						// Update the user interface.
 						toolStripProgressBar.Value = toolStripProgressBar.Minimum;
-						toolStripStatusLabel.Text = "FAIL";
+
+						//Determine board status
+						switch (textBoxLatitude.Text)
+						{
+							//Board is not plugged in/board is dead.
+							case "":
+								toolStripStatusLabel.Text = "FAIL: Not detected";
+								break;
+							//Board has faulty reading/components
+							case "0":
+								toolStripStatusLabel.Text = "FAIL: Bad Position";
+								break;
+							//Unknown reason why program timed out
+							default:
+								toolStripStatusLabel.Text = "FAIL";
+								break;
+
+						}
 						toolStripStatusLabel.Font = new Font(toolStripStatusLabel.Font, FontStyle.Bold);
 						toolStripStatusLabel.ForeColor = Color.Red;
 						groupBoxSettings.Enabled = true;
