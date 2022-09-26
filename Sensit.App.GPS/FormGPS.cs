@@ -1,6 +1,6 @@
-using Sensit.TestSDK.Devices;
 using System.Globalization;
 using System.IO.Ports;
+using Sensit.TestSDK.Devices;
 
 namespace Sensit.App.GPS
 {
@@ -268,7 +268,7 @@ namespace Sensit.App.GPS
 
 				// Alert the user (and make it bold).
 				toolStripProgressBar.Value = toolStripProgressBar.Maximum;
-				toolStripStatusLabel.Text = "PASS";
+				toolStripStatusLabel.Text = "PASSED @ " + TimeSpan.FromSeconds(elapsedSeconds).ToString(@"m\:ss");
 				toolStripStatusLabel.Font = new Font(toolStripStatusLabel.Font, FontStyle.Bold);
 				toolStripStatusLabel.ForeColor = Color.Green;
 				groupBoxSettings.Enabled = true;
@@ -336,11 +336,14 @@ namespace Sensit.App.GPS
 		{
 			try
 			{
+				//Set the timeout value
+				Properties.Settings.Default.Timeout = (uint)numericUpDownTimeout.Value;
+
 				// Set up progress bar.
 				toolStripProgressBar.Maximum = (int)Properties.Settings.Default.Timeout;
 
 				// Open the serial port (and let it know what serial port to use).
-				gpsDevice.Open(Properties.Settings.Default.Port);
+				gpsDevice.Open(comboBoxSerialPort.Text);
 
 				// Update the user interface.
 				groupBoxSettings.Enabled = false;
