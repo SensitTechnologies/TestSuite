@@ -12,8 +12,8 @@ namespace Sensit.App.GPS
 		#region Constants
 
 		// TODO:  Double-check latitude and longitude conversions.
-		private const double LATITUDE = 41.478142;
-		private const double LONGITUDE = -87.055367;
+		private const double LATITUDE = 41.46095328477597; //Sensit: 41.46095328477597 
+		private const double LONGITUDE = -87.01571016084537; //Sensit: -87.01571016084537
 		private const double POSITION_TOLERANCE = 1.0;
 		private readonly TimeSpan TIME_TOLERANCE = new(0, 2, 0);
 
