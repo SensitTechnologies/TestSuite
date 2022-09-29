@@ -323,6 +323,7 @@
 			this.buttonPortRefresh.Size = new System.Drawing.Size(38, 36);
 			this.buttonPortRefresh.TabIndex = 2;
 			this.buttonPortRefresh.UseVisualStyleBackColor = true;
+			this.buttonPortRefresh.Click += new System.EventHandler(this.ButtonPortRefresh_Click);
 			// 
 			// labelSerialPort
 			// 

@@ -5,7 +5,7 @@ using Sensit.TestSDK.Devices;
 namespace Sensit.App.GPS
 {
 	/// <summary>
-	/// Evaluate a GPS module that sends NMEA GGA Sentances.
+	/// Evaluate a GPS module that sends NMEA GGA Sentences.
 	/// </summary>
 	public partial class FormGPS : Form
 	{
@@ -314,7 +314,7 @@ namespace Sensit.App.GPS
 						//Determine board status
 						switch (textBoxLatitude.Text)
 						{
-							//Board is not plugged in/board is dead.
+							//Board is not plugged in/board is plugged in backwards/board is dead.
 							case "":
 								toolStripStatusLabel.Text = "FAIL: Not detected";
 								break;
