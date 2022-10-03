@@ -28,6 +28,7 @@ namespace Sensit.App.GPS
 		/// 8-N-1 only supported at this time
 		/// </remarks>
 		private SerialStreamDevice gpsDevice;
+		private List<SerialStreamDevice> gpsPanelList = new();
 
 		/// <summary>
 		/// Timer to keep track of how long GPS module takes to find satellites.
@@ -65,10 +66,7 @@ namespace Sensit.App.GPS
 			timer.Tick += new EventHandler(OnTimedEvent);
 
 			// Find all available serial ports.
-			comboBoxSerialPort.Items.AddRange(SerialPort.GetPortNames());
-
-			// Select the most recently used port.
-			comboBoxSerialPort.Text = Properties.Settings.Default.Port;
+			checkedListSerialPort.Items.AddRange(SerialPort.GetPortNames());
 
 			// Set the most recently used timeout.
 			numericUpDownTimeout.Value = Properties.Settings.Default.Timeout;
@@ -108,17 +106,6 @@ namespace Sensit.App.GPS
 		#region Settings
 
 		/// <summary>
-		/// Remember the most recently selected serial port.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void ComboBoxSerialPort_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			// Save the serial port selection in the application settings.
-			Properties.Settings.Default.Port = comboBoxSerialPort.Text;
-		}
-
-		/// <summary>
 		/// Remember the most recently selected test duration.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -136,14 +123,14 @@ namespace Sensit.App.GPS
 		private void ButtonPortRefresh_Click(object sender, EventArgs e)
 		{
 			// Clear the serial port combo box.
-			comboBoxSerialPort.Items.Clear();
+			checkedListSerialPort.Items.Clear();
 
 			// Find all available serial ports.
-			comboBoxSerialPort.Items.AddRange(SerialPort.GetPortNames());
+			checkedListSerialPort.Items.AddRange(SerialPort.GetPortNames());
 
 			// Select the most recently used port.
 			// The most recently used port is fetched from applications settings.
-			comboBoxSerialPort.Text = Properties.Settings.Default.Port;
+			checkedListSerialPort.Text = Properties.Settings.Default.Port;
 		}
 
 		#endregion
@@ -180,10 +167,10 @@ namespace Sensit.App.GPS
 						out DateTime dateTime);
 
 					// Display timestamp to the user.
-					textBoxTimestamp.Text = dateTime.ToString("h:mm:ss tt");
+					//textBoxTimestamp.Text = dateTime.ToString("h:mm:ss tt");
 
 					// Test timestamp.
-					SetStatus(textBoxStatusTimestamp, DateTime.UtcNow - dateTime < TIME_TOLERANCE);
+					//SetStatus(textBoxStatusTimestamp, DateTime.UtcNow - dateTime < TIME_TOLERANCE);
 
 					// If latitude format is correct...
 					if (double.TryParse(pieces[2], out double latitude))
@@ -196,10 +183,10 @@ namespace Sensit.App.GPS
 						}
 
 						// Display latitude to the user.
-						textBoxLatitude.Text = latitude.ToString("0.00000") + " " + pieces[3];
+						//textBoxLatitude.Text = latitude.ToString("0.00000") + " " + pieces[3];
 
 						// Test latitude.
-						SetStatus(textBoxStatusLatitude, Math.Abs(latitude - LATITUDE) < POSITION_TOLERANCE);
+						//SetStatus(textBoxStatusLatitude, Math.Abs(latitude - LATITUDE) < POSITION_TOLERANCE);
 					}
 
 					// If longitude format is correct...
@@ -213,30 +200,30 @@ namespace Sensit.App.GPS
 						}
 
 						// Display longitude to the user.
-						textBoxLongitude.Text = longitude.ToString("0.00000") + " " + pieces[5];
+						//textBoxLongitude.Text = longitude.ToString("0.00000") + " " + pieces[5];
 
 						// Test longitude.
-						SetStatus(textBoxStatusLongitude, Math.Abs(longitude - LONGITUDE) < POSITION_TOLERANCE);
+						//SetStatus(textBoxStatusLongitude, Math.Abs(longitude - LONGITUDE) < POSITION_TOLERANCE);
 					}
 
 					// If GPS fix status format is correct...
 					if (Int16.TryParse(pieces[6], out short fix))
 					{
 						// Display to the user.
-						textBoxFixType.Text = pieces[6];
+						//textBoxFixType.Text = pieces[6];
 
 						// Ensure fix is established.
-						SetStatus(textBoxStatusFixType, fix > 0);
+						//SetStatus(textBoxStatusFixType, fix > 0);
 					}
 
 					// If satellite format is correct...
 					if (Int16.TryParse(pieces[7], out short satellites))
 					{
 						// Display number of satellites to the user.
-						textBoxSatellites.Text = satellites.ToString();
+						//textBoxSatellites.Text = satellites.ToString();
 
 						// Ensure number of satellites is at least four.
-						SetStatus(textBoxStatusSatellites, satellites >= 4);
+						//SetStatus(textBoxStatusSatellites, satellites >= 4);
 					}
 				}
 			}));
@@ -253,28 +240,28 @@ namespace Sensit.App.GPS
 				control.Text = "";
 			}
 
-			// If all are passing...
-			if (textBoxStatusTimestamp.Text.Equals("OK") &&
-				textBoxStatusLatitude.Text.Equals("OK") &&
-				textBoxStatusLongitude.Text.Equals("OK") &&
-				textBoxStatusFixType.Text.Equals("OK") &&
-				textBoxStatusSatellites.Text.Equals("OK"))
-			{
-				// Close the serial port.
-				gpsDevice.Close();
+			//// If all are passing...
+			//if (textBoxStatusTimestamp.Text.Equals("OK") &&
+			//	textBoxStatusLatitude.Text.Equals("OK") &&
+			//	textBoxStatusLongitude.Text.Equals("OK") &&
+			//	textBoxStatusFixType.Text.Equals("OK") &&
+			//	textBoxStatusSatellites.Text.Equals("OK"))
+			//{
+				//// Close the serial port.
+				//gpsDevice.Close();
 
-				// Disable the timer.
-				timer.Enabled = false;
+				//// Disable the timer.
+				//timer.Enabled = false;
 
-				// Alert the user (and make it bold).
-				toolStripProgressBar.Value = toolStripProgressBar.Maximum;
-				toolStripStatusLabel.Text = "PASSED @ " + TimeSpan.FromSeconds(elapsedSeconds).ToString(@"m\:ss");
-				toolStripStatusLabel.Font = new Font(toolStripStatusLabel.Font, FontStyle.Bold);
-				toolStripStatusLabel.ForeColor = Color.Green;
-				groupBoxSettings.Enabled = true;
-				buttonStart.Enabled = true;
-				buttonStop.Enabled = false;
-			}
+				//// Alert the user (and make it bold).
+				//toolStripProgressBar.Value = toolStripProgressBar.Maximum;
+				//toolStripStatusLabel.Text = "PASSED @ " + TimeSpan.FromSeconds(elapsedSeconds).ToString(@"m\:ss");
+				//toolStripStatusLabel.Font = new Font(toolStripStatusLabel.Font, FontStyle.Bold);
+				//toolStripStatusLabel.ForeColor = Color.Green;
+				//groupBoxSettings.Enabled = true;
+				//buttonStart.Enabled = true;
+				//buttonStop.Enabled = false;
+			//}
 		}
 
 		/// <summary>
@@ -312,26 +299,26 @@ namespace Sensit.App.GPS
 						toolStripProgressBar.Value = toolStripProgressBar.Minimum;
 
 						//Determine board status
-						switch (textBoxLatitude.Text)
-						{
+						//switch (textBoxLatitude.Text)
+						//{
 							//Board is not plugged in/board is plugged in backwards/board is dead.
-							case "":
-								toolStripStatusLabel.Text = "FAIL: Not detected";
-								break;
-							//Board has faulty reading/components
-							case "0":
-								toolStripStatusLabel.Text = "FAIL: Bad Position";
-								break;
-							//Unknown reason why program timed out
-							default:
-								toolStripStatusLabel.Text = "FAIL";
-								break;
+							//case "":
+							//	toolStripStatusLabel.Text = "FAIL: Not detected";
+							//	break;
+							////Board has faulty reading/components
+							//case "0":
+							//	toolStripStatusLabel.Text = "FAIL: Bad Position";
+							//	break;
+							////Unknown reason why program timed out
+							//default:
+							//	toolStripStatusLabel.Text = "FAIL";
+							//	break;
 
-						}
+						//}
 						toolStripStatusLabel.Font = new Font(toolStripStatusLabel.Font, FontStyle.Bold);
 						toolStripStatusLabel.ForeColor = Color.Red;
 						groupBoxSettings.Enabled = true;
-						buttonStart.Enabled = true;
+						buttonStartSingle.Enabled = true;
 						buttonStop.Enabled = false;
 					}
 				}
@@ -345,11 +332,11 @@ namespace Sensit.App.GPS
 		}
 
 		/// <summary>
-		/// When Start button is clicked, start the test.
+		/// When Start Single button is clicked, start the test.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void ButtonStart_Click(object sender, EventArgs e)
+		private void ButtonStartSingle_Click(object sender, EventArgs e)
 		{
 			try
 			{
@@ -360,22 +347,13 @@ namespace Sensit.App.GPS
 				toolStripProgressBar.Maximum = (int)Properties.Settings.Default.Timeout;
 
 				// Open the serial port (and let it know what serial port to use).
-				gpsDevice.Open(comboBoxSerialPort.Text);
+				gpsDevice.Open(checkedListSerialPort.Text);
 
 				// Update the user interface.
 				groupBoxSettings.Enabled = false;
-				buttonStart.Enabled = false;
+				buttonStartSingle.Enabled = false;
+				buttonStartPanel.Enabled = false;
 				buttonStop.Enabled = true;
-				textBoxTimestamp.Text = string.Empty;
-				textBoxLatitude.Text = string.Empty;
-				textBoxLongitude.Text = string.Empty;
-				textBoxFixType.Text = string.Empty;
-				textBoxSatellites.Text = string.Empty;
-				textBoxStatusFixType.Text = string.Empty;
-				textBoxStatusLatitude.Text = string.Empty;
-				textBoxStatusLongitude.Text = string.Empty;
-				textBoxStatusSatellites.Text = string.Empty;
-				textBoxStatusTimestamp.Text = string.Empty;
 				toolStripProgressBar.Value = toolStripProgressBar.Minimum;
 				toolStripStatusLabel.Text = "Testing...";
 				toolStripStatusLabel.Font = new Font(toolStripStatusLabel.Font, FontStyle.Regular);
@@ -396,6 +374,52 @@ namespace Sensit.App.GPS
 		}
 
 		/// <summary>
+		/// When Start Panel button is clicked, start programming each gps board individually.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ButtonStartPanel_Click(object sender, EventArgs e)
+		{
+			foreach (SerialStreamDevice gpsDevice in gpsPanelList)
+			{
+
+				try
+				{
+					//Set the timeout value
+					Properties.Settings.Default.Timeout = (uint)numericUpDownTimeout.Value;
+
+					// Set up progress bar.
+					toolStripProgressBar.Maximum = (int)Properties.Settings.Default.Timeout;
+
+					//Open the serial port (and let it know what serial port to use).
+					gpsDevice.Open(checkedListSerialPort.Text);
+
+					// Update the user interface.
+					groupBoxSettings.Enabled = false;
+					buttonStartSingle.Enabled = false;
+					buttonStartPanel.Enabled = false;
+					buttonStop.Enabled = true;
+					toolStripProgressBar.Value = toolStripProgressBar.Minimum;
+					toolStripStatusLabel.Text = "Testing...";
+					toolStripStatusLabel.Font = new Font(toolStripStatusLabel.Font, FontStyle.Regular);
+					toolStripStatusLabel.ForeColor = SystemColors.ControlText;
+
+					// Reset elapsed time.
+					elapsedSeconds = 0;
+
+					// Start the timer.
+					timer.Enabled = true;
+				}
+				// If an error occurs...
+				catch (Exception ex)
+				{
+					// Alert the user.
+					MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
+				}
+			}
+		}
+
+		/// <summary>
 		/// When Stop button is clicked, stop testing.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -412,7 +436,7 @@ namespace Sensit.App.GPS
 
 				// Update user interface.
 				groupBoxSettings.Enabled = true;
-				buttonStart.Enabled = true;
+				buttonStartSingle.Enabled = true;
 				buttonStop.Enabled = false;
 				toolStripStatusLabel.Text = "Ready...";
 				toolStripStatusLabel.Font = new Font(toolStripStatusLabel.Font, FontStyle.Regular);

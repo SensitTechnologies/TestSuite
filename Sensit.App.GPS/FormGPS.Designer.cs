@@ -28,7 +28,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormGPS));
 			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,51 +40,73 @@
 			this.statusStrip = new System.Windows.Forms.StatusStrip();
 			this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
 			this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-			this.tableLayoutPanelTestSetupButtons = new System.Windows.Forms.TableLayoutPanel();
-			this.tableLayoutPanelStartStop = new System.Windows.Forms.TableLayoutPanel();
-			this.buttonStart = new System.Windows.Forms.Button();
-			this.buttonStop = new System.Windows.Forms.Button();
-			this.groupBoxSettings = new System.Windows.Forms.GroupBox();
-			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			this.tableLayoutPanelSerialPort = new System.Windows.Forms.TableLayoutPanel();
-			this.comboBoxSerialPort = new System.Windows.Forms.ComboBox();
 			this.buttonPortRefresh = new System.Windows.Forms.Button();
+			this.buttonStop = new System.Windows.Forms.Button();
+			this.buttonStartSingle = new System.Windows.Forms.Button();
+			this.groupBoxSettings = new System.Windows.Forms.GroupBox();
+			this.tableLayoutSettings = new System.Windows.Forms.TableLayoutPanel();
 			this.labelSerialPort = new System.Windows.Forms.Label();
-			this.labelTimeout = new System.Windows.Forms.Label();
 			this.labelSeconds = new System.Windows.Forms.Label();
 			this.numericUpDownTimeout = new System.Windows.Forms.NumericUpDown();
-			this.tableLayoutPanelStatus = new System.Windows.Forms.TableLayoutPanel();
-			this.tableLayoutPanelVariables = new System.Windows.Forms.TableLayoutPanel();
-			this.textBoxStatusFixType = new System.Windows.Forms.TextBox();
-			this.textBoxStatusLongitude = new System.Windows.Forms.TextBox();
-			this.textBoxStatusLatitude = new System.Windows.Forms.TextBox();
-			this.labelTimestamp = new System.Windows.Forms.Label();
-			this.labelLatitude = new System.Windows.Forms.Label();
-			this.textBoxTimestamp = new System.Windows.Forms.TextBox();
-			this.textBoxLatitude = new System.Windows.Forms.TextBox();
-			this.labelLongitude = new System.Windows.Forms.Label();
-			this.textBoxLongitude = new System.Windows.Forms.TextBox();
-			this.labelFixType = new System.Windows.Forms.Label();
-			this.labelUnitTimestamp = new System.Windows.Forms.Label();
-			this.labelUnitLatitude = new System.Windows.Forms.Label();
-			this.labelUnitLongitude = new System.Windows.Forms.Label();
-			this.labelSatellites = new System.Windows.Forms.Label();
-			this.textBoxStatusTimestamp = new System.Windows.Forms.TextBox();
-			this.textBoxFixType = new System.Windows.Forms.TextBox();
-			this.textBoxSatellites = new System.Windows.Forms.TextBox();
-			this.textBoxStatusSatellites = new System.Windows.Forms.TextBox();
+			this.labelTimeout = new System.Windows.Forms.Label();
+			this.checkedListSerialPort = new System.Windows.Forms.CheckedListBox();
+			this.labelName = new System.Windows.Forms.Label();
+			this.labelPanelNumber = new System.Windows.Forms.Label();
+			this.textBoxName = new System.Windows.Forms.TextBox();
+			this.textBoxPanelNumber = new System.Windows.Forms.TextBox();
 			this.groupBoxStatus = new System.Windows.Forms.GroupBox();
+			this.tableLayoutPogo = new System.Windows.Forms.TableLayoutPanel();
+			this.pictureBoxGPS19 = new System.Windows.Forms.PictureBox();
+			this.pictureBoxGPS18 = new System.Windows.Forms.PictureBox();
+			this.pictureBoxGPS17 = new System.Windows.Forms.PictureBox();
+			this.pictureBoxGPS16 = new System.Windows.Forms.PictureBox();
+			this.pictureBoxGPS15 = new System.Windows.Forms.PictureBox();
+			this.pictureBoxGPS14 = new System.Windows.Forms.PictureBox();
+			this.pictureBoxGPS13 = new System.Windows.Forms.PictureBox();
+			this.pictureBoxGPS12 = new System.Windows.Forms.PictureBox();
+			this.pictureBoxGPS11 = new System.Windows.Forms.PictureBox();
+			this.pictureBoxGPS10 = new System.Windows.Forms.PictureBox();
+			this.pictureBoxGPS9 = new System.Windows.Forms.PictureBox();
+			this.pictureBoxGPS8 = new System.Windows.Forms.PictureBox();
+			this.pictureBoxGPS7 = new System.Windows.Forms.PictureBox();
+			this.pictureBoxGPS6 = new System.Windows.Forms.PictureBox();
+			this.pictureBoxGPS5 = new System.Windows.Forms.PictureBox();
+			this.pictureBoxGPS4 = new System.Windows.Forms.PictureBox();
+			this.pictureBoxGPS3 = new System.Windows.Forms.PictureBox();
+			this.pictureBoxGPS2 = new System.Windows.Forms.PictureBox();
+			this.pictureBoxGPS1 = new System.Windows.Forms.PictureBox();
+			this.pictureBoxGPS0 = new System.Windows.Forms.PictureBox();
+			this.pictureBoxGPSSingle = new System.Windows.Forms.PictureBox();
+			this.pictureBox35 = new System.Windows.Forms.PictureBox();
 			this.menuStrip.SuspendLayout();
 			this.statusStrip.SuspendLayout();
-			this.tableLayoutPanelTestSetupButtons.SuspendLayout();
-			this.tableLayoutPanelStartStop.SuspendLayout();
 			this.groupBoxSettings.SuspendLayout();
-			this.tableLayoutPanel1.SuspendLayout();
-			this.tableLayoutPanelSerialPort.SuspendLayout();
+			this.tableLayoutSettings.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownTimeout)).BeginInit();
-			this.tableLayoutPanelStatus.SuspendLayout();
-			this.tableLayoutPanelVariables.SuspendLayout();
 			this.groupBoxStatus.SuspendLayout();
+			this.tableLayoutPogo.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS19)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS18)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS17)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS16)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS15)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS14)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS13)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS12)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS11)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS10)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS9)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS8)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS7)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS6)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS5)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS4)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS3)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS2)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS0)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPSSingle)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox35)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// menuStrip
@@ -98,7 +119,7 @@
 			this.menuStrip.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip.Name = "menuStrip";
 			this.menuStrip.Padding = new System.Windows.Forms.Padding(6, 3, 0, 3);
-			this.menuStrip.Size = new System.Drawing.Size(359, 30);
+			this.menuStrip.Size = new System.Drawing.Size(463, 30);
 			this.menuStrip.TabIndex = 14;
 			this.menuStrip.Text = "menuStrip1";
 			// 
@@ -132,7 +153,7 @@
 			this.startToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
 			this.startToolStripMenuItem.Size = new System.Drawing.Size(147, 26);
 			this.startToolStripMenuItem.Text = "&Start";
-			this.startToolStripMenuItem.Click += new System.EventHandler(this.ButtonStart_Click);
+			this.startToolStripMenuItem.Click += new System.EventHandler(this.ButtonStartSingle_Click);
 			// 
 			// stopToolStripMenuItem
 			// 
@@ -155,13 +176,13 @@
 			// supportToolStripMenuItem
 			// 
 			this.supportToolStripMenuItem.Name = "supportToolStripMenuItem";
-			this.supportToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+			this.supportToolStripMenuItem.Size = new System.Drawing.Size(133, 26);
 			this.supportToolStripMenuItem.Text = "&Wiki";
 			// 
 			// aboutToolStripMenuItem
 			// 
 			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(133, 26);
 			this.aboutToolStripMenuItem.Text = "&About";
 			// 
 			// statusStrip
@@ -170,10 +191,10 @@
 			this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar,
             this.toolStripStatusLabel});
-			this.statusStrip.Location = new System.Drawing.Point(0, 441);
+			this.statusStrip.Location = new System.Drawing.Point(0, 613);
 			this.statusStrip.Name = "statusStrip";
 			this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 18, 0);
-			this.statusStrip.Size = new System.Drawing.Size(359, 40);
+			this.statusStrip.Size = new System.Drawing.Size(463, 40);
 			this.statusStrip.TabIndex = 15;
 			this.statusStrip.Text = "statusStrip1";
 			// 
@@ -189,459 +210,539 @@
 			this.toolStripStatusLabel.Size = new System.Drawing.Size(77, 34);
 			this.toolStripStatusLabel.Text = "Ready...";
 			// 
-			// tableLayoutPanelTestSetupButtons
+			// buttonPortRefresh
 			// 
-			this.tableLayoutPanelTestSetupButtons.AutoSize = true;
-			this.tableLayoutPanelTestSetupButtons.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutPanelTestSetupButtons.ColumnCount = 1;
-			this.tableLayoutPanelTestSetupButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanelTestSetupButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 23F));
-			this.tableLayoutPanelTestSetupButtons.Controls.Add(this.tableLayoutPanelStartStop, 0, 0);
-			this.tableLayoutPanelTestSetupButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.tableLayoutPanelTestSetupButtons.Location = new System.Drawing.Point(0, 389);
-			this.tableLayoutPanelTestSetupButtons.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.tableLayoutPanelTestSetupButtons.Name = "tableLayoutPanelTestSetupButtons";
-			this.tableLayoutPanelTestSetupButtons.RowCount = 1;
-			this.tableLayoutPanelTestSetupButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanelTestSetupButtons.Size = new System.Drawing.Size(359, 52);
-			this.tableLayoutPanelTestSetupButtons.TabIndex = 16;
-			// 
-			// tableLayoutPanelStartStop
-			// 
-			this.tableLayoutPanelStartStop.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.tableLayoutPanelStartStop.AutoSize = true;
-			this.tableLayoutPanelStartStop.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutPanelStartStop.ColumnCount = 2;
-			this.tableLayoutPanelStartStop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanelStartStop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanelStartStop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 26F));
-			this.tableLayoutPanelStartStop.Controls.Add(this.buttonStart, 0, 0);
-			this.tableLayoutPanelStartStop.Controls.Add(this.buttonStop, 1, 0);
-			this.tableLayoutPanelStartStop.Location = new System.Drawing.Point(68, 4);
-			this.tableLayoutPanelStartStop.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.tableLayoutPanelStartStop.Name = "tableLayoutPanelStartStop";
-			this.tableLayoutPanelStartStop.RowCount = 1;
-			this.tableLayoutPanelStartStop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanelStartStop.Size = new System.Drawing.Size(222, 44);
-			this.tableLayoutPanelStartStop.TabIndex = 17;
-			// 
-			// buttonStart
-			// 
-			this.buttonStart.Location = new System.Drawing.Point(5, 4);
-			this.buttonStart.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.buttonStart.Name = "buttonStart";
-			this.buttonStart.Size = new System.Drawing.Size(101, 36);
-			this.buttonStart.TabIndex = 3;
-			this.buttonStart.Text = "Start";
-			this.buttonStart.UseVisualStyleBackColor = true;
-			this.buttonStart.Click += new System.EventHandler(this.ButtonStart_Click);
+			this.buttonPortRefresh.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+			this.buttonPortRefresh.BackColor = System.Drawing.SystemColors.ButtonFace;
+			this.buttonPortRefresh.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.reuse;
+			this.buttonPortRefresh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.buttonPortRefresh.Location = new System.Drawing.Point(162, 4);
+			this.buttonPortRefresh.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+			this.buttonPortRefresh.Name = "buttonPortRefresh";
+			this.buttonPortRefresh.Size = new System.Drawing.Size(35, 35);
+			this.buttonPortRefresh.TabIndex = 20;
+			this.buttonPortRefresh.UseVisualStyleBackColor = false;
+			this.buttonPortRefresh.Click += new System.EventHandler(this.ButtonPortRefresh_Click);
 			// 
 			// buttonStop
 			// 
+			this.buttonStop.Anchor = System.Windows.Forms.AnchorStyles.Top;
 			this.buttonStop.Enabled = false;
-			this.buttonStop.Location = new System.Drawing.Point(116, 4);
+			this.buttonStop.Location = new System.Drawing.Point(334, 132);
 			this.buttonStop.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.buttonStop.Name = "buttonStop";
-			this.buttonStop.Size = new System.Drawing.Size(101, 36);
+			this.buttonStop.Size = new System.Drawing.Size(115, 35);
 			this.buttonStop.TabIndex = 4;
 			this.buttonStop.Text = "Stop";
 			this.buttonStop.UseVisualStyleBackColor = true;
 			this.buttonStop.Click += new System.EventHandler(this.ButtonStop_Click);
 			// 
+			// buttonStartSingle
+			// 
+			this.buttonStartSingle.Location = new System.Drawing.Point(334, 281);
+			this.buttonStartSingle.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+			this.buttonStartSingle.Name = "buttonStartSingle";
+			this.buttonStartSingle.Size = new System.Drawing.Size(115, 35);
+			this.buttonStartSingle.TabIndex = 3;
+			this.buttonStartSingle.Text = "Start Single";
+			this.buttonStartSingle.UseVisualStyleBackColor = true;
+			this.buttonStartSingle.Click += new System.EventHandler(this.ButtonStartSingle_Click);
+			// 
 			// groupBoxSettings
 			// 
-			this.groupBoxSettings.AutoSize = true;
-			this.groupBoxSettings.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.groupBoxSettings.Controls.Add(this.tableLayoutPanel1);
+			this.groupBoxSettings.Controls.Add(this.tableLayoutSettings);
 			this.groupBoxSettings.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBoxSettings.Location = new System.Drawing.Point(0, 30);
 			this.groupBoxSettings.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.groupBoxSettings.Name = "groupBoxSettings";
 			this.groupBoxSettings.Padding = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.groupBoxSettings.Size = new System.Drawing.Size(359, 113);
+			this.groupBoxSettings.Size = new System.Drawing.Size(463, 239);
 			this.groupBoxSettings.TabIndex = 17;
 			this.groupBoxSettings.TabStop = false;
 			this.groupBoxSettings.Text = "Settings";
 			// 
-			// tableLayoutPanel1
+			// tableLayoutSettings
 			// 
-			this.tableLayoutPanel1.AutoSize = true;
-			this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutPanel1.ColumnCount = 1;
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanelSerialPort, 0, 0);
-			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(5, 24);
-			this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.RowCount = 1;
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(349, 85);
-			this.tableLayoutPanel1.TabIndex = 0;
-			// 
-			// tableLayoutPanelSerialPort
-			// 
-			this.tableLayoutPanelSerialPort.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.tableLayoutPanelSerialPort.AutoSize = true;
-			this.tableLayoutPanelSerialPort.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutPanelSerialPort.ColumnCount = 3;
-			this.tableLayoutPanelSerialPort.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanelSerialPort.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanelSerialPort.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanelSerialPort.Controls.Add(this.comboBoxSerialPort, 1, 0);
-			this.tableLayoutPanelSerialPort.Controls.Add(this.buttonPortRefresh, 2, 0);
-			this.tableLayoutPanelSerialPort.Controls.Add(this.labelSerialPort, 0, 0);
-			this.tableLayoutPanelSerialPort.Controls.Add(this.labelTimeout, 0, 1);
-			this.tableLayoutPanelSerialPort.Controls.Add(this.labelSeconds, 2, 1);
-			this.tableLayoutPanelSerialPort.Controls.Add(this.numericUpDownTimeout, 1, 1);
-			this.tableLayoutPanelSerialPort.Location = new System.Drawing.Point(20, 4);
-			this.tableLayoutPanelSerialPort.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.tableLayoutPanelSerialPort.Name = "tableLayoutPanelSerialPort";
-			this.tableLayoutPanelSerialPort.RowCount = 2;
-			this.tableLayoutPanelSerialPort.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelSerialPort.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelSerialPort.Size = new System.Drawing.Size(309, 77);
-			this.tableLayoutPanelSerialPort.TabIndex = 15;
-			// 
-			// comboBoxSerialPort
-			// 
-			this.comboBoxSerialPort.AllowDrop = true;
-			this.comboBoxSerialPort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBoxSerialPort.FormattingEnabled = true;
-			this.comboBoxSerialPort.Location = new System.Drawing.Point(87, 4);
-			this.comboBoxSerialPort.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.comboBoxSerialPort.Name = "comboBoxSerialPort";
-			this.comboBoxSerialPort.Size = new System.Drawing.Size(149, 28);
-			this.comboBoxSerialPort.TabIndex = 4;
-			// 
-			// buttonPortRefresh
-			// 
-			this.buttonPortRefresh.Image = ((System.Drawing.Image)(resources.GetObject("buttonPortRefresh.Image")));
-			this.buttonPortRefresh.Location = new System.Drawing.Point(246, 4);
-			this.buttonPortRefresh.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.buttonPortRefresh.Name = "buttonPortRefresh";
-			this.buttonPortRefresh.Size = new System.Drawing.Size(38, 36);
-			this.buttonPortRefresh.TabIndex = 2;
-			this.buttonPortRefresh.UseVisualStyleBackColor = true;
-			this.buttonPortRefresh.Click += new System.EventHandler(this.ButtonPortRefresh_Click);
+			this.tableLayoutSettings.AutoSize = true;
+			this.tableLayoutSettings.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.tableLayoutSettings.ColumnCount = 6;
+			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.79621F));
+			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.14218F));
+			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.36364F));
+			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+			this.tableLayoutSettings.Controls.Add(this.labelSerialPort, 0, 1);
+			this.tableLayoutSettings.Controls.Add(this.labelSeconds, 5, 5);
+			this.tableLayoutSettings.Controls.Add(this.numericUpDownTimeout, 4, 5);
+			this.tableLayoutSettings.Controls.Add(this.labelTimeout, 3, 5);
+			this.tableLayoutSettings.Controls.Add(this.checkedListSerialPort, 0, 2);
+			this.tableLayoutSettings.Controls.Add(this.buttonPortRefresh, 2, 1);
+			this.tableLayoutSettings.Controls.Add(this.labelName, 3, 1);
+			this.tableLayoutSettings.Controls.Add(this.labelPanelNumber, 3, 3);
+			this.tableLayoutSettings.Controls.Add(this.textBoxName, 3, 2);
+			this.tableLayoutSettings.Controls.Add(this.textBoxPanelNumber, 3, 4);
+			this.tableLayoutSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableLayoutSettings.Location = new System.Drawing.Point(5, 24);
+			this.tableLayoutSettings.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+			this.tableLayoutSettings.Name = "tableLayoutSettings";
+			this.tableLayoutSettings.RowCount = 6;
+			this.tableLayoutSettings.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutSettings.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
+			this.tableLayoutSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
+			this.tableLayoutSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
+			this.tableLayoutSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
+			this.tableLayoutSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutSettings.Size = new System.Drawing.Size(453, 211);
+			this.tableLayoutSettings.TabIndex = 15;
 			// 
 			// labelSerialPort
 			// 
-			this.labelSerialPort.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelSerialPort.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelSerialPort.AutoSize = true;
-			this.labelSerialPort.Location = new System.Drawing.Point(3, 12);
+			this.tableLayoutSettings.SetColumnSpan(this.labelSerialPort, 2);
+			this.labelSerialPort.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.labelSerialPort.Location = new System.Drawing.Point(3, 15);
 			this.labelSerialPort.Name = "labelSerialPort";
-			this.labelSerialPort.Size = new System.Drawing.Size(76, 20);
+			this.labelSerialPort.Size = new System.Drawing.Size(128, 28);
 			this.labelSerialPort.TabIndex = 3;
-			this.labelSerialPort.Text = "Serial Port";
-			// 
-			// labelTimeout
-			// 
-			this.labelTimeout.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelTimeout.AutoSize = true;
-			this.labelTimeout.Location = new System.Drawing.Point(3, 50);
-			this.labelTimeout.Name = "labelTimeout";
-			this.labelTimeout.Size = new System.Drawing.Size(64, 20);
-			this.labelTimeout.TabIndex = 5;
-			this.labelTimeout.Text = "Timeout";
+			this.labelSerialPort.Text = "Serial Ports";
+			this.labelSerialPort.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
 			// 
 			// labelSeconds
 			// 
-			this.labelSeconds.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.labelSeconds.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelSeconds.AutoSize = true;
-			this.labelSeconds.Location = new System.Drawing.Point(244, 50);
+			this.labelSeconds.Location = new System.Drawing.Point(378, 171);
 			this.labelSeconds.Name = "labelSeconds";
-			this.labelSeconds.Size = new System.Drawing.Size(62, 20);
+			this.labelSeconds.Size = new System.Drawing.Size(72, 20);
 			this.labelSeconds.TabIndex = 7;
 			this.labelSeconds.Text = "seconds";
 			// 
 			// numericUpDownTimeout
 			// 
-			this.numericUpDownTimeout.Location = new System.Drawing.Point(85, 47);
+			this.numericUpDownTimeout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.numericUpDownTimeout.Location = new System.Drawing.Point(302, 167);
 			this.numericUpDownTimeout.Maximum = new decimal(new int[] {
             3600,
             0,
             0,
             0});
 			this.numericUpDownTimeout.Name = "numericUpDownTimeout";
-			this.numericUpDownTimeout.Size = new System.Drawing.Size(150, 27);
+			this.numericUpDownTimeout.Size = new System.Drawing.Size(70, 27);
 			this.numericUpDownTimeout.TabIndex = 8;
 			// 
-			// tableLayoutPanelStatus
+			// labelTimeout
 			// 
-			this.tableLayoutPanelStatus.ColumnCount = 1;
-			this.tableLayoutPanelStatus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanelStatus.Controls.Add(this.tableLayoutPanelVariables, 0, 0);
-			this.tableLayoutPanelStatus.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanelStatus.Location = new System.Drawing.Point(5, 24);
-			this.tableLayoutPanelStatus.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.tableLayoutPanelStatus.Name = "tableLayoutPanelStatus";
-			this.tableLayoutPanelStatus.RowCount = 1;
-			this.tableLayoutPanelStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanelStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 208F));
-			this.tableLayoutPanelStatus.Size = new System.Drawing.Size(349, 218);
-			this.tableLayoutPanelStatus.TabIndex = 0;
+			this.labelTimeout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.labelTimeout.AutoSize = true;
+			this.labelTimeout.Location = new System.Drawing.Point(228, 171);
+			this.labelTimeout.Name = "labelTimeout";
+			this.labelTimeout.Size = new System.Drawing.Size(68, 20);
+			this.labelTimeout.TabIndex = 5;
+			this.labelTimeout.Text = "Timeout";
+			this.labelTimeout.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
-			// tableLayoutPanelVariables
+			// checkedListSerialPort
 			// 
-			this.tableLayoutPanelVariables.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.tableLayoutPanelVariables.AutoSize = true;
-			this.tableLayoutPanelVariables.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutPanelVariables.ColumnCount = 4;
-			this.tableLayoutPanelVariables.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanelVariables.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanelVariables.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanelVariables.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanelVariables.Controls.Add(this.textBoxStatusFixType, 3, 3);
-			this.tableLayoutPanelVariables.Controls.Add(this.textBoxStatusLongitude, 3, 2);
-			this.tableLayoutPanelVariables.Controls.Add(this.textBoxStatusLatitude, 3, 1);
-			this.tableLayoutPanelVariables.Controls.Add(this.labelTimestamp, 0, 0);
-			this.tableLayoutPanelVariables.Controls.Add(this.labelLatitude, 0, 1);
-			this.tableLayoutPanelVariables.Controls.Add(this.textBoxTimestamp, 1, 0);
-			this.tableLayoutPanelVariables.Controls.Add(this.textBoxLatitude, 1, 1);
-			this.tableLayoutPanelVariables.Controls.Add(this.labelLongitude, 0, 2);
-			this.tableLayoutPanelVariables.Controls.Add(this.textBoxLongitude, 1, 2);
-			this.tableLayoutPanelVariables.Controls.Add(this.labelFixType, 0, 3);
-			this.tableLayoutPanelVariables.Controls.Add(this.labelUnitTimestamp, 2, 0);
-			this.tableLayoutPanelVariables.Controls.Add(this.labelUnitLatitude, 2, 1);
-			this.tableLayoutPanelVariables.Controls.Add(this.labelUnitLongitude, 2, 2);
-			this.tableLayoutPanelVariables.Controls.Add(this.labelSatellites, 0, 4);
-			this.tableLayoutPanelVariables.Controls.Add(this.textBoxStatusTimestamp, 3, 0);
-			this.tableLayoutPanelVariables.Controls.Add(this.textBoxFixType, 1, 3);
-			this.tableLayoutPanelVariables.Controls.Add(this.textBoxSatellites, 1, 4);
-			this.tableLayoutPanelVariables.Controls.Add(this.textBoxStatusSatellites, 3, 4);
-			this.tableLayoutPanelVariables.Location = new System.Drawing.Point(5, 21);
-			this.tableLayoutPanelVariables.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.tableLayoutPanelVariables.Name = "tableLayoutPanelVariables";
-			this.tableLayoutPanelVariables.RowCount = 5;
-			this.tableLayoutPanelVariables.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelVariables.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelVariables.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelVariables.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelVariables.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelVariables.Size = new System.Drawing.Size(339, 175);
-			this.tableLayoutPanelVariables.TabIndex = 2;
+			this.checkedListSerialPort.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.checkedListSerialPort.BackColor = System.Drawing.SystemColors.Menu;
+			this.tableLayoutSettings.SetColumnSpan(this.checkedListSerialPort, 3);
+			this.checkedListSerialPort.FormattingEnabled = true;
+			this.checkedListSerialPort.Location = new System.Drawing.Point(3, 46);
+			this.checkedListSerialPort.Name = "checkedListSerialPort";
+			this.tableLayoutSettings.SetRowSpan(this.checkedListSerialPort, 4);
+			this.checkedListSerialPort.Size = new System.Drawing.Size(219, 158);
+			this.checkedListSerialPort.TabIndex = 9;
 			// 
-			// textBoxStatusFixType
+			// labelName
 			// 
-			this.textBoxStatusFixType.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.textBoxStatusFixType.Location = new System.Drawing.Point(295, 109);
-			this.textBoxStatusFixType.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.textBoxStatusFixType.Name = "textBoxStatusFixType";
-			this.textBoxStatusFixType.ReadOnly = true;
-			this.textBoxStatusFixType.Size = new System.Drawing.Size(41, 27);
-			this.textBoxStatusFixType.TabIndex = 20;
-			this.textBoxStatusFixType.TabStop = false;
-			this.textBoxStatusFixType.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tableLayoutSettings.SetColumnSpan(this.labelName, 3);
+			this.labelName.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.labelName.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.labelName.Location = new System.Drawing.Point(228, 20);
+			this.labelName.Name = "labelName";
+			this.labelName.Size = new System.Drawing.Size(222, 23);
+			this.labelName.TabIndex = 11;
+			this.labelName.Text = "Name";
 			// 
-			// textBoxStatusLongitude
+			// labelPanelNumber
 			// 
-			this.textBoxStatusLongitude.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.textBoxStatusLongitude.Location = new System.Drawing.Point(295, 74);
-			this.textBoxStatusLongitude.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.textBoxStatusLongitude.Name = "textBoxStatusLongitude";
-			this.textBoxStatusLongitude.ReadOnly = true;
-			this.textBoxStatusLongitude.Size = new System.Drawing.Size(41, 27);
-			this.textBoxStatusLongitude.TabIndex = 19;
-			this.textBoxStatusLongitude.TabStop = false;
-			this.textBoxStatusLongitude.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tableLayoutSettings.SetColumnSpan(this.labelPanelNumber, 3);
+			this.labelPanelNumber.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.labelPanelNumber.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.labelPanelNumber.Location = new System.Drawing.Point(228, 91);
+			this.labelPanelNumber.Name = "labelPanelNumber";
+			this.labelPanelNumber.Size = new System.Drawing.Size(222, 23);
+			this.labelPanelNumber.TabIndex = 12;
+			this.labelPanelNumber.Text = "Panel Number";
 			// 
-			// textBoxStatusLatitude
+			// textBoxName
 			// 
-			this.textBoxStatusLatitude.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.textBoxStatusLatitude.Location = new System.Drawing.Point(295, 39);
-			this.textBoxStatusLatitude.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.textBoxStatusLatitude.Name = "textBoxStatusLatitude";
-			this.textBoxStatusLatitude.ReadOnly = true;
-			this.textBoxStatusLatitude.Size = new System.Drawing.Size(41, 27);
-			this.textBoxStatusLatitude.TabIndex = 18;
-			this.textBoxStatusLatitude.TabStop = false;
-			this.textBoxStatusLatitude.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tableLayoutSettings.SetColumnSpan(this.textBoxName, 2);
+			this.textBoxName.Location = new System.Drawing.Point(228, 46);
+			this.textBoxName.Name = "textBoxName";
+			this.textBoxName.Size = new System.Drawing.Size(141, 27);
+			this.textBoxName.TabIndex = 13;
 			// 
-			// labelTimestamp
+			// textBoxPanelNumber
 			// 
-			this.labelTimestamp.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelTimestamp.AutoSize = true;
-			this.labelTimestamp.Location = new System.Drawing.Point(5, 7);
-			this.labelTimestamp.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-			this.labelTimestamp.Name = "labelTimestamp";
-			this.labelTimestamp.Size = new System.Drawing.Size(83, 20);
-			this.labelTimestamp.TabIndex = 0;
-			this.labelTimestamp.Text = "Timestamp";
-			// 
-			// labelLatitude
-			// 
-			this.labelLatitude.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelLatitude.AutoSize = true;
-			this.labelLatitude.Location = new System.Drawing.Point(5, 42);
-			this.labelLatitude.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-			this.labelLatitude.Name = "labelLatitude";
-			this.labelLatitude.Size = new System.Drawing.Size(63, 20);
-			this.labelLatitude.TabIndex = 1;
-			this.labelLatitude.Text = "Latitude";
-			// 
-			// textBoxTimestamp
-			// 
-			this.textBoxTimestamp.Location = new System.Drawing.Point(98, 4);
-			this.textBoxTimestamp.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.textBoxTimestamp.Name = "textBoxTimestamp";
-			this.textBoxTimestamp.ReadOnly = true;
-			this.textBoxTimestamp.Size = new System.Drawing.Size(132, 27);
-			this.textBoxTimestamp.TabIndex = 2;
-			this.textBoxTimestamp.TabStop = false;
-			// 
-			// textBoxLatitude
-			// 
-			this.textBoxLatitude.Location = new System.Drawing.Point(98, 39);
-			this.textBoxLatitude.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.textBoxLatitude.Name = "textBoxLatitude";
-			this.textBoxLatitude.ReadOnly = true;
-			this.textBoxLatitude.Size = new System.Drawing.Size(132, 27);
-			this.textBoxLatitude.TabIndex = 3;
-			this.textBoxLatitude.TabStop = false;
-			// 
-			// labelLongitude
-			// 
-			this.labelLongitude.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelLongitude.AutoSize = true;
-			this.labelLongitude.Location = new System.Drawing.Point(5, 77);
-			this.labelLongitude.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-			this.labelLongitude.Name = "labelLongitude";
-			this.labelLongitude.Size = new System.Drawing.Size(76, 20);
-			this.labelLongitude.TabIndex = 4;
-			this.labelLongitude.Text = "Longitude";
-			// 
-			// textBoxLongitude
-			// 
-			this.textBoxLongitude.Location = new System.Drawing.Point(98, 74);
-			this.textBoxLongitude.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.textBoxLongitude.Name = "textBoxLongitude";
-			this.textBoxLongitude.ReadOnly = true;
-			this.textBoxLongitude.Size = new System.Drawing.Size(132, 27);
-			this.textBoxLongitude.TabIndex = 5;
-			this.textBoxLongitude.TabStop = false;
-			// 
-			// labelFixType
-			// 
-			this.labelFixType.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelFixType.AutoSize = true;
-			this.labelFixType.Location = new System.Drawing.Point(5, 112);
-			this.labelFixType.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-			this.labelFixType.Name = "labelFixType";
-			this.labelFixType.Size = new System.Drawing.Size(62, 20);
-			this.labelFixType.TabIndex = 6;
-			this.labelFixType.Text = "Fix Type";
-			// 
-			// labelUnitTimestamp
-			// 
-			this.labelUnitTimestamp.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelUnitTimestamp.Location = new System.Drawing.Point(240, 7);
-			this.labelUnitTimestamp.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-			this.labelUnitTimestamp.Name = "labelUnitTimestamp";
-			this.labelUnitTimestamp.Size = new System.Drawing.Size(47, 20);
-			this.labelUnitTimestamp.TabIndex = 0;
-			this.labelUnitTimestamp.Text = "UTC Time";
-			// 
-			// labelUnitLatitude
-			// 
-			this.labelUnitLatitude.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelUnitLatitude.AutoSize = true;
-			this.labelUnitLatitude.Location = new System.Drawing.Point(240, 42);
-			this.labelUnitLatitude.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-			this.labelUnitLatitude.Name = "labelUnitLatitude";
-			this.labelUnitLatitude.Size = new System.Drawing.Size(40, 20);
-			this.labelUnitLatitude.TabIndex = 11;
-			this.labelUnitLatitude.Text = "°N/S";
-			// 
-			// labelUnitLongitude
-			// 
-			this.labelUnitLongitude.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelUnitLongitude.AutoSize = true;
-			this.labelUnitLongitude.Location = new System.Drawing.Point(240, 77);
-			this.labelUnitLongitude.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-			this.labelUnitLongitude.Name = "labelUnitLongitude";
-			this.labelUnitLongitude.Size = new System.Drawing.Size(43, 20);
-			this.labelUnitLongitude.TabIndex = 12;
-			this.labelUnitLongitude.Text = "°E/W";
-			// 
-			// labelSatellites
-			// 
-			this.labelSatellites.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelSatellites.AutoSize = true;
-			this.labelSatellites.Location = new System.Drawing.Point(5, 147);
-			this.labelSatellites.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-			this.labelSatellites.Name = "labelSatellites";
-			this.labelSatellites.Size = new System.Drawing.Size(69, 20);
-			this.labelSatellites.TabIndex = 15;
-			this.labelSatellites.Text = "Satellites";
-			// 
-			// textBoxStatusTimestamp
-			// 
-			this.textBoxStatusTimestamp.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.textBoxStatusTimestamp.Location = new System.Drawing.Point(295, 4);
-			this.textBoxStatusTimestamp.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.textBoxStatusTimestamp.Name = "textBoxStatusTimestamp";
-			this.textBoxStatusTimestamp.ReadOnly = true;
-			this.textBoxStatusTimestamp.Size = new System.Drawing.Size(41, 27);
-			this.textBoxStatusTimestamp.TabIndex = 17;
-			this.textBoxStatusTimestamp.TabStop = false;
-			this.textBoxStatusTimestamp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			// 
-			// textBoxFixType
-			// 
-			this.textBoxFixType.Location = new System.Drawing.Point(98, 109);
-			this.textBoxFixType.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.textBoxFixType.Name = "textBoxFixType";
-			this.textBoxFixType.ReadOnly = true;
-			this.textBoxFixType.Size = new System.Drawing.Size(132, 27);
-			this.textBoxFixType.TabIndex = 7;
-			this.textBoxFixType.TabStop = false;
-			// 
-			// textBoxSatellites
-			// 
-			this.textBoxSatellites.Location = new System.Drawing.Point(98, 144);
-			this.textBoxSatellites.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.textBoxSatellites.Name = "textBoxSatellites";
-			this.textBoxSatellites.ReadOnly = true;
-			this.textBoxSatellites.Size = new System.Drawing.Size(132, 27);
-			this.textBoxSatellites.TabIndex = 22;
-			this.textBoxSatellites.TabStop = false;
-			// 
-			// textBoxStatusSatellites
-			// 
-			this.textBoxStatusSatellites.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.textBoxStatusSatellites.Location = new System.Drawing.Point(295, 144);
-			this.textBoxStatusSatellites.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.textBoxStatusSatellites.Name = "textBoxStatusSatellites";
-			this.textBoxStatusSatellites.ReadOnly = true;
-			this.textBoxStatusSatellites.Size = new System.Drawing.Size(41, 27);
-			this.textBoxStatusSatellites.TabIndex = 23;
-			this.textBoxStatusSatellites.TabStop = false;
-			this.textBoxStatusSatellites.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.tableLayoutSettings.SetColumnSpan(this.textBoxPanelNumber, 3);
+			this.textBoxPanelNumber.Location = new System.Drawing.Point(228, 117);
+			this.textBoxPanelNumber.Name = "textBoxPanelNumber";
+			this.textBoxPanelNumber.Size = new System.Drawing.Size(214, 27);
+			this.textBoxPanelNumber.TabIndex = 14;
 			// 
 			// groupBoxStatus
 			// 
 			this.groupBoxStatus.AutoSize = true;
-			this.groupBoxStatus.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.groupBoxStatus.Controls.Add(this.tableLayoutPanelStatus);
+			this.groupBoxStatus.Controls.Add(this.tableLayoutPogo);
 			this.groupBoxStatus.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBoxStatus.Location = new System.Drawing.Point(0, 143);
+			this.groupBoxStatus.Location = new System.Drawing.Point(0, 269);
 			this.groupBoxStatus.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.groupBoxStatus.Name = "groupBoxStatus";
 			this.groupBoxStatus.Padding = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.groupBoxStatus.Size = new System.Drawing.Size(359, 246);
+			this.groupBoxStatus.Size = new System.Drawing.Size(463, 344);
 			this.groupBoxStatus.TabIndex = 18;
 			this.groupBoxStatus.TabStop = false;
 			this.groupBoxStatus.Text = "Status";
+			// 
+			// tableLayoutPogo
+			// 
+			this.tableLayoutPogo.ColumnCount = 6;
+			this.tableLayoutPogo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+			this.tableLayoutPogo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+			this.tableLayoutPogo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+			this.tableLayoutPogo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+			this.tableLayoutPogo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+			this.tableLayoutPogo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+			this.tableLayoutPogo.Controls.Add(this.pictureBoxGPS19, 4, 3);
+			this.tableLayoutPogo.Controls.Add(this.pictureBoxGPS18, 3, 3);
+			this.tableLayoutPogo.Controls.Add(this.pictureBoxGPS17, 2, 3);
+			this.tableLayoutPogo.Controls.Add(this.pictureBoxGPS16, 1, 3);
+			this.tableLayoutPogo.Controls.Add(this.pictureBoxGPS15, 0, 3);
+			this.tableLayoutPogo.Controls.Add(this.pictureBoxGPS14, 4, 2);
+			this.tableLayoutPogo.Controls.Add(this.pictureBoxGPS13, 3, 2);
+			this.tableLayoutPogo.Controls.Add(this.pictureBoxGPS12, 2, 2);
+			this.tableLayoutPogo.Controls.Add(this.pictureBoxGPS11, 1, 2);
+			this.tableLayoutPogo.Controls.Add(this.pictureBoxGPS10, 0, 2);
+			this.tableLayoutPogo.Controls.Add(this.pictureBoxGPS9, 4, 1);
+			this.tableLayoutPogo.Controls.Add(this.pictureBoxGPS8, 3, 1);
+			this.tableLayoutPogo.Controls.Add(this.pictureBoxGPS7, 2, 1);
+			this.tableLayoutPogo.Controls.Add(this.pictureBoxGPS6, 1, 1);
+			this.tableLayoutPogo.Controls.Add(this.pictureBoxGPS5, 0, 1);
+			this.tableLayoutPogo.Controls.Add(this.pictureBoxGPS4, 4, 0);
+			this.tableLayoutPogo.Controls.Add(this.pictureBoxGPS3, 3, 0);
+			this.tableLayoutPogo.Controls.Add(this.pictureBoxGPS2, 2, 0);
+			this.tableLayoutPogo.Controls.Add(this.pictureBoxGPS1, 1, 0);
+			this.tableLayoutPogo.Controls.Add(this.pictureBoxGPS0, 0, 0);
+			this.tableLayoutPogo.Controls.Add(this.pictureBoxGPSSingle, 5, 4);
+			this.tableLayoutPogo.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableLayoutPogo.Location = new System.Drawing.Point(5, 24);
+			this.tableLayoutPogo.Name = "tableLayoutPogo";
+			this.tableLayoutPogo.RowCount = 5;
+			this.tableLayoutPogo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tableLayoutPogo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tableLayoutPogo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tableLayoutPogo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tableLayoutPogo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tableLayoutPogo.Size = new System.Drawing.Size(453, 316);
+			this.tableLayoutPogo.TabIndex = 0;
+			// 
+			// pictureBoxGPS19
+			// 
+			this.pictureBoxGPS19.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pictureBoxGPS19.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS19.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.pictureBoxGPS19.Location = new System.Drawing.Point(303, 192);
+			this.pictureBoxGPS19.Name = "pictureBoxGPS19";
+			this.pictureBoxGPS19.Size = new System.Drawing.Size(69, 57);
+			this.pictureBoxGPS19.TabIndex = 23;
+			this.pictureBoxGPS19.TabStop = false;
+			// 
+			// pictureBoxGPS18
+			// 
+			this.pictureBoxGPS18.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pictureBoxGPS18.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS18.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.pictureBoxGPS18.Location = new System.Drawing.Point(228, 192);
+			this.pictureBoxGPS18.Name = "pictureBoxGPS18";
+			this.pictureBoxGPS18.Size = new System.Drawing.Size(69, 57);
+			this.pictureBoxGPS18.TabIndex = 22;
+			this.pictureBoxGPS18.TabStop = false;
+			// 
+			// pictureBoxGPS17
+			// 
+			this.pictureBoxGPS17.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pictureBoxGPS17.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS17.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.pictureBoxGPS17.Location = new System.Drawing.Point(153, 192);
+			this.pictureBoxGPS17.Name = "pictureBoxGPS17";
+			this.pictureBoxGPS17.Size = new System.Drawing.Size(69, 57);
+			this.pictureBoxGPS17.TabIndex = 21;
+			this.pictureBoxGPS17.TabStop = false;
+			// 
+			// pictureBoxGPS16
+			// 
+			this.pictureBoxGPS16.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pictureBoxGPS16.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS16.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.pictureBoxGPS16.Location = new System.Drawing.Point(78, 192);
+			this.pictureBoxGPS16.Name = "pictureBoxGPS16";
+			this.pictureBoxGPS16.Size = new System.Drawing.Size(69, 57);
+			this.pictureBoxGPS16.TabIndex = 20;
+			this.pictureBoxGPS16.TabStop = false;
+			// 
+			// pictureBoxGPS15
+			// 
+			this.pictureBoxGPS15.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pictureBoxGPS15.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS15.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.pictureBoxGPS15.Location = new System.Drawing.Point(3, 192);
+			this.pictureBoxGPS15.Name = "pictureBoxGPS15";
+			this.pictureBoxGPS15.Size = new System.Drawing.Size(69, 57);
+			this.pictureBoxGPS15.TabIndex = 19;
+			this.pictureBoxGPS15.TabStop = false;
+			// 
+			// pictureBoxGPS14
+			// 
+			this.pictureBoxGPS14.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pictureBoxGPS14.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS14.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.pictureBoxGPS14.Location = new System.Drawing.Point(303, 129);
+			this.pictureBoxGPS14.Name = "pictureBoxGPS14";
+			this.pictureBoxGPS14.Size = new System.Drawing.Size(69, 57);
+			this.pictureBoxGPS14.TabIndex = 17;
+			this.pictureBoxGPS14.TabStop = false;
+			// 
+			// pictureBoxGPS13
+			// 
+			this.pictureBoxGPS13.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pictureBoxGPS13.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS13.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.pictureBoxGPS13.Location = new System.Drawing.Point(228, 129);
+			this.pictureBoxGPS13.Name = "pictureBoxGPS13";
+			this.pictureBoxGPS13.Size = new System.Drawing.Size(69, 57);
+			this.pictureBoxGPS13.TabIndex = 16;
+			this.pictureBoxGPS13.TabStop = false;
+			// 
+			// pictureBoxGPS12
+			// 
+			this.pictureBoxGPS12.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pictureBoxGPS12.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS12.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.pictureBoxGPS12.Location = new System.Drawing.Point(153, 129);
+			this.pictureBoxGPS12.Name = "pictureBoxGPS12";
+			this.pictureBoxGPS12.Size = new System.Drawing.Size(69, 57);
+			this.pictureBoxGPS12.TabIndex = 15;
+			this.pictureBoxGPS12.TabStop = false;
+			// 
+			// pictureBoxGPS11
+			// 
+			this.pictureBoxGPS11.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pictureBoxGPS11.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS11.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.pictureBoxGPS11.Location = new System.Drawing.Point(78, 129);
+			this.pictureBoxGPS11.Name = "pictureBoxGPS11";
+			this.pictureBoxGPS11.Size = new System.Drawing.Size(69, 57);
+			this.pictureBoxGPS11.TabIndex = 14;
+			this.pictureBoxGPS11.TabStop = false;
+			// 
+			// pictureBoxGPS10
+			// 
+			this.pictureBoxGPS10.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pictureBoxGPS10.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS10.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.pictureBoxGPS10.Location = new System.Drawing.Point(3, 129);
+			this.pictureBoxGPS10.Name = "pictureBoxGPS10";
+			this.pictureBoxGPS10.Size = new System.Drawing.Size(69, 57);
+			this.pictureBoxGPS10.TabIndex = 13;
+			this.pictureBoxGPS10.TabStop = false;
+			// 
+			// pictureBoxGPS9
+			// 
+			this.pictureBoxGPS9.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pictureBoxGPS9.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.pictureBoxGPS9.Location = new System.Drawing.Point(303, 66);
+			this.pictureBoxGPS9.Name = "pictureBoxGPS9";
+			this.pictureBoxGPS9.Size = new System.Drawing.Size(69, 57);
+			this.pictureBoxGPS9.TabIndex = 11;
+			this.pictureBoxGPS9.TabStop = false;
+			// 
+			// pictureBoxGPS8
+			// 
+			this.pictureBoxGPS8.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pictureBoxGPS8.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.pictureBoxGPS8.Location = new System.Drawing.Point(228, 66);
+			this.pictureBoxGPS8.Name = "pictureBoxGPS8";
+			this.pictureBoxGPS8.Size = new System.Drawing.Size(69, 57);
+			this.pictureBoxGPS8.TabIndex = 10;
+			this.pictureBoxGPS8.TabStop = false;
+			// 
+			// pictureBoxGPS7
+			// 
+			this.pictureBoxGPS7.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pictureBoxGPS7.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.pictureBoxGPS7.Location = new System.Drawing.Point(153, 66);
+			this.pictureBoxGPS7.Name = "pictureBoxGPS7";
+			this.pictureBoxGPS7.Size = new System.Drawing.Size(69, 57);
+			this.pictureBoxGPS7.TabIndex = 9;
+			this.pictureBoxGPS7.TabStop = false;
+			// 
+			// pictureBoxGPS6
+			// 
+			this.pictureBoxGPS6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pictureBoxGPS6.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.pictureBoxGPS6.Location = new System.Drawing.Point(78, 66);
+			this.pictureBoxGPS6.Name = "pictureBoxGPS6";
+			this.pictureBoxGPS6.Size = new System.Drawing.Size(69, 57);
+			this.pictureBoxGPS6.TabIndex = 8;
+			this.pictureBoxGPS6.TabStop = false;
+			// 
+			// pictureBoxGPS5
+			// 
+			this.pictureBoxGPS5.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pictureBoxGPS5.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.pictureBoxGPS5.Location = new System.Drawing.Point(3, 66);
+			this.pictureBoxGPS5.Name = "pictureBoxGPS5";
+			this.pictureBoxGPS5.Size = new System.Drawing.Size(69, 57);
+			this.pictureBoxGPS5.TabIndex = 7;
+			this.pictureBoxGPS5.TabStop = false;
+			// 
+			// pictureBoxGPS4
+			// 
+			this.pictureBoxGPS4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pictureBoxGPS4.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.pictureBoxGPS4.Location = new System.Drawing.Point(303, 3);
+			this.pictureBoxGPS4.Name = "pictureBoxGPS4";
+			this.pictureBoxGPS4.Size = new System.Drawing.Size(69, 57);
+			this.pictureBoxGPS4.TabIndex = 5;
+			this.pictureBoxGPS4.TabStop = false;
+			// 
+			// pictureBoxGPS3
+			// 
+			this.pictureBoxGPS3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pictureBoxGPS3.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.pictureBoxGPS3.Location = new System.Drawing.Point(228, 3);
+			this.pictureBoxGPS3.Name = "pictureBoxGPS3";
+			this.pictureBoxGPS3.Size = new System.Drawing.Size(69, 57);
+			this.pictureBoxGPS3.TabIndex = 4;
+			this.pictureBoxGPS3.TabStop = false;
+			// 
+			// pictureBoxGPS2
+			// 
+			this.pictureBoxGPS2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pictureBoxGPS2.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.pictureBoxGPS2.Location = new System.Drawing.Point(153, 3);
+			this.pictureBoxGPS2.Name = "pictureBoxGPS2";
+			this.pictureBoxGPS2.Size = new System.Drawing.Size(69, 57);
+			this.pictureBoxGPS2.TabIndex = 3;
+			this.pictureBoxGPS2.TabStop = false;
+			// 
+			// pictureBoxGPS1
+			// 
+			this.pictureBoxGPS1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pictureBoxGPS1.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.pictureBoxGPS1.Location = new System.Drawing.Point(78, 3);
+			this.pictureBoxGPS1.Name = "pictureBoxGPS1";
+			this.pictureBoxGPS1.Size = new System.Drawing.Size(69, 57);
+			this.pictureBoxGPS1.TabIndex = 2;
+			this.pictureBoxGPS1.TabStop = false;
+			// 
+			// pictureBoxGPS0
+			// 
+			this.pictureBoxGPS0.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pictureBoxGPS0.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS0.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.pictureBoxGPS0.Location = new System.Drawing.Point(3, 3);
+			this.pictureBoxGPS0.Name = "pictureBoxGPS0";
+			this.pictureBoxGPS0.Size = new System.Drawing.Size(69, 57);
+			this.pictureBoxGPS0.TabIndex = 1;
+			this.pictureBoxGPS0.TabStop = false;
+			// 
+			// pictureBoxGPSSingle
+			// 
+			this.pictureBoxGPSSingle.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pictureBoxGPSSingle.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPSSingle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.pictureBoxGPSSingle.Location = new System.Drawing.Point(378, 255);
+			this.pictureBoxGPSSingle.Name = "pictureBoxGPSSingle";
+			this.pictureBoxGPSSingle.Size = new System.Drawing.Size(72, 58);
+			this.pictureBoxGPSSingle.TabIndex = 24;
+			this.pictureBoxGPSSingle.TabStop = false;
+			// 
+			// pictureBox35
+			// 
+			this.pictureBox35.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBox35.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+			this.pictureBox35.Location = new System.Drawing.Point(61, 289);
+			this.pictureBox35.Name = "pictureBox35";
+			this.pictureBox35.Size = new System.Drawing.Size(50, 14);
+			this.pictureBox35.TabIndex = 34;
+			this.pictureBox35.TabStop = false;
 			// 
 			// FormGPS
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(359, 481);
+			this.ClientSize = new System.Drawing.Size(463, 653);
 			this.Controls.Add(this.groupBoxStatus);
 			this.Controls.Add(this.groupBoxSettings);
-			this.Controls.Add(this.tableLayoutPanelTestSetupButtons);
 			this.Controls.Add(this.statusStrip);
 			this.Controls.Add(this.menuStrip);
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -652,21 +753,35 @@
 			this.menuStrip.PerformLayout();
 			this.statusStrip.ResumeLayout(false);
 			this.statusStrip.PerformLayout();
-			this.tableLayoutPanelTestSetupButtons.ResumeLayout(false);
-			this.tableLayoutPanelTestSetupButtons.PerformLayout();
-			this.tableLayoutPanelStartStop.ResumeLayout(false);
 			this.groupBoxSettings.ResumeLayout(false);
 			this.groupBoxSettings.PerformLayout();
-			this.tableLayoutPanel1.ResumeLayout(false);
-			this.tableLayoutPanel1.PerformLayout();
-			this.tableLayoutPanelSerialPort.ResumeLayout(false);
-			this.tableLayoutPanelSerialPort.PerformLayout();
+			this.tableLayoutSettings.ResumeLayout(false);
+			this.tableLayoutSettings.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownTimeout)).EndInit();
-			this.tableLayoutPanelStatus.ResumeLayout(false);
-			this.tableLayoutPanelStatus.PerformLayout();
-			this.tableLayoutPanelVariables.ResumeLayout(false);
-			this.tableLayoutPanelVariables.PerformLayout();
 			this.groupBoxStatus.ResumeLayout(false);
+			this.tableLayoutPogo.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS19)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS18)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS17)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS16)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS15)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS14)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS13)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS12)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS11)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS10)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS9)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS8)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS7)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS6)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS5)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS4)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS3)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS2)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS0)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPSSingle)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox35)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -685,11 +800,45 @@
 		private StatusStrip statusStrip;
 		private ToolStripProgressBar toolStripProgressBar;
 		private ToolStripStatusLabel toolStripStatusLabel;
-		private TableLayoutPanel tableLayoutPanelTestSetupButtons;
-		private TableLayoutPanel tableLayoutPanelStartStop;
-		private Button buttonStart;
+		private Button buttonStartSingle;
 		private Button buttonStop;
 		private GroupBox groupBoxSettings;
+		private TableLayoutPanel tableLayoutSettings;
+		private Label labelSerialPort;
+		private Label labelTimeout;
+		private Label labelSeconds;
+		private NumericUpDown numericUpDownTimeout;
+		private Button buttonPortRefresh;
+		private CheckedListBox checkedListSerialPort;
+		private GroupBox groupBoxStatus;
+		private Label labelName;
+		private Label labelPanelNumber;
+		private TextBox textBoxName;
+		private TextBox textBoxPanelNumber;
+		private PictureBox pictureBoxGPSSingle;
+		private PictureBox pictureBoxGPS19;
+		private PictureBox pictureBoxGPS18;
+		private PictureBox pictureBoxGPS17;
+		private PictureBox pictureBoxGPS16;
+		private PictureBox pictureBoxGPS15;
+		private PictureBox pictureBoxGPS14;
+		private PictureBox pictureBoxGPS13;
+		private PictureBox pictureBoxGPS12;
+		private PictureBox pictureBoxGPS11;
+		private PictureBox pictureBoxGPS4;
+		private PictureBox pictureBoxGPS3;
+		private PictureBox pictureBoxGPS2;
+		private PictureBox pictureBoxGPS1;
+		private PictureBox pictureBoxGPS0;
+		private PictureBox pictureBoxGPS6;
+		private PictureBox pictureBoxGPS7;
+		private PictureBox pictureBoxGPS8;
+		private PictureBox pictureBoxGPS9;
+		private PictureBox pictureBoxGPS10;
+		private PictureBox pictureBoxGPS5;
+		private Button buttonStartPanel;
+		private TableLayoutPanel tableLayoutPanelSerialPort;
+		private ComboBox comboBoxSerialPort;
 		private TableLayoutPanel tableLayoutPanelStatus;
 		private TableLayoutPanel tableLayoutPanelVariables;
 		private TextBox textBoxStatusFixType;
@@ -710,14 +859,8 @@
 		private TextBox textBoxFixType;
 		private TextBox textBoxSatellites;
 		private TextBox textBoxStatusSatellites;
-		private GroupBox groupBoxStatus;
-		private TableLayoutPanel tableLayoutPanel1;
-		private TableLayoutPanel tableLayoutPanelSerialPort;
-		private ComboBox comboBoxSerialPort;
-		private Button buttonPortRefresh;
-		private Label labelSerialPort;
-		private Label labelTimeout;
-		private Label labelSeconds;
-		private NumericUpDown numericUpDownTimeout;
+		private Button buttonStart;
+		private TableLayoutPanel tableLayoutPogo;
+		private PictureBox pictureBox35;
 	}
 }

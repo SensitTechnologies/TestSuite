@@ -63,15 +63,4 @@
   <metadata name="statusStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="buttonPortRefresh.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAAO9JREFUOE9jIBbEtdz8D2WSDnIn3Pkv6nvif+2ch8QZ4lF+7b+E/0mwJsmgU2AM
-        4mvEnsNvAMgGUZ/jYI0gDTDNICwfdQ6MU3vv4jYEpNkk5TzYqTAMcg1MMwjjdAUokLD5EWSjatIlMC6c
-        94y4MEAGDqU3/k/a8IJ0jQMLQH7VTb1EurNhGkE4pOM+VgOS57zEbjBIEyy09fNv/vdquvd/1u53YDxp
-        5/v/EdNe/nfqxBMLINtBmnWyr4MNMCi89d+q/uF/+7anYOzaS0RMxHbfAxsA0mxacQ9uQN3698SHh1Up
-        0GYghnLJA8QbwMAAAPxvwKHz5SH/AAAAAElFTkSuQmCC
-</value>
-  </data>
 </root>
