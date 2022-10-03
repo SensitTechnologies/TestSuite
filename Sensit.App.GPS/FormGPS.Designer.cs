@@ -41,8 +41,6 @@
 			this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
 			this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.buttonPortRefresh = new System.Windows.Forms.Button();
-			this.buttonStop = new System.Windows.Forms.Button();
-			this.buttonStartSingle = new System.Windows.Forms.Button();
 			this.groupBoxSettings = new System.Windows.Forms.GroupBox();
 			this.tableLayoutSettings = new System.Windows.Forms.TableLayoutPanel();
 			this.labelSerialPort = new System.Windows.Forms.Label();
@@ -150,19 +148,12 @@
 			// startToolStripMenuItem
 			// 
 			this.startToolStripMenuItem.Name = "startToolStripMenuItem";
-			this.startToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-			this.startToolStripMenuItem.Size = new System.Drawing.Size(147, 26);
-			this.startToolStripMenuItem.Text = "&Start";
-			this.startToolStripMenuItem.Click += new System.EventHandler(this.ButtonStartSingle_Click);
+			this.startToolStripMenuItem.Size = new System.Drawing.Size(83, 26);
 			// 
 			// stopToolStripMenuItem
 			// 
-			this.stopToolStripMenuItem.Enabled = false;
 			this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
-			this.stopToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F7;
-			this.stopToolStripMenuItem.Size = new System.Drawing.Size(147, 26);
-			this.stopToolStripMenuItem.Text = "&Stop";
-			this.stopToolStripMenuItem.Click += new System.EventHandler(this.ButtonStop_Click);
+			this.stopToolStripMenuItem.Size = new System.Drawing.Size(83, 26);
 			// 
 			// helpToolStripMenuItem
 			// 
@@ -216,37 +207,13 @@
 			this.buttonPortRefresh.BackColor = System.Drawing.SystemColors.ButtonFace;
 			this.buttonPortRefresh.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.reuse;
 			this.buttonPortRefresh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.buttonPortRefresh.Location = new System.Drawing.Point(162, 4);
+			this.buttonPortRefresh.Location = new System.Drawing.Point(161, 4);
 			this.buttonPortRefresh.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.buttonPortRefresh.Name = "buttonPortRefresh";
 			this.buttonPortRefresh.Size = new System.Drawing.Size(35, 35);
 			this.buttonPortRefresh.TabIndex = 20;
 			this.buttonPortRefresh.UseVisualStyleBackColor = false;
 			this.buttonPortRefresh.Click += new System.EventHandler(this.ButtonPortRefresh_Click);
-			// 
-			// buttonStop
-			// 
-			this.buttonStop.Anchor = System.Windows.Forms.AnchorStyles.Top;
-			this.buttonStop.Enabled = false;
-			this.buttonStop.Location = new System.Drawing.Point(334, 132);
-			this.buttonStop.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.buttonStop.Name = "buttonStop";
-			this.buttonStop.Size = new System.Drawing.Size(115, 35);
-			this.buttonStop.TabIndex = 4;
-			this.buttonStop.Text = "Stop";
-			this.buttonStop.UseVisualStyleBackColor = true;
-			this.buttonStop.Click += new System.EventHandler(this.ButtonStop_Click);
-			// 
-			// buttonStartSingle
-			// 
-			this.buttonStartSingle.Location = new System.Drawing.Point(334, 281);
-			this.buttonStartSingle.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.buttonStartSingle.Name = "buttonStartSingle";
-			this.buttonStartSingle.Size = new System.Drawing.Size(115, 35);
-			this.buttonStartSingle.TabIndex = 3;
-			this.buttonStartSingle.Text = "Start Single";
-			this.buttonStartSingle.UseVisualStyleBackColor = true;
-			this.buttonStartSingle.Click += new System.EventHandler(this.ButtonStartSingle_Click);
 			// 
 			// groupBoxSettings
 			// 
@@ -269,9 +236,9 @@
 			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
 			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.79621F));
 			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.14218F));
-			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.36364F));
-			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.11479F));
+			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.77704F));
+			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17.21854F));
 			this.tableLayoutSettings.Controls.Add(this.labelSerialPort, 0, 1);
 			this.tableLayoutSettings.Controls.Add(this.labelSeconds, 5, 5);
 			this.tableLayoutSettings.Controls.Add(this.numericUpDownTimeout, 4, 5);
@@ -306,7 +273,7 @@
 			this.labelSerialPort.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.labelSerialPort.Location = new System.Drawing.Point(3, 15);
 			this.labelSerialPort.Name = "labelSerialPort";
-			this.labelSerialPort.Size = new System.Drawing.Size(128, 28);
+			this.labelSerialPort.Size = new System.Drawing.Size(127, 28);
 			this.labelSerialPort.TabIndex = 3;
 			this.labelSerialPort.Text = "Serial Ports";
 			this.labelSerialPort.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -315,16 +282,16 @@
 			// 
 			this.labelSeconds.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelSeconds.AutoSize = true;
-			this.labelSeconds.Location = new System.Drawing.Point(378, 171);
+			this.labelSeconds.Location = new System.Drawing.Point(376, 171);
 			this.labelSeconds.Name = "labelSeconds";
-			this.labelSeconds.Size = new System.Drawing.Size(72, 20);
+			this.labelSeconds.Size = new System.Drawing.Size(74, 20);
 			this.labelSeconds.TabIndex = 7;
 			this.labelSeconds.Text = "seconds";
 			// 
 			// numericUpDownTimeout
 			// 
 			this.numericUpDownTimeout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.numericUpDownTimeout.Location = new System.Drawing.Point(302, 167);
+			this.numericUpDownTimeout.Location = new System.Drawing.Point(300, 167);
 			this.numericUpDownTimeout.Maximum = new decimal(new int[] {
             3600,
             0,
@@ -338,9 +305,9 @@
 			// 
 			this.labelTimeout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.labelTimeout.AutoSize = true;
-			this.labelTimeout.Location = new System.Drawing.Point(228, 171);
+			this.labelTimeout.Location = new System.Drawing.Point(227, 171);
 			this.labelTimeout.Name = "labelTimeout";
-			this.labelTimeout.Size = new System.Drawing.Size(68, 20);
+			this.labelTimeout.Size = new System.Drawing.Size(67, 20);
 			this.labelTimeout.TabIndex = 5;
 			this.labelTimeout.Text = "Timeout";
 			this.labelTimeout.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -356,7 +323,7 @@
 			this.checkedListSerialPort.Location = new System.Drawing.Point(3, 46);
 			this.checkedListSerialPort.Name = "checkedListSerialPort";
 			this.tableLayoutSettings.SetRowSpan(this.checkedListSerialPort, 4);
-			this.checkedListSerialPort.Size = new System.Drawing.Size(219, 158);
+			this.checkedListSerialPort.Size = new System.Drawing.Size(218, 158);
 			this.checkedListSerialPort.TabIndex = 9;
 			// 
 			// labelName
@@ -364,9 +331,9 @@
 			this.tableLayoutSettings.SetColumnSpan(this.labelName, 3);
 			this.labelName.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.labelName.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.labelName.Location = new System.Drawing.Point(228, 20);
+			this.labelName.Location = new System.Drawing.Point(227, 20);
 			this.labelName.Name = "labelName";
-			this.labelName.Size = new System.Drawing.Size(222, 23);
+			this.labelName.Size = new System.Drawing.Size(223, 23);
 			this.labelName.TabIndex = 11;
 			this.labelName.Text = "Name";
 			// 
@@ -375,25 +342,27 @@
 			this.tableLayoutSettings.SetColumnSpan(this.labelPanelNumber, 3);
 			this.labelPanelNumber.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.labelPanelNumber.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.labelPanelNumber.Location = new System.Drawing.Point(228, 91);
+			this.labelPanelNumber.Location = new System.Drawing.Point(227, 91);
 			this.labelPanelNumber.Name = "labelPanelNumber";
-			this.labelPanelNumber.Size = new System.Drawing.Size(222, 23);
+			this.labelPanelNumber.Size = new System.Drawing.Size(223, 23);
 			this.labelPanelNumber.TabIndex = 12;
 			this.labelPanelNumber.Text = "Panel Number";
 			// 
 			// textBoxName
 			// 
 			this.tableLayoutSettings.SetColumnSpan(this.textBoxName, 2);
-			this.textBoxName.Location = new System.Drawing.Point(228, 46);
+			this.textBoxName.Location = new System.Drawing.Point(227, 46);
 			this.textBoxName.Name = "textBoxName";
+			this.textBoxName.PlaceholderText = "Required";
 			this.textBoxName.Size = new System.Drawing.Size(141, 27);
 			this.textBoxName.TabIndex = 13;
 			// 
 			// textBoxPanelNumber
 			// 
 			this.tableLayoutSettings.SetColumnSpan(this.textBoxPanelNumber, 3);
-			this.textBoxPanelNumber.Location = new System.Drawing.Point(228, 117);
+			this.textBoxPanelNumber.Location = new System.Drawing.Point(227, 117);
 			this.textBoxPanelNumber.Name = "textBoxPanelNumber";
+			this.textBoxPanelNumber.PlaceholderText = "Required for Panel Program";
 			this.textBoxPanelNumber.Size = new System.Drawing.Size(214, 27);
 			this.textBoxPanelNumber.TabIndex = 14;
 			// 
@@ -800,8 +769,6 @@
 		private StatusStrip statusStrip;
 		private ToolStripProgressBar toolStripProgressBar;
 		private ToolStripStatusLabel toolStripStatusLabel;
-		private Button buttonStartSingle;
-		private Button buttonStop;
 		private GroupBox groupBoxSettings;
 		private TableLayoutPanel tableLayoutSettings;
 		private Label labelSerialPort;
@@ -836,30 +803,6 @@
 		private PictureBox pictureBoxGPS9;
 		private PictureBox pictureBoxGPS10;
 		private PictureBox pictureBoxGPS5;
-		private Button buttonStartPanel;
-		private TableLayoutPanel tableLayoutPanelSerialPort;
-		private ComboBox comboBoxSerialPort;
-		private TableLayoutPanel tableLayoutPanelStatus;
-		private TableLayoutPanel tableLayoutPanelVariables;
-		private TextBox textBoxStatusFixType;
-		private TextBox textBoxStatusLongitude;
-		private TextBox textBoxStatusLatitude;
-		private Label labelTimestamp;
-		private Label labelLatitude;
-		private TextBox textBoxTimestamp;
-		private TextBox textBoxLatitude;
-		private Label labelLongitude;
-		private TextBox textBoxLongitude;
-		private Label labelFixType;
-		private Label labelUnitTimestamp;
-		private Label labelUnitLatitude;
-		private Label labelUnitLongitude;
-		private Label labelSatellites;
-		private TextBox textBoxStatusTimestamp;
-		private TextBox textBoxFixType;
-		private TextBox textBoxSatellites;
-		private TextBox textBoxStatusSatellites;
-		private Button buttonStart;
 		private TableLayoutPanel tableLayoutPogo;
 		private PictureBox pictureBox35;
 	}
