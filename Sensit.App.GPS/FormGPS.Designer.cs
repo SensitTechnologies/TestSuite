@@ -44,14 +44,16 @@
 			this.groupBoxSettings = new System.Windows.Forms.GroupBox();
 			this.tableLayoutSettings = new System.Windows.Forms.TableLayoutPanel();
 			this.labelSerialPort = new System.Windows.Forms.Label();
-			this.labelSeconds = new System.Windows.Forms.Label();
-			this.numericUpDownTimeout = new System.Windows.Forms.NumericUpDown();
-			this.labelTimeout = new System.Windows.Forms.Label();
 			this.checkedListSerialPort = new System.Windows.Forms.CheckedListBox();
 			this.labelName = new System.Windows.Forms.Label();
 			this.labelPanelNumber = new System.Windows.Forms.Label();
-			this.textBoxName = new System.Windows.Forms.TextBox();
+			this.numericUpDownTimeout = new System.Windows.Forms.NumericUpDown();
+			this.labelSeconds = new System.Windows.Forms.Label();
+			this.labelTimeout = new System.Windows.Forms.Label();
+			this.comboBoxUserLocation = new System.Windows.Forms.ComboBox();
 			this.textBoxPanelNumber = new System.Windows.Forms.TextBox();
+			this.textBoxName = new System.Windows.Forms.TextBox();
+			this.labelUserLocation = new System.Windows.Forms.Label();
 			this.groupBoxStatus = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPogo = new System.Windows.Forms.TableLayoutPanel();
 			this.pictureBoxGPS19 = new System.Windows.Forms.PictureBox();
@@ -78,7 +80,6 @@
 			this.buttonStartSingle = new System.Windows.Forms.Button();
 			this.buttonStop = new System.Windows.Forms.Button();
 			this.buttonStartPanel = new System.Windows.Forms.Button();
-			this.pictureBox35 = new System.Windows.Forms.PictureBox();
 			this.menuStrip.SuspendLayout();
 			this.statusStrip.SuspendLayout();
 			this.groupBoxSettings.SuspendLayout();
@@ -107,7 +108,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS0)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPSSingle)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox35)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// menuStrip
@@ -120,7 +120,7 @@
 			this.menuStrip.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip.Name = "menuStrip";
 			this.menuStrip.Padding = new System.Windows.Forms.Padding(6, 3, 0, 3);
-			this.menuStrip.Size = new System.Drawing.Size(449, 30);
+			this.menuStrip.Size = new System.Drawing.Size(624, 30);
 			this.menuStrip.TabIndex = 14;
 			this.menuStrip.Text = "menuStrip1";
 			// 
@@ -188,7 +188,7 @@
 			this.statusStrip.Location = new System.Drawing.Point(0, 613);
 			this.statusStrip.Name = "statusStrip";
 			this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 18, 0);
-			this.statusStrip.Size = new System.Drawing.Size(449, 40);
+			this.statusStrip.Size = new System.Drawing.Size(624, 40);
 			this.statusStrip.TabIndex = 15;
 			this.statusStrip.Text = "statusStrip1";
 			// 
@@ -206,11 +206,11 @@
 			// 
 			// buttonPortRefresh
 			// 
-			this.buttonPortRefresh.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+			this.buttonPortRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.buttonPortRefresh.BackColor = System.Drawing.SystemColors.ButtonFace;
 			this.buttonPortRefresh.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.reuse;
 			this.buttonPortRefresh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.buttonPortRefresh.Location = new System.Drawing.Point(155, 4);
+			this.buttonPortRefresh.Location = new System.Drawing.Point(176, 4);
 			this.buttonPortRefresh.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.buttonPortRefresh.Name = "buttonPortRefresh";
 			this.buttonPortRefresh.Size = new System.Drawing.Size(35, 35);
@@ -226,7 +226,7 @@
 			this.groupBoxSettings.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.groupBoxSettings.Name = "groupBoxSettings";
 			this.groupBoxSettings.Padding = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.groupBoxSettings.Size = new System.Drawing.Size(449, 239);
+			this.groupBoxSettings.Size = new System.Drawing.Size(624, 239);
 			this.groupBoxSettings.TabIndex = 17;
 			this.groupBoxSettings.TabStop = false;
 			this.groupBoxSettings.Text = "Settings";
@@ -235,23 +235,28 @@
 			// 
 			this.tableLayoutSettings.AutoSize = true;
 			this.tableLayoutSettings.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutSettings.ColumnCount = 6;
-			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.79621F));
-			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.14218F));
-			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.11479F));
-			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.77704F));
-			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17.21854F));
-			this.tableLayoutSettings.Controls.Add(this.labelSerialPort, 0, 1);
-			this.tableLayoutSettings.Controls.Add(this.labelSeconds, 5, 5);
-			this.tableLayoutSettings.Controls.Add(this.numericUpDownTimeout, 4, 5);
-			this.tableLayoutSettings.Controls.Add(this.labelTimeout, 3, 5);
-			this.tableLayoutSettings.Controls.Add(this.checkedListSerialPort, 0, 2);
-			this.tableLayoutSettings.Controls.Add(this.buttonPortRefresh, 2, 1);
-			this.tableLayoutSettings.Controls.Add(this.labelName, 3, 1);
-			this.tableLayoutSettings.Controls.Add(this.labelPanelNumber, 3, 3);
-			this.tableLayoutSettings.Controls.Add(this.textBoxName, 3, 2);
-			this.tableLayoutSettings.Controls.Add(this.textBoxPanelNumber, 3, 4);
+			this.tableLayoutSettings.ColumnCount = 9;
+			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+			this.tableLayoutSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+			this.tableLayoutSettings.Controls.Add(this.labelSerialPort, 0, 0);
+			this.tableLayoutSettings.Controls.Add(this.checkedListSerialPort, 0, 1);
+			this.tableLayoutSettings.Controls.Add(this.buttonPortRefresh, 2, 0);
+			this.tableLayoutSettings.Controls.Add(this.labelName, 6, 1);
+			this.tableLayoutSettings.Controls.Add(this.labelPanelNumber, 6, 4);
+			this.tableLayoutSettings.Controls.Add(this.numericUpDownTimeout, 3, 5);
+			this.tableLayoutSettings.Controls.Add(this.labelSeconds, 4, 5);
+			this.tableLayoutSettings.Controls.Add(this.labelTimeout, 3, 4);
+			this.tableLayoutSettings.Controls.Add(this.comboBoxUserLocation, 3, 2);
+			this.tableLayoutSettings.Controls.Add(this.textBoxPanelNumber, 6, 5);
+			this.tableLayoutSettings.Controls.Add(this.textBoxName, 6, 2);
+			this.tableLayoutSettings.Controls.Add(this.labelUserLocation, 3, 1);
 			this.tableLayoutSettings.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutSettings.Location = new System.Drawing.Point(5, 24);
 			this.tableLayoutSettings.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
@@ -259,12 +264,11 @@
 			this.tableLayoutSettings.RowCount = 6;
 			this.tableLayoutSettings.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutSettings.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-			this.tableLayoutSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
-			this.tableLayoutSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
-			this.tableLayoutSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
-			this.tableLayoutSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutSettings.Size = new System.Drawing.Size(439, 211);
+			this.tableLayoutSettings.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+			this.tableLayoutSettings.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutSettings.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tableLayoutSettings.Size = new System.Drawing.Size(614, 211);
 			this.tableLayoutSettings.TabIndex = 15;
 			// 
 			// labelSerialPort
@@ -276,98 +280,129 @@
 			this.labelSerialPort.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.labelSerialPort.Location = new System.Drawing.Point(3, 15);
 			this.labelSerialPort.Name = "labelSerialPort";
-			this.labelSerialPort.Size = new System.Drawing.Size(123, 28);
+			this.labelSerialPort.Size = new System.Drawing.Size(138, 28);
 			this.labelSerialPort.TabIndex = 3;
 			this.labelSerialPort.Text = "Serial Ports";
 			this.labelSerialPort.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
 			// 
-			// labelSeconds
+			// checkedListSerialPort
 			// 
-			this.labelSeconds.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.labelSeconds.AutoSize = true;
-			this.labelSeconds.Location = new System.Drawing.Point(363, 171);
-			this.labelSeconds.Name = "labelSeconds";
-			this.labelSeconds.Size = new System.Drawing.Size(73, 20);
-			this.labelSeconds.TabIndex = 7;
-			this.labelSeconds.Text = "seconds";
+			this.checkedListSerialPort.BackColor = System.Drawing.SystemColors.Menu;
+			this.tableLayoutSettings.SetColumnSpan(this.checkedListSerialPort, 3);
+			this.checkedListSerialPort.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.checkedListSerialPort.FormattingEnabled = true;
+			this.checkedListSerialPort.Location = new System.Drawing.Point(3, 46);
+			this.checkedListSerialPort.Name = "checkedListSerialPort";
+			this.tableLayoutSettings.SetRowSpan(this.checkedListSerialPort, 5);
+			this.checkedListSerialPort.Size = new System.Drawing.Size(210, 167);
+			this.checkedListSerialPort.TabIndex = 9;
+			// 
+			// labelName
+			// 
+			this.labelName.AutoSize = true;
+			this.tableLayoutSettings.SetColumnSpan(this.labelName, 2);
+			this.labelName.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.labelName.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.labelName.Location = new System.Drawing.Point(398, 43);
+			this.labelName.Name = "labelName";
+			this.labelName.Size = new System.Drawing.Size(138, 25);
+			this.labelName.TabIndex = 11;
+			this.labelName.Text = "Name";
+			// 
+			// labelPanelNumber
+			// 
+			this.labelPanelNumber.AutoSize = true;
+			this.tableLayoutSettings.SetColumnSpan(this.labelPanelNumber, 2);
+			this.labelPanelNumber.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.labelPanelNumber.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.labelPanelNumber.Location = new System.Drawing.Point(398, 137);
+			this.labelPanelNumber.Name = "labelPanelNumber";
+			this.labelPanelNumber.Size = new System.Drawing.Size(138, 25);
+			this.labelPanelNumber.TabIndex = 12;
+			this.labelPanelNumber.Text = "Panel Number";
 			// 
 			// numericUpDownTimeout
 			// 
-			this.numericUpDownTimeout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.numericUpDownTimeout.Location = new System.Drawing.Point(290, 167);
+			this.numericUpDownTimeout.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.numericUpDownTimeout.Location = new System.Drawing.Point(219, 165);
 			this.numericUpDownTimeout.Maximum = new decimal(new int[] {
             3600,
             0,
             0,
             0});
 			this.numericUpDownTimeout.Name = "numericUpDownTimeout";
-			this.numericUpDownTimeout.Size = new System.Drawing.Size(67, 27);
+			this.numericUpDownTimeout.Size = new System.Drawing.Size(66, 27);
 			this.numericUpDownTimeout.TabIndex = 8;
+			// 
+			// labelSeconds
+			// 
+			this.labelSeconds.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.labelSeconds.Location = new System.Drawing.Point(291, 162);
+			this.labelSeconds.Name = "labelSeconds";
+			this.labelSeconds.Size = new System.Drawing.Size(66, 20);
+			this.labelSeconds.TabIndex = 7;
+			this.labelSeconds.Text = "seconds";
+			this.labelSeconds.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// labelTimeout
 			// 
-			this.labelTimeout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.labelTimeout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.labelTimeout.AutoSize = true;
-			this.labelTimeout.Location = new System.Drawing.Point(220, 171);
+			this.tableLayoutSettings.SetColumnSpan(this.labelTimeout, 2);
+			this.labelTimeout.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.labelTimeout.Location = new System.Drawing.Point(219, 139);
 			this.labelTimeout.Name = "labelTimeout";
-			this.labelTimeout.Size = new System.Drawing.Size(64, 20);
+			this.labelTimeout.Size = new System.Drawing.Size(73, 23);
 			this.labelTimeout.TabIndex = 5;
 			this.labelTimeout.Text = "Timeout";
 			this.labelTimeout.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
-			// checkedListSerialPort
+			// comboBoxUserLocation
 			// 
-			this.checkedListSerialPort.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.checkedListSerialPort.BackColor = System.Drawing.SystemColors.Menu;
-			this.tableLayoutSettings.SetColumnSpan(this.checkedListSerialPort, 3);
-			this.checkedListSerialPort.FormattingEnabled = true;
-			this.checkedListSerialPort.Location = new System.Drawing.Point(3, 46);
-			this.checkedListSerialPort.Name = "checkedListSerialPort";
-			this.tableLayoutSettings.SetRowSpan(this.checkedListSerialPort, 4);
-			this.checkedListSerialPort.Size = new System.Drawing.Size(211, 158);
-			this.checkedListSerialPort.TabIndex = 9;
+			this.comboBoxUserLocation.AllowDrop = true;
+			this.comboBoxUserLocation.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+			this.tableLayoutSettings.SetColumnSpan(this.comboBoxUserLocation, 2);
+			this.comboBoxUserLocation.FormattingEnabled = true;
+			this.comboBoxUserLocation.Items.AddRange(new object[] {
+            "Transport",
+            "Loudermilk"});
+			this.comboBoxUserLocation.Location = new System.Drawing.Point(219, 71);
+			this.comboBoxUserLocation.Name = "comboBoxUserLocation";
+			this.comboBoxUserLocation.Size = new System.Drawing.Size(138, 28);
+			this.comboBoxUserLocation.TabIndex = 22;
+			this.comboBoxUserLocation.Text = "Transport";
 			// 
-			// labelName
+			// textBoxPanelNumber
 			// 
-			this.tableLayoutSettings.SetColumnSpan(this.labelName, 3);
-			this.labelName.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.labelName.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.labelName.Location = new System.Drawing.Point(220, 20);
-			this.labelName.Name = "labelName";
-			this.labelName.Size = new System.Drawing.Size(216, 23);
-			this.labelName.TabIndex = 11;
-			this.labelName.Text = "Name";
-			// 
-			// labelPanelNumber
-			// 
-			this.tableLayoutSettings.SetColumnSpan(this.labelPanelNumber, 3);
-			this.labelPanelNumber.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.labelPanelNumber.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.labelPanelNumber.Location = new System.Drawing.Point(220, 91);
-			this.labelPanelNumber.Name = "labelPanelNumber";
-			this.labelPanelNumber.Size = new System.Drawing.Size(216, 23);
-			this.labelPanelNumber.TabIndex = 12;
-			this.labelPanelNumber.Text = "Panel Number";
+			this.tableLayoutSettings.SetColumnSpan(this.textBoxPanelNumber, 3);
+			this.textBoxPanelNumber.Location = new System.Drawing.Point(398, 165);
+			this.textBoxPanelNumber.Name = "textBoxPanelNumber";
+			this.textBoxPanelNumber.PlaceholderText = "Required for Panel Program";
+			this.textBoxPanelNumber.Size = new System.Drawing.Size(196, 27);
+			this.textBoxPanelNumber.TabIndex = 14;
 			// 
 			// textBoxName
 			// 
 			this.tableLayoutSettings.SetColumnSpan(this.textBoxName, 2);
-			this.textBoxName.Location = new System.Drawing.Point(220, 46);
+			this.textBoxName.Location = new System.Drawing.Point(398, 71);
 			this.textBoxName.Name = "textBoxName";
 			this.textBoxName.PlaceholderText = "Required";
 			this.textBoxName.Size = new System.Drawing.Size(137, 27);
 			this.textBoxName.TabIndex = 13;
 			// 
-			// textBoxPanelNumber
+			// labelUserLocation
 			// 
-			this.tableLayoutSettings.SetColumnSpan(this.textBoxPanelNumber, 3);
-			this.textBoxPanelNumber.Location = new System.Drawing.Point(220, 117);
-			this.textBoxPanelNumber.Name = "textBoxPanelNumber";
-			this.textBoxPanelNumber.PlaceholderText = "Required for Panel Program";
-			this.textBoxPanelNumber.Size = new System.Drawing.Size(214, 27);
-			this.textBoxPanelNumber.TabIndex = 14;
+			this.labelUserLocation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.labelUserLocation.AutoSize = true;
+			this.tableLayoutSettings.SetColumnSpan(this.labelUserLocation, 2);
+			this.labelUserLocation.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.labelUserLocation.Location = new System.Drawing.Point(219, 45);
+			this.labelUserLocation.Name = "labelUserLocation";
+			this.labelUserLocation.Size = new System.Drawing.Size(75, 23);
+			this.labelUserLocation.TabIndex = 21;
+			this.labelUserLocation.Text = "Location";
 			// 
 			// groupBoxStatus
 			// 
@@ -378,21 +413,22 @@
 			this.groupBoxStatus.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.groupBoxStatus.Name = "groupBoxStatus";
 			this.groupBoxStatus.Padding = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.groupBoxStatus.Size = new System.Drawing.Size(449, 344);
+			this.groupBoxStatus.Size = new System.Drawing.Size(624, 344);
 			this.groupBoxStatus.TabIndex = 18;
 			this.groupBoxStatus.TabStop = false;
 			this.groupBoxStatus.Text = "Status";
 			// 
 			// tableLayoutPogo
 			// 
+			this.tableLayoutPogo.AutoSize = true;
 			this.tableLayoutPogo.ColumnCount = 7;
-			this.tableLayoutPogo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPogo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPogo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPogo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPogo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPogo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPogo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			this.tableLayoutPogo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.19857F));
+			this.tableLayoutPogo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.19857F));
+			this.tableLayoutPogo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.19857F));
+			this.tableLayoutPogo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.19857F));
+			this.tableLayoutPogo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.19857F));
+			this.tableLayoutPogo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.19857F));
+			this.tableLayoutPogo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.80856F));
 			this.tableLayoutPogo.Controls.Add(this.pictureBoxGPS19, 4, 3);
 			this.tableLayoutPogo.Controls.Add(this.pictureBoxGPS18, 3, 3);
 			this.tableLayoutPogo.Controls.Add(this.pictureBoxGPS17, 2, 3);
@@ -421,12 +457,12 @@
 			this.tableLayoutPogo.Location = new System.Drawing.Point(5, 24);
 			this.tableLayoutPogo.Name = "tableLayoutPogo";
 			this.tableLayoutPogo.RowCount = 5;
-			this.tableLayoutPogo.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPogo.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPogo.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPogo.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPogo.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPogo.Size = new System.Drawing.Size(439, 316);
+			this.tableLayoutPogo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tableLayoutPogo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tableLayoutPogo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tableLayoutPogo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tableLayoutPogo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tableLayoutPogo.Size = new System.Drawing.Size(614, 316);
 			this.tableLayoutPogo.TabIndex = 0;
 			// 
 			// pictureBoxGPS19
@@ -434,11 +470,12 @@
 			this.pictureBoxGPS19.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.pictureBoxGPS19.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS19.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.gps_board;
 			this.pictureBoxGPS19.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.pictureBoxGPS19.Location = new System.Drawing.Point(219, 192);
+			this.pictureBoxGPS19.Location = new System.Drawing.Point(327, 192);
 			this.pictureBoxGPS19.Name = "pictureBoxGPS19";
-			this.pictureBoxGPS19.Size = new System.Drawing.Size(48, 57);
+			this.pictureBoxGPS19.Size = new System.Drawing.Size(75, 57);
+			this.pictureBoxGPS19.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pictureBoxGPS19.TabIndex = 23;
 			this.pictureBoxGPS19.TabStop = false;
 			// 
@@ -447,11 +484,12 @@
 			this.pictureBoxGPS18.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.pictureBoxGPS18.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS18.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.gps_board;
 			this.pictureBoxGPS18.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.pictureBoxGPS18.Location = new System.Drawing.Point(165, 192);
+			this.pictureBoxGPS18.Location = new System.Drawing.Point(246, 192);
 			this.pictureBoxGPS18.Name = "pictureBoxGPS18";
-			this.pictureBoxGPS18.Size = new System.Drawing.Size(48, 57);
+			this.pictureBoxGPS18.Size = new System.Drawing.Size(75, 57);
+			this.pictureBoxGPS18.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pictureBoxGPS18.TabIndex = 22;
 			this.pictureBoxGPS18.TabStop = false;
 			// 
@@ -460,11 +498,12 @@
 			this.pictureBoxGPS17.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.pictureBoxGPS17.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS17.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.gps_board;
 			this.pictureBoxGPS17.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.pictureBoxGPS17.Location = new System.Drawing.Point(111, 192);
+			this.pictureBoxGPS17.Location = new System.Drawing.Point(165, 192);
 			this.pictureBoxGPS17.Name = "pictureBoxGPS17";
-			this.pictureBoxGPS17.Size = new System.Drawing.Size(48, 57);
+			this.pictureBoxGPS17.Size = new System.Drawing.Size(75, 57);
+			this.pictureBoxGPS17.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pictureBoxGPS17.TabIndex = 21;
 			this.pictureBoxGPS17.TabStop = false;
 			// 
@@ -473,11 +512,12 @@
 			this.pictureBoxGPS16.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.pictureBoxGPS16.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS16.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.gps_board;
 			this.pictureBoxGPS16.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.pictureBoxGPS16.Location = new System.Drawing.Point(57, 192);
+			this.pictureBoxGPS16.Location = new System.Drawing.Point(84, 192);
 			this.pictureBoxGPS16.Name = "pictureBoxGPS16";
-			this.pictureBoxGPS16.Size = new System.Drawing.Size(48, 57);
+			this.pictureBoxGPS16.Size = new System.Drawing.Size(75, 57);
+			this.pictureBoxGPS16.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pictureBoxGPS16.TabIndex = 20;
 			this.pictureBoxGPS16.TabStop = false;
 			// 
@@ -486,11 +526,12 @@
 			this.pictureBoxGPS15.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.pictureBoxGPS15.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS15.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.gps_board;
 			this.pictureBoxGPS15.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
 			this.pictureBoxGPS15.Location = new System.Drawing.Point(3, 192);
 			this.pictureBoxGPS15.Name = "pictureBoxGPS15";
-			this.pictureBoxGPS15.Size = new System.Drawing.Size(48, 57);
+			this.pictureBoxGPS15.Size = new System.Drawing.Size(75, 57);
+			this.pictureBoxGPS15.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pictureBoxGPS15.TabIndex = 19;
 			this.pictureBoxGPS15.TabStop = false;
 			// 
@@ -499,11 +540,12 @@
 			this.pictureBoxGPS14.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.pictureBoxGPS14.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS14.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.gps_board;
 			this.pictureBoxGPS14.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.pictureBoxGPS14.Location = new System.Drawing.Point(219, 129);
+			this.pictureBoxGPS14.Location = new System.Drawing.Point(327, 129);
 			this.pictureBoxGPS14.Name = "pictureBoxGPS14";
-			this.pictureBoxGPS14.Size = new System.Drawing.Size(48, 57);
+			this.pictureBoxGPS14.Size = new System.Drawing.Size(75, 57);
+			this.pictureBoxGPS14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pictureBoxGPS14.TabIndex = 17;
 			this.pictureBoxGPS14.TabStop = false;
 			// 
@@ -512,11 +554,12 @@
 			this.pictureBoxGPS13.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.pictureBoxGPS13.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS13.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.gps_board;
 			this.pictureBoxGPS13.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.pictureBoxGPS13.Location = new System.Drawing.Point(165, 129);
+			this.pictureBoxGPS13.Location = new System.Drawing.Point(246, 129);
 			this.pictureBoxGPS13.Name = "pictureBoxGPS13";
-			this.pictureBoxGPS13.Size = new System.Drawing.Size(48, 57);
+			this.pictureBoxGPS13.Size = new System.Drawing.Size(75, 57);
+			this.pictureBoxGPS13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pictureBoxGPS13.TabIndex = 16;
 			this.pictureBoxGPS13.TabStop = false;
 			// 
@@ -525,11 +568,12 @@
 			this.pictureBoxGPS12.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.pictureBoxGPS12.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS12.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.gps_board;
 			this.pictureBoxGPS12.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.pictureBoxGPS12.Location = new System.Drawing.Point(111, 129);
+			this.pictureBoxGPS12.Location = new System.Drawing.Point(165, 129);
 			this.pictureBoxGPS12.Name = "pictureBoxGPS12";
-			this.pictureBoxGPS12.Size = new System.Drawing.Size(48, 57);
+			this.pictureBoxGPS12.Size = new System.Drawing.Size(75, 57);
+			this.pictureBoxGPS12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pictureBoxGPS12.TabIndex = 15;
 			this.pictureBoxGPS12.TabStop = false;
 			// 
@@ -538,11 +582,12 @@
 			this.pictureBoxGPS11.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.pictureBoxGPS11.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS11.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.gps_board;
 			this.pictureBoxGPS11.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.pictureBoxGPS11.Location = new System.Drawing.Point(57, 129);
+			this.pictureBoxGPS11.Location = new System.Drawing.Point(84, 129);
 			this.pictureBoxGPS11.Name = "pictureBoxGPS11";
-			this.pictureBoxGPS11.Size = new System.Drawing.Size(48, 57);
+			this.pictureBoxGPS11.Size = new System.Drawing.Size(75, 57);
+			this.pictureBoxGPS11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pictureBoxGPS11.TabIndex = 14;
 			this.pictureBoxGPS11.TabStop = false;
 			// 
@@ -551,11 +596,12 @@
 			this.pictureBoxGPS10.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.pictureBoxGPS10.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS10.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.gps_board;
 			this.pictureBoxGPS10.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
 			this.pictureBoxGPS10.Location = new System.Drawing.Point(3, 129);
 			this.pictureBoxGPS10.Name = "pictureBoxGPS10";
-			this.pictureBoxGPS10.Size = new System.Drawing.Size(48, 57);
+			this.pictureBoxGPS10.Size = new System.Drawing.Size(75, 57);
+			this.pictureBoxGPS10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pictureBoxGPS10.TabIndex = 13;
 			this.pictureBoxGPS10.TabStop = false;
 			// 
@@ -564,11 +610,12 @@
 			this.pictureBoxGPS9.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.pictureBoxGPS9.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS9.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.gps_board;
 			this.pictureBoxGPS9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.pictureBoxGPS9.Location = new System.Drawing.Point(219, 66);
+			this.pictureBoxGPS9.Location = new System.Drawing.Point(327, 66);
 			this.pictureBoxGPS9.Name = "pictureBoxGPS9";
-			this.pictureBoxGPS9.Size = new System.Drawing.Size(48, 57);
+			this.pictureBoxGPS9.Size = new System.Drawing.Size(75, 57);
+			this.pictureBoxGPS9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pictureBoxGPS9.TabIndex = 11;
 			this.pictureBoxGPS9.TabStop = false;
 			// 
@@ -577,11 +624,12 @@
 			this.pictureBoxGPS8.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.pictureBoxGPS8.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS8.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.gps_board;
 			this.pictureBoxGPS8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.pictureBoxGPS8.Location = new System.Drawing.Point(165, 66);
+			this.pictureBoxGPS8.Location = new System.Drawing.Point(246, 66);
 			this.pictureBoxGPS8.Name = "pictureBoxGPS8";
-			this.pictureBoxGPS8.Size = new System.Drawing.Size(48, 57);
+			this.pictureBoxGPS8.Size = new System.Drawing.Size(75, 57);
+			this.pictureBoxGPS8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pictureBoxGPS8.TabIndex = 10;
 			this.pictureBoxGPS8.TabStop = false;
 			// 
@@ -590,11 +638,12 @@
 			this.pictureBoxGPS7.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.pictureBoxGPS7.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS7.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.gps_board;
 			this.pictureBoxGPS7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.pictureBoxGPS7.Location = new System.Drawing.Point(111, 66);
+			this.pictureBoxGPS7.Location = new System.Drawing.Point(165, 66);
 			this.pictureBoxGPS7.Name = "pictureBoxGPS7";
-			this.pictureBoxGPS7.Size = new System.Drawing.Size(48, 57);
+			this.pictureBoxGPS7.Size = new System.Drawing.Size(75, 57);
+			this.pictureBoxGPS7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pictureBoxGPS7.TabIndex = 9;
 			this.pictureBoxGPS7.TabStop = false;
 			// 
@@ -603,11 +652,12 @@
 			this.pictureBoxGPS6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.pictureBoxGPS6.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS6.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.gps_board;
 			this.pictureBoxGPS6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.pictureBoxGPS6.Location = new System.Drawing.Point(57, 66);
+			this.pictureBoxGPS6.Location = new System.Drawing.Point(84, 66);
 			this.pictureBoxGPS6.Name = "pictureBoxGPS6";
-			this.pictureBoxGPS6.Size = new System.Drawing.Size(48, 57);
+			this.pictureBoxGPS6.Size = new System.Drawing.Size(75, 57);
+			this.pictureBoxGPS6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pictureBoxGPS6.TabIndex = 8;
 			this.pictureBoxGPS6.TabStop = false;
 			// 
@@ -616,11 +666,12 @@
 			this.pictureBoxGPS5.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.pictureBoxGPS5.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS5.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.gps_board;
 			this.pictureBoxGPS5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
 			this.pictureBoxGPS5.Location = new System.Drawing.Point(3, 66);
 			this.pictureBoxGPS5.Name = "pictureBoxGPS5";
-			this.pictureBoxGPS5.Size = new System.Drawing.Size(48, 57);
+			this.pictureBoxGPS5.Size = new System.Drawing.Size(75, 57);
+			this.pictureBoxGPS5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pictureBoxGPS5.TabIndex = 7;
 			this.pictureBoxGPS5.TabStop = false;
 			// 
@@ -629,11 +680,12 @@
 			this.pictureBoxGPS4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.pictureBoxGPS4.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS4.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.gps_board;
 			this.pictureBoxGPS4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.pictureBoxGPS4.Location = new System.Drawing.Point(219, 3);
+			this.pictureBoxGPS4.Location = new System.Drawing.Point(327, 3);
 			this.pictureBoxGPS4.Name = "pictureBoxGPS4";
-			this.pictureBoxGPS4.Size = new System.Drawing.Size(48, 57);
+			this.pictureBoxGPS4.Size = new System.Drawing.Size(75, 57);
+			this.pictureBoxGPS4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pictureBoxGPS4.TabIndex = 5;
 			this.pictureBoxGPS4.TabStop = false;
 			// 
@@ -642,11 +694,12 @@
 			this.pictureBoxGPS3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.pictureBoxGPS3.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS3.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.gps_board;
 			this.pictureBoxGPS3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.pictureBoxGPS3.Location = new System.Drawing.Point(165, 3);
+			this.pictureBoxGPS3.Location = new System.Drawing.Point(246, 3);
 			this.pictureBoxGPS3.Name = "pictureBoxGPS3";
-			this.pictureBoxGPS3.Size = new System.Drawing.Size(48, 57);
+			this.pictureBoxGPS3.Size = new System.Drawing.Size(75, 57);
+			this.pictureBoxGPS3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pictureBoxGPS3.TabIndex = 4;
 			this.pictureBoxGPS3.TabStop = false;
 			// 
@@ -655,11 +708,12 @@
 			this.pictureBoxGPS2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.pictureBoxGPS2.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS2.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.gps_board;
 			this.pictureBoxGPS2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.pictureBoxGPS2.Location = new System.Drawing.Point(111, 3);
+			this.pictureBoxGPS2.Location = new System.Drawing.Point(165, 3);
 			this.pictureBoxGPS2.Name = "pictureBoxGPS2";
-			this.pictureBoxGPS2.Size = new System.Drawing.Size(48, 57);
+			this.pictureBoxGPS2.Size = new System.Drawing.Size(75, 57);
+			this.pictureBoxGPS2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pictureBoxGPS2.TabIndex = 3;
 			this.pictureBoxGPS2.TabStop = false;
 			// 
@@ -668,11 +722,12 @@
 			this.pictureBoxGPS1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.pictureBoxGPS1.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS1.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.gps_board;
 			this.pictureBoxGPS1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.pictureBoxGPS1.Location = new System.Drawing.Point(57, 3);
+			this.pictureBoxGPS1.Location = new System.Drawing.Point(84, 3);
 			this.pictureBoxGPS1.Name = "pictureBoxGPS1";
-			this.pictureBoxGPS1.Size = new System.Drawing.Size(48, 57);
+			this.pictureBoxGPS1.Size = new System.Drawing.Size(75, 57);
+			this.pictureBoxGPS1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pictureBoxGPS1.TabIndex = 2;
 			this.pictureBoxGPS1.TabStop = false;
 			// 
@@ -681,11 +736,12 @@
 			this.pictureBoxGPS0.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.pictureBoxGPS0.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPS0.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.gps_board;
 			this.pictureBoxGPS0.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
 			this.pictureBoxGPS0.Location = new System.Drawing.Point(3, 3);
 			this.pictureBoxGPS0.Name = "pictureBoxGPS0";
-			this.pictureBoxGPS0.Size = new System.Drawing.Size(48, 57);
+			this.pictureBoxGPS0.Size = new System.Drawing.Size(75, 57);
+			this.pictureBoxGPS0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pictureBoxGPS0.TabIndex = 1;
 			this.pictureBoxGPS0.TabStop = false;
 			// 
@@ -694,11 +750,12 @@
 			this.pictureBoxGPSSingle.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.pictureBoxGPSSingle.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
+			this.pictureBoxGPSSingle.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.gps_board;
 			this.pictureBoxGPSSingle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.pictureBoxGPSSingle.Location = new System.Drawing.Point(273, 255);
+			this.pictureBoxGPSSingle.Location = new System.Drawing.Point(408, 255);
 			this.pictureBoxGPSSingle.Name = "pictureBoxGPSSingle";
-			this.pictureBoxGPSSingle.Size = new System.Drawing.Size(48, 58);
+			this.pictureBoxGPSSingle.Size = new System.Drawing.Size(75, 58);
+			this.pictureBoxGPSSingle.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
 			this.pictureBoxGPSSingle.TabIndex = 24;
 			this.pictureBoxGPSSingle.TabStop = false;
 			// 
@@ -706,7 +763,7 @@
 			// 
 			this.buttonStartSingle.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.buttonStartSingle.AutoSize = true;
-			this.buttonStartSingle.Location = new System.Drawing.Point(327, 269);
+			this.buttonStartSingle.Location = new System.Drawing.Point(489, 269);
 			this.buttonStartSingle.Name = "buttonStartSingle";
 			this.buttonStartSingle.Size = new System.Drawing.Size(90, 30);
 			this.buttonStartSingle.TabIndex = 25;
@@ -718,9 +775,9 @@
 			// 
 			this.buttonStop.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.buttonStop.AutoSize = true;
-			this.buttonStop.Location = new System.Drawing.Point(327, 142);
+			this.buttonStop.Location = new System.Drawing.Point(489, 142);
 			this.buttonStop.Name = "buttonStop";
-			this.buttonStop.Size = new System.Drawing.Size(63, 30);
+			this.buttonStop.Size = new System.Drawing.Size(61, 30);
 			this.buttonStop.TabIndex = 26;
 			this.buttonStop.Text = "Stop";
 			this.buttonStop.UseVisualStyleBackColor = true;
@@ -730,7 +787,7 @@
 			// 
 			this.buttonStartPanel.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.buttonStartPanel.AutoSize = true;
-			this.buttonStartPanel.Location = new System.Drawing.Point(327, 16);
+			this.buttonStartPanel.Location = new System.Drawing.Point(489, 16);
 			this.buttonStartPanel.Name = "buttonStartPanel";
 			this.buttonStartPanel.Size = new System.Drawing.Size(84, 30);
 			this.buttonStartPanel.TabIndex = 27;
@@ -738,21 +795,12 @@
 			this.buttonStartPanel.UseVisualStyleBackColor = true;
 			this.buttonStartPanel.Click += new System.EventHandler(this.ButtonStartPanel_Click);
 			// 
-			// pictureBox35
-			// 
-			this.pictureBox35.BackgroundImage = global::Sensit.App.GPS.Properties.Resources.green_tag;
-			this.pictureBox35.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.pictureBox35.Location = new System.Drawing.Point(61, 289);
-			this.pictureBox35.Name = "pictureBox35";
-			this.pictureBox35.Size = new System.Drawing.Size(50, 14);
-			this.pictureBox35.TabIndex = 34;
-			this.pictureBox35.TabStop = false;
-			// 
 			// FormGPS
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(449, 653);
+			this.BackColor = System.Drawing.SystemColors.Control;
+			this.ClientSize = new System.Drawing.Size(624, 653);
 			this.Controls.Add(this.groupBoxStatus);
 			this.Controls.Add(this.groupBoxSettings);
 			this.Controls.Add(this.statusStrip);
@@ -771,6 +819,7 @@
 			this.tableLayoutSettings.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownTimeout)).EndInit();
 			this.groupBoxStatus.ResumeLayout(false);
+			this.groupBoxStatus.PerformLayout();
 			this.tableLayoutPogo.ResumeLayout(false);
 			this.tableLayoutPogo.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS19)).EndInit();
@@ -794,7 +843,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPS0)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGPSSingle)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox35)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -848,9 +896,10 @@
 		private PictureBox pictureBoxGPS10;
 		private PictureBox pictureBoxGPS5;
 		private TableLayoutPanel tableLayoutPogo;
-		private PictureBox pictureBox35;
 		private Button buttonStartSingle;
 		private Button buttonStop;
 		private Button buttonStartPanel;
+		private Label labelUserLocation;
+		private ComboBox comboBoxUserLocation;
 	}
 }

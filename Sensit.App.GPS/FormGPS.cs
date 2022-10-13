@@ -13,11 +13,16 @@ namespace Sensit.App.GPS
 	{
 		#region Constants
 
-		// TODO:  Double-check latitude and longitude conversions.
-		private const double LATITUDE = 41.46095328477597; //Sensit: 41.46095328477597 
-		private const double LONGITUDE = -87.01571016084537; //Sensit: -87.01571016084537
 		private const double POSITION_TOLERANCE = 1.0;
 		private readonly TimeSpan TIME_TOLERANCE = new(0, 2, 0);
+
+		//851 Transport Drive (OG Building)
+		private const double TRANSPORT_LATITUDE = 41.46095328477597;
+		private const double TRANSPORT_LONGITUDE = -87.01571016084537;
+
+		//1150 Loudermilk Lane (Production Building)
+		private const double LOUDERMILK_LATITUDE = 41.45822418035022;
+		private const double LOUDERMILK_LONGITUDE = -87.01414233228682;
 
 		#endregion
 
@@ -33,6 +38,9 @@ namespace Sensit.App.GPS
 		
 		//GPS Data Recording
 		GPSDataRecords gpsRecord;
+
+		//User Location
+		internal string? userLocation;
 
 		/// <summary>
 		/// Timer to keep track of how long GPS module takes to find satellites.
@@ -74,6 +82,9 @@ namespace Sensit.App.GPS
 
 			// Set the most recently used timeout.
 			numericUpDownTimeout.Value = Properties.Settings.Default.Timeout;
+
+			//Set up most recent location
+			comboBoxUserLocation.ResetText();
 		}
 
 		#endregion
@@ -104,7 +115,6 @@ namespace Sensit.App.GPS
 		{
 			Application.Exit();
 		}
-
 		#endregion
 
 		#region Settings
@@ -126,7 +136,10 @@ namespace Sensit.App.GPS
 		/// <param name="e"></param>
 		private void ButtonPortRefresh_Click(object sender, EventArgs e)
 		{
-			// Clear the serial port combo box.
+			//Reset Icons
+			ResetIcons();
+
+			// Clear the serial port checked box.
 			checkedListSerialPort.Items.Clear();
 
 			// Find all available serial ports.
@@ -157,73 +170,93 @@ namespace Sensit.App.GPS
 			// threads might get stuck waiting for each other).
 			BeginInvoke(new Action(() =>
 			{
-				// Parse messages.
-				string[] pieces = message.Split(',');
+				//TODO: DELETE AFTER TESTING
+				Debug.WriteLine(message);
 
-				// If the message begins with "SPGGA"...
-				if (pieces[0].Equals("$GPGGA") && pieces.Length >= 14)
+				//Set allowed tolerances in gps records
+				//TODO: see if this should be a user input. for now, they're what adam had.
+				gpsRecord.PositionTolerance = POSITION_TOLERANCE;
+				gpsRecord.TimeTolerance = TIME_TOLERANCE;
+
+				//Set User Location in gps records.
+				switch (comboBoxUserLocation.SelectedItem.ToString())
 				{
-					//***PARSE EVERYTHING***//
-					// Convert timestamp to a date/time variable.
-					DateTime.TryParseExact(pieces[1],
-						"HHmmss.fff",
-						CultureInfo.InvariantCulture,
-						DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,
-						out DateTime dateTime);
-
-					//Latitude
-					double latitude = (double.TryParse(pieces[2], out latitude) ? latitude : 0) / 100;
-					if (pieces[3] == "S") { latitude *= -1; }
-
-					//Longitude
-					double longitude = (double.TryParse(pieces[4], out longitude) ? longitude : 0) / 100;
-					if (pieces[5] == "W") { longitude *= -1; }
-
-					//Fix Quality
-					double fix = double.TryParse(pieces[6], out fix) ? fix : 0;
-
-					//Satellite Count
-					double satellite = double.TryParse(pieces[7], out satellite) ? satellite : 0;
-
-
-					//***TEST EVERYTHING***//
-					// Test timestamp.
-					if (DateTime.UtcNow - dateTime < TIME_TOLERANCE &&
-						Math.Abs(latitude - LATITUDE) < POSITION_TOLERANCE &&
-						Math.Abs(longitude - LONGITUDE) < POSITION_TOLERANCE &&
-						fix > 0 &&
-						satellite > 4)
-					{
-						SetStatus(true);
-					}
+					case "Loudermilk":
+						gpsRecord.UserLatitude = LOUDERMILK_LATITUDE;
+						gpsRecord.UserLongitude = LOUDERMILK_LONGITUDE;
+						break;
+					case "Transport":
+						gpsRecord.UserLatitude = TRANSPORT_LATITUDE;
+						gpsRecord.UserLongitude = TRANSPORT_LONGITUDE;
+						break;
+					default:
+						throw new NotImplementedException();
+				}
+				gpsRecord.SetRecords(message);
+				if (gpsRecord.IsValid == true)
+				{
+					SetStatus(gpsRecord.IsValid);
+				}
+				else
+				{
+					//If not valid, reset records
+					gpsRecord.ResetBoardRecord();
 				}
 			}));
 		}
 
 		private void SetStatus(bool pass)
 		{
+			//Close serial port
+			gpsDevice.Close();
+
+			// Disable the timer.
+			timer.Enabled = false;
+
+			//Set Test Duration
+			//TODO: fix this
+			gpsRecord.TestDuration = gpsRecord.TestTimeout.ToString();
+
+			//Set user name
+			gpsRecord.UserName = textBoxName.Text;
+
+			//Variable for the icon to change based on status
+			PictureBox tag = SetDictionary(gpsRecord.PanelLocation);
+
+			// Update user interface.
+			groupBoxSettings.Enabled = true;
+			buttonStartSingle.Enabled = true;
+			buttonStartPanel.Enabled = true;
+			buttonStop.Enabled = false;
+			toolStripStatusLabel.Font = new Font(toolStripStatusLabel.Font, FontStyle.Regular);
+			toolStripStatusLabel.ForeColor = SystemColors.ControlText;
+			toolStripProgressBar.Value = toolStripProgressBar.Minimum;
+
 			//// If all are passing...
 			if (pass == true)
 			{
-				//// Close the serial port.
-				gpsDevice.Close();
+				//Set test duration
+				gpsRecord.TestDuration = timer.ToString();
 
-				//// Disable the timer.
-				timer.Enabled = false;
+				//Clear and change icon
+				tag.BackgroundImage = Properties.Resources.green_tag;
 
-				//// Alert the user (and make it bold).
-				//TODO: change the gps board's icon to a red tag
+				//Status strip update
+				toolStripStatusLabel.Text = $"COM port {checkedListSerialPort.SelectedItem}: PASSED IN " + TimeSpan.FromSeconds(elapsedSeconds).ToString(@"m\:ss");
+
+				//Give the user time to see the status strip message (3 seconds)
+				Thread.Sleep(300);
 			}
 			else
 			{
-				//Close serial port
-				gpsDevice.Close();
+				//// Alert the user (and make it bold).
+				tag.BackgroundImage = Properties.Resources.red_tag;
 
-				//Disable timer
-				timer.Enabled = false;
+				//status strip update
+				toolStripStatusLabel.Text = $"COM port {checkedListSerialPort.SelectedItem}: FAILED";
 
-				//Alert user
-				//TODO: change gps board icon to a red tag
+				//Give the user time to see the status strip message (3 seconds)
+				Thread.Sleep(300);
 			}
 		}
 
@@ -252,37 +285,8 @@ namespace Sensit.App.GPS
 					// If the timeout has elapsed...
 					if (elapsedSeconds >= Properties.Settings.Default.Timeout)
 					{
-						// Close the serial port.
-						gpsDevice.Close();
 
-						// Disable the timer.
-						timer.Enabled = false;
-
-						// Update the user interface.
-						toolStripProgressBar.Value = toolStripProgressBar.Minimum;
-
-						//Determine board status
-						//switch (textBoxLatitude.Text)
-						//{
-						//Board is not plugged in/board is plugged in backwards/board is dead.
-						//case "":
-						//	toolStripStatusLabel.Text = "FAIL: Not detected";
-						//	break;
-						////Board has faulty reading/components
-						//case "0":
-						//	toolStripStatusLabel.Text = "FAIL: Bad Position";
-						//	break;
-						////Unknown reason why program timed out
-						//default:
-						//	toolStripStatusLabel.Text = "FAIL";
-						//	break;
-						//}
-
-						toolStripStatusLabel.Font = new Font(toolStripStatusLabel.Font, FontStyle.Bold);
-						toolStripStatusLabel.ForeColor = Color.Red;
-						groupBoxSettings.Enabled = true;
-						buttonStartSingle.Enabled = true;
-						buttonStop.Enabled = false;
+						SetStatus(false);
 					}
 				}
 			}
@@ -303,9 +307,30 @@ namespace Sensit.App.GPS
 		{
 			try
 			{
+				//Reset Icons
+				ResetIcons();
+
+				// Update the user interface.
+				groupBoxSettings.Enabled = false;
+				buttonStartSingle.Enabled = false;
+				buttonStartPanel.Enabled = false;
+				buttonStop.Enabled = true;
+				toolStripProgressBar.Value = toolStripProgressBar.Minimum;
+				toolStripStatusLabel.Font = new Font(toolStripStatusLabel.Font, FontStyle.Regular);
+				toolStripStatusLabel.ForeColor = SystemColors.ControlText;
+
 				if (checkedListSerialPort.CheckedItems.Count != 1)
 				{
 					throw new TestException("One port must be selected.");
+				}
+
+				if(comboBoxUserLocation == null)
+				{
+					throw new TestException("Please choose your location.");
+				}
+				else
+				{
+					userLocation = comboBoxUserLocation.SelectedItem.ToString();
 				}
 
 				//Set the timeout value
@@ -314,21 +339,25 @@ namespace Sensit.App.GPS
 				// Set up progress bar.
 				toolStripProgressBar.Maximum = (int)Properties.Settings.Default.Timeout;
 
-				//instantiate new gps record
-				gpsRecord = new();
+				//Instantiate a new gps record. Tell record it is not a panel
+				/* Temporary: Boards are currently not serialized. Future proofing
+				 * has the property implemented already. For now, the "serial number" 
+				 * will be "Single"
+				 */
+				gpsRecord = new()
+				{
+					IsPanel = false,
+					PanelLocation = "Single",
+					BoardSerialNumber = "Single",
+					UserName = textBoxName.Text,
+					TestTimeout = numericUpDownTimeout.Value
+				};
+
+				//Reset the message received 
+				gpsDevice.MessageReceived = TestResponse;
 
 				// Open the serial port (and let it know what serial port to use).
-				gpsDevice.Open((string)checkedListSerialPort.SelectedItem);
-
-				// Update the user interface.
-				groupBoxSettings.Enabled = false;
-				buttonStartSingle.Enabled = false;
-				buttonStartPanel.Enabled = false;
-				buttonStop.Enabled = true;
-				toolStripProgressBar.Value = toolStripProgressBar.Minimum;
-				toolStripStatusLabel.Text = "Testing...";
-				toolStripStatusLabel.Font = new Font(toolStripStatusLabel.Font, FontStyle.Regular);
-				toolStripStatusLabel.ForeColor = SystemColors.ControlText;
+				gpsDevice.Open(checkedListSerialPort.SelectedItem.ToString());
 
 				// Reset elapsed time.
 				elapsedSeconds = 0;
@@ -346,29 +375,84 @@ namespace Sensit.App.GPS
 
 		private void ButtonStartPanel_Click(object sender, EventArgs e)
 		{
+			ResetIcons();
+
 			try
 			{
-				List<string> gpsPanelList = new(GetCheckedPorts());
-				foreach (string gpsName in gpsPanelList)
+				//TODO: find a better way to get index of checked item in original list
+				List<string> checkingIndices = new();
+				foreach (string s in checkedListSerialPort.Items)
+				{
+					checkingIndices.Add(s);
+				}
+
+				List<string> port = new();
+				foreach (string selectedItem in checkedListSerialPort.CheckedItems)
+				{
+					//TODO: we need to store port name and we need to store index. would a dictionary be better?
+					port.Add(selectedItem);
+				}
+
+				//switch for exceptions regarding com port count
+				switch (checkedListSerialPort.CheckedItems.Count) 
+				{ 
+					case 0:
+						throw new NotImplementedException();
+					case 1:
+						throw new TestException($"Only {port[0]} selected. \r\n" +
+							$"Select more ports or switch to single board programming.");
+					default:
+						break;
+				};
+
+				if (comboBoxUserLocation == null)
+				{
+					throw new TestException("Please choose your location.");
+				}
+				else
+				{
+					userLocation = comboBoxUserLocation.SelectedItem.ToString();
+				}
+
+				//Update: foreach loop causes the second port to be opened while the first one is testing, etc. This
+				//causes a lot of errors. First, I'm going to see if I can use the timer being disabled to run each
+				//iteration one after the other. If that doesn't work, I'm going to use an if statement with a counter.
+				foreach (string gpsName in port)
 				{
 					//Set the timeout value
 					Properties.Settings.Default.Timeout = (uint)numericUpDownTimeout.Value;
 
+					//Instantiate new gps record for each board and set values
+					/* Temporary: Boards are currently not serialized. Future proofing
+					 * has the property implemented already. For now, the "serial number" 
+					 * will be "Panel"
+					 */
+
+					gpsRecord = new()
+					{
+						IsPanel = true,
+						PanelLocation = checkingIndices.IndexOf(gpsName).ToString(),
+						BoardSerialNumber = "Panel",
+					};
+
 					// Set up progress bar.
 					toolStripProgressBar.Maximum = (int)Properties.Settings.Default.Timeout;
+
+					//Reset message received 
+					gpsDevice.MessageReceived = TestResponse;
 
 					//Open the serial port (and let it know what serial port to use).
 					gpsDevice.Open(gpsName);
 
-					// Update the user interface.
-					groupBoxSettings.Enabled = false;
-					buttonStartSingle.Enabled = false;
-					buttonStartPanel.Enabled = false;
-					buttonStop.Enabled = true;
-					toolStripProgressBar.Value = toolStripProgressBar.Minimum;
-					toolStripStatusLabel.Text = "Testing...";
+					// Update user interface.
+					groupBoxSettings.Enabled = true;
+					buttonStartSingle.Enabled = true;
+					buttonStartPanel.Enabled = true;
+					buttonStop.Enabled = false;
+					toolStripStatusLabel.Text = "Panel Test Complete";
 					toolStripStatusLabel.Font = new Font(toolStripStatusLabel.Font, FontStyle.Regular);
 					toolStripStatusLabel.ForeColor = SystemColors.ControlText;
+					toolStripProgressBar.Value = toolStripProgressBar.Minimum;
 
 					// Reset elapsed time.
 					elapsedSeconds = 0;
@@ -422,21 +506,77 @@ namespace Sensit.App.GPS
 
 		#region Helper Methods
 
-		private List<string> GetCheckedPorts()
+		private PictureBox SetDictionary(string gpsKey)
 		{
-			List<string> ports = new();
-
-			if(checkedListSerialPort.CheckedItems.Count == 0)
+			//use checklist to set the dictionary keys based off checked list index (which will become their location)
+			List<string> checkedItems = new();
+			foreach(string s in checkedListSerialPort.Items)
 			{
-				throw new TestException("No checked ports");
+				checkedItems.Add(s);
 			}
 
-			foreach (string s in checkedListSerialPort.CheckedItems)
+			int count = 1;
+			while(checkedItems.Count < 20)
 			{
-				ports.Add(s);
+				checkedItems.Add($"empty port {count}");
+				count++;
 			}
 
-			return ports;
+			//make dictionary
+			Dictionary<string, PictureBox> getPictureBox = new()
+			{
+				{ checkedItems[0], pictureBoxGPS0 },
+				{ checkedItems[1], pictureBoxGPS1 },
+				{ checkedItems[2], pictureBoxGPS2 },
+				{ checkedItems[3], pictureBoxGPS3 },
+				{ checkedItems[4], pictureBoxGPS4 },
+				{ checkedItems[5], pictureBoxGPS5 },
+				{ checkedItems[6], pictureBoxGPS6 },
+				{ checkedItems[7], pictureBoxGPS7 },
+				{ checkedItems[8], pictureBoxGPS8 },
+				{ checkedItems[9], pictureBoxGPS9 },
+				{ checkedItems[10], pictureBoxGPS10 },
+				{ checkedItems[11], pictureBoxGPS11 },
+				{ checkedItems[12], pictureBoxGPS12 },
+				{ checkedItems[13], pictureBoxGPS13 },
+				{ checkedItems[14], pictureBoxGPS14 },
+				{ checkedItems[15], pictureBoxGPS15 },
+				{ checkedItems[16], pictureBoxGPS16 },
+				{ checkedItems[17], pictureBoxGPS17 },	
+				{ checkedItems[18], pictureBoxGPS18 },
+				{ checkedItems[19], pictureBoxGPS19 },
+
+				//for the single board test program
+				{ "Single", pictureBoxGPSSingle }
+			};
+
+			return getPictureBox[gpsKey];
+		}
+
+		private void ResetIcons()
+		{
+			//TODO: do this in a better and more efficient way
+			pictureBoxGPS0.BackgroundImage = Properties.Resources.gps_board;
+			pictureBoxGPS1.BackgroundImage = Properties.Resources.gps_board;
+			pictureBoxGPS2.BackgroundImage = Properties.Resources.gps_board;
+			pictureBoxGPS3.BackgroundImage = Properties.Resources.gps_board;
+			pictureBoxGPS4.BackgroundImage = Properties.Resources.gps_board;
+			pictureBoxGPS5.BackgroundImage = Properties.Resources.gps_board;
+			pictureBoxGPS6.BackgroundImage = Properties.Resources.gps_board;
+			pictureBoxGPS7.BackgroundImage = Properties.Resources.gps_board;
+			pictureBoxGPS8.BackgroundImage = Properties.Resources.gps_board;
+			pictureBoxGPS9.BackgroundImage = Properties.Resources.gps_board;
+			pictureBoxGPS10.BackgroundImage = Properties.Resources.gps_board;
+			pictureBoxGPS11.BackgroundImage = Properties.Resources.gps_board;
+			pictureBoxGPS12.BackgroundImage = Properties.Resources.gps_board;
+			pictureBoxGPS13.BackgroundImage = Properties.Resources.gps_board;
+			pictureBoxGPS14.BackgroundImage = Properties.Resources.gps_board;
+			pictureBoxGPS15.BackgroundImage = Properties.Resources.gps_board;
+			pictureBoxGPS16.BackgroundImage = Properties.Resources.gps_board;
+			pictureBoxGPS17.BackgroundImage = Properties.Resources.gps_board;
+			pictureBoxGPS18.BackgroundImage = Properties.Resources.gps_board;
+			pictureBoxGPS19.BackgroundImage = Properties.Resources.gps_board;
+			pictureBoxGPSSingle.BackgroundImage = Properties.Resources.gps_board;
 		}
 
 		#endregion

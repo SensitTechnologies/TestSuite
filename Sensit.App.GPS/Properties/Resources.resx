@@ -121,7 +121,25 @@
   <data name="reuse" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\reuse.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="green tag" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\green tag.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="red_tag" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\red_tag.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gps_board" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gps_board.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="green_tag" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\green_tag.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gps_board" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gps_board.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="green_tag" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\green_tag.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="red_tag" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\red_tag.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="reuse" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\reuse.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
