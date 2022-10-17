@@ -363,11 +363,9 @@
 			// 
 			this.comboBoxUserLocation.AllowDrop = true;
 			this.comboBoxUserLocation.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+			this.comboBoxUserLocation.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.tableLayoutSettings.SetColumnSpan(this.comboBoxUserLocation, 2);
 			this.comboBoxUserLocation.FormattingEnabled = true;
-			this.comboBoxUserLocation.Items.AddRange(new object[] {
-            "Transport",
-            "Loudermilk"});
 			this.comboBoxUserLocation.Location = new System.Drawing.Point(219, 71);
 			this.comboBoxUserLocation.Name = "comboBoxUserLocation";
 			this.comboBoxUserLocation.Size = new System.Drawing.Size(138, 28);

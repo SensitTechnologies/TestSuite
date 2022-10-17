@@ -7,6 +7,11 @@ namespace Sensit.App.GPS
 		//TODO: program the gps data panel class. make grid, properties,
 		//setting to the records, and create the csv output method here probably
 
+		//COM port being used
+		//Doesn't need saved to .csv but it needs to be specific
+		//for each board instance
+		internal string? ComPortLocation { get; set; }
+
 		//Is this board part of a panel?
 		internal bool IsPanel { get; set; }
 		internal string PanelLocation { get; set; } = "";
