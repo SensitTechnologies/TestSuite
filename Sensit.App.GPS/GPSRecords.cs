@@ -1,49 +1,46 @@
 ﻿using System.Globalization;
+using CsvHelper.Configuration;
 
 namespace Sensit.App.GPS
 {
-	internal class GPSDataRecords
+	public class GPSDataRecord
 	{
-		//TODO: program the gps data panel class. make grid, properties,
-		//setting to the records, and create the csv output method here probably
-
 		//COM port being used
-		//Doesn't need saved to .csv but it needs to be specific
-		//for each board instance
-		internal string? ComPortLocation { get; set; }
+		public string? ComPortLocation { get; set; }
 
 		//Is this board part of a panel?
-		internal bool IsPanel { get; set; }
-		internal string PanelLocation { get; set; } = "";
+		public bool IsPanel { get; set; }
+		public string PanelLocation { get; set; } = "";
 
 		//Form data to record
-		internal double UserLatitude { get; set; }
-		internal double UserLongitude { get; set; }
-		internal decimal TestTimeout { get; set; }
-		internal string UserName { get; set; } = "";
-		internal string TestDuration { get; set; } = "";
+		public double UserLatitude { get; set; }
+		public double UserLongitude { get; set; }
+		public int TestTimeout { get; set; }
+		public string UserName { get; set; } = "";
+		public string TestDuration { get; set; } = "";
 
 		//Validity of message received
-		internal bool IsValid { get; set; }
+		public bool IsValid { get; set; }
 
 		//Properties of GPS board
-		internal string? BoardSerialNumber { get; set; }
-		internal DateTime? UTCTime { get; set; }
-		internal double Latitude { get; set; }
-		internal double Longitude { get; set; }
-		internal double FixQuality { get; set; }
-		internal double SatelliteCount { get; set; }
-		internal double HDOP { get; set; } //Horizontal Dilution of Precision
-		internal double Altitude { get; set; }
-		internal double HeightOfGeoid { get; set; } //Height of geoid above WGS84 ellipsoid
-		internal string? Checksum { get; set; }
+		public string BoardSerialNumber { get; set; } = "empty";
+		public DateTime UTCTime { get; set; } = DateTime.MinValue;
+		public double Latitude { get; set; }
+		public double Longitude { get; set; }
+		public double FixQuality { get; set; }
+		public double SatelliteCount { get; set; }
+		public double HDOP { get; set; } //Horizontal Dilution of Precision
+		public double Altitude { get; set; }
+		public double HeightOfGeoid { get; set; } //Height of geoid above WGS84 ellipsoid
+		public string Checksum { get; set; } = "empty";
 
 		//Tolerances 
-		internal double PositionTolerance { get; set; }
-		internal TimeSpan TimeTolerance { get; set; }
+		public double PositionTolerance { get; set; }
+		public TimeSpan TimeTolerance { get; set; }
+
 
 		//Set data to class
-		internal void SetRecords(string message)
+		public void SetRecords(string message)
 		{
 			//Split the message
 			string[] pieces = message.Split(',');
@@ -101,22 +98,13 @@ namespace Sensit.App.GPS
 			{
 				IsValid = false;
 			}
+
 		}
 
-		//Get data from class
-		internal List<string> GetRecords()
-		{
-			List<string> records = new();
-
-
-
-			return records;
-		}
-
-		internal void ResetBoardRecord()
+		public void ResetBoardRecord()
 		{
 			//GPS message invalid. clear only board data before trying again.
-			UTCTime = null;
+			UTCTime = DateTime.MinValue;
 			Latitude = 0;
 			Longitude = 0;
 			FixQuality = 0;
@@ -125,6 +113,40 @@ namespace Sensit.App.GPS
 			Altitude = 0;
 			HeightOfGeoid = 0;
 			Checksum = "0";
+		}
+	}
+
+	public class GPSRecordMap : ClassMap<GPSDataRecord>
+	{
+		public GPSRecordMap()
+		{
+			AutoMap(CultureInfo.InvariantCulture);
+
+			
+			//Properties to ignore.
+			Map(r => r.ComPortLocation).Ignore();
+
+			//Put in properties to map along with their column name
+			//	Map(r => r._).Name(" ");
+			Map(r => r.BoardSerialNumber).Name("Board_Serial_Number");
+			Map(r => r.IsPanel).Name("In_A_Panel");
+			Map(r => r.PanelLocation).Name("Panel_Location");
+			Map(r => r.UserName).Name("User_Name");
+			Map(r => r.UserLatitude).Name("User_Latitude");
+			Map(r => r.UserLongitude).Name("User_Longitude");
+			Map(r => r.TestTimeout).Name("Test_Timeout");
+			Map(r => r.TestDuration).Name("Test_Duration");
+			Map(r => r.PositionTolerance).Name("Position_Tolerance");
+			Map(r => r.TimeTolerance).Name("Time_Tolerance");
+			Map(r => r.UTCTime).Name("UTC_Time");
+			Map(r => r.Latitude).Name("Latitude");
+			Map(r => r.Longitude).Name("Longitude");
+			Map(r => r.FixQuality).Name("Fix_Quality");
+			Map(r => r.SatelliteCount).Name("Satellite_Count");
+			Map(r => r.HDOP).Name("HDOP");
+			Map(r => r.Altitude).Name("Alitude");
+			Map(r => r.HeightOfGeoid).Name("Height_Of_Geoid");
+			Map(r => r.Checksum).Name("Checksum");
 		}
 	}
 }

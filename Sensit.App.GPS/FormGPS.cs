@@ -1,6 +1,8 @@
 
 using System.Globalization;
 using System.IO.Ports;
+using CsvHelper;
+using CsvHelper.Configuration;
 using Sensit.TestSDK.Devices;
 using Sensit.TestSDK.Exceptions;
 
@@ -13,12 +15,15 @@ namespace Sensit.App.GPS
 	{
 		#region Constants
 
+		//File papth to create and store csv data in
+		private readonly string filePath = Path.GetFullPath(@"\\10.25.0.30\Public\Production Software\Data Logging\GPS Tester");
+
 		//Tolerances for testing.
 		private const double POSITION_TOLERANCE = 1.0;
 		private readonly TimeSpan TIME_TOLERANCE = new(0, 2, 0);
 
 		//Minimum Test Time (seconds)
-		private readonly int MINIMUM_TIMEOUT = 120;
+		private readonly int MINIMUM_TIMEOUT = 10;
 
 		#region Latitude/Longitude for each Location
 
@@ -226,6 +231,11 @@ namespace Sensit.App.GPS
 				gpsRecord.SetRecords(message);
 				if (gpsRecord.IsValid == true)
 				{
+					//Close gpsDevice so no more messages call setstatus
+					gpsDevice.Close();
+
+					//clear any lingering messages? 
+					message = String.Empty;
 
 					SetStatus(gpsRecord.IsValid);
 				}
@@ -237,12 +247,10 @@ namespace Sensit.App.GPS
 			}));
 		}
 
+		List<GPSDataRecord> csvList = new();
 		private int panelTestCount;
 		private void SetStatus(bool pass)
 		{
-			//Close gpsDevice
-			gpsDevice.Close();
-
 			// Disable the timer.
 			timer.Enabled = false;
 
@@ -258,9 +266,6 @@ namespace Sensit.App.GPS
 			// If all are passing...
 			if (pass == true)
 			{
-				//Set test duration
-				gpsRecord.TestDuration = timer.ToString();
-
 				//Clear and change icon
 				tag.BackgroundImage = Properties.Resources.green_tag;
 
@@ -330,7 +335,7 @@ namespace Sensit.App.GPS
 		#region Disposable variables for test
 
 		//GPS Data Recording
-		GPSDataRecords gpsRecord;
+		GPSDataRecord gpsRecord;
 
 		//Indicator of whether a test is in process or not
 		private bool inTest;
@@ -352,7 +357,7 @@ namespace Sensit.App.GPS
 		private async void ButtonStartSingle_Click(object sender, EventArgs e)
 		{
 			try
-			{
+			{				
 				//Check user input for error(s) and let it know isPanel == false.
 				CheckUserInput(false);
 
@@ -394,7 +399,7 @@ namespace Sensit.App.GPS
 					PanelLocation = "Single",
 					BoardSerialNumber = "Single",
 					UserName = textBoxName.Text,
-					TestTimeout = numericUpDownTimeout.Value,
+					TestTimeout = (int)numericUpDownTimeout.Value,
 					ComPortLocation = checkedListSerialPort.CheckedItems[panelTestCount].ToString(),
 				};
 
@@ -445,6 +450,9 @@ namespace Sensit.App.GPS
 			toolStripStatusLabel.Font = new Font(toolStripStatusLabel.Font, FontStyle.Regular);
 			toolStripStatusLabel.ForeColor = SystemColors.ControlText;
 			toolStripProgressBar.Value = toolStripProgressBar.Minimum;
+
+			//Export to .csv file
+			ExporttoCsv(gpsRecord);
 		}
 
 		private async void ButtonStartPanel_Click(object sender, EventArgs e)
@@ -488,12 +496,6 @@ namespace Sensit.App.GPS
 				//Test each selected serial port one at a time.
 				foreach (string current in checkedPorts)
 				{
-					//Wait for any previous test to finish
-					while (inTest == true)
-					{
-						await Task.Delay(1000);
-					}
-
 					//Set testing to true
 					inTest = true;
 
@@ -508,7 +510,7 @@ namespace Sensit.App.GPS
 						PanelLocation = allPorts.IndexOf(current).ToString(),
 						BoardSerialNumber = "Panel",
 						UserName = textBoxName.Text,
-						TestTimeout = numericUpDownTimeout.Value,
+						TestTimeout = (int)numericUpDownTimeout.Value,
 						ComPortLocation = current,
 					};
 
@@ -531,6 +533,20 @@ namespace Sensit.App.GPS
 					// Reset elapsed time.
 					elapsedSeconds = 0;
 
+					//Wait for any previous test to finish
+					while (inTest == true)
+					{
+						await Task.Delay(1000);
+					}
+
+					//add record to csvList
+					csvList.Add(gpsRecord);
+				}
+
+				//Wait for last test to finish
+				while (inTest == true && csvList.Count != panelTestCount)
+				{
+					await Task.Delay(500);
 				}
 
 				// Update user interface.
@@ -542,6 +558,7 @@ namespace Sensit.App.GPS
 				toolStripStatusLabel.ForeColor = SystemColors.ControlText;
 				toolStripProgressBar.Value = toolStripProgressBar.Minimum;
 
+				ExporttoCsv(csvList);
 			}
 			// If an error occurs...
 			catch (Exception ex)
@@ -755,6 +772,77 @@ namespace Sensit.App.GPS
 				};
 			}
 		}
+		#endregion
+
+		#region Export using .csvHelper
+		// Export data recieved to filepath
+		// for panels, create new file and append all board data
+		// for singles, create and write new file
+
+		/// <summary>
+		/// Panel export to CSV
+		/// </summary>
+		/// <param name="boardData"></param>
+		internal void ExporttoCsv(List<GPSDataRecord> boardData)
+		{
+			//Create and name .csv file.
+			string fileName = DateTime.Now.ToString("MMddyyyy_HHmm") + "_PANEL";
+
+			//set configurations for csv mapping
+			var config = new CsvConfiguration(cultureInfo: CultureInfo.InvariantCulture)
+			{
+				//Trim the whitespace around each field to ensure delimiters are seen
+				TrimOptions = TrimOptions.Trim,
+			};
+
+			using StreamWriter writer = new(File.Create(filePath + fileName));
+			using CsvWriter csv = new(writer, config);
+			csv.Context.RegisterClassMap(typeof(GPSRecordMap));
+
+			//write column headers
+			csv.WriteHeader(typeof(GPSDataRecord));
+			//end header line
+			csv.NextRecord();
+			//write each board record
+			foreach (GPSDataRecord board in boardData)
+			{
+				//write board data
+				csv.WriteRecord(board);
+
+				//flush the writer
+				csv.Flush();
+
+				//end the line
+				csv.NextRecord();
+			}
+		}
+
+		internal void ExporttoCsv(GPSDataRecord boardData)
+		{
+			//Create and name .csv file.
+			string fileName = DateTime.Now.ToString("MMddyyyy_HHmm") + "_SINGLE";
+
+			//set configurations for csv mapping
+			var config = new CsvConfiguration(cultureInfo: CultureInfo.InvariantCulture)
+			{
+				//Trim the whitespace around each field to ensure delimiters are seen
+				TrimOptions = TrimOptions.Trim,
+			};
+
+			using StreamWriter writer = new(filePath + fileName);
+			using CsvWriter csv = new(writer, config);
+			csv.Context.RegisterClassMap(typeof(GPSRecordMap));
+
+			//write column headers
+			csv.WriteHeader(typeof(GPSDataRecord));
+			//end header line
+			csv.NextRecord();
+			//write board record
+			csv.WriteRecord(boardData);
+			//flush the writer
+			csv.Flush();
+		}
+
 		#endregion
 	}
 }
