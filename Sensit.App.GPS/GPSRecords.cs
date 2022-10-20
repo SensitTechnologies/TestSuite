@@ -5,25 +5,26 @@ namespace Sensit.App.GPS
 {
 	public class GPSDataRecord
 	{
-		//COM port being used
+		#region Properties
+
+		//Data derived from form.
 		public string? ComPortLocation { get; set; }
-
-		//Is this board part of a panel?
 		public bool IsPanel { get; set; }
-		public string PanelLocation { get; set; } = "";
+		public string PanelLocation { get; set; } = string.Empty;
+		public string TestDuration { get; set; } = string.Empty;
 
-		//Form data to record
+		//Data derived from user inputs.
+		public string PanelSerialNumber { get; set; } = string.Empty;
 		public double UserLatitude { get; set; }
 		public double UserLongitude { get; set; }
 		public int TestTimeout { get; set; }
-		public string UserName { get; set; } = "";
-		public string TestDuration { get; set; } = "";
+		public string UserName { get; set; } = string.Empty;
 
-		//Validity of message received
-		public bool IsValid { get; set; }
+		//Indicates whether or not this board's test passed or failed
+		public bool TestValid { get; set; }
 
 		//Properties of GPS board
-		public string BoardSerialNumber { get; set; } = "empty";
+		public string BoardSerialNumber { get; set; } = string.Empty;
 		public DateTime UTCTime { get; set; } = DateTime.MinValue;
 		public double Latitude { get; set; }
 		public double Longitude { get; set; }
@@ -32,14 +33,19 @@ namespace Sensit.App.GPS
 		public double HDOP { get; set; } //Horizontal Dilution of Precision
 		public double Altitude { get; set; }
 		public double HeightOfGeoid { get; set; } //Height of geoid above WGS84 ellipsoid
-		public string Checksum { get; set; } = "empty";
+		public string Checksum { get; set; } = string.Empty;
 
-		//Tolerances 
+		//Tolerances allowed for testing
 		public double PositionTolerance { get; set; }
 		public TimeSpan TimeTolerance { get; set; }
 
+		#endregion
 
-		//Set data to class
+		/// <summary>
+		/// Take inputted data and set it to class properties
+		/// IF data recieved passes validation. 
+		/// </summary>
+		/// <param name="message">Message GPS board recieved from the GPS antenna.</param>
 		public void SetRecords(string message)
 		{
 			//Split the message
@@ -91,19 +97,24 @@ namespace Sensit.App.GPS
 					FixQuality > 0 &&
 					SatelliteCount > 4))
 				{
-					IsValid = true;
+					TestValid = true;
 				}
 			}
 			else
 			{
-				IsValid = false;
+				TestValid = false;
 			}
 
 		}
 
+		/// <summary>
+		/// Reset the board input's determined properties each time 
+		/// a message received fails validation.
+		/// Might not belong in the object's data class?
+		/// </summary>
 		public void ResetBoardRecord()
 		{
-			//GPS message invalid. clear only board data before trying again.
+			//Reset all GPS board dependent properties. 
 			UTCTime = DateTime.MinValue;
 			Latitude = 0;
 			Longitude = 0;
@@ -118,35 +129,49 @@ namespace Sensit.App.GPS
 
 	public class GPSRecordMap : ClassMap<GPSDataRecord>
 	{
+		/// <summary>
+		/// A map for .csvHelper. Determines the properties to input 
+		/// into the .csv file, their order, and the column header 
+		/// for each data type.
+		/// I am not sure if it should be in its own file?
+		/// </summary>
 		public GPSRecordMap()
 		{
+			//Automap any properties that might be missed
 			AutoMap(CultureInfo.InvariantCulture);
 
-			
 			//Properties to ignore.
 			Map(r => r.ComPortLocation).Ignore();
+			Map(r => r.IsPanel).Ignore();
 
-			//Put in properties to map along with their column name
-			//	Map(r => r._).Name(" ");
-			Map(r => r.BoardSerialNumber).Name("Board_Serial_Number");
-			Map(r => r.IsPanel).Name("In_A_Panel");
-			Map(r => r.PanelLocation).Name("Panel_Location");
-			Map(r => r.UserName).Name("User_Name");
-			Map(r => r.UserLatitude).Name("User_Latitude");
-			Map(r => r.UserLongitude).Name("User_Longitude");
-			Map(r => r.TestTimeout).Name("Test_Timeout");
-			Map(r => r.TestDuration).Name("Test_Duration");
-			Map(r => r.PositionTolerance).Name("Position_Tolerance");
-			Map(r => r.TimeTolerance).Name("Time_Tolerance");
-			Map(r => r.UTCTime).Name("UTC_Time");
-			Map(r => r.Latitude).Name("Latitude");
-			Map(r => r.Longitude).Name("Longitude");
-			Map(r => r.FixQuality).Name("Fix_Quality");
-			Map(r => r.SatelliteCount).Name("Satellite_Count");
+			//Order of .csv file output.
+
+			//Quick glance data first. Board identification and pass/fail
+			Map(r => r.BoardSerialNumber).Name("Board Serial Number");
+			Map(m => m.TestValid).Name("Test Passed?");
+
+			//User/Form Information
+			Map(r => r.UserName).Name("User");
+			Map(r => r.UserLatitude).Name("User Latitude");
+			Map(r => r.UserLongitude).Name("User Longitude");
+			Map(r => r.TestDuration).Name("Test Duration");
+			Map(r => r.TestTimeout).Name("Test Timeout");
+
+			//Board Identification/Information
+			Map(r => r.PanelLocation).Name("Board Location"); //See info doc in .csv export folder
+			Map(r => r.UTCTime).Name("UTC Time");
+			Map(r => r.Latitude).Name("Board Latitude");
+			Map(r => r.Longitude).Name("Board Longitude");
+			Map(r => r.FixQuality).Name("Fix Quality");
+			Map(r => r.SatelliteCount).Name("Satellite Count");
 			Map(r => r.HDOP).Name("HDOP");
 			Map(r => r.Altitude).Name("Alitude");
-			Map(r => r.HeightOfGeoid).Name("Height_Of_Geoid");
-			Map(r => r.Checksum).Name("Checksum");
+			Map(r => r.HeightOfGeoid).Name("Height Of Geoid");
+			Map(r => r.Checksum).Name("GPS Message Checksum");
+
+			//Testing Information
+			Map(r => r.PositionTolerance).Name("PositionTolerance");
+			Map(r => r.TimeTolerance).Name("Time Tolerance");
 		}
 	}
 }

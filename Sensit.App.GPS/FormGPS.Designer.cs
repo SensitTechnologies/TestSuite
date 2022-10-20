@@ -215,6 +215,7 @@
 			this.buttonPortRefresh.Name = "buttonPortRefresh";
 			this.buttonPortRefresh.Size = new System.Drawing.Size(35, 35);
 			this.buttonPortRefresh.TabIndex = 20;
+			this.buttonPortRefresh.TabStop = false;
 			this.buttonPortRefresh.UseVisualStyleBackColor = false;
 			this.buttonPortRefresh.Click += new System.EventHandler(this.ButtonPortRefresh_Click);
 			// 
@@ -295,7 +296,7 @@
 			this.checkedListSerialPort.Name = "checkedListSerialPort";
 			this.tableLayoutSettings.SetRowSpan(this.checkedListSerialPort, 5);
 			this.checkedListSerialPort.Size = new System.Drawing.Size(210, 167);
-			this.checkedListSerialPort.TabIndex = 9;
+			this.checkedListSerialPort.TabIndex = 10;
 			// 
 			// labelName
 			// 
@@ -306,7 +307,7 @@
 			this.labelName.Location = new System.Drawing.Point(398, 43);
 			this.labelName.Name = "labelName";
 			this.labelName.Size = new System.Drawing.Size(138, 25);
-			this.labelName.TabIndex = 11;
+			this.labelName.TabIndex = 0;
 			this.labelName.Text = "Name";
 			// 
 			// labelPanelNumber
@@ -333,7 +334,7 @@
             0});
 			this.numericUpDownTimeout.Name = "numericUpDownTimeout";
 			this.numericUpDownTimeout.Size = new System.Drawing.Size(66, 27);
-			this.numericUpDownTimeout.TabIndex = 8;
+			this.numericUpDownTimeout.TabIndex = 2;
 			// 
 			// labelSeconds
 			// 
@@ -369,7 +370,7 @@
 			this.comboBoxUserLocation.Location = new System.Drawing.Point(219, 71);
 			this.comboBoxUserLocation.Name = "comboBoxUserLocation";
 			this.comboBoxUserLocation.Size = new System.Drawing.Size(138, 28);
-			this.comboBoxUserLocation.TabIndex = 22;
+			this.comboBoxUserLocation.TabIndex = 0;
 			this.comboBoxUserLocation.Text = "Transport";
 			// 
 			// textBoxPanelNumber
@@ -377,9 +378,9 @@
 			this.tableLayoutSettings.SetColumnSpan(this.textBoxPanelNumber, 3);
 			this.textBoxPanelNumber.Location = new System.Drawing.Point(398, 165);
 			this.textBoxPanelNumber.Name = "textBoxPanelNumber";
-			this.textBoxPanelNumber.PlaceholderText = "Required for Panel Program";
+			this.textBoxPanelNumber.PlaceholderText = "Optional";
 			this.textBoxPanelNumber.Size = new System.Drawing.Size(196, 27);
-			this.textBoxPanelNumber.TabIndex = 14;
+			this.textBoxPanelNumber.TabIndex = 3;
 			// 
 			// textBoxName
 			// 
@@ -388,7 +389,7 @@
 			this.textBoxName.Name = "textBoxName";
 			this.textBoxName.PlaceholderText = "Required";
 			this.textBoxName.Size = new System.Drawing.Size(137, 27);
-			this.textBoxName.TabIndex = 13;
+			this.textBoxName.TabIndex = 1;
 			// 
 			// labelUserLocation
 			// 
@@ -460,6 +461,7 @@
 			this.tableLayoutPogo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
 			this.tableLayoutPogo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
 			this.tableLayoutPogo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tableLayoutPogo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPogo.Size = new System.Drawing.Size(614, 316);
 			this.tableLayoutPogo.TabIndex = 0;
 			// 
@@ -764,7 +766,7 @@
 			this.buttonStartSingle.Location = new System.Drawing.Point(489, 269);
 			this.buttonStartSingle.Name = "buttonStartSingle";
 			this.buttonStartSingle.Size = new System.Drawing.Size(90, 30);
-			this.buttonStartSingle.TabIndex = 25;
+			this.buttonStartSingle.TabIndex = 5;
 			this.buttonStartSingle.Text = "Single Test";
 			this.buttonStartSingle.UseVisualStyleBackColor = true;
 			this.buttonStartSingle.Click += new System.EventHandler(this.ButtonStartSingle_Click);
@@ -788,7 +790,7 @@
 			this.buttonStartPanel.Location = new System.Drawing.Point(489, 16);
 			this.buttonStartPanel.Name = "buttonStartPanel";
 			this.buttonStartPanel.Size = new System.Drawing.Size(84, 30);
-			this.buttonStartPanel.TabIndex = 27;
+			this.buttonStartPanel.TabIndex = 4;
 			this.buttonStartPanel.Text = "Panel Test";
 			this.buttonStartPanel.UseVisualStyleBackColor = true;
 			this.buttonStartPanel.Click += new System.EventHandler(this.ButtonStartPanel_Click);

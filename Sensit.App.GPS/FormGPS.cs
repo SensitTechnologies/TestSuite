@@ -1,4 +1,3 @@
-
 using System.Globalization;
 using System.IO.Ports;
 using CsvHelper;
@@ -14,31 +13,35 @@ namespace Sensit.App.GPS
 	public partial class FormGPS : Form
 	{
 		#region Constants
+		/// <summary>
+		/// The current file path to store .csv data files in.
+		/// </summary>
+		private readonly string CSV_FILE_PATH = Path.GetFullPath(@"\\10.25.0.30\Public\Production Software\Data Logging\GPS Tester\");
 
-		//File papth to create and store csv data in
-		private readonly string filePath = Path.GetFullPath(@"\\10.25.0.30\Public\Production Software\Data Logging\GPS Tester");
+		/// <summary>
+		/// Minimum Test Time (seconds)
+		/// </summary>
+		private readonly int MINIMUM_TIMEOUT = 120;
 
-		//Tolerances for testing.
+		/// <summary>
+		/// Tolerances for testing.
+		/// </summary>
 		private const double POSITION_TOLERANCE = 1.0;
 		private readonly TimeSpan TIME_TOLERANCE = new(0, 2, 0);
 
-		//Minimum Test Time (seconds)
-		private readonly int MINIMUM_TIMEOUT = 10;
+		//Latitude/Longitude for each Location
 
-		#region Latitude/Longitude for each Location
-
-		//851 Transport Drive (OG Building)
+		/// <summary>
+		/// 851 Transport Drive (OG Building)
+		/// </summary>
 		private const double TRANSPORT_LATITUDE = 41.46095328477597;
 		private const double TRANSPORT_LONGITUDE = -87.01571016084537;
 
-		//1150 Loudermilk Lane (Production Building)
+		/// <summary>
+		///1150 Loudermilk Lane (Production Building)
+		/// </summary>
 		private const double LOUDERMILK_LATITUDE = 41.45822418035022;
 		private const double LOUDERMILK_LONGITUDE = -87.01414233228682;
-
-		#endregion
-		#endregion
-
-		#region Enumerations
 
 		/// <summary>
 		/// List holding names of all testing locations we have. 
@@ -72,6 +75,26 @@ namespace Sensit.App.GPS
 		/// timestamp for elapsed time
 		/// </summary>
 		private uint elapsedSeconds = 0;
+
+		/// <summary>
+		/// Class object for storing data recieved from GPS tests.
+		/// </summary>
+		GPSDataRecord gpsRecord;
+
+		/// <summary>
+		/// A list of all available serial ports. Updates every time the user clicks the refresh button.
+		/// </summary>
+		private List<string> allPorts;
+
+		/// <summary>
+		/// Keeps track of how many boards have been tested in the current test iteration.
+		/// </summary>
+		private int panelTestCount;
+
+		/// <summary>
+		/// Indicates whether or not a gps test is in process.
+		/// </summary>
+		private bool inTest;
 
 		#endregion
 
@@ -110,15 +133,9 @@ namespace Sensit.App.GPS
 			//Set up most recent location
 			comboBoxUserLocation.ResetText();
 
-			//gpsRecord cannot be null when exiting constructor
+			//GPS Record and all ports cannot be null when exiting constructor.
 			gpsRecord = new();
-
-			//checkedPorts cannot be null when exiting constructor
-			checkedPorts = new();
-
-			//allPorts cannot be null when exiting constructor
 			allPorts = new();
-
 		}
 
 		#endregion
@@ -149,6 +166,7 @@ namespace Sensit.App.GPS
 		{
 			Application.Exit();
 		}
+
 		#endregion
 
 		#region Settings
@@ -229,7 +247,7 @@ namespace Sensit.App.GPS
 						throw new TestException("UserLocation not available");
 				}
 				gpsRecord.SetRecords(message);
-				if (gpsRecord.IsValid == true)
+				if (gpsRecord.TestValid == true)
 				{
 					//Close gpsDevice so no more messages call setstatus
 					gpsDevice.Close();
@@ -237,7 +255,7 @@ namespace Sensit.App.GPS
 					//clear any lingering messages? 
 					message = String.Empty;
 
-					SetStatus(gpsRecord.IsValid);
+					SetStatus(gpsRecord.TestValid);
 				}
 				else
 				{
@@ -247,8 +265,10 @@ namespace Sensit.App.GPS
 			}));
 		}
 
-		List<GPSDataRecord> csvList = new();
-		private int panelTestCount;
+		/// <summary>
+		/// Sets the Status of a GPS board after a test has completed.
+		/// </summary>
+		/// <param name="pass">Bool value indicating whether or not a GPS board passed or failed a test.</param>
 		private void SetStatus(bool pass)
 		{
 			// Disable the timer.
@@ -269,23 +289,18 @@ namespace Sensit.App.GPS
 				//Clear and change icon
 				tag.BackgroundImage = Properties.Resources.green_tag;
 
-				//Status strip update
+				//Status strip update. User probably cannot see these on panel test but should on single testing
 				toolStripStatusLabel.Text = $"COM port {gpsDevice.PortName}: PASSED IN " + elapsedSeconds;
-
-				//Give the user time to see the status strip message (2 seconds)
-				Thread.Sleep(2000);
 			}
 			else
 			{
-				//// Alert the user (and make it bold).
+				// Alert the user (and make it bold).
 				tag.BackgroundImage = Properties.Resources.red_tag;
 
-				//status strip update
+				//Status strip update. User probably cannot see these on panel test but should on single testing
 				toolStripStatusLabel.Text = $"COM port {gpsDevice.PortName}: FAILED";
-
-				//Give the user time to see the status strip message (2 seconds)
-				Thread.Sleep(2000);
 			}
+
 			//Set testing to false and increase panel count
 			inTest = false;
 			panelTestCount++;
@@ -319,6 +334,9 @@ namespace Sensit.App.GPS
 						//Elapsed seconds needs to be reset here as well so it doesn't throw exceptions in panel testing
 						elapsedSeconds = 0;
 
+						//close gps port
+						gpsDevice.Close();
+
 						//Fail the test.
 						SetStatus(false);
 					}
@@ -332,23 +350,6 @@ namespace Sensit.App.GPS
 			}
 		}
 
-		#region Disposable variables for test
-
-		//GPS Data Recording
-		GPSDataRecord gpsRecord;
-
-		//Indicator of whether a test is in process or not
-		private bool inTest;
-
-		//User Location
-		internal string? userLocation;
-
-		//List containing all checked values
-		private List<string> checkedPorts;
-		private List<string> allPorts;
-
-		#endregion
-
 		/// <summary>
 		/// When "SingleTest" button is clicked, start a single test.
 		/// </summary>
@@ -357,7 +358,7 @@ namespace Sensit.App.GPS
 		private async void ButtonStartSingle_Click(object sender, EventArgs e)
 		{
 			try
-			{				
+			{
 				//Check user input for error(s) and let it know isPanel == false.
 				CheckUserInput(false);
 
@@ -391,16 +392,15 @@ namespace Sensit.App.GPS
 				//Instantiate a new gps record. Tell record it is not a panel
 				/* Temporary: Boards are currently not serialized. Future proofing
 				 * has the property implemented already. For now, the "serial number" 
-				 * will be "Single"
-				 */
+				 * will be "Single" */
 				gpsRecord = new()
 				{
 					IsPanel = false,
 					PanelLocation = "Single",
-					BoardSerialNumber = "Single",
+					BoardSerialNumber = "Not Implemented",
 					UserName = textBoxName.Text,
 					TestTimeout = (int)numericUpDownTimeout.Value,
-					ComPortLocation = checkedListSerialPort.CheckedItems[panelTestCount].ToString(),
+					ComPortLocation = checkedListSerialPort.CheckedItems[0].ToString(),
 				};
 
 				//Reset panel test counter
@@ -417,6 +417,27 @@ namespace Sensit.App.GPS
 
 				// Start the timer.
 				timer.Enabled = true;
+
+				//Wait for async testing to finish
+				while (inTest == true)
+				{
+					await Task.Delay(500);
+				}
+
+				// Update user interface.
+				groupBoxSettings.Enabled = true;
+				buttonStartSingle.Enabled = true;
+				buttonStartPanel.Enabled = true;
+				buttonStop.Enabled = false;
+				toolStripStatusLabel.Font = new Font(toolStripStatusLabel.Font, FontStyle.Regular);
+				toolStripStatusLabel.ForeColor = SystemColors.ControlText;
+				toolStripProgressBar.Value = toolStripProgressBar.Minimum;
+
+				//Play test complete sound to notify user
+				System.Media.SystemSounds.Beep.Play();
+
+				//Export to .csv file
+				ExporttoCsv(gpsRecord);
 			}
 			// If an error occurs...
 			catch (Exception ex)
@@ -435,30 +456,27 @@ namespace Sensit.App.GPS
 				// Alert the user.
 				MessageBox.Show(ex.Message, ex.GetType().Name.ToString(CultureInfo.CurrentCulture));
 			}
-
-			//Wait for async testing to finish
-			while (inTest == true)
-			{
-				await Task.Delay(500);
-			}
-
-			// Update user interface.
-			groupBoxSettings.Enabled = true;
-			buttonStartSingle.Enabled = true;
-			buttonStartPanel.Enabled = true;
-			buttonStop.Enabled = false;
-			toolStripStatusLabel.Font = new Font(toolStripStatusLabel.Font, FontStyle.Regular);
-			toolStripStatusLabel.ForeColor = SystemColors.ControlText;
-			toolStripProgressBar.Value = toolStripProgressBar.Minimum;
-
-			//Export to .csv file
-			ExporttoCsv(gpsRecord);
 		}
 
+		/// <summary>
+		/// List to store GPS Records in for .csv creation.
+		/// </summary>
+		private List<GPSDataRecord> csvList = new();
+
+
+
+		/// <summary>
+		/// When "PanelTest" button is clicked, start a multichannel test.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private async void ButtonStartPanel_Click(object sender, EventArgs e)
 		{
 			try
 			{
+				/// Create a list of all serial ports that the user has checked the box of.
+				List<string> checkedPorts = new();
+
 				//Reset icons
 				ResetIcons();
 
@@ -500,15 +518,12 @@ namespace Sensit.App.GPS
 					inTest = true;
 
 					//Instantiate new gps record for each board and set values
-					/* Temporary: Boards are currently not serialized. Future proofing
-					 * has the property implemented already. For now, the "serial number" 
-					 * will be "Panel"
-					 */
 					gpsRecord = new()
 					{
 						IsPanel = true,
 						PanelLocation = allPorts.IndexOf(current).ToString(),
-						BoardSerialNumber = "Panel",
+						PanelSerialNumber = textBoxPanelNumber.Text,
+						BoardSerialNumber = "Not Implemented",
 						UserName = textBoxName.Text,
 						TestTimeout = (int)numericUpDownTimeout.Value,
 						ComPortLocation = current,
@@ -523,8 +538,7 @@ namespace Sensit.App.GPS
 					//Open the serial port (and let it know what serial port to use).
 					gpsDevice.Open(current);
 
-					//Wait for comport to finish
-					//https://stackoverflow.com/questions/7219653/why-is-access-to-com-port-denied
+					//Wait for comport to finish opening
 					Thread.Sleep(500);
 
 					//enable timer
@@ -556,9 +570,18 @@ namespace Sensit.App.GPS
 				buttonStop.Enabled = false;
 				toolStripStatusLabel.Font = new Font(toolStripStatusLabel.Font, FontStyle.Regular);
 				toolStripStatusLabel.ForeColor = SystemColors.ControlText;
+				toolStripStatusLabel.Text = "Panel Test Complete.";
 				toolStripProgressBar.Value = toolStripProgressBar.Minimum;
 
+				//Play test complete sound to notify user
+				System.Media.SystemSounds.Beep.Play();
+
 				ExporttoCsv(csvList);
+
+				/*NOTE: Sporadic bug can cause new test to start (therefore resetting the record)
+				* before the first one is written. I'm adding this pause to give the record a chance 
+				* to finish writing. So far it seems to fix the problem? */
+				Thread.Sleep(500);
 			}
 			// If an error occurs...
 			catch (Exception ex)
@@ -599,7 +622,7 @@ namespace Sensit.App.GPS
 				buttonStartSingle.Enabled = true;
 				buttonStartPanel.Enabled = true;
 				buttonStop.Enabled = false;
-				toolStripStatusLabel.Text = "Ready...";
+				toolStripStatusLabel.Text = "Test Stopped. Ready for next test...";
 				toolStripStatusLabel.Font = new Font(toolStripStatusLabel.Font, FontStyle.Regular);
 				toolStripStatusLabel.ForeColor = SystemColors.ControlText;
 				toolStripProgressBar.Value = toolStripProgressBar.Minimum;
@@ -684,7 +707,7 @@ namespace Sensit.App.GPS
 		/// </summary>
 		private void ResetIcons()
 		{
-			//TODO: do this in a better and more efficient way when time allows
+			//TODO: I'd like to do this better when/if time allows.
 			pictureBoxGPS0.BackgroundImage = Properties.Resources.gps_board;
 			pictureBoxGPS1.BackgroundImage = Properties.Resources.gps_board;
 			pictureBoxGPS2.BackgroundImage = Properties.Resources.gps_board;
@@ -709,56 +732,45 @@ namespace Sensit.App.GPS
 		}
 
 		/// <summary>
-		/// Check the user's inputs to determine erors and/or bugs
+		/// Check the user's inputs to determine errors and/or bugs
 		/// </summary>
 		/// <param name="isPanel"></param>
 		/// <exception cref="TestException"></exception>
 		private void CheckUserInput(bool isPanel)
 		{
 			//Check for user name entry
-			if (textBoxName.Text == null || textBoxName.Text == "")
+			if (String.IsNullOrWhiteSpace(textBoxName.Text))
 			{
 				throw new TestException("Please enter your Name in the text box labelled name.");
 			}
 
 			//Check for Location and make sure it's accurate
-			userLocation = comboBoxUserLocation == null || !UserLocationList.Contains(comboBoxUserLocation.Text) ?
-				throw new TestException("Please choose your location.")
-				: comboBoxUserLocation.SelectedItem.ToString();
+			if (String.IsNullOrWhiteSpace(comboBoxUserLocation.Text))
+			{
+				throw new TestException("Please choose your location.");
+			}
 
-			//Check for a timeout. TODO: Set minimum timeout to 120 seconds
+			//Check for a timeout.
 			if (numericUpDownTimeout.Value < MINIMUM_TIMEOUT)
 			{
 				throw new TestException($"Minimum timeout is {MINIMUM_TIMEOUT}. Please choose a longer testing time.");
 			}
 
-			//Check for Serial Port input (and Panel Number for Panel Test)
-			//If it's a panel test
+			//For Panel Tests. Check to make sure serial ports checked is greater than one.
 			if (isPanel == true)
 			{
-				//Check for Panel Number
-				if (textBoxPanelNumber.Text == null || textBoxPanelNumber.Text == "")
+				switch (checkedListSerialPort.CheckedItems.Count)
 				{
-					throw new TestException("Panel Number required for Panel Test");
-				}
-
-				else
-				{
-					switch (checkedListSerialPort.CheckedItems.Count)
-					{
-						case 0:
-							throw new TestException("No serial ports selected. Please check boxes next to ports and try again.");
-						case 1:
-							throw new TestException("Only one port selected for a Panel Test. Please select a minimum of two ports and try again.");
-						default:
-							break;
-					};
-
-				}
-
+					case 0:
+						throw new TestException("No serial ports selected. Please check boxes next to ports and try again.");
+					case 1:
+						throw new TestException("Only one port selected for a Panel Test. Please select a minimum of two ports and try again.");
+					default:
+						break;
+				};
 			}
 
-			//If it's a single test
+			//For Single Tests. Check to make sure serial ports is equal to exactly one.
 			else
 			{
 				switch (checkedListSerialPort.CheckedItems.Count)
@@ -775,71 +787,87 @@ namespace Sensit.App.GPS
 		#endregion
 
 		#region Export using .csvHelper
-		// Export data recieved to filepath
-		// for panels, create new file and append all board data
-		// for singles, create and write new file
 
 		/// <summary>
 		/// Panel export to CSV
 		/// </summary>
-		/// <param name="boardData"></param>
+		/// <param name="boardData">Each item is the records for a board in a panel. </param>
 		internal void ExporttoCsv(List<GPSDataRecord> boardData)
 		{
-			//Create and name .csv file.
+			//Set name for .csv file.
 			string fileName = DateTime.Now.ToString("MMddyyyy_HHmm") + "_PANEL";
 
-			//set configurations for csv mapping
+			//Set configurations for .csv mapping.
 			var config = new CsvConfiguration(cultureInfo: CultureInfo.InvariantCulture)
 			{
 				//Trim the whitespace around each field to ensure delimiters are seen
 				TrimOptions = TrimOptions.Trim,
 			};
 
-			using StreamWriter writer = new(File.Create(filePath + fileName));
+			//Create a Stream Writer and have it create named file at predetermined file path. 
+			using StreamWriter writer = new(File.Create(CSV_FILE_PATH + fileName));
+
+			//Create a .csvHelper instance.
 			using CsvWriter csv = new(writer, config);
+
+			//Set the .csvHelper's class map. Map is currently store in GPSRecords. It might need its own file?
 			csv.Context.RegisterClassMap(typeof(GPSRecordMap));
 
-			//write column headers
+			//Write column headers using class map's names. 
 			csv.WriteHeader(typeof(GPSDataRecord));
-			//end header line
+
+			//End the header line.
 			csv.NextRecord();
-			//write each board record
+
+			//Write the records for each board
 			foreach (GPSDataRecord board in boardData)
 			{
-				//write board data
+				//Write the board's GPSRecord data. Sorted through class map
 				csv.WriteRecord(board);
 
-				//flush the writer
+				//Flush the writer. 
 				csv.Flush();
 
-				//end the line
+				//End the line this input is stored on.
 				csv.NextRecord();
 			}
 		}
 
+		/// <summary>
+		/// Single Text export to a .csv file. 
+		/// </summary>
+		/// <param name="boardData">Contains a single record for the board's GPSRecord.</param>
 		internal void ExporttoCsv(GPSDataRecord boardData)
 		{
-			//Create and name .csv file.
-			string fileName = DateTime.Now.ToString("MMddyyyy_HHmm") + "_SINGLE";
+			//Set name for .csv file.
+			string fileName = DateTime.Now.ToString("MMddyyyy_HHmm") + "_PANEL";
 
-			//set configurations for csv mapping
+			//Set configurations for .csv mapping.
 			var config = new CsvConfiguration(cultureInfo: CultureInfo.InvariantCulture)
 			{
 				//Trim the whitespace around each field to ensure delimiters are seen
 				TrimOptions = TrimOptions.Trim,
 			};
 
-			using StreamWriter writer = new(filePath + fileName);
+			//Create a Stream Writer and have it create named file at predetermined file path. 
+			using StreamWriter writer = new(File.Create(CSV_FILE_PATH + fileName));
+
+			//Create a .csvHelper instance.
 			using CsvWriter csv = new(writer, config);
+
+			//Set the .csvHelper's class map. Map is currently store in GPSRecords. It might need its own file?
 			csv.Context.RegisterClassMap(typeof(GPSRecordMap));
 
-			//write column headers
+			//Write column headers using class map's names. 
 			csv.WriteHeader(typeof(GPSDataRecord));
-			//end header line
+
+			//End the header line.
 			csv.NextRecord();
-			//write board record
+
+			//Write the board's GPSRecord data. Sorted through class map
 			csv.WriteRecord(boardData);
-			//flush the writer
+
+			//Flush the writer. 
 			csv.Flush();
 		}
 
