@@ -390,9 +390,6 @@ namespace Sensit.App.GPS
 				}
 
 				//Instantiate a new gps record. Tell record it is not a panel
-				/* Temporary: Boards are currently not serialized. Future proofing
-				 * has the property implemented already. For now, the "serial number" 
-				 * will be "Single" */
 				gpsRecord = new()
 				{
 					IsPanel = false,
@@ -434,7 +431,7 @@ namespace Sensit.App.GPS
 				toolStripProgressBar.Value = toolStripProgressBar.Minimum;
 
 				//Play test complete sound to notify user
-				System.Media.SystemSounds.Beep.Play();
+				System.Media.SystemSounds.Exclamation.Play();
 
 				//Export to .csv file
 				ExporttoCsv(gpsRecord);
@@ -463,8 +460,6 @@ namespace Sensit.App.GPS
 		/// </summary>
 		private List<GPSDataRecord> csvList = new();
 
-
-
 		/// <summary>
 		/// When "PanelTest" button is clicked, start a multichannel test.
 		/// </summary>
@@ -474,7 +469,7 @@ namespace Sensit.App.GPS
 		{
 			try
 			{
-				/// Create a list of all serial ports that the user has checked the box of.
+				// Create a list of all serial ports that the user has checked the box of.
 				List<string> checkedPorts = new();
 
 				//Reset icons
@@ -494,7 +489,6 @@ namespace Sensit.App.GPS
 				{
 					checkedPorts.Add(s);
 				}
-
 
 				// Update the user interface.
 				groupBoxSettings.Enabled = false;
@@ -840,7 +834,7 @@ namespace Sensit.App.GPS
 		internal void ExporttoCsv(GPSDataRecord boardData)
 		{
 			//Set name for .csv file.
-			string fileName = DateTime.Now.ToString("MMddyyyy_HHmm") + "_PANEL";
+			string fileName = DateTime.Now.ToString("MMddyyyy_HHmm") + "_SINGLE";
 
 			//Set configurations for .csv mapping.
 			var config = new CsvConfiguration(cultureInfo: CultureInfo.InvariantCulture)
