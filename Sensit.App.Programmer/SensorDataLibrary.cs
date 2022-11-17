@@ -25,7 +25,7 @@ namespace Sensit.App.Programmer
 		public static readonly int CAL_SCALE_OXYGEN = 0;
 
 		//Carbon Monoxide Sensor
-		public static readonly int CARBONMONOXIDE_CAL_SCALE = 0x36C90;
+		public static readonly int CARBONMONOXIDE_CAL_SCALE = 0x0012AD4; // 11/17/22 fixed value
 		public static readonly int CARBONMONOXIDE_CAL_POINT_ONE = 0x64000000; //only CO has different Cal Point (flipped number peter gave)
 
 		//Hydrogen Sulfide Sensor
@@ -130,10 +130,8 @@ namespace Sensit.App.Programmer
 				data.Add(SensorRev);
 				data.Add(RecordFormat);
 				
-				//Flip CalScale value so it is written in the correct order.
-				List<byte> flippedCalScale = new(ToBigEndianArray(CalScale));
-				flippedCalScale.Reverse();
-				data.AddRange(flippedCalScale);
+				// 11/17/22 removed flipping the cal scale value as the results are backwards.
+				data.AddRange(ToBigEndianArray(CalScale));
 
 				data.Add(CalGasOne);
 				data.AddRange(ToBigEndianArray(CalPointOne));

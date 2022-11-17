@@ -14,10 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="aardvark.dll" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Sensit.TestSDK\Sensit.TestSDK.csproj" />
   </ItemGroup>
 
