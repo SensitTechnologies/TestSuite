@@ -16,7 +16,9 @@ namespace Sensit.App.GPS
 		/// <summary>
 		/// The current file path to store .csv data files in.
 		/// </summary>
-		private readonly string CSV_FILE_PATH = Path.GetFullPath(@"\\10.25.0.30\Public\Production Software\Data Logging\GPS Tester\");
+		//private readonly string CSV_FILE_PATH = Path.GetFullPath(@"\\10.25.0.30\Public\Production Software\Data Logging\GPS Tester\");
+		private readonly string CSV_FILE_PATH = Path.GetFullPath("C:\\GPS Test Logs");
+
 
 		/// <summary>
 		/// Minimum Test Time (seconds)
