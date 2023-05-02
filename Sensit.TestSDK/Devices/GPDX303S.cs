@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using Sensit.TestSDK.Communication;
 using Sensit.TestSDK.Exceptions;
 using Sensit.TestSDK.Interfaces;
+using Sensit.TestSDK.Protocols;
 
 namespace Sensit.TestSDK.Devices
 {
@@ -56,14 +57,14 @@ namespace Sensit.TestSDK.Devices
 		public void WriteThenRead()
 		{
 			// Fetch current and voltage readings from each channel.
-			Readings[VariableType.Voltage1] = SendQuery(new GPDX303S_SCPI().VOUT(1).Query());
-			Readings[VariableType.Current1] = SendQuery(new GPDX303S_SCPI().IOUT(1).Query());
-			Readings[VariableType.Voltage2] = SendQuery(new GPDX303S_SCPI().VOUT(2).Query());
-			Readings[VariableType.Current2] = SendQuery(new GPDX303S_SCPI().IOUT(2).Query());
-			Readings[VariableType.Voltage3] = SendQuery(new GPDX303S_SCPI().VOUT(3).Query());
-			Readings[VariableType.Current3] = SendQuery(new GPDX303S_SCPI().IOUT(3).Query());
-			Readings[VariableType.Voltage4] = SendQuery(new GPDX303S_SCPI().VOUT(4).Query());
-			Readings[VariableType.Current4] = SendQuery(new GPDX303S_SCPI().IOUT(4).Query());
+			Readings[VariableType.Voltage1] = SendQuery(new SCPI_GPDX303S().VOUT(1).Query());
+			Readings[VariableType.Current1] = SendQuery(new SCPI_GPDX303S().IOUT(1).Query());
+			Readings[VariableType.Voltage2] = SendQuery(new SCPI_GPDX303S().VOUT(2).Query());
+			Readings[VariableType.Current2] = SendQuery(new SCPI_GPDX303S().IOUT(2).Query());
+			Readings[VariableType.Voltage3] = SendQuery(new SCPI_GPDX303S().VOUT(3).Query());
+			Readings[VariableType.Current3] = SendQuery(new SCPI_GPDX303S().IOUT(3).Query());
+			Readings[VariableType.Voltage4] = SendQuery(new SCPI_GPDX303S().VOUT(4).Query());
+			Readings[VariableType.Current4] = SendQuery(new SCPI_GPDX303S().IOUT(4).Query());
 		}
 
 		public void Write(VariableType variable, decimal value)
@@ -71,35 +72,35 @@ namespace Sensit.TestSDK.Devices
 			switch (variable)
 			{
 				case VariableType.Current1:
-					SendCommand(new GPDX303S_SCPI().ISET(1, value).Command());
+					SendCommand(new SCPI_GPDX303S().ISET(1, value).Command());
 					break;
 
 				case VariableType.Current2:
-					SendCommand(new GPDX303S_SCPI().ISET(2, value).Command());
+					SendCommand(new SCPI_GPDX303S().ISET(2, value).Command());
 					break;
 
 				case VariableType.Current3:
-					SendCommand(new GPDX303S_SCPI().ISET(3, value).Command());
+					SendCommand(new SCPI_GPDX303S().ISET(3, value).Command());
 					break;
 
 				case VariableType.Current4:
-					SendCommand(new GPDX303S_SCPI().ISET(4, value).Command());
+					SendCommand(new SCPI_GPDX303S().ISET(4, value).Command());
 					break;
 
 				case VariableType.Voltage1:
-					SendCommand(new GPDX303S_SCPI().VSET(1, value).Command());
+					SendCommand(new SCPI_GPDX303S().VSET(1, value).Command());
 					break;
 
 				case VariableType.Voltage2:
-					SendCommand(new GPDX303S_SCPI().VSET(2, value).Command());
+					SendCommand(new SCPI_GPDX303S().VSET(2, value).Command());
 					break;
 
 				case VariableType.Voltage3:
-					SendCommand(new GPDX303S_SCPI().VSET(3, value).Command());
+					SendCommand(new SCPI_GPDX303S().VSET(3, value).Command());
 					break;
 
 				case VariableType.Voltage4:
-					SendCommand(new GPDX303S_SCPI().VSET(4, value).Command());
+					SendCommand(new SCPI_GPDX303S().VSET(4, value).Command());
 					break;
 
 				default:
@@ -116,11 +117,11 @@ namespace Sensit.TestSDK.Devices
 			{
 				case ControlMode.Passive:
 					// Turn output off.
-					SendCommand(new GPDX303S_SCPI().OUT(false).Command());
+					SendCommand(new SCPI_GPDX303S().OUT(false).Command());
 					break;
 				case ControlMode.Active:
 					// Turn output on.
-					SendCommand(new GPDX303S_SCPI().OUT(true).Command());
+					SendCommand(new SCPI_GPDX303S().OUT(true).Command());
 					break;
 				default:
 					throw new DeviceSettingNotSupportedException("Cannot set GPDX303S power supply control mode:"
@@ -134,28 +135,28 @@ namespace Sensit.TestSDK.Devices
 			switch (type)
 			{
 				case VariableType.Current1:
-					result = SendQuery(new GPDX303S_SCPI().ISET(1).Query());
+					result = SendQuery(new SCPI_GPDX303S().ISET(1).Query());
 					break;
 				case VariableType.Current2:
-					result = SendQuery(new GPDX303S_SCPI().ISET(2).Query());
+					result = SendQuery(new SCPI_GPDX303S().ISET(2).Query());
 					break;
 				case VariableType.Current3:
-					result = SendQuery(new GPDX303S_SCPI().ISET(3).Query());
+					result = SendQuery(new SCPI_GPDX303S().ISET(3).Query());
 					break;
 				case VariableType.Current4:
-					result = SendQuery(new GPDX303S_SCPI().ISET(4).Query());
+					result = SendQuery(new SCPI_GPDX303S().ISET(4).Query());
 					break;
 				case VariableType.Voltage1:
-					result = SendQuery(new GPDX303S_SCPI().VSET(1).Query());
+					result = SendQuery(new SCPI_GPDX303S().VSET(1).Query());
 					break;
 				case VariableType.Voltage2:
-					result = SendQuery(new GPDX303S_SCPI().VSET(2).Query());
+					result = SendQuery(new SCPI_GPDX303S().VSET(2).Query());
 					break;
 				case VariableType.Voltage3:
-					result = SendQuery(new GPDX303S_SCPI().VSET(3).Query());
+					result = SendQuery(new SCPI_GPDX303S().VSET(3).Query());
 					break;
 				case VariableType.Voltage4:
-					result = SendQuery(new GPDX303S_SCPI().VSET(4).Query());
+					result = SendQuery(new SCPI_GPDX303S().VSET(4).Query());
 					break;
 				default:
 					throw new DeviceSettingNotSupportedException("GPDX303S power supply does not support " + type.ToString() + ".");
