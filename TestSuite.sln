@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sensit.App.Log", "Sensit.Ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sensit.App.Aardvark", "ElectrochemComm\Sensit.App.Aardvark.csproj", "{763D02F8-C037-4B26-8474-F3454F01210B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.Modbus", "Sensit.App.Modbus\Sensit.App.Modbus.csproj", "{6CF45CC3-64BD-4B3B-9ACE-74D82C024A36}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -90,6 +92,12 @@ Global
 		{763D02F8-C037-4B26-8474-F3454F01210B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{763D02F8-C037-4B26-8474-F3454F01210B}.Remote Debug|Any CPU.ActiveCfg = Release|Any CPU
 		{763D02F8-C037-4B26-8474-F3454F01210B}.Remote Debug|Any CPU.Build.0 = Release|Any CPU
+		{6CF45CC3-64BD-4B3B-9ACE-74D82C024A36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CF45CC3-64BD-4B3B-9ACE-74D82C024A36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CF45CC3-64BD-4B3B-9ACE-74D82C024A36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CF45CC3-64BD-4B3B-9ACE-74D82C024A36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CF45CC3-64BD-4B3B-9ACE-74D82C024A36}.Remote Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{6CF45CC3-64BD-4B3B-9ACE-74D82C024A36}.Remote Debug|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
