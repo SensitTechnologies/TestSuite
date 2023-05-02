@@ -26,6 +26,11 @@
 /Sensit.App.MassFlow/*.pfx
 /Sensit.App.MassFlow/*.user
 
+/Sensit.App.Modbus/bin
+/Sensit.App.Modbus/obj
+/Sensit.App.Modbus/*.pfx
+/Sensit.App.Modbus/*.user
+
 /Sensit.App.Pogo/bin
 /Sensit.App.Pogo/obj
 /Sensit/App.Pogo/*.pfx
