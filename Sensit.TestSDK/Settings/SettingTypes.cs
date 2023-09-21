@@ -675,6 +675,9 @@ namespace Sensit.TestSDK.Settings
 		public byte Code { get; }
 	}
 
+	/// <summary>
+	/// Setting that contains no data, and is used to group other settings visually.
+	/// </summary>
 	public class CategorySetting : Setting
 	{
 		/// <summary>
