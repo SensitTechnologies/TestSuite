@@ -674,4 +674,37 @@ namespace Sensit.TestSDK.Settings
 		/// </summary>
 		public byte Code { get; }
 	}
+
+	public class CategorySetting : Setting
+	{
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <remarks>
+		/// Constructor with no parameters is required for serialization.
+		/// </remarks>
+		public CategorySetting() { }
+
+		/// <summary>
+		/// Constructor with label.
+		/// </summary>
+		/// <param name="label"></param>
+		public CategorySetting(string label)
+		{
+			Label = label;
+		}
+
+		public override List<byte> GetBytes()
+		{
+			// Since this is a category, it contains no data.
+			return new List<byte>();
+		}
+
+		public override List<byte> SetBytes(List<byte> bytes)
+		{
+			// Do not tamper with the list of bytes.
+			// Just pass it through.
+			return bytes;
+		}
+	}
 }
