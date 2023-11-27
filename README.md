@@ -6,7 +6,7 @@ This is a software suite for automating testing and calibration of sensors or in
 ## Installation
 Click-once installers for the apps are available for download here:  (Note that the applications have not been published since the migration to .NET 6.0, so they still require .NET Framework 4.8.)
 * [Automated Test App](https://clickonceapp.blob.core.windows.net/clickonce-app-container/calibration/publish.htm)
-* [Datalogger App](https://clickonceapp.blob.core.windows.net/clickonce-app-container/Sensit.App.Log/publish.htm)
+* [Datalogger App](https://clickonceapp.blob.core.windows.net/clickonce-app-container/Sensit.App.Log/Publish.html)
 * [Gas Concentration App](https://clickonceapp.blob.core.windows.net/clickonce-app-container/gasconcentration/publish.htm)
 * [Mass Flow Controller App](https://clickonceapp.blob.core.windows.net/clickonce-app-container/massflow/publish.htm)
 * Power Supply App (oops...not hosted online yet)
