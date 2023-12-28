@@ -43,9 +43,8 @@ namespace Sensit.App.Log
 		// mode we're currently using.
 		private StopMode _stopMode;
 
-		// timestamp for elapsed time
+		// timestamps for elapsed time
 		private TimeSpan _elapsedTime;
-
 		private DateTime _stopDateTime;
 
 		// number of samples logged
@@ -96,19 +95,19 @@ namespace Sensit.App.Log
 			numericUpDownInterval.Value = Properties.Settings.Default.Interval;
 
 			// When the filename is changed, save the new value.
-			textBoxFilename.TextChanged += new ((sender, e) =>
+			textBoxFilename.TextChanged += new((sender, e) =>
 			{
 				Properties.Settings.Default.Filename = textBoxFilename.Text;
 			});
 
 			// When the serial port is changed, save the new value.
-			comboBoxSerialPort.SelectedIndexChanged += new ((sender, e) =>
+			comboBoxSerialPort.SelectedIndexChanged += new((sender, e) =>
 			{
 				Properties.Settings.Default.Port = comboBoxSerialPort.Text;
 			});
 
 			// When the baud rate is changed, save the new value.
-			comboBoxBaudRate.SelectedIndexChanged += new ((sender, e) =>
+			comboBoxBaudRate.SelectedIndexChanged += new((sender, e) =>
 			{
 				try
 				{
@@ -126,7 +125,7 @@ namespace Sensit.App.Log
 			});
 
 			// When the number of data bits is changed, save the new value.
-			comboBoxDataBits.SelectedIndexChanged += new ((sender, e) =>
+			comboBoxDataBits.SelectedIndexChanged += new((sender, e) =>
 			{
 				try
 				{
@@ -144,32 +143,32 @@ namespace Sensit.App.Log
 			});
 
 			// When the parity is changed, save the new value.
-			comboBoxParity.SelectedIndexChanged += new ((sender, e) =>
+			comboBoxParity.SelectedIndexChanged += new((sender, e) =>
 			{
 				Properties.Settings.Default.Parity = comboBoxParity.Text;
 			});
 
 			// When the number of stop bits is changed, save the new value.
-			comboBoxStopBits.SelectedIndexChanged += new ((sender, e) =>
+			comboBoxStopBits.SelectedIndexChanged += new((sender, e) =>
 			{
 				Properties.Settings.Default.StopBits = comboBoxStopBits.Text;
 			});
 
 			// When the handshaking mode is changed, save the new value.
-			comboBoxHandshake.SelectedIndexChanged += new ((sender, e) =>
+			comboBoxHandshake.SelectedIndexChanged += new((sender, e) =>
 			{
 				Properties.Settings.Default.Handshake = comboBoxHandshake.Text;
 			});
 
 			// When the selected logging interval is changed, save the new value.
 			// Set the timer's interval property (which controls how often samples are taken).
-			numericUpDownInterval.ValueChanged += new ((sender, e) =>
+			numericUpDownInterval.ValueChanged += new((sender, e) =>
 			{
 				_timer.Interval = decimal.ToDouble(numericUpDownInterval.Value);
 			});
 
 			// When the command is changed, save the new value.
-			textBoxCommand.TextChanged += new ((sender, e) =>
+			textBoxCommand.TextChanged += new((sender, e) =>
 			{
 				Properties.Settings.Default.Command = textBoxCommand.Text;
 			});
@@ -305,7 +304,7 @@ namespace Sensit.App.Log
 			// threads might get stuck waiting for each other).
 			BeginInvoke(new Action(() =>
 			{
-				// TODO:  Process received message.
+				// Process received message.
 				RecordData(DateTime.Now, message);
 			}));
 		}
@@ -327,21 +326,28 @@ namespace Sensit.App.Log
 
 			try
 			{
-				// Use a method invoker to interact with the Form's thread.
-				// It must be asynchronous (BeginInvoke, not Invoke) or else the two
-				// threads might get stuck waiting for each other).
-				BeginInvoke(new Action(() =>
+				// Update elapsed time.
+				_elapsedTime += new TimeSpan(0, 0, 0, 0, (int)_timer.Interval);
+
+				// If the DUT requires polling...
+				if (_isPolled)
 				{
-					// Insert newline characters as requested.
-					_genericSerialDevice.Command = textBoxCommand.Text.Replace("\\n", "\n").Replace("\\r", "\r").Replace("\\t", "\t");
+					// Use a method invoker to interact with the Form's thread.
+					// It must be asynchronous (BeginInvoke, not Invoke) or else the two
+					// threads might get stuck waiting for each other).
+					BeginInvoke(new Action(() =>
+					{
+						// Insert newline characters as requested.
+						_genericSerialDevice.Command = textBoxCommand.Text.Replace("\\n", "\n").Replace("\\r", "\r").Replace("\\t", "\t");
 
-					// Fetch a value from the DUT.
-					_genericSerialDevice.WriteThenRead();
-					string sample = _genericSerialDevice.Message;
+						// Fetch a value from the DUT.
+						_genericSerialDevice.WriteThenRead();
+						string sample = _genericSerialDevice.Message;
 
-					// Log the result.
-					RecordData(e.SignalTime, sample);
-				}));
+						// Log the result.
+						RecordData(e.SignalTime, sample);
+					}));
+				}
 
 				// Start the timer again.
 				_timer.Enabled = true;
@@ -373,9 +379,6 @@ namespace Sensit.App.Log
 			// Display the sample value to the user.
 			textBoxResponse.Text = sample;
 
-			// Update elapsed time.
-			_elapsedTime += new TimeSpan(0, 0, 0, 0, (int)_timer.Interval);
-
 			// Update samples taken.
 			_samples++;
 
@@ -384,11 +387,11 @@ namespace Sensit.App.Log
 			_stopDateTime = dateTimePickerDate.Value.Date + dateTimePickerTime.Value.TimeOfDay;
 
 			// Update the status message.
-			toolStripStatusLabel.Text = "Logged " + _samples + " samples in " + _elapsedTime.ToString() + ".";
+			toolStripStatusLabel.Text = "Logged " + _samples + " samples in " + _elapsedTime.ToString(@"dd\.hh\:mm\:ss") + ".";
 
 			// Determine when to stop.
 			if (((_stopMode == StopMode.ElapsedTime) && (_elapsedTime > new TimeSpan((int)numericUpDownHours.Value, (int)numericUpDownMinutes.Value, (int)numericUpDownSeconds.Value))) ||
-				((_stopMode == StopMode.TimeDate) && (_stopDateTime > DateTime.Now)) ||
+				((_stopMode == StopMode.TimeDate) && (DateTime.Now > _stopDateTime)) ||
 				((_stopMode == StopMode.Scans) && (_samples >= numericUpDownNumScans.Value)))
 			{
 				StopLogging();
@@ -422,9 +425,6 @@ namespace Sensit.App.Log
 
 						// Set the desired interval.
 						_timer.Interval = decimal.ToDouble(numericUpDownInterval.Value);
-
-						// Start the timer.
-						_timer.Enabled = true;
 					}
 					else
 					{
@@ -438,7 +438,13 @@ namespace Sensit.App.Log
 
 						// Open the serial port.
 						_serialStreamDevice.Open();
+
+						// Set the interval to one second so we can track elapsed time.
+						_timer.Interval = 1000;
 					}
+
+					// Start the timer.
+					_timer.Enabled = true;
 
 					// Set up the CSV file writer filestream.
 					_writer = new CsvWriter(Properties.Settings.Default.Filename, true);
@@ -502,8 +508,6 @@ namespace Sensit.App.Log
 
 					// Close the DUT serial port.
 					_genericSerialDevice?.Close();
-
-					// Close the DUT serial port.
 					_serialStreamDevice?.Close();
 
 					// Enable most of the controls.
@@ -532,6 +536,9 @@ namespace Sensit.App.Log
 
 			// Serial port controls
 			groupBoxSerialPort.Enabled = !testInProgress;
+
+			// Sampling controls
+			groupBoxSample.Enabled = !testInProgress;
 
 			// Stop controls
 			groupBoxStop.Enabled = !testInProgress;
