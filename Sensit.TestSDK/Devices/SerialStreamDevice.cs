@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO.Ports;
 using System.Text;
+using System.Text.RegularExpressions;
 using Sensit.TestSDK.Communication;
-using Sensit.TestSDK.Interfaces;
 using Sensit.TestSDK.Utilities;
 
 namespace Sensit.TestSDK.Devices
@@ -82,6 +82,12 @@ namespace Sensit.TestSDK.Devices
 		{
 			// Convert the byte array to a string.
 			string message = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
+
+			// Save the whole string as a message to be logged.
+			// Replace any newlines or tabs with spaces to avoid weird log files.
+			// https://stackoverflow.com/questions/206717/how-do-i-replace-multiple-spaces-with-a-single-space-in-c
+			message = Regex.Replace(message, @"\s+", " ");
+			message = message.Trim();
 
 			// Notify the user that a message has been received.
 			// Run actions required when test is completed (i.e. update GUI).
