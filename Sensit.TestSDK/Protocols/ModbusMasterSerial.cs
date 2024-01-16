@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO.Ports;
 
 namespace Sensit.TestSDK.Protocols
@@ -8,12 +9,20 @@ namespace Sensit.TestSDK.Protocols
 	/// </summary>
 	public sealed class ModbusMasterSerial : ModbusMaster, IDisposable
 	{
-		#region Fields
+        #region Constants
 
-		/// <summary>
-		/// Serial port instance
-		/// </summary>
-		private readonly SerialPort _serialPort;
+        /// <summary>
+        /// Time that a byte could take to be received. This is longer than the interchar or interframe delay
+        /// due to the possibility of windows interupting the serial port handler
+        /// </summary>
+        const int ReceiveByteTimeout = 5;
+        #endregion
+        #region Fields
+
+        /// <summary>
+        /// Serial port instance
+        /// </summary>
+        private readonly SerialPort _serialPort;
 
 		/// <summary>
 		/// Character timeout
@@ -110,8 +119,10 @@ namespace Sensit.TestSDK.Protocols
 			bool done = false;
 			int value;
 
-			// Await 1 char...
-			if (!_timeoutStopwatch.IsRunning)
+            Stopwatch sw = new();
+            sw.Start();
+            // Await 1 char...
+            if (!_timeoutStopwatch.IsRunning)
 				_timeoutStopwatch.Start();
 
 			do
@@ -123,11 +134,8 @@ namespace Sensit.TestSDK.Protocols
 				}
 				else
 					value = -1;
-			} while ((!done) && ((_timeoutStopwatch.ElapsedMilliseconds - _charTimeout) < _intercharDelay));
-
-			if (done)
-				_charTimeout = _timeoutStopwatch.ElapsedMilliseconds;   // Char received with no errors...reset timeout counter for next char!
-
+			} while (!done && sw.ElapsedMilliseconds < ReceiveByteTimeout);
+			
 			return value;
 		}
 

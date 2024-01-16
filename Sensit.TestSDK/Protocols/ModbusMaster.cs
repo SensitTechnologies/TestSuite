@@ -154,58 +154,7 @@ namespace Sensit.TestSDK.Protocols
 			// Clear the receive message buffer.
 			_receiveBuffer.Clear();
 
-			bool done = false;
-			bool firstByteReceived = false;
-			long elapsedTime;
-
-			// Start a timeout stopwatch.
-			Stopwatch sw = new Stopwatch();
-			sw.Start();
-			do
-			{
-				// Try to read a byte.
-				int rcv = ReceiveByte();
-
-				// If a byte was received...
-				if (rcv > -1)
-				{
-					// If it is the first byte...
-					if (firstByteReceived == false)
-					{
-						// Remember that at least one byte has been received.
-						firstByteReceived = true;
-					}
-
-					// If we're using MODBUS ASCII...
-					if (_connectionType == ConnectionType.SerialASCII)
-					{
-						// If the byte we received was a colon (the first byte of an ASCII message)...
-						if ((byte)rcv == Encoding.ASCII.GetBytes(new char[] { AsciiStartFrame }).First())
-						{
-							// Clear the receive message buffer of any previous partial message.
-							_receiveBuffer.Clear();
-						}
-					}
-
-					// Add the received byte to the receive message buffer.
-					_receiveBuffer.Add((byte)rcv);
-				}
-				// If we've stopped receiving bytes...
-				else if ((rcv == -1) && firstByteReceived)
-				{
-					// Consider the message finished.
-					done = true;
-				}
-
-				// Fetch how many milliseconds have elapsed.
-				// Keep receiving until we stop receiving bytes.
-				elapsedTime = sw.ElapsedMilliseconds;
-			} while ((!done) && (RxTimeout > elapsedTime));
-
-			// Stop the stopwatch.
-			_timeoutStopwatch.Stop();
-			sw.Stop();
-
+			long elapsedTime = ReceiveMessage();
 			// If the response timed out...
 			if (elapsedTime >= RxTimeout)
 			{
@@ -236,8 +185,10 @@ namespace Sensit.TestSDK.Protocols
 				// If the message was incomplete...
 				if (_receiveBuffer.Count < minFrameLength)
 				{
-					throw new ModbusTimeoutException("Wrong message length.");
-				}
+					ReceiveMessage(); // try again to see if anything else made it in.
+					if (_receiveBuffer.Count < minFrameLength)
+						throw new ModbusTimeoutException("Wrong message length.");
+                }
 
 				switch (_connectionType)
 				{
@@ -295,10 +246,20 @@ namespace Sensit.TestSDK.Protocols
 						ushort crcCalculated = Checksum.Crc16(_receiveBuffer.ToArray());
 						if (crcReceived != crcCalculated)
 						{
-							// TODO:  Read until there's nothing left in the queue.
+							_receiveBuffer.AddRange(BitConverter.GetBytes(crcReceived));
+							ReceiveMessage(); // try again to see if anything else made it in.
 
-							throw new ModbusResponseException("Wrong CRC.");
-						}
+							crcReceived = BitConverter.ToUInt16(_receiveBuffer.ToArray(), _receiveBuffer.Count - 2);
+
+							// Remove CRC.
+							_receiveBuffer.RemoveRange(_receiveBuffer.Count - 2, 2);
+
+							crcCalculated = Checksum.Crc16(_receiveBuffer.ToArray());
+							if (crcReceived != crcCalculated)
+							{
+								throw new ModbusResponseException("Wrong CRC.");
+                            }
+                        }
 
 						// If the device address is incorrect...
 						byte addr = _receiveBuffer[0];
@@ -370,18 +331,74 @@ namespace Sensit.TestSDK.Protocols
 			}
 		}
 
-		#endregion
+        protected long ReceiveMessage()
+        {
+            bool done = false;
+            bool firstByteReceived = false;
+            long elapsedTime = 0;
 
-		#region Protocol Methods
+            // Start a timeout stopwatch.
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            do
+            {
+                // Try to read a byte.
+                int rcv = ReceiveByte();
 
-		/// <summary>
-		/// Read coil registers.
-		/// </summary>
-		/// <param name="deviceAddress">Slave device address</param>
-		/// <param name="startAddress">Address of first register to be read</param>
-		/// <param name="numCoils">Number of coils to be read</param>
-		/// <returns>Array of registers from slave</returns>
-		public bool[] ReadCoils(byte deviceAddress, ushort startAddress, ushort numCoils)
+                // If a byte was received...
+                if (rcv > -1)
+                {
+                    // If it is the first byte...
+                    if (firstByteReceived == false)
+                    {
+                        // Remember that at least one byte has been received.
+                        firstByteReceived = true;
+                    }
+
+                    // If we're using MODBUS ASCII...
+                    if (_connectionType == ConnectionType.SerialASCII)
+                    {
+                        // If the byte we received was a colon (the first byte of an ASCII message)...
+                        if ((byte)rcv == Encoding.ASCII.GetBytes(new char[] { AsciiStartFrame }).First())
+                        {
+                            // Clear the receive message buffer of any previous partial message.
+                            _receiveBuffer.Clear();
+                        }
+                    }
+
+                    // Add the received byte to the receive message buffer.
+                    _receiveBuffer.Add((byte)rcv);
+                }
+                // If we've stopped receiving bytes...
+                else if ((rcv == -1) && firstByteReceived)
+                {
+                    done = true;
+                }
+
+                // Fetch how many milliseconds have elapsed.
+                // Keep receiving until we stop receiving bytes.
+                elapsedTime = sw.ElapsedMilliseconds;
+            } while ((!done) && (RxTimeout > elapsedTime));
+
+            // Stop the stopwatch.
+            _timeoutStopwatch.Stop();
+            sw.Stop();
+
+            return elapsedTime;
+        }
+
+        #endregion
+
+        #region Protocol Methods
+
+        /// <summary>
+        /// Read coil registers.
+        /// </summary>
+        /// <param name="deviceAddress">Slave device address</param>
+        /// <param name="startAddress">Address of first register to be read</param>
+        /// <param name="numCoils">Number of coils to be read</param>
+        /// <returns>Array of registers from slave</returns>
+        public bool[] ReadCoils(byte deviceAddress, ushort startAddress, ushort numCoils)
 		{
 			if (numCoils < 1)
 			{
@@ -478,17 +495,17 @@ namespace Sensit.TestSDK.Protocols
 			// Increase transaction ID (only used for TCP/UDP).
 			_transactionID++;
 
-			// Form the request.
-			_sendBuffer.Clear();
+            // Form the request.
+            _sendBuffer.Clear();
 			_sendBuffer.Add((byte)ModbusCode.ReadHoldingRegisters);
 			_sendBuffer.AddRange(GetBytes(startAddress));
 			_sendBuffer.AddRange(GetBytes(numRegisters));
-			
-			// Send the request and receive the response.
-			Query(deviceAddress, messageLength);
 
-			// Parse the response.
-			List<ushort> ret = new List<ushort>();
+            // Send the request and receive the response.
+            Query(deviceAddress, messageLength);
+
+            // Parse the response.
+            List<ushort> ret = new List<ushort>();
 			for (int ii = 0; ii < _receiveBuffer[1]; ii += 2)
 			{
 				ret.Add(ToUInt16(_receiveBuffer.ToArray(), ii + 2));
