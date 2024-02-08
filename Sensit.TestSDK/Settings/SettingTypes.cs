@@ -25,9 +25,25 @@ namespace Sensit.TestSDK.Settings
 		}
 
 		/// <summary>
+		/// Constructor with label and unit of measure
+		/// </summary>
+		/// <param name="label"></param>
+		/// <param name="unit"></param>
+		public Setting(string label, string unit)
+		{
+			Label = label;
+			Unit = unit;
+		}
+
+		/// <summary>
 		/// The name of the setting as it appears to the user.
 		/// </summary>
 		public string Label { get; set; } = string.Empty;
+
+		/// <summary>
+		/// Unit of measure
+		/// </summary>
+		public string Unit { get; set; } = string.Empty;
 
 		/// <summary>
 		/// Convert setting to bytes.
@@ -69,7 +85,19 @@ namespace Sensit.TestSDK.Settings
 		public String24Setting(string label, string initialValue)
 		{
 			Label = label;
+			Value = initialValue;
+		}
 
+		/// <summary>
+		/// Constructor with label, unit of measure, and value.
+		/// </summary>
+		/// <param name="label">the name of the setting as it appears to the user.</param>
+		/// <param name="unit">unit of measure</param>
+		/// <param name="initialValue">the initial value of the setting</param>
+		public String24Setting(string label, string unit, string initialValue)
+		{
+			Label = label;
+			Unit = unit;
 			Value = initialValue;
 		}
 
@@ -133,12 +161,24 @@ namespace Sensit.TestSDK.Settings
 		/// <summary>
 		/// Constructor with label and value.
 		/// </summary>
-		/// <param name="label">the name of the setting as it appears to the user.</param>
-		/// <param name="initialValue">the initial value of the setting</param>
+		/// <param name="label"></param>
+		/// <param name="initialValue"></param>
 		public Int32Setting(string label, int initialValue)
 		{
 			Label = label;
+			Value = initialValue;
+		}
 
+		/// <summary>
+		/// Constructor with label, unit of measure, and value
+		/// </summary>
+		/// <param name="label">the name of the setting as it appears to the user.</param>
+		/// <param name="unit">unit of measure</param>
+		/// <param name="initialValue">the initial value of the setting</param>
+		public Int32Setting(string label, string unit, int initialValue)
+		{
+			Label = label;
+			Unit = unit;
 			Value = initialValue;
 		}
 
@@ -200,14 +240,15 @@ namespace Sensit.TestSDK.Settings
 		public Int16Setting() { }
 
 		/// <summary>
-		/// Constructor with label and value.
+		/// Constructor with label, unit of measure, and value.
 		/// </summary>
 		/// <param name="label">the name of the setting as it appears to the user.</param>
+		/// <param name="unit">unit of measure</param>
 		/// <param name="initialValue">the initial value of the setting</param>
-		public Int16Setting(string label, int initialValue)
+		public Int16Setting(string label, string unit, int initialValue)
 		{
 			Label = label;
-
+			Unit = unit;
 			Value = initialValue;
 		}
 
@@ -268,14 +309,15 @@ namespace Sensit.TestSDK.Settings
 		public Int8Setting() { }
 
 		/// <summary>
-		/// Constructor with label and value.
+		/// Constructor with label, unit of measure, and value.
 		/// </summary>
 		/// <param name="label">the name of the setting as it appears to the user.</param>
+		/// <param name="unit">unit of measure</param>
 		/// <param name="initialValue">the initial value of the setting</param>
-		public Int8Setting(string label, int initialValue)
+		public Int8Setting(string label, string unit, int initialValue)
 		{
 			Label = label;
-
+			Unit = unit;
 			Value = initialValue;
 		}
 
@@ -317,14 +359,15 @@ namespace Sensit.TestSDK.Settings
 		public Decimal32Setting() { }
 
 		/// <summary>
-		/// Constructor with label and value.
+		/// Constructor with label, unit of measure, and value.
 		/// </summary>
 		/// <param name="label">the name of the setting as it appears to the user</param>
+		/// <param name="unit">unit of measure</param>
 		/// <param name="initialValue">the initial value of the setting</param>
-		public Decimal32Setting(string label, decimal initialValue)
+		public Decimal32Setting(string label, string unit, decimal initialValue)
 		{
 			Label = label;
-
+			Unit = unit;
 			Value = initialValue;
 		}
 
@@ -388,14 +431,15 @@ namespace Sensit.TestSDK.Settings
 		public Decimal16Setting() { }
 
 		/// <summary>
-		/// Constructor with label and value.
+		/// Constructor with label, value, and unit of measure.
 		/// </summary>
 		/// <param name="label">the name of the setting as it appears to the user</param>
+		/// <param name="unit">unit of measure</param>
 		/// <param name="initialValue">the initial value of the setting</param>
-		public Decimal16Setting(string label, decimal initialValue)
+		public Decimal16Setting(string label, string unit, decimal initialValue)
 		{
 			Label = label;
-
+			Unit = unit;
 			Value = initialValue;
 		}
 
@@ -459,14 +503,15 @@ namespace Sensit.TestSDK.Settings
 		public Decimal8Setting() { }
 
 		/// <summary>
-		/// Constructor with label and value.
+		/// Constructor with label, unit of measure, and value.
 		/// </summary>
 		/// <param name="label">the name of the setting as it appears to the user</param>
+		/// <param name="unit">unit of measure</param>
 		/// <param name="initialValue">the initial value of the setting</param>
-		public Decimal8Setting(string label, decimal initialValue)
+		public Decimal8Setting(string label, string unit, decimal initialValue)
 		{
 			Label = label;
-
+			Unit = unit;
 			Value = initialValue;
 		}
 
@@ -518,7 +563,19 @@ namespace Sensit.TestSDK.Settings
 		public BoolSetting(string label, bool initialValue)
 		{
 			Label = label;
+			Value = initialValue;
+		}
 
+		/// <summary>
+		/// Constructor with label, unit of measure, and value.
+		/// </summary>
+		/// <param name="label">the name of the setting as it appears to the user</param>
+		/// <param name="unit">unit of measure</param>
+		/// <param name="initialValue">the initial value of the setting</param>
+		public BoolSetting(string label, string unit, bool initialValue)
+		{
+			Label = label;
+			Unit = unit;
 			Value = initialValue;
 		}
 
@@ -575,7 +632,7 @@ namespace Sensit.TestSDK.Settings
 		}
 
 		/// <summary>
-		/// Constructor with label, enumerated values, and the default value
+		/// Constructor with label, enumerated values, and default value.
 		/// </summary>
 		/// <param name="label">the name of the setting as it appears to the user</param>
 		/// <param name="settingValues">list of all possible values the setting can have</param>
@@ -588,6 +645,27 @@ namespace Sensit.TestSDK.Settings
 			{
 				Values.Add(g);
 			}
+
+			Value = initialValue;
+		}
+
+		/// <summary>
+		/// Constructor with label, unit of measure, enumerated values, and default value.
+		/// </summary>
+		/// <param name="label">the name of the setting as it appears to the user</param>
+		/// <param name="unit">unit of measure</param>
+		/// <param name="settingValues">list of all possible values the setting can have</param>
+		/// <param name="initialValue">0-based index of the setting's initial value</param>
+		public EnumSetting(string label, string unit, List<EnumValue> settingValues, int initialValue)
+		{
+			Label = label;
+
+			foreach (EnumValue g in settingValues ?? new List<EnumValue>())
+			{
+				Values.Add(g);
+			}
+
+			Unit = unit;
 
 			Value = initialValue;
 		}
@@ -675,9 +753,6 @@ namespace Sensit.TestSDK.Settings
 		public byte Code { get; }
 	}
 
-	/// <summary>
-	/// Setting that contains no data, and is used to group other settings visually.
-	/// </summary>
 	public class CategorySetting : Setting
 	{
 		/// <summary>
