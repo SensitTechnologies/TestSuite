@@ -17,8 +17,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sensit.App.PowerSupply", "S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sensit.App.Programmer", "Sensit.App.Programmer\Sensit.App.Programmer.csproj", "{DAE7BC16-2B74-4897-9923-4D451D3439CE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sensit.App.GPS", "Sensit.App.GPS\Sensit.App.GPS.csproj", "{E5A3814B-02B0-4733-BCA6-D9771EE5F1AD}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sensit.App.Log", "Sensit.App.Log\Sensit.App.Log.csproj", "{721F0804-A66E-4C3C-A00C-61B72AE089BB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sensit.App.Modbus", "Sensit.App.Modbus\Sensit.App.Modbus.csproj", "{6CF45CC3-64BD-4B3B-9ACE-74D82C024A36}"
@@ -72,12 +70,6 @@ Global
 		{DAE7BC16-2B74-4897-9923-4D451D3439CE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DAE7BC16-2B74-4897-9923-4D451D3439CE}.Remote Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DAE7BC16-2B74-4897-9923-4D451D3439CE}.Remote Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E5A3814B-02B0-4733-BCA6-D9771EE5F1AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E5A3814B-02B0-4733-BCA6-D9771EE5F1AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E5A3814B-02B0-4733-BCA6-D9771EE5F1AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E5A3814B-02B0-4733-BCA6-D9771EE5F1AD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E5A3814B-02B0-4733-BCA6-D9771EE5F1AD}.Remote Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E5A3814B-02B0-4733-BCA6-D9771EE5F1AD}.Remote Debug|Any CPU.Build.0 = Debug|Any CPU
 		{721F0804-A66E-4C3C-A00C-61B72AE089BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{721F0804-A66E-4C3C-A00C-61B72AE089BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{721F0804-A66E-4C3C-A00C-61B72AE089BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
