@@ -9,15 +9,13 @@ using Sensit.TestSDK.Interfaces;
 namespace Sensit.TestSDK.Devices
 {
 	/// <summary>
-	/// Communication driver for Cole-Parmer Mass Flow Controller.
+	/// Communication driver for Alicat Scientific Mass Flow Controller.
 	/// </summary>
 	/// <remarks>
 	/// Product website:
-	/// https://www.coleparmer.com/p/cole-parmer-mass-flow-controllers-for-gas/43456
-	/// Instruction manual:
-	/// https://pim-resources.coleparmer.com/instruction-manual/cole-parmer-mass-flow-controller-manual.pdf
+	/// https://www.alicat.com/gas-products/laminar-dp-mass-flow-meters-and-controllers/
 	/// 
-	/// The following info came from Cole-Parmer tech support, and is not in the manual:
+	/// The following info came from Cole-Parmer (a reseller) tech support, and is not in the manual:
 	/// 
 	/// To set control variable, adjust via menu setting or via register 122.
 	/// The command to read the register is ID + R + 122, and to write the
@@ -42,8 +40,8 @@ namespace Sensit.TestSDK.Devices
 	/// serial interfaces, but some menu differences and major electronics differences.
 	/// 
 	/// </remarks>
-	[DisplayName("Cole Parmer MFC"), Description("Cole Parmer Mass Flow Controller")]
-	public class ColeParmerMFC : SerialDevice, IDevice
+	[DisplayName("Alicat MFC"), Description("Alicat Mass Flow Controller")]
+	public class AlicatMFC : SerialDevice, IDevice
 	{
 		public Dictionary<VariableType, decimal> Readings { get; } = new Dictionary<VariableType, decimal>
 		{
