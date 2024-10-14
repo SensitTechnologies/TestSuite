@@ -22,11 +22,11 @@ namespace Sensit.TestSDK.Devices
 	public class GPDX303S : SerialDevice, IDevice
 	{
 		// settings supported by the power supply
-		public override List<int> SupportedBaudRates { get; } = new List<int> { 9600, 57600, 115200 };
-		public override List<int> SupportedDataBits { get; } = new List<int> { 8 };
-		public override List<Parity> SupportedParity { get; } = new List<Parity> { Parity.None };
-		public override List<StopBits> SupportedStopBits { get; } = new List<StopBits> { StopBits.One };
-		public override List<Handshake> SupportedHandshake { get; } = new List<Handshake> { Handshake.None };
+		public override List<int> SupportedBaudRates { get; } = [9600, 57600, 115200];
+		public override List<int> SupportedDataBits { get; } = [8];
+		public override List<Parity> SupportedParity { get; } = [Parity.None];
+		public override List<StopBits> SupportedStopBits { get; } = [StopBits.One];
+		public override List<Handshake> SupportedHandshake { get; } = [Handshake.None];
 
 		public Dictionary<VariableType, decimal> Readings { get; } = new Dictionary<VariableType, decimal>
 		{
