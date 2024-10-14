@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO.Ports;
-using Sensit.TestSDK.Calculations;
 using Sensit.TestSDK.Communication;
 using Sensit.TestSDK.Exceptions;
 using Sensit.TestSDK.Interfaces;
