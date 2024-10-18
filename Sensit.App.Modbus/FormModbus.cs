@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO.Ports;
+﻿using System.IO.Ports;
 using System.Text;
-using System.Threading;
-using System.Windows.Forms;
 using Sensit.TestSDK.Protocols;
-
 
 namespace Sensit.App.Modbus
 {
@@ -32,7 +27,7 @@ namespace Sensit.App.Modbus
 		#region Fields
 
 		// MODBUS serial device
-		private ModbusMasterSerial _mbMaster = null;
+		private ModbusMasterSerial? _mbMaster = null;
 
 		// thread for polling MODBUS data
 		private Thread _pollThread = null;
