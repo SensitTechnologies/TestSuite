@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sensit.App.Log", "Sensit.Ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sensit.App.Modbus", "Sensit.App.Modbus\Sensit.App.Modbus.csproj", "{6CF45CC3-64BD-4B3B-9ACE-74D82C024A36}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensit.App.Relay", "Sensit.App.Relay\Sensit.App.Relay.csproj", "{EF7F3879-D155-470A-A996-48AF3786EB67}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,6 +84,12 @@ Global
 		{6CF45CC3-64BD-4B3B-9ACE-74D82C024A36}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6CF45CC3-64BD-4B3B-9ACE-74D82C024A36}.Remote Debug|Any CPU.ActiveCfg = Release|Any CPU
 		{6CF45CC3-64BD-4B3B-9ACE-74D82C024A36}.Remote Debug|Any CPU.Build.0 = Release|Any CPU
+		{EF7F3879-D155-470A-A996-48AF3786EB67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF7F3879-D155-470A-A996-48AF3786EB67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF7F3879-D155-470A-A996-48AF3786EB67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF7F3879-D155-470A-A996-48AF3786EB67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF7F3879-D155-470A-A996-48AF3786EB67}.Remote Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{EF7F3879-D155-470A-A996-48AF3786EB67}.Remote Debug|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
