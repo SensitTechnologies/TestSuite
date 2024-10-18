@@ -46,6 +46,11 @@
 /Sensit.App.Programmer/*.pfx
 /Sensit.App.Programmer/*.user
 
+/Sensit.App.Relay/bin
+/Sensit.App.Relay/obj
+/Sensit.App.Relay/*.pfx
+/Sensit.App.Relay/*.user
+
 /Sensit.TestSDK/bin
 /Sensit.TestSDK/obj
 /Sensit.TestSDK/*.user
