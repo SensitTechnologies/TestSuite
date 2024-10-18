@@ -68,7 +68,7 @@ namespace Sensit.App.MassFlow
 
 						// Update the user interface.
 						comboBoxSerialPort.Enabled = false;
-						groupBoxMassFlow.Enabled = true;
+						groupBoxMassFlowControl.Enabled = true;
 						toolStripStatusLabel.Text = "Port open.";
 					}
 					else if (((RadioButton)sender) == radioButtonClosed)
@@ -81,7 +81,7 @@ namespace Sensit.App.MassFlow
 
 						// Update user interface.
 						comboBoxSerialPort.Enabled = true;
-						groupBoxMassFlow.Enabled = false;
+						groupBoxMassFlowControl.Enabled = false;
 						toolStripStatusLabel.Text = "Port closed.";
 					}
 				}
