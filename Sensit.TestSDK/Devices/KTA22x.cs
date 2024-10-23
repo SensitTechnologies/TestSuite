@@ -135,7 +135,11 @@ namespace Sensit.TestSDK.Devices
 		/// <returns></returns>
 		public bool IsRelayOn(int relay)
 		{
-			string response = ReadAllRelayStatus();
+			// Example command is "@00 RS X\r", where X is relay number.
+			string command = $"@{ADDRESS:D2} RS " + relay + "\r";
+
+			// Example response is "#00 X\r", where X is 0 or 1.
+			string response = WriteThenRead(command);
 
 			// Split the input string by space
 			string[] parts = response.Split(' ');
@@ -145,9 +149,10 @@ namespace Sensit.TestSDK.Devices
 			{
 				int decimalValue = int.Parse(parts[1]);
 
-				// Check if bit representing relay number is set
-				int mask = 1 << (relay - 1);
-				return ((decimalValue & mask) != 0);
+				// Check if value is 0 or 1.
+				bool status = ((decimalValue & 1) != 0);
+
+				return status;
 			}
 			catch (ArgumentNullException ex)
 			{
