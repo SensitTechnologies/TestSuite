@@ -28,11 +28,14 @@ namespace Sensit.TestSDK.Devices
 		public override List<StopBits> SupportedStopBits { get; } = new List<StopBits> { StopBits.One };
 		public override List<Handshake> SupportedHandshake { get; } = new List<Handshake> { Handshake.None };
 
-        /// <summary>
-        /// Turns on a single relay. Command is @AA ON X<CR>.
-        /// </summary>
-        /// <param name="relay">1 indexed relay ID.</param>
-        public void TurnRelayOn(int relay)
+		// TODO:  KTA22x Input Status command "@00 IS 0".
+		// TODO:  KTA22x Analog Input command "@00 AI 0".
+
+		/// <summary>
+		/// Turns on a single relay. Command is @AA ON X<CR>.
+		/// </summary>
+		/// <param name="relay">1 indexed relay ID.</param>
+		public void TurnRelayOn(int relay)
         {
             if (relay <= 0)
             {
@@ -121,11 +124,36 @@ namespace Sensit.TestSDK.Devices
 		/// Reads the status of all the relay channels
 		/// </summary>
 		/// <returns>The read response string from the relay module</returns>
-		public string ReadAllRelayStatus()
+		public int ReadAllRelayStatus()
 		{
+			// Command is "@00 RS 0\r".  0 indicates all relays are to be queried.
 			string command = $"@{ADDRESS:D2} RS 0\r";
 
-			return WriteThenRead(command);
+			string response = WriteThenRead(command);
+
+			// Split the input string by space
+			string[] parts = response.Split(' ');
+
+			try
+			{
+				// Extract the value.
+				return int.Parse(parts[1]);
+			}
+			catch (ArgumentNullException ex)
+			{
+				throw new DeviceCommunicationException("Invalid response from relay module"
+					+ Environment.NewLine + ex.Message);
+			}
+			catch (FormatException ex)
+			{
+				throw new DeviceCommunicationException("Invalid response from relay module"
+					+ Environment.NewLine + ex.Message);
+			}
+			catch (OverflowException ex)
+			{
+				throw new DeviceCommunicationException("Invalid response from relay module."
+					+ Environment.NewLine + ex.Message);
+			}
 		}
 
 		/// <summary>
@@ -144,13 +172,13 @@ namespace Sensit.TestSDK.Devices
 			// Split the input string by space
 			string[] parts = response.Split(' ');
 
-			// Extract the decimal value part
 			try
 			{
-				int decimalValue = int.Parse(parts[1]);
+				// Extract the boolean value.
+				int relayStatus = int.Parse(parts[1]);
 
 				// Check if value is 0 or 1.
-				bool status = ((decimalValue & 1) != 0);
+				bool status = ((relayStatus & 1) != 0);
 
 				return status;
 			}
@@ -175,6 +203,9 @@ namespace Sensit.TestSDK.Devices
 		/// Sends the command via the serial port.
 		/// </summary>
 		/// <param name="data">The command to be sent over the serial port.</param>
+		/// <exception cref="DevicePortException"></exception>
+		/// <exception cref="DeviceSettingNotSupportedException"></exception>
+		/// <exception cref="DeviceCommunicationException"></exception>
 		private void Write(string data)
         {
             try
@@ -198,6 +229,13 @@ namespace Sensit.TestSDK.Devices
 			}
 		}
 
+		/// <summary>
+		/// Sends a command via the serial port, then reads a response.
+		/// </summary>
+		/// <param name="data"></param>
+		/// <returns></returns>
+		/// <exception cref="DevicePortException"></exception>
+		/// <exception cref="DeviceCommunicationException"></exception>
         private string WriteThenRead(string data)
         {
             try
