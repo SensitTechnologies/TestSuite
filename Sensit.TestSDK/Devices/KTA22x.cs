@@ -22,11 +22,11 @@ namespace Sensit.TestSDK.Devices
         public const int MAX_RELAY_CHANNELS = 8;
 
 		// supported serial settings
-		public override List<int> SupportedBaudRates { get; } = new List<int> { 9600 };
-		public override List<int> SupportedDataBits { get; } = new List<int> { 8 };
-		public override List<Parity> SupportedParity { get; } = new List<Parity> { Parity.None };
-		public override List<StopBits> SupportedStopBits { get; } = new List<StopBits> { StopBits.One };
-		public override List<Handshake> SupportedHandshake { get; } = new List<Handshake> { Handshake.None };
+		public override List<int> SupportedBaudRates { get; } = [9600];
+		public override List<int> SupportedDataBits { get; } = [8];
+		public override List<Parity> SupportedParity { get; } = [Parity.None];
+		public override List<StopBits> SupportedStopBits { get; } = [StopBits.One];
+		public override List<Handshake> SupportedHandshake { get; } = [Handshake.None];
 
 		// TODO:  KTA22x Input Status command "@00 IS 0".
 		// TODO:  KTA22x Analog Input command "@00 AI 0".
