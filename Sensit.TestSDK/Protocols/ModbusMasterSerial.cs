@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO.Ports;
+using Sensit.TestSDK.Communication;
 
 namespace Sensit.TestSDK.Protocols
 {
@@ -16,7 +17,9 @@ namespace Sensit.TestSDK.Protocols
         /// due to the possibility of windows interupting the serial port handler
         /// </summary>
         const int ReceiveByteTimeout = 5;
+
         #endregion
+
         #region Fields
 
         /// <summary>
