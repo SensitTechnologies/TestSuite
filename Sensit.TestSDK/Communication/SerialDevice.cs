@@ -18,7 +18,12 @@ namespace Sensit.TestSDK.Communication
 		/// within the SDK.
 		/// https://stackoverflow.com/questions/61551474/why-are-internal-fields-preferable-to-protected-fields-in-an-abstract-class
 		/// </remarks>
-		internal SerialDevice() { }
+		internal SerialDevice()
+		{
+			// Set read/write timeouts.
+			Port.ReadTimeout = 500;
+			Port.WriteTimeout = 500;
+		}
 
 		// port used to communicate with device
 		// (protected means it's accessible within derived classes, but not outside them)
