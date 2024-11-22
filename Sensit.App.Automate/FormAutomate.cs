@@ -29,7 +29,12 @@ namespace Sensit.App.Automate
 		private const int COLUMN_EVENTS_VARIABLE = 1;
 		private const int COLUMN_EVENTS_VALUE = 2;
 		private const int COLUMN_EVENTS_DURATION = 3;
-		private const int COLUMN_EVENTS_STATUS = 4;
+		private const int COLUMN_EVENTS_ERROR_TOLERANCE = 4;
+		private const int COLUMN_EVENTS_RATE_TOLERANCE = 5;
+		private const int COLUMN_EVENTS_DWELL_TIME = 6;
+		private const int COLUMN_EVENTS_TIMEOUT = 7;
+		private const int COLUMN_EVENTS_INTERVAL = 8;
+		private const int COLUMN_EVENTS_STATUS = 9;
 
 		#endregion
 
@@ -433,7 +438,9 @@ namespace Sensit.App.Automate
 			LayoutSuspend();
 
 			// Add a new event to the event list panel.
-			AddEventToPanel(comboBoxEventDevice.Text, comboBoxEventVariable.Text, numericUpDownEventValue.Value, numericUpDownEventDuration.Value);
+			AddEventToPanel(comboBoxEventDevice.Text, comboBoxEventVariable.Text, numericUpDownEventValue.Value, numericUpDownEventDuration.Value,
+				numericUpDownEventErrorTolerance.Value, numericUpDownEventRateTolerance.Value, numericUpDownEventDwellTime.Value, numericUpDownEventTimeout.Value,
+				numericUpDownEventInterval.Value);
 
 			LayoutResume();
 
@@ -451,7 +458,8 @@ namespace Sensit.App.Automate
 		/// <param name="variable">DisplayName of the variable acted upon</param>
 		/// <param name="value">value to set the variable to</param>
 		/// <param name="duration">time to wait before starting next event [seconds]</param>
-		private void AddEventToPanel(string device, string variable, decimal value, decimal duration)
+		private void AddEventToPanel(string device, string variable, decimal value, decimal duration, decimal errorTolerance, decimal rateTolerance,
+			decimal dwellTime, decimal timeout, decimal interval)
 		{
 			// Add a new row to the table layout panel.
 			tableLayoutPanelEvents.RowCount++;
@@ -492,6 +500,51 @@ namespace Sensit.App.Automate
 				Dock = DockStyle.None,
 				Text = duration.ToString(CultureInfo.InvariantCulture)
 			}, COLUMN_EVENTS_DURATION, tableLayoutPanelEvents.RowCount - 1);
+
+			// Add the error tolerance.
+			tableLayoutPanelEvents.Controls.Add(new TextBox
+			{
+				Anchor = AnchorStyles.Left | AnchorStyles.Top,
+				AutoSize = true,
+				Dock = DockStyle.None,
+				Text = errorTolerance.ToString(CultureInfo.InvariantCulture)
+			}, COLUMN_EVENTS_ERROR_TOLERANCE, tableLayoutPanelEvents.RowCount - 1);
+
+			// Add the rate tolerance.
+			tableLayoutPanelEvents.Controls.Add(new TextBox
+			{
+				Anchor = AnchorStyles.Left | AnchorStyles.Top,
+				AutoSize = true,
+				Dock = DockStyle.None,
+				Text = rateTolerance.ToString(CultureInfo.InvariantCulture)
+			}, COLUMN_EVENTS_RATE_TOLERANCE, tableLayoutPanelEvents.RowCount - 1);
+
+			// Add the dwell time.
+			tableLayoutPanelEvents.Controls.Add(new TextBox
+			{
+				Anchor = AnchorStyles.Left | AnchorStyles.Top,
+				AutoSize = true,
+				Dock = DockStyle.None,
+				Text = dwellTime.ToString(CultureInfo.InvariantCulture)
+			}, COLUMN_EVENTS_DWELL_TIME, tableLayoutPanelEvents.RowCount - 1);
+
+			// Add the timeout.
+			tableLayoutPanelEvents.Controls.Add(new TextBox
+			{
+				Anchor = AnchorStyles.Left | AnchorStyles.Top,
+				AutoSize = true,
+				Dock = DockStyle.None,
+				Text = timeout.ToString(CultureInfo.InvariantCulture)
+			}, COLUMN_EVENTS_TIMEOUT, tableLayoutPanelEvents.RowCount - 1);
+
+			// Add the interval.
+			tableLayoutPanelEvents.Controls.Add(new TextBox
+			{
+				Anchor = AnchorStyles.Left | AnchorStyles.Top,
+				AutoSize = true,
+				Dock = DockStyle.None,
+				Text = interval.ToString(CultureInfo.InvariantCulture)
+			}, COLUMN_EVENTS_INTERVAL, tableLayoutPanelEvents.RowCount - 1);
 
 			// Add the status.
 			tableLayoutPanelEvents.Controls.Add(new Label
@@ -760,6 +813,11 @@ namespace Sensit.App.Automate
 						// Find the device type with the correct display name.
 						Type deviceType = deviceTypes.FirstOrDefault(o => o.GetDisplayName() == d.Type);
 
+						if (deviceType == null)
+						{
+							throw new KeyNotFoundException("Device not recognized.");
+						}
+
 						// Add device to "Devices" tab.
 						AddDeviceToPanel(d.Name, deviceType.GetDisplayName(), d.SerialPort);
 					}
@@ -767,12 +825,12 @@ namespace Sensit.App.Automate
 					// Add each event to the form.
 					foreach (EventSetting es in testSetting.Events)
 					{
-						AddEventToPanel(es.DeviceName, es.Variable.GetDescription(), es.Value, es.Duration);
+						AddEventToPanel(es.DeviceName, es.Variable.GetDescription(), es.Value, es.Duration, es.ErrorTolerance, es.RateTolerance, es.DwellTime, es.Timeout, es.Interval);
 					}
 
 					LayoutResume();
 				}
-				catch (InvalidOperationException ex)
+				catch (Exception ex)
 				{
 					MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine +
 						"(This means the logfile you're trying to open is not formatted correctly.)",
