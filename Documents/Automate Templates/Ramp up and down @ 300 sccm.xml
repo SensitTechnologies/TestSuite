@@ -3,12 +3,12 @@
   <Devices>
     <DeviceSetting>
       <Name>Diluent</Name>
-      <Type>Cole Parmer MFC</Type>
+      <Type>Alicat MFC</Type>
       <SerialPort />
     </DeviceSetting>
     <DeviceSetting>
       <Name>Analyte</Name>
-      <Type>Cole Parmer MFC</Type>
+      <Type>Alicat MFC</Type>
       <SerialPort />
     </DeviceSetting>
   </Devices>
@@ -20,9 +20,9 @@
       <Duration>300</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
@@ -31,9 +31,9 @@
       <Duration>0</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
@@ -42,9 +42,9 @@
       <Duration>300</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
@@ -53,9 +53,9 @@
       <Duration>0</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
@@ -64,9 +64,9 @@
       <Duration>300</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
@@ -75,9 +75,9 @@
       <Duration>0</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
@@ -86,9 +86,9 @@
       <Duration>300</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
@@ -97,9 +97,9 @@
       <Duration>0</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
@@ -108,9 +108,9 @@
       <Duration>300</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
@@ -119,9 +119,9 @@
       <Duration>0</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
@@ -130,9 +130,9 @@
       <Duration>300</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
@@ -141,9 +141,9 @@
       <Duration>0</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
@@ -152,9 +152,9 @@
       <Duration>300</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
@@ -163,9 +163,9 @@
       <Duration>0</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
@@ -174,9 +174,9 @@
       <Duration>300</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
@@ -185,9 +185,9 @@
       <Duration>0</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
@@ -196,9 +196,9 @@
       <Duration>300</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
@@ -207,9 +207,9 @@
       <Duration>0</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
@@ -218,9 +218,9 @@
       <Duration>300</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
@@ -229,9 +229,9 @@
       <Duration>0</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
@@ -240,9 +240,9 @@
       <Duration>300</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
@@ -251,9 +251,9 @@
       <Duration>0</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
@@ -262,9 +262,9 @@
       <Duration>300</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
@@ -273,9 +273,9 @@
       <Duration>0</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
@@ -284,9 +284,9 @@
       <Duration>300</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
@@ -295,9 +295,9 @@
       <Duration>0</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
@@ -306,9 +306,9 @@
       <Duration>300</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
@@ -317,9 +317,9 @@
       <Duration>0</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
@@ -328,9 +328,9 @@
       <Duration>300</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
@@ -339,9 +339,9 @@
       <Duration>0</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
@@ -350,9 +350,9 @@
       <Duration>300</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
@@ -361,9 +361,9 @@
       <Duration>0</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
@@ -372,9 +372,9 @@
       <Duration>300</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
@@ -383,9 +383,9 @@
       <Duration>0</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
@@ -394,9 +394,9 @@
       <Duration>300</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
@@ -405,9 +405,9 @@
       <Duration>0</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
@@ -416,9 +416,9 @@
       <Duration>300</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
@@ -427,9 +427,9 @@
       <Duration>0</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
@@ -438,9 +438,9 @@
       <Duration>300</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
@@ -449,9 +449,9 @@
       <Duration>0</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
@@ -460,9 +460,9 @@
       <Duration>300</Duration>
       <ErrorTolerance>5.0</ErrorTolerance>
       <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
   </Events>
 </TestSetting>

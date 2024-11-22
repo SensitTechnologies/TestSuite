@@ -418,9 +418,9 @@ namespace Sensit.App.Automate
 				{
 					Setpoint = e.Value,
 					Tolerance = e.ErrorTolerance,
-					Interval = e.Interval,
-					Timeout = e.Timeout,
-					DwellTime = e.DwellTime
+					Interval = new TimeSpan(0, 0, Convert.ToInt32(e.Interval)),
+					Timeout = new TimeSpan(0, 0, Convert.ToInt32(e.Timeout)),
+					DwellTime = new TimeSpan(0, 0, Convert.ToInt32(e.DwellTime))
 				};
 
 				// If the variable is new, create it.  If it already exists, update it.
@@ -455,7 +455,7 @@ namespace Sensit.App.Automate
 					_log.Write(_equipment.Devices);
 
 					// Wait to get desired reading frequency.
-					Thread.Sleep(e.Interval);
+					Thread.Sleep(testVariable.Interval);
 
 					// Update the number of completed samples.
 					_samplesComplete++;

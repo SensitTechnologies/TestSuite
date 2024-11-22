@@ -3,12 +3,12 @@
   <Devices>
     <DeviceSetting>
       <Name>Diluent</Name>
-      <Type>Cole Parmer MFC</Type>
+      <Type>Simulator</Type>
       <SerialPort>COM7</SerialPort>
     </DeviceSetting>
     <DeviceSetting>
       <Name>Analyte</Name>
-      <Type>Cole Parmer MFC</Type>
+      <Type>Simulator</Type>
       <SerialPort>COM6</SerialPort>
     </DeviceSetting>
   </Devices>
@@ -18,231 +18,231 @@
       <Variable>MassFlow</Variable>
       <Value>100</Value>
       <Duration>60</Duration>
-      <ErrorTolerance>5.0</ErrorTolerance>
-      <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <ErrorTolerance>10.0</ErrorTolerance>
+      <RateTolerance>1.5</RateTolerance>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
       <Variable>MassFlow</Variable>
       <Value>10</Value>
       <Duration>0</Duration>
-      <ErrorTolerance>5.0</ErrorTolerance>
-      <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <ErrorTolerance>10.0</ErrorTolerance>
+      <RateTolerance>1.5</RateTolerance>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
       <Variable>MassFlow</Variable>
       <Value>90</Value>
       <Duration>60</Duration>
-      <ErrorTolerance>5.0</ErrorTolerance>
-      <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <ErrorTolerance>10.0</ErrorTolerance>
+      <RateTolerance>1.5</RateTolerance>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
       <Variable>MassFlow</Variable>
       <Value>20</Value>
       <Duration>0</Duration>
-      <ErrorTolerance>5.0</ErrorTolerance>
-      <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <ErrorTolerance>10.0</ErrorTolerance>
+      <RateTolerance>1.5</RateTolerance>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
       <Variable>MassFlow</Variable>
       <Value>80</Value>
       <Duration>60</Duration>
-      <ErrorTolerance>5.0</ErrorTolerance>
-      <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <ErrorTolerance>10.0</ErrorTolerance>
+      <RateTolerance>1.5</RateTolerance>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
       <Variable>MassFlow</Variable>
       <Value>30</Value>
       <Duration>0</Duration>
-      <ErrorTolerance>5.0</ErrorTolerance>
-      <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <ErrorTolerance>10.0</ErrorTolerance>
+      <RateTolerance>1.5</RateTolerance>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
       <Variable>MassFlow</Variable>
       <Value>70</Value>
       <Duration>60</Duration>
-      <ErrorTolerance>5.0</ErrorTolerance>
-      <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <ErrorTolerance>10.0</ErrorTolerance>
+      <RateTolerance>1.5</RateTolerance>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
       <Variable>MassFlow</Variable>
       <Value>40</Value>
       <Duration>0</Duration>
-      <ErrorTolerance>5.0</ErrorTolerance>
-      <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <ErrorTolerance>10.0</ErrorTolerance>
+      <RateTolerance>1.5</RateTolerance>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
       <Variable>MassFlow</Variable>
       <Value>60</Value>
       <Duration>60</Duration>
-      <ErrorTolerance>5.0</ErrorTolerance>
-      <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <ErrorTolerance>10.0</ErrorTolerance>
+      <RateTolerance>1.5</RateTolerance>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
       <Variable>MassFlow</Variable>
       <Value>50</Value>
       <Duration>0</Duration>
-      <ErrorTolerance>5.0</ErrorTolerance>
-      <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <ErrorTolerance>10.0</ErrorTolerance>
+      <RateTolerance>1.5</RateTolerance>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
       <Variable>MassFlow</Variable>
       <Value>50</Value>
       <Duration>60</Duration>
-      <ErrorTolerance>5.0</ErrorTolerance>
-      <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <ErrorTolerance>10.0</ErrorTolerance>
+      <RateTolerance>1.5</RateTolerance>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
       <Variable>MassFlow</Variable>
       <Value>60</Value>
       <Duration>0</Duration>
-      <ErrorTolerance>5.0</ErrorTolerance>
-      <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <ErrorTolerance>10.0</ErrorTolerance>
+      <RateTolerance>1.5</RateTolerance>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
       <Variable>MassFlow</Variable>
       <Value>40</Value>
       <Duration>60</Duration>
-      <ErrorTolerance>5.0</ErrorTolerance>
-      <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <ErrorTolerance>10.0</ErrorTolerance>
+      <RateTolerance>1.5</RateTolerance>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
       <Variable>MassFlow</Variable>
       <Value>70</Value>
       <Duration>0</Duration>
-      <ErrorTolerance>5.0</ErrorTolerance>
-      <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <ErrorTolerance>10.0</ErrorTolerance>
+      <RateTolerance>1.5</RateTolerance>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
       <Variable>MassFlow</Variable>
       <Value>30</Value>
       <Duration>60</Duration>
-      <ErrorTolerance>5.0</ErrorTolerance>
-      <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <ErrorTolerance>10.0</ErrorTolerance>
+      <RateTolerance>1.5</RateTolerance>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
       <Variable>MassFlow</Variable>
       <Value>80</Value>
       <Duration>0</Duration>
-      <ErrorTolerance>5.0</ErrorTolerance>
-      <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <ErrorTolerance>10.0</ErrorTolerance>
+      <RateTolerance>1.5</RateTolerance>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
       <Variable>MassFlow</Variable>
       <Value>20</Value>
       <Duration>60</Duration>
-      <ErrorTolerance>5.0</ErrorTolerance>
-      <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <ErrorTolerance>10.0</ErrorTolerance>
+      <RateTolerance>1.5</RateTolerance>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
       <Variable>MassFlow</Variable>
       <Value>90</Value>
       <Duration>0</Duration>
-      <ErrorTolerance>5.0</ErrorTolerance>
-      <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <ErrorTolerance>10.0</ErrorTolerance>
+      <RateTolerance>1.5</RateTolerance>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
       <Variable>MassFlow</Variable>
       <Value>10</Value>
       <Duration>60</Duration>
-      <ErrorTolerance>5.0</ErrorTolerance>
-      <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <ErrorTolerance>10.0</ErrorTolerance>
+      <RateTolerance>1.5</RateTolerance>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Analyte</DeviceName>
       <Variable>MassFlow</Variable>
       <Value>100</Value>
       <Duration>0</Duration>
-      <ErrorTolerance>5.0</ErrorTolerance>
-      <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <ErrorTolerance>10.0</ErrorTolerance>
+      <RateTolerance>1.5</RateTolerance>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
     <EventSetting>
       <DeviceName>Diluent</DeviceName>
       <Variable>MassFlow</Variable>
       <Value>0</Value>
       <Duration>60</Duration>
-      <ErrorTolerance>5.0</ErrorTolerance>
-      <RateTolerance>0.5</RateTolerance>
-      <DwellTime>PT0S</DwellTime>
-      <Timeout>PT30S</Timeout>
-      <Interval>PT1S</Interval>
+      <ErrorTolerance>10.0</ErrorTolerance>
+      <RateTolerance>1.5</RateTolerance>
+      <DwellTime>0</DwellTime>
+      <Timeout>30</Timeout>
+      <Interval>1</Interval>
     </EventSetting>
   </Events>
 </TestSetting>
