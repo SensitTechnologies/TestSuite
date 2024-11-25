@@ -55,20 +55,20 @@
 			numericUpDownEventTimeout = new System.Windows.Forms.NumericUpDown();
 			numericUpDownEventDwellTime = new System.Windows.Forms.NumericUpDown();
 			numericUpDownEventRateTolerance = new System.Windows.Forms.NumericUpDown();
+			numericUpDownEventErrorTolerance = new System.Windows.Forms.NumericUpDown();
 			comboBoxEventDevice = new System.Windows.Forms.ComboBox();
 			numericUpDownEventDuration = new System.Windows.Forms.NumericUpDown();
 			comboBoxEventVariable = new System.Windows.Forms.ComboBox();
 			numericUpDownEventValue = new System.Windows.Forms.NumericUpDown();
-			numericUpDownEventErrorTolerance = new System.Windows.Forms.NumericUpDown();
 			buttonEventAdd = new System.Windows.Forms.Button();
 			panelEvents = new System.Windows.Forms.Panel();
 			tableLayoutPanelEvents = new System.Windows.Forms.TableLayoutPanel();
+			labelEventDevice = new System.Windows.Forms.Label();
+			labelEventErrorTolerance = new System.Windows.Forms.Label();
+			labelRateTolerance = new System.Windows.Forms.Label();
+			labelDwellTime = new System.Windows.Forms.Label();
 			labelInterval = new System.Windows.Forms.Label();
 			labelTimeout = new System.Windows.Forms.Label();
-			labelDwellTime = new System.Windows.Forms.Label();
-			labelRateTolerance = new System.Windows.Forms.Label();
-			labelEventErrorTolerance = new System.Windows.Forms.Label();
-			labelEventDevice = new System.Windows.Forms.Label();
 			labelEventVariable = new System.Windows.Forms.Label();
 			labelEventValue = new System.Windows.Forms.Label();
 			labelEventDuration = new System.Windows.Forms.Label();
@@ -128,9 +128,9 @@
 			((System.ComponentModel.ISupportInitialize)numericUpDownEventTimeout).BeginInit();
 			((System.ComponentModel.ISupportInitialize)numericUpDownEventDwellTime).BeginInit();
 			((System.ComponentModel.ISupportInitialize)numericUpDownEventRateTolerance).BeginInit();
+			((System.ComponentModel.ISupportInitialize)numericUpDownEventErrorTolerance).BeginInit();
 			((System.ComponentModel.ISupportInitialize)numericUpDownEventDuration).BeginInit();
 			((System.ComponentModel.ISupportInitialize)numericUpDownEventValue).BeginInit();
-			((System.ComponentModel.ISupportInitialize)numericUpDownEventErrorTolerance).BeginInit();
 			panelEvents.SuspendLayout();
 			tableLayoutPanelEvents.SuspendLayout();
 			tabPageLog.SuspendLayout();
@@ -159,7 +159,7 @@
 			tabControl.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			tabControl.Name = "tabControl";
 			tabControl.SelectedIndex = 0;
-			tabControl.Size = new System.Drawing.Size(1066, 318);
+			tabControl.Size = new System.Drawing.Size(493, 318);
 			tabControl.TabIndex = 0;
 			tabControl.TabStop = false;
 			// 
@@ -170,7 +170,7 @@
 			tabPageDevices.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			tabPageDevices.Name = "tabPageDevices";
 			tabPageDevices.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			tabPageDevices.Size = new System.Drawing.Size(1058, 290);
+			tabPageDevices.Size = new System.Drawing.Size(485, 290);
 			tabPageDevices.TabIndex = 6;
 			tabPageDevices.Text = "Devices";
 			tabPageDevices.UseVisualStyleBackColor = true;
@@ -185,7 +185,7 @@
 			groupBoxDevices.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			groupBoxDevices.Name = "groupBoxDevices";
 			groupBoxDevices.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			groupBoxDevices.Size = new System.Drawing.Size(1050, 284);
+			groupBoxDevices.Size = new System.Drawing.Size(477, 284);
 			groupBoxDevices.TabIndex = 18;
 			groupBoxDevices.TabStop = false;
 			groupBoxDevices.Text = "What equipment does the test use?";
@@ -206,7 +206,7 @@
 			tableLayoutPanelDevicesControls.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanelDevicesControls.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanelDevicesControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
-			tableLayoutPanelDevicesControls.Size = new System.Drawing.Size(1042, 262);
+			tableLayoutPanelDevicesControls.Size = new System.Drawing.Size(469, 262);
 			tableLayoutPanelDevicesControls.TabIndex = 19;
 			// 
 			// tableLayoutPanelDevicesDelete
@@ -225,7 +225,7 @@
 			tableLayoutPanelDevicesDelete.RowCount = 1;
 			tableLayoutPanelDevicesDelete.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanelDevicesDelete.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-			tableLayoutPanelDevicesDelete.Size = new System.Drawing.Size(1034, 31);
+			tableLayoutPanelDevicesDelete.Size = new System.Drawing.Size(461, 31);
 			tableLayoutPanelDevicesDelete.TabIndex = 20;
 			// 
 			// checkBoxDeviceSelectAll
@@ -245,7 +245,7 @@
 			// 
 			buttonDeviceDelete.AutoSize = true;
 			buttonDeviceDelete.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			buttonDeviceDelete.Location = new System.Drawing.Point(693, 3);
+			buttonDeviceDelete.Location = new System.Drawing.Point(311, 3);
 			buttonDeviceDelete.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			buttonDeviceDelete.Name = "buttonDeviceDelete";
 			buttonDeviceDelete.Size = new System.Drawing.Size(140, 25);
@@ -272,13 +272,13 @@
 			tableLayoutPanelDevicesAdd.RowCount = 1;
 			tableLayoutPanelDevicesAdd.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanelDevicesAdd.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
-			tableLayoutPanelDevicesAdd.Size = new System.Drawing.Size(1034, 33);
+			tableLayoutPanelDevicesAdd.Size = new System.Drawing.Size(461, 33);
 			tableLayoutPanelDevicesAdd.TabIndex = 19;
 			// 
 			// buttonDeviceAdd
 			// 
 			buttonDeviceAdd.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			buttonDeviceAdd.Location = new System.Drawing.Point(692, 3);
+			buttonDeviceAdd.Location = new System.Drawing.Point(310, 3);
 			buttonDeviceAdd.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			buttonDeviceAdd.Name = "buttonDeviceAdd";
 			buttonDeviceAdd.Size = new System.Drawing.Size(88, 27);
@@ -291,10 +291,10 @@
 			// 
 			comboBoxDeviceType.Dock = System.Windows.Forms.DockStyle.Fill;
 			comboBoxDeviceType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			comboBoxDeviceType.Location = new System.Drawing.Point(348, 3);
+			comboBoxDeviceType.Location = new System.Drawing.Point(157, 3);
 			comboBoxDeviceType.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			comboBoxDeviceType.Name = "comboBoxDeviceType";
-			comboBoxDeviceType.Size = new System.Drawing.Size(336, 23);
+			comboBoxDeviceType.Size = new System.Drawing.Size(145, 23);
 			comboBoxDeviceType.TabIndex = 4;
 			// 
 			// textBoxDeviceName
@@ -303,7 +303,7 @@
 			textBoxDeviceName.Location = new System.Drawing.Point(4, 3);
 			textBoxDeviceName.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			textBoxDeviceName.Name = "textBoxDeviceName";
-			textBoxDeviceName.Size = new System.Drawing.Size(336, 23);
+			textBoxDeviceName.Size = new System.Drawing.Size(145, 23);
 			textBoxDeviceName.TabIndex = 3;
 			textBoxDeviceName.Enter += TextBox_Enter;
 			textBoxDeviceName.MouseDown += TextBox_MouseDown;
@@ -316,7 +316,7 @@
 			panelDevices.Location = new System.Drawing.Point(4, 3);
 			panelDevices.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			panelDevices.Name = "panelDevices";
-			panelDevices.Size = new System.Drawing.Size(1034, 180);
+			panelDevices.Size = new System.Drawing.Size(461, 180);
 			panelDevices.TabIndex = 21;
 			// 
 			// tableLayoutPanelDevices
@@ -336,7 +336,7 @@
 			tableLayoutPanelDevices.Name = "tableLayoutPanelDevices";
 			tableLayoutPanelDevices.RowCount = 1;
 			tableLayoutPanelDevices.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			tableLayoutPanelDevices.Size = new System.Drawing.Size(1034, 13);
+			tableLayoutPanelDevices.Size = new System.Drawing.Size(461, 13);
 			tableLayoutPanelDevices.TabIndex = 7;
 			// 
 			// labelDeviceName
@@ -354,7 +354,7 @@
 			// 
 			labelDeviceType.AutoSize = true;
 			labelDeviceType.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold);
-			labelDeviceType.Location = new System.Drawing.Point(348, 0);
+			labelDeviceType.Location = new System.Drawing.Point(157, 0);
 			labelDeviceType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			labelDeviceType.Name = "labelDeviceType";
 			labelDeviceType.Size = new System.Drawing.Size(35, 13);
@@ -365,7 +365,7 @@
 			// 
 			labelDeviceSerialPort.AutoSize = true;
 			labelDeviceSerialPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold);
-			labelDeviceSerialPort.Location = new System.Drawing.Point(692, 0);
+			labelDeviceSerialPort.Location = new System.Drawing.Point(310, 0);
 			labelDeviceSerialPort.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			labelDeviceSerialPort.Name = "labelDeviceSerialPort";
 			labelDeviceSerialPort.Size = new System.Drawing.Size(66, 13);
@@ -379,7 +379,7 @@
 			tabPageEvents.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			tabPageEvents.Name = "tabPageEvents";
 			tabPageEvents.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			tabPageEvents.Size = new System.Drawing.Size(1058, 290);
+			tabPageEvents.Size = new System.Drawing.Size(485, 290);
 			tabPageEvents.TabIndex = 2;
 			tabPageEvents.Text = "Events";
 			tabPageEvents.UseVisualStyleBackColor = true;
@@ -394,13 +394,14 @@
 			groupBoxEvents.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			groupBoxEvents.Name = "groupBoxEvents";
 			groupBoxEvents.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			groupBoxEvents.Size = new System.Drawing.Size(1050, 284);
+			groupBoxEvents.Size = new System.Drawing.Size(477, 284);
 			groupBoxEvents.TabIndex = 17;
 			groupBoxEvents.TabStop = false;
 			groupBoxEvents.Text = "What should the equipment do?";
 			// 
 			// tableLayoutPanelEventsControls
 			// 
+			tableLayoutPanelEventsControls.AutoScroll = true;
 			tableLayoutPanelEventsControls.ColumnCount = 1;
 			tableLayoutPanelEventsControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			tableLayoutPanelEventsControls.Controls.Add(tableLayoutPanelEventsDelete, 0, 2);
@@ -415,7 +416,7 @@
 			tableLayoutPanelEventsControls.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanelEventsControls.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanelEventsControls.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
-			tableLayoutPanelEventsControls.Size = new System.Drawing.Size(1042, 262);
+			tableLayoutPanelEventsControls.Size = new System.Drawing.Size(469, 262);
 			tableLayoutPanelEventsControls.TabIndex = 19;
 			// 
 			// tableLayoutPanelEventsDelete
@@ -423,8 +424,8 @@
 			tableLayoutPanelEventsDelete.AutoSize = true;
 			tableLayoutPanelEventsDelete.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			tableLayoutPanelEventsDelete.ColumnCount = 2;
-			tableLayoutPanelEventsDelete.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 89.4026947F));
-			tableLayoutPanelEventsDelete.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10.5973024F));
+			tableLayoutPanelEventsDelete.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanelEventsDelete.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			tableLayoutPanelEventsDelete.Controls.Add(checkBoxEventSelectAll, 0, 0);
 			tableLayoutPanelEventsDelete.Controls.Add(buttonEventDelete, 1, 0);
 			tableLayoutPanelEventsDelete.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -433,7 +434,7 @@
 			tableLayoutPanelEventsDelete.Name = "tableLayoutPanelEventsDelete";
 			tableLayoutPanelEventsDelete.RowCount = 1;
 			tableLayoutPanelEventsDelete.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			tableLayoutPanelEventsDelete.Size = new System.Drawing.Size(1034, 31);
+			tableLayoutPanelEventsDelete.Size = new System.Drawing.Size(461, 31);
 			tableLayoutPanelEventsDelete.TabIndex = 20;
 			// 
 			// checkBoxEventSelectAll
@@ -453,7 +454,7 @@
 			// 
 			buttonEventDelete.AutoSize = true;
 			buttonEventDelete.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			buttonEventDelete.Location = new System.Drawing.Point(928, 3);
+			buttonEventDelete.Location = new System.Drawing.Point(360, 3);
 			buttonEventDelete.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			buttonEventDelete.Name = "buttonEventDelete";
 			buttonEventDelete.Size = new System.Drawing.Size(97, 25);
@@ -466,79 +467,91 @@
 			// 
 			tableLayoutPanelEventsAdd.AutoSize = true;
 			tableLayoutPanelEventsAdd.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			tableLayoutPanelEventsAdd.ColumnCount = 10;
-			tableLayoutPanelEventsAdd.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-			tableLayoutPanelEventsAdd.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-			tableLayoutPanelEventsAdd.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-			tableLayoutPanelEventsAdd.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-			tableLayoutPanelEventsAdd.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-			tableLayoutPanelEventsAdd.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-			tableLayoutPanelEventsAdd.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-			tableLayoutPanelEventsAdd.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-			tableLayoutPanelEventsAdd.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-			tableLayoutPanelEventsAdd.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-			tableLayoutPanelEventsAdd.Controls.Add(numericUpDownEventInterval, 8, 0);
-			tableLayoutPanelEventsAdd.Controls.Add(numericUpDownEventTimeout, 7, 0);
-			tableLayoutPanelEventsAdd.Controls.Add(numericUpDownEventDwellTime, 6, 0);
-			tableLayoutPanelEventsAdd.Controls.Add(numericUpDownEventRateTolerance, 5, 0);
+			tableLayoutPanelEventsAdd.ColumnCount = 11;
+			tableLayoutPanelEventsAdd.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
+			tableLayoutPanelEventsAdd.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
+			tableLayoutPanelEventsAdd.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
+			tableLayoutPanelEventsAdd.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
+			tableLayoutPanelEventsAdd.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
+			tableLayoutPanelEventsAdd.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
+			tableLayoutPanelEventsAdd.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
+			tableLayoutPanelEventsAdd.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
+			tableLayoutPanelEventsAdd.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
+			tableLayoutPanelEventsAdd.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
+			tableLayoutPanelEventsAdd.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			tableLayoutPanelEventsAdd.Controls.Add(numericUpDownEventInterval, 9, 0);
+			tableLayoutPanelEventsAdd.Controls.Add(numericUpDownEventTimeout, 8, 0);
+			tableLayoutPanelEventsAdd.Controls.Add(numericUpDownEventDwellTime, 7, 0);
+			tableLayoutPanelEventsAdd.Controls.Add(numericUpDownEventRateTolerance, 6, 0);
+			tableLayoutPanelEventsAdd.Controls.Add(numericUpDownEventErrorTolerance, 5, 0);
 			tableLayoutPanelEventsAdd.Controls.Add(comboBoxEventDevice, 0, 0);
 			tableLayoutPanelEventsAdd.Controls.Add(numericUpDownEventDuration, 3, 0);
 			tableLayoutPanelEventsAdd.Controls.Add(comboBoxEventVariable, 1, 0);
 			tableLayoutPanelEventsAdd.Controls.Add(numericUpDownEventValue, 2, 0);
-			tableLayoutPanelEventsAdd.Controls.Add(numericUpDownEventErrorTolerance, 4, 0);
-			tableLayoutPanelEventsAdd.Controls.Add(buttonEventAdd, 9, 0);
+			tableLayoutPanelEventsAdd.Controls.Add(buttonEventAdd, 4, 0);
 			tableLayoutPanelEventsAdd.Dock = System.Windows.Forms.DockStyle.Fill;
 			tableLayoutPanelEventsAdd.Location = new System.Drawing.Point(4, 189);
 			tableLayoutPanelEventsAdd.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			tableLayoutPanelEventsAdd.Name = "tableLayoutPanelEventsAdd";
 			tableLayoutPanelEventsAdd.RowCount = 1;
 			tableLayoutPanelEventsAdd.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			tableLayoutPanelEventsAdd.Size = new System.Drawing.Size(1034, 33);
+			tableLayoutPanelEventsAdd.Size = new System.Drawing.Size(461, 33);
 			tableLayoutPanelEventsAdd.TabIndex = 19;
 			// 
 			// numericUpDownEventInterval
 			// 
 			numericUpDownEventInterval.Dock = System.Windows.Forms.DockStyle.Fill;
 			numericUpDownEventInterval.Increment = new decimal(new int[] { 60, 0, 0, 0 });
-			numericUpDownEventInterval.Location = new System.Drawing.Point(828, 3);
+			numericUpDownEventInterval.Location = new System.Drawing.Point(832, 3);
 			numericUpDownEventInterval.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			numericUpDownEventInterval.Maximum = new decimal(new int[] { 86400, 0, 0, 0 });
 			numericUpDownEventInterval.Name = "numericUpDownEventInterval";
-			numericUpDownEventInterval.Size = new System.Drawing.Size(95, 23);
-			numericUpDownEventInterval.TabIndex = 11;
+			numericUpDownEventInterval.Size = new System.Drawing.Size(84, 23);
+			numericUpDownEventInterval.TabIndex = 20;
 			// 
 			// numericUpDownEventTimeout
 			// 
 			numericUpDownEventTimeout.Dock = System.Windows.Forms.DockStyle.Fill;
 			numericUpDownEventTimeout.Increment = new decimal(new int[] { 60, 0, 0, 0 });
-			numericUpDownEventTimeout.Location = new System.Drawing.Point(725, 3);
+			numericUpDownEventTimeout.Location = new System.Drawing.Point(740, 3);
 			numericUpDownEventTimeout.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			numericUpDownEventTimeout.Maximum = new decimal(new int[] { 86400, 0, 0, 0 });
 			numericUpDownEventTimeout.Name = "numericUpDownEventTimeout";
-			numericUpDownEventTimeout.Size = new System.Drawing.Size(95, 23);
-			numericUpDownEventTimeout.TabIndex = 10;
+			numericUpDownEventTimeout.Size = new System.Drawing.Size(84, 23);
+			numericUpDownEventTimeout.TabIndex = 19;
 			// 
 			// numericUpDownEventDwellTime
 			// 
 			numericUpDownEventDwellTime.Dock = System.Windows.Forms.DockStyle.Fill;
 			numericUpDownEventDwellTime.Increment = new decimal(new int[] { 60, 0, 0, 0 });
-			numericUpDownEventDwellTime.Location = new System.Drawing.Point(622, 3);
+			numericUpDownEventDwellTime.Location = new System.Drawing.Point(648, 3);
 			numericUpDownEventDwellTime.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			numericUpDownEventDwellTime.Maximum = new decimal(new int[] { 86400, 0, 0, 0 });
 			numericUpDownEventDwellTime.Name = "numericUpDownEventDwellTime";
-			numericUpDownEventDwellTime.Size = new System.Drawing.Size(95, 23);
-			numericUpDownEventDwellTime.TabIndex = 9;
+			numericUpDownEventDwellTime.Size = new System.Drawing.Size(84, 23);
+			numericUpDownEventDwellTime.TabIndex = 18;
 			// 
 			// numericUpDownEventRateTolerance
 			// 
 			numericUpDownEventRateTolerance.Dock = System.Windows.Forms.DockStyle.Fill;
 			numericUpDownEventRateTolerance.Increment = new decimal(new int[] { 60, 0, 0, 0 });
-			numericUpDownEventRateTolerance.Location = new System.Drawing.Point(519, 3);
+			numericUpDownEventRateTolerance.Location = new System.Drawing.Point(556, 3);
 			numericUpDownEventRateTolerance.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			numericUpDownEventRateTolerance.Maximum = new decimal(new int[] { 86400, 0, 0, 0 });
 			numericUpDownEventRateTolerance.Name = "numericUpDownEventRateTolerance";
-			numericUpDownEventRateTolerance.Size = new System.Drawing.Size(95, 23);
-			numericUpDownEventRateTolerance.TabIndex = 8;
+			numericUpDownEventRateTolerance.Size = new System.Drawing.Size(84, 23);
+			numericUpDownEventRateTolerance.TabIndex = 14;
+			// 
+			// numericUpDownEventErrorTolerance
+			// 
+			numericUpDownEventErrorTolerance.Dock = System.Windows.Forms.DockStyle.Fill;
+			numericUpDownEventErrorTolerance.Increment = new decimal(new int[] { 60, 0, 0, 0 });
+			numericUpDownEventErrorTolerance.Location = new System.Drawing.Point(464, 3);
+			numericUpDownEventErrorTolerance.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			numericUpDownEventErrorTolerance.Maximum = new decimal(new int[] { 86400, 0, 0, 0 });
+			numericUpDownEventErrorTolerance.Name = "numericUpDownEventErrorTolerance";
+			numericUpDownEventErrorTolerance.Size = new System.Drawing.Size(84, 23);
+			numericUpDownEventErrorTolerance.TabIndex = 13;
 			// 
 			// comboBoxEventDevice
 			// 
@@ -548,18 +561,18 @@
 			comboBoxEventDevice.Location = new System.Drawing.Point(4, 3);
 			comboBoxEventDevice.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			comboBoxEventDevice.Name = "comboBoxEventDevice";
-			comboBoxEventDevice.Size = new System.Drawing.Size(95, 23);
+			comboBoxEventDevice.Size = new System.Drawing.Size(84, 23);
 			comboBoxEventDevice.TabIndex = 3;
 			// 
 			// numericUpDownEventDuration
 			// 
 			numericUpDownEventDuration.Dock = System.Windows.Forms.DockStyle.Fill;
 			numericUpDownEventDuration.Increment = new decimal(new int[] { 60, 0, 0, 0 });
-			numericUpDownEventDuration.Location = new System.Drawing.Point(313, 3);
+			numericUpDownEventDuration.Location = new System.Drawing.Point(280, 3);
 			numericUpDownEventDuration.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			numericUpDownEventDuration.Maximum = new decimal(new int[] { 86400, 0, 0, 0 });
 			numericUpDownEventDuration.Name = "numericUpDownEventDuration";
-			numericUpDownEventDuration.Size = new System.Drawing.Size(95, 23);
+			numericUpDownEventDuration.Size = new System.Drawing.Size(84, 23);
 			numericUpDownEventDuration.TabIndex = 6;
 			numericUpDownEventDuration.Enter += NumericUpDown_Enter;
 			numericUpDownEventDuration.MouseDown += NumericUpDown_MouseDown;
@@ -569,10 +582,10 @@
 			comboBoxEventVariable.Dock = System.Windows.Forms.DockStyle.Fill;
 			comboBoxEventVariable.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			comboBoxEventVariable.FormattingEnabled = true;
-			comboBoxEventVariable.Location = new System.Drawing.Point(107, 3);
+			comboBoxEventVariable.Location = new System.Drawing.Point(96, 3);
 			comboBoxEventVariable.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			comboBoxEventVariable.Name = "comboBoxEventVariable";
-			comboBoxEventVariable.Size = new System.Drawing.Size(95, 23);
+			comboBoxEventVariable.Size = new System.Drawing.Size(84, 23);
 			comboBoxEventVariable.TabIndex = 4;
 			// 
 			// numericUpDownEventValue
@@ -580,33 +593,22 @@
 			numericUpDownEventValue.DecimalPlaces = 2;
 			numericUpDownEventValue.Dock = System.Windows.Forms.DockStyle.Fill;
 			numericUpDownEventValue.Increment = new decimal(new int[] { 100, 0, 0, 0 });
-			numericUpDownEventValue.Location = new System.Drawing.Point(210, 3);
+			numericUpDownEventValue.Location = new System.Drawing.Point(188, 3);
 			numericUpDownEventValue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			numericUpDownEventValue.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
 			numericUpDownEventValue.Name = "numericUpDownEventValue";
-			numericUpDownEventValue.Size = new System.Drawing.Size(95, 23);
+			numericUpDownEventValue.Size = new System.Drawing.Size(84, 23);
 			numericUpDownEventValue.TabIndex = 5;
 			numericUpDownEventValue.Enter += NumericUpDown_Enter;
 			numericUpDownEventValue.MouseDown += NumericUpDown_MouseDown;
 			// 
-			// numericUpDownEventErrorTolerance
-			// 
-			numericUpDownEventErrorTolerance.Dock = System.Windows.Forms.DockStyle.Fill;
-			numericUpDownEventErrorTolerance.Increment = new decimal(new int[] { 60, 0, 0, 0 });
-			numericUpDownEventErrorTolerance.Location = new System.Drawing.Point(416, 3);
-			numericUpDownEventErrorTolerance.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			numericUpDownEventErrorTolerance.Maximum = new decimal(new int[] { 86400, 0, 0, 0 });
-			numericUpDownEventErrorTolerance.Name = "numericUpDownEventErrorTolerance";
-			numericUpDownEventErrorTolerance.Size = new System.Drawing.Size(95, 23);
-			numericUpDownEventErrorTolerance.TabIndex = 12;
-			// 
 			// buttonEventAdd
 			// 
 			buttonEventAdd.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			buttonEventAdd.Location = new System.Drawing.Point(931, 3);
+			buttonEventAdd.Location = new System.Drawing.Point(372, 3);
 			buttonEventAdd.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			buttonEventAdd.Name = "buttonEventAdd";
-			buttonEventAdd.Size = new System.Drawing.Size(85, 27);
+			buttonEventAdd.Size = new System.Drawing.Size(84, 27);
 			buttonEventAdd.TabIndex = 7;
 			buttonEventAdd.Text = "Add Event";
 			buttonEventAdd.UseVisualStyleBackColor = true;
@@ -620,97 +622,43 @@
 			panelEvents.Location = new System.Drawing.Point(4, 3);
 			panelEvents.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			panelEvents.Name = "panelEvents";
-			panelEvents.Size = new System.Drawing.Size(1034, 180);
+			panelEvents.Size = new System.Drawing.Size(461, 180);
 			panelEvents.TabIndex = 21;
 			// 
 			// tableLayoutPanelEvents
 			// 
 			tableLayoutPanelEvents.AutoSize = true;
 			tableLayoutPanelEvents.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			tableLayoutPanelEvents.ColumnCount = 10;
-			tableLayoutPanelEvents.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-			tableLayoutPanelEvents.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-			tableLayoutPanelEvents.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-			tableLayoutPanelEvents.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-			tableLayoutPanelEvents.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-			tableLayoutPanelEvents.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-			tableLayoutPanelEvents.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-			tableLayoutPanelEvents.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-			tableLayoutPanelEvents.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-			tableLayoutPanelEvents.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-			tableLayoutPanelEvents.Controls.Add(labelInterval, 8, 0);
-			tableLayoutPanelEvents.Controls.Add(labelTimeout, 7, 0);
-			tableLayoutPanelEvents.Controls.Add(labelDwellTime, 6, 0);
-			tableLayoutPanelEvents.Controls.Add(labelRateTolerance, 5, 0);
-			tableLayoutPanelEvents.Controls.Add(labelEventErrorTolerance, 4, 0);
+			tableLayoutPanelEvents.ColumnCount = 11;
+			tableLayoutPanelEvents.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
+			tableLayoutPanelEvents.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
+			tableLayoutPanelEvents.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
+			tableLayoutPanelEvents.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
+			tableLayoutPanelEvents.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
+			tableLayoutPanelEvents.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
+			tableLayoutPanelEvents.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
+			tableLayoutPanelEvents.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
+			tableLayoutPanelEvents.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
+			tableLayoutPanelEvents.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
+			tableLayoutPanelEvents.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			tableLayoutPanelEvents.Controls.Add(labelEventDevice, 0, 0);
+			tableLayoutPanelEvents.Controls.Add(labelEventErrorTolerance, 5, 0);
+			tableLayoutPanelEvents.Controls.Add(labelRateTolerance, 6, 0);
+			tableLayoutPanelEvents.Controls.Add(labelDwellTime, 7, 0);
+			tableLayoutPanelEvents.Controls.Add(labelInterval, 9, 0);
+			tableLayoutPanelEvents.Controls.Add(labelTimeout, 8, 0);
 			tableLayoutPanelEvents.Controls.Add(labelEventVariable, 1, 0);
 			tableLayoutPanelEvents.Controls.Add(labelEventValue, 2, 0);
 			tableLayoutPanelEvents.Controls.Add(labelEventDuration, 3, 0);
-			tableLayoutPanelEvents.Controls.Add(labelEventStatus, 9, 0);
+			tableLayoutPanelEvents.Controls.Add(labelEventStatus, 4, 0);
 			tableLayoutPanelEvents.Dock = System.Windows.Forms.DockStyle.Top;
 			tableLayoutPanelEvents.Location = new System.Drawing.Point(0, 0);
 			tableLayoutPanelEvents.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			tableLayoutPanelEvents.Name = "tableLayoutPanelEvents";
 			tableLayoutPanelEvents.RowCount = 1;
 			tableLayoutPanelEvents.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			tableLayoutPanelEvents.Size = new System.Drawing.Size(1034, 13);
+			tableLayoutPanelEvents.Size = new System.Drawing.Size(461, 26);
 			tableLayoutPanelEvents.TabIndex = 7;
-			// 
-			// labelInterval
-			// 
-			labelInterval.AutoSize = true;
-			labelInterval.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold);
-			labelInterval.Location = new System.Drawing.Point(828, 0);
-			labelInterval.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			labelInterval.Name = "labelInterval";
-			labelInterval.Size = new System.Drawing.Size(68, 13);
-			labelInterval.TabIndex = 10;
-			labelInterval.Text = "Interval [s]";
-			// 
-			// labelTimeout
-			// 
-			labelTimeout.AutoSize = true;
-			labelTimeout.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold);
-			labelTimeout.Location = new System.Drawing.Point(725, 0);
-			labelTimeout.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			labelTimeout.Name = "labelTimeout";
-			labelTimeout.Size = new System.Drawing.Size(70, 13);
-			labelTimeout.TabIndex = 9;
-			labelTimeout.Text = "Timeout [s]";
-			// 
-			// labelDwellTime
-			// 
-			labelDwellTime.AutoSize = true;
-			labelDwellTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold);
-			labelDwellTime.Location = new System.Drawing.Point(622, 0);
-			labelDwellTime.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			labelDwellTime.Name = "labelDwellTime";
-			labelDwellTime.Size = new System.Drawing.Size(87, 13);
-			labelDwellTime.TabIndex = 8;
-			labelDwellTime.Text = "Dwell Time [s]";
-			// 
-			// labelRateTolerance
-			// 
-			labelRateTolerance.AutoSize = true;
-			labelRateTolerance.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold);
-			labelRateTolerance.Location = new System.Drawing.Point(519, 0);
-			labelRateTolerance.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			labelRateTolerance.Name = "labelRateTolerance";
-			labelRateTolerance.Size = new System.Drawing.Size(95, 13);
-			labelRateTolerance.TabIndex = 7;
-			labelRateTolerance.Text = "Rate Tolerance";
-			// 
-			// labelEventErrorTolerance
-			// 
-			labelEventErrorTolerance.AutoSize = true;
-			labelEventErrorTolerance.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold);
-			labelEventErrorTolerance.Location = new System.Drawing.Point(416, 0);
-			labelEventErrorTolerance.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			labelEventErrorTolerance.Name = "labelEventErrorTolerance";
-			labelEventErrorTolerance.Size = new System.Drawing.Size(95, 13);
-			labelEventErrorTolerance.TabIndex = 6;
-			labelEventErrorTolerance.Text = "Error Tolerance";
 			// 
 			// labelEventDevice
 			// 
@@ -723,11 +671,66 @@
 			labelEventDevice.TabIndex = 1;
 			labelEventDevice.Text = "Device";
 			// 
+			// labelEventErrorTolerance
+			// 
+			labelEventErrorTolerance.AutoSize = true;
+			labelEventErrorTolerance.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold);
+			labelEventErrorTolerance.Location = new System.Drawing.Point(464, 0);
+			labelEventErrorTolerance.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			labelEventErrorTolerance.Name = "labelEventErrorTolerance";
+			labelEventErrorTolerance.Size = new System.Drawing.Size(64, 26);
+			labelEventErrorTolerance.TabIndex = 6;
+			labelEventErrorTolerance.Text = "Error Tolerance";
+			// 
+			// labelRateTolerance
+			// 
+			labelRateTolerance.AutoSize = true;
+			labelRateTolerance.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold);
+			labelRateTolerance.Location = new System.Drawing.Point(556, 0);
+			labelRateTolerance.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			labelRateTolerance.Name = "labelRateTolerance";
+			labelRateTolerance.Size = new System.Drawing.Size(64, 26);
+			labelRateTolerance.TabIndex = 7;
+			labelRateTolerance.Text = "Rate Tolerance";
+			// 
+			// labelDwellTime
+			// 
+			labelDwellTime.AutoSize = true;
+			labelDwellTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold);
+			labelDwellTime.Location = new System.Drawing.Point(648, 0);
+			labelDwellTime.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			labelDwellTime.Name = "labelDwellTime";
+			labelDwellTime.Size = new System.Drawing.Size(73, 26);
+			labelDwellTime.TabIndex = 8;
+			labelDwellTime.Text = "Dwell Time [s]";
+			// 
+			// labelInterval
+			// 
+			labelInterval.AutoSize = true;
+			labelInterval.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold);
+			labelInterval.Location = new System.Drawing.Point(832, 0);
+			labelInterval.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			labelInterval.Name = "labelInterval";
+			labelInterval.Size = new System.Drawing.Size(68, 13);
+			labelInterval.TabIndex = 10;
+			labelInterval.Text = "Interval [s]";
+			// 
+			// labelTimeout
+			// 
+			labelTimeout.AutoSize = true;
+			labelTimeout.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold);
+			labelTimeout.Location = new System.Drawing.Point(740, 0);
+			labelTimeout.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			labelTimeout.Name = "labelTimeout";
+			labelTimeout.Size = new System.Drawing.Size(70, 13);
+			labelTimeout.TabIndex = 9;
+			labelTimeout.Text = "Timeout [s]";
+			// 
 			// labelEventVariable
 			// 
 			labelEventVariable.AutoSize = true;
 			labelEventVariable.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold);
-			labelEventVariable.Location = new System.Drawing.Point(107, 0);
+			labelEventVariable.Location = new System.Drawing.Point(96, 0);
 			labelEventVariable.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			labelEventVariable.Name = "labelEventVariable";
 			labelEventVariable.Size = new System.Drawing.Size(53, 13);
@@ -738,7 +741,7 @@
 			// 
 			labelEventValue.AutoSize = true;
 			labelEventValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold);
-			labelEventValue.Location = new System.Drawing.Point(210, 0);
+			labelEventValue.Location = new System.Drawing.Point(188, 0);
 			labelEventValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			labelEventValue.Name = "labelEventValue";
 			labelEventValue.Size = new System.Drawing.Size(39, 13);
@@ -749,7 +752,7 @@
 			// 
 			labelEventDuration.AutoSize = true;
 			labelEventDuration.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold);
-			labelEventDuration.Location = new System.Drawing.Point(313, 0);
+			labelEventDuration.Location = new System.Drawing.Point(280, 0);
 			labelEventDuration.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			labelEventDuration.Name = "labelEventDuration";
 			labelEventDuration.Size = new System.Drawing.Size(73, 13);
@@ -760,7 +763,7 @@
 			// 
 			labelEventStatus.AutoSize = true;
 			labelEventStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold);
-			labelEventStatus.Location = new System.Drawing.Point(931, 0);
+			labelEventStatus.Location = new System.Drawing.Point(372, 0);
 			labelEventStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			labelEventStatus.Name = "labelEventStatus";
 			labelEventStatus.Size = new System.Drawing.Size(43, 13);
@@ -774,7 +777,7 @@
 			tabPageLog.Margin = new System.Windows.Forms.Padding(2);
 			tabPageLog.Name = "tabPageLog";
 			tabPageLog.Padding = new System.Windows.Forms.Padding(2);
-			tabPageLog.Size = new System.Drawing.Size(1058, 290);
+			tabPageLog.Size = new System.Drawing.Size(485, 290);
 			tabPageLog.TabIndex = 7;
 			tabPageLog.Text = "Log";
 			tabPageLog.UseVisualStyleBackColor = true;
@@ -789,7 +792,7 @@
 			groupBoxLog.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			groupBoxLog.Name = "groupBoxLog";
 			groupBoxLog.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			groupBoxLog.Size = new System.Drawing.Size(1054, 286);
+			groupBoxLog.Size = new System.Drawing.Size(481, 286);
 			groupBoxLog.TabIndex = 17;
 			groupBoxLog.TabStop = false;
 			groupBoxLog.Text = "Where should results be saved?";
@@ -804,7 +807,7 @@
 			groupBoxFilename.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			groupBoxFilename.Name = "groupBoxFilename";
 			groupBoxFilename.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			groupBoxFilename.Size = new System.Drawing.Size(1046, 55);
+			groupBoxFilename.Size = new System.Drawing.Size(473, 55);
 			groupBoxFilename.TabIndex = 8;
 			groupBoxFilename.TabStop = false;
 			groupBoxFilename.Text = "Filename";
@@ -824,7 +827,7 @@
 			tableLayoutPanelFilename.Name = "tableLayoutPanelFilename";
 			tableLayoutPanelFilename.RowCount = 1;
 			tableLayoutPanelFilename.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			tableLayoutPanelFilename.Size = new System.Drawing.Size(1038, 33);
+			tableLayoutPanelFilename.Size = new System.Drawing.Size(465, 33);
 			tableLayoutPanelFilename.TabIndex = 1;
 			// 
 			// textBoxLogFilename
@@ -833,14 +836,14 @@
 			textBoxLogFilename.Location = new System.Drawing.Point(4, 3);
 			textBoxLogFilename.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			textBoxLogFilename.Name = "textBoxLogFilename";
-			textBoxLogFilename.Size = new System.Drawing.Size(934, 23);
+			textBoxLogFilename.Size = new System.Drawing.Size(361, 23);
 			textBoxLogFilename.TabIndex = 3;
 			textBoxLogFilename.TextChanged += TextBoxLogFilename_TextChanged;
 			// 
 			// buttonLogBrowse
 			// 
 			buttonLogBrowse.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			buttonLogBrowse.Location = new System.Drawing.Point(946, 3);
+			buttonLogBrowse.Location = new System.Drawing.Point(373, 3);
 			buttonLogBrowse.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			buttonLogBrowse.Name = "buttonLogBrowse";
 			buttonLogBrowse.Size = new System.Drawing.Size(88, 27);
@@ -856,7 +859,7 @@
 			tabPageStatus.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			tabPageStatus.Name = "tabPageStatus";
 			tabPageStatus.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			tabPageStatus.Size = new System.Drawing.Size(1058, 290);
+			tabPageStatus.Size = new System.Drawing.Size(485, 290);
 			tabPageStatus.TabIndex = 4;
 			tabPageStatus.Text = "Status";
 			tabPageStatus.UseVisualStyleBackColor = true;
@@ -869,7 +872,7 @@
 			groupBoxVariables.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			groupBoxVariables.Name = "groupBoxVariables";
 			groupBoxVariables.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			groupBoxVariables.Size = new System.Drawing.Size(1050, 284);
+			groupBoxVariables.Size = new System.Drawing.Size(477, 284);
 			groupBoxVariables.TabIndex = 1;
 			groupBoxVariables.TabStop = false;
 			groupBoxVariables.Text = "Variables";
@@ -881,7 +884,7 @@
 			flowLayoutPanelControlledVariables.Location = new System.Drawing.Point(4, 19);
 			flowLayoutPanelControlledVariables.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			flowLayoutPanelControlledVariables.Name = "flowLayoutPanelControlledVariables";
-			flowLayoutPanelControlledVariables.Size = new System.Drawing.Size(1042, 262);
+			flowLayoutPanelControlledVariables.Size = new System.Drawing.Size(469, 262);
 			flowLayoutPanelControlledVariables.TabIndex = 0;
 			// 
 			// statusStrip
@@ -891,7 +894,7 @@
 			statusStrip.Location = new System.Drawing.Point(0, 393);
 			statusStrip.Name = "statusStrip";
 			statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
-			statusStrip.Size = new System.Drawing.Size(1074, 32);
+			statusStrip.Size = new System.Drawing.Size(501, 32);
 			statusStrip.TabIndex = 1;
 			statusStrip.Text = "statusStrip1";
 			// 
@@ -914,7 +917,7 @@
 			menuStrip.Location = new System.Drawing.Point(0, 0);
 			menuStrip.Name = "menuStrip";
 			menuStrip.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-			menuStrip.Size = new System.Drawing.Size(1074, 24);
+			menuStrip.Size = new System.Drawing.Size(501, 24);
 			menuStrip.TabIndex = 2;
 			menuStrip.Text = "menuStrip1";
 			// 
@@ -1055,7 +1058,7 @@
 			tableLayoutPanelTest.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			tableLayoutPanelTest.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			tableLayoutPanelTest.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
-			tableLayoutPanelTest.Size = new System.Drawing.Size(1074, 369);
+			tableLayoutPanelTest.Size = new System.Drawing.Size(501, 369);
 			tableLayoutPanelTest.TabIndex = 18;
 			// 
 			// tableLayoutPanelTestSetupButtons
@@ -1073,7 +1076,7 @@
 			tableLayoutPanelTestSetupButtons.Name = "tableLayoutPanelTestSetupButtons";
 			tableLayoutPanelTestSetupButtons.RowCount = 1;
 			tableLayoutPanelTestSetupButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			tableLayoutPanelTestSetupButtons.Size = new System.Drawing.Size(1066, 39);
+			tableLayoutPanelTestSetupButtons.Size = new System.Drawing.Size(493, 39);
 			tableLayoutPanelTestSetupButtons.TabIndex = 13;
 			// 
 			// tableLayoutPanelRepeat
@@ -1086,7 +1089,7 @@
 			tableLayoutPanelRepeat.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			tableLayoutPanelRepeat.Controls.Add(labelRepeat, 0, 0);
 			tableLayoutPanelRepeat.Controls.Add(tableLayoutPanelYesNo, 1, 0);
-			tableLayoutPanelRepeat.Location = new System.Drawing.Point(178, 4);
+			tableLayoutPanelRepeat.Location = new System.Drawing.Point(34, 4);
 			tableLayoutPanelRepeat.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			tableLayoutPanelRepeat.Name = "tableLayoutPanelRepeat";
 			tableLayoutPanelRepeat.RowCount = 1;
@@ -1161,7 +1164,7 @@
 			tableLayoutPanelStartStop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 23F));
 			tableLayoutPanelStartStop.Controls.Add(buttonStart, 0, 0);
 			tableLayoutPanelStartStop.Controls.Add(buttonStop, 1, 0);
-			tableLayoutPanelStartStop.Location = new System.Drawing.Point(703, 3);
+			tableLayoutPanelStartStop.Location = new System.Drawing.Point(273, 3);
 			tableLayoutPanelStartStop.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			tableLayoutPanelStartStop.Name = "tableLayoutPanelStartStop";
 			tableLayoutPanelStartStop.RowCount = 1;
@@ -1175,7 +1178,7 @@
 			AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			AutoSize = true;
-			ClientSize = new System.Drawing.Size(1074, 425);
+			ClientSize = new System.Drawing.Size(501, 425);
 			Controls.Add(tableLayoutPanelTest);
 			Controls.Add(statusStrip);
 			Controls.Add(menuStrip);
@@ -1212,9 +1215,9 @@
 			((System.ComponentModel.ISupportInitialize)numericUpDownEventTimeout).EndInit();
 			((System.ComponentModel.ISupportInitialize)numericUpDownEventDwellTime).EndInit();
 			((System.ComponentModel.ISupportInitialize)numericUpDownEventRateTolerance).EndInit();
+			((System.ComponentModel.ISupportInitialize)numericUpDownEventErrorTolerance).EndInit();
 			((System.ComponentModel.ISupportInitialize)numericUpDownEventDuration).EndInit();
 			((System.ComponentModel.ISupportInitialize)numericUpDownEventValue).EndInit();
-			((System.ComponentModel.ISupportInitialize)numericUpDownEventErrorTolerance).EndInit();
 			panelEvents.ResumeLayout(false);
 			panelEvents.PerformLayout();
 			tableLayoutPanelEvents.ResumeLayout(false);

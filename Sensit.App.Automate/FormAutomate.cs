@@ -29,12 +29,12 @@ namespace Sensit.App.Automate
 		private const int COLUMN_EVENTS_VARIABLE = 1;
 		private const int COLUMN_EVENTS_VALUE = 2;
 		private const int COLUMN_EVENTS_DURATION = 3;
-		private const int COLUMN_EVENTS_ERROR_TOLERANCE = 4;
-		private const int COLUMN_EVENTS_RATE_TOLERANCE = 5;
-		private const int COLUMN_EVENTS_DWELL_TIME = 6;
-		private const int COLUMN_EVENTS_TIMEOUT = 7;
-		private const int COLUMN_EVENTS_INTERVAL = 8;
-		private const int COLUMN_EVENTS_STATUS = 9;
+		private const int COLUMN_EVENTS_STATUS = 4;
+		private const int COLUMN_EVENTS_ERROR_TOLERANCE = 5;
+		private const int COLUMN_EVENTS_RATE_TOLERANCE = 6;
+		private const int COLUMN_EVENTS_DWELL_TIME = 7;
+		private const int COLUMN_EVENTS_TIMEOUT = 8;
+		private const int COLUMN_EVENTS_INTERVAL = 9;
 
 		#endregion
 
@@ -501,6 +501,14 @@ namespace Sensit.App.Automate
 				Text = duration.ToString(CultureInfo.InvariantCulture)
 			}, COLUMN_EVENTS_DURATION, tableLayoutPanelEvents.RowCount - 1);
 
+			// Add the status.
+			tableLayoutPanelEvents.Controls.Add(new Label
+			{
+				Anchor = AnchorStyles.Left | AnchorStyles.Top,
+				AutoSize = true,
+				Dock = DockStyle.None,
+			}, COLUMN_EVENTS_STATUS, tableLayoutPanelEvents.RowCount - 1);
+
 			// Add the error tolerance.
 			tableLayoutPanelEvents.Controls.Add(new TextBox
 			{
@@ -545,14 +553,6 @@ namespace Sensit.App.Automate
 				Dock = DockStyle.None,
 				Text = interval.ToString(CultureInfo.InvariantCulture)
 			}, COLUMN_EVENTS_INTERVAL, tableLayoutPanelEvents.RowCount - 1);
-
-			// Add the status.
-			tableLayoutPanelEvents.Controls.Add(new Label
-			{
-				Anchor = AnchorStyles.Left | AnchorStyles.Top,
-				AutoSize = true,
-				Dock = DockStyle.None,
-			}, COLUMN_EVENTS_STATUS, tableLayoutPanelEvents.RowCount - 1);
 		}
 
 		/// <summary>
@@ -972,6 +972,11 @@ namespace Sensit.App.Automate
 				Label labelEventVariable = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_VARIABLE, row) as Label;
 				TextBox textBoxEventValue = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_VALUE, row) as TextBox;
 				TextBox textBoxEventDuration = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_DURATION, row) as TextBox;
+				TextBox textBoxEventErrorTolerance = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_ERROR_TOLERANCE, row) as TextBox;
+				TextBox textBoxEventRateTolerance = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_RATE_TOLERANCE, row) as TextBox;
+				TextBox textBoxEventDwellTime = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_DWELL_TIME, row) as TextBox;
+				TextBox textBoxEventTimeout = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_TIMEOUT, row) as TextBox;
+				TextBox textBoxEventInterval = tableLayoutPanelEvents.GetControlFromPosition(COLUMN_EVENTS_INTERVAL, row) as TextBox;
 
 				// If the specified device does not exist...
 				if (testSetting.Devices.FirstOrDefault(o => o.Name == checkBoxEventDevice.Text) == null)
@@ -991,7 +996,12 @@ namespace Sensit.App.Automate
 						DeviceName = checkBoxEventDevice.Text,
 						Variable = variableType,
 						Value = Convert.ToDecimal(textBoxEventValue.Text, CultureInfo.InvariantCulture),
-						Duration = Convert.ToUInt32(textBoxEventDuration.Text, CultureInfo.InvariantCulture)
+						Duration = Convert.ToUInt32(textBoxEventDuration.Text, CultureInfo.InvariantCulture),
+						ErrorTolerance = Convert.ToDecimal(textBoxEventErrorTolerance.Text, CultureInfo.InvariantCulture),
+						RateTolerance = Convert.ToDecimal(textBoxEventRateTolerance.Text, CultureInfo.InvariantCulture),
+						DwellTime = Convert.ToUInt32(textBoxEventDwellTime.Text, CultureInfo.InvariantCulture),
+						Timeout = Convert.ToUInt32(textBoxEventTimeout.Text, CultureInfo.InvariantCulture),
+						Interval = Convert.ToUInt32(textBoxEventInterval.Text, CultureInfo.InvariantCulture),
 					});
 				}
 				catch (ArgumentException ex)
