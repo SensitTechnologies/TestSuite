@@ -114,8 +114,7 @@ namespace Sensit.App.Automate
 		/// <remarks>
 		/// This will be accessed by the FormCalibration to display the variables values and setpoints.
 		/// </remarks>
-		public Dictionary<(string name, VariableType variable), TestVariable> Variables { get; private set; } =
-			new Dictionary<(string, VariableType), TestVariable>();
+		public Dictionary<(string name, VariableType variable), TestVariable> Variables { get; private set; } = [];
 
 		/// <summary>
 		/// True if test should repeat until manually stopped.
