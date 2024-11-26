@@ -19,7 +19,9 @@ namespace Sensit.App.Automate
 
 		public decimal Setpoint { get; set; }
 
-		public decimal Tolerance { get; set; }
+		public decimal ErrorTolerance { get; set; }
+
+		public decimal RateTolerance { get; set; }
 		
 		public TimeSpan Interval { get; set; }
 		
@@ -286,15 +288,19 @@ namespace Sensit.App.Automate
 					// Get the reading from the device.
 					decimal reading = _equipment.Devices[v.Key.name].Readings[v.Key.variable];
 
-					// Update global variable.
-					v.Value.Actual = Convert.ToDecimal(reading);
+					// Calculate rate of change using the difference between the previous and current readings.
+					decimal rateOfChange = (reading - v.Value.Actual) / Convert.ToDecimal(v.Value.Interval.TotalSeconds);
 
-					// If the variable is not near the setpoint...
-					if (Math.Abs(v.Value.Setpoint - v.Value.Actual) > v.Value.Tolerance)
+					// If the variable has exceeded error or rate tolerance...
+					if ((Math.Abs(v.Value.Setpoint - reading) > v.Value.ErrorTolerance) ||
+						(Math.Abs(rateOfChange) > v.Value.RateTolerance))
 					{
 						// Attempt to achieve the setpoint again.
 						ProcessSetpoint(v.Key.name, v.Key.variable);
 					}
+
+					// Remember the previous reading.
+					v.Value.Actual = reading;
 				}
 			}
 		}
@@ -307,7 +313,7 @@ namespace Sensit.App.Automate
 		/// where the test can be paused.
 		/// </remarks>
 		private void ProcessPause()
-	{
+		{
 			// All we need to do is call the error method with a message for the user.
 			PopupRetryAbort("The test is paused.  Continue?", "Notice");
 
@@ -332,8 +338,12 @@ namespace Sensit.App.Automate
 				Stopwatch stopwatch = Stopwatch.StartNew();
 				Stopwatch timeoutWatch = Stopwatch.StartNew();
 
+				// Take first reading.
+				decimal previousReading = _equipment.Devices[deviceName].Readings[variable];
+
 				// Take readings until they are within tolerance for the required settling time.
 				decimal error;
+				decimal rateOfChange;
 				do
 				{
 					// Abort if requested.
@@ -343,7 +353,7 @@ namespace Sensit.App.Automate
 					if (timeoutWatch.Elapsed > values.Timeout)
 					{
 						// Prompt user; cancel test if requested.
-						PopupRetryAbort("Not able to reach stability." + Environment.NewLine + "Retry ?", "Stability Error");
+						PopupRetryAbort("Unable to reach stability." + Environment.NewLine + "Retry ?", "Stability Error");
 
 						// Reset the timeout stopwatch.
 						timeoutWatch.Restart();
@@ -367,15 +377,20 @@ namespace Sensit.App.Automate
 					// Get reference reading.
 					_equipment.Devices[deviceName].WriteThenRead();
 					decimal reading = _equipment.Devices[deviceName].Readings[variable];
+					rateOfChange = (reading - previousReading) / Convert.ToDecimal(values.Interval.TotalSeconds);
 
 					// Update global variable.
-					Variables[(deviceName, variable)].Actual = Convert.ToDecimal(reading);
+					Variables[(deviceName, variable)].Actual = reading;
+
+					// Update previous reading.
+					previousReading = reading;
 
 					// Calculate error.
 					error = reading - values.Setpoint;
 
 					// If tolerance has been exceeded, reset the stability time.
-					if (Math.Abs(error) > values.Tolerance)
+					if ((Math.Abs(error) > values.ErrorTolerance) ||
+						(Math.Abs(rateOfChange) > values.RateTolerance))
 					{
 						_testThread.ReportProgress(PercentProgress, "Waiting for stability...");
 						stopwatch.Restart();
@@ -393,7 +408,8 @@ namespace Sensit.App.Automate
 					// Wait to get desired reading frequency.
 					Thread.Sleep(values.Interval);
 				} while ((stopwatch.Elapsed <= values.DwellTime) ||
-						(Math.Abs(error) > values.Tolerance));
+						(Math.Abs(error) > values.ErrorTolerance) ||
+						(Math.Abs(rateOfChange) > values.RateTolerance));
 			}
 		}
 
@@ -416,7 +432,7 @@ namespace Sensit.App.Automate
 				TestVariable testVariable = new()
 				{
 					Setpoint = e.Value,
-					Tolerance = e.ErrorTolerance,
+					ErrorTolerance = e.ErrorTolerance,
 					Interval = new TimeSpan(0, 0, Convert.ToInt32(e.Interval)),
 					Timeout = new TimeSpan(0, 0, Convert.ToInt32(e.Timeout)),
 					DwellTime = new TimeSpan(0, 0, Convert.ToInt32(e.DwellTime))

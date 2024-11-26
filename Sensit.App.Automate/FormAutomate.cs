@@ -1111,7 +1111,7 @@ namespace Sensit.App.Automate
 
 				_variableStatusControls[key].Value = value.Actual;
 				_variableStatusControls[key].Setpoint = value.Setpoint;
-				_variableStatusControls[key].Tolerance = value.Tolerance;
+				_variableStatusControls[key].Tolerance = value.ErrorTolerance;
 			}
 
 			// If the number of complete events has been reset...
