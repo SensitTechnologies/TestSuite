@@ -29,635 +29,654 @@ namespace Sensit.App.Programmer
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.wikiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.statusStrip = new System.Windows.Forms.StatusStrip();
-			this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
-			this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-			this.groupBoxBarcode = new System.Windows.Forms.GroupBox();
-			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-			this.textBoxBarcode = new System.Windows.Forms.TextBox();
-			this.tableLayoutPanelStatus = new System.Windows.Forms.TableLayoutPanel();
-			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			this.textBox1 = new System.Windows.Forms.TextBox();
-			this.textBox2 = new System.Windows.Forms.TextBox();
-			this.textBox3 = new System.Windows.Forms.TextBox();
-			this.labelTimestamp = new System.Windows.Forms.Label();
-			this.label1 = new System.Windows.Forms.Label();
-			this.textBox4 = new System.Windows.Forms.TextBox();
-			this.textBox5 = new System.Windows.Forms.TextBox();
-			this.label2 = new System.Windows.Forms.Label();
-			this.textBox6 = new System.Windows.Forms.TextBox();
-			this.label3 = new System.Windows.Forms.Label();
-			this.labelUnitTimestamp = new System.Windows.Forms.Label();
-			this.labelUnitLatitude = new System.Windows.Forms.Label();
-			this.labelUnitLongitude = new System.Windows.Forms.Label();
-			this.label4 = new System.Windows.Forms.Label();
-			this.textBox7 = new System.Windows.Forms.TextBox();
-			this.textBox8 = new System.Windows.Forms.TextBox();
-			this.textBox9 = new System.Windows.Forms.TextBox();
-			this.textBox10 = new System.Windows.Forms.TextBox();
-			this.tableLayoutPanelTestSetupButtons = new System.Windows.Forms.TableLayoutPanel();
-			this.tableLayoutPanelStartStop = new System.Windows.Forms.TableLayoutPanel();
-			this.buttonRead = new System.Windows.Forms.Button();
-			this.buttonWrite = new System.Windows.Forms.Button();
-			this.groupBoxStatus = new System.Windows.Forms.GroupBox();
-			this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-			this.tableLayoutPanelVariables = new System.Windows.Forms.TableLayoutPanel();
-			this.labelDateProgrammed = new System.Windows.Forms.Label();
-			this.labelSerialNumber = new System.Windows.Forms.Label();
-			this.labelSensorType = new System.Windows.Forms.Label();
-			this.textBoxSerialNumber = new System.Windows.Forms.TextBox();
-			this.textBoxSensorType = new System.Windows.Forms.TextBox();
-			this.textBoxDateProgrammed = new System.Windows.Forms.TextBox();
-			this.menuStrip1.SuspendLayout();
-			this.statusStrip.SuspendLayout();
-			this.groupBoxBarcode.SuspendLayout();
-			this.tableLayoutPanel2.SuspendLayout();
-			this.tableLayoutPanel1.SuspendLayout();
-			this.tableLayoutPanelTestSetupButtons.SuspendLayout();
-			this.tableLayoutPanelStartStop.SuspendLayout();
-			this.groupBoxStatus.SuspendLayout();
-			this.tableLayoutPanel3.SuspendLayout();
-			this.tableLayoutPanelVariables.SuspendLayout();
-			this.SuspendLayout();
+			menuStrip1 = new System.Windows.Forms.MenuStrip();
+			fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			wikiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			statusStrip = new System.Windows.Forms.StatusStrip();
+			toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
+			toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+			groupBoxBarcode = new System.Windows.Forms.GroupBox();
+			tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+			textBoxBarcode = new System.Windows.Forms.TextBox();
+			tableLayoutPanelStatus = new System.Windows.Forms.TableLayoutPanel();
+			tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			textBox1 = new System.Windows.Forms.TextBox();
+			textBox2 = new System.Windows.Forms.TextBox();
+			textBox3 = new System.Windows.Forms.TextBox();
+			labelTimestamp = new System.Windows.Forms.Label();
+			label1 = new System.Windows.Forms.Label();
+			textBox4 = new System.Windows.Forms.TextBox();
+			textBox5 = new System.Windows.Forms.TextBox();
+			label2 = new System.Windows.Forms.Label();
+			textBox6 = new System.Windows.Forms.TextBox();
+			label3 = new System.Windows.Forms.Label();
+			labelUnitTimestamp = new System.Windows.Forms.Label();
+			labelUnitLatitude = new System.Windows.Forms.Label();
+			labelUnitLongitude = new System.Windows.Forms.Label();
+			label4 = new System.Windows.Forms.Label();
+			textBox7 = new System.Windows.Forms.TextBox();
+			textBox8 = new System.Windows.Forms.TextBox();
+			textBox9 = new System.Windows.Forms.TextBox();
+			textBox10 = new System.Windows.Forms.TextBox();
+			tableLayoutPanelTestSetupButtons = new System.Windows.Forms.TableLayoutPanel();
+			tableLayoutPanelStartStop = new System.Windows.Forms.TableLayoutPanel();
+			buttonRead = new System.Windows.Forms.Button();
+			buttonWrite = new System.Windows.Forms.Button();
+			groupBoxStatus = new System.Windows.Forms.GroupBox();
+			tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+			tableLayoutPanelVariables = new System.Windows.Forms.TableLayoutPanel();
+			textBoxSensorCounts = new System.Windows.Forms.TextBox();
+			labelSensorCounts = new System.Windows.Forms.Label();
+			labelDateProgrammed = new System.Windows.Forms.Label();
+			labelSerialNumber = new System.Windows.Forms.Label();
+			labelSensorType = new System.Windows.Forms.Label();
+			textBoxSerialNumber = new System.Windows.Forms.TextBox();
+			textBoxSensorType = new System.Windows.Forms.TextBox();
+			textBoxDateProgrammed = new System.Windows.Forms.TextBox();
+			menuStrip1.SuspendLayout();
+			statusStrip.SuspendLayout();
+			groupBoxBarcode.SuspendLayout();
+			tableLayoutPanel2.SuspendLayout();
+			tableLayoutPanel1.SuspendLayout();
+			tableLayoutPanelTestSetupButtons.SuspendLayout();
+			tableLayoutPanelStartStop.SuspendLayout();
+			groupBoxStatus.SuspendLayout();
+			tableLayoutPanel3.SuspendLayout();
+			tableLayoutPanelVariables.SuspendLayout();
+			SuspendLayout();
 			// 
 			// menuStrip1
 			// 
-			this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.helpToolStripMenuItem});
-			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 3, 0, 3);
-			this.menuStrip1.Size = new System.Drawing.Size(326, 30);
-			this.menuStrip1.TabIndex = 0;
-			this.menuStrip1.Text = "menuStrip1";
+			menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+			menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileToolStripMenuItem, helpToolStripMenuItem });
+			menuStrip1.Location = new System.Drawing.Point(0, 0);
+			menuStrip1.Name = "menuStrip1";
+			menuStrip1.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
+			menuStrip1.Size = new System.Drawing.Size(285, 24);
+			menuStrip1.TabIndex = 0;
+			menuStrip1.Text = "menuStrip1";
 			// 
 			// fileToolStripMenuItem
 			// 
-			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.exitToolStripMenuItem});
-			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-			this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
-			this.fileToolStripMenuItem.Text = "&File";
+			fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { exitToolStripMenuItem });
+			fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+			fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+			fileToolStripMenuItem.Text = "&File";
 			// 
 			// exitToolStripMenuItem
 			// 
-			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(116, 26);
-			this.exitToolStripMenuItem.Text = "&Exit";
-			this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
+			exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+			exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+			exitToolStripMenuItem.Text = "&Exit";
+			exitToolStripMenuItem.Click += ExitToolStripMenuItem_Click;
 			// 
 			// helpToolStripMenuItem
 			// 
-			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.wikiToolStripMenuItem,
-            this.aboutToolStripMenuItem});
-			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-			this.helpToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
-			this.helpToolStripMenuItem.Text = "&Help";
+			helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { wikiToolStripMenuItem, aboutToolStripMenuItem });
+			helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+			helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+			helpToolStripMenuItem.Text = "&Help";
 			// 
 			// wikiToolStripMenuItem
 			// 
-			this.wikiToolStripMenuItem.Name = "wikiToolStripMenuItem";
-			this.wikiToolStripMenuItem.Size = new System.Drawing.Size(133, 26);
-			this.wikiToolStripMenuItem.Text = "&Wiki";
+			wikiToolStripMenuItem.Name = "wikiToolStripMenuItem";
+			wikiToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+			wikiToolStripMenuItem.Text = "&Wiki";
 			// 
 			// aboutToolStripMenuItem
 			// 
-			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(133, 26);
-			this.aboutToolStripMenuItem.Text = "&About";
+			aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+			aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+			aboutToolStripMenuItem.Text = "&About";
 			// 
 			// statusStrip
 			// 
-			this.statusStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
-			this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripProgressBar,
-            this.toolStripStatusLabel});
-			this.statusStrip.Location = new System.Drawing.Point(0, 380);
-			this.statusStrip.Name = "statusStrip";
-			this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 18, 0);
-			this.statusStrip.Size = new System.Drawing.Size(326, 40);
-			this.statusStrip.TabIndex = 4;
-			this.statusStrip.Text = "statusStrip1";
+			statusStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+			statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripProgressBar, toolStripStatusLabel });
+			statusStrip.Location = new System.Drawing.Point(0, 283);
+			statusStrip.Name = "statusStrip";
+			statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
+			statusStrip.Size = new System.Drawing.Size(285, 32);
+			statusStrip.TabIndex = 4;
+			statusStrip.Text = "statusStrip1";
 			// 
 			// toolStripProgressBar
 			// 
-			this.toolStripProgressBar.Name = "toolStripProgressBar";
-			this.toolStripProgressBar.Size = new System.Drawing.Size(134, 32);
+			toolStripProgressBar.Name = "toolStripProgressBar";
+			toolStripProgressBar.Size = new System.Drawing.Size(117, 26);
 			// 
 			// toolStripStatusLabel
 			// 
-			this.toolStripStatusLabel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.toolStripStatusLabel.Name = "toolStripStatusLabel";
-			this.toolStripStatusLabel.Size = new System.Drawing.Size(77, 34);
-			this.toolStripStatusLabel.Text = "Ready...";
+			toolStripStatusLabel.Font = new System.Drawing.Font("Segoe UI", 12F);
+			toolStripStatusLabel.Name = "toolStripStatusLabel";
+			toolStripStatusLabel.Size = new System.Drawing.Size(62, 27);
+			toolStripStatusLabel.Text = "Ready...";
 			// 
 			// groupBoxBarcode
 			// 
-			this.groupBoxBarcode.AutoSize = true;
-			this.groupBoxBarcode.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.groupBoxBarcode.Controls.Add(this.tableLayoutPanel2);
-			this.groupBoxBarcode.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBoxBarcode.Location = new System.Drawing.Point(0, 30);
-			this.groupBoxBarcode.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.groupBoxBarcode.Name = "groupBoxBarcode";
-			this.groupBoxBarcode.Padding = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.groupBoxBarcode.Size = new System.Drawing.Size(326, 63);
-			this.groupBoxBarcode.TabIndex = 0;
-			this.groupBoxBarcode.TabStop = false;
-			this.groupBoxBarcode.Text = "Barcode";
+			groupBoxBarcode.AutoSize = true;
+			groupBoxBarcode.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			groupBoxBarcode.Controls.Add(tableLayoutPanel2);
+			groupBoxBarcode.Dock = System.Windows.Forms.DockStyle.Top;
+			groupBoxBarcode.Location = new System.Drawing.Point(0, 24);
+			groupBoxBarcode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			groupBoxBarcode.Name = "groupBoxBarcode";
+			groupBoxBarcode.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			groupBoxBarcode.Size = new System.Drawing.Size(285, 51);
+			groupBoxBarcode.TabIndex = 0;
+			groupBoxBarcode.TabStop = false;
+			groupBoxBarcode.Text = "Barcode";
 			// 
 			// tableLayoutPanel2
 			// 
-			this.tableLayoutPanel2.AutoSize = true;
-			this.tableLayoutPanel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutPanel2.ColumnCount = 1;
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 23F));
-			this.tableLayoutPanel2.Controls.Add(this.textBoxBarcode, 0, 0);
-			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
-			this.tableLayoutPanel2.Location = new System.Drawing.Point(5, 24);
-			this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-			this.tableLayoutPanel2.RowCount = 1;
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel2.Size = new System.Drawing.Size(316, 35);
-			this.tableLayoutPanel2.TabIndex = 1;
+			tableLayoutPanel2.AutoSize = true;
+			tableLayoutPanel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			tableLayoutPanel2.ColumnCount = 1;
+			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			tableLayoutPanel2.Controls.Add(textBoxBarcode, 0, 0);
+			tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
+			tableLayoutPanel2.Location = new System.Drawing.Point(4, 19);
+			tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			tableLayoutPanel2.Name = "tableLayoutPanel2";
+			tableLayoutPanel2.RowCount = 1;
+			tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanel2.Size = new System.Drawing.Size(277, 29);
+			tableLayoutPanel2.TabIndex = 1;
 			// 
 			// textBoxBarcode
 			// 
-			this.textBoxBarcode.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBoxBarcode.Location = new System.Drawing.Point(5, 4);
-			this.textBoxBarcode.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.textBoxBarcode.Name = "textBoxBarcode";
-			this.textBoxBarcode.Size = new System.Drawing.Size(306, 27);
-			this.textBoxBarcode.TabIndex = 5;
+			textBoxBarcode.Dock = System.Windows.Forms.DockStyle.Fill;
+			textBoxBarcode.Location = new System.Drawing.Point(4, 3);
+			textBoxBarcode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			textBoxBarcode.Name = "textBoxBarcode";
+			textBoxBarcode.Size = new System.Drawing.Size(269, 23);
+			textBoxBarcode.TabIndex = 5;
 			// 
 			// tableLayoutPanelStatus
 			// 
-			this.tableLayoutPanelStatus.ColumnCount = 1;
-			this.tableLayoutPanelStatus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanelStatus.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanelStatus.Location = new System.Drawing.Point(0, 0);
-			this.tableLayoutPanelStatus.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			this.tableLayoutPanelStatus.Name = "tableLayoutPanelStatus";
-			this.tableLayoutPanelStatus.RowCount = 1;
-			this.tableLayoutPanelStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanelStatus.Size = new System.Drawing.Size(200, 100);
-			this.tableLayoutPanelStatus.TabIndex = 0;
+			tableLayoutPanelStatus.ColumnCount = 1;
+			tableLayoutPanelStatus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			tableLayoutPanelStatus.Dock = System.Windows.Forms.DockStyle.Fill;
+			tableLayoutPanelStatus.Location = new System.Drawing.Point(0, 0);
+			tableLayoutPanelStatus.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			tableLayoutPanelStatus.Name = "tableLayoutPanelStatus";
+			tableLayoutPanelStatus.RowCount = 1;
+			tableLayoutPanelStatus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			tableLayoutPanelStatus.Size = new System.Drawing.Size(200, 100);
+			tableLayoutPanelStatus.TabIndex = 0;
 			// 
 			// tableLayoutPanel1
 			// 
-			this.tableLayoutPanel1.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.tableLayoutPanel1.AutoSize = true;
-			this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutPanel1.ColumnCount = 4;
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanel1.Controls.Add(this.textBox1, 3, 3);
-			this.tableLayoutPanel1.Controls.Add(this.textBox2, 3, 2);
-			this.tableLayoutPanel1.Controls.Add(this.textBox3, 3, 1);
-			this.tableLayoutPanel1.Controls.Add(this.labelTimestamp, 0, 0);
-			this.tableLayoutPanel1.Controls.Add(this.label1, 0, 1);
-			this.tableLayoutPanel1.Controls.Add(this.textBox4, 1, 0);
-			this.tableLayoutPanel1.Controls.Add(this.textBox5, 1, 1);
-			this.tableLayoutPanel1.Controls.Add(this.label2, 0, 2);
-			this.tableLayoutPanel1.Controls.Add(this.textBox6, 1, 2);
-			this.tableLayoutPanel1.Controls.Add(this.label3, 0, 3);
-			this.tableLayoutPanel1.Controls.Add(this.labelUnitTimestamp, 2, 0);
-			this.tableLayoutPanel1.Controls.Add(this.labelUnitLatitude, 2, 1);
-			this.tableLayoutPanel1.Controls.Add(this.labelUnitLongitude, 2, 2);
-			this.tableLayoutPanel1.Controls.Add(this.label4, 0, 4);
-			this.tableLayoutPanel1.Controls.Add(this.textBox7, 3, 0);
-			this.tableLayoutPanel1.Controls.Add(this.textBox8, 1, 3);
-			this.tableLayoutPanel1.Controls.Add(this.textBox9, 1, 4);
-			this.tableLayoutPanel1.Controls.Add(this.textBox10, 3, 4);
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(4, 3);
-			this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.RowCount = 5;
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(192, 145);
-			this.tableLayoutPanel1.TabIndex = 2;
+			tableLayoutPanel1.Anchor = System.Windows.Forms.AnchorStyles.None;
+			tableLayoutPanel1.AutoSize = true;
+			tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			tableLayoutPanel1.ColumnCount = 4;
+			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			tableLayoutPanel1.Controls.Add(textBox1, 3, 3);
+			tableLayoutPanel1.Controls.Add(textBox2, 3, 2);
+			tableLayoutPanel1.Controls.Add(textBox3, 3, 1);
+			tableLayoutPanel1.Controls.Add(labelTimestamp, 0, 0);
+			tableLayoutPanel1.Controls.Add(label1, 0, 1);
+			tableLayoutPanel1.Controls.Add(textBox4, 1, 0);
+			tableLayoutPanel1.Controls.Add(textBox5, 1, 1);
+			tableLayoutPanel1.Controls.Add(label2, 0, 2);
+			tableLayoutPanel1.Controls.Add(textBox6, 1, 2);
+			tableLayoutPanel1.Controls.Add(label3, 0, 3);
+			tableLayoutPanel1.Controls.Add(labelUnitTimestamp, 2, 0);
+			tableLayoutPanel1.Controls.Add(labelUnitLatitude, 2, 1);
+			tableLayoutPanel1.Controls.Add(labelUnitLongitude, 2, 2);
+			tableLayoutPanel1.Controls.Add(label4, 0, 4);
+			tableLayoutPanel1.Controls.Add(textBox7, 3, 0);
+			tableLayoutPanel1.Controls.Add(textBox8, 1, 3);
+			tableLayoutPanel1.Controls.Add(textBox9, 1, 4);
+			tableLayoutPanel1.Controls.Add(textBox10, 3, 4);
+			tableLayoutPanel1.Location = new System.Drawing.Point(4, 3);
+			tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			tableLayoutPanel1.Name = "tableLayoutPanel1";
+			tableLayoutPanel1.RowCount = 5;
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanel1.Size = new System.Drawing.Size(192, 145);
+			tableLayoutPanel1.TabIndex = 2;
 			// 
 			// textBox1
 			// 
-			this.textBox1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.textBox1.Location = new System.Drawing.Point(269, 102);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.ReadOnly = true;
-			this.textBox1.Size = new System.Drawing.Size(36, 27);
-			this.textBox1.TabIndex = 20;
-			this.textBox1.TabStop = false;
-			this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			textBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+			textBox1.Location = new System.Drawing.Point(251, 90);
+			textBox1.Name = "textBox1";
+			textBox1.ReadOnly = true;
+			textBox1.Size = new System.Drawing.Size(36, 23);
+			textBox1.TabIndex = 20;
+			textBox1.TabStop = false;
+			textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// textBox2
 			// 
-			this.textBox2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.textBox2.Location = new System.Drawing.Point(269, 69);
-			this.textBox2.Name = "textBox2";
-			this.textBox2.ReadOnly = true;
-			this.textBox2.Size = new System.Drawing.Size(36, 27);
-			this.textBox2.TabIndex = 19;
-			this.textBox2.TabStop = false;
-			this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			textBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
+			textBox2.Location = new System.Drawing.Point(251, 61);
+			textBox2.Name = "textBox2";
+			textBox2.ReadOnly = true;
+			textBox2.Size = new System.Drawing.Size(36, 23);
+			textBox2.TabIndex = 19;
+			textBox2.TabStop = false;
+			textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// textBox3
 			// 
-			this.textBox3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.textBox3.Location = new System.Drawing.Point(269, 36);
-			this.textBox3.Name = "textBox3";
-			this.textBox3.ReadOnly = true;
-			this.textBox3.Size = new System.Drawing.Size(36, 27);
-			this.textBox3.TabIndex = 18;
-			this.textBox3.TabStop = false;
-			this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			textBox3.Font = new System.Drawing.Font("Segoe UI", 9F);
+			textBox3.Location = new System.Drawing.Point(251, 32);
+			textBox3.Name = "textBox3";
+			textBox3.ReadOnly = true;
+			textBox3.Size = new System.Drawing.Size(36, 23);
+			textBox3.TabIndex = 18;
+			textBox3.TabStop = false;
+			textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// labelTimestamp
 			// 
-			this.labelTimestamp.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelTimestamp.AutoSize = true;
-			this.labelTimestamp.Location = new System.Drawing.Point(4, 6);
-			this.labelTimestamp.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.labelTimestamp.Name = "labelTimestamp";
-			this.labelTimestamp.Size = new System.Drawing.Size(83, 20);
-			this.labelTimestamp.TabIndex = 0;
-			this.labelTimestamp.Text = "Timestamp";
+			labelTimestamp.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			labelTimestamp.AutoSize = true;
+			labelTimestamp.Location = new System.Drawing.Point(4, 7);
+			labelTimestamp.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			labelTimestamp.Name = "labelTimestamp";
+			labelTimestamp.Size = new System.Drawing.Size(67, 15);
+			labelTimestamp.TabIndex = 0;
+			labelTimestamp.Text = "Timestamp";
 			// 
 			// label1
 			// 
-			this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(4, 39);
-			this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(63, 20);
-			this.label1.TabIndex = 1;
-			this.label1.Text = "Latitude";
+			label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			label1.AutoSize = true;
+			label1.Location = new System.Drawing.Point(4, 36);
+			label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			label1.Name = "label1";
+			label1.Size = new System.Drawing.Size(50, 15);
+			label1.TabIndex = 1;
+			label1.Text = "Latitude";
 			// 
 			// textBox4
 			// 
-			this.textBox4.Location = new System.Drawing.Point(95, 3);
-			this.textBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			this.textBox4.Name = "textBox4";
-			this.textBox4.ReadOnly = true;
-			this.textBox4.Size = new System.Drawing.Size(116, 27);
-			this.textBox4.TabIndex = 2;
-			this.textBox4.TabStop = false;
+			textBox4.Location = new System.Drawing.Point(79, 3);
+			textBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			textBox4.Name = "textBox4";
+			textBox4.ReadOnly = true;
+			textBox4.Size = new System.Drawing.Size(116, 23);
+			textBox4.TabIndex = 2;
+			textBox4.TabStop = false;
 			// 
 			// textBox5
 			// 
-			this.textBox5.Location = new System.Drawing.Point(95, 36);
-			this.textBox5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			this.textBox5.Name = "textBox5";
-			this.textBox5.ReadOnly = true;
-			this.textBox5.Size = new System.Drawing.Size(116, 27);
-			this.textBox5.TabIndex = 3;
-			this.textBox5.TabStop = false;
+			textBox5.Location = new System.Drawing.Point(79, 32);
+			textBox5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			textBox5.Name = "textBox5";
+			textBox5.ReadOnly = true;
+			textBox5.Size = new System.Drawing.Size(116, 23);
+			textBox5.TabIndex = 3;
+			textBox5.TabStop = false;
 			// 
 			// label2
 			// 
-			this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(4, 72);
-			this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(76, 20);
-			this.label2.TabIndex = 4;
-			this.label2.Text = "Longitude";
+			label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			label2.AutoSize = true;
+			label2.Location = new System.Drawing.Point(4, 65);
+			label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			label2.Name = "label2";
+			label2.Size = new System.Drawing.Size(61, 15);
+			label2.TabIndex = 4;
+			label2.Text = "Longitude";
 			// 
 			// textBox6
 			// 
-			this.textBox6.Location = new System.Drawing.Point(95, 69);
-			this.textBox6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			this.textBox6.Name = "textBox6";
-			this.textBox6.ReadOnly = true;
-			this.textBox6.Size = new System.Drawing.Size(116, 27);
-			this.textBox6.TabIndex = 5;
-			this.textBox6.TabStop = false;
+			textBox6.Location = new System.Drawing.Point(79, 61);
+			textBox6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			textBox6.Name = "textBox6";
+			textBox6.ReadOnly = true;
+			textBox6.Size = new System.Drawing.Size(116, 23);
+			textBox6.TabIndex = 5;
+			textBox6.TabStop = false;
 			// 
 			// label3
 			// 
-			this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(4, 105);
-			this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(62, 20);
-			this.label3.TabIndex = 6;
-			this.label3.Text = "Fix Type";
+			label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			label3.AutoSize = true;
+			label3.Location = new System.Drawing.Point(4, 94);
+			label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			label3.Name = "label3";
+			label3.Size = new System.Drawing.Size(49, 15);
+			label3.TabIndex = 6;
+			label3.Text = "Fix Type";
 			// 
 			// labelUnitTimestamp
 			// 
-			this.labelUnitTimestamp.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelUnitTimestamp.Location = new System.Drawing.Point(219, 9);
-			this.labelUnitTimestamp.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.labelUnitTimestamp.Name = "labelUnitTimestamp";
-			this.labelUnitTimestamp.Size = new System.Drawing.Size(41, 15);
-			this.labelUnitTimestamp.TabIndex = 0;
-			this.labelUnitTimestamp.Text = "UTC Time";
+			labelUnitTimestamp.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			labelUnitTimestamp.Location = new System.Drawing.Point(203, 7);
+			labelUnitTimestamp.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			labelUnitTimestamp.Name = "labelUnitTimestamp";
+			labelUnitTimestamp.Size = new System.Drawing.Size(41, 15);
+			labelUnitTimestamp.TabIndex = 0;
+			labelUnitTimestamp.Text = "UTC Time";
 			// 
 			// labelUnitLatitude
 			// 
-			this.labelUnitLatitude.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelUnitLatitude.AutoSize = true;
-			this.labelUnitLatitude.Location = new System.Drawing.Point(219, 39);
-			this.labelUnitLatitude.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.labelUnitLatitude.Name = "labelUnitLatitude";
-			this.labelUnitLatitude.Size = new System.Drawing.Size(40, 20);
-			this.labelUnitLatitude.TabIndex = 11;
-			this.labelUnitLatitude.Text = "°N/S";
+			labelUnitLatitude.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			labelUnitLatitude.AutoSize = true;
+			labelUnitLatitude.Location = new System.Drawing.Point(203, 36);
+			labelUnitLatitude.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			labelUnitLatitude.Name = "labelUnitLatitude";
+			labelUnitLatitude.Size = new System.Drawing.Size(32, 15);
+			labelUnitLatitude.TabIndex = 11;
+			labelUnitLatitude.Text = "°N/S";
 			// 
 			// labelUnitLongitude
 			// 
-			this.labelUnitLongitude.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelUnitLongitude.AutoSize = true;
-			this.labelUnitLongitude.Location = new System.Drawing.Point(219, 72);
-			this.labelUnitLongitude.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.labelUnitLongitude.Name = "labelUnitLongitude";
-			this.labelUnitLongitude.Size = new System.Drawing.Size(43, 20);
-			this.labelUnitLongitude.TabIndex = 12;
-			this.labelUnitLongitude.Text = "°E/W";
+			labelUnitLongitude.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			labelUnitLongitude.AutoSize = true;
+			labelUnitLongitude.Location = new System.Drawing.Point(203, 65);
+			labelUnitLongitude.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			labelUnitLongitude.Name = "labelUnitLongitude";
+			labelUnitLongitude.Size = new System.Drawing.Size(34, 15);
+			labelUnitLongitude.TabIndex = 12;
+			labelUnitLongitude.Text = "°E/W";
 			// 
 			// label4
 			// 
-			this.label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(4, 138);
-			this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(69, 20);
-			this.label4.TabIndex = 15;
-			this.label4.Text = "Satellites";
+			label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			label4.AutoSize = true;
+			label4.Location = new System.Drawing.Point(4, 123);
+			label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			label4.Name = "label4";
+			label4.Size = new System.Drawing.Size(53, 15);
+			label4.TabIndex = 15;
+			label4.Text = "Satellites";
 			// 
 			// textBox7
 			// 
-			this.textBox7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.textBox7.Location = new System.Drawing.Point(269, 3);
-			this.textBox7.Name = "textBox7";
-			this.textBox7.ReadOnly = true;
-			this.textBox7.Size = new System.Drawing.Size(36, 27);
-			this.textBox7.TabIndex = 17;
-			this.textBox7.TabStop = false;
-			this.textBox7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			textBox7.Font = new System.Drawing.Font("Segoe UI", 9F);
+			textBox7.Location = new System.Drawing.Point(251, 3);
+			textBox7.Name = "textBox7";
+			textBox7.ReadOnly = true;
+			textBox7.Size = new System.Drawing.Size(36, 23);
+			textBox7.TabIndex = 17;
+			textBox7.TabStop = false;
+			textBox7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// textBox8
 			// 
-			this.textBox8.Location = new System.Drawing.Point(95, 102);
-			this.textBox8.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			this.textBox8.Name = "textBox8";
-			this.textBox8.ReadOnly = true;
-			this.textBox8.Size = new System.Drawing.Size(116, 27);
-			this.textBox8.TabIndex = 7;
-			this.textBox8.TabStop = false;
+			textBox8.Location = new System.Drawing.Point(79, 90);
+			textBox8.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			textBox8.Name = "textBox8";
+			textBox8.ReadOnly = true;
+			textBox8.Size = new System.Drawing.Size(116, 23);
+			textBox8.TabIndex = 7;
+			textBox8.TabStop = false;
 			// 
 			// textBox9
 			// 
-			this.textBox9.Location = new System.Drawing.Point(95, 135);
-			this.textBox9.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			this.textBox9.Name = "textBox9";
-			this.textBox9.ReadOnly = true;
-			this.textBox9.Size = new System.Drawing.Size(116, 27);
-			this.textBox9.TabIndex = 22;
-			this.textBox9.TabStop = false;
+			textBox9.Location = new System.Drawing.Point(79, 119);
+			textBox9.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			textBox9.Name = "textBox9";
+			textBox9.ReadOnly = true;
+			textBox9.Size = new System.Drawing.Size(116, 23);
+			textBox9.TabIndex = 22;
+			textBox9.TabStop = false;
 			// 
 			// textBox10
 			// 
-			this.textBox10.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.textBox10.Location = new System.Drawing.Point(269, 135);
-			this.textBox10.Name = "textBox10";
-			this.textBox10.ReadOnly = true;
-			this.textBox10.Size = new System.Drawing.Size(36, 27);
-			this.textBox10.TabIndex = 23;
-			this.textBox10.TabStop = false;
-			this.textBox10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			textBox10.Font = new System.Drawing.Font("Segoe UI", 9F);
+			textBox10.Location = new System.Drawing.Point(251, 119);
+			textBox10.Name = "textBox10";
+			textBox10.ReadOnly = true;
+			textBox10.Size = new System.Drawing.Size(36, 23);
+			textBox10.TabIndex = 23;
+			textBox10.TabStop = false;
+			textBox10.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// tableLayoutPanelTestSetupButtons
 			// 
-			this.tableLayoutPanelTestSetupButtons.AutoSize = true;
-			this.tableLayoutPanelTestSetupButtons.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutPanelTestSetupButtons.ColumnCount = 1;
-			this.tableLayoutPanelTestSetupButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanelTestSetupButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 23F));
-			this.tableLayoutPanelTestSetupButtons.Controls.Add(this.tableLayoutPanelStartStop, 0, 0);
-			this.tableLayoutPanelTestSetupButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.tableLayoutPanelTestSetupButtons.Location = new System.Drawing.Point(0, 328);
-			this.tableLayoutPanelTestSetupButtons.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.tableLayoutPanelTestSetupButtons.Name = "tableLayoutPanelTestSetupButtons";
-			this.tableLayoutPanelTestSetupButtons.RowCount = 1;
-			this.tableLayoutPanelTestSetupButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanelTestSetupButtons.Size = new System.Drawing.Size(326, 52);
-			this.tableLayoutPanelTestSetupButtons.TabIndex = 17;
+			tableLayoutPanelTestSetupButtons.AutoSize = true;
+			tableLayoutPanelTestSetupButtons.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			tableLayoutPanelTestSetupButtons.ColumnCount = 1;
+			tableLayoutPanelTestSetupButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanelTestSetupButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			tableLayoutPanelTestSetupButtons.Controls.Add(tableLayoutPanelStartStop, 0, 0);
+			tableLayoutPanelTestSetupButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
+			tableLayoutPanelTestSetupButtons.Location = new System.Drawing.Point(0, 244);
+			tableLayoutPanelTestSetupButtons.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			tableLayoutPanelTestSetupButtons.Name = "tableLayoutPanelTestSetupButtons";
+			tableLayoutPanelTestSetupButtons.RowCount = 1;
+			tableLayoutPanelTestSetupButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanelTestSetupButtons.Size = new System.Drawing.Size(285, 39);
+			tableLayoutPanelTestSetupButtons.TabIndex = 17;
 			// 
 			// tableLayoutPanelStartStop
 			// 
-			this.tableLayoutPanelStartStop.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.tableLayoutPanelStartStop.AutoSize = true;
-			this.tableLayoutPanelStartStop.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutPanelStartStop.ColumnCount = 2;
-			this.tableLayoutPanelStartStop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanelStartStop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanelStartStop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 26F));
-			this.tableLayoutPanelStartStop.Controls.Add(this.buttonRead, 0, 0);
-			this.tableLayoutPanelStartStop.Controls.Add(this.buttonWrite, 1, 0);
-			this.tableLayoutPanelStartStop.Location = new System.Drawing.Point(52, 4);
-			this.tableLayoutPanelStartStop.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.tableLayoutPanelStartStop.Name = "tableLayoutPanelStartStop";
-			this.tableLayoutPanelStartStop.RowCount = 1;
-			this.tableLayoutPanelStartStop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanelStartStop.Size = new System.Drawing.Size(222, 44);
-			this.tableLayoutPanelStartStop.TabIndex = 17;
+			tableLayoutPanelStartStop.Anchor = System.Windows.Forms.AnchorStyles.None;
+			tableLayoutPanelStartStop.AutoSize = true;
+			tableLayoutPanelStartStop.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			tableLayoutPanelStartStop.ColumnCount = 2;
+			tableLayoutPanelStartStop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			tableLayoutPanelStartStop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			tableLayoutPanelStartStop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 23F));
+			tableLayoutPanelStartStop.Controls.Add(buttonRead, 0, 0);
+			tableLayoutPanelStartStop.Controls.Add(buttonWrite, 1, 0);
+			tableLayoutPanelStartStop.Location = new System.Drawing.Point(46, 3);
+			tableLayoutPanelStartStop.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			tableLayoutPanelStartStop.Name = "tableLayoutPanelStartStop";
+			tableLayoutPanelStartStop.RowCount = 1;
+			tableLayoutPanelStartStop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			tableLayoutPanelStartStop.Size = new System.Drawing.Size(192, 33);
+			tableLayoutPanelStartStop.TabIndex = 17;
 			// 
 			// buttonRead
 			// 
-			this.buttonRead.Location = new System.Drawing.Point(5, 4);
-			this.buttonRead.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.buttonRead.Name = "buttonRead";
-			this.buttonRead.Size = new System.Drawing.Size(101, 36);
-			this.buttonRead.TabIndex = 3;
-			this.buttonRead.Text = "Read";
-			this.buttonRead.UseVisualStyleBackColor = true;
-			this.buttonRead.Click += new System.EventHandler(this.ButtonRead_Click);
+			buttonRead.Location = new System.Drawing.Point(4, 3);
+			buttonRead.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			buttonRead.Name = "buttonRead";
+			buttonRead.Size = new System.Drawing.Size(88, 27);
+			buttonRead.TabIndex = 3;
+			buttonRead.Text = "Read";
+			buttonRead.UseVisualStyleBackColor = true;
+			buttonRead.Click += ButtonRead_Click;
 			// 
 			// buttonWrite
 			// 
-			this.buttonWrite.Location = new System.Drawing.Point(116, 4);
-			this.buttonWrite.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.buttonWrite.Name = "buttonWrite";
-			this.buttonWrite.Size = new System.Drawing.Size(101, 36);
-			this.buttonWrite.TabIndex = 4;
-			this.buttonWrite.Text = "Write";
-			this.buttonWrite.UseVisualStyleBackColor = true;
-			this.buttonWrite.Click += new System.EventHandler(this.ButtonWrite_Click);
+			buttonWrite.Location = new System.Drawing.Point(100, 3);
+			buttonWrite.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			buttonWrite.Name = "buttonWrite";
+			buttonWrite.Size = new System.Drawing.Size(88, 27);
+			buttonWrite.TabIndex = 4;
+			buttonWrite.Text = "Write";
+			buttonWrite.UseVisualStyleBackColor = true;
+			buttonWrite.Click += ButtonWrite_Click;
 			// 
 			// groupBoxStatus
 			// 
-			this.groupBoxStatus.AutoSize = true;
-			this.groupBoxStatus.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.groupBoxStatus.Controls.Add(this.tableLayoutPanel3);
-			this.groupBoxStatus.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBoxStatus.Location = new System.Drawing.Point(0, 93);
-			this.groupBoxStatus.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.groupBoxStatus.Name = "groupBoxStatus";
-			this.groupBoxStatus.Padding = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.groupBoxStatus.Size = new System.Drawing.Size(326, 235);
-			this.groupBoxStatus.TabIndex = 18;
-			this.groupBoxStatus.TabStop = false;
-			this.groupBoxStatus.Text = "Status";
+			groupBoxStatus.AutoSize = true;
+			groupBoxStatus.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			groupBoxStatus.Controls.Add(tableLayoutPanel3);
+			groupBoxStatus.Dock = System.Windows.Forms.DockStyle.Fill;
+			groupBoxStatus.Location = new System.Drawing.Point(0, 75);
+			groupBoxStatus.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			groupBoxStatus.Name = "groupBoxStatus";
+			groupBoxStatus.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			groupBoxStatus.Size = new System.Drawing.Size(285, 169);
+			groupBoxStatus.TabIndex = 18;
+			groupBoxStatus.TabStop = false;
+			groupBoxStatus.Text = "Status";
 			// 
 			// tableLayoutPanel3
 			// 
-			this.tableLayoutPanel3.ColumnCount = 1;
-			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanelVariables, 0, 0);
-			this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel3.Location = new System.Drawing.Point(5, 24);
-			this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-			this.tableLayoutPanel3.RowCount = 1;
-			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 196F));
-			this.tableLayoutPanel3.Size = new System.Drawing.Size(316, 207);
-			this.tableLayoutPanel3.TabIndex = 1;
+			tableLayoutPanel3.ColumnCount = 1;
+			tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			tableLayoutPanel3.Controls.Add(tableLayoutPanelVariables, 0, 0);
+			tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+			tableLayoutPanel3.Location = new System.Drawing.Point(4, 19);
+			tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			tableLayoutPanel3.Name = "tableLayoutPanel3";
+			tableLayoutPanel3.RowCount = 1;
+			tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 155F));
+			tableLayoutPanel3.Size = new System.Drawing.Size(277, 147);
+			tableLayoutPanel3.TabIndex = 1;
 			// 
 			// tableLayoutPanelVariables
 			// 
-			this.tableLayoutPanelVariables.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.tableLayoutPanelVariables.AutoSize = true;
-			this.tableLayoutPanelVariables.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.tableLayoutPanelVariables.ColumnCount = 2;
-			this.tableLayoutPanelVariables.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanelVariables.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-			this.tableLayoutPanelVariables.Controls.Add(this.labelDateProgrammed, 0, 2);
-			this.tableLayoutPanelVariables.Controls.Add(this.labelSerialNumber, 0, 0);
-			this.tableLayoutPanelVariables.Controls.Add(this.labelSensorType, 0, 1);
-			this.tableLayoutPanelVariables.Controls.Add(this.textBoxSerialNumber, 1, 0);
-			this.tableLayoutPanelVariables.Controls.Add(this.textBoxSensorType, 1, 1);
-			this.tableLayoutPanelVariables.Controls.Add(this.textBoxDateProgrammed, 1, 2);
-			this.tableLayoutPanelVariables.Location = new System.Drawing.Point(16, 51);
-			this.tableLayoutPanelVariables.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.tableLayoutPanelVariables.Name = "tableLayoutPanelVariables";
-			this.tableLayoutPanelVariables.RowCount = 3;
-			this.tableLayoutPanelVariables.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelVariables.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelVariables.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanelVariables.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanelVariables.Size = new System.Drawing.Size(284, 105);
-			this.tableLayoutPanelVariables.TabIndex = 2;
+			tableLayoutPanelVariables.Anchor = System.Windows.Forms.AnchorStyles.None;
+			tableLayoutPanelVariables.AutoSize = true;
+			tableLayoutPanelVariables.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			tableLayoutPanelVariables.ColumnCount = 2;
+			tableLayoutPanelVariables.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			tableLayoutPanelVariables.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+			tableLayoutPanelVariables.Controls.Add(textBoxSensorCounts, 1, 3);
+			tableLayoutPanelVariables.Controls.Add(labelSensorCounts, 0, 3);
+			tableLayoutPanelVariables.Controls.Add(labelDateProgrammed, 0, 2);
+			tableLayoutPanelVariables.Controls.Add(labelSerialNumber, 0, 0);
+			tableLayoutPanelVariables.Controls.Add(labelSensorType, 0, 1);
+			tableLayoutPanelVariables.Controls.Add(textBoxSerialNumber, 1, 0);
+			tableLayoutPanelVariables.Controls.Add(textBoxSensorType, 1, 1);
+			tableLayoutPanelVariables.Controls.Add(textBoxDateProgrammed, 1, 2);
+			tableLayoutPanelVariables.Location = new System.Drawing.Point(20, 15);
+			tableLayoutPanelVariables.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			tableLayoutPanelVariables.Name = "tableLayoutPanelVariables";
+			tableLayoutPanelVariables.RowCount = 4;
+			tableLayoutPanelVariables.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanelVariables.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanelVariables.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanelVariables.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			tableLayoutPanelVariables.Size = new System.Drawing.Size(236, 116);
+			tableLayoutPanelVariables.TabIndex = 2;
+			// 
+			// textBoxSensorCounts
+			// 
+			textBoxSensorCounts.Location = new System.Drawing.Point(116, 90);
+			textBoxSensorCounts.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			textBoxSensorCounts.Name = "textBoxSensorCounts";
+			textBoxSensorCounts.ReadOnly = true;
+			textBoxSensorCounts.Size = new System.Drawing.Size(116, 23);
+			textBoxSensorCounts.TabIndex = 23;
+			textBoxSensorCounts.TabStop = false;
+			// 
+			// labelSensorCounts
+			// 
+			labelSensorCounts.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			labelSensorCounts.AutoSize = true;
+			labelSensorCounts.Location = new System.Drawing.Point(4, 94);
+			labelSensorCounts.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			labelSensorCounts.Name = "labelSensorCounts";
+			labelSensorCounts.Size = new System.Drawing.Size(83, 15);
+			labelSensorCounts.TabIndex = 22;
+			labelSensorCounts.Text = "Sensor Counts";
 			// 
 			// labelDateProgrammed
 			// 
-			this.labelDateProgrammed.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelDateProgrammed.AutoSize = true;
-			this.labelDateProgrammed.Location = new System.Drawing.Point(5, 77);
-			this.labelDateProgrammed.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-			this.labelDateProgrammed.Name = "labelDateProgrammed";
-			this.labelDateProgrammed.Size = new System.Drawing.Size(132, 20);
-			this.labelDateProgrammed.TabIndex = 20;
-			this.labelDateProgrammed.Text = "Date Programmed";
+			labelDateProgrammed.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			labelDateProgrammed.AutoSize = true;
+			labelDateProgrammed.Location = new System.Drawing.Point(4, 65);
+			labelDateProgrammed.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			labelDateProgrammed.Name = "labelDateProgrammed";
+			labelDateProgrammed.Size = new System.Drawing.Size(104, 15);
+			labelDateProgrammed.TabIndex = 20;
+			labelDateProgrammed.Text = "Date Programmed";
 			// 
 			// labelSerialNumber
 			// 
-			this.labelSerialNumber.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelSerialNumber.AutoSize = true;
-			this.labelSerialNumber.Location = new System.Drawing.Point(5, 7);
-			this.labelSerialNumber.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-			this.labelSerialNumber.Name = "labelSerialNumber";
-			this.labelSerialNumber.Size = new System.Drawing.Size(104, 20);
-			this.labelSerialNumber.TabIndex = 0;
-			this.labelSerialNumber.Text = "Serial Number";
+			labelSerialNumber.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			labelSerialNumber.AutoSize = true;
+			labelSerialNumber.Location = new System.Drawing.Point(4, 7);
+			labelSerialNumber.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			labelSerialNumber.Name = "labelSerialNumber";
+			labelSerialNumber.Size = new System.Drawing.Size(82, 15);
+			labelSerialNumber.TabIndex = 0;
+			labelSerialNumber.Text = "Serial Number";
 			// 
 			// labelSensorType
 			// 
-			this.labelSensorType.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelSensorType.AutoSize = true;
-			this.labelSensorType.Location = new System.Drawing.Point(5, 42);
-			this.labelSensorType.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-			this.labelSensorType.Name = "labelSensorType";
-			this.labelSensorType.Size = new System.Drawing.Size(88, 20);
-			this.labelSensorType.TabIndex = 1;
-			this.labelSensorType.Text = "Sensor Type";
+			labelSensorType.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			labelSensorType.AutoSize = true;
+			labelSensorType.Location = new System.Drawing.Point(4, 36);
+			labelSensorType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			labelSensorType.Name = "labelSensorType";
+			labelSensorType.Size = new System.Drawing.Size(70, 15);
+			labelSensorType.TabIndex = 1;
+			labelSensorType.Text = "Sensor Type";
 			// 
 			// textBoxSerialNumber
 			// 
-			this.textBoxSerialNumber.Location = new System.Drawing.Point(147, 4);
-			this.textBoxSerialNumber.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.textBoxSerialNumber.Name = "textBoxSerialNumber";
-			this.textBoxSerialNumber.ReadOnly = true;
-			this.textBoxSerialNumber.Size = new System.Drawing.Size(132, 27);
-			this.textBoxSerialNumber.TabIndex = 2;
-			this.textBoxSerialNumber.TabStop = false;
+			textBoxSerialNumber.Location = new System.Drawing.Point(116, 3);
+			textBoxSerialNumber.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			textBoxSerialNumber.Name = "textBoxSerialNumber";
+			textBoxSerialNumber.ReadOnly = true;
+			textBoxSerialNumber.Size = new System.Drawing.Size(116, 23);
+			textBoxSerialNumber.TabIndex = 2;
+			textBoxSerialNumber.TabStop = false;
 			// 
 			// textBoxSensorType
 			// 
-			this.textBoxSensorType.Location = new System.Drawing.Point(147, 39);
-			this.textBoxSensorType.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.textBoxSensorType.Name = "textBoxSensorType";
-			this.textBoxSensorType.ReadOnly = true;
-			this.textBoxSensorType.Size = new System.Drawing.Size(132, 27);
-			this.textBoxSensorType.TabIndex = 3;
-			this.textBoxSensorType.TabStop = false;
+			textBoxSensorType.Location = new System.Drawing.Point(116, 32);
+			textBoxSensorType.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			textBoxSensorType.Name = "textBoxSensorType";
+			textBoxSensorType.ReadOnly = true;
+			textBoxSensorType.Size = new System.Drawing.Size(116, 23);
+			textBoxSensorType.TabIndex = 3;
+			textBoxSensorType.TabStop = false;
 			// 
 			// textBoxDateProgrammed
 			// 
-			this.textBoxDateProgrammed.Location = new System.Drawing.Point(147, 74);
-			this.textBoxDateProgrammed.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.textBoxDateProgrammed.Name = "textBoxDateProgrammed";
-			this.textBoxDateProgrammed.ReadOnly = true;
-			this.textBoxDateProgrammed.Size = new System.Drawing.Size(132, 27);
-			this.textBoxDateProgrammed.TabIndex = 21;
-			this.textBoxDateProgrammed.TabStop = false;
+			textBoxDateProgrammed.Location = new System.Drawing.Point(116, 61);
+			textBoxDateProgrammed.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			textBoxDateProgrammed.Name = "textBoxDateProgrammed";
+			textBoxDateProgrammed.ReadOnly = true;
+			textBoxDateProgrammed.Size = new System.Drawing.Size(116, 23);
+			textBoxDateProgrammed.TabIndex = 21;
+			textBoxDateProgrammed.TabStop = false;
 			// 
 			// FormProgrammer
 			// 
-			this.AcceptButton = this.buttonWrite;
-			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(326, 420);
-			this.Controls.Add(this.groupBoxStatus);
-			this.Controls.Add(this.tableLayoutPanelTestSetupButtons);
-			this.Controls.Add(this.groupBoxBarcode);
-			this.Controls.Add(this.statusStrip);
-			this.Controls.Add(this.menuStrip1);
-			this.MainMenuStrip = this.menuStrip1;
-			this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-			this.Name = "FormProgrammer";
-			this.Text = "Smart Sensor";
-			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormProgrammer_FormClosed);
-			this.menuStrip1.ResumeLayout(false);
-			this.menuStrip1.PerformLayout();
-			this.statusStrip.ResumeLayout(false);
-			this.statusStrip.PerformLayout();
-			this.groupBoxBarcode.ResumeLayout(false);
-			this.groupBoxBarcode.PerformLayout();
-			this.tableLayoutPanel2.ResumeLayout(false);
-			this.tableLayoutPanel2.PerformLayout();
-			this.tableLayoutPanel1.ResumeLayout(false);
-			this.tableLayoutPanel1.PerformLayout();
-			this.tableLayoutPanelTestSetupButtons.ResumeLayout(false);
-			this.tableLayoutPanelTestSetupButtons.PerformLayout();
-			this.tableLayoutPanelStartStop.ResumeLayout(false);
-			this.groupBoxStatus.ResumeLayout(false);
-			this.tableLayoutPanel3.ResumeLayout(false);
-			this.tableLayoutPanel3.PerformLayout();
-			this.tableLayoutPanelVariables.ResumeLayout(false);
-			this.tableLayoutPanelVariables.PerformLayout();
-			this.ResumeLayout(false);
-			this.PerformLayout();
+			AcceptButton = buttonWrite;
+			AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+			AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			ClientSize = new System.Drawing.Size(285, 315);
+			Controls.Add(groupBoxStatus);
+			Controls.Add(tableLayoutPanelTestSetupButtons);
+			Controls.Add(groupBoxBarcode);
+			Controls.Add(statusStrip);
+			Controls.Add(menuStrip1);
+			MainMenuStrip = menuStrip1;
+			Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+			Name = "FormProgrammer";
+			Text = "Smart Sensor";
+			FormClosed += FormProgrammer_FormClosed;
+			Load += FormProgrammer_Load;
+			menuStrip1.ResumeLayout(false);
+			menuStrip1.PerformLayout();
+			statusStrip.ResumeLayout(false);
+			statusStrip.PerformLayout();
+			groupBoxBarcode.ResumeLayout(false);
+			groupBoxBarcode.PerformLayout();
+			tableLayoutPanel2.ResumeLayout(false);
+			tableLayoutPanel2.PerformLayout();
+			tableLayoutPanel1.ResumeLayout(false);
+			tableLayoutPanel1.PerformLayout();
+			tableLayoutPanelTestSetupButtons.ResumeLayout(false);
+			tableLayoutPanelTestSetupButtons.PerformLayout();
+			tableLayoutPanelStartStop.ResumeLayout(false);
+			groupBoxStatus.ResumeLayout(false);
+			tableLayoutPanel3.ResumeLayout(false);
+			tableLayoutPanel3.PerformLayout();
+			tableLayoutPanelVariables.ResumeLayout(false);
+			tableLayoutPanelVariables.PerformLayout();
+			ResumeLayout(false);
+			PerformLayout();
 
 		}
 
@@ -708,6 +727,8 @@ namespace Sensit.App.Programmer
 		private System.Windows.Forms.TextBox textBoxSensorType;
 		private System.Windows.Forms.Label labelDateProgrammed;
 		private System.Windows.Forms.TextBox textBoxDateProgrammed;
+		private System.Windows.Forms.TextBox textBoxSensorCounts;
+		private System.Windows.Forms.Label labelSensorCounts;
 	}
 }
 

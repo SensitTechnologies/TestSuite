@@ -931,33 +931,33 @@
 			// newToolStripMenuItem
 			// 
 			newToolStripMenuItem.Name = "newToolStripMenuItem";
-			newToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+			newToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			newToolStripMenuItem.Text = "&New";
 			newToolStripMenuItem.Click += NewToolStripMenuItem_Click;
 			// 
 			// openToolStripMenuItem
 			// 
 			openToolStripMenuItem.Name = "openToolStripMenuItem";
-			openToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+			openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			openToolStripMenuItem.Text = "&Open...";
 			openToolStripMenuItem.Click += OpenToolStripMenuItem_Click;
 			// 
 			// saveToolStripMenuItem
 			// 
 			saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-			saveToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+			saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			saveToolStripMenuItem.Text = "&Save As...";
 			saveToolStripMenuItem.Click += SaveAsToolStripMenuItem_Click;
 			// 
 			// toolStripSeparator
 			// 
 			toolStripSeparator.Name = "toolStripSeparator";
-			toolStripSeparator.Size = new System.Drawing.Size(120, 6);
+			toolStripSeparator.Size = new System.Drawing.Size(177, 6);
 			// 
 			// exitToolStripMenuItem
 			// 
 			exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			exitToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+			exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			exitToolStripMenuItem.Text = "&Exit";
 			exitToolStripMenuItem.Click += ExitToolStripMenuItem_Click;
 			// 
@@ -965,7 +965,7 @@
 			// 
 			testToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { startToolStripMenuItem, pauseToolStripMenuItem, stopToolStripMenuItem });
 			testToolStripMenuItem.Name = "testToolStripMenuItem";
-			testToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+			testToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
 			testToolStripMenuItem.Text = "&Test";
 			// 
 			// startToolStripMenuItem

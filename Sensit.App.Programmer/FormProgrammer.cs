@@ -2,14 +2,21 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
+using System.Runtime.Versioning;
 using System.Windows.Forms;
 using Sensit.TestSDK.Devices;
 using Sensit.TestSDK.Exceptions;
+using static Sensit.App.Programmer.SensorDataLibrary;
 
 namespace Sensit.App.Programmer
 {
+	// This class contains calls that are only supported on Windows.
+	[SupportedOSPlatform("windows")]
 	public partial class FormProgrammer : Form
 	{
+		private readonly ushort I2C_ADDRESS_EEPROM = 0x57; // CAT24C256 EEPROM I2C address
+		private readonly ushort I2C_ADDRESS_SENSOR = 0x48; // Sensor's ADC I2C address; (A0 is 8-bit) if it doesn't work
+
 		/// <summary>
 		/// Run when the application starts.
 		/// </summary>
@@ -62,7 +69,7 @@ namespace Sensit.App.Programmer
 
 				// Read base record.
 				UpdateProgress("Reading base record...", 25);
-				ReadBaseRecord();
+				SensorDataLibrary.SensorType sensorType = ReadBaseRecord();
 
 				// Read Device ID (and make sure sensor type matches).
 				UpdateProgress("Reading device ID...", 50);
@@ -71,6 +78,10 @@ namespace Sensit.App.Programmer
 				// Read manufacturing record (and make sure serial number matches).
 				UpdateProgress("Reading manufacturing record...", 75);
 				ReadManufacturingRecord();
+
+				// Read sensor ADC to verify communication.
+				UpdateProgress("Checking sensor...", 85);
+				CheckSensor(sensorType);
 
 				// Close the aardvark.
 				UpdateProgress("Closing aardvark...", 95);
@@ -141,6 +152,10 @@ namespace Sensit.App.Programmer
 				UpdateProgress("Writing manufacturing record...", 75);
 				WriteManufacturingRecord(sensorType, words[0]);
 
+				// Read sensor ADC to verify communication.
+				UpdateProgress("Checking sensor...", 85);
+				CheckSensor(sensorType);
+
 				// Close the aardvark.
 				UpdateProgress("Closing aardvark...", 95);
 				CloseAardvark();
@@ -176,7 +191,7 @@ namespace Sensit.App.Programmer
 		#region Programmer Commands
 
 		//Create an instance of aardvark.
-		AardvarkI2C aardvarkI2C = new();
+		readonly AardvarkI2C aardvarkI2C = new();
 
 		/// <summary>
 		/// Opens the Aardvark
@@ -198,28 +213,29 @@ namespace Sensit.App.Programmer
 		/// Read Base Record from sensor's EEPROM.
 		/// </summary>
 		/// <exception cref="DeviceSettingNotSupportedException">Sulfur Dioxide not implemented</exception>
-		private void ReadBaseRecord()
+		/// <returns>sensor type</returns>
+		private SensorDataLibrary.SensorType ReadBaseRecord()
 		{
 			//Retrieve byte list from EEPROM's Base Record
-			List<byte> readData = aardvarkI2C.EepromRead(SensorDataLibrary.ADDRESS_BASE_RECORD, SensorDataLibrary.PAGE_SIZE);
+			List<byte> readData = aardvarkI2C.EepromRead(I2C_ADDRESS_EEPROM, ADDRESS_BASE_RECORD, PAGE_SIZE);
 
 			//Determine Record Format from data
-			SensorDataLibrary.BaseRecordFormat0 baseRecordFormat = new SensorDataLibrary.BaseRecordFormat0();
+			SensorDataLibrary.BaseRecordFormat0 baseRecordFormat = new();
 			baseRecordFormat.SetBytes(readData);
 
-			//Determine Sensor Type
+			// Determine sensor type.
 			switch (baseRecordFormat.SensorType)
 			{
-				case SensorDataLibrary.SensorType.Oxygen:
+				case SensorType.Oxygen:
 					textBoxSensorType.Text = "O2";
 					break;
-				case SensorDataLibrary.SensorType.CarbonMonoxide:
+				case SensorType.CarbonMonoxide:
 					textBoxSensorType.Text = "CO";
 					break;
-				case SensorDataLibrary.SensorType.HydrogenSulfide:
+				case SensorType.HydrogenSulfide:
 					textBoxSensorType.Text = "H2S";
 					break;
-				case SensorDataLibrary.SensorType.HydrogenCyanide:
+				case SensorType.HydrogenCyanide:
 					textBoxSensorType.Text = "HCN";
 					break;
 				default:
@@ -230,6 +246,8 @@ namespace Sensit.App.Programmer
 
 					throw new DeviceSettingNotSupportedException("Invalid sensor type");
 			}
+
+			return baseRecordFormat.SensorType;
 		}
 
 		/// <summary>
@@ -239,45 +257,53 @@ namespace Sensit.App.Programmer
 		/// <exception cref="DeviceSettingNotSupportedException"></exception>
 		private void WriteBaseRecord(SensorDataLibrary.SensorType sensorType)
 		{
-			List<byte> returnData = new();
+			List<byte> returnData = [];
 
 			//Set and retrieve info for sensor type based off serial number
 			switch (sensorType)
 			{
-				case SensorDataLibrary.SensorType.Oxygen:
+				case SensorType.Oxygen:
 					textBoxSensorType.Text = "O2";
-					SensorDataLibrary.BaseRecordFormat2 oxygenBaseRecord = new();
-					oxygenBaseRecord.SensorRev = 1;
-					oxygenBaseRecord.CalScale = SensorDataLibrary.CAL_SCALE_OXYGEN;
-					oxygenBaseRecord.ZeroCalibration = 19699;
-					oxygenBaseRecord.SensorType = SensorDataLibrary.SensorType.Oxygen;
-					oxygenBaseRecord.ZeroMax = SensorDataLibrary.ZERO_MAX_OXYGEN;
-					oxygenBaseRecord.ZeroMin = SensorDataLibrary.ZERO_MIN_OXYGEN;
+					SensorDataLibrary.BaseRecordFormat2 oxygenBaseRecord = new()
+					{
+						SensorRev = 1,
+						CalScale = CAL_SCALE_OXYGEN,
+						ZeroCalibration = CAL_ZERO_OXYGEN,
+						SensorType = SensorType.Oxygen,
+						ZeroMax = ZERO_MAX_OXYGEN,
+						ZeroMin = ZERO_MIN_OXYGEN
+					};
 					returnData.AddRange(oxygenBaseRecord.GetBytes());
 					break;
-				case SensorDataLibrary.SensorType.CarbonMonoxide:
+				case SensorType.CarbonMonoxide:
 					textBoxSensorType.Text = "CO";
-					SensorDataLibrary.BaseRecordFormat0 carbonMonoxideBaseRecord = new();
-					carbonMonoxideBaseRecord.SensorRev = 1;
-					carbonMonoxideBaseRecord.SensorType = SensorDataLibrary.SensorType.CarbonMonoxide;
-					carbonMonoxideBaseRecord.CalScale = SensorDataLibrary.CARBONMONOXIDE_CAL_SCALE;
-					carbonMonoxideBaseRecord.CalPointOne = SensorDataLibrary.CARBONMONOXIDE_CAL_POINT_ONE;
+					SensorDataLibrary.BaseRecordFormat0 carbonMonoxideBaseRecord = new()
+					{
+						SensorRev = 1,
+						SensorType = SensorType.CarbonMonoxide,
+						CalScale = CARBONMONOXIDE_CAL_SCALE,
+						CalPointOne = CARBONMONOXIDE_CAL_POINT_ONE
+					};
 					returnData.AddRange((carbonMonoxideBaseRecord.GetBytes()));
 					break;
-				case SensorDataLibrary.SensorType.HydrogenSulfide:
+				case SensorType.HydrogenSulfide:
 					textBoxSensorType.Text = "H2S";
-					SensorDataLibrary.BaseRecordFormat0 hydrogenSulfideBaseRecord = new();
-					hydrogenSulfideBaseRecord.SensorRev = 1;
-					hydrogenSulfideBaseRecord.SensorType = SensorDataLibrary.SensorType.HydrogenSulfide;
-					hydrogenSulfideBaseRecord.CalScale = SensorDataLibrary.HYDROGENSULFIDE_CAL_SCALE;
+					SensorDataLibrary.BaseRecordFormat0 hydrogenSulfideBaseRecord = new()
+					{
+						SensorRev = 1,
+						SensorType = SensorType.HydrogenSulfide,
+						CalScale = HYDROGENSULFIDE_CAL_SCALE
+					};
 					returnData.AddRange((hydrogenSulfideBaseRecord.GetBytes()));
 					break;
-				case SensorDataLibrary.SensorType.HydrogenCyanide:
+				case SensorType.HydrogenCyanide:
 					textBoxSensorType.Text = "HCN";
-					SensorDataLibrary.BaseRecordFormat0 hydrogenCyanideBaseRecord = new();
-					hydrogenCyanideBaseRecord.SensorRev = 1;
-					hydrogenCyanideBaseRecord.SensorType = SensorDataLibrary.SensorType.HydrogenCyanide;
-					hydrogenCyanideBaseRecord.CalScale = SensorDataLibrary.HYDROGENCYANIDE_CAL_SCALE;
+					SensorDataLibrary.BaseRecordFormat0 hydrogenCyanideBaseRecord = new()
+					{
+						SensorRev = 1,
+						SensorType = SensorType.HydrogenCyanide,
+						CalScale = HYDROGENCYANIDE_CAL_SCALE
+					};
 					returnData.AddRange((hydrogenCyanideBaseRecord.GetBytes()));
 					break;
 				default:
@@ -289,7 +315,7 @@ namespace Sensit.App.Programmer
 			}
 
 			//Write data to sensor's EEPROM
-			aardvarkI2C.EepromWrite(SensorDataLibrary.ADDRESS_BASE_RECORD, returnData);
+			aardvarkI2C.EepromWrite(I2C_ADDRESS_EEPROM, ADDRESS_BASE_RECORD, returnData);
 		}
 
 		/// <summary>
@@ -298,7 +324,7 @@ namespace Sensit.App.Programmer
 		private void ReadDeviceID()
 		{
 			//Read Device ID from sensor's EEPROM
-			List<byte> readData = aardvarkI2C.EepromRead(SensorDataLibrary.ADDRESS_DEVICE_ID, SensorDataLibrary.PAGE_SIZE);
+			List<byte> readData = aardvarkI2C.EepromRead(I2C_ADDRESS_EEPROM, ADDRESS_DEVICE_ID, PAGE_SIZE);
 			SensorDataLibrary.DeviceID deviceID = new();
 			deviceID.SetBytes(readData);
 
@@ -306,7 +332,7 @@ namespace Sensit.App.Programmer
 			textBoxSerialNumber.Text = deviceID.SerialNumber;
 
 			//Write Date Programmed to form
-			DateTime date = new DateTime(deviceID.Year, deviceID.Month, deviceID.Day);
+			DateTime date = new(deviceID.Year, deviceID.Month, deviceID.Day);
 			textBoxDateProgrammed.Text = date.ToString("MM-dd-yyyy", CultureInfo.InvariantCulture);
 		}
 
@@ -334,7 +360,7 @@ namespace Sensit.App.Programmer
 			};
 
 			//Set record format based off of sensor type.
-			if (sensorType == SensorDataLibrary.SensorType.Oxygen)
+			if (sensorType == SensorType.Oxygen)
 			{
 				deviceID.RecordFormat = 2;
 			}
@@ -344,7 +370,7 @@ namespace Sensit.App.Programmer
 			}
 
 			//Write Device ID to EEPROM
-			aardvarkI2C.EepromWrite(SensorDataLibrary.ADDRESS_DEVICE_ID, deviceID.GetBytes());
+			aardvarkI2C.EepromWrite(I2C_ADDRESS_EEPROM, ADDRESS_DEVICE_ID, deviceID.GetBytes());
 		}
 
 		/// <summary>
@@ -353,7 +379,7 @@ namespace Sensit.App.Programmer
 		private void ReadManufacturingRecord()
 		{
 			//Read from EEPROM
-			aardvarkI2C.EepromRead(SensorDataLibrary.ADDRESS_MANUFACTURING_ID, SensorDataLibrary.PAGE_SIZE);
+			aardvarkI2C.EepromRead(I2C_ADDRESS_EEPROM, ADDRESS_MANUFACTURING_ID, PAGE_SIZE);
 		}
 
 		/// <summary>
@@ -376,7 +402,7 @@ namespace Sensit.App.Programmer
 			};
 
 			//Set record format based off of sensor type.
-			if (sensorType == SensorDataLibrary.SensorType.Oxygen)
+			if (sensorType == SensorType.Oxygen)
 			{
 				manufactureID.RecordFormat = 2;
 			}
@@ -389,7 +415,95 @@ namespace Sensit.App.Programmer
 			textBoxSerialNumber.Text += Environment.NewLine + serialNumber;
 
 			//Write info to EEPROM
-			aardvarkI2C.EepromWrite(SensorDataLibrary.ADDRESS_MANUFACTURING_ID, manufactureID.GetBytes());
+			aardvarkI2C.EepromWrite(I2C_ADDRESS_EEPROM, ADDRESS_MANUFACTURING_ID, manufactureID.GetBytes());
+		}
+
+		private void CheckSensor(SensorType sensorType)
+		{
+			// packet of data to write to ADC
+			List<byte> writeData = [0x00, 0x00, 0x00];
+
+			// Configure ADC based on sensor type.
+			switch (sensorType)
+			{
+				case SensorType.Oxygen:
+					writeData[0] = ADS111x.AddressRegister(ADS111x.AddressPointer.ConfigRegister);
+					writeData[1] = ADS111x.ConfigRegister(
+						ADS111x.ConfigFlags.MUX_AIN0 |
+						ADS111x.ConfigFlags.PGA_FSR_2_048V |
+						ADS111x.ConfigFlags.MODE_Continuous |
+						ADS111x.ConfigFlags.DR_SPS_3300 |
+						ADS111x.ConfigFlags.COMP_MODE_Traditional |
+						ADS111x.ConfigFlags.COMP_POL_Low);
+					break;
+				case SensorType.HydrogenCyanide:
+				case SensorType.SulfurDioxide:
+					// TODO
+					break;
+				case SensorType.HydrogenSulfide:
+				case SensorType.CarbonMonoxide:
+					// TODO
+					break;
+				default:
+					throw new DeviceSettingNotSupportedException("Invalid sensor type.");
+			}
+
+			// Read ADC value from sensor.
+			// TODO: debug this I2C read from sensor.
+			// TODO:  If 100 ms is not long enough, can do write, then pause, then read separately.
+			// Once you write config, you can read continuously every 50 ms.
+			List<byte> readData = aardvarkI2C.I2CWriteThenRead(I2C_ADDRESS_SENSOR, writeData, 2);
+
+			// Convert byte list to integer.
+			int adcValue = (readData[0] << 8) | readData[1];
+
+			// Update user interface.
+			textBoxSensorCounts.Text = adcValue.ToString(CultureInfo.InvariantCulture);
+
+			// TODO:  Check against count values (different for each sensor type).
+			// TODO:  16-bit value, but device acts like it's two bytes.
+			// First byte is MSB, 2nd is LSB; no gas should be 0 to 50 counts except for O2,
+			// which gives about 4,700 counts.
+			// Check that ADC value is within expected range
+			switch (sensorType)
+			{
+				case SensorType.Oxygen:
+					if (adcValue < 0 || adcValue > 65535)
+					{
+						//Close the aardvark
+						aardvarkI2C.Close();
+						throw new DeviceCommunicationException("Sensor ADC value out of range.");
+					}
+					break;
+				case SensorType.CarbonMonoxide:
+					if (adcValue < 0 || adcValue > 65535)
+					{
+						//Close the aardvark
+						aardvarkI2C.Close();
+						throw new DeviceCommunicationException("Sensor ADC value out of range.");
+					}
+					break;
+				case SensorType.HydrogenSulfide:
+					if (adcValue < 0 || adcValue > 65535)
+					{
+						//Close the aardvark
+						aardvarkI2C.Close();
+						throw new DeviceCommunicationException("Sensor ADC value out of range.");
+					}
+					break;
+				case SensorType.HydrogenCyanide:
+					if (adcValue < 0 || adcValue > 65535)
+					{
+						//Close the aardvark
+						aardvarkI2C.Close();
+						throw new DeviceCommunicationException("Sensor ADC value out of range.");
+					}
+					break;
+				default:
+					//Close the aardvark
+					aardvarkI2C.Close();
+					throw new DeviceSettingNotSupportedException("Invalid sensor type.");
+			}
 		}
 
 		#endregion
@@ -411,54 +525,38 @@ namespace Sensit.App.Programmer
 			// BBBB = Batch Number
 			// NN = Number in Batch
 			uint sensorTypeCode;
-			uint sensorBatch;
-			uint sensorNum;
+			//uint sensorBatch;
+			//uint sensorNum;
 			if (numDigits == 10)
 			{
-				sensorTypeCode = uint.Parse(serialNumber.Substring(0, 4));
-				sensorBatch = uint.Parse(serialNumber.Substring(4, 4));
-				sensorNum = uint.Parse(serialNumber.Substring(8, 2));
+				sensorTypeCode = uint.Parse(serialNumber[..4]);
+				//sensorBatch = uint.Parse(serialNumber.Substring(4, 4));
+				//sensorNum = uint.Parse(serialNumber.Substring(8, 2));
 			}
 			else if (numDigits == 9)
 			{
-				sensorTypeCode = uint.Parse(serialNumber.Substring(0, 3));
-				sensorBatch = uint.Parse(serialNumber.Substring(3, 4));
-				sensorNum = uint.Parse(serialNumber.Substring(7, 2));
+				sensorTypeCode = uint.Parse(serialNumber[..3]);
+				//sensorBatch = uint.Parse(serialNumber.Substring(3, 4));
+				//sensorNum = uint.Parse(serialNumber.Substring(7, 2));
 			}
 			else if (numDigits == 8)
 			{
-				sensorTypeCode = uint.Parse(serialNumber.Substring(0, 2));
-				sensorBatch = uint.Parse(serialNumber.Substring(2, 4));
-				sensorNum = uint.Parse(serialNumber.Substring(6, 2));
+				sensorTypeCode = uint.Parse(serialNumber[..2]);
+				//sensorBatch = uint.Parse(serialNumber.Substring(2, 4));
+				//sensorNum = uint.Parse(serialNumber.Substring(6, 2));
 			}
 			else throw new TestException("Invalid serial number format.");
 
 			// Translate code into sensor type.
-			SensorDataLibrary.SensorType sensorType;
-			switch (sensorTypeCode)
+			var sensorType = sensorTypeCode switch
 			{
-				case 185:
-					sensorType = SensorDataLibrary.SensorType.Oxygen;
-					break;
-				case 20:
-				case 21:
-				case 22:
-					sensorType = SensorDataLibrary.SensorType.HydrogenSulfide;
-					break;
-				case 11:
-				case 15:
-					sensorType = SensorDataLibrary.SensorType.CarbonMonoxide;
-					break;
-				case 55:
-					sensorType = SensorDataLibrary.SensorType.HydrogenCyanide;
-					break;
-				case 51:
-					sensorType = SensorDataLibrary.SensorType.SulfurDioxide;
-					throw new TestException("SO2 sensors are not supported yet.");
-				default:
-					throw new TestException("Unknown sensor type.");
-			}
-
+				185 => SensorType.Oxygen,
+				20 or 21 or 22 => SensorType.HydrogenSulfide,
+				11 or 15 => SensorType.CarbonMonoxide,
+				55 => SensorType.HydrogenCyanide,
+				51 => throw new TestException("SO2 sensors are not supported yet."),//sensorType = SensorDataLibrary.SensorType.SulfurDioxide;
+				_ => throw new TestException("Unknown sensor type."),
+			};
 			return sensorType;
 		}
 
@@ -494,5 +592,10 @@ namespace Sensit.App.Programmer
 
 
 		#endregion
+
+		private void FormProgrammer_Load(object sender, EventArgs e)
+		{
+
+		}
 	}
 }
