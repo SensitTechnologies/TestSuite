@@ -47,7 +47,7 @@ namespace Sensit.TestSDK.Settings
 			XmlSerializer serializer = new(typeof(T));
 
 			// Create a filestream to read the file.
-			FileStream fileStream = new(filename, FileMode.Open);
+            FileStream fileStream = new(filename, FileMode.Open, FileAccess.Read);
 
 			// Create an XML reader.
 			XmlReader xmlReader = XmlReader.Create(fileStream);
