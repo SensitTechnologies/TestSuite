@@ -81,7 +81,8 @@ namespace Sensit.App.Programmer
 
 				// Read sensor ADC to verify communication.
 				UpdateProgress("Checking sensor...", 85);
-				CheckSensor(sensorType);
+				// TODO:  Test and enable checking of sensors.
+				//CheckSensor(sensorType);
 
 				// Close the aardvark.
 				UpdateProgress("Closing aardvark...", 95);
@@ -154,7 +155,8 @@ namespace Sensit.App.Programmer
 
 				// Read sensor ADC to verify communication.
 				UpdateProgress("Checking sensor...", 85);
-				CheckSensor(sensorType);
+				// TODO:  Test and enable checking of sensors.
+				//CheckSensor(sensorType);
 
 				// Close the aardvark.
 				UpdateProgress("Closing aardvark...", 95);
@@ -527,7 +529,7 @@ namespace Sensit.App.Programmer
 			uint sensorTypeCode;
 			//uint sensorBatch;
 			//uint sensorNum;
-			if (numDigits == 10)
+			if (numDigits >= 10)
 			{
 				sensorTypeCode = uint.Parse(serialNumber[..4]);
 				//sensorBatch = uint.Parse(serialNumber.Substring(4, 4));
@@ -590,12 +592,6 @@ namespace Sensit.App.Programmer
 			textBoxDateProgrammed.Text = string.Empty;
 		}
 
-
 		#endregion
-
-		private void FormProgrammer_Load(object sender, EventArgs e)
-		{
-
-		}
 	}
 }
