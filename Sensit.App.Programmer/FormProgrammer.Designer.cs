@@ -656,7 +656,6 @@ namespace Sensit.App.Programmer
 			Name = "FormProgrammer";
 			Text = "Smart Sensor";
 			FormClosed += FormProgrammer_FormClosed;
-			Load += FormProgrammer_Load;
 			menuStrip1.ResumeLayout(false);
 			menuStrip1.PerformLayout();
 			statusStrip.ResumeLayout(false);
