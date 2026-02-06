@@ -134,8 +134,13 @@ namespace Sensit.App.Programmer
 				// Parse the barcode text.
 				string[] words = textBoxBarcode.Text.Split(' ');
 
+				// Parse the serial number from the barcode.
+				// The serial number also has a batch code after a dash.
+				// We only need the part before the dash for programming.
+				string serialNumber = words[0].Split('-')[0];
+
 				// Determine sensor type from serial number.
-				SensorDataLibrary.SensorType sensorType = ParseAlphasenseBarcode(words[0]);
+				SensorDataLibrary.SensorType sensorType = ParseAlphasenseBarcode(serialNumber);
 
 				// Initialize the aardvark.
 				UpdateProgress("Initializing aardvark...", 5);
@@ -147,11 +152,11 @@ namespace Sensit.App.Programmer
 
 				// Write Device ID.
 				UpdateProgress("Writing device ID...", 50);
-				WriteDeviceID(sensorType, words[0]);
+				WriteDeviceID(sensorType, serialNumber);
 
 				// Write manufacturing record.
 				UpdateProgress("Writing manufacturing record...", 75);
-				WriteManufacturingRecord(sensorType, words[0]);
+				WriteManufacturingRecord(sensorType, serialNumber);
 
 				// Read sensor ADC to verify communication.
 				UpdateProgress("Checking sensor...", 85);
@@ -348,10 +353,10 @@ namespace Sensit.App.Programmer
 			// We need the date.
 			string date = DateTime.Today.ToString("MMddyyyy", CultureInfo.InvariantCulture);
 
-			//Write date to be programmed into EEPROM on form.
+			// Write date to be programmed into EEPROM on form.
 			textBoxDateProgrammed.Text = DateTime.Today.ToString("MM-dd-yyyy", CultureInfo.InvariantCulture);
 
-			//Write device ID to sensor EEPROM.
+			// Write device ID to sensor EEPROM.
 			SensorDataLibrary.DeviceID deviceID = new()
 			{
 				SensorType = sensorType,
