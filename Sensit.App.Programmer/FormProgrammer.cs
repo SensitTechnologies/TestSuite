@@ -556,7 +556,7 @@ namespace Sensit.App.Programmer
 				20 or 21 or 22 => SensorType.HydrogenSulfide,
 				11 or 15 => SensorType.CarbonMonoxide,
 				55 => SensorType.HydrogenCyanide,
-				51 => throw new TestException("SO2 sensors are not supported yet."),//sensorType = SensorDataLibrary.SensorType.SulfurDioxide;
+				51 => throw new TestException("SO2 sensors are not supported yet."),//SensorType.SulfurDioxide;
 				_ => throw new TestException("Unknown sensor type."),
 			};
 			return sensorType;
