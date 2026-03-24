@@ -433,6 +433,7 @@ namespace Sensit.App.Automate
 				{
 					Setpoint = e.Value,
 					ErrorTolerance = e.ErrorTolerance,
+					RateTolerance = e.RateTolerance,
 					Interval = new TimeSpan(0, 0, Convert.ToInt32(e.Interval)),
 					Timeout = new TimeSpan(0, 0, Convert.ToInt32(e.Timeout)),
 					DwellTime = new TimeSpan(0, 0, Convert.ToInt32(e.DwellTime))
